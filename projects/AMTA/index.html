@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMTA Lexicography Assistant - Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #1a237e;       /* Academic Navy */
+            --primary-light: #3949ab;
+            --accent: #059669;        /* Success Teal */
+            --accent-light: #10b981;
+            --gradient-start: #1a237e;
+            --gradient-end: #283593;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 4px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            gap: 4px;
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .language-toggle button:hover {
+            color: var(--primary);
+            background: rgba(26, 35, 126, 0.05);
+        }
+        
+        .language-toggle button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            margin-bottom: 64px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        /* ===== DATA NOTICE ===== */
+        .data-notice {
+            background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
+            border-left: 4px solid #f59f00;
+            padding: 24px;
+            margin: 40px auto;
+            border-radius: var(--radius-md);
+            max-width: 800px;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .data-notice h4 {
+            color: #5c4400;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-notice h4 i {
+            font-size: 20px;
+        }
+
+        .data-notice p {
+            color: #8a6d00;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .data-notice a {
+            color: #1a237e;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .data-notice a:hover {
+            border-bottom-color: #1a237e;
+        }
+
+        /* ===== WORKFLOW SECTION ===== */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        body.arabic .section-title::after {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        .workflow-container {
+            position: relative;
+            margin: 64px 0;
+        }
+
+        .workflow-image-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto 48px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .workflow-image-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2);
+        }
+
+        .workflow-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .workflow-step {
+            background: var(--card-bg);
+            padding: 32px 24px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .workflow-step:hover::before {
+            opacity: 1;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .workflow-step h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .workflow-step p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 16px;
+            background: rgba(26, 35, 126, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ===== BENEFITS SECTION ===== */
+        .benefits-section {
+            background: var(--card-bg);
+            padding: 64px 0;
+            border-radius: var(--radius-lg);
+            margin: 64px 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .audience-column {
+            background: var(--bg-light);
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+        }
+
+        .audience-column:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .audience-column h3 {
+            color: var(--primary);
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 700;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+
+        .benefit-list {
+            list-style: none;
+        }
+
+        .benefit-list li {
+            padding: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        body.arabic .benefit-list li {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .benefit-list li:not(:last-child) {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .benefit-content strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== APIS SECTION ===== */
+        .apis-section {
+            text-align: center;
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin: 48px 0;
+        }
+
+        .apis-label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .apis-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .api-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .api-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 64px 0;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #eef2ff 100%);
+            border-radius: var(--radius-lg);
+            margin: 64px 0;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .cta-subtitle {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 35, 126, 0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+            margin-top: 64px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-email {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .footer-email:hover {
+            color: var(--accent);
+        }
+        
+        /* Legal links style */
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 20px; }
+            .section-title { font-size: 28px; }
+            .features-grid,
+            .audience-grid,
+            .workflow-steps {
+                grid-template-columns: 1fr;
+            }
+            .language-toggle {
+                top: 16px;
+                right: 16px;
+            }
+            .hero {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 28px; }
+            .hero-description { font-size: 16px; }
+            .feature-card,
+            .audience-column {
+                padding: 24px;
+            }
+            .container {
+                padding: 0 16px;
+            }
+        }
+
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+    </style>
+</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+<body>
+    <div class="language-toggle">
+        <button id="lang-en" class="active">
+            <i class="fas fa-globe-americas"></i> English
+        </button>
+        <button id="lang-ar">
+            <i class="fas fa-mosque"></i> العربية
+        </button>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="lang-en">AMTA Lexicography Assistant</h1>
+                <h1 class="lang-ar">مساعد AMTA للمعجميات</h1>
+                
+                <div class="hero-subtitle lang-en">Intelligent Lexicography Platform</div>
+                <div class="hero-subtitle lang-ar">منصة صناعة المعاجم الذكية</div>
+                
+                <p class="hero-description lang-en">
+                    An advanced Google Workspace Add-on that leverages Generative AI and Academic Corpora 
+                    to automate the creation of specialized dictionaries, ensuring academic validity and linguistic precision.
+                </p>
+                <p class="hero-description lang-ar">
+                    إضافة متقدمة لمساحة عمل جوجل تستخدم الذكاء الاصطناعي التوليدي والمدونات الأكاديمية 
+                    لأتمتة إنشاء القواميس المتخصصة، مع ضمان الصلاحية الأكاديمية والدقة اللغوية.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-shield-alt"></i> Important Notice Regarding Google Data</h4>
+            <h4 class="lang-ar"><i class="fas fa-shield-alt"></i> ملاحظة هامة بشأن بيانات جوجل</h4>
+            
+            <p class="lang-en">
+                The AMTA Lexicography Assistant requires access to your Google Sheets data to perform its core functions 
+                (i.e., reading terms for analysis and writing back dictionary entries). We only access data necessary for the app's features.
+            </p>
+            <p class="lang-ar">
+                يتطلب مساعد AMTA الوصول إلى بيانات جداول جوجل الخاصة بك لأداء وظائفه الأساسية 
+                (مثل، قراءة المصطلحات للتحليل والكتابة مرة أخرى في إدخالات القاموس). نحن نصل فقط إلى البيانات الضرورية لميزات التطبيق.
+            </p>
+            
+            <p class="lang-en">
+                For detailed information on data handling, please read our 
+                <a href="../../privacy.html"><strong>Privacy Policy</strong></a>.
+            </p>
+            <p class="lang-ar">
+                للحصول على معلومات مفصلة حول التعامل مع البيانات، يرجى قراءة 
+                <a href="../../privacy.html"><strong>سياسة الخصوصية</strong></a>.
+            </p>
+        </div>
+
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">How It Works</h2>
+            <h2 class="section-title lang-ar">كيف يعمل النظام</h2>
+            
+            <div class="workflow-image-container">
+                <img src="https://lh3.googleusercontent.com/_zZ6UGGgrqP_yTeWCg-CXIx2SfEdFJ1XbueZsbY2Ve5boU4sby5rvnkKKK0SMX-wTjIL9b4rRwKfTvY8IFL23cc" 
+                     class="workflow-image" 
+                     alt="Application Workflow Diagram">
+            </div>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4 class="lang-en">Input Phase</h4>
+                    <h4 class="lang-ar">مرحلة الإدخال</h4>
+                    <p class="lang-en">Domain input processed through API orchestration and semantic search</p>
+                    <p class="lang-ar">معالجة المدخلات المجالية عبر تنسيق واجهات البرمجة والبحث الدلالي</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4 class="lang-en">Analysis & RAG</h4>
+                    <h4 class="lang-ar">التحليل والتوليد المعزز</h4>
+                    <p class="lang-en">AI-powered analysis with corpus statistics and retrieval-augmented generation</p>
+                    <p class="lang-ar">تحليل مدعوم بالذكاء الاصطناعي مع إحصائيات المدونات والتوليد المعزز بالاسترجاع</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4 class="lang-en">Output Phase</h4>
+                    <h4 class="lang-ar">مرحلة الإخراج</h4>
+                    <p class="lang-en">Structured outputs in XML/JSON formats compatible with Lexonomy</p>
+                    <p class="lang-ar">مخرجات منظمة بتنسيقات XML/JSON متوافقة مع Lexonomy</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title lang-en">Key Features</h2>
+            <h2 class="section-title lang-ar">الميزات الرئيسية</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="lang-en">AI-Powered Definitions</h3>
+                    <h3 class="lang-ar">تعريفات مدعومة بالذكاء الاصطناعي</h3>
+                    <p class="lang-en">
+                        Utilizes RAG (Retrieval-Augmented Generation) to draft precise technical definitions, 
+                        translations, and context-aware examples by verifying against real academic papers.
+                    </p>
+                    <p class="lang-ar">
+                        يستخدم التوليد المعزز بالاسترجاع لصياغة تعاريف تقنية دقيقة وترجمات وأمثلة واعية بالسياق 
+                        من خلال التحقق من الأوراق الأكاديمية الحقيقية.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="lang-en">Corpus Statistics</h3>
+                    <h3 class="lang-ar">إحصائيات المدونات النصية</h3>
+                    <p class="lang-en">
+                        Automatically calculates <strong>Keyness Scores</strong>, Domain Frequency, 
+                        and Reference Frequency (vs. BAWE Corpus) to determine term significance.
+                    </p>
+                    <p class="lang-ar">
+                        يحسب تلقائياً <strong>درجات الأهمية</strong>، التكرار المجالي، والتكرار المرجعي 
+                        (مقارنة بمدونة BAWE) لتحديد أهمية المصطلحات.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="lang-en">Lexonomy Export</h3>
+                    <h3 class="lang-ar">تصدير لمنصة Lexonomy</h3>
+                    <p class="lang-en">
+                        Seamlessly transforms your data into structured XML compatible with 
+                        <strong>Lexonomy</strong> and other professional dictionary writing systems (DWS).
+                    </p>
+                    <p class="lang-ar">
+                        يحول بياناتك بسلاسة إلى XML منظم متوافق مع 
+                        <strong>ليكسونومي Lexonomy</strong> وأنظمة كتابة القواميس الاحترافية الأخرى.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits-section">
+            <h2 class="section-title lang-en">Why Use AMTA Assistant?</h2>
+            <h2 class="section-title lang-ar">لماذا تستخدم مساعد AMTA؟</h2>
+            
+            <div class="audience-grid">
+                <div class="audience-column">
+                    <h3 class="lang-en">For Lexicographers</h3>
+                    <h3 class="lang-ar">للمعجميين</h3>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Automate Drudgery</strong>
+                                <span class="lang-en">Skip manual term extraction. Get suggested terms from semantic search instantly.</span>
+                                <strong class="lang-ar">أتمتة المهام الروتينية</strong>
+                                <span class="lang-ar">تخطى استخراج المصطلحات يدوياً. احصل على مصطلحات مقترحة من البحث الدلالي فوراً.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Data-Driven Decisions</strong>
+                                <span class="lang-en">Use statistical Keyness scores to decide which words belong in your dictionary.</span>
+                                <strong class="lang-ar">قرارات قائمة على البيانات</strong>
+                                <span class="lang-ar">استخدم درجات الأهمية الإحصائية لتقرر أي الكلمات تنتمي إلى قاموسك.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Structured Output</strong>
+                                <span class="lang-en">Export clean XML without needing to code tags manually.</span>
+                                <strong class="lang-ar">مخرجات منظمة</strong>
+                                <span class="lang-ar">صدر XML نظيف دون الحاجة لترميز الوسوم يدوياً.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="audience-column">
+                    <h3 class="lang-en">For Educators</h3>
+                    <h3 class="lang-ar">للمعلمين</h3>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Instant Glossaries</strong>
+                                <span class="lang-en">Create course-specific glossaries for students in minutes, not days.</span>
+                                <strong class="lang-ar">معاجم فورية</strong>
+                                <span class="lang-ar">قم بصناعة مسارد خاصة بالمقرر للطلاب في دقائق، وليس أيام.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Authentic Examples</strong>
+                                <span class="lang-en">Extract real-world usage examples directly from peer-reviewed papers.</span>
+                                <strong class="lang-ar">أمثلة أصلية</strong>
+                                <span class="lang-ar">استخرج أمثلة استخدام حقيقية مباشرة من الأوراق المحكمة.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Bilingual Support</strong>
+                                <span class="lang-en">Automatically generate accurate translations for multilingual definitions.</span>
+                                <strong class="lang-ar">دعم ثنائي اللغة</strong>
+                                <span class="lang-ar">كتابة ترجمات دقيقة تلقائياً للتعريفات بلغات متعددة.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="apis-section">
+            <span class="apis-label lang-en">Powered By Academic APIs</span>
+            <span class="apis-label lang-ar">مدعوم بواجهات برمجة تطبيقات أكاديمية</span>
+            
+            <div class="apis-grid">
+                <div class="api-badge">
+                    <i class="fas fa-robot"></i>
+                    <span class="lang-en">Gemini AI</span>
+                    <span class="lang-ar">Gemini AI</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span class="lang-en">Semantic Scholar</span>
+                    <span class="lang-ar">Semantic Scholar</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-database"></i>
+                    <span class="lang-en">CORE API</span>
+                    <span class="lang-ar">CORE API</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-search"></i>
+                    <span class="lang-en">SerpApi</span>
+                    <span class="lang-ar">Serp API</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">Ready to Build Your Dictionary?</h2>
+            <h2 class="cta-title lang-ar">مستعد لبناء قاموسك؟</h2>
+            
+            <p class="cta-subtitle lang-en">
+                Launch the add-on from the Extensions menu in Google Sheets and start creating 
+                professional dictionaries in minutes.
+            </p>
+            <p class="cta-subtitle lang-ar">
+                شغّل الإضافة من قائمة الإضافات في جداول جوجل وابدأ في إنشاء قواميس احترافية في دقائق.
+            </p>
+            
+            <button class="cta-button" onclick="window.open('https://workspace.google.com/marketplace', '_blank')">
+                <i class="fas fa-rocket"></i> 
+                <span class="lang-en">Get Started Now</span>
+                <span class="lang-ar">ابدأ الآن</span>
+            </button>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <span class="lang-en">© 2025 Waleed Mandour • </span>
+                    <span class="lang-ar">© 2025 وليد مندور • </span>
+                    <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                </div>
+                
+                <div style="margin-top: 10px; font-size: 0.9em;">
+                    <span class="lang-en">
+                        <a href="../../privacy.html">Privacy Policy</a> | 
+                        <a href="../../terms.html">Terms of Service</a>
+                    </span>
+                    <span class="lang-ar">
+                        <a href="../../privacy.html">سياسة الخصوصية</a> | 
+                        <a href="../../terms.html">شروط الخدمة</a>
+                    </span>
+                </div>
+
+                <div style="margin-top: 8px;">
+                    <span class="lang-en">Part of the <strong>waleedmandour.org/projects/</strong> portfolio</span>
+                    <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+
+        // Add scroll animation for elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and steps
+            document.querySelectorAll('.feature-card, .workflow-step, .audience-column').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
