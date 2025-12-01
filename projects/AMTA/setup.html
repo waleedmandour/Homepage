@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #475569;
+      --success: #16a34a;
+      --warning: #d97706;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #334155;
+      background-color: var(--bg);
+      padding: 0;
+      margin: 0;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 30px;
+    }
+    h1 { color: #1e293b; font-weight: 800; font-size: 2rem; margin: 0 0 10px 0; letter-spacing: -0.5px; }
+    .subtitle { color: #64748b; font-size: 1.1rem; font-weight: 400; }
+
+    /* Typography */
+    h2 { color: #0f172a; margin-top: 40px; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+    h3 { color: var(--primary); font-size: 1.1rem; margin-top: 25px; font-weight: 600; }
+    p { margin-bottom: 15px; }
+
+    /* API Grid */
+    .api-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .api-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .api-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--primary); }
+    .api-name { font-weight: 700; color: #1e293b; font-size: 1rem; }
+    .api-desc { font-size: 0.85rem; color: #64748b; margin: 8px 0 12px 0; }
+    .api-link { font-size: 0.8rem; color: var(--primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; }
+    
+    /* Workflow Steps */
+    .step {
+      background: var(--card-bg);
+      border-left: 4px solid var(--primary);
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 0 12px 12px 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .step-badge {
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .step-title { font-weight: 700; font-size: 1.1rem; color: #1e293b; margin-left: 8px; }
+
+    /* Logic Visualization Box */
+    .logic-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      margin-top: 20px;
+    }
+    .logic-step { display: flex; gap: 10px; margin-bottom: 8px; }
+    .logic-icon { font-size: 1.2rem; }
+
+    /* Pro Tips Section */
+    .tips-section {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 40px;
+    }
+    .tip-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .tip-item:last-child { margin-bottom: 0; }
+    .tip-icon { font-size: 1.5rem; color: var(--warning); }
+    .tip-content strong { display: block; color: #92400e; margin-bottom: 4px; }
+    .tip-content p { margin: 0; font-size: 0.95rem; color: #78350f; }
+
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🧠 AMTA Lexicography Assistant</h1>
+    <div class="subtitle">A Computational Workflow for Specialized Dictionary Creation</div>
+  </header>
+
+  <p>
+    This system democratizes access to advanced computational lexicography. Designed for institutions and researchers with limited resources, it orchestrates a suite of <strong>free and open-access APIs</strong> to automate the extraction, validation, and definition of domain-specific terminology.
+  </p>
+
+  <!-- 1. PREREQUISITES -->
+  <h2>🔑 1. Service Configuration</h2>
+  <p>To operate the assistant, you must obtain free API keys from the following providers. These keys are stored locally in your script properties and remain private.</p>
+  
+  <div class="api-grid">
+    <div class="api-card">
+      <div class="api-name">🤖 Google Gemini</div>
+      <div class="api-desc">The core intelligence engine for definitions, translations, and semantic analysis.</div>
+      <a href="https://aistudio.google.com/app/apikey" target="_blank" class="api-link">Get API Key &rarr;</a>
+    </div>
+    
+    <div class="api-card">
+      <div class="api-name">🎓 Semantic Scholar</div>
+      <div class="api-desc">Provides access to millions of academic papers for term extraction.</div>
+      <a href="https://www.semanticscholar.org/product/api" target="_blank" class="api-link">Get API Key &rarr;</a>
+    </div>
+
+    <div class="api-card">
+      <div class="api-name">📚 SerpApi (Scholar)</div>
+      <div class="api-desc">Enables scraping of Google Scholar for top-cited literature.</div>
+      <a href="https://serpapi.com/" target="_blank" class="api-link">Get API Key &rarr;</a>
+    </div>
+    
+    <div class="api-card">
+      <div class="api-name">🔓 CORE API</div>
+      <div class="api-desc">Access to Open Access research papers for definition context.</div>
+      <a href="https://core.ac.uk/services/api" target="_blank" class="api-link">Get API Key &rarr;</a>
+    </div>
+
+    <div class="api-card">
+      <div class="api-name">🤗 Hugging Face</div>
+      <div class="api-desc">Powers linguistic tasks like Part-of-Speech (POS) tagging.</div>
+      <a href="https://huggingface.co/settings/tokens" target="_blank" class="api-link">Get Token &rarr;</a>
+    </div>
+  </div>
+
+  <!-- 2. THE PIPELINE -->
+  <h2>🚀 2. The Lexicography Pipeline</h2>
+  <p>The system follows a linear 5-stage workflow. You can run the <strong>Full Pipeline</strong> automatically or execute each step manually via the sidebar.</p>
+
+  <div class="step">
+    <span class="step-badge">Phase 1</span> <span class="step-title">Discovery (Term Extraction)</span>
+    <p>Input a domain (e.g., "Quantum Computing") to retrieve candidate terms.</p>
+    <ul>
+      <li><strong>Method:</strong> Queries academic databases for high-relevance papers.</li>
+      <li><strong>Filtering:</strong> Automatically removes stop words and generic vocabulary.</li>
+      <li><strong>Output:</strong> Populates <strong>Column A</strong> (Terms) and <strong>Column B</strong> (Subdomain).</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <span class="step-badge">Phase 2</span> <span class="step-title">Statistical Validation</span>
+    <p>Validate candidates against the <strong>British Academic Written English (BAWE)</strong> corpus.</p>
+    <ul>
+      <li><strong>Keyness Score:</strong> Calculates statistical relevance to the specific domain.</li>
+      <li><strong>Reference Frequency:</strong> Checks how often the term appears in general academic English.</li>
+      <li><strong>Output:</strong> Populates <strong>Columns C & D</strong>. Use these to filter weak candidates.</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <span class="step-badge">Phase 3</span> <span class="step-title">Context Enrichment</span>
+    <p>The system fetches metadata for the most cited paper associated with each term.</p>
+    <ul>
+      <li>Retrieves Title, URL, Citation Count, and Year.</li>
+      <li><strong>Output:</strong> Populates <strong>Columns E, F, G, H</strong>. This context is crucial for the next phase.</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <span class="step-badge">Phase 4</span> <span class="step-title">Content Generation (RAG)</span>
+    <p>This is the core engine. It generates a technical Definition, a Translation (Term + Definition), and an authentic Example.</p>
+    
+    <div class="logic-box">
+      <div style="font-weight:700; margin-bottom:10px;">🧠 How the "Tiered Fallback" Logic Works:</div>
+      <div class="logic-step"><span class="logic-icon">📄</span> <strong>Tier 1: Paper Extraction.</strong> Attempts to read the full text of the specific paper found in Phase 3.</div>
+      <div class="logic-step"><span class="logic-icon">🌐</span> <strong>Tier 2: Web Context.</strong> If the paper is paywalled, searches Google Scholar via SerpApi for abstract snippets.</div>
+      <div class="logic-step"><span class="logic-icon">🤖</span> <strong>Tier 3: Expert AI.</strong> If context is unavailable, relies on Gemini's internal parametric knowledge.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-badge">Phase 5</span> <span class="step-title">Finalization & Export</span>
+    <p>Prepare the data for publication.</p>
+    <ul>
+      <li><strong>Collocations:</strong> Identifies word pairs (e.g., "Genetic Algorithm").</li>
+      <li><strong>XML Generation:</strong> Serializes data into Lexonomy-compatible XML.</li>
+      <li><strong>Export:</strong> Download the dataset as JSON, CSV, or XML to Google Drive.</li>
+    </ul>
+  </div>
+
+  <!-- 3. PRO TIPS -->
+  <div class="tips-section">
+    <h3 style="margin-top:0; color:#92400e;">💡 Pro Tips for Scalability</h3>
+    
+    <div class="tip-item">
+      <div class="tip-icon">📑</div>
+      <div class="tip-content">
+        <strong>Use Multiple Tabs for Subdomains</strong>
+        <p>The Assistant always acts on the <em>currently active sheet</em>. To build a comprehensive dictionary, create separate tabs for sub-disciplines (e.g., "Tab 1: Mechanics", "Tab 2: Thermodynamics"). Run the pipeline on each tab individually, then export them as separate XML files.</p>
+      </div>
+    </div>
+
+    <div class="tip-item">
+      <div class="tip-icon">⏳</div>
+      <div class="tip-content">
+        <strong>Respecting Rate Limits</strong>
+        <p>Free API tiers have limits (e.g., Gemini Free Tier allows ~15 requests/minute). The system has built-in pauses to prevent errors. If a process takes time, check the <strong>real-time log terminal</strong> in the loading overlay to confirm it is working.</p>
+      </div>
+    </div>
+
+    <div class="tip-item">
+      <div class="tip-icon">💾</div>
+      <div class="tip-content">
+        <strong>Data Checkpoints</strong>
+        <p>For large datasets (500+ terms), run the process in batches. The system saves data to the sheet row-by-row. If your internet connection drops, simply click the button again—it will verify existing entries and resume only for empty rows.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Developed for AMTA • Powered by Google Apps Script • 2025
+  </div>
+</div>
+
+</body>
+</html>
