@@ -87,7 +87,7 @@
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
         }
         
         .language-toggle button:hover {
@@ -128,6 +128,34 @@
             color: white;
             max-width: 800px;
             margin: 0 auto;
+        }
+
+        .app-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .app-logo:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20%;
         }
 
         .hero h1 {
@@ -576,9 +604,36 @@
         .footer a {
             color: var(--primary);
             text-decoration: none;
+            transition: var(--transition);
         }
         .footer a:hover {
+            color: var(--accent);
             text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -5px;
+            color: var(--text-muted);
+        }
+
+        body.arabic .footer-links a:not(:last-child)::after {
+            right: auto;
+            left: -5px;
         }
 
         /* ===== ANIMATIONS ===== */
@@ -613,6 +668,18 @@
             .hero {
                 padding: 60px 0;
             }
+            .app-logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 25px;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .footer-links a:not(:last-child)::after {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -624,6 +691,11 @@
             }
             .container {
                 padding: 0 16px;
+            }
+            .app-logo {
+                width: 80px;
+                height: 80px;
+                padding: 15px;
             }
         }
 
@@ -655,17 +727,18 @@
 </script>
 <body>
     <div class="language-toggle">
-        <button id="lang-en" class="active">
-            <i class="fas fa-globe-americas"></i> English
-        </button>
-        <button id="lang-ar">
-            <i class="fas fa-mosque"></i> العربية
-        </button>
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
     </div>
 
     <section class="hero">
         <div class="container">
             <div class="hero-content">
+                <!-- App Logo -->
+                <div class="app-logo">
+                    <img src="images/amta.png" alt="AMTA Lexicography Assistant Logo">
+                </div>
+                
                 <h1 class="lang-en">AMTA Lexicography Assistant</h1>
                 <h1 class="lang-ar">مساعد AMTA للمعجميات</h1>
                 
@@ -920,14 +993,16 @@
                     <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
                 </div>
                 
-                <div style="margin-top: 10px; font-size: 0.9em;">
+                <div class="footer-links">
                     <span class="lang-en">
-                        <a href="../../privacy.html">Privacy Policy</a> | 
+                        <a href="../../privacy.html">Privacy Policy</a>
                         <a href="../../terms.html">Terms of Service</a>
+                        <a href="https://waleedmandour.org/projects/AMTA/support.html">Support</a>
                     </span>
                     <span class="lang-ar">
-                        <a href="../../privacy.html">سياسة الخصوصية</a> | 
+                        <a href="../../privacy.html">سياسة الخصوصية</a>
                         <a href="../../terms.html">شروط الخدمة</a>
+                        <a href="https://waleedmandour.org/projects/AMTA/support.html">الدعم</a>
                     </span>
                 </div>
 
