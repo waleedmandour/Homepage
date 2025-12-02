@@ -1,1 +1,1 @@
-# AMTA-Lexicography
+# Lexicography - Discourse Analysis - Corpus Linguistics
