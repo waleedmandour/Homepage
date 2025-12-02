@@ -1,267 +1,1739 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
 <head>
-  <base target="_top">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #2563eb;
-      --secondary: #475569;
-      --success: #16a34a;
-      --warning: #d97706;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border: #e2e8f0;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      color: #334155;
-      background-color: var(--bg);
-      padding: 0;
-      margin: 0;
-    }
-    .container {
-      max-width: 850px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-    
-    /* Header */
-    header {
-      text-align: center;
-      margin-bottom: 50px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 30px;
-    }
-    h1 { color: #1e293b; font-weight: 800; font-size: 2rem; margin: 0 0 10px 0; letter-spacing: -0.5px; }
-    .subtitle { color: #64748b; font-size: 1.1rem; font-weight: 400; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup & Configuration | AMTA Lexicography Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary: #1a237e;       /* Academic Navy */
+            --primary-light: #3949ab;
+            --accent: #059669;        /* Success Teal */
+            --accent-light: #10b981;
+            --warning: #d97706;
+            --success: #16a34a;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    /* Typography */
-    h2 { color: #0f172a; margin-top: 40px; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-    h3 { color: var(--primary); font-size: 1.1rem; margin-top: 25px; font-weight: 600; }
-    p { margin-bottom: 15px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* API Grid */
-    .api-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-    .api-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .api-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--primary); }
-    .api-name { font-weight: 700; color: #1e293b; font-size: 1rem; }
-    .api-desc { font-size: 0.85rem; color: #64748b; margin: 8px 0 12px 0; }
-    .api-link { font-size: 0.8rem; color: var(--primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; }
-    
-    /* Workflow Steps */
-    .step {
-      background: var(--card-bg);
-      border-left: 4px solid var(--primary);
-      padding: 25px;
-      margin-bottom: 25px;
-      border-radius: 0 12px 12px 0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-    .step-badge {
-      background: #eff6ff;
-      color: var(--primary);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-    .step-title { font-weight: 700; font-size: 1.1rem; color: #1e293b; margin-left: 8px; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* Logic Visualization Box */
-    .logic-box {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #166534;
-      padding: 20px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      margin-top: 20px;
-    }
-    .logic-step { display: flex; gap: 10px; margin-bottom: 8px; }
-    .logic-icon { font-size: 1.2rem; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-    /* Pro Tips Section */
-    .tips-section {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-radius: 12px;
-      padding: 25px;
-      margin-top: 40px;
-    }
-    .tip-item {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .tip-item:last-child { margin-bottom: 0; }
-    .tip-icon { font-size: 1.5rem; color: var(--warning); }
-    .tip-content strong { display: block; color: #92400e; margin-bottom: 4px; }
-    .tip-content p { margin: 0; font-size: 0.95rem; color: #78350f; }
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
 
-    /* Footer */
-    .footer {
-      margin-top: 60px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #94a3b8;
-      border-top: 1px solid var(--border);
-      padding-top: 30px;
-    }
-  </style>
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== NAVIGATION TOGGLE ===== */
+        .nav-toggle {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: white;
+        }
+
+        .nav-icon {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .nav-text {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 4px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            gap: 4px;
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .language-toggle button:hover {
+            color: var(--primary);
+            background: rgba(26, 35, 126, 0.05);
+        }
+        
+        .language-toggle button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 120px 0 60px;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ===== APP LOGO WITH AWESOME VISUAL EFFECT ===== */
+        .app-logo-container {
+            position: relative;
+            width: 280px;
+            height: 160px;
+            margin: 0 auto 40px;
+            perspective: 1000px;
+        }
+
+        .app-logo {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.25) 0%, 
+                rgba(255, 255, 255, 0.15) 50%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 12px 30px rgba(0, 0, 0, 0.3),
+                inset 0 4px 20px rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite linear;
+        }
+
+        .app-logo:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg) scale(1.05);
+            border-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 6px 25px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.35) 0%, 
+                rgba(255, 255, 255, 0.25) 50%, 
+                rgba(255, 255, 255, 0.15) 100%);
+        }
+
+        .app-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: calc(var(--radius-lg) - 5px);
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: var(--transition);
+        }
+
+        .app-logo:hover img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(
+                circle at center,
+                rgba(26, 35, 126, 0.3) 0%,
+                rgba(26, 35, 126, 0.1) 40%,
+                transparent 70%
+            );
+            border-radius: calc(var(--radius-lg) + 10px);
+            z-index: 1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .app-logo:hover .logo-glow {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===== API KEYS SECTION ===== */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.arabic .section-header {
+            flex-direction: row-reverse;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            color: var(--text-muted);
+            font-size: 17px;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        body.arabic .section-description {
+            text-align: right;
+        }
+
+        /* ===== API CARDS GRID ===== */
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .api-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .api-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        body.arabic .api-card::before {
+            left: 0;
+            right: 0;
+        }
+
+        .api-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .api-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        body.arabic .api-card-header {
+            flex-direction: row-reverse;
+        }
+
+        .api-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .api-card-title {
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        body.arabic .api-card-title {
+            text-align: right;
+        }
+
+        .api-card-description {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        body.arabic .api-card-description {
+            text-align: right;
+        }
+
+        .api-card-required {
+            display: inline-block;
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        body.arabic .api-card-required {
+            text-align: right;
+        }
+
+        .api-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+
+        body.arabic .api-card-link {
+            flex-direction: row-reverse;
+        }
+
+        .api-card-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ===== WORKFLOW STEPS ===== */
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .workflow-step {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border-left: 5px solid var(--accent);
+        }
+
+        body.arabic .workflow-step {
+            border-left: none;
+            border-right: 5px solid var(--accent);
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        body.arabic .step-header {
+            flex-direction: row-reverse;
+        }
+
+        .step-badge {
+            background: var(--accent);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        body.arabic .step-badge {
+            letter-spacing: normal;
+        }
+
+        .step-title {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        body.arabic .step-title {
+            text-align: right;
+        }
+
+        .step-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        body.arabic .step-description {
+            text-align: right;
+        }
+
+        .step-visual {
+            display: flex;
+            gap: 30px;
+            margin-top: 25px;
+            align-items: flex-start;
+        }
+
+        body.arabic .step-visual {
+            flex-direction: row-reverse;
+        }
+
+        .step-image {
+            flex: 0 0 45%;
+            max-width: 45%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .step-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .step-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .step-notes {
+            flex: 1;
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: var(--radius-md);
+        }
+
+        body.arabic .step-notes {
+            text-align: right;
+        }
+
+        .step-notes h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .step-notes p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .step-notes ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        body.arabic .step-notes ul {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        .step-notes li {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: rgba(26, 35, 126, 0.05);
+            border: 1px solid rgba(26, 35, 126, 0.1);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--primary);
+            margin: 15px 0;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        body.arabic .code-block {
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* ===== LOGIC BOX ===== */
+        .logic-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            margin: 30px 0;
+        }
+
+        .logic-box-header {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.arabic .logic-box-header {
+            flex-direction: row-reverse;
+        }
+
+        .logic-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(26, 35, 126, 0.1);
+        }
+
+        body.arabic .logic-step {
+            flex-direction: row-reverse;
+        }
+
+        .logic-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .logic-icon {
+            color: var(--accent);
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .logic-content {
+            flex: 1;
+        }
+
+        body.arabic .logic-content {
+            text-align: right;
+        }
+
+        .logic-content strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .logic-content p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== TROUBLESHOOTING SECTION ===== */
+        .troubleshooting-section {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 1px solid #fde68a;
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            margin-top: 50px;
+        }
+
+        body.arabic .troubleshooting-section {
+            direction: rtl;
+        }
+
+        .troubleshooting-header {
+            color: #92400e;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        body.arabic .troubleshooting-header {
+            flex-direction: row-reverse;
+        }
+
+        .troubleshooting-header i {
+            font-size: 32px;
+        }
+
+        .troubleshooting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .issue-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius-md);
+            border: 1px solid #fbbf24;
+        }
+
+        .issue-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        body.arabic .issue-header {
+            flex-direction: row-reverse;
+        }
+
+        .issue-icon {
+            color: #d97706;
+            font-size: 24px;
+        }
+
+        .issue-title {
+            color: #92400e;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 1.3;
+        }
+
+        body.arabic .issue-title {
+            text-align: right;
+        }
+
+        .issue-description {
+            color: #78350f;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        body.arabic .issue-description {
+            text-align: right;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-muted);
+            font-size: 15px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        body.arabic .footer {
+            direction: rtl;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        body.arabic .footer-links {
+            flex-direction: row-reverse;
+        }
+
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* ===== LANGUAGE CONTENT ===== */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .step-visual {
+                flex-direction: column;
+            }
+            
+            body.arabic .step-visual {
+                flex-direction: column;
+            }
+            
+            .step-image {
+                flex: 1;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .app-logo-container {
+                width: 220px;
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .header {
+                padding: 100px 0 40px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .api-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-toggle, .language-toggle {
+                top: 16px;
+            }
+            
+            .nav-toggle {
+                left: 16px;
+            }
+            
+            .language-toggle {
+                right: 16px;
+            }
+            
+            .troubleshooting-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .header-subtitle {
+                font-size: 18px;
+            }
+            
+            .workflow-step {
+                padding: 25px;
+            }
+            
+            .nav-toggle, .language-toggle {
+                padding: 8px 16px;
+            }
+            
+            .nav-text {
+                font-size: 13px;
+            }
+            
+            .app-logo-container {
+                width: 180px;
+                height: 110px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Toggle -->
+    <a href="https://waleedmandour.org/projects/" class="nav-toggle">
+        <i class="fas fa-arrow-left nav-icon"></i>
+        <span class="nav-text lang-en">Back to Research Portfolio</span>
+        <span class="nav-text lang-ar">العودة إلى محفظة الأبحاث</span>
+    </a>
 
-<div class="container">
-  <header>
-    <h1>🧠 AMTA Lexicography Assistant</h1>
-    <div class="subtitle">A Computational Workflow for Specialized Dictionary Creation</div>
-  </header>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
 
-  <p>
-    This system democratizes access to advanced computational lexicography. Designed for institutions and researchers with limited resources, it orchestrates a suite of <strong>free and open-access APIs</strong> to automate the extraction, validation, and definition of domain-specific terminology.
-  </p>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Awesome App Logo with Visual Effects -->
+                <div class="app-logo-container">
+                    <div class="app-logo">
+                        <div class="logo-glow"></div>
+                        <img src="images/AMTA.png" alt="AMTA Lexicography Assistant Logo">
+                    </div>
+                </div>
+                
+                <h1 class="lang-en">Setup & Configuration Guide</h1>
+                <h1 class="lang-ar">دليل الإعداد والتكوين</h1>
+                
+                <div class="header-subtitle lang-en">
+                    Comprehensive setup and operational manual for the AMTA Lexicography Assistant
+                </div>
+                <div class="header-subtitle lang-ar">
+                    دليل شامل للإعداد والتشغيل لمساعد AMTA المعجمي
+                </div>
+            </div>
+        </div>
+    </header>
 
-  <!-- 1. PREREQUISITES -->
-  <h2>🔑 1. Service Configuration</h2>
-  <p>To operate the assistant, you must obtain free API keys from the following providers. These keys are stored locally in your script properties and remain private.</p>
+    <div class="container">
+        <!-- Introduction -->
+        <div class="section">
+            <p class="section-description lang-en">
+                This guide provides detailed instructions for configuring and operating the AMTA Lexicography Assistant. 
+                It explains the necessary API integrations, the Google Apps Script logic, and the user interface components 
+                required for the complete computational workflow for specialized dictionary creation.
+            </p>
+            <p class="section-description lang-ar">
+                يقدم هذا الدليل تعليمات مفصلة لتكوين وتشغيل مساعد AMTA المعجمي. 
+                يشرح تكاملات واجهة برمجة التطبيقات الضرورية، ومنطق Google Apps Script، ومكونات واجهة المستخدم 
+                المطلوبة لسير العمل الحسابي الكامل لإنشاء القواميس المتخصصة.
+            </p>
+        </div>
+
+        <!-- 1. Service Configuration -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2 class="section-title lang-en">Service Configuration & API Integration</h2>
+                <h2 class="section-title lang-ar">تكوين الخدمة وتكامل واجهة برمجة التطبيقات</h2>
+            </div>
+            
+            <p class="section-description lang-en">
+                The Assistant operates by orchestrating several external APIs. Before launching the app, obtain API keys/tokens 
+                from the providers below. These are <strong>essential</strong> for the pipeline to function.
+            </p>
+            <p class="section-description lang-ar">
+                يعمل المساعد من خلال تنسيق عدة واجهات برمجة تطبيقات خارجية. قبل تشغيل التطبيق، احصل على مفاتيح/رموز واجهة برمجة التطبيقات 
+                من المزودين أدناه. هذه <strong>ضرورية</strong> لعمل خط الأنابيب.
+            </p>
+
+            <div class="api-grid">
+                <!-- Google Gemini Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">Google Gemini</h3>
+                        <h3 class="api-card-title lang-ar">Google Gemini</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Core Large Language Model for Retrieval-Augmented Generation (RAG), definition creation, and translations. 
+                        <strong>Required for Phases 4 & 5 of the pipeline.</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        نموذج اللغة الكبيرة الأساسي للتوليد المعزز بالاسترجاع، وإنشاء التعريفات، والترجمات. 
+                        <strong>مطلوب للمرحلتين 4 و 5 من خط الأنابيب.</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Semantic Scholar Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">Semantic Scholar</h3>
+                        <h3 class="api-card-title lang-ar">Semantic Scholar</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Access to millions of academic papers for initial term discovery and metadata extraction. 
+                        <strong>Required for Phase 1 (Discovery).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        الوصول إلى ملايين الأوراق الأكاديمية للاكتشاف الأولي للمصطلحات واستخراج البيانات الوصفية. 
+                        <strong>مطلوب للمرحلة 1 (الاكتشاف).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://www.semanticscholar.org/product/api" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- SerpApi Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">SerpApi (Google Scholar)</h3>
+                        <h3 class="api-card-title lang-ar">SerpApi (Google Scholar)</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Enables structured search of Google Scholar for literature context and academic references. 
+                        <strong>Required for Phase 3 (Tier 2 Fallback).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        يتيح البحث المنظم في Google Scholar للسياق الأدبي والمراجع الأكاديمية. 
+                        <strong>مطلوب للمرحلة 3 (البديل من المستوى 2).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://serpapi.com/" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- CORE API Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">CORE API</h3>
+                        <h3 class="api-card-title lang-ar">CORE API</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Access to Open Access research papers for context enrichment and full-text retrieval. 
+                        <strong>Required for Phase 3 (Tier 1).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        الوصول إلى أوراق البحث مفتوحة الوصول لإثراء السياق واسترجاع النص الكامل. 
+                        <strong>مطلوب للمرحلة 3 (المستوى 1).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://core.ac.uk/services/api" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Hugging Face Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">Hugging Face</h3>
+                        <h3 class="api-card-title lang-ar">Hugging Face</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Powers linguistic tasks like Part-of-Speech (POS) tagging and basic Natural Language Processing operations. 
+                        <strong>Required for Phase 2 (Statistical Validation).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        يدعم المهام اللغوية مثل وسم أجزاء الكلام وعمليات معالجة اللغة الطبيعية الأساسية. 
+                        <strong>مطلوب للمرحلة 2 (التحقق الإحصائي).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://huggingface.co/settings/tokens" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get Access Token</span>
+                        <span class="lang-ar">احصل على رمز الوصول</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Frontend Interface -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h2 class="section-title lang-en">Frontend Interface (Google Sheets Sidebar)</h2>
+                <h2 class="section-title lang-ar">واجهة الواجهة الأمامية (الشريط الجانبي في Google Sheets)</h2>
+            </div>
+            
+            <p class="section-description lang-en">
+                The app's user interface is contained entirely within a custom Google Sheets sidebar, providing all controls 
+                and real-time status updates for the lexicography workflow.
+            </p>
+            <p class="section-description lang-ar">
+                واجهة مستخدم التطبيق موجودة بالكامل داخل شريط جانبي مخصص في Google Sheets، مما يوفر جميع عناصر التحكم 
+                وتحديثات الحالة في الوقت الفعلي لسير العمل المعجمي.
+            </p>
+
+            <div class="workflow-steps">
+                <!-- Configuration Tab -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Configuration</span>
+                        <span class="step-badge lang-ar">التكوين</span>
+                        <h3 class="step-title lang-en">API Key Management Tab</h3>
+                        <h3 class="step-title lang-ar">علامة تبويب إدارة مفاتيح API</h3>
+                    </div>
+                    
+                    <div class="step-visual">
+                        <div class="step-image">
+                            <img src="PLACEHOLDER_SS_SIDEBAR_SETTINGS.png" alt="Sidebar Settings Tab Screenshot">
+                        </div>
+                        <div class="step-notes">
+                            <h4 class="lang-en">Secure API Key Storage</h4>
+                            <h4 class="lang-ar">التخزين الآمن لمفاتيح API</h4>
+                            <p class="lang-en">Access the <strong>Settings Tab</strong> in the sidebar to enter your API keys. The Apps Script code uses:</p>
+                            <p class="lang-ar">اذهب إلى <strong>علامة تبويب الإعدادات</strong> في الشريط الجانبي لإدخال مفاتيح API. يستخدم كود Apps Script:</p>
+                            <div class="code-block">PropertiesService.getUserProperties().setProperty('API_KEY', keyValue);</div>
+                            <p class="lang-en">This method securely stores keys, making them accessible <strong>only by your script and your Google Account</strong>.</p>
+                            <p class="lang-ar">هذه الطريقة تخزن المفاتيح بشكل آمن، مما يجعلها قابلة للوصول <strong>فقط من خلال البرنامج النصي الخاص بك وحساب Google الخاص بك</strong>.</p>
+                            <p class="lang-en"><strong>Required Fields:</strong></p>
+                            <p class="lang-ar"><strong>الحقول المطلوبة:</strong></p>
+                            <ul>
+                                <li class="lang-en"><code>GEMINI_API_KEY</code></li>
+                                <li class="lang-ar"><code>GEMINI_API_KEY</code></li>
+                                <li class="lang-en"><code>SERP_API_KEY</code></li>
+                                <li class="lang-ar"><code>SERP_API_KEY</code></li>
+                                <li class="lang-en"><code>CORE_API_KEY</code></li>
+                                <li class="lang-ar"><code>CORE_API_KEY</code></li>
+                                <li class="lang-en"><code>HF_API_TOKEN</code></li>
+                                <li class="lang-ar"><code>HF_API_TOKEN</code></li>
+                            </ul>
+                            <p class="lang-en">Clicking <strong>"Save Configuration"</strong> encrypts and saves the keys. Failure to do this will result in a <code>401 Authentication Error</code> in the execution logs.</p>
+                            <p class="lang-ar">النقر على <strong>"حفظ التكوين"</strong> يقوم بتشفير وحفظ المفاتيح. الفشل في القيام بذلك سيؤدي إلى <code>خطأ المصادقة 401</code> في سجلات التنفيذ.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operation Tab -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Operation</span>
+                        <span class="step-badge lang-ar">التشغيل</span>
+                        <h3 class="step-title lang-en">Main Control & Pipeline Tab</h3>
+                        <h3 class="step-title lang-ar">علامة تبويب التحكم الرئيسي وخط الأنابيب</h3>
+                    </div>
+                    
+                    <div class="step-visual">
+                        <div class="step-image">
+                            <img src="PLACEHOLDER_SS_SIDEBAR_RUN.png" alt="Sidebar Run Pipeline Tab Screenshot">
+                        </div>
+                        <div class="step-notes">
+                            <h4 class="lang-en">Pipeline Control Interface</h4>
+                            <h4 class="lang-ar">واجهة تحكم خط الأنابيب</h4>
+                            <p class="lang-en">The main tab contains:</p>
+                            <p class="lang-ar">تحتوي علامة التبويب الرئيسية على:</p>
+                            <ul>
+                                <li class="lang-en"><strong>Run Full Pipeline</strong> button</li>
+                                <li class="lang-ar">زر <strong>تشغيل خط الأنابيب الكامل</strong></li>
+                                <li class="lang-en"><strong>Individual Phase</strong> buttons (e.g., "Run Phase 1: Discovery")</li>
+                                <li class="lang-ar">أزرار <strong>المراحل الفردية</strong> (مثل "تشغيل المرحلة 1: الاكتشاف")</li>
+                                <li class="lang-en"><strong>Real-time Log Terminal</strong></li>
+                                <li class="lang-ar"><strong>محطة السجل في الوقت الفعلي</strong></li>
+                                <li class="lang-en"><strong>Progress Indicator</strong></li>
+                                <li class="lang-ar"><strong>مؤشر التقدم</strong></li>
+                            </ul>
+                            <p class="lang-en"><strong>Primary Function:</strong> Buttons call corresponding functions via:</p>
+                            <p class="lang-ar"><strong>الوظيفة الأساسية:</strong> تستدعي الأزرار الوظائف المقابلة عبر:</p>
+                            <div class="code-block">google.script.run.withSuccessHandler(onSuccess)
+    .withFailureHandler(onFailure)
+    .runFullPipeline();</div>
+                            <p class="lang-en">The UI automatically locks during processing to prevent concurrent calls and ensure data integrity.</p>
+                            <p class="lang-ar">تغلق واجهة المستخدم تلقائيًا أثناء المعالجة لمنع المكالمات المتزامنة وضمان سلامة البيانات.</p>
+                            <p class="lang-en"><strong>Log Terminal:</strong> A dedicated <code>div</code> element displays real-time log messages from the backend, updated via:</p>
+                            <p class="lang-ar"><strong>محطة السجل:</strong> يعرض عنصر <code>div</code> مخصص رسائل السجل في الوقت الفعلي من الواجهة الخلفية، يتم تحديثها عبر:</p>
+                            <div class="code-block">SpreadsheetApp.getUi().showSidebar(html);</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Backend Logic -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h2 class="section-title lang-en">Backend Logic (Google Apps Script)</h2>
+                <h2 class="section-title lang-ar">منطق الواجهة الخلفية (Google Apps Script)</h2>
+            </div>
+            
+            <p class="section-description lang-en">
+                The <code>Code.gs</code> file houses the complete Apps Script logic that orchestrates the workflow between the UI, external APIs, and Google Sheets data.
+            </p>
+            <p class="section-description lang-ar">
+                يحتوي ملف <code>Code.gs</code> على منطق Apps Script الكامل الذي ينسق سير العمل بين واجهة المستخدم، وواجهات برمجة التطبيقات الخارجية، وبيانات Google Sheets.
+            </p>
+
+            <div class="logic-box">
+                <div class="logic-box-header">
+                    <i class="fas fa-microchip"></i>
+                    <span class="lang-en">Core Apps Script Functions</span>
+                    <span class="lang-ar">وظائف Apps Script الأساسية</span>
+                </div>
+                
+                <div class="logic-step">
+                    <div class="logic-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="logic-content">
+                        <strong class="lang-en">onOpen() Function</strong>
+                        <strong class="lang-ar">وظيفة onOpen()</strong>
+                        <p class="lang-en">Automatically creates the custom menu (Extensions → AMTA Lexicography Assistant) when the Google Sheet is opened. This function registers the sidebar and initializes the user interface.</p>
+                        <p class="lang-ar">ينشئ تلقائيًا القائمة المخصصة (الإضافات → مساعد AMTA المعجمي) عند فتح جدول Google. تقوم هذه الوظيفة بتسجيل الشريط الجانبي وتهيئة واجهة المستخدم.</p>
+                    </div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="logic-content">
+                        <strong class="lang-en">runFullPipeline() Function</strong>
+                        <strong class="lang-ar">وظيفة runFullPipeline()</strong>
+                        <p class="lang-en">The master orchestration function. Reads data from the <code>INPUT_TERMS</code> sheet and iteratively calls phase-specific functions for each row. Implements error handling and progress tracking.</p>
+                        <p class="lang-ar">وظيفة التنسيق الرئيسية. تقرأ البيانات من ورقة <code>INPUT_TERMS</code> وتستدعي وظائف محددة لكل مرحلة بشكل تكراري لكل صف. تنفذ معالجة الأخطاء وتتبع التقدم.</p>
+                    </div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logic-content">
+                        <strong class="lang-en">Tiered API Call System</strong>
+                        <strong class="lang-ar">نظام مكالمات API المتدرج</strong>
+                        <p class="lang-en">Functions use <code>UrlFetchApp.fetch()</code> with proper headers and authentication to make secure calls to external APIs. API keys are retrieved from <code>PropertiesService</code> with encryption.</p>
+                        <p class="lang-ar">تستخدم الوظائف <code>UrlFetchApp.fetch()</code> مع رؤوس ومصادقة مناسبة لإجراء مكالمات آمنة إلى واجهات برمجة التطبيقات الخارجية. يتم استرداد مفاتيح API من <code>PropertiesService</code> مع التشفير.</p>
+                    </div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="logic-content">
+                        <strong class="lang-en">Row-by-Row Resumption Logic</strong>
+                        <strong class="lang-ar">منطق الاستئناف صفًا بصفح</strong>
+                        <p class="lang-en">The script checks if an entry already exists in the <code>OUTPUT_DATA</code> sheet for each term. If data exists, it skips that row and moves to the next, enabling seamless restart after interruptions.</p>
+                        <p class="lang-ar">يتحقق البرنامج النصي مما إذا كان إدخال موجود بالفعل في ورقة <code>OUTPUT_DATA</code> لكل مصطلح. إذا كانت البيانات موجودة، فإنه يتخطى ذلك الصف وينتقل إلى التالي، مما يتيح إعادة التشغيل السلس بعد الانقطاعات.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Pipeline Workflow -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h2 class="section-title lang-en">Five-Phase Lexicography Pipeline</h2>
+                <h2 class="section-title lang-ar">خط أنابيب المعجميات بخمس مراحل</h2>
+            </div>
+            
+            <p class="section-description lang-en">
+                The system follows a linear 5-stage workflow. Data is processed row-by-row on the <code>INPUT_TERMS</code> sheet, 
+                with each phase adding specific value to the final dictionary entry.
+            </p>
+            <p class="section-description lang-ar">
+                يتبع النظام سير عمل خطيًا من 5 مراحل. تتم معالجة البيانات صفًا بصفح على ورقة <code>INPUT_TERMS</code>، 
+                مع إضافة كل مرحلة قيمة محددة لإدخال القاموس النهائي.
+            </p>
+
+            <div class="workflow-steps">
+                <!-- Phase 1 -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Phase 1</span>
+                        <span class="step-badge lang-ar">المرحلة 1</span>
+                        <h3 class="step-title lang-en">Discovery & Term Filtering</h3>
+                        <h3 class="step-title lang-ar">الاكتشاف وتصفية المصطلحات</h3>
+                    </div>
+                    <p class="step-description lang-en">
+                        Input a domain (e.g., "Quantum Computing") to retrieve and filter candidate terms from academic literature.
+                    </p>
+                    <p class="step-description lang-ar">
+                        أدخل مجالًا (مثل "الحوسبة الكمومية") لاسترداد وتصفية المصطلحات المرشحة من الأدب الأكاديمي.
+                    </p>
+                    <div class="step-image">
+                        <img src="PLACEHOLDER_SS_PHASE1_OUTPUT.png" alt="Screenshot of Phase 1 Output">
+                    </div>
+                    <div class="step-notes">
+                        <h4 class="lang-en">Technical Implementation</h4>
+                        <h4 class="lang-ar">التنفيذ التقني</h4>
+                        <ul>
+                            <li class="lang-en"><strong>Input:</strong> Domain term from active sheet cell</li>
+                            <li class="lang-ar"><strong>المدخلات:</strong> مصطلح المجال من خلية الورقة النشطة</li>
+                            <li class="lang-en"><strong>GS Logic:</strong> <code>runPhase1Discovery()</code> calls Semantic Scholar API to find relevant papers and extract common nouns/phrases using NLP techniques</li>
+                            <li class="lang-ar"><strong>منطق GS:</strong> يستدعي <code>runPhase1Discovery()</code> واجهة برمجة تطبيقات Semantic Scholar للعثور على أوراق ذات صلة واستخراج الأسماء/العبارات الشائعة باستخدام تقنيات معالجة اللغة الطبيعية</li>
+                            <li class="lang-en"><strong>Output:</strong> Populates <strong>Column A</strong> (Terms) and <strong>Column B</strong> (Subdomain) on the active sheet</li>
+                            <li class="lang-ar"><strong>المخرجات:</strong> يملأ <strong>العمود A</strong> (المصطلحات) و <strong>العمود B</strong> (المجال الفرعي) على الورقة النشطة</li>
+                            <li class="lang-en"><strong>API Calls:</strong> Semantic Scholar API with domain-specific queries</li>
+                            <li class="lang-ar"><strong>مكالمات API:</strong> واجهة برمجة تطبيقات Semantic Scholar مع استعلامات محددة المجال</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Phase 2</span>
+                        <span class="step-badge lang-ar">المرحلة 2</span>
+                        <h3 class="step-title lang-en">Statistical Validation & NLP Analysis</h3>
+                        <h3 class="step-title lang-ar">التحقق الإحصائي وتحليل معالجة اللغة الطبيعية</h3>
+                    </div>
+                    <p class="step-description lang-en">
+                        Validate candidates against corpus data and perform basic NLP analysis to ensure they are true academic terms.
+                    </p>
+                    <p class="step-description lang-ar">
+                        تحقق من المرشحين مقابل بيانات المدونة وقم بإجراء تحليل أساسي لمعالجة اللغة الطبيعية للتأكد من أنها مصطلحات أكاديمية حقيقية.
+                    </p>
+                    <div class="step-notes">
+                        <h4 class="lang-en">Validation Process</h4>
+                        <h4 class="lang-ar">عملية التحقق</h4>
+                        <ul>
+                            <li class="lang-en"><strong>GS Logic:</strong> Term is sent to Hugging Face for Part-of-Speech (POS) tagging to confirm it's a valid nominal phrase</li>
+                            <li class="lang-ar"><strong>منطق GS:</strong> يتم إرسال المصطلح إلى Hugging Face لوسم أجزاء الكلام للتأكد من أنه عبارة اسمية صحيحة</li>
+                            <li class="lang-en"><strong>Statistical Analysis:</strong> Local logic calculates statistical relevance vs. BAWE Corpus data stored internally as a JSON asset</li>
+                            <li class="lang-ar"><strong>التحليل الإحصائي:</strong> يحسب المنطق المحلي الأهمية الإحصائية مقابل بيانات مدونة BAWE المخزنة داخليًا كأصل JSON</li>
+                            <li class="lang-en"><strong>Keyness Scoring:</strong> Computes term significance using statistical measures</li>
+                            <li class="lang-ar"><strong>تسجيل الأهمية:</strong> يحسب أهمية المصطلح باستخدام المقاييس الإحصائية</li>
+                            <li class="lang-en"><strong>Output:</strong> Populates <strong>Column C</strong> (Keyness Score) & <strong>Column D</strong> (Reference Frequency)</li>
+                            <li class="lang-ar"><strong>المخرجات:</strong> يملأ <strong>العمود C</strong> (درجة الأهمية) و <strong>العمود D</strong> (التكرار المرجعي)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Phase 3</span>
+                        <span class="step-badge lang-ar">المرحلة 3</span>
+                        <h3 class="step-title lang-en">Context Enrichment & Source Retrieval</h3>
+                        <h3 class="step-title lang-ar">إثراء السياق واسترداد المصادر</h3>
+                    </div>
+                    <p class="step-description lang-en">
+                        The system attempts to fetch direct, high-quality content links for Retrieval-Augmented Generation.
+                    </p>
+                    <p class="step-description lang-ar">
+                        يحاول النظام جلب روابط محتوى مباشرة وعالية الجودة للتوليد المعزز بالاسترجاع.
+                    </p>
+                    <div class="step-notes">
+                        <h4 class="lang-en">Tiered Retrieval System</h4>
+                        <h4 class="lang-ar">نظام الاسترداد المتدرج</h4>
+                        <ul>
+                            <li class="lang-en"><strong>Tier 1 Logic:</strong> <code>runPhase3Enrichment()</code> calls CORE API to fetch full-text URLs for the highest-cited papers</li>
+                            <li class="lang-ar"><strong>منطق المستوى 1:</strong> يستدعي <code>runPhase3Enrichment()</code> واجهة برمجة تطبيقات CORE لجلب عناوين URL للنص الكامل للأوراق الأكثر استشهادًا</li>
+                            <li class="lang-en"><strong>Tier 2 Fallback:</strong> If CORE fails (paywall/access issues), calls SerpApi (Google Scholar) for abstracts/snippets</li>
+                            <li class="lang-ar"><strong>البديل من المستوى 2:</strong> إذا فشلت CORE (مشكلات الدفع/الوصول)، تستدعي SerpApi (Google Scholar) للملخصات/المقتطفات</li>
+                            <li class="lang-en"><strong>Quality Assessment:</strong> Ranks sources by citation count and relevance</li>
+                            <li class="lang-ar"><strong>تقييم الجودة:</strong> يرتب المصادر حسب عدد الاقتباسات والأهمية</li>
+                            <li class="lang-en"><strong>Output:</strong> Populates <strong>Column E</strong> (Best Source URL) & <strong>Column F</strong> (Citation Count)</li>
+                            <li class="lang-ar"><strong>المخرجات:</strong> يملأ <strong>العمود E</strong> (أفضل عنوان URL للمصدر) و <strong>العمود F</strong> (عدد الاقتباسات)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Phase 4</span>
+                        <span class="step-badge lang-ar">المرحلة 4</span>
+                        <h3 class="step-title lang-en">Content Generation via RAG</h3>
+                        <h3 class="step-title lang-ar">توليد المحتوى عبر التوليد المعزز بالاسترجاع</h3>
+                    </div>
+                    <p class="step-description lang-en">
+                        The core generation engine. Creates Definitions, Translations, and authentic Examples using context from Phase 3.
+                    </p>
+                    <p class="step-description lang-ar">
+                        محرك التوليد الأساسي. ينشئ التعريفات والترجمات والأمثلة الأصيلة باستخدام السياق من المرحلة 3.
+                    </p>
+                    
+                    <div class="logic-box">
+                        <div class="logic-box-header">
+                            <i class="fas fa-brain"></i>
+                            <span class="lang-en">Gemini RAG Implementation</span>
+                            <span class="lang-ar">تنفيذ Gemini للتوليد المعزز بالاسترجاع</span>
+                        </div>
+                        
+                        <div class="logic-step">
+                            <div class="logic-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="logic-content">
+                                <strong class="lang-en">RAG Input Construction</strong>
+                                <strong class="lang-ar">بناء مدخلات التوليد المعزز بالاسترجاع</strong>
+                                <p class="lang-en">The term is combined with the full text (Tier 1) or abstract snippet (Tier 2) to form a structured prompt: <em>"Based only on this text, write a technical definition for [TERM]..."</em></p>
+                                <p class="lang-ar">يتم دمج المصطلح مع النص الكامل (المستوى 1) أو مقتطف الملخص (المستوى 2) لتشكيل مطالبة منظمة: <em>"بناءً على هذا النص فقط، اكتب تعريفًا تقنيًا لـ [المصطلح]..."</em></p>
+                            </div>
+                        </div>
+
+                        <div class="logic-step">
+                            <div class="logic-icon">
+                                <i class="fas fa-pen-alt"></i>
+                            </div>
+                            <div class="logic-content">
+                                <strong class="lang-en">Multi-Output Generation</strong>
+                                <strong class="lang-ar">توليد مخرجات متعددة</strong>
+                                <p class="lang-en">Gemini returns three structured outputs: Technical Definition, Professional Translation, and Contextual Example, all grounded in the provided academic source.</p>
+                                <p class="lang-ar">يعيد Gemini ثلاثة مخرجات منظمة: التعريف التقني، والترجمة الاحترافية، والمثال السياقي، وكلها تستند إلى المصدر الأكاديمي المقدم.</p>
+                            </div>
+                        </div>
+
+                        <div class="logic-step">
+                            <div class="logic-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            <div class="logic-content">
+                                <strong class="lang-en">Data Integration</strong>
+                                <strong class="lang-ar">تكامل البيانات</strong>
+                                <p class="lang-en">The script parses the Gemini response and writes the three generated outputs to <strong>Columns G, H, I</strong> respectively.</p>
+                                <p class="lang-ar">يحلل البرنامج النصي استجابة Gemini ويكتب المخرجات الثلاثة التي تم إنشاؤها إلى <strong>الأعمدة G، H، I</strong> على التوالي.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5 -->
+                <div class="workflow-step">
+                    <div class="step-header">
+                        <span class="step-badge lang-en">Phase 5</span>
+                        <span class="step-badge lang-ar">المرحلة 5</span>
+                        <h3 class="step-title lang-en">Finalization & Export Preparation</h3>
+                        <h3 class="step-title lang-ar">الإنهاء وإعداد التصدير</h3>
+                    </div>
+                    <p class="step-description lang-en">
+                        Prepare the fully processed sheet data for Lexonomy integration and archival storage.
+                    </p>
+                    <p class="step-description lang-ar">
+                        جهز بيانات الورقة المعالجة بالكامل لدمج Lexonomy والتخزين الأرشيفي.
+                    </p>
+                    <div class="step-notes">
+                        <h4 class="lang-en">Export Pipeline</h4>
+                        <h4 class="lang-ar">خط أنابيب التصدير</h4>
+                        <ul>
+                            <li class="lang-en"><strong>Collocation Analysis:</strong> Local Apps Script function identifies and extracts high-frequency collocations from source material</li>
+                            <li class="lang-ar"><strong>تحليل المتلازمات:</strong> تتعرف وظيفة Apps Script المحلية على المتلازمات عالية التردد وتستخرجها من المادة المصدر</li>
+                            <li class="lang-en"><strong>XML Generation:</strong> Creates Lexonomy-compliant XML structure using the complete row data</li>
+                            <li class="lang-ar"><strong>توليد XML:</strong> ينشئ بنية XML متوافقة مع Lexonomy باستخدام بيانات الصف الكاملة</li>
+                            <li class="lang-en"><strong>Drive Integration:</strong> Uses <code>DriveApp</code> service to save the final XML file to user-selected location</li>
+                            <li class="lang-ar"><strong>تكامل Drive:</strong> يستخدم خدمة <code>DriveApp</code> لحفظ ملف XML النهائي في الموقع المحدد من قبل المستخدم</li>
+                            <li class="lang-en"><strong>Quality Check:</strong> Validates output structure and completeness before final export</li>
+                            <li class="lang-ar"><strong>فحص الجودة:</strong> يتحقق من هيكل المخرجات واكتمالها قبل التصدير النهائي</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   <!-- 5. FREQUENTLY ASKED QUESTIONS (FAQ) -->
+  <h2>❓ 5. Frequently Asked Questions (FAQ)</h2>
   
-  <div class="api-grid">
-    <div class="api-card">
-      <div class="api-name">🤖 Google Gemini</div>
-      <div class="api-desc">The core intelligence engine for definitions, translations, and semantic analysis.</div>
-      <a href="https://aistudio.google.com/app/apikey" target="_blank" class="api-link">Get API Key &rarr;</a>
-    </div>
-    
-    <div class="api-card">
-      <div class="api-name">🎓 Semantic Scholar</div>
-      <div class="api-desc">Provides access to millions of academic papers for term extraction.</div>
-      <a href="https://www.semanticscholar.org/product/api" target="_blank" class="api-link">Get API Key &rarr;</a>
-    </div>
-
-    <div class="api-card">
-      <div class="api-name">📚 SerpApi (Scholar)</div>
-      <div class="api-desc">Enables scraping of Google Scholar for top-cited literature.</div>
-      <a href="https://serpapi.com/" target="_blank" class="api-link">Get API Key &rarr;</a>
-    </div>
-    
-    <div class="api-card">
-      <div class="api-name">🔓 CORE API</div>
-      <div class="api-desc">Access to Open Access research papers for definition context.</div>
-      <a href="https://core.ac.uk/services/api" target="_blank" class="api-link">Get API Key &rarr;</a>
-    </div>
-
-    <div class="api-card">
-      <div class="api-name">🤗 Hugging Face</div>
-      <div class="api-desc">Powers linguistic tasks like Part-of-Speech (POS) tagging.</div>
-      <a href="https://huggingface.co/settings/tokens" target="_blank" class="api-link">Get Token &rarr;</a>
-    </div>
-  </div>
-
-  <!-- 2. THE PIPELINE -->
-  <h2>🚀 2. The Lexicography Pipeline</h2>
-  <p>The system follows a linear 5-stage workflow. You can run the <strong>Full Pipeline</strong> automatically or execute each step manually via the sidebar.</p>
-
-  <div class="step">
-    <span class="step-badge">Phase 1</span> <span class="step-title">Discovery (Term Extraction)</span>
-    <p>Input a domain (e.g., "Quantum Computing") to retrieve candidate terms.</p>
-    <ul>
-      <li><strong>Method:</strong> Queries academic databases for high-relevance papers.</li>
-      <li><strong>Filtering:</strong> Automatically removes stop words and generic vocabulary.</li>
-      <li><strong>Output:</strong> Populates <strong>Column A</strong> (Terms) and <strong>Column B</strong> (Subdomain).</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <span class="step-badge">Phase 2</span> <span class="step-title">Statistical Validation</span>
-    <p>Validate candidates against the <strong>British Academic Written English (BAWE)</strong> corpus.</p>
-    <ul>
-      <li><strong>Keyness Score:</strong> Calculates statistical relevance to the specific domain.</li>
-      <li><strong>Reference Frequency:</strong> Checks how often the term appears in general academic English.</li>
-      <li><strong>Output:</strong> Populates <strong>Columns C & D</strong>. Use these to filter weak candidates.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <span class="step-badge">Phase 3</span> <span class="step-title">Context Enrichment</span>
-    <p>The system fetches metadata for the most cited paper associated with each term.</p>
-    <ul>
-      <li>Retrieves Title, URL, Citation Count, and Year.</li>
-      <li><strong>Output:</strong> Populates <strong>Columns E, F, G, H</strong>. This context is crucial for the next phase.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <span class="step-badge">Phase 4</span> <span class="step-title">Content Generation (RAG)</span>
-    <p>This is the core engine. It generates a technical Definition, a Translation (Term + Definition), and an authentic Example.</p>
-    
-    <div class="logic-box">
-      <div style="font-weight:700; margin-bottom:10px;">🧠 How the "Tiered Fallback" Logic Works:</div>
-      <div class="logic-step"><span class="logic-icon">📄</span> <strong>Tier 1: Paper Extraction.</strong> Attempts to read the full text of the specific paper found in Phase 3.</div>
-      <div class="logic-step"><span class="logic-icon">🌐</span> <strong>Tier 2: Web Context.</strong> If the paper is paywalled, searches Google Scholar via SerpApi for abstract snippets.</div>
-      <div class="logic-step"><span class="logic-icon">🤖</span> <strong>Tier 3: Expert AI.</strong> If context is unavailable, relies on Gemini's internal parametric knowledge.</div>
-    </div>
-  </div>
-
-  <div class="step">
-    <span class="step-badge">Phase 5</span> <span class="step-title">Finalization & Export</span>
-    <p>Prepare the data for publication.</p>
-    <ul>
-      <li><strong>Collocations:</strong> Identifies word pairs (e.g., "Genetic Algorithm").</li>
-      <li><strong>XML Generation:</strong> Serializes data into Lexonomy-compatible XML.</li>
-      <li><strong>Export:</strong> Download the dataset as JSON, CSV, or XML to Google Drive.</li>
-    </ul>
-  </div>
-
-  <!-- 3. PRO TIPS -->
-  <div class="tips-section">
-    <h3 style="margin-top:0; color:#92400e;">💡 Pro Tips for Scalability</h3>
-    
-    <div class="tip-item">
-      <div class="tip-icon">📑</div>
-      <div class="tip-content">
-        <strong>Use Multiple Tabs for Subdomains</strong>
-        <p>The Assistant always acts on the <em>currently active sheet</em>. To build a comprehensive dictionary, create separate tabs for sub-disciplines (e.g., "Tab 1: Mechanics", "Tab 2: Thermodynamics"). Run the pipeline on each tab individually, then export them as separate XML files.</p>
+  <div class="faq-section">
+      <div class="faq-item">
+          <div class="faq-question">Q: Why do I need to enter my own API keys?</div>
+          <div class="faq-answer">
+              <p>A: The AMTA Assistant is an orchestration tool, not a service provider. We require you to use your own keys for two primary reasons: **Cost Control** (you manage your usage and billing) and **Data Privacy** (your keys are stored only by you and the requests are made directly from your Google account, not routed through a third-party server).</p>
+          </div>
       </div>
-    </div>
 
-    <div class="tip-item">
-      <div class="tip-icon">⏳</div>
-      <div class="tip-content">
-        <strong>Respecting Rate Limits</strong>
-        <p>Free API tiers have limits (e.g., Gemini Free Tier allows ~15 requests/minute). The system has built-in pauses to prevent errors. If a process takes time, check the <strong>real-time log terminal</strong> in the loading overlay to confirm it is working.</p>
+      <div class="faq-item">
+          <div class="faq-question">Q: Is my data sent to the developer's server?</div>
+          <div class="faq-answer">
+              <p>A: **Absolutely not.** Your data (the terms, the output, and your API keys) are never transmitted to the developer's server. Your keys are stored in <code>PropertiesService.getUserProperties()</code>, and all API calls are made directly from your Apps Script instance to the third-party providers (Gemini, SerpApi, etc.).</p>
+          </div>
       </div>
-    </div>
 
-    <div class="tip-item">
-      <div class="tip-icon">💾</div>
-      <div class="tip-content">
-        <strong>Data Checkpoints</strong>
-        <p>For large datasets (500+ terms), run the process in batches. The system saves data to the sheet row-by-row. If your internet connection drops, simply click the button again—it will verify existing entries and resume only for empty rows.</p>
+      <div class="faq-item">
+          <div class="faq-question">Q: Why is the process so slow, even for one term?</div>
+          <div class="faq-answer">
+              <p>A: The pipeline executes five distinct phases, which involve sequential communication with five different external APIs and two internal statistical calculations. The entire process is designed for **accuracy over speed**. The system includes necessary pauses (<code>Utilities.sleep()</code>) to prevent hitting external API rate limits, which can often be as low as 1 request per second.</p>
+          </div>
       </div>
-    </div>
+
+      <div class="faq-item">
+          <div class="faq-question">Q: What if I only want to run Phase 4 (Content Generation)?</div>
+          <div class="faq-answer">
+              <p>A: You can! Use the individual Phase buttons in the sidebar. However, for Phase 4 to work, the data in **Columns E, F, G, H** (Context Enrichment) must already be populated, as the RAG process relies on having source material to achieve high quality and academic validity.</p>
+          </div>
+      </div>
+
+      <div class="faq-item">
+          <div class="faq-question">Q: Why are there different export options (XML/JSON)?</div>
+          <div class="faq-answer">
+              <p>A: The final export is tailored to different use cases. **XML** is generated in a structure compliant with Lexonomy for professional dictionary writing. **JSON/CSV** are provided for general data analysis, data visualization, or integration into other computational tools.</p>
+          </div>
+      </div>
   </div>
 
-  <div class="footer">
-    Developed for AMTA • Powered by Google Apps Script • 2025
-  </div>
-</div>
 
+        <!-- 5. Troubleshooting -->
+        <div class="troubleshooting-section">
+            <h3 class="troubleshooting-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="lang-en">Troubleshooting & Common Issues</span>
+                <span class="lang-ar">استكشاف الأخطاء وإصلاحها والمشكلات الشائعة</span>
+            </h3>
+            
+            <div class="troubleshooting-grid">
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h4 class="issue-title lang-en">"Exception: Access Denied" / "Authorization Required"</h4>
+                        <h4 class="issue-title lang-ar">"استثناء: تم الرفض" / "مطلوب تفويض"</h4>
+                    </div>
+                    <p class="issue-description lang-en">
+                        This indicates your Apps Script OAuth token has expired or permissions were not fully granted. 
+                        <strong>Solution:</strong> Uninstall the Add-on from the Google Workspace Marketplace, close the sheet completely, 
+                        reopen it, and reinstall the Add-on, ensuring you click 'Allow' for all requested scopes.
+                    </p>
+                    <p class="issue-description lang-ar">
+                        يشير هذا إلى أن رمز OAuth الخاص بـ Apps Script قد انتهت صلاحيته أو لم يتم منح الأذونات بالكامل. 
+                        <strong>الحل:</strong> قم بإلغاء تثبيت الإضافة من سوق Google Workspace، وأغلق الورقة تمامًا، 
+                        وأعد فتحها، وأعد تثبيت الإضافة، مع التأكد من النقر على "السماح" لجميع النطاقات المطلوبة.
+                    </p>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h4 class="issue-title lang-en">"401 Unauthorized" / "Invalid API Key"</h4>
+                        <h4 class="issue-title lang-ar">"401 غير مصرح" / "مفتاح API غير صالح"</h4>
+                    </div>
+                    <p class="issue-description lang-en">
+                        The API key is incorrect, expired, or improperly stored in the system. 
+                        <strong>Solution:</strong> Re-open the Settings tab in the sidebar and carefully re-enter the key(s). 
+                        Click 'Save Configuration' again. Verify the key is active and has sufficient quota in the provider's dashboard.
+                    </p>
+                    <p class="issue-description lang-ar">
+                        مفتاح API غير صحيح، أو منتهي الصلاحية، أو مخزن بشكل غير صحيح في النظام. 
+                        <strong>الحل:</strong> أعد فتح علامة تبويب الإعدادات في الشريط الجانبي وأعد إدخال المفتاح (المفاتيح) بعناية. 
+                        انقر فوق "حفظ التكوين" مرة أخرى. تحقق من أن المفتاح نشط وبه حصة كافية في لوحة تحكم المزود.
+                    </p>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4 class="issue-title lang-en">Timeout / Rate Limit Exceeded (429 Error)</h4>
+                        <h4 class="issue-title lang-ar">"المهلة / تجاوز حد المعدل (خطأ 429)"</h4>
+                    </div>
+                    <p class="issue-description lang-en">
+                        The external API has stopped responding due to too many requests or quota limits. 
+                        <strong>Solution:</strong> This is common with free API tiers. The App Script <code>runFullPipeline()</code> 
+                        has built-in pauses, but if this happens, simply wait 10-15 minutes, then click "Run Full Pipeline" again. 
+                        The row-by-row logic will resume automatically from the last processed term.
+                    </p>
+                    <p class="issue-description lang-ar">
+                        توقفت واجهة برمجة التطبيقات الخارجية عن الرد بسبب كثرة الطلبات أو حدود الحصة. 
+                        <strong>الحل:</strong> هذا شائع مع مستويات API المجانية. يحتوي <code>runFullPipeline()</code> على فترات توقف مضمنة، 
+                        ولكن إذا حدث هذا، انتظر ببساطة 10-15 دقيقة، ثم انقر فوق "تشغيل خط الأنابيب الكامل" مرة أخرى. 
+                        سيكمل المنطق صفًا بصفح تلقائيًا من المصطلح الأخير الذي تم معالجته.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <strong class="lang-en">AMTA Lexicography Assistant</strong>
+                    <strong class="lang-ar">مساعد AMTA المعجمي</strong>
+                    <span class="lang-en"> • Setup & Configuration Guide</span>
+                    <span class="lang-ar"> • دليل الإعداد والتكوين</span>
+                </div>
+                <div style="margin-top: 5px;">
+                    <span class="lang-en">Developed by Waleed Mandour 2025</span>
+                    <span class="lang-ar"> تم تطوير بواسطة وليد مندور 2025</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://waleedmandour.org/projects/" class="footer-link">
+                        <span class="lang-en">Research Work</span>
+                        <span class="lang-ar">الأعمال البحثية</span>
+                    </a>
+                    <a href="https://waleedmandour.org/projects/AMTA/support.html" class="footer-link">
+                        <span class="lang-en">Technical Support</span>
+                        <span class="lang-ar">الدعم الفني</span>
+                    </a>
+                    <a href="../../privacy.html" class="footer-link">
+                        <span class="lang-en">Privacy Policy</span>
+                        <span class="lang-ar">سياسة الخصوصية</span>
+                    </a>
+                    <a href="../../terms.html" class="footer-link">
+                        <span class="lang-en">Terms of Service</span>
+                        <span class="lang-ar">شروط الخدمة</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add subtle animation to workflow steps on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe workflow steps and API cards
+            document.querySelectorAll('.workflow-step, .api-card, .issue-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Logo animation on hover
+            const logo = document.querySelector('.app-logo');
+            if (logo) {
+                logo.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) rotateX(5deg) rotateY(5deg) scale(1.05)';
+                });
+                
+                logo.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
