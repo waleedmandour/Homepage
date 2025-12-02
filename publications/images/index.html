@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* Main Content Styles */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        
+        /* Publications Intro */
+        .publications-intro {
+            background-color: var(--light);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            box-shadow: var(--shadow);
+        }
+        
+        .publications-intro p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        body.arabic .publications-intro p {
+            text-align: right;
+        }
+        
+        /* Research Metrics Styles */
+        .research-metrics {
+            background: linear-gradient(135deg, var(--light) 0%, #e8f4f8 100%);
+            padding: 50px 40px;
+            border-radius: 16px;
+            margin-bottom: 60px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(32, 178, 170, 0.1);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .metric-card {
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+        
+        .metric-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .metric-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        
+        .metric-label {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .metric-source {
+            font-size: 0.9em;
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        .metrics-note {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .metrics-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .metrics-link:hover {
+            color: var(--primary);
+            border-bottom: 1px solid var(--primary);
+        }
+        
+        .update-info {
+            background: rgba(32, 178, 170, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        body.arabic .update-info {
+            border-left: none;
+            border-right: 4px solid var(--secondary);
+        }
+        
+        .update-info p {
+            margin: 0;
+            font-size: 0.95em;
+            color: var(--dark);
+        }
+        
+        /* Publication Categories */
+        .publication-category {
+            margin-bottom: 60px;
+        }
+        
+        .category-title {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        /* Publication Items */
+        .publication-item {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .publication-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .publication-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .publication-meta {
+            font-size: 0.95em;
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .publication-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .publication-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            border: 1px solid var(--secondary);
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: var(--transition);
+            font-size: 0.9em;
+        }
+        
+        .publication-link:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        .publication-code {
+            color: var(--gray);
+            font-size: 0.85em;
+            display: inline-block;
+            padding: 6px 10px;
+            background-color: var(--light);
+            border-radius: 4px;
+        }
+        
+        /* Quick Navigation */
+        .quick-nav {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .quick-nav h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .quick-nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .quick-nav-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            background-color: var(--white);
+            border-radius: 6px;
+            transition: var(--transition);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .quick-nav-link:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+        }
+        
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text {
+                text-align: center;
+            }
+            
+            body.arabic .header-text {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.1em;
+            }
+            
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .page-title {
+                font-size: 2em;
+            }
+            
+            .category-title {
+                font-size: 1.7em;
+            }
+            
+            .publications-intro, .publication-item, .research-metrics {
+                padding: 25px;
+            }
+            
+            .quick-nav-links {
+                flex-direction: column;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .metric-card {
+                padding: 25px 15px;
+            }
+            
+            .metric-value {
+                font-size: 1.8em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .publication-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">Lexicography & Natural Language Processing Researcher</p>
+                <p class="tagline lang-ar">باحث في المعجميات ومعالجة اللغات الطبيعية</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html" class="lang-en">Home</a><a href="index.html" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="research.html" class="lang-en">Research</a><a href="research.html" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="publications.html" class="active lang-en">Publications</a><a href="publications.html" class="active lang-ar">المنشورات</a></li>
+                    <li><a href="projects.html" class="lang-en">Projects</a><a href="projects.html" class="lang-ar">المشاريع</a></li>
+                    <li><a href="news.html" class="lang-en">News</a><a href="news.html" class="lang-ar">الأخبار</a></li>
+                    <li><a href="contact.html" class="lang-en">Contact</a><a href="contact.html" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area for Publications Page -->
+    <main class="container">
+        <h2 class="page-title lang-en">Publications</h2>
+        <h2 class="page-title lang-ar">المنشورات</h2>
+
+        <!-- Quick Navigation -->
+        <div class="quick-nav">
+            <h3 class="lang-en">Quick Navigation</h3>
+            <h3 class="lang-ar">التنقل السريع</h3>
+            <div class="quick-nav-links">
+                <a href="#research-metrics" class="quick-nav-link lang-en">Research Metrics</a>
+                <a href="#research-metrics" class="quick-nav-link lang-ar">مقاييس البحث</a>
+                <a href="#journal-articles" class="quick-nav-link lang-en">Journal Articles</a>
+                <a href="#journal-articles" class="quick-nav-link lang-ar">المقالات</a>
+                <a href="#conference-papers" class="quick-nav-link lang-en">Conference Papers</a>
+                <a href="#conference-papers" class="quick-nav-link lang-ar">أوراق المؤتمرات</a>
+                <a href="#book-chapters" class="quick-nav-link lang-en">Book Chapters</a>
+                <a href="#book-chapters" class="quick-nav-link lang-ar">فصول الكتب</a>
+                <a href="#research-tools" class="quick-nav-link lang-en">Research Tools</a>
+                <a href="#research-tools" class="quick-nav-link lang-ar">أدوات البحث</a>
+                <a href="#dissertations-theses" class="quick-nav-link lang-en">Dissertations</a>
+                <a href="#dissertations-theses" class="quick-nav-link lang-ar">الأطروحات</a>
+            </div>
+        </div>
+
+        <!-- Publications Introduction -->
+        <section class="publications-intro">
+            <p class="lang-en">
+                My research output encompasses a diverse range of scholarly works, including journal articles, conference papers, book chapters, and research tools. This page provides a comprehensive overview of my contributions to the fields of corpus linguistics, lexicography, natural language processing, and language education.
+            </p>
+            <p class="lang-ar">
+                يشمل إنتاجي البحثي مجموعة متنوعة من الأعمال العلمية، بما في ذلك المقالات الصحفية وأوراق المؤتمرات وفصول الكتب وأدوات البحث. تقدم هذه الصفحة نظرة شاملة عن مساهماتي في مجالات لسانيات المدونات النصية والمعجميات ومعالجة اللغات الطبيعية وتعليم اللغة.
+            </p>
+            <p class="lang-en">
+                For direct access to the full text or detailed information, please use the provided links (DOIs, OSF, publisher pages).
+            </p>
+            <p class="lang-ar">
+                للوصول المباشر إلى النص الكامل أو المعلومات التفصيلية، يرجى استخدام الروابط المقدمة (DOIs, OSF, صفحات الناشر).
+            </p>
+        </section>
+
+        <!-- Research Impact Metrics -->
+        <section id="research-metrics" class="research-metrics">
+            <h3 class="category-title lang-en">Research Impact Metrics</h3>
+            <h3 class="category-title lang-ar">مقاييس تأثير البحث</h3>
+            
+            <div class="metrics-grid">
+                <!-- Citation Metrics -->
+                <div class="metric-card">
+                    <div class="metric-icon">📚</div>
+                    <div class="metric-value">8</div>
+                    <div class="metric-label lang-en">Total Citations</div>
+                    <div class="metric-label lang-ar">إجمالي الاقتباسات</div>
+                    <div class="metric-source lang-en">Google Scholar</div>
+                    <div class="metric-source lang-ar">Google Scholar</div>
+                </div>
+                
+                <!-- h-index -->
+                <div class="metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-value">2</div>
+                    <div class="metric-label lang-en">h-index</div>
+                    <div class="metric-label lang-ar">h-index</div>
+                    <div class="metric-source lang-en">Google Scholar</div>
+                    <div class="metric-source lang-ar">Google Scholar</div>
+                </div>
+                
+                <!-- i10-index -->
+                <div class="metric-card">
+                    <div class="metric-icon">🔢</div>
+                    <div class="metric-value">0</div>
+                    <div class="metric-label lang-en">i10-index</div>
+                    <div class="metric-label lang-ar">i10-index</div>
+                    <div class="metric-source lang-en">Google Scholar</div>
+                    <div class="metric-source lang-ar">Google Scholar</div>
+                </div>
+                
+                <!-- Publications -->
+                <div class="metric-card">
+                    <div class="metric-icon">📄</div>
+                    <div class="metric-value">9</div>
+                    <div class="metric-label lang-en">Publications</div>
+                    <div class="metric-label lang-ar">المنشورات</div>
+                    <div class="metric-source lang-en">Peer-Reviewed</div>
+                    <div class="metric-source lang-ar">مراجعة الأقران</div>
+                </div>
+                
+                <!-- Research Tools -->
+                <div class="metric-card">
+                    <div class="metric-icon">🛠️</div>
+                    <div class="metric-value">4</div>
+                    <div class="metric-label lang-en">Research Tools</div>
+                    <div class="metric-label lang-ar">أدوات البحث</div>
+                    <div class="metric-source lang-en">Open Source</div>
+                    <div class="metric-source lang-ar">مفتوحة المصدر</div>
+                </div>
+                
+                <!-- Conference Presentations -->
+                <div class="metric-card">
+                    <div class="metric-icon">🎤</div>
+                    <div class="metric-value">16</div>
+                    <div class="metric-label lang-en">Conference Talks</div>
+                    <div class="metric-label lang-ar">عروض المؤتمرات</div>
+                    <div class="metric-source lang-en">International</div>
+                    <div class="metric-source lang-ar">دولية</div>
+                </div>
+            </div>
+            
+            <div class="metrics-note">
+                <p class="lang-en">
+                    <strong>Last updated:</strong> November 28, 2025 | 
+                    <a href="https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en" target="_blank" class="metrics-link">
+                        View Live Profile &rarr;
+                    </a>
+                </p>
+                <p class="lang-ar">
+                    <strong>آخر تحديث:</strong> 28 نوفمبر 2025 | 
+                    <a href="https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en" target="_blank" class="metrics-link">
+                        &larr; عرض الملف الحي
+                    </a>
+                </p>
+            </div>
+
+            <div class="update-info">
+                <p class="lang-en">
+                    <strong>Note:</strong> Metrics are manually updated. Last verification was conducted on November 28, 2025 via Google Scholar.
+                </p>
+                <p class="lang-ar">
+                    <strong>ملاحظة:</strong> يتم تحديث المقاييس يدوياً. تم آخر التحقق في 28 نوفمبر 2025 عبر Google Scholar.
+                </p>
+            </div>
+        </section>
+
+        <!-- Journal Articles -->
+        <section id="journal-articles" class="publication-category">
+            <h3 class="category-title lang-en">Journal Articles</h3>
+            <h3 class="category-title lang-ar">المقالات العلمية</h3>
+            <div class="publication-list">
+
+                <div class="publication-item">
+                    <p class="publication-title" id="amta-pipeline">Mandour, W. (2025). Parallel Timeline Evolution of Corpus Studies and Artificial Intelligence. <em>OSF</em>.</p>
+                    <p class="publication-meta">2025-03-16 | journal-article</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.17605/OSF.IO/Y5WMC" target="_blank" class="publication-link">View on OSF</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title" id="ai-bilingual">Mandour, W. (2024). AI and Bilingual Dictionary Compilation: Advancing Arabic - English Lexicography. <em>ARTMAN</em>.</p>
+                    <p class="publication-meta">2024-08-01 | journal-article</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.21608/artman.2024.303446.2690" target="_blank" class="publication-link">DOI</a>
+                        <span class="publication-code">ISSN: 2974-3451</span>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title" id="oralit-literacy">Mandour, W. (2022). Orality vs. Literacy in Two of Arthur Miller's Plays: A Corpus-Based Study. <em>هرمس</em>.</p>
+                    <p class="publication-meta">2022-07-01 | journal-article</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.21608/herms.2022.248186" target="_blank" class="publication-link">DOI</a>
+                        <span class="publication-code">ISSN: 2090-8555</span>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title" id="medical-abstracts">Mandour, W. (2022). Academic Collocations in Egyptian Medical Abstracts: A Corpus Based Study. <em>DAAD Journal</em>.</p>
+                    <p class="publication-meta">2022-04-30 | journal-article</p>
+                    <div class="publication-links">
+                        <span class="publication-code">ISSN: 2718-0468</span>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2020). The Use of an Open Access Corpus Web Tool in a DDL Writing Model. <em>CDELT</em>.</p>
+                    <p class="publication-meta">2020-04-01 | journal-article</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.21608/opde.2020.137203" target="_blank" class="publication-link">DOI</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Conference Papers -->
+        <section id="conference-papers" class="publication-category">
+            <h3 class="category-title lang-en">Conference Papers</h3>
+            <h3 class="category-title lang-ar">أوراق المؤتمرات</h3>
+            <div class="publication-list">
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2024). Empowering bilingual lexicography with AI: The role of AI-model Triangulation Approach (AMTA) in dictionary design. <em>AsiaLex2024</em>.</p>
+                    <p class="publication-meta">2024-09-13 | conference-paper</p>
+                    <div class="publication-links">
+                        <span class="publication-code">ISBN: 978-4-9901771-2-6</span>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2020). Words of Peace in the Speeches of the Egyptian President, Abdulfattah El-Sisi: A Corpus-Based Study. <em>ICHSS 2020: International Conference on Human and Social Sciences</em>.</p>
+                    <p class="publication-meta">2020-01 | conference-paper</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.5281/zenodo.3607882" target="_blank" class="publication-link">DOI</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Book Chapters -->
+        <section id="book-chapters" class="publication-category">
+            <h3 class="category-title lang-en">Book Chapters</h3>
+            <h3 class="category-title lang-ar">فصول الكتب</h3>
+            <div class="publication-list">
+
+                <div class="publication-item">
+                    <p class="publication-title" id="ai-tools-sentiment">Mandour, W. (2025). AI-powered tools for linguistic and sentiment analysis in language learning: Applications using google sheets and large language models. In <em>Multimedia and Sensory Input for Augmented, Mixed, and Virtual Reality</em>.</p>
+                    <p class="publication-meta">2025 | book-chapter</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.4018/979-8-3693-9511-0.CH003" target="_blank" class="publication-link">DOI</a>
+                        <span class="publication-code">ISBN: 9798369395110</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Research Tools / Patents -->
+        <section id="research-tools" class="publication-category">
+            <h3 class="category-title lang-en">Research Tools & Patents</h3>
+            <h3 class="category-title lang-ar">أدوات البحث وبراءات الاختراع</h3>
+            <div class="publication-list">
+
+                <div class="publication-item">
+                    <p class="publication-title" id="text-analysis-script">Mandour, W. (2025). Textual Analysis Script for English Language Learners & Researchers. <em>OSF</em>.</p>
+                    <p class="publication-meta">2025-01 | research-tool</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.17605/OSF.IO/GNME6" target="_blank" class="publication-link">DOI</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2024). Sentiment Analysis Script for English Language Learners. <em>Open Scientific Framework</em>.</p>
+                    <p class="publication-meta">2024-01 | research-tool</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.17605/OSF.IO/FZQX2" target="_blank" class="publication-link">DOI</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2020). Willy & Quentin in Arthur Miller. <em>Open Science Framework</em>.</p>
+                    <p class="publication-meta">2020-02-18 | patent</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.17605/OSF.IO/WVCZD" target="_blank" class="publication-link">DOI</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2019). Egyptian Medical Corpora. <em>Open Science Framework</em>.</p>
+                    <p class="publication-meta">2019-10-31 | patent</p>
+                    <div class="publication-links">
+                        <a href="https://doi.org/10.17605/OSF.IO/WXZKD" target="_blank" class="publication-link">DOI</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Dissertations / Theses -->
+        <section id="dissertations-theses" class="publication-category">
+            <h3 class="category-title lang-en">Dissertations / Theses</h3>
+            <h3 class="category-title lang-ar">الأطروحات والرسائل</h3>
+            <div class="publication-list">
+
+                <div class="publication-item">
+                    <p class="publication-title">Mandour, W. (2020). A Corpus-Based Study of Collocations in the Medical Discourse of Egyptian and Native English-Speaking Researchers. <em>Egyptian Universities Libraries</em>.</p>
+                    <p class="publication-meta">2020-01-01 | dissertation-thesis</p>
+                    <div class="publication-links">
+                        <span class="publication-code">BIBCODE: 12628311</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer style="background-color: #0A1C3C; color: white; text-align: center; padding: 25px 0; margin-top: 50px;">
+        <div class="container">
+            <p style="font-size: 0.9em;" class="lang-en">&copy; 2024 Dr. Waleed Mandour. All rights reserved.</p>
+            <p style="font-size: 0.9em;" class="lang-ar">&copy; 2024 الدكتور وليد مندور. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
