@@ -166,132 +166,113 @@
             margin: 0 auto;
         }
 
-        /* ===== APP LOGO WITH AWESOME VISUAL EFFECT ===== */
+        /* ===== ENHANCED APP LOGO SECTION ===== */
         .app-logo-container {
             position: relative;
-            width: 280px;
-            height: 160px;
+            width: 220px;
+            height: 220px;
             margin: 0 auto 40px;
-            perspective: 1000px;
-        }
-
-        .app-logo {
-            width: 100%;
-            height: 100%;
-            border-radius: var(--radius-lg);
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.25) 0%, 
-                rgba(255, 255, 255, 0.15) 50%, 
-                rgba(255, 255, 255, 0.05) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 25px;
-            border: 3px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 
-                0 12px 30px rgba(0, 0, 0, 0.3),
-                inset 0 4px 20px rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .app-logo-frame {
+            width: 100%;
+            height: 100%;
             position: relative;
-            overflow: hidden;
-        }
-
-        .app-logo::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.1) 50%,
-                transparent 70%
-            );
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite linear;
-        }
-
-        .app-logo:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg) scale(1.05);
-            border-color: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.4),
-                inset 0 6px 25px rgba(255, 255, 255, 0.2);
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.35) 0%, 
-                rgba(255, 255, 255, 0.25) 50%, 
-                rgba(255, 255, 255, 0.15) 100%);
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+                0 0 30px rgba(59, 130, 246, 0.3);
+            padding: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .app-logo img {
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 0 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .app-logo-img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: calc(var(--radius-lg) - 5px);
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-            transition: var(--transition);
+            border-radius: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            transition: filter 0.3s ease;
         }
 
-        .app-logo:hover img {
-            transform: scale(1.05);
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        .app-logo-frame:hover .app-logo-img {
+            filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
         }
 
-        .logo-glow {
+        /* Decorative elements around logo */
+        .app-logo-container::before {
+            content: '';
             position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: radial-gradient(
-                circle at center,
-                rgba(26, 35, 126, 0.3) 0%,
-                rgba(26, 35, 126, 0.1) 40%,
-                transparent 70%
-            );
-            border-radius: calc(var(--radius-lg) + 10px);
+            width: 200px;
+            height: 200px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .app-logo-container::after {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            animation: rotate 25s linear infinite reverse;
+            z-index: -2;
+        }
+
+        /* Add a subtle shine effect */
+        .app-logo-frame::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 60%);
+            background-size: 300% 300%;
+            animation: shine 8s ease-in-out infinite;
+            pointer-events: none;
             z-index: 1;
-            opacity: 0;
-            transition: var(--transition);
         }
 
-        .app-logo:hover .logo-glow {
-            opacity: 1;
-            animation: pulse 2s infinite;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+        @keyframes shine {
+            0% { background-position: -100% -100%; }
+            100% { background-position: 200% 200%; }
         }
 
-        .header h1 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .header-subtitle {
-            font-size: 20px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 700px;
-            margin: 0 auto 30px;
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-        }
 
         /* ===== API KEYS SECTION ===== */
         .section {
@@ -944,6 +925,8 @@
         <button id="lang-ar">العربية</button>
     </div>
 
+    
+
     <!-- Header Section -->
     <header class="header">
         <div class="container">
@@ -968,6 +951,30 @@
             </div>
         </div>
     </header>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+    
+<body>
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Enhanced App Logo -->
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <img src="images/AMTA.png" alt="AMTA Lexicography Assistant Logo" class="app-logo-img">
+                    </div>
+                </div>
 
     <div class="container">
         <!-- Introduction -->
@@ -1000,7 +1007,7 @@
             </p>
             <p class="section-description lang-ar">
                 يعمل المساعد من خلال تنسيق عدة واجهات برمجة تطبيقات خارجية. قبل تشغيل التطبيق، احصل على مفاتيح/رموز واجهة برمجة التطبيقات 
-                من المزودين أدناه. هذه <strong>ضرورية</strong> لعمل خط الأنابيب.
+                من المزودين أدناه. هذه <strong>ضرورية</strong> لعمل خط العمل.
             </p>
 
             <div class="api-grid">
@@ -1019,7 +1026,7 @@
                     </p>
                     <p class="api-card-description lang-ar">
                         نموذج اللغة الكبيرة الأساسي للتوليد المعزز بالاسترجاع، وإنشاء التعريفات، والترجمات. 
-                        <strong>مطلوب للمرحلتين 4 و 5 من خط الأنابيب.</strong>
+                        <strong>مطلوب للمرحلتين 4 و 5 من خط العمل.</strong>
                     </p>
                     <span class="api-card-required lang-en">Required</span>
                     <span class="api-card-required lang-ar">مطلوب</span>
@@ -1195,329 +1202,6 @@
                     </div>
                 </div>
 
-                <!-- Operation Tab -->
-                <div class="workflow-step">
-                    <div class="step-header">
-                        <span class="step-badge lang-en">Operation</span>
-                        <span class="step-badge lang-ar">التشغيل</span>
-                        <h3 class="step-title lang-en">Main Control & Pipeline Tab</h3>
-                        <h3 class="step-title lang-ar">علامة تبويب التحكم الرئيسي وخط الأنابيب</h3>
-                    </div>
-                    
-                    <div class="step-visual">
-                        <div class="step-image">
-                            <img src="PLACEHOLDER_SS_SIDEBAR_RUN.png" alt="Sidebar Run Pipeline Tab Screenshot">
-                        </div>
-                        <div class="step-notes">
-                            <h4 class="lang-en">Pipeline Control Interface</h4>
-                            <h4 class="lang-ar">واجهة تحكم خط الأنابيب</h4>
-                            <p class="lang-en">The main tab contains:</p>
-                            <p class="lang-ar">تحتوي علامة التبويب الرئيسية على:</p>
-                            <ul>
-                                <li class="lang-en"><strong>Run Full Pipeline</strong> button</li>
-                                <li class="lang-ar">زر <strong>تشغيل خط الأنابيب الكامل</strong></li>
-                                <li class="lang-en"><strong>Individual Phase</strong> buttons (e.g., "Run Phase 1: Discovery")</li>
-                                <li class="lang-ar">أزرار <strong>المراحل الفردية</strong> (مثل "تشغيل المرحلة 1: الاكتشاف")</li>
-                                <li class="lang-en"><strong>Real-time Log Terminal</strong></li>
-                                <li class="lang-ar"><strong>محطة السجل في الوقت الفعلي</strong></li>
-                                <li class="lang-en"><strong>Progress Indicator</strong></li>
-                                <li class="lang-ar"><strong>مؤشر التقدم</strong></li>
-                            </ul>
-                            <p class="lang-en"><strong>Primary Function:</strong> Buttons call corresponding functions via:</p>
-                            <p class="lang-ar"><strong>الوظيفة الأساسية:</strong> تستدعي الأزرار الوظائف المقابلة عبر:</p>
-                            <div class="code-block">google.script.run.withSuccessHandler(onSuccess)
-    .withFailureHandler(onFailure)
-    .runFullPipeline();</div>
-                            <p class="lang-en">The UI automatically locks during processing to prevent concurrent calls and ensure data integrity.</p>
-                            <p class="lang-ar">تغلق واجهة المستخدم تلقائيًا أثناء المعالجة لمنع المكالمات المتزامنة وضمان سلامة البيانات.</p>
-                            <p class="lang-en"><strong>Log Terminal:</strong> A dedicated <code>div</code> element displays real-time log messages from the backend, updated via:</p>
-                            <p class="lang-ar"><strong>محطة السجل:</strong> يعرض عنصر <code>div</code> مخصص رسائل السجل في الوقت الفعلي من الواجهة الخلفية، يتم تحديثها عبر:</p>
-                            <div class="code-block">SpreadsheetApp.getUi().showSidebar(html);</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Backend Logic -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <h2 class="section-title lang-en">Backend Logic (Google Apps Script)</h2>
-                <h2 class="section-title lang-ar">منطق الواجهة الخلفية (Google Apps Script)</h2>
-            </div>
-            
-            <p class="section-description lang-en">
-                The <code>Code.gs</code> file houses the complete Apps Script logic that orchestrates the workflow between the UI, external APIs, and Google Sheets data.
-            </p>
-            <p class="section-description lang-ar">
-                يحتوي ملف <code>Code.gs</code> على منطق Apps Script الكامل الذي ينسق سير العمل بين واجهة المستخدم، وواجهات برمجة التطبيقات الخارجية، وبيانات Google Sheets.
-            </p>
-
-            <div class="logic-box">
-                <div class="logic-box-header">
-                    <i class="fas fa-microchip"></i>
-                    <span class="lang-en">Core Apps Script Functions</span>
-                    <span class="lang-ar">وظائف Apps Script الأساسية</span>
-                </div>
-                
-                <div class="logic-step">
-                    <div class="logic-icon">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <div class="logic-content">
-                        <strong class="lang-en">onOpen() Function</strong>
-                        <strong class="lang-ar">وظيفة onOpen()</strong>
-                        <p class="lang-en">Automatically creates the custom menu (Extensions → AMTA Lexicography Assistant) when the Google Sheet is opened. This function registers the sidebar and initializes the user interface.</p>
-                        <p class="lang-ar">ينشئ تلقائيًا القائمة المخصصة (الإضافات → مساعد AMTA المعجمي) عند فتح جدول Google. تقوم هذه الوظيفة بتسجيل الشريط الجانبي وتهيئة واجهة المستخدم.</p>
-                    </div>
-                </div>
-
-                <div class="logic-step">
-                    <div class="logic-icon">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <div class="logic-content">
-                        <strong class="lang-en">runFullPipeline() Function</strong>
-                        <strong class="lang-ar">وظيفة runFullPipeline()</strong>
-                        <p class="lang-en">The master orchestration function. Reads data from the <code>INPUT_TERMS</code> sheet and iteratively calls phase-specific functions for each row. Implements error handling and progress tracking.</p>
-                        <p class="lang-ar">وظيفة التنسيق الرئيسية. تقرأ البيانات من ورقة <code>INPUT_TERMS</code> وتستدعي وظائف محددة لكل مرحلة بشكل تكراري لكل صف. تنفذ معالجة الأخطاء وتتبع التقدم.</p>
-                    </div>
-                </div>
-
-                <div class="logic-step">
-                    <div class="logic-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="logic-content">
-                        <strong class="lang-en">Tiered API Call System</strong>
-                        <strong class="lang-ar">نظام مكالمات API المتدرج</strong>
-                        <p class="lang-en">Functions use <code>UrlFetchApp.fetch()</code> with proper headers and authentication to make secure calls to external APIs. API keys are retrieved from <code>PropertiesService</code> with encryption.</p>
-                        <p class="lang-ar">تستخدم الوظائف <code>UrlFetchApp.fetch()</code> مع رؤوس ومصادقة مناسبة لإجراء مكالمات آمنة إلى واجهات برمجة التطبيقات الخارجية. يتم استرداد مفاتيح API من <code>PropertiesService</code> مع التشفير.</p>
-                    </div>
-                </div>
-
-                <div class="logic-step">
-                    <div class="logic-icon">
-                        <i class="fas fa-redo"></i>
-                    </div>
-                    <div class="logic-content">
-                        <strong class="lang-en">Row-by-Row Resumption Logic</strong>
-                        <strong class="lang-ar">منطق الاستئناف صفًا بصفح</strong>
-                        <p class="lang-en">The script checks if an entry already exists in the <code>OUTPUT_DATA</code> sheet for each term. If data exists, it skips that row and moves to the next, enabling seamless restart after interruptions.</p>
-                        <p class="lang-ar">يتحقق البرنامج النصي مما إذا كان إدخال موجود بالفعل في ورقة <code>OUTPUT_DATA</code> لكل مصطلح. إذا كانت البيانات موجودة، فإنه يتخطى ذلك الصف وينتقل إلى التالي، مما يتيح إعادة التشغيل السلس بعد الانقطاعات.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Pipeline Workflow -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-project-diagram"></i>
-                </div>
-                <h2 class="section-title lang-en">Five-Phase Lexicography Pipeline</h2>
-                <h2 class="section-title lang-ar">خط أنابيب المعجميات بخمس مراحل</h2>
-            </div>
-            
-            <p class="section-description lang-en">
-                The system follows a linear 5-stage workflow. Data is processed row-by-row on the <code>INPUT_TERMS</code> sheet, 
-                with each phase adding specific value to the final dictionary entry.
-            </p>
-            <p class="section-description lang-ar">
-                يتبع النظام سير عمل خطيًا من 5 مراحل. تتم معالجة البيانات صفًا بصفح على ورقة <code>INPUT_TERMS</code>، 
-                مع إضافة كل مرحلة قيمة محددة لإدخال القاموس النهائي.
-            </p>
-
-            <div class="workflow-steps">
-                <!-- Phase 1 -->
-                <div class="workflow-step">
-                    <div class="step-header">
-                        <span class="step-badge lang-en">Phase 1</span>
-                        <span class="step-badge lang-ar">المرحلة 1</span>
-                        <h3 class="step-title lang-en">Discovery & Term Filtering</h3>
-                        <h3 class="step-title lang-ar">الاكتشاف وتصفية المصطلحات</h3>
-                    </div>
-                    <p class="step-description lang-en">
-                        Input a domain (e.g., "Quantum Computing") to retrieve and filter candidate terms from academic literature.
-                    </p>
-                    <p class="step-description lang-ar">
-                        أدخل مجالًا (مثل "الحوسبة الكمومية") لاسترداد وتصفية المصطلحات المرشحة من الأدب الأكاديمي.
-                    </p>
-                    <div class="step-image">
-                        <img src="PLACEHOLDER_SS_PHASE1_OUTPUT.png" alt="Screenshot of Phase 1 Output">
-                    </div>
-                    <div class="step-notes">
-                        <h4 class="lang-en">Technical Implementation</h4>
-                        <h4 class="lang-ar">التنفيذ التقني</h4>
-                        <ul>
-                            <li class="lang-en"><strong>Input:</strong> Domain term from active sheet cell</li>
-                            <li class="lang-ar"><strong>المدخلات:</strong> مصطلح المجال من خلية الورقة النشطة</li>
-                            <li class="lang-en"><strong>GS Logic:</strong> <code>runPhase1Discovery()</code> calls Semantic Scholar API to find relevant papers and extract common nouns/phrases using NLP techniques</li>
-                            <li class="lang-ar"><strong>منطق GS:</strong> يستدعي <code>runPhase1Discovery()</code> واجهة برمجة تطبيقات Semantic Scholar للعثور على أوراق ذات صلة واستخراج الأسماء/العبارات الشائعة باستخدام تقنيات معالجة اللغة الطبيعية</li>
-                            <li class="lang-en"><strong>Output:</strong> Populates <strong>Column A</strong> (Terms) and <strong>Column B</strong> (Subdomain) on the active sheet</li>
-                            <li class="lang-ar"><strong>المخرجات:</strong> يملأ <strong>العمود A</strong> (المصطلحات) و <strong>العمود B</strong> (المجال الفرعي) على الورقة النشطة</li>
-                            <li class="lang-en"><strong>API Calls:</strong> Semantic Scholar API with domain-specific queries</li>
-                            <li class="lang-ar"><strong>مكالمات API:</strong> واجهة برمجة تطبيقات Semantic Scholar مع استعلامات محددة المجال</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 2 -->
-                <div class="workflow-step">
-                    <div class="step-header">
-                        <span class="step-badge lang-en">Phase 2</span>
-                        <span class="step-badge lang-ar">المرحلة 2</span>
-                        <h3 class="step-title lang-en">Statistical Validation & NLP Analysis</h3>
-                        <h3 class="step-title lang-ar">التحقق الإحصائي وتحليل معالجة اللغة الطبيعية</h3>
-                    </div>
-                    <p class="step-description lang-en">
-                        Validate candidates against corpus data and perform basic NLP analysis to ensure they are true academic terms.
-                    </p>
-                    <p class="step-description lang-ar">
-                        تحقق من المرشحين مقابل بيانات المدونة وقم بإجراء تحليل أساسي لمعالجة اللغة الطبيعية للتأكد من أنها مصطلحات أكاديمية حقيقية.
-                    </p>
-                    <div class="step-notes">
-                        <h4 class="lang-en">Validation Process</h4>
-                        <h4 class="lang-ar">عملية التحقق</h4>
-                        <ul>
-                            <li class="lang-en"><strong>GS Logic:</strong> Term is sent to Hugging Face for Part-of-Speech (POS) tagging to confirm it's a valid nominal phrase</li>
-                            <li class="lang-ar"><strong>منطق GS:</strong> يتم إرسال المصطلح إلى Hugging Face لوسم أجزاء الكلام للتأكد من أنه عبارة اسمية صحيحة</li>
-                            <li class="lang-en"><strong>Statistical Analysis:</strong> Local logic calculates statistical relevance vs. BAWE Corpus data stored internally as a JSON asset</li>
-                            <li class="lang-ar"><strong>التحليل الإحصائي:</strong> يحسب المنطق المحلي الأهمية الإحصائية مقابل بيانات مدونة BAWE المخزنة داخليًا كأصل JSON</li>
-                            <li class="lang-en"><strong>Keyness Scoring:</strong> Computes term significance using statistical measures</li>
-                            <li class="lang-ar"><strong>تسجيل الأهمية:</strong> يحسب أهمية المصطلح باستخدام المقاييس الإحصائية</li>
-                            <li class="lang-en"><strong>Output:</strong> Populates <strong>Column C</strong> (Keyness Score) & <strong>Column D</strong> (Reference Frequency)</li>
-                            <li class="lang-ar"><strong>المخرجات:</strong> يملأ <strong>العمود C</strong> (درجة الأهمية) و <strong>العمود D</strong> (التكرار المرجعي)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 3 -->
-                <div class="workflow-step">
-                    <div class="step-header">
-                        <span class="step-badge lang-en">Phase 3</span>
-                        <span class="step-badge lang-ar">المرحلة 3</span>
-                        <h3 class="step-title lang-en">Context Enrichment & Source Retrieval</h3>
-                        <h3 class="step-title lang-ar">إثراء السياق واسترداد المصادر</h3>
-                    </div>
-                    <p class="step-description lang-en">
-                        The system attempts to fetch direct, high-quality content links for Retrieval-Augmented Generation.
-                    </p>
-                    <p class="step-description lang-ar">
-                        يحاول النظام جلب روابط محتوى مباشرة وعالية الجودة للتوليد المعزز بالاسترجاع.
-                    </p>
-                    <div class="step-notes">
-                        <h4 class="lang-en">Tiered Retrieval System</h4>
-                        <h4 class="lang-ar">نظام الاسترداد المتدرج</h4>
-                        <ul>
-                            <li class="lang-en"><strong>Tier 1 Logic:</strong> <code>runPhase3Enrichment()</code> calls CORE API to fetch full-text URLs for the highest-cited papers</li>
-                            <li class="lang-ar"><strong>منطق المستوى 1:</strong> يستدعي <code>runPhase3Enrichment()</code> واجهة برمجة تطبيقات CORE لجلب عناوين URL للنص الكامل للأوراق الأكثر استشهادًا</li>
-                            <li class="lang-en"><strong>Tier 2 Fallback:</strong> If CORE fails (paywall/access issues), calls SerpApi (Google Scholar) for abstracts/snippets</li>
-                            <li class="lang-ar"><strong>البديل من المستوى 2:</strong> إذا فشلت CORE (مشكلات الدفع/الوصول)، تستدعي SerpApi (Google Scholar) للملخصات/المقتطفات</li>
-                            <li class="lang-en"><strong>Quality Assessment:</strong> Ranks sources by citation count and relevance</li>
-                            <li class="lang-ar"><strong>تقييم الجودة:</strong> يرتب المصادر حسب عدد الاقتباسات والأهمية</li>
-                            <li class="lang-en"><strong>Output:</strong> Populates <strong>Column E</strong> (Best Source URL) & <strong>Column F</strong> (Citation Count)</li>
-                            <li class="lang-ar"><strong>المخرجات:</strong> يملأ <strong>العمود E</strong> (أفضل عنوان URL للمصدر) و <strong>العمود F</strong> (عدد الاقتباسات)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 4 -->
-                <div class="workflow-step">
-                    <div class="step-header">
-                        <span class="step-badge lang-en">Phase 4</span>
-                        <span class="step-badge lang-ar">المرحلة 4</span>
-                        <h3 class="step-title lang-en">Content Generation via RAG</h3>
-                        <h3 class="step-title lang-ar">توليد المحتوى عبر التوليد المعزز بالاسترجاع</h3>
-                    </div>
-                    <p class="step-description lang-en">
-                        The core generation engine. Creates Definitions, Translations, and authentic Examples using context from Phase 3.
-                    </p>
-                    <p class="step-description lang-ar">
-                        محرك التوليد الأساسي. ينشئ التعريفات والترجمات والأمثلة الأصيلة باستخدام السياق من المرحلة 3.
-                    </p>
-                    
-                    <div class="logic-box">
-                        <div class="logic-box-header">
-                            <i class="fas fa-brain"></i>
-                            <span class="lang-en">Gemini RAG Implementation</span>
-                            <span class="lang-ar">تنفيذ Gemini للتوليد المعزز بالاسترجاع</span>
-                        </div>
-                        
-                        <div class="logic-step">
-                            <div class="logic-icon">
-                                <i class="fas fa-link"></i>
-                            </div>
-                            <div class="logic-content">
-                                <strong class="lang-en">RAG Input Construction</strong>
-                                <strong class="lang-ar">بناء مدخلات التوليد المعزز بالاسترجاع</strong>
-                                <p class="lang-en">The term is combined with the full text (Tier 1) or abstract snippet (Tier 2) to form a structured prompt: <em>"Based only on this text, write a technical definition for [TERM]..."</em></p>
-                                <p class="lang-ar">يتم دمج المصطلح مع النص الكامل (المستوى 1) أو مقتطف الملخص (المستوى 2) لتشكيل مطالبة منظمة: <em>"بناءً على هذا النص فقط، اكتب تعريفًا تقنيًا لـ [المصطلح]..."</em></p>
-                            </div>
-                        </div>
-
-                        <div class="logic-step">
-                            <div class="logic-icon">
-                                <i class="fas fa-pen-alt"></i>
-                            </div>
-                            <div class="logic-content">
-                                <strong class="lang-en">Multi-Output Generation</strong>
-                                <strong class="lang-ar">توليد مخرجات متعددة</strong>
-                                <p class="lang-en">Gemini returns three structured outputs: Technical Definition, Professional Translation, and Contextual Example, all grounded in the provided academic source.</p>
-                                <p class="lang-ar">يعيد Gemini ثلاثة مخرجات منظمة: التعريف التقني، والترجمة الاحترافية، والمثال السياقي، وكلها تستند إلى المصدر الأكاديمي المقدم.</p>
-                            </div>
-                        </div>
-
-                        <div class="logic-step">
-                            <div class="logic-icon">
-                                <i class="fas fa-table"></i>
-                            </div>
-                            <div class="logic-content">
-                                <strong class="lang-en">Data Integration</strong>
-                                <strong class="lang-ar">تكامل البيانات</strong>
-                                <p class="lang-en">The script parses the Gemini response and writes the three generated outputs to <strong>Columns G, H, I</strong> respectively.</p>
-                                <p class="lang-ar">يحلل البرنامج النصي استجابة Gemini ويكتب المخرجات الثلاثة التي تم إنشاؤها إلى <strong>الأعمدة G، H، I</strong> على التوالي.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phase 5 -->
-                <div class="workflow-step">
-                    <div class="step-header">
-                        <span class="step-badge lang-en">Phase 5</span>
-                        <span class="step-badge lang-ar">المرحلة 5</span>
-                        <h3 class="step-title lang-en">Finalization & Export Preparation</h3>
-                        <h3 class="step-title lang-ar">الإنهاء وإعداد التصدير</h3>
-                    </div>
-                    <p class="step-description lang-en">
-                        Prepare the fully processed sheet data for Lexonomy integration and archival storage.
-                    </p>
-                    <p class="step-description lang-ar">
-                        جهز بيانات الورقة المعالجة بالكامل لدمج Lexonomy والتخزين الأرشيفي.
-                    </p>
-                    <div class="step-notes">
-                        <h4 class="lang-en">Export Pipeline</h4>
-                        <h4 class="lang-ar">خط أنابيب التصدير</h4>
-                        <ul>
-                            <li class="lang-en"><strong>Collocation Analysis:</strong> Local Apps Script function identifies and extracts high-frequency collocations from source material</li>
-                            <li class="lang-ar"><strong>تحليل المتلازمات:</strong> تتعرف وظيفة Apps Script المحلية على المتلازمات عالية التردد وتستخرجها من المادة المصدر</li>
-                            <li class="lang-en"><strong>XML Generation:</strong> Creates Lexonomy-compliant XML structure using the complete row data</li>
-                            <li class="lang-ar"><strong>توليد XML:</strong> ينشئ بنية XML متوافقة مع Lexonomy باستخدام بيانات الصف الكاملة</li>
-                            <li class="lang-en"><strong>Drive Integration:</strong> Uses <code>DriveApp</code> service to save the final XML file to user-selected location</li>
-                            <li class="lang-ar"><strong>تكامل Drive:</strong> يستخدم خدمة <code>DriveApp</code> لحفظ ملف XML النهائي في الموقع المحدد من قبل المستخدم</li>
-                            <li class="lang-en"><strong>Quality Check:</strong> Validates output structure and completeness before final export</li>
-                            <li class="lang-ar"><strong>فحص الجودة:</strong> يتحقق من هيكل المخرجات واكتمالها قبل التصدير النهائي</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
    <!-- 5. FREQUENTLY ASKED QUESTIONS (FAQ) -->
   <h2>❓ 5. Frequently Asked Questions (FAQ)</h2>
   
@@ -1625,7 +1309,7 @@
                     <p class="issue-description lang-ar">
                         توقفت واجهة برمجة التطبيقات الخارجية عن الرد بسبب كثرة الطلبات أو حدود الحصة. 
                         <strong>الحل:</strong> هذا شائع مع مستويات API المجانية. يحتوي <code>runFullPipeline()</code> على فترات توقف مضمنة، 
-                        ولكن إذا حدث هذا، انتظر ببساطة 10-15 دقيقة، ثم انقر فوق "تشغيل خط الأنابيب الكامل" مرة أخرى. 
+                        ولكن إذا حدث هذا، انتظر ببساطة 10-15 دقيقة، ثم انقر فوق "تشغيل خط العمل الكامل" مرة أخرى. 
                         سيكمل المنطق صفًا بصفح تلقائيًا من المصطلح الأخير الذي تم معالجته.
                     </p>
                 </div>
