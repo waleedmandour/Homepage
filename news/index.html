@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* Main Content Styles */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        
+        /* News Intro Section */
+        .news-intro {
+            background-color: var(--light);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            box-shadow: var(--shadow);
+        }
+        
+        .news-intro h3 {
+            color: var(--primary);
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .news-intro p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        body.arabic .news-intro p {
+            text-align: right;
+        }
+        
+        /* News Timeline Section */
+        .news-timeline {
+            position: relative;
+            margin-bottom: 60px;
+        }
+        
+        .timeline-title {
+            color: var(--primary);
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Timeline vertical line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--secondary), var(--accent));
+            transform: translateX(-50%);
+        }
+        
+        body.arabic .timeline::before {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+        
+        /* News Items */
+        .news-item {
+            position: relative;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .news-content {
+            width: 45%;
+            background-color: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .news-item:nth-child(odd) .news-content {
+            margin-left: auto;
+        }
+        
+        .news-item:nth-child(even) .news-content {
+            margin-right: auto;
+        }
+        
+        body.arabic .news-item:nth-child(odd) .news-content {
+            margin-right: auto;
+            margin-left: 0;
+        }
+        
+        body.arabic .news-item:nth-child(even) .news-content {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        .news-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        /* Timeline dots */
+        .news-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        body.arabic .news-item::before {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+        
+        .news-date {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .news-title {
+            color: var(--accent);
+            font-size: 1.4em;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .news-description {
+            font-size: 1.05em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .news-category {
+            display: inline-block;
+            background-color: var(--light);
+            color: var(--secondary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 15px;
+        }
+        
+        body.arabic .news-category {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        .news-link {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: var(--transition);
+            border-bottom: 1px dotted transparent;
+        }
+        
+        .news-link:hover {
+            color: var(--secondary);
+            border-bottom: 1px dotted var(--secondary);
+        }
+        
+        /* Subscribe Section */
+        .subscribe-section {
+            background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.1) 100%);
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .subscribe-title {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .subscribe-description {
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+        
+        .subscribe-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .subscribe-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            font-size: 1em;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        body.arabic .subscribe-input {
+            border-radius: 0 30px 30px 0;
+        }
+        
+        .subscribe-input:focus {
+            border-color: var(--secondary);
+        }
+        
+        .subscribe-button {
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 0 30px 30px 0;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        body.arabic .subscribe-button {
+            border-radius: 30px 0 0 30px;
+        }
+        
+        .subscribe-button:hover {
+            background-color: var(--accent);
+        }
+        
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text {
+                text-align: center;
+            }
+            
+            body.arabic .header-text {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.1em;
+            }
+            
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .page-title {
+                font-size: 2em;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            body.arabic .timeline::before {
+                left: auto;
+                right: 30px;
+            }
+            
+            .news-item::before {
+                left: 30px;
+            }
+            
+            body.arabic .news-item::before {
+                left: auto;
+                right: 30px;
+            }
+            
+            .news-content {
+                width: calc(100% - 70px);
+                margin-left: 70px !important;
+            }
+            
+            body.arabic .news-content {
+                margin-right: 70px !important;
+                margin-left: 0 !important;
+            }
+            
+            .news-item:nth-child(odd) .news-content,
+            .news-item:nth-child(even) .news-content {
+                margin-left: 70px;
+                margin-right: 0;
+            }
+            
+            body.arabic .news-item:nth-child(odd) .news-content,
+            body.arabic .news-item:nth-child(even) .news-content {
+                margin-right: 70px;
+                margin-left: 0;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+            }
+            
+            .subscribe-input {
+                border-radius: 30px;
+                margin-bottom: 15px;
+            }
+            
+            .subscribe-button {
+                border-radius: 30px;
+                width: 100%;
+            }
+            
+            body.arabic .subscribe-input,
+            body.arabic .subscribe-button {
+                border-radius: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .news-content {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+                padding: 20px;
+            }
+            
+            body.arabic .news-content {
+                margin-right: 50px !important;
+            }
+            
+            .news-item::before {
+                left: 20px;
+                width: 16px;
+                height: 16px;
+            }
+            
+            body.arabic .news-item::before {
+                right: 20px;
+            }
+            
+            .news-intro, .subscribe-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">Lexicography & Natural Language Processing Researcher</p>
+                <p class="tagline lang-ar">باحث في المعجميات ومعالجة اللغات الطبيعية</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html" class="lang-en">Home</a><a href="index.html" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="research.html" class="lang-en">Research</a><a href="research.html" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="publications.html" class="lang-en">Publications</a><a href="publications.html" class="lang-ar">المنشورات</a></li>
+                    <li><a href="projects.html" class="lang-en">Projects</a><a href="projects.html" class="lang-ar">المشاريع</a></li>
+                    <li><a href="news.html" class="lang-en active">News</a><a href="news.html" class="lang-ar active">الأخبار</a></li>
+                    <li><a href="contact.html" class="lang-en">Contact</a><a href="contact.html" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area for News Page -->
+    <main class="container">
+        <h2 class="page-title lang-en">Latest News & Updates</h2>
+        <h2 class="page-title lang-ar">آخر الأخبار والتحديثات</h2>
+
+        <!-- News Introduction -->
+        <section class="news-intro">
+            <h3 class="lang-en">Stay Updated with My Latest Research & Activities</h3>
+            <h3 class="lang-ar">ابق على اطلاع بأحدث أبحاثي وأنشطتي</h3>
+            
+            <p class="lang-en">
+                This page contains the latest updates on my research projects, publications, conference presentations, and other professional activities. I regularly share news about advancements in computational lexicography, NLP applications, and my work with AI-powered language tools. Check back often for updates or subscribe to receive notifications about new posts.
+            </p>
+            <p class="lang-ar">
+                تحتوي هذه الصفحة على آخر التحديثات حول مشاريعي البحثية والمنشورات والعروض التقديمية في المؤتمرات والأنشطة المهنية الأخرى. أشارك بانتظام أخبارًا عن التطورات في المعجميات الحاسوبية وتطبيقات معالجة اللغات الطبيعية وعملي مع أدوات اللغة المدعومة بالذكاء الاصطناعي. تفحص الصفحة بانتظام للتحديثات أو اشترك لتلقي إشعارات حول المنشورات الجديدة.
+            </p>
+        </section>
+
+        <!-- News Timeline -->
+        <section class="news-timeline">
+            <h3 class="timeline-title lang-en">Recent News Timeline</h3>
+            <h3 class="timeline-title lang-ar">الجدول الزمني للأخبار الحديثة</h3>
+            
+            <div class="timeline">
+                <!-- News Item 1 -->
+                <div class="news-item">
+                    <div class="news-content">
+                        <span class="news-date">May 2024</span>
+                        <span class="news-category">Research Publication</span>
+                        
+                        <h4 class="news-title lang-en">AMTA Framework Paper Accepted for Publication</h4>
+                        <h4 class="news-title lang-ar">قبول ورقة إطار عمل AMTA للنشر</h4>
+                        
+                        <p class="news-description lang-en">
+                            My paper detailing the AI-Model Triangulation Approach (AMTA) for bilingual dictionary compilation has been accepted for publication in the <em>International Journal of Lexicography</em>. The paper presents a novel framework that integrates multiple AI models to enhance accuracy and efficiency in lexicographic work.
+                        </p>
+                        <p class="news-description lang-ar">
+                            تم قبول ورقة البحث الخاصة بي التي توضح نهج تثليث النماذج الذكية (AMTA) لتجميع القواميس ثنائية اللغة للنشر في <em>المجلة الدولية للمعجميات</em>. تقدم الورقة إطارًا جديدًا يدمج نماذج ذكاء اصطناعي متعددة لتعزيز الدقة والكفاءة في العمل المعجمي.
+                        </p>
+                        
+                        <a href="publications.html#amta-paper" class="news-link lang-en">Read More <i class="fas fa-arrow-right"></i></a>
+                        <a href="publications.html#amta-paper" class="news-link lang-ar">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <!-- News Item 2 -->
+                <div class="news-item">
+                    <div class="news-content">
+                        <span class="news-date">April 2024</span>
+                        <span class="news-category">Conference Presentation</span>
+                        
+                        <h4 class="news-title lang-en">Keynote Speaker at International Lexicography Conference</h4>
+                        <h4 class="news-title lang-ar">متحدث رئيسي في مؤتمر المعجميات الدولي</h4>
+                        
+                        <p class="news-description lang-en">
+                            I was invited as a keynote speaker at the 5th International Conference on Lexicography and Language Technology in Berlin. My presentation focused on "The Future of Bilingual Lexicography in the Age of Large Language Models" and demonstrated practical applications of AI tools for dictionary compilation.
+                        </p>
+                        <p class="news-description lang-ar">
+                            تمت دعوتي كمتحدث رئيسي في المؤتمر الدولي الخامس للمعجميات وتكنولوجيا اللغة في برلين. ركز عرضي التقديمي على "مستقبل المعجميات ثنائية اللغة في عصر نماذج اللغة الكبيرة" وأظهر التطبيقات العملية لأدوات الذكاء الاصطناعي لتجميع القواميس.
+                        </p>
+                        
+                        <a href="conferences.html#berlin2024" class="news-link lang-en">Conference Details <i class="fas fa-arrow-right"></i></a>
+                        <a href="conferences.html#berlin2024" class="news-link lang-ar">تفاصيل المؤتمر <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <!-- News Item 3 -->
+                <div class="news-item">
+                    <div class="news-content">
+                        <span class="news-date">March 2024</span>
+                        <span class="news-category">Project Launch</span>
+                        
+                        <h4 class="news-title lang-en">New Research Project: AI-Powered Arabic-English Dictionary</h4>
+                        <h4 class="news-title lang-ar">مشروع بحثي جديد: قاموس عربي-إنجليزي مدعوم بالذكاء الاصطناعي</h4>
+                        
+                        <p class="news-description lang-en">
+                            I have initiated a new research project to develop a comprehensive Arabic-English dictionary using AI-assisted methodologies. The project leverages the AMTA framework and will involve collaboration with computational linguists and lexicographers from three universities. The dictionary aims to address gaps in current bilingual lexicography resources.
+                        </p>
+                        <p class="news-description lang-ar">
+                            لقد بدأت مشروعًا بحثيًا جديدًا لتطوير قاموس شامل عربي-إنجليزي باستخدام منهجيات مدعومة بالذكاء الاصطناعي. يستفيد المشروع من إطار عمل AMTA وسيتضمن تعاونًا مع لغويين حاسوبيين ومعجميين من ثلاث جامعات. يهدف القاموس إلى معالجة الفجوات في موارد المعجميات ثنائية اللغة الحالية.
+                        </p>
+                        
+                        <a href="projects.html#arabic-english-dict" class="news-link lang-en">Project Details <i class="fas fa-arrow-right"></i></a>
+                        <a href="projects.html#arabic-english-dict" class="news-link lang-ar">تفاصيل المشروع <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <!-- News Item 4 -->
+                <div class="news-item">
+                    <div class="news-content">
+                        <span class="news-date">February 2024</span>
+                        <span class="news-category">Tool Release</span>
+                        
+                        <h4 class="news-title lang-en">Open-Source Text Analysis Script Released</h4>
+                        <h4 class="news-title lang-ar">إطلاق نص تحليل النصوص مفتوح المصدر</h4>
+                        
+                        <p class="news-description lang-en">
+                            I have released an open-source Python script for comprehensive textual analysis, designed specifically for language learners and researchers. The tool performs sentiment analysis, keyword extraction, readability assessment, and collocation analysis. It's now available on GitHub for the research community.
+                        </p>
+                        <p class="news-description lang-ar">
+                            لقد أطلقت نص Python مفتوح المصدر لتحليل النصوص الشامل، مصمم خصيصًا لمتعلمي اللغة والباحثين. تقوم الأداة بإجراء تحليل المشاعر، واستخراج الكلمات الرئيسية، وتقييم قابلية القراءة، وتحليل التآلف. وهي متاحة الآن على GitHub لمجتمع البحث.
+                        </p>
+                        
+                        <a href="https://github.com/wmandour/text-analysis-tool" target="_blank" class="news-link lang-en">View on GitHub <i class="fas fa-arrow-right"></i></a>
+                        <a href="https://github.com/wmandour/text-analysis-tool" target="_blank" class="news-link lang-ar">عرض على GitHub <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <!-- News Item 5 -->
+                <div class="news-item">
+                    <div class="news-content">
+                        <span class="news-date">January 2024</span>
+                        <span class="news-category">Workshop</span>
+                        
+                        <h4 class="news-title lang-en">Conducted NLP Workshop for Linguistics Students</h4>
+                        <h4 class="news-title lang-ar">إجراء ورشة عمل حول معالجة اللغات الطبيعية لطلاب اللسانيات</h4>
+                        
+                        <p class="news-description lang-en">
+                            I conducted a two-day workshop on "Introduction to Natural Language Processing for Linguists" at Cairo University. The workshop covered basic NLP concepts, Python programming for linguistic analysis, and practical applications of AI tools in linguistic research. Over 40 graduate students participated in the hands-on sessions.
+                        </p>
+                        <p class="news-description lang-ar">
+                            قمت بإجراء ورشة عمل لمدة يومين حول "مقدمة في معالجة اللغات الطبيعية لللسانيين" في جامعة القاهرة. غطت ورشة العمل مفاهيم معالجة اللغات الطبيعية الأساسية، وبرمجة Python للتحليل اللغوي، والتطبيقات العملية لأدوات الذكاء الاصطناعي في البحث اللغوي. شارك أكثر من 40 طالب دراسات عليا في الجلسات العملية.
+                        </p>
+                        
+                        <a href="workshops.html#nlp-workshop" class="news-link lang-en">Workshop Materials <i class="fas fa-arrow-right"></i></a>
+                        <a href="workshops.html#nlp-workshop" class="news-link lang-ar">مواد ورشة العمل <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subscribe Section -->
+        <section class="subscribe-section">
+            <h3 class="subscribe-title lang-en">Stay Updated</h3>
+            <h3 class="subscribe-title lang-ar">ابق على اطلاع</h3>
+            
+            <p class="subscribe-description lang-en">
+                Subscribe to receive email notifications about my latest publications, conference presentations, research projects, and other news. I send updates approximately once a month.
+            </p>
+            <p class="subscribe-description lang-ar">
+                اشترك لتلقي إشعارات بالبريد الإلكتروني حول أحدث منشوراتي والعروض التقديمية في المؤتمرات والمشاريع البحثية والأخبار الأخرى. أرسل التحديثات تقريبًا مرة واحدة في الشهر.
+            </p>
+            
+            <form class="subscribe-form" id="subscribe-form">
+                <input type="email" class="subscribe-input" placeholder="Your email address" required>
+                <button type="submit" class="subscribe-button lang-en">Subscribe</button>
+                <button type="submit" class="subscribe-button lang-ar">اشتراك</button>
+            </form>
+            
+            <p class="lang-en" style="margin-top: 20px; font-size: 0.9em; color: var(--gray);">
+                Your email will only be used to send news updates. You can unsubscribe at any time.
+            </p>
+            <p class="lang-ar" style="margin-top: 20px; font-size: 0.9em; color: var(--gray);">
+                سيتم استخدام بريدك الإلكتروني فقط لإرسال تحديثات الأخبار. يمكنك إلغاء الاشتراك في أي وقت.
+            </p>
+        </section>
+    </main>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+        
+        // Subscribe form functionality
+        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.subscribe-input').value;
+            
+            // In a real implementation, this would connect to a backend
+            alert(document.body.classList.contains('arabic') 
+                ? `شكراً على اشتراكك! سيتم إرسال التحديثات إلى ${email}`
+                : `Thank you for subscribing! Updates will be sent to ${email}`);
+            
+            this.reset();
+        });
+    </script>
+</body>
+</html>
