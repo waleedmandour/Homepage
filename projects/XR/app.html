@@ -34,6 +34,7 @@
 
         body {
             font-family: var(--font-tech);
+            /* This background will be made transparent by JS when AR starts */
             background: radial-gradient(circle at center, #1e293b 0%, var(--bg-dark) 100%);
             color: var(--text-main);
             overflow: hidden;
@@ -107,7 +108,7 @@
             gap: 10px;
         }
 
-        /* Side Panels (Left: Control, Right: Quiz) */
+        /* Side Panels */
         .side-panel {
             position: absolute;
             top: 90px;
@@ -638,9 +639,15 @@
 
         async function initARMode() {
             const container = document.getElementById('container');
+            
+            // **FIX: Make background transparent so camera feed is visible**
+            document.body.style.background = 'transparent';
+            
             const mindar = new window.MINDAR.IMAGE.MindARThree({
                 container: container,
                 imageTargetSrc: "http://waleedmandour.org/projects/AR/images/targets.mind",
+                // **FIX: Disable default loading UI to prevent double loaders**
+                uiLoading: "no",
                 filterMinCF: 0.001, 
                 filterBeta: 1000
             });
@@ -664,7 +671,14 @@
             anchor.group.add(rootGroup);
 
             buildProcessingPlant();
-            await mindarThree.start();
+            
+            // **CRITICAL: Ensure this runs on HTTPS or localhost**
+            try {
+                await mindarThree.start();
+            } catch (error) {
+                console.error("AR Start Failed:", error);
+                alert("Camera access failed. Please ensure you are using HTTPS.");
+            }
         }
 
         // --- MODEL & PARTICLES ---
