@@ -73,6 +73,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: all 0.3s;
         }
 
         .status-dot {
@@ -81,6 +82,11 @@
             box-shadow: 0 0 10px var(--accent-green);
             animation: pulse 2s infinite;
         }
+
+        /* Emergency State */
+        .critical-state .status-badge { border-color: var(--accent-danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
+        .critical-state .status-dot { background: var(--accent-danger); box-shadow: 0 0 15px var(--accent-danger); animation: flash 0.5s infinite; }
+        .critical-state .tech-title h1 { color: var(--accent-danger); }
 
         .tech-title h1 {
             font-size: 1.2rem;
@@ -95,23 +101,42 @@
             color: var(--text-muted);
         }
 
-        /* Engineering Controls (The "2nd Level" Feature) */
-        .control-room-panel {
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Side Panels (Left: Control, Right: Quiz) */
+        .side-panel {
             position: absolute;
-            top: 80px; left: 20px;
+            top: 90px;
             width: 280px;
             background: var(--glass-panel);
             border: 1px solid var(--glass-border);
-            border-left: 3px solid var(--accent-cyan);
-            border-radius: 0 12px 12px 0;
-            padding: 20px;
             backdrop-filter: blur(12px);
-            transform: translateX(-120%);
+            padding: 20px;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: auto;
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
-        .control-room-panel.active { transform: translateX(0); }
+        .control-room-panel {
+            left: 20px;
+            border-left: 3px solid var(--accent-cyan);
+            border-radius: 0 12px 12px 0;
+            transform: translateX(-120%);
+        }
+
+        .quiz-panel {
+            right: 20px;
+            border-right: 3px solid var(--accent-orange);
+            border-radius: 12px 0 0 12px;
+            transform: translateX(120%);
+        }
+
+        .side-panel.active { transform: translateX(0); }
 
         .panel-header {
             display: flex;
@@ -124,6 +149,26 @@
 
         .panel-label { font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; }
 
+        /* Quiz Styles */
+        .quiz-question { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.4; }
+        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+        .quiz-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+        .quiz-btn:hover { background: rgba(255,255,255,0.1); }
+        .quiz-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
+        .quiz-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-danger); color: var(--accent-danger); }
+        .next-q-btn { margin-top: 15px; width: 100%; padding: 8px; background: var(--accent-cyan); border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
+
+        /* Sliders */
         .slider-group { margin-bottom: 15px; }
         .slider-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
         .slider-label { font-size: 0.8rem; color: var(--text-muted); }
@@ -145,6 +190,7 @@
             padding: 10px;
             margin-top: 15px;
             text-align: center;
+            transition: background 0.3s;
         }
         .yield-value {
             font-size: 1.5rem; font-weight: 700; color: var(--accent-green);
@@ -189,7 +235,7 @@
         /* Molecule Popup */
         .molecule-popup {
             position: absolute;
-            right: 20px; top: 100px;
+            right: 20px; bottom: 120px;
             width: 180px; height: 180px;
             background: var(--glass-panel);
             border: 1px solid var(--accent-green);
@@ -203,7 +249,7 @@
         .molecule-canvas { width: 100%; height: 120px; }
         .molecule-label { font-family: var(--font-code); color: var(--accent-green); font-size: 0.9rem; }
 
-        /* Loading & Welcome */
+        /* Start Screen */
         #loadingScreen, #startScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-dark);
@@ -271,37 +317,16 @@
         }
         
         .target-image-display {
-            width: 80%;
-            max-width: 300px;
-            height: 300px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            color: #000;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .tooltip {
-            position: absolute;
-            background: rgba(0,0,0,0.8);
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
+            width: 80%; max-width: 300px; height: 300px;
+            background: #fff; border-radius: 8px; margin-bottom: 20px;
+            color: #000; text-align: center; padding: 20px;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
-        /* MindAR Fixes for iOS */
-        video { transform: scaleX(-1) !important; } /* Mirror fix */
+        video { transform: scaleX(-1) !important; }
         
         .ar-target-guide {
             width: 200px; height: 200px;
@@ -320,14 +345,12 @@
     <div id="loadingScreen">
         <div class="loader-ring"></div>
         <h2 style="margin-top: 20px; color: var(--accent-cyan); letter-spacing: 2px;">INITIALIZING SYSTEM</h2>
-        <p style="font-family: var(--font-code); color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">LOADING ASSETS & PHYSICS ENGINE...</p>
     </div>
 
     <!-- Target Image Modal -->
     <div id="targetModal">
         <h3 style="color: white; margin-bottom: 20px;">Scan this Image</h3>
         <div class="target-image-display">
-            <!-- This acts as the placeholder since we don't have the PNG file URL, only the mind file -->
             <div style="border: 2px dashed #333; padding: 20px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center;">
                 <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 10px;"></i>
                 <p>Point camera at the Haber-Bosch Target Marker</p>
@@ -343,16 +366,9 @@
         <p style="max-width: 300px; text-align: center; margin-top: 20px; color: var(--text-muted);">
             Interactive engineering simulation of ammonia synthesis. Explore thermodynamics and process flow.
         </p>
-        
         <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
         <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View Target Marker</button>
         <button class="btn-secondary" id="btnStart3D">Desktop / Non-AR Mode</button>
-        
-        <div style="margin-top: 30px; font-size: 0.7rem; color: var(--text-muted);">
-            <i class="fab fa-apple"></i> Optimized for iOS Safari & Android Chrome
-        </div>
-        
-        <!-- Updated Footer -->
         <div style="margin-top: 40px; font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; width: 80%; text-align: center;">
             Developed by: Waleed Mandour, 2025
         </div>
@@ -363,21 +379,28 @@
         
         <!-- Top Info -->
         <div class="top-bar">
-            <div class="status-badge">
+            <div class="status-badge" id="systemStatus">
                 <div class="status-dot"></div>
                 <div class="tech-title">
-                    <h1>System Active</h1>
+                    <h1 id="statusText">System Active</h1>
                     <span id="modeIndicator">AR TRACKING</span>
                 </div>
             </div>
             
-            <button class="icon-btn pointer-events-auto" id="btnSettings" style="background: var(--glass-panel);">
-                <i class="fas fa-sliders-h"></i>
-            </button>
+            <div class="menu-buttons">
+                <!-- Settings Button -->
+                <button class="icon-btn pointer-events-auto" id="btnSettings" style="background: var(--glass-panel);" title="Reactor Controls">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+                <!-- New Quiz Button -->
+                <button class="icon-btn pointer-events-auto" id="btnQuiz" style="background: var(--glass-panel);" title="Definition Quiz">
+                    <i class="fas fa-clipboard-list"></i>
+                </button>
+            </div>
         </div>
 
-        <!-- Engineering Control Panel (Slide-out) -->
-        <div class="control-room-panel" id="controlPanel">
+        <!-- Left Panel: Engineering Controls -->
+        <div class="control-room-panel side-panel" id="controlPanel">
             <div class="panel-header">
                 <span class="panel-label">Reactor Control</span>
                 <button class="icon-btn" id="btnCloseControls" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
@@ -401,10 +424,24 @@
                 <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">High P favors yield (Moles)</div>
             </div>
 
-            <div class="yield-monitor">
-                <div style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;">Calculated Yield</div>
+            <div class="yield-monitor" id="yieldMonitor">
+                <div style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;" id="monitorLabel">Calculated Yield</div>
                 <div class="yield-value" id="valYield">15.4%</div>
             </div>
+        </div>
+
+        <!-- Right Panel: Quiz -->
+        <div class="quiz-panel side-panel" id="quizPanel">
+            <div class="panel-header">
+                <span class="panel-label" style="color: var(--accent-orange)">Knowledge Check</span>
+                <button class="icon-btn" id="btnCloseQuiz" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="quizContent">
+                <div class="quiz-question" id="qText">Loading...</div>
+                <div class="quiz-options" id="qOptions"></div>
+                <button class="next-q-btn" id="btnNextQ">Next Question <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div id="quizScore" style="margin-top: 15px; font-family: var(--font-code); font-size: 0.8rem; color: var(--text-muted);">Score: 0</div>
         </div>
 
         <!-- Molecule View Popup -->
@@ -442,12 +479,36 @@
         const COLORS = {
             metal: 0x8899a6,
             darkMetal: 0x2c3e50,
-            n2: 0x38bdf8, // Cyan
-            h2: 0xffffff, // White
-            nh3: 0xf59e0b, // Orange
+            n2: 0x38bdf8,
+            h2: 0xffffff,
+            nh3: 0xf59e0b,
             catalyst: 0x8b4513,
             highlight: 0x10b981
         };
+
+        // --- QUIZ DATA ---
+        const quizQuestions = [
+            {
+                q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?",
+                options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"],
+                correct: 1
+            },
+            {
+                q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...",
+                options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"],
+                correct: 1
+            },
+            {
+                q: "What catalyst is primarily used in the Haber-Bosch process?",
+                options: ["Platinum", "Iron", "Copper", "Nickel"],
+                correct: 1
+            },
+            {
+                q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?",
+                options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"],
+                correct: 0
+            }
+        ];
 
         // --- APP STATE ---
         const state = {
@@ -457,17 +518,28 @@
             isXray: false,
             flowActive: true,
             audioEnabled: true,
-            mode: 'AR', // 'AR' or '3D'
-            activeComponent: null
+            mode: 'AR',
+            activeComponent: null,
+            // Gamification States
+            startTime: 0,
+            lastEmergency: 0,
+            isEmergency: false,
+            emergencySolved: false,
+            // Quiz States
+            currentQ: 0,
+            score: 0
         };
 
         // --- 3D ENGINE VARIABLES ---
         let scene, camera, renderer, clock, mixer;
         let mindarThree;
-        let rootGroup; // The main container for the plant
-        let particles = [];
-        let molecules = []; // For the popup view
+        let rootGroup;
+        let particles = { mesh: null, data: [] };
+        let molecules = [];
         let molScene, molCamera, molRenderer;
+        
+        // Audio Context for Alarm
+        let audioCtx;
 
         // --- INIT SEQUENCE ---
         window.addEventListener('load', () => {
@@ -485,6 +557,9 @@
 
         async function startApp(mode) {
             state.mode = mode;
+            state.startTime = Date.now();
+            state.lastEmergency = Date.now(); // Reset timer
+            
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('mainHUD').style.display = 'flex';
             document.getElementById('modeIndicator').innerText = mode === 'AR' ? 'AR TRACKING' : 'SIMULATION MODE';
@@ -497,12 +572,13 @@
             }
             
             initUI();
+            initQuiz();
             initAudio();
             initMoleculeViewer();
             animate();
         }
 
-        // --- THREE.JS SCENE SETUP ---
+        // --- 3D SCENE SETUP ---
         function createCommonScene() {
             scene = new THREE.Scene();
             
@@ -512,13 +588,15 @@
             
             const dirLight = new THREE.DirectionalLight(0xffffff, 1);
             dirLight.position.set(5, 10, 7);
+            dirLight.name = "MainLight";
             scene.add(dirLight);
 
             const blueLight = new THREE.PointLight(0x38bdf8, 0.8, 10);
             blueLight.position.set(0, 2, 2);
+            blueLight.name = "AccentLight";
             scene.add(blueLight);
 
-            // Root Group for the entire plant
+            // Root Group
             rootGroup = new THREE.Group();
             scene.add(rootGroup);
 
@@ -527,7 +605,7 @@
 
         function init3DMode() {
             createCommonScene();
-            scene.background = new THREE.Color(0x0f172a); // Dark blue-grey
+            scene.background = new THREE.Color(0x0f172a);
 
             const container = document.getElementById('container');
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -538,16 +616,13 @@
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
             container.appendChild(renderer.domElement);
 
-            // Simple Orbit Controls logic
+            // Controls
             let isDragging = false;
             let previousMousePosition = { x: 0, y: 0 };
-
             container.addEventListener('mousedown', () => isDragging = true);
             container.addEventListener('touchstart', (e) => { isDragging = true; previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY }; });
-
             window.addEventListener('mouseup', () => isDragging = false);
             window.addEventListener('touchend', () => isDragging = false);
-
             const moveHandler = (x, y) => {
                 if (isDragging) {
                     const deltaMove = { x: x - previousMousePosition.x, y: y - previousMousePosition.y };
@@ -556,21 +631,15 @@
                     previousMousePosition = { x: x, y: y };
                 }
             };
-
             container.addEventListener('mousemove', (e) => moveHandler(e.offsetX, e.offsetY));
             container.addEventListener('touchmove', (e) => { e.preventDefault(); moveHandler(e.touches[0].clientX, e.touches[0].clientY); });
-
-            // Click interaction
             container.addEventListener('click', (event) => onMouseClick(event));
         }
 
         async function initARMode() {
             const container = document.getElementById('container');
-            
-            // MindAR Initialization with specific URL
             const mindar = new window.MINDAR.IMAGE.MindARThree({
                 container: container,
-                // UPDATED: Pointing to your specific mind file
                 imageTargetSrc: "http://waleedmandour.org/projects/AR/images/targets.mind",
                 filterMinCF: 0.001, 
                 filterBeta: 1000
@@ -578,87 +647,62 @@
 
             mindarThree = mindar;
             const { renderer: arRenderer, scene: arScene, camera: arCamera } = mindarThree;
-            
             renderer = arRenderer;
             scene = arScene;
             camera = arCamera;
 
-            // Lighting for AR
             const ambient = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambient);
             const dirLight = new THREE.DirectionalLight(0xffffff, 1);
             dirLight.position.set(0, 5, 5);
+            dirLight.name = "MainLight";
             scene.add(dirLight);
 
-            // Anchor
             const anchor = mindarThree.addAnchor(0);
             rootGroup = new THREE.Group();
-            rootGroup.scale.set(0.3, 0.3, 0.3); // Scale down for AR card
+            rootGroup.scale.set(0.3, 0.3, 0.3);
             anchor.group.add(rootGroup);
 
-            // Build models
             buildProcessingPlant();
-
             await mindarThree.start();
         }
 
-        // --- INDUSTRIAL MODEL BUILDER ---
-        
+        // --- MODEL & PARTICLES ---
         function getIndustrialMaterial(color, transparent = false) {
             return new THREE.MeshStandardMaterial({
-                color: color,
-                roughness: 0.3,
-                metalness: 0.7,
-                transparent: transparent,
-                opacity: transparent ? 0.3 : 1.0,
-                side: THREE.DoubleSide
+                color: color, roughness: 0.3, metalness: 0.7,
+                transparent: transparent, opacity: transparent ? 0.3 : 1.0, side: THREE.DoubleSide
             });
         }
 
         function buildProcessingPlant() {
-            // 1. Catalytic Converter (Reactor) - Centerpiece
+            // Reactor
             const reactorGroup = new THREE.Group();
             reactorGroup.name = "Reactor";
-            
-            // Main Vessel
             const vesselGeo = new THREE.CylinderGeometry(0.8, 0.8, 3, 32);
-            const shellMat = getIndustrialMaterial(COLORS.metal);
-            const shell = new THREE.Mesh(vesselGeo, shellMat);
-            shell.position.y = 1.5;
-            shell.name = "Shell";
+            const shell = new THREE.Mesh(vesselGeo, getIndustrialMaterial(COLORS.metal));
+            shell.position.y = 1.5; shell.name = "Shell";
             reactorGroup.add(shell);
-
-            // Catalyst Bed (Internal)
+            
             const bedGeo = new THREE.CylinderGeometry(0.7, 0.7, 2, 32);
-            const bedMat = new THREE.MeshStandardMaterial({ color: COLORS.catalyst, wireframe: true });
-            const bed = new THREE.Mesh(bedGeo, bedMat);
-            bed.position.y = 1.5;
-            bed.visible = false; // Only visible in X-Ray
-            bed.name = "Internals";
+            const bed = new THREE.Mesh(bedGeo, new THREE.MeshStandardMaterial({ color: COLORS.catalyst, wireframe: true }));
+            bed.position.y = 1.5; bed.visible = false; bed.name = "Internals";
             reactorGroup.add(bed);
-
-            // Top/Bottom Caps (Flanges)
+            
             const capGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.2, 32);
-            const topCap = new THREE.Mesh(capGeo, getIndustrialMaterial(COLORS.darkMetal));
-            topCap.position.y = 3.1;
-            const botCap = new THREE.Mesh(capGeo, getIndustrialMaterial(COLORS.darkMetal));
-            botCap.position.y = -0.1;
+            const topCap = new THREE.Mesh(capGeo, getIndustrialMaterial(COLORS.darkMetal)); topCap.position.y = 3.1;
+            const botCap = new THREE.Mesh(capGeo, getIndustrialMaterial(COLORS.darkMetal)); botCap.position.y = -0.1;
             reactorGroup.add(topCap, botCap);
 
-            // 2. Feed Tanks (N2 & H2)
+            // Tanks
             const createTank = (color, xPos, label) => {
                 const tank = new THREE.Group();
                 const geo = new THREE.SphereGeometry(0.6, 32, 32);
-                const mat = getIndustrialMaterial(color);
-                const mesh = new THREE.Mesh(geo, mat);
-                tank.position.set(xPos, 0.6, 0);
-                tank.name = label;
-                
-                // Support legs
+                const mesh = new THREE.Mesh(geo, getIndustrialMaterial(color));
+                tank.position.set(xPos, 0.6, 0); tank.name = label;
                 const legGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.6, 8);
-                const legMat = getIndustrialMaterial(COLORS.darkMetal);
                 for(let i=0; i<3; i++) {
-                    const leg = new THREE.Mesh(legGeo, legMat);
+                    const leg = new THREE.Mesh(legGeo, getIndustrialMaterial(COLORS.darkMetal));
                     const angle = (i / 3) * Math.PI * 2;
                     leg.position.set(xPos + Math.cos(angle)*0.3, 0.3, Math.sin(angle)*0.3);
                     tank.add(leg);
@@ -667,143 +711,258 @@
                 return tank;
             };
 
-            const tankN2 = createTank(COLORS.n2, -2, "Nitrogen Feed");
-            const tankH2 = createTank(COLORS.h2, 2, "Hydrogen Feed");
-
-            // 3. Pipes
-            const pipeMat = getIndustrialMaterial(0xcccccc);
-            
-            // Pipe: N2 to Reactor
-            const pipe1 = createBentPipe(new THREE.Vector3(-2, 1.2, 0), new THREE.Vector3(0, 0.5, 0), pipeMat);
-            // Pipe: H2 to Reactor
-            const pipe2 = createBentPipe(new THREE.Vector3(2, 1.2, 0), new THREE.Vector3(0, 0.5, 0), pipeMat);
-            // Pipe: Reactor to Condenser
-            const pipe3 = createBentPipe(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 4, -1), pipeMat);
-
-            // 4. Condenser/Separator (Back)
-            const condenserGroup = new THREE.Group();
-            condenserGroup.name = "Condenser";
-            condenserGroup.position.set(0, 2, -2);
-            const condGeo = new THREE.BoxGeometry(1.5, 2, 1);
-            const condMesh = new THREE.Mesh(condGeo, getIndustrialMaterial(COLORS.darkMetal));
-            
-            // Cooling coils (visual)
-            const coilGeo = new THREE.TorusGeometry(0.3, 0.05, 8, 20);
-            const coilMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-            const coil1 = new THREE.Mesh(coilGeo, coilMat); coil1.position.z = 0.51;
-            const coil2 = new THREE.Mesh(coilGeo, coilMat); coil2.position.z = 0.51; coil2.position.y = -0.5;
-            
-            condenserGroup.add(condMesh, coil1, coil2);
-
-            // Assemble Root
             rootGroup.add(reactorGroup);
-            rootGroup.add(tankN2);
-            rootGroup.add(tankH2);
-            rootGroup.add(pipe1);
-            rootGroup.add(pipe2);
-            rootGroup.add(pipe3);
+            rootGroup.add(createTank(COLORS.n2, -2, "Nitrogen Feed"));
+            rootGroup.add(createTank(COLORS.h2, 2, "Hydrogen Feed"));
+
+            // Pipes
+            const pipeMat = getIndustrialMaterial(0xcccccc);
+            const createBentPipe = (start, end) => {
+                const path = new THREE.CatmullRomCurve3([start, new THREE.Vector3((start.x + end.x)/2, start.y, start.z), new THREE.Vector3((start.x + end.x)/2, end.y, end.z), end]);
+                return new THREE.Mesh(new THREE.TubeGeometry(path, 10, 0.1, 8, false), pipeMat);
+            }
+            rootGroup.add(createBentPipe(new THREE.Vector3(-2, 1.2, 0), new THREE.Vector3(0, 0.5, 0)));
+            rootGroup.add(createBentPipe(new THREE.Vector3(2, 1.2, 0), new THREE.Vector3(0, 0.5, 0)));
+            rootGroup.add(createBentPipe(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 4, -1)));
+
+            // Condenser
+            const condenserGroup = new THREE.Group();
+            condenserGroup.name = "Condenser"; condenserGroup.position.set(0, 2, -2);
+            condenserGroup.add(new THREE.Mesh(new THREE.BoxGeometry(1.5, 2, 1), getIndustrialMaterial(COLORS.darkMetal)));
             rootGroup.add(condenserGroup);
 
-            // Initialize Particles
             initFlowSystem();
         }
 
-        function createBentPipe(start, end, material) {
-            const path = new THREE.CatmullRomCurve3([
-                start,
-                new THREE.Vector3((start.x + end.x)/2, start.y, start.z),
-                new THREE.Vector3((start.x + end.x)/2, end.y, end.z),
-                end
-            ]);
-            const geometry = new THREE.TubeGeometry(path, 10, 0.1, 8, false);
-            return new THREE.Mesh(geometry, material);
-        }
-
-        // --- PARTICLE SYSTEM (FLOW) ---
         function initFlowSystem() {
-            const geometry = new THREE.BufferGeometry();
             const count = 100;
             const positions = new Float32Array(count * 3);
-            
-            // Initial positions (randomly placed for now, simplified logic)
-            for(let i=0; i<count; i++) {
-                positions[i*3] = (Math.random() - 0.5) * 4;
-                positions[i*3+1] = Math.random() * 3;
-                positions[i*3+2] = (Math.random() - 0.5) * 2;
-            }
-            
+            const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            
-            const material = new THREE.PointsMaterial({
-                color: COLORS.n2,
-                size: 0.1,
-                transparent: true,
-                opacity: 0.8
-            });
-
+            const material = new THREE.PointsMaterial({ color: COLORS.n2, size: 0.1, transparent: true, opacity: 0.8 });
             const particleSystem = new THREE.Points(geometry, material);
-            particleSystem.name = "Particles";
             rootGroup.add(particleSystem);
             
             particles = { mesh: particleSystem, data: [] };
             for(let i=0; i<count; i++) {
-                // Assign paths based on index
-                let type = i % 3 === 0 ? 'N2' : 'H2';
-                particles.data.push({ 
-                    type: type, 
-                    t: Math.random(), 
-                    speed: 0.005 + Math.random()*0.005,
-                    path: type === 'N2' ? 1 : 2 // 1=Left path, 2=Right path
-                });
+                particles.data.push({ type: i%3===0?'N2':'H2', t: Math.random(), speed: 0.005 + Math.random()*0.005, path: i%3===0?1:2 });
             }
         }
 
         function updateFlow() {
             if (!state.flowActive || !particles.mesh) return;
-
             const positions = particles.mesh.geometry.attributes.position.array;
-            
-            // Reaction speed factor based on Temperature
             const speedFactor = (state.temp / 450); 
             
             for (let i = 0; i < particles.data.length; i++) {
                 const p = particles.data[i];
                 p.t += p.speed * speedFactor;
                 if (p.t > 1) p.t = 0;
-
-                // Path Logic (Simplified Bezier approximations)
-                let x, y, z;
                 
+                let x, y, z;
                 if (p.t < 0.5) {
-                    // Feed to Reactor
                     const startX = p.path === 1 ? -2 : 2;
-                    x = startX * (1 - p.t * 2);
-                    y = 0.6 + (p.t * 2 * 1); // Curve up
-                    z = 0;
+                    x = startX * (1 - p.t * 2); y = 0.6 + (p.t * 2); z = 0;
                 } else {
-                    // Reactor to Condenser
                     const localT = (p.t - 0.5) * 2;
-                    x = 0;
-                    y = 1.6 + localT * 2;
-                    z = -localT * 2;
-                    
-                    // Color change to Ammonia inside reactor
-                    if (p.t > 0.6) {
-                        // Normally we'd update buffer color, keeping simple for perf
-                    }
+                    x = 0; y = 1.6 + localT * 2; z = -localT * 2;
                 }
-
-                positions[i * 3] = x;
-                positions[i * 3 + 1] = y;
-                positions[i * 3 + 2] = z;
+                positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
             }
             particles.mesh.geometry.attributes.position.needsUpdate = true;
         }
 
-        // --- INTERACTION & LOGIC ---
-        
+        // --- UI & LOGIC ---
+        function initUI() {
+            // Panel Toggles
+            document.getElementById('btnSettings').addEventListener('click', () => {
+                document.getElementById('controlPanel').classList.add('active');
+                document.getElementById('quizPanel').classList.remove('active');
+            });
+            document.getElementById('btnCloseControls').addEventListener('click', () => document.getElementById('controlPanel').classList.remove('active'));
+            
+            document.getElementById('btnQuiz').addEventListener('click', () => {
+                document.getElementById('quizPanel').classList.add('active');
+                document.getElementById('controlPanel').classList.remove('active');
+            });
+            document.getElementById('btnCloseQuiz').addEventListener('click', () => document.getElementById('quizPanel').classList.remove('active'));
+
+            // Sliders & Emergency Logic
+            const sliderTemp = document.getElementById('sliderTemp');
+            const sliderPress = document.getElementById('sliderPress');
+
+            const updateCalc = () => {
+                state.temp = parseInt(sliderTemp.value);
+                state.pressure = parseInt(sliderPress.value);
+                document.getElementById('valTemp').innerText = state.temp + "°C";
+                document.getElementById('valPress').innerText = state.pressure + " atm";
+                
+                // GAMIFICATION: Check for Equilibrium during Emergency
+                if (state.isEmergency) {
+                    // Target: Temp 400-450, Pressure 200-250
+                    const tGood = state.temp >= 400 && state.temp <= 450;
+                    const pGood = state.pressure >= 200 && state.pressure <= 250;
+                    
+                    const stability = Math.max(0, 100 - (Math.abs(state.temp - 425)/2) - (Math.abs(state.pressure - 225)/2));
+                    
+                    document.getElementById('monitorLabel').innerText = "SYSTEM STABILITY";
+                    document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
+                    document.getElementById('valYield').innerText = Math.floor(stability) + "%";
+                    
+                    if (tGood && pGood) {
+                        resolveEmergency();
+                    }
+                } else {
+                    // Normal Yield Calc
+                    let yieldVal = (20000 / state.temp) + (state.pressure / 10) - 20; 
+                    yieldVal = Math.max(0, Math.min(98, yieldVal));
+                    document.getElementById('monitorLabel').innerText = "Calculated Yield";
+                    document.getElementById('monitorLabel').style.color = "var(--text-muted)";
+                    document.getElementById('valYield').innerText = yieldVal.toFixed(1) + "%";
+                }
+            };
+
+            sliderTemp.addEventListener('input', updateCalc);
+            sliderPress.addEventListener('input', updateCalc);
+
+            // Bottom Toggles
+            document.getElementById('btnXray').addEventListener('click', (e) => {
+                state.isXray = !state.isXray; e.currentTarget.classList.toggle('active');
+                rootGroup.traverse((child) => {
+                    if (child.name === "Shell") { child.material.transparent = true; child.material.opacity = state.isXray ? 0.2 : 1.0; }
+                    if (child.name === "Internals") child.visible = state.isXray;
+                });
+            });
+            document.getElementById('btnFlow').addEventListener('click', (e) => { state.flowActive = !state.flowActive; e.currentTarget.classList.toggle('active'); });
+            document.getElementById('btnReset').addEventListener('click', () => { if(rootGroup) gsap.to(rootGroup.rotation, {x:0, y:0, z:0, duration: 1}); });
+            document.getElementById('btnExit').addEventListener('click', () => location.reload());
+        }
+
+        // --- QUIZ LOGIC ---
+        function initQuiz() {
+            renderQuestion();
+            document.getElementById('btnNextQ').addEventListener('click', () => {
+                state.currentQ = (state.currentQ + 1) % quizQuestions.length;
+                renderQuestion();
+            });
+        }
+
+        function renderQuestion() {
+            const q = quizQuestions[state.currentQ];
+            document.getElementById('qText').innerText = `Q${state.currentQ + 1}: ${q.q}`;
+            const optsDiv = document.getElementById('qOptions');
+            optsDiv.innerHTML = '';
+            document.getElementById('btnNextQ').style.display = 'none';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'quiz-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(idx, btn, q.correct);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, btnElement, correct) {
+            const btns = document.querySelectorAll('.quiz-btn');
+            btns.forEach(b => b.style.pointerEvents = 'none'); // Disable clicks
+            
+            if (selected === correct) {
+                btnElement.classList.add('correct');
+                state.score += 10;
+            } else {
+                btnElement.classList.add('wrong');
+                btns[correct].classList.add('correct');
+            }
+            document.getElementById('quizScore').innerText = `Score: ${state.score}`;
+            document.getElementById('btnNextQ').style.display = 'block';
+        }
+
+        // --- GAMIFICATION: EMERGENCY SYSTEM ---
+        function triggerEmergency() {
+            if (state.isEmergency) return;
+            state.isEmergency = true;
+            
+            // UI Changes
+            document.body.classList.add('critical-state');
+            document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
+            document.getElementById('monitorLabel').innerText = "STABILITY CRITICAL";
+            document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
+            document.getElementById('valYield').style.color = "var(--accent-danger)";
+            
+            // Open Controls automatically
+            document.getElementById('controlPanel').classList.add('active');
+            document.getElementById('quizPanel').classList.remove('active');
+            
+            // Audio Alarm
+            playAlarmSound();
+            
+            // 3D Lighting Red Pulse
+            const light = scene.getObjectByName("MainLight");
+            const accent = scene.getObjectByName("AccentLight");
+            if(light) light.color.setHex(0xff0000);
+            if(accent) accent.color.setHex(0xff0000);
+        }
+
+        function resolveEmergency() {
+            state.isEmergency = false;
+            state.lastEmergency = Date.now();
+            
+            // UI Reset
+            document.body.classList.remove('critical-state');
+            document.getElementById('statusText').innerText = "Equilibrium Restored";
+            document.getElementById('monitorLabel').innerText = "Calculated Yield";
+            document.getElementById('monitorLabel').style.color = "var(--text-muted)";
+            document.getElementById('valYield').style.color = "var(--accent-green)";
+            
+            // Stop Sound
+            if(audioCtx) audioCtx.close();
+            audioCtx = null;
+            
+            // 3D Lighting Reset
+            const light = scene.getObjectByName("MainLight");
+            const accent = scene.getObjectByName("AccentLight");
+            if(light) light.color.setHex(0xffffff);
+            if(accent) accent.color.setHex(0x38bdf8);
+            
+            setTimeout(() => {
+                document.getElementById('statusText').innerText = "System Active";
+                document.getElementById('controlPanel').classList.remove('active');
+            }, 2000);
+        }
+
+        function playAlarmSound() {
+            if (!state.audioEnabled) return;
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.value = 440; // A4
+                
+                // Siren LFO
+                const lfo = audioCtx.createOscillator();
+                lfo.type = 'sine';
+                lfo.frequency.value = 2; // 2Hz siren speed
+                const lfoGain = audioCtx.createGain();
+                lfoGain.gain.value = 200; // range
+                
+                lfo.connect(lfoGain);
+                lfoGain.connect(oscillator.frequency);
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                lfo.start();
+                
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            } catch(e) { console.log("Audio play failed"); }
+        }
+
+        // --- STANDARD FUNCTIONS ---
         function onMouseClick(event) {
-            // Raycasting
             const mouse = new THREE.Vector2();
             if (event.type === 'touchstart') {
                 mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
@@ -812,216 +971,73 @@
                 mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             }
-
             const raycaster = new THREE.Raycaster();
             raycaster.setFromCamera(mouse, camera);
-
             const intersects = raycaster.intersectObjects(rootGroup.children, true);
-            
             if (intersects.length > 0) {
-                // Find parent group with name
                 let obj = intersects[0].object;
-                while(obj.parent && obj.parent !== rootGroup) {
-                    obj = obj.parent;
-                }
-                
-                if (obj.name) {
-                    selectComponent(obj.name);
-                }
+                while(obj.parent && obj.parent !== rootGroup) obj = obj.parent;
+                if (obj.name) selectComponent(obj.name);
             }
         }
 
         function selectComponent(name) {
             state.activeComponent = name;
-            
-            // UI Feedback
             const toast = document.getElementById('infoToast');
             document.getElementById('toastText').innerText = name;
             toast.style.display = 'block';
             gsap.fromTo(toast, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.3});
-            
-            // Audio
-            if (state.audioEnabled) {
-                speak(name);
-            }
-
-            // Molecule View Update
+            if (state.audioEnabled && !state.isEmergency) speak(name);
             updateMoleculeView(name);
-
-            // Highlight Logic could go here
         }
 
-        // --- MOLECULE VIEWER (Mini Scene) ---
         function initMoleculeViewer() {
             const container = document.getElementById('moleculeCanvas');
-            molScene = new THREE.Scene();
-            molScene.background = new THREE.Color(0x101828);
-            
-            molCamera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 10);
-            molCamera.position.z = 5;
-            
+            molScene = new THREE.Scene(); molScene.background = new THREE.Color(0x101828);
+            molCamera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 10); molCamera.position.z = 5;
             molRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            molRenderer.setSize(container.clientWidth, container.clientHeight);
-            container.appendChild(molRenderer.domElement);
-            
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(1, 1, 2);
-            molScene.add(light);
-            molScene.add(new THREE.AmbientLight(0xffffff, 0.5));
+            molRenderer.setSize(container.clientWidth, container.clientHeight); container.appendChild(molRenderer.domElement);
+            molScene.add(new THREE.DirectionalLight(0xffffff, 1)); molScene.add(new THREE.AmbientLight(0xffffff, 0.5));
         }
 
         function updateMoleculeView(componentName) {
             const popup = document.getElementById('moleculePopup');
-            
-            // Clear previous
-            while(molScene.children.length > 2) { // Keep lights
-                molScene.remove(molScene.children[molScene.children.length-1]);
-            }
-
-            let showPopup = true;
+            while(molScene.children.length > 2) molScene.remove(molScene.children[molScene.children.length-1]);
             let label = "";
-
-            if (componentName === "Nitrogen Feed") {
-                createMolecule("N2", 0x38bdf8);
-                label = "Dinitrogen (N≡N)";
-            } else if (componentName === "Hydrogen Feed") {
-                createMolecule("H2", 0xffffff);
-                label = "Dihydrogen (H-H)";
-            } else if (componentName === "Reactor") {
-                createReactionAnimation(); // N2 + 3H2 -> 2NH3
-                label = "N₂ + 3H₂ ⇌ 2NH₃";
-            } else if (componentName === "Condenser") {
-                createMolecule("NH3", 0xf59e0b);
-                label = "Ammonia (NH₃)";
-            } else {
-                showPopup = false;
-            }
-
-            if (showPopup) {
-                popup.style.display = 'flex';
-                document.getElementById('moleculeLabel').innerText = label;
-            } else {
-                popup.style.display = 'none';
-            }
+            if (componentName === "Nitrogen Feed") { createMolecule("N2", 0x38bdf8); label = "Dinitrogen (N≡N)"; } 
+            else if (componentName === "Hydrogen Feed") { createMolecule("H2", 0xffffff); label = "Dihydrogen (H-H)"; }
+            else if (componentName === "Reactor") { createMolecule("NH3", 0xf59e0b); label = "N₂ + 3H₂ ⇌ 2NH₃"; }
+            else if (componentName === "Condenser") { createMolecule("NH3", 0xf59e0b); label = "Ammonia (NH₃)"; }
+            
+            if (label) { popup.style.display = 'flex'; document.getElementById('moleculeLabel').innerText = label; } 
+            else popup.style.display = 'none';
         }
 
         function createMolecule(type, color) {
             const group = new THREE.Group();
             const geo = new THREE.SphereGeometry(0.8, 16, 16);
             const mat = new THREE.MeshPhongMaterial({ color: color, shininess: 50 });
-            
             if (type === "N2") {
-                const atom1 = new THREE.Mesh(geo, mat); atom1.position.x = -0.6;
-                const atom2 = new THREE.Mesh(geo, mat); atom2.position.x = 0.6;
-                group.add(atom1, atom2);
+                const a1 = new THREE.Mesh(geo, mat); a1.position.x = -0.6;
+                const a2 = new THREE.Mesh(geo, mat); a2.position.x = 0.6; group.add(a1, a2);
             } else if (type === "NH3") {
                 const n = new THREE.Mesh(geo, mat);
-                const hGeo = new THREE.SphereGeometry(0.4, 16, 16);
-                const hMat = new THREE.MeshPhongMaterial({ color: 0xffffff });
-                
-                const h1 = new THREE.Mesh(hGeo, hMat); h1.position.set(0.8, -0.5, 0);
-                const h2 = new THREE.Mesh(hGeo, hMat); h2.position.set(-0.6, -0.5, 0.7);
-                const h3 = new THREE.Mesh(hGeo, hMat); h3.position.set(-0.6, -0.5, -0.7);
-                group.add(n, h1, h2, h3);
-            } else { // H2
-                const hGeo = new THREE.SphereGeometry(0.5, 16, 16);
-                const h1 = new THREE.Mesh(hGeo, mat); h1.position.x = -0.4;
-                const h2 = new THREE.Mesh(hGeo, mat); h2.position.x = 0.4;
-                group.add(h1, h2);
-            }
-            
-            molScene.add(group);
-            molecules = [group]; // Store for rotation
-        }
-
-        function createReactionAnimation() {
-            // Simply showing products and reactants swirling for now
-            createMolecule("NH3", 0xf59e0b);
-        }
-
-        // --- UI HANDLERS ---
-        function initUI() {
-            // Settings / Controls Panel
-            document.getElementById('btnSettings').addEventListener('click', () => {
-                document.getElementById('controlPanel').classList.add('active');
-            });
-            document.getElementById('btnCloseControls').addEventListener('click', () => {
-                document.getElementById('controlPanel').classList.remove('active');
-            });
-
-            // Sliders (Le Chatelier Logic)
-            const sliderTemp = document.getElementById('sliderTemp');
-            const sliderPress = document.getElementById('sliderPress');
-
-            const updateCalc = () => {
-                state.temp = parseInt(sliderTemp.value);
-                state.pressure = parseInt(sliderPress.value);
-                
-                document.getElementById('valTemp').innerText = state.temp + "°C";
-                document.getElementById('valPress').innerText = state.pressure + " atm";
-                
-                // Mock calculation of Ammonia Yield % based on typical charts
-                // Lower T = Higher Yield, Higher P = Higher Yield
-                let yieldVal = (20000 / state.temp) + (state.pressure / 10) - 20; 
-                yieldVal = Math.max(0, Math.min(98, yieldVal)); // Clamp
-                
-                document.getElementById('valYield').innerText = yieldVal.toFixed(1) + "%";
-                state.yield = yieldVal;
-            };
-
-            sliderTemp.addEventListener('input', updateCalc);
-            sliderPress.addEventListener('input', updateCalc);
-
-            // Bottom Toggles
-            document.getElementById('btnXray').addEventListener('click', (e) => {
-                state.isXray = !state.isXray;
-                e.currentTarget.classList.toggle('active');
-                
-                // Toggle visibility of shells vs internals
-                rootGroup.traverse((child) => {
-                    if (child.name === "Shell") {
-                        child.material.transparent = true;
-                        child.material.opacity = state.isXray ? 0.2 : 1.0;
-                    }
-                    if (child.name === "Internals") {
-                        child.visible = state.isXray;
-                    }
-                });
-            });
-
-            document.getElementById('btnFlow').addEventListener('click', (e) => {
-                state.flowActive = !state.flowActive;
-                e.currentTarget.classList.toggle('active');
-            });
-            
-            document.getElementById('btnReset').addEventListener('click', () => {
-                if(rootGroup) {
-                    gsap.to(rootGroup.rotation, {x:0, y:0, z:0, duration: 1});
-                }
-            });
-            
-            document.getElementById('btnExit').addEventListener('click', () => {
-                location.reload();
-            });
+                const hGeo = new THREE.SphereGeometry(0.4, 16, 16); const hMat = new THREE.MeshPhongMaterial({color:0xffffff});
+                const h1 = new THREE.Mesh(hGeo, hMat); h1.position.set(0.8,-0.5,0);
+                const h2 = new THREE.Mesh(hGeo, hMat); h2.position.set(-0.6,-0.5,0.7);
+                const h3 = new THREE.Mesh(hGeo, hMat); h3.position.set(-0.6,-0.5,-0.7); group.add(n, h1, h2, h3);
+            } else { const h1 = new THREE.Mesh(new THREE.SphereGeometry(0.5), mat); h1.position.x = -0.4; const h2 = new THREE.Mesh(new THREE.SphereGeometry(0.5), mat); h2.position.x = 0.4; group.add(h1, h2); }
+            molScene.add(group); molecules = [group];
         }
 
         function initAudio() {
-            const synth = window.speechSynthesis;
             document.getElementById('btnAudio').addEventListener('click', (e) => {
-                state.audioEnabled = !state.audioEnabled;
-                e.currentTarget.classList.toggle('active');
-                if(!state.audioEnabled) synth.cancel();
+                state.audioEnabled = !state.audioEnabled; e.currentTarget.classList.toggle('active');
+                if(!state.audioEnabled) { window.speechSynthesis.cancel(); if(audioCtx) audioCtx.close(); }
             });
         }
-
         function speak(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.pitch = 1;
-                utterance.rate = 1;
-                window.speechSynthesis.speak(utterance);
-            }
+            if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); window.speechSynthesis.speak(u); }
         }
 
         // --- ANIMATION LOOP ---
@@ -1030,25 +1046,16 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            // Rotate Molecules in popup
-            if (molScene && molecules.length > 0) {
-                molecules.forEach(m => {
-                    m.rotation.x += 0.01;
-                    m.rotation.y += 0.01;
-                });
-                molRenderer.render(molScene, molCamera);
+            // Timer for Gamification
+            const now = Date.now();
+            if (!state.isEmergency && now - state.lastEmergency > 60000) { // 60 seconds
+                triggerEmergency();
             }
 
-            // Update Particle Flow
+            if (molScene && molecules.length > 0) { molecules.forEach(m => { m.rotation.x += 0.01; m.rotation.y += 0.01; }); molRenderer.render(molScene, molCamera); }
             updateFlow();
-
-            if (state.mode === '3D') {
-                renderer.render(scene, camera);
-            } else if (state.mode === 'AR') {
-                renderer.render(scene, camera);
-            }
+            renderer.render(scene, camera);
         }
-
     </script>
 </body>
 </html>
