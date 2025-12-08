@@ -514,6 +514,18 @@
             color: var(--dark);
             line-height: 1.7;
         }
+        
+        /* Highlight specific for gamification card */
+        .feature-card.gamified {
+            border: 1px solid #ef4444;
+        }
+        .feature-card.gamified::before {
+            background: linear-gradient(90deg, #ef4444, #f59e0b);
+        }
+        .feature-card.gamified .feature-icon {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
 
         /* ===== BENEFITS SECTION ===== */
         .benefits-section {
@@ -782,7 +794,7 @@
                 <!-- App Logo -->
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
-                        <!-- REPLACE WITH YOUR APP LOGO: images/HB-Logo.png -->
+                        <!-- REPLACE WITH YOUR APP LOGO -->
                         <img src="images/logo.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/logo.png'" alt="Haber-Bosch AR Logo" class="app-logo-img">
                     </div>
                 </div>
@@ -790,18 +802,18 @@
                 <h1 class="lang-en">Haber-Bosch WebAR Lab</h1>
                 <h1 class="lang-ar">مختبر هابر-بوش للواقع المعزز</h1>
                 
-                <div class="hero-subtitle lang-en">Immersive Thermodynamics Education</div>
-                <div class="hero-subtitle lang-ar">تعليم غامر للديناميكا الحرارية</div>
+                <div class="hero-subtitle lang-en">Immersive Thermodynamics Education & CLIL</div>
+                <div class="hero-subtitle lang-ar">تعليم غامر للديناميكا الحرارية واللغة الإنجليزية للأغراض الخاصة</div>
                 
                 <p class="hero-description lang-en">
                     A next-generation WebAR experience designed to visualize the invisible. 
                     Students interact with industrial equipment, manipulate thermodynamic parameters, 
-                    and observe chemical equilibrium in real-time, bridging the gap between textbook theory and plant reality.
+                    and practice specialized engineering English through gamified challenges.
                 </p>
                 <p class="hero-description lang-ar">
-                    تجربة واقع معزز عبر الويب (WebAR) من الجيل التالي مصممة لتصور ما لا يمكن رؤيته. 
-                    يتفاعل الطلاب مع المعدات الصناعية، ويتحكمون في المعاملات الديناميكية الحرارية، 
-                    ويراقبون التوازن الكيميائي في الوقت الفعلي، مما يسد الفجوة بين النظريات الدراسية والواقع الصناعي.
+                    تجربة واقع معزز من الجيل التالي مصممة لتصور ما لا يمكن رؤيته.
+                    يتفاعل الطلاب مع المعدات الصناعية، ويتحكمون في المعاملات الحرارية،
+                    ويمارسون اللغة الإنجليزية الهندسية المتخصصة من خلال تحديات تفاعلية (Gamification).
                 </p>
             </div>
         </section>
@@ -812,29 +824,24 @@
             <h4 class="lang-ar"><i class="fas fa-camera"></i> الوصول للكاميرا مطلوب</h4>
             
             <p class="lang-en">
-                This application requires camera access to enable the Augmented Reality features (scanning targets).
-                All video processing happens locally on your device; no video data is sent to external servers.
+                This application requires camera access to enable Augmented Reality.
+                Video processing happens locally on your device; no data is sent to external servers.
             </p>
             <p class="lang-ar">
-                يتطلب هذا التطبيق الوصول إلى الكاميرا لتمكين ميزات الواقع المعزز (مسح الأهداف).
-                تتم معالجة جميع بيانات الفيديو محلياً على جهازك؛ لا يتم إرسال أي بيانات إلى خوادم خارجية.
+                يتطلب هذا التطبيق الوصول إلى الكاميرا لتمكين الواقع المعزز.
+                تتم معالجة الفيديو محلياً على جهازك؛ لا يتم إرسال أي بيانات لخوادم خارجية.
             </p>
             
-            <p class="lang-en">
-                Supported on <strong>iOS Safari</strong> and <strong>Android Chrome</strong>.
-            </p>
-            <p class="lang-ar">
-                مدعوم على متصفحي <strong>iOS Safari</strong> و <strong>Android Chrome</strong>.
-            </p>
+            <p class="lang-en">Supported on <strong>iOS Safari</strong> and <strong>Android Chrome</strong>.</p>
+            <p class="lang-ar">مدعوم على <strong>iOS Safari</strong> و <strong>Android Chrome</strong>.</p>
         </div>
 
         <!-- Workflow Section -->
         <section class="workflow-container">
-            <h2 class="section-title lang-en">How It Works</h2>
-            <h2 class="section-title lang-ar">كيف يعمل النظام</h2>
+            <h2 class="section-title lang-en">Learning Workflow</h2>
+            <h2 class="section-title lang-ar">سير عملية التعلم</h2>
             
             <div class="workflow-image-container">
-                <!-- REPLACE WITH YOUR WORKFLOW SCREENSHOT: images/AR-Workflow.png -->
                 <img src="images/ScreenshotAR.png" 
                      onerror="this.style.background='#0d1b2a'; this.src='http://waleedmandour.org/projects/XR/images/ScreenshotAR.png'"
                      class="workflow-image" 
@@ -844,24 +851,24 @@
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <h4 class="lang-en">Scan & Initialize</h4>
-                    <h4 class="lang-ar">المسح والتهيئة</h4>
-                    <p class="lang-en">Point your camera at the target marker to instantiate the 3D industrial plant in your physical space.</p>
-                    <p class="lang-ar">وجه الكاميرا نحو العلامة المستهدفة لإظهار المصنع الصناعي ثلاثي الأبعاد في مساحتك الفعلية.</p>
+                    <h4 class="lang-en">Scan & Instantiate</h4>
+                    <h4 class="lang-ar">المسح والتجسيد</h4>
+                    <p class="lang-en">Point camera at the marker to project the 3D plant. Labeling helps learners associate terms with physical components.</p>
+                    <p class="lang-ar">وجه الكاميرا نحو العلامة لإظهار المصنع ثلاثي الأبعاد. تساعد التسميات المتعلمين على ربط المصطلحات بالمكونات المادية.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
-                    <h4 class="lang-en">Control Parameters</h4>
-                    <h4 class="lang-ar">التحكم في المعاملات</h4>
-                    <p class="lang-en">Adjust Temperature and Pressure sliders to see immediate effects on reaction yield via Le Chatelier’s principle.</p>
-                    <p class="lang-ar">اضبط منزلقات درجة الحرارة والضغط لرؤية التأثيرات الفورية على ناتج التفاعل وفقاً لمبدأ لوشاتلييه.</p>
+                    <h4 class="lang-en">Experiment</h4>
+                    <h4 class="lang-ar">التجربة والتحكم</h4>
+                    <p class="lang-en">Manipulate temperature and pressure sliders. Observe how "Yield" changes, reinforcing cause-and-effect vocabulary.</p>
+                    <p class="lang-ar">تلاعب بمنزلقات الحرارة والضغط. لاحظ كيف يتغير "الناتج"، مما يعزز مفردات السبب والنتيجة.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
-                    <h4 class="lang-en">Visualize & Learn</h4>
-                    <h4 class="lang-ar">التصور والتعلم</h4>
-                    <p class="lang-en">Toggle "X-Ray Mode" to see internal flows or zoom in to view molecular bond breaking animation.</p>
-                    <p class="lang-ar">بدّل إلى "وضع الأشعة السينية" لرؤية التدفقات الداخلية أو قم بالتكبير لمشاهدة رسوم تكسير الروابط الجزيئية.</p>
+                    <h4 class="lang-en">Gamified Assessment</h4>
+                    <h4 class="lang-ar">تقييم قائم على اللعب</h4>
+                    <p class="lang-en">Respond to "System Decomposition" alerts by actively adjusting parameters, testing knowledge under pressure.</p>
+                    <p class="lang-ar">استجب لتنبيهات "تحلل النظام" عن طريق ضبط المعاملات بنشاط، مما يختبر المعرفة تحت الضغط.</p>
                 </div>
             </div>
         </section>
@@ -874,46 +881,84 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-flask"></i></div>
-                    <h3 class="lang-en">Thermodynamic Logic</h3>
-                    <h3 class="lang-ar">منطق الديناميكا الحرارية</h3>
+                    <h3 class="lang-en">Thermodynamic Engine</h3>
+                    <h3 class="lang-ar">محرك ديناميكا حرارية</h3>
                     <p class="lang-en">
-                        A built-in calculation engine updates the theoretical ammonia yield in real-time as users manipulate reactor conditions (300-600°C).
+                        Real-time calculation of ammonia yield based on Le Chatelier’s principle. Visualizes the trade-off between kinetics and thermodynamics.
                     </p>
                     <p class="lang-ar">
-                        محرك حساب مدمج يقوم بتحديث ناتج الأمونيا النظري في الوقت الفعلي بينما يتلاعب المستخدمون بظروف المفاعل (300-600 درجة مئوية).
+                        حساب فوري لناتج الأمونيا بناءً على مبدأ لوشاتلييه. يصور التوازن بين الحركية والديناميكا الحرارية.
                     </p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-eye"></i></div>
-                    <h3 class="lang-en">X-Ray Vision</h3>
-                    <h3 class="lang-ar">رؤية الأشعة السينية</h3>
+                
+                <div class="feature-card gamified">
+                    <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3 class="lang-en">Gamified Learning</h3>
+                    <h3 class="lang-ar">التعلم القائم على اللعب</h3>
                     <p class="lang-en">
-                        Allows students to look <em>inside</em> steel reactors and condensers to understand catalyst placement and liquefaction coils.
+                        <strong>Challenge Mode:</strong> Every 60 seconds, the system destabilizes. Students must intervene to restore equilibrium, promoting active engagement and focus.
                     </p>
                     <p class="lang-ar">
-                        تتيح للطلاب النظر <em>داخل</em> المفاعلات الفولاذية والمكثفات لفهم أماكن وضع المحفزات وملفات التسييل.
+                        <strong>وضع التحدي:</strong> كل 60 ثانية، يفقد النظام استقراره. يجب على الطلاب التدخل لاستعادة التوازن، مما يعزز المشاركة والتركيز.
                     </p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-atom"></i></div>
-                    <h3 class="lang-en">Molecular Visualization</h3>
-                    <h3 class="lang-ar">التصور الجزيئي</h3>
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3 class="lang-en">Interactive Quizzes</h3>
+                    <h3 class="lang-ar">اختبارات تفاعلية</h3>
                     <p class="lang-en">
-                        Context-aware 3D popups visualize the atomic breakdown of N₂ and H₂ bonds and the formation of NH₃.
+                        Integrated pop-up quizzes test definition recall and process understanding immediately after interaction, reinforcing ESP vocabulary.
                     </p>
                     <p class="lang-ar">
-                        نوافذ منبثقة ثلاثية الأبعاد واعية بالسياق تصور التفكك الذري لروابط N₂ و H₂ وتكوين NH₃.
+                        اختبارات منبثقة مدمجة تختبر تذكر التعاريف وفهم العملية فور التفاعل، مما يعزز مفردات اللغة الإنجليزية للأغراض الخاصة.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Benefits Section -->
+        <!-- Pedagogical Benefits Section -->
         <section class="benefits-section">
-            <h2 class="section-title lang-en">Why This Matters?</h2>
-            <h2 class="section-title lang-ar">لماذا هذا مهم؟</h2>
+            <h2 class="section-title lang-en">Pedagogical Value</h2>
+            <h2 class="section-title lang-ar">القيمة التربوية</h2>
             
             <div class="audience-grid">
+                <!-- For Language Learners -->
+                <div class="audience-column">
+                    <h3 class="lang-en">For Language Learners (ESP)</h3>
+                    <h3 class="lang-ar">لمتعلمي اللغة (ESP)</h3>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Contextualized Vocabulary</strong>
+                                <span class="lang-en">Terms like "Exothermic," "Equilibrium," and "Catalyst" are learned in a rich 3D context rather than abstract lists.</span>
+                                <strong class="lang-ar">مفردات في سياقها</strong>
+                                <span class="lang-ar">يتم تعلم مصطلحات مثل "طارد للحرارة" و"توازن" في سياق ثلاثي الأبعاد غني بدلاً من قوائم مجردة.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Task-Based Learning (TBL)</strong>
+                                <span class="lang-en">The "Emergency Alert" forces students to process instructions and act quickly, simulating real-world engineering pressure.</span>
+                                <strong class="lang-ar">التعلم القائم على المهام</strong>
+                                <span class="lang-ar">يجبر "تنبيه الطوارئ" الطلاب على معالجة التعليمات والتصرف بسرعة، محاكياً ضغط العمل الهندسي الحقيقي.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Dual Coding</strong>
+                                <span class="lang-en">Combining visual data (3D models) with verbal labels enhances memory retention (Paivio's Dual Coding Theory).</span>
+                                <strong class="lang-ar">الترميز المزدوج</strong>
+                                <span class="lang-ar">الجمع بين البيانات البصرية (نماذج 3D) والتسميات اللفظية يعزز الاحتفاظ بالذاكرة (نظرية بايفيو).</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- For Engineering Students -->
                 <div class="audience-column">
                     <h3 class="lang-en">For Engineering Students</h3>
                     <h3 class="lang-ar">لطلاب الهندسة</h3>
@@ -921,44 +966,19 @@
                         <li>
                             <div class="check-icon">✓</div>
                             <div class="benefit-content">
-                                <strong class="lang-en">Active Recall</strong>
-                                <span class="lang-en">Learn by doing. Interacting with the machinery improves retention of complex process flows.</span>
-                                <strong class="lang-ar">الاسترجاع النشط</strong>
-                                <span class="lang-ar">تعلم بالممارسة. التفاعل مع الآلات يحسن الاحتفاظ بتدفقات العمليات المعقدة.</span>
+                                <strong class="lang-en">Concept Visualization</strong>
+                                <span class="lang-en">Makes abstract concepts like molecular bond breaking and phase changes visible via "X-Ray Mode."</span>
+                                <strong class="lang-ar">تصور المفاهيم</strong>
+                                <span class="lang-ar">يجعل المفاهيم المجردة مثل تكسير الروابط الجزيئية وتغيرات الطور مرئية عبر "وضع الأشعة السينية".</span>
                             </div>
                         </li>
                         <li>
                             <div class="check-icon">✓</div>
                             <div class="benefit-content">
-                                <strong class="lang-en">Safety First</strong>
-                                <span class="lang-en">Experiment with high-pressure scenarios (200 atm) in a risk-free virtual environment.</span>
-                                <strong class="lang-ar">السلامة أولاً</strong>
-                                <span class="lang-ar">جرب سيناريوهات الضغط العالي (200 ضغط جوي) في بيئة افتراضية خالية من المخاطر.</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="audience-column">
-                    <h3 class="lang-en">For Educators</h3>
-                    <h3 class="lang-ar">للمعلمين</h3>
-                    <ul class="benefit-list">
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Zero Installation</strong>
-                                <span class="lang-en">Runs entirely in the browser (WebAR). No app store downloads required for students.</span>
-                                <strong class="lang-ar">بدون تثبيت</strong>
-                                <span class="lang-ar">يعمل بالكامل في المتصفح (WebAR). لا يتطلب تنزيلات من متجر التطبيقات للطلاب.</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Vocabulary Retention</strong>
-                                <span class="lang-en">Scientific terms are integrated into the AR HUD, reinforcing correct terminology.</span>
-                                <strong class="lang-ar">الاحتفاظ بالمفردات</strong>
-                                <span class="lang-ar">يتم دمج المصطلحات العلمية في شاشة العرض الرأسية (HUD)، مما يعزز المصطلحات الصحيحة.</span>
+                                <strong class="lang-en">Safe Experimentation</strong>
+                                <span class="lang-en">Simulate dangerous high-pressure environments (200 atm) safely within the classroom.</span>
+                                <strong class="lang-ar">تجريب آمن</strong>
+                                <span class="lang-ar">محاكاة بيئات الضغط العالي الخطرة (200 ضغط جوي) بأمان داخل الفصل الدراسي.</span>
                             </div>
                         </li>
                     </ul>
@@ -981,31 +1001,29 @@
                     <span>MindAR.js</span>
                 </div>
                 <div class="api-badge">
-                    <i class="fas fa-magic"></i>
-                    <span>WebGL</span>
+                    <i class="fas fa-gamepad"></i>
+                    <span>Gamification</span>
                 </div>
                 <div class="api-badge">
-                    <i class="fas fa-wind"></i>
-                    <span>GSAP Animation</span>
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>CLIL Methodology</span>
                 </div>
             </div>
         </section>
 
         <!-- CTA Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Experience the Process</h2>
-            <h2 class="cta-title lang-ar">جرب العملية</h2>
+            <h2 class="cta-title lang-en">Ready to Stabilize the Reactor?</h2>
+            <h2 class="cta-title lang-ar">مستعد لتثبيت المفاعل؟</h2>
             
             <p class="cta-subtitle lang-en">
-                Launch the simulation directly in your browser. 
-                Have your tracking marker ready or use the non-AR 3D mode.
+                Launch the simulation now. Ensure your audio is on for the emergency alerts.
             </p>
             <p class="cta-subtitle lang-ar">
-                ابدأ المحاكاة مباشرة في متصفحك.
-                جهز علامة التتبع الخاصة بك أو استخدم وضع العرض ثلاثي الأبعاد (بدون الواقع المعزز).
+                ابدأ المحاكاة الآن. تأكد من تشغيل الصوت لسماع تنبيهات الطوارئ.
             </p>
             
-            <button class="cta-button" onclick="'https://waleedmandour.org/projects/XR/app.html'">
+            <button class="cta-button" onclick="window.location.href='https://waleedmandour.org/projects/XR/app.html'">
                 <i class="fas fa-rocket"></i> 
                 <span class="lang-en">Launch WebAR Lab</span>
                 <span class="lang-ar">تشغيل المختبر</span>
@@ -1015,13 +1033,13 @@
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">© 2025 AR Engineering Labs • Designed for Education</span>
-                    <span class="lang-ar">© 2025 مختبرات الهندسة للواقع المعزز • صُمم للتعليم</span>
+                    <span class="lang-en">© 2025 AR Engineering Labs • Designed for LANC2160</span>
+                    <span class="lang-ar">© 2025 مختبرات الهندسة للواقع المعزز • صُمم لمقرر LANC2160</span>
                 </div>
                 
                 <div style="margin-top: 8px;">
-                    <span class="lang-en">Part of the <a href="#">Dr. Waleed Mandour's Project Portfolio</a></span>
-                    <span class="lang-ar">جزء من <a href="#">محفظة مشاريع د. وليد مندور</a></span>
+                    <span class="lang-en">Developed by <a href="#" style="color: var(--secondary);">Dr. Waleed Mandour</a></span>
+                    <span class="lang-ar">طوره <a href="#" style="color: var(--secondary);">د. وليد مندور</a></span>
                 </div>
             </div>
         </footer>
