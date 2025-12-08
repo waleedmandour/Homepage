@@ -246,6 +246,43 @@
             padding: 10px 20px;
             cursor: pointer;
             font-family: var(--font-code);
+            font-size: 0.9rem;
+        }
+        
+        .btn-text {
+            margin-top: 10px;
+            background: none;
+            border: none;
+            color: var(--accent-cyan);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Modal for Target Image */
+        #targetModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .target-image-display {
+            width: 80%;
+            max-width: 300px;
+            height: 300px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #000;
+            text-align: center;
+            padding: 20px;
         }
 
         .tooltip {
@@ -286,6 +323,19 @@
         <p style="font-family: var(--font-code); color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">LOADING ASSETS & PHYSICS ENGINE...</p>
     </div>
 
+    <!-- Target Image Modal -->
+    <div id="targetModal">
+        <h3 style="color: white; margin-bottom: 20px;">Scan this Image</h3>
+        <div class="target-image-display">
+            <!-- This acts as the placeholder since we don't have the PNG file URL, only the mind file -->
+            <div style="border: 2px dashed #333; padding: 20px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                <p>Point camera at the Haber-Bosch Target Marker</p>
+            </div>
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
+    </div>
+
     <!-- Start Screen -->
     <div id="startScreen" style="display: none;">
         <i class="fas fa-industry" style="font-size: 4rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
@@ -293,13 +343,18 @@
         <p style="max-width: 300px; text-align: center; margin-top: 20px; color: var(--text-muted);">
             Interactive engineering simulation of ammonia synthesis. Explore thermodynamics and process flow.
         </p>
+        
         <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
+        <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View Target Marker</button>
         <button class="btn-secondary" id="btnStart3D">Desktop / Non-AR Mode</button>
+        
         <div style="margin-top: 30px; font-size: 0.7rem; color: var(--text-muted);">
             <i class="fab fa-apple"></i> Optimized for iOS Safari & Android Chrome
         </div>
-        <div style="margin-top: 30px; font-size: 0.7rem; color: var(--text-muted);">
-            <i class="fab fa-copywright</i> Developed by Dr. Waleed Mandour, 2025.
+        
+        <!-- Updated Footer -->
+        <div style="margin-top: 40px; font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; width: 80%; text-align: center;">
+            Developed by: Waleed Mandour, 2025
         </div>
     </div>
 
@@ -512,10 +567,11 @@
         async function initARMode() {
             const container = document.getElementById('container');
             
-            // Standard Image Target (Using MindAR example card for demo purposes - replace with your specific chemical marker)
+            // MindAR Initialization with specific URL
             const mindar = new window.MINDAR.IMAGE.MindARThree({
                 container: container,
-                imageTargetSrc: "https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind",
+                // UPDATED: Pointing to your specific mind file
+                imageTargetSrc: "http://waleedmandour.org/projects/AR/images/targets.mind",
                 filterMinCF: 0.001, 
                 filterBeta: 1000
             });
