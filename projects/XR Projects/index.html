@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Haber-Bosch Process WebAR Lab | Chemical Engineering</title>
+    <meta name="description" content="Interactive WebAR simulation of the Haber-Bosch ammonia synthesis process for chemical engineering education">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/examples/js/libs/stats.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image-three.prod.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary-blue: #0d1b2a;
+            --secondary-blue: #1b263b;
+            --accent-blue: #415a77;
+            --light-blue: #778da9;
+            --highlight: #e0e1dd;
+            --reactor-color: #5a6268;
+            --n2-color: #4d8ac8;
+            --h2-color: #2ecc71;
+            --nh3-color: #e67e22;
+            --recycle-color: #95a5a6;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--highlight);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Loading Screen */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--light-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Instruction View */
+        #instructionView {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--light-blue), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--light-blue);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .target-section, .instructions-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .target-section h2, .instructions-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--highlight);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .target-image-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .target-image {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(45deg, #0d1b2a 25%, #1b263b 25%, #1b263b 50%, #0d1b2a 50%, #0d1b2a 75%, #1b263b 75%);
+            background-size: 40px 40px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .target-image::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .target-image::after {
+            content: 'N₂ + H₂';
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            z-index: 2;
+        }
+
+        .target-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: var(--primary-blue);
+        }
+
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid var(--primary-blue);
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .shape.square {
+            width: 50px;
+            height: 50px;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .shape.hexagon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-blue);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .shape.circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .instructions-list {
+            list-style: none;
+        }
+
+        .instructions-list li {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .instructions-list li i {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--highlight);
+        }
+
+        .process-overview {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .process-overview h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* AR Container */
+        #arContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: none;
+        }
+
+        #arScene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Control Panel */
+        #controlPanel {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(13, 27, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            pointer-events: all;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow);
+            z-index: 30;
+        }
+
+        .control-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--highlight);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .control-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .step-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+        .step-slider-container span {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            min-width: 120px;
+            font-size: 0.95rem;
+        }
+
+        .slider {
+            flex-grow: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--light-blue);
+            cursor: pointer;
+            border: 3px solid var(--primary-blue);
+        }
+
+        /* Info Card */
+        .info-card {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(13, 27, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            width: 320px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            pointer-events: all;
+            z-index: 30;
+        }
+
+        .info-card.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .info-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .info-card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--highlight);
+        }
+
+        .close-card {
+            background: none;
+            border: none;
+            color: var(--light-blue);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .close-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .info-card-content {
+            margin-bottom: 20px;
+        }
+
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .parameter {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .parameter-label {
+            font-size: 0.85rem;
+            color: var(--light-blue);
+            margin-bottom: 5px;
+        }
+
+        .parameter-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--highlight);
+        }
+
+        .chemical-equation {
+            background: rgba(65, 90, 119, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            border: 1px solid rgba(65, 90, 119, 0.4);
+        }
+
+        .info-audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .audio-btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .audio-btn:hover {
+            background: #4a6b96;
+        }
+
+        /* Process Visualization */
+        #processVisualization {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(13, 27, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            width: 220px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow);
+            z-index: 30;
+            pointer-events: all;
+        }
+
+        .visualization-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .process-flow {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-progress {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, var(--n2-color), var(--h2-color), var(--nh3-color));
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .flow-markers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .flow-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .flow-marker.active {
+            border-color: var(--highlight);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .flow-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--light-blue);
+        }
+
+        /* Start Button */
+        .start-ar-btn {
+            background: linear-gradient(135deg, var(--accent-blue), var(--light-blue));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px auto 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(65, 90, 119, 0.3);
+            max-width: 300px;
+        }
+
+        .start-ar-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(65, 90, 119, 0.4);
+        }
+
+        .start-ar-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-blue);
+            font-size: 0.9rem;
+        }
+
+        .compatibility-warning {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                gap: 20px;
+            }
+            
+            .target-section, .instructions-section {
+                padding: 20px;
+            }
+            
+            .target-image {
+                width: 220px;
+                height: 220px;
+            }
+            
+            #controlPanel {
+                bottom: 20px;
+                padding: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
+            }
+            
+            .step-slider-container {
+                order: -1;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .info-card {
+                top: 20px;
+                right: 20px;
+                left: 20px;
+                width: auto;
+            }
+            
+            #processVisualization {
+                top: 20px;
+                left: 20px;
+                width: calc(100% - 40px);
+            }
+        }
+
+        /* Animation for particles */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes flow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(1000%); }
+        }
+
+        /* Stats */
+        #stats {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loader"></div>
+        <h2 style="margin-top: 20px; color: var(--light-blue);">Initializing Haber-Bosch AR Lab</h2>
+        <p id="loadingText" style="margin-top: 10px; color: var(--light-blue); text-align: center; max-width: 300px;">
+            Loading 3D models and AR engine...
+        </p>
+    </div>
+
+    <!-- Instruction View -->
+    <div id="instructionView">
+        <div class="container">
+            <header class="header">
+                <h1>Haber-Bosch Process AR Lab</h1>
+                <p class="subtitle">Interactive WebAR simulation for chemical engineering education. Visualize and interact with the ammonia synthesis process in augmented reality.</p>
+            </header>
+            
+            <div class="content-grid">
+                <section class="target-section">
+                    <h2><i class="fas fa-bullseye"></i> AR Target Image</h2>
+                    <div class="target-image-container">
+                        <div class="target-image">
+                            <div class="target-shapes">
+                                <div class="shape triangle"></div>
+                                <div class="shape square"></div>
+                                <div class="shape hexagon"></div>
+                                <div class="shape circle"></div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 20px; color: var(--light-blue); text-align: center;">
+                            Point your camera at this target image to activate the AR experience
+                        </p>
+                    </div>
+                    
+                    <div class="compatibility-warning">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                        <div>
+                            <strong>Compatibility Note:</strong> For best results, use a mobile device with a modern browser (Chrome, Safari) and ensure good lighting conditions.
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="instructions-section">
+                    <h2><i class="fas fa-graduation-cap"></i> How to Use</h2>
+                    <ul class="instructions-list">
+                        <li>
+                            <i class="fas fa-camera"></i>
+                            <strong>Allow Camera Access</strong><br>
+                            When prompted, grant permission to use your device's camera.
+                        </li>
+                        <li>
+                            <i class="fas fa-vector-square"></i>
+                            <strong>Scan the Target Image</strong><br>
+                            Point your camera at the target image shown on the left.
+                        </li>
+                        <li>
+                            <i class="fas fa-hand-pointer"></i>
+                            <strong>Interact with 3D Model</strong><br>
+                            Tap on different components to learn about their function.
+                        </li>
+                        <li>
+                            <i class="fas fa-volume-up"></i>
+                            <strong>Listen to Explanations</strong><br>
+                            Audio explanations will play for each component you select.
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            
+            <section class="process-overview">
+                <h2><i class="fas fa-industry"></i> Process Overview</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Nitrogen Extraction</h3>
+                        <p>N₂ from air via cryogenic distillation</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Hydrogen Production</h3>
+                        <p>H₂ from natural gas via steam reforming</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Compression</h3>
+                        <p>Gases compressed to 150-300 atm</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3>Catalytic Reaction</h3>
+                        <p>N₂ + 3H₂ → 2NH₃ at 400-500°C</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h3>Separation & Recycling</h3>
+                        <p>NH₃ separated, unreacted gases recycled</p>
+                    </div>
+                </div>
+            </section>
+            
+            <button id="startAR" class="start-ar-btn">
+                <i class="fas fa-cube"></i> Launch AR Experience
+            </button>
+            
+            <div class="footer">
+                <p>WebAR Haber-Bosch Process Simulator | Designed for Chemical Engineering Education</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">Uses MindAR.js + Three.js | Optimized for mobile devices</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AR Container -->
+    <div id="arContainer">
+        <div id="arScene"></div>
+        <div class="ar-overlay">
+            <div id="processVisualization" style="display: none;">
+                <div class="visualization-title">
+                    <i class="fas fa-stream"></i> Process Flow
+                </div>
+                <div class="process-flow">
+                    <div class="flow-progress" id="flowProgress"></div>
+                    <div class="flow-markers">
+                        <div class="flow-marker" data-step="0" style="left: 0%;"></div>
+                        <div class="flow-marker" data-step="1" style="left: 25%;"></div>
+                        <div class="flow-marker" data-step="2" style="left: 50%;"></div>
+                        <div class="flow-marker" data-step="3" style="left: 75%;"></div>
+                        <div class="flow-marker" data-step="4" style="left: 100%;"></div>
+                    </div>
+                </div>
+                <div class="flow-labels">
+                    <span>Feed</span>
+                    <span>Mix</span>
+                    <span>React</span>
+                    <span>Separate</span>
+                    <span>Product</span>
+                </div>
+            </div>
+            
+            <div id="infoCard" class="info-card">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">Component Name</h3>
+                    <button class="close-card" id="closeCard">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="info-card-content">
+                    <p id="componentDescription">Component description will appear here.</p>
+                    
+                    <div class="parameter-grid" id="parameterGrid">
+                        <!-- Parameters will be inserted here -->
+                    </div>
+                    
+                    <div class="chemical-equation" id="chemicalEquation" style="display: none;">
+                        N₂ + 3H₂ ⇌ 2NH₃
+                    </div>
+                </div>
+                <div class="info-audio-controls">
+                    <button class="audio-btn" id="playAudio">
+                        <i class="fas fa-play"></i> Play Explanation
+                    </button>
+                    <button class="audio-btn" id="repeatAudio" style="background: rgba(255,255,255,0.1);">
+                        <i class="fas fa-redo"></i> Repeat
+                    </button>
+                </div>
+            </div>
+            
+            <div id="controlPanel" style="display: none;">
+                <div class="step-slider-container">
+                    <span id="stepLabel">Step 1: Gas Feed</span>
+                    <input type="range" min="0" max="4" value="0" class="slider" id="stepSlider">
+                </div>
+                
+                <button class="control-btn" id="resetView" title="Reset View">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                
+                <button class="control-btn" id="toggleAudio" title="Toggle Audio">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                
+                <button class="control-btn" id="toggleHelp" title="Show Help">
+                    <i class="fas fa-question"></i>
+                </button>
+                
+                <button class="control-btn" id="exitAR" title="Exit AR">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats for debugging -->
+    <div id="stats"></div>
+
+    <script>
+        // Main Application Controller
+        class HaberBoschAR {
+            constructor() {
+                // State variables
+                this.isARActive = false;
+                this.isAudioEnabled = true;
+                this.currentStep = 0;
+                this.selectedComponent = null;
+                this.lastAudioUtterance = null;
+                
+                // AR variables
+                this.mindARThree = null;
+                this.renderer = null;
+                this.scene = null;
+                this.camera = null;
+                this.controls = null;
+                
+                // 3D objects
+                this.components = {};
+                this.particles = {
+                    n2: [],
+                    h2: [],
+                    nh3: [],
+                    recycle: []
+                };
+                
+                // Component data
+                this.componentData = {
+                    reactor: {
+                        title: "Catalytic Reactor",
+                        description: "The heart of the Haber-Bosch process where nitrogen and hydrogen gases react over an iron catalyst to form ammonia. The reactor operates at high temperature (400-500°C) and pressure (150-300 atm) to favor ammonia production.",
+                        parameters: [
+                            { label: "Temperature", value: "450°C" },
+                            { label: "Pressure", value: "200 atm" },
+                            { label: "Catalyst", value: "Fe3O4 + K2O" },
+                            { label: "Conversion", value: "15-20%" }
+                        ],
+                        equation: "N₂ + 3H₂ ⇌ 2NH₃",
+                        audioText: "The catalytic reactor is the core of the Haber-Bosch process. Nitrogen and hydrogen gases are passed over an iron-based catalyst at approximately 450 degrees Celsius and 200 atmospheres of pressure. Under these conditions, the gases react to form ammonia. The reaction is reversible and exothermic, with typical single-pass conversion rates of 15 to 20 percent."
+                    },
+                    nitrogenFeed: {
+                        title: "Nitrogen Feed System",
+                        description: "Supplies high-purity nitrogen gas extracted from air via cryogenic distillation or pressure swing adsorption. Nitrogen is compressed and purified before entering the reactor.",
+                        parameters: [
+                            { label: "Purity", value: ">99.9%" },
+                            { label: "Source", value: "Air Separation" },
+                            { label: "Pressure", value: "200 atm" },
+                            { label: "Temperature", value: "30°C" }
+                        ],
+                        audioText: "The nitrogen feed system supplies high-purity nitrogen gas extracted from atmospheric air. This is typically achieved through cryogenic distillation or pressure swing adsorption processes. The nitrogen is then compressed to reactor pressure, approximately 200 atmospheres, and preheated before entering the catalytic reactor."
+                    },
+                    hydrogenFeed: {
+                        title: "Hydrogen Feed System",
+                        description: "Provides hydrogen gas typically produced from natural gas via steam methane reforming. Hydrogen is purified, compressed, and mixed with nitrogen in a 3:1 ratio.",
+                        parameters: [
+                            { label: "Purity", value: ">99.5%" },
+                            { label: "Source", value: "Steam Reforming" },
+                            { label: "H₂:N₂ Ratio", value: "3:1" },
+                            { label: "Pressure", value: "200 atm" }
+                        ],
+                        audioText: "The hydrogen feed system delivers hydrogen gas to the reactor. In modern plants, hydrogen is primarily produced via steam methane reforming of natural gas. The hydrogen is purified to remove carbon monoxide and other impurities, then compressed to reactor pressure. It's mixed with nitrogen in a precise 3-to-1 molar ratio before entering the reactor."
+                    },
+                    separator: {
+                        title: "Ammonia Separator",
+                        description: "Cools the reactor effluent to liquefy ammonia. Unreacted nitrogen and hydrogen gases are separated and recycled back to the reactor feed.",
+                        parameters: [
+                            { label: "Temperature", value: "-20°C" },
+                            { label: "Separation", value: "Condensation" },
+                            { label: "NH₃ Purity", value: ">99.8%" },
+                            { label: "Recycle Rate", value: "80-85%" }
+                        ],
+                        audioText: "The ammonia separator cools the reactor effluent to approximately minus 20 degrees Celsius, causing the ammonia to liquefy while unreacted nitrogen and hydrogen remain gaseous. The liquid ammonia is drawn off as product, while the unreacted gases are compressed and recycled back to the reactor inlet. This recycling is crucial for achieving high overall conversion rates."
+                    },
+                    storage: {
+                        title: "Ammonia Storage Tank",
+                        description: "Stores liquid ammonia under pressure or refrigeration. Ammonia is typically stored at -33°C at atmospheric pressure or at ambient temperature under pressure.",
+                        parameters: [
+                            { label: "State", value: "Liquid" },
+                            { label: "Storage Temp", value: "-33°C" },
+                            { label: "Capacity", value: "Variable" },
+                            { label: "Pressure", value: "Atmospheric" }
+                        ],
+                        audioText: "The ammonia storage tank holds liquid ammonia product. Ammonia is typically stored at minus 33 degrees Celsius at atmospheric pressure, or at ambient temperature under pressure. From storage, ammonia can be transported for use in fertilizers, refrigerants, or as a chemical feedstock. The Haber-Bosch process produces over 150 million metric tons of ammonia annually worldwide."
+                    },
+                    recycleCompressor: {
+                        title: "Recycle Compressor",
+                        description: "Compresses unreacted nitrogen and hydrogen gases from the separator for reintroduction into the reactor feed. This improves overall conversion efficiency.",
+                        parameters: [
+                            { label: "Function", value: "Gas Recycle" },
+                            { label: "Compression", value: "200 atm" },
+                            { label: "Flow Rate", value: "High" },
+                            { label: "Efficiency", value: ">85%" }
+                        ],
+                        audioText: "The recycle compressor takes unreacted nitrogen and hydrogen gases from the ammonia separator and compresses them back to reactor pressure for reintroduction into the feed stream. This recycling is essential for achieving high overall conversion efficiency in the Haber-Bosch process, as single-pass conversion is limited by thermodynamic equilibrium."
+                    }
+                };
+                
+                // Process steps
+                this.processSteps = [
+                    { label: "Step 1: Gas Feed", components: ["nitrogenFeed", "hydrogenFeed"] },
+                    { label: "Step 2: Mixing & Compression", components: ["reactor"] },
+                    { label: "Step 3: Catalytic Reaction", components: ["reactor"] },
+                    { label: "Step 4: Separation", components: ["separator", "recycleCompressor"] },
+                    { label: "Step 5: Storage", components: ["storage"] }
+                ];
+                
+                // Initialize the application
+                this.init();
+            }
+            
+            async init() {
+                // Update loading text
+                document.getElementById('loadingText').textContent = 'Loading 3D models and AR engine...';
+                
+                // Initialize Web Speech API
+                this.initSpeechSynthesis();
+                
+                // Set up event listeners
+                this.setupEventListeners();
+                
+                // Preload assets
+                await this.preloadAssets();
+                
+                // Hide loading screen after a short delay
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.display = 'none';
+                    }, 500);
+                }, 1000);
+            }
+            
+            initSpeechSynthesis() {
+                // Check browser support
+                if (!('speechSynthesis' in window)) {
+                    console.warn('Web Speech API not supported');
+                    document.getElementById('toggleAudio').style.display = 'none';
+                    document.getElementById('playAudio').style.display = 'none';
+                    document.getElementById('repeatAudio').style.display = 'none';
+                    this.isAudioEnabled = false;
+                }
+                
+                // Configure speech synthesis
+                this.speechSynth = window.speechSynthesis;
+                
+                // Get available voices
+                setTimeout(() => {
+                    this.voices = this.speechSynth.getVoices();
+                    // Prefer a female voice for better clarity
+                    this.selectedVoice = this.voices.find(voice => 
+                        voice.name.includes('Female') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female')
+                    ) || this.voices[0];
+                }, 500);
+            }
+            
+            setupEventListeners() {
+                // Start AR button
+                document.getElementById('startAR').addEventListener('click', () => this.startAR());
+                
+                // Control panel buttons
+                document.getElementById('resetView').addEventListener('click', () => this.resetView());
+                document.getElementById('toggleAudio').addEventListener('click', () => this.toggleAudio());
+                document.getElementById('toggleHelp').addEventListener('click', () => this.showHelp());
+                document.getElementById('exitAR').addEventListener('click', () => this.exitAR());
+                
+                // Info card buttons
+                document.getElementById('closeCard').addEventListener('click', () => this.closeInfoCard());
+                document.getElementById('playAudio').addEventListener('click', () => this.playComponentAudio());
+                document.getElementById('repeatAudio').addEventListener('click', () => this.repeatAudio());
+                
+                // Step slider
+                document.getElementById('stepSlider').addEventListener('input', (e) => this.changeStep(parseInt(e.target.value)));
+                
+                // Handle window resize
+                window.addEventListener('resize', () => this.onWindowResize());
+            }
+            
+            async preloadAssets() {
+                // In a real application, you would preload 3D models here
+                // For this demo, we'll create simple geometries at runtime
+                return Promise.resolve();
+            }
+            
+            async startAR() {
+                try {
+                    // Show AR container
+                    document.getElementById('instructionView').style.display = 'none';
+                    document.getElementById('arContainer').style.display = 'block';
+                    document.getElementById('processVisualization').style.display = 'block';
+                    document.getElementById('controlPanel').style.display = 'flex';
+                    
+                    // Update loading for AR
+                    document.getElementById('loadingScreen').style.display = 'flex';
+                    document.getElementById('loadingScreen').style.opacity = '1';
+                    document.getElementById('loadingText').textContent = 'Initializing AR camera and 3D scene...';
+                    
+                    // Initialize MindAR
+                    await this.initMindAR();
+                    
+                    // Hide loading screen
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                        }, 500);
+                    }, 1500);
+                    
+                    // Start animation loop
+                    this.startAnimationLoop();
+                    
+                    // Set initial step
+                    this.changeStep(0);
+                    
+                    // Play welcome audio
+                    setTimeout(() => {
+                        if (this.isAudioEnabled) {
+                            this.speak("Welcome to the Haber-Bosch Process AR Lab. Point your camera at the target image to begin. Tap on any component to learn more about it.");
+                        }
+                    }, 2000);
+                    
+                } catch (error) {
+                    console.error('Failed to start AR:', error);
+                    alert('Failed to initialize AR. Please ensure you have granted camera permissions and are using a compatible device.');
+                    this.exitAR();
+                }
+            }
+            
+            async initMindAR() {
+                // Initialize MindAR
+                const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+                    container: document.getElementById('arScene'),
+                    imageTargetSrc: 'https://raw.githubusercontent.com/hiukim/mind-ar-js/master/examples/image-tracking/assets/band-example/band.mind',
+                    maxTrack: 1,
+                    filterMinCF: 0.001,
+                    filterBeta: 0.001,
+                });
+                
+                this.mindARThree = mindarThree;
+                this.renderer = mindarThree.renderer;
+                this.scene = mindarThree.scene;
+                this.camera = mindarThree.camera;
+                
+                // Start MindAR
+                await mindarThree.start();
+                
+                // Create 3D models
+                this.create3DModels();
+                
+                // Set up anchor
+                const anchor = mindarThree.addAnchor(0);
+                anchor.group.add(this.modelsGroup);
+                
+                // Add lighting
+                this.addLighting();
+                
+                // Handle anchor found/lost
+                anchor.onTargetFound = () => {
+                    console.log('Target found');
+                    this.onTargetFound();
+                };
+                
+                anchor.onTargetLost = () => {
+                    console.log('Target lost');
+                    this.onTargetLost();
+                };
+            }
+            
+            create3DModels() {
+                // Create a group to hold all models
+                this.modelsGroup = new THREE.Group();
+                this.modelsGroup.position.set(0, 0, 0);
+                this.modelsGroup.scale.set(0.5, 0.5, 0.5);
+                
+                // Create reactor
+                this.createReactor();
+                
+                // Create feed systems
+                this.createFeedSystems();
+                
+                // Create separator and storage
+                this.createSeparationSystem();
+                
+                // Create recycle compressor
+                this.createRecycleCompressor();
+                
+                // Add particle systems
+                this.createParticleSystems();
+                
+                // Add the group to the scene
+                this.scene.add(this.modelsGroup);
+            }
+            
+            createReactor() {
+                // Main reactor vessel
+                const reactorGeometry = new THREE.CylinderGeometry(1.2, 1.2, 3, 32);
+                const reactorMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x5a6268,
+                    shininess: 30,
+                    transparent: true,
+                    opacity: 0.9
+                });
+                const reactor = new THREE.Mesh(reactorGeometry, reactorMaterial);
+                reactor.position.set(0, 1.5, 0);
+                reactor.userData = { component: 'reactor' };
+                
+                // Reactor head (top)
+                const headGeometry = new THREE.CylinderGeometry(1.3, 1.2, 0.3, 32);
+                const headMaterial = new THREE.MeshPhongMaterial({ color: 0x4a545c });
+                const head = new THREE.Mesh(headGeometry, headMaterial);
+                head.position.set(0, 3.15, 0);
+                
+                // Reactor bottom
+                const bottomGeometry = new THREE.CylinderGeometry(1.2, 1.3, 0.3, 32);
+                const bottom = new THREE.Mesh(bottomGeometry, headMaterial);
+                bottom.position.set(0, -0.15, 0);
+                
+                // Internal catalyst bed (visualization)
+                const catalystGeometry = new THREE.CylinderGeometry(1.1, 1.1, 2, 32);
+                const catalystMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0xa0522d,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                const catalyst = new THREE.Mesh(catalystGeometry, catalystMaterial);
+                catalyst.position.set(0, 1.5, 0);
+                
+                // Reactor group
+                const reactorGroup = new THREE.Group();
+                reactorGroup.add(reactor);
+                reactorGroup.add(head);
+                reactorGroup.add(bottom);
+                reactorGroup.add(catalyst);
+                
+                // Add label
+                this.addLabel(reactorGroup, "Catalytic Reactor", new THREE.Vector3(0, 3.8, 0));
+                
+                // Store reference
+                this.components.reactor = reactorGroup;
+                this.modelsGroup.add(reactorGroup);
+                
+                // Make interactive
+                reactor.addEventListener('click', () => this.onComponentClick('reactor'));
+            }
+            
+            createFeedSystems() {
+                // Nitrogen feed system
+                const n2FeedGroup = new THREE.Group();
+                n2FeedGroup.position.set(-2.5, 2, 0);
+                
+                // N2 feed pipe
+                const n2PipeGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 16);
+                const n2Material = new THREE.MeshPhongMaterial({ color: 0x4d8ac8 });
+                const n2Pipe = new THREE.Mesh(n2PipeGeometry, n2Material);
+                n2Pipe.rotation.z = Math.PI / 2;
+                n2Pipe.position.set(0, 0, 0);
+                n2Pipe.userData = { component: 'nitrogenFeed' };
+                
+                // N2 feed tank
+                const n2TankGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.2, 32);
+                const n2Tank = new THREE.Mesh(n2TankGeometry, n2Material);
+                n2Tank.position.set(-1.2, 0, 0);
+                
+                n2FeedGroup.add(n2Pipe);
+                n2FeedGroup.add(n2Tank);
+                this.addLabel(n2FeedGroup, "N₂ Feed", new THREE.Vector3(0, 1.5, 0));
+                
+                this.components.nitrogenFeed = n2FeedGroup;
+                this.modelsGroup.add(n2FeedGroup);
+                
+                // Make interactive
+                n2Pipe.addEventListener('click', () => this.onComponentClick('nitrogenFeed'));
+                
+                // Hydrogen feed system
+                const h2FeedGroup = new THREE.Group();
+                h2FeedGroup.position.set(2.5, 2, 0);
+                
+                // H2 feed pipe
+                const h2PipeGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 16);
+                const h2Material = new THREE.MeshPhongMaterial({ color: 0x2ecc71 });
+                const h2Pipe = new THREE.Mesh(h2PipeGeometry, h2Material);
+                h2Pipe.rotation.z = Math.PI / 2;
+                h2Pipe.position.set(0, 0, 0);
+                h2Pipe.userData = { component: 'hydrogenFeed' };
+                
+                // H2 feed tank
+                const h2TankGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.2, 32);
+                const h2Tank = new THREE.Mesh(h2TankGeometry, h2Material);
+                h2Tank.position.set(1.2, 0, 0);
+                
+                h2FeedGroup.add(h2Pipe);
+                h2FeedGroup.add(h2Tank);
+                this.addLabel(h2FeedGroup, "H₂ Feed", new THREE.Vector3(0, 1.5, 0));
+                
+                this.components.hydrogenFeed = h2FeedGroup;
+                this.modelsGroup.add(h2FeedGroup);
+                
+                // Make interactive
+                h2Pipe.addEventListener('click', () => this.onComponentClick('hydrogenFeed'));
+            }
+            
+            createSeparationSystem() {
+                // Separator
+                const separatorGroup = new THREE.Group();
+                separatorGroup.position.set(2, -1, 0);
+                
+                // Separator vessel
+                const separatorGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2, 32);
+                const separatorMaterial = new THREE.MeshPhongMaterial({ color: 0x7f8c8d });
+                const separator = new THREE.Mesh(separatorGeometry, separatorMaterial);
+                separator.position.set(0, 1, 0);
+                separator.userData = { component: 'separator' };
+                
+                // Separator dome
+                const domeGeometry = new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+                const dome = new THREE.Mesh(domeGeometry, separatorMaterial);
+                dome.position.set(0, 2, 0);
+                
+                separatorGroup.add(separator);
+                separatorGroup.add(dome);
+                this.addLabel(separatorGroup, "Separator", new THREE.Vector3(0, 2.8, 0));
+                
+                this.components.separator = separatorGroup;
+                this.modelsGroup.add(separatorGroup);
+                
+                // Make interactive
+                separator.addEventListener('click', () => this.onComponentClick('separator'));
+                
+                // Storage tank
+                const storageGroup = new THREE.Group();
+                storageGroup.position.set(0, -2.5, 0);
+                
+                // Storage sphere
+                const storageGeometry = new THREE.SphereGeometry(1, 32, 32);
+                const storageMaterial = new THREE.MeshPhongMaterial({ color: 0xe67e22 });
+                const storage = new THREE.Mesh(storageGeometry, storageMaterial);
+                storage.userData = { component: 'storage' };
+                
+                storageGroup.add(storage);
+                this.addLabel(storageGroup, "NH₃ Storage", new THREE.Vector3(0, -1.5, 0));
+                
+                this.components.storage = storageGroup;
+                this.modelsGroup.add(storageGroup);
+                
+                // Make interactive
+                storage.addEventListener('click', () => this.onComponentClick('storage'));
+            }
+            
+            createRecycleCompressor() {
+                const compressorGroup = new THREE.Group();
+                compressorGroup.position.set(-2, -1, 0);
+                
+                // Compressor body
+                const compressorGeometry = new THREE.BoxGeometry(1, 1.5, 1);
+                const compressorMaterial = new THREE.MeshPhongMaterial({ color: 0x95a5a6 });
+                const compressor = new THREE.Mesh(compressorGeometry, compressorMaterial);
+                compressor.position.set(0, 0.75, 0);
+                compressor.userData = { component: 'recycleCompressor' };
+                
+                // Inlet and outlet pipes
+                const pipeGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.8, 16);
+                const pipeMaterial = new THREE.MeshPhongMaterial({ color: 0x7f8c8d });
+                
+                const inletPipe = new THREE.Mesh(pipeGeometry, pipeMaterial);
+                inletPipe.rotation.z = Math.PI / 2;
+                inletPipe.position.set(-0.6, 0.5, 0);
+                
+                const outletPipe = new THREE.Mesh(pipeGeometry, pipeMaterial);
+                outletPipe.rotation.z = Math.PI / 2;
+                outletPipe.position.set(0.6, 1, 0);
+                
+                compressorGroup.add(compressor);
+                compressorGroup.add(inletPipe);
+                compressorGroup.add(outletPipe);
+                this.addLabel(compressorGroup, "Recycle Compressor", new THREE.Vector3(0, 2, 0));
+                
+                this.components.recycleCompressor = compressorGroup;
+                this.modelsGroup.add(compressorGroup);
+                
+                // Make interactive
+                compressor.addEventListener('click', () => this.onComponentClick('recycleCompressor'));
+            }
+            
+            createParticleSystems() {
+                // Create particle systems for gas flow visualization
+                this.createParticleStream(
+                    this.components.nitrogenFeed, 
+                    this.components.reactor, 
+                    0x4d8ac8, 
+                    'n2',
+                    10
+                );
+                
+                this.createParticleStream(
+                    this.components.hydrogenFeed, 
+                    this.components.reactor, 
+                    0x2ecc71, 
+                    'h2',
+                    30
+                );
+                
+                this.createParticleStream(
+                    this.components.reactor, 
+                    this.components.separator, 
+                    0xe67e22, 
+                    'nh3',
+                    20
+                );
+                
+                this.createParticleStream(
+                    this.components.separator, 
+                    this.components.recycleCompressor, 
+                    0x95a5a6, 
+                    'recycle',
+                    15
+                );
+                
+                this.createParticleStream(
+                    this.components.recycleCompressor, 
+                    this.components.reactor, 
+                    0x7f8c8d, 
+                    'recycleReturn',
+                    15
+                );
+            }
+            
+            createParticleStream(startObj, endObj, color, type, count) {
+                const particles = [];
+                const particleGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+                const particleMaterial = new THREE.MeshBasicMaterial({ color: color });
+                
+                // Get start and end positions
+                const startPos = startObj.position.clone();
+                const endPos = endObj.position.clone();
+                
+                // Create particles
+                for (let i = 0; i < count; i++) {
+                    const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+                    particle.visible = false;
+                    this.modelsGroup.add(particle);
+                    particles.push({
+                        mesh: particle,
+                        progress: Math.random(),
+                        speed: 0.005 + Math.random() * 0.01,
+                        offset: Math.random() * Math.PI * 2
+                    });
+                }
+                
+                // Store based on type
+                if (type === 'n2') this.particles.n2 = particles;
+                else if (type === 'h2') this.particles.h2 = particles;
+                else if (type === 'nh3') this.particles.nh3 = particles;
+                else if (type === 'recycle' || type === 'recycleReturn') this.particles.recycle = particles;
+            }
+            
+            addLabel(object, text, position) {
+                // Create a canvas for the label
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = 512;
+                canvas.height = 128;
+                
+                // Draw text
+                context.fillStyle = 'rgba(13, 27, 42, 0.9)';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                
+                context.font = 'bold 40px Inter, sans-serif';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillStyle = '#e0e1dd';
+                context.fillText(text, canvas.width / 2, canvas.height / 2);
+                
+                // Create texture
+                const texture = new THREE.CanvasTexture(canvas);
+                const labelMaterial = new THREE.SpriteMaterial({ map: texture });
+                const label = new THREE.Sprite(labelMaterial);
+                label.position.copy(position);
+                label.scale.set(2, 0.5, 1);
+                
+                object.add(label);
+                return label;
+            }
+            
+            addLighting() {
+                // Ambient light
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                this.scene.add(ambientLight);
+                
+                // Directional light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 10, 5);
+                this.scene.add(directionalLight);
+                
+                // Hemisphere light
+                const hemisphereLight = new THREE.HemisphereLight(0x4d8ac8, 0xe67e22, 0.3);
+                this.scene.add(hemisphereLight);
+            }
+            
+            onComponentClick(componentId) {
+                // Update selected component
+                this.selectedComponent = componentId;
+                
+                // Show info card
+                this.showInfoCard(componentId);
+                
+                // Highlight the component
+                this.highlightComponent(componentId);
+                
+                // Play audio explanation
+                if (this.isAudioEnabled) {
+                    this.playComponentAudio();
+                }
+            }
+            
+            showInfoCard(componentId) {
+                const data = this.componentData[componentId];
+                const card = document.getElementById('infoCard');
+                
+                // Update card content
+                document.getElementById('componentDescription').textContent = data.description;
+                document.getElementById('infoCardTitle').textContent = data.title;
+                
+                // Update parameters
+                const paramGrid = document.getElementById('parameterGrid');
+                paramGrid.innerHTML = '';
+                
+                data.parameters.forEach(param => {
+                    const paramEl = document.createElement('div');
+                    paramEl.className = 'parameter';
+                    paramEl.innerHTML = `
+                        <div class="parameter-label">${param.label}</div>
+                        <div class="parameter-value">${param.value}</div>
+                    `;
+                    paramGrid.appendChild(paramEl);
+                });
+                
+                // Show/hide chemical equation
+                const equationEl = document.getElementById('chemicalEquation');
+                if (data.equation) {
+                    equationEl.textContent = data.equation;
+                    equationEl.style.display = 'block';
+                } else {
+                    equationEl.style.display = 'none';
+                }
+                
+                // Show card
+                card.classList.add('active');
+            }
+            
+            closeInfoCard() {
+                document.getElementById('infoCard').classList.remove('active');
+                
+                // Remove highlight from component
+                if (this.selectedComponent) {
+                    this.removeHighlight(this.selectedComponent);
+                }
+            }
+            
+            highlightComponent(componentId) {
+                // Remove any existing highlights
+                Object.keys(this.components).forEach(id => {
+                    this.removeHighlight(id);
+                });
+                
+                // Add highlight to selected component
+                const component = this.components[componentId];
+                if (component) {
+                    component.traverse(child => {
+                        if (child.isMesh) {
+                            child.material.emissive = new THREE.Color(0x333333);
+                            child.material.emissiveIntensity = 0.5;
+                        }
+                    });
+                }
+            }
+            
+            removeHighlight(componentId) {
+                const component = this.components[componentId];
+                if (component) {
+                    component.traverse(child => {
+                        if (child.isMesh) {
+                            child.material.emissive = new THREE.Color(0x000000);
+                            child.material.emissiveIntensity = 0;
+                        }
+                    });
+                }
+            }
+            
+            playComponentAudio() {
+                if (!this.selectedComponent || !this.isAudioEnabled) return;
+                
+                const data = this.componentData[this.selectedComponent];
+                this.speak(data.audioText);
+            }
+            
+            repeatAudio() {
+                if (this.lastAudioUtterance) {
+                    this.speechSynth.cancel(); // Cancel any ongoing speech
+                    this.speak(this.lastAudioUtterance.text);
+                }
+            }
+            
+            speak(text) {
+                if (!this.isAudioEnabled || !this.speechSynth) return;
+                
+                // Cancel any ongoing speech
+                this.speechSynth.cancel();
+                
+                // Create new utterance
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9; // Slightly slower for clarity
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                
+                // Use selected voice if available
+                if (this.selectedVoice) {
+                    utterance.voice = this.selectedVoice;
+                }
+                
+                // Store last utterance for repeat functionality
+                this.lastAudioUtterance = utterance;
+                
+                // Speak
+                this.speechSynth.speak(utterance);
+            }
+            
+            changeStep(stepIndex) {
+                this.currentStep = stepIndex;
+                
+                // Update UI
+                document.getElementById('stepSlider').value = stepIndex;
+                document.getElementById('stepLabel').textContent = this.processSteps[stepIndex].label;
+                
+                // Update visualization
+                document.getElementById('flowProgress').style.width = `${(stepIndex / 4) * 100}%`;
+                
+                // Update flow markers
+                document.querySelectorAll('.flow-marker').forEach((marker, i) => {
+                    if (i <= stepIndex) {
+                        marker.classList.add('active');
+                    } else {
+                        marker.classList.remove('active');
+                    }
+                });
+                
+                // Highlight relevant components
+                this.highlightStepComponents(stepIndex);
+            }
+            
+            highlightStepComponents(stepIndex) {
+                // Remove all highlights first
+                Object.keys(this.components).forEach(id => {
+                    this.removeHighlight(id);
+                });
+                
+                // Highlight components for this step
+                const step = this.processSteps[stepIndex];
+                step.components.forEach(componentId => {
+                    const component = this.components[componentId];
+                    if (component) {
+                        component.traverse(child => {
+                            if (child.isMesh) {
+                                child.material.emissive = new THREE.Color(0x111111);
+                                child.material.emissiveIntensity = 0.3;
+                            }
+                        });
+                    }
+                });
+            }
+            
+            startAnimationLoop() {
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    
+                    if (this.renderer && this.mindARThree) {
+                        // Update particle systems
+                        this.updateParticles();
+                        
+                        // Update reactor animation
+                        this.updateReactorAnimation();
+                        
+                        // Render scene
+                        this.renderer.render(this.scene, this.camera);
+                    }
+                };
+                
+                animate();
+            }
+            
+            updateParticles() {
+                // Update N2 particles
+                this.particles.n2.forEach(particle => {
+                    particle.progress += particle.speed;
+                    if (particle.progress > 1) particle.progress = 0;
+                    
+                    // Calculate position along path
+                    const startPos = this.components.nitrogenFeed.position.clone();
+                    const endPos = this.components.reactor.position.clone();
+                    
+                    const x = startPos.x + (endPos.x - startPos.x) * particle.progress;
+                    const y = startPos.y + (endPos.y - startPos.y) * particle.progress;
+                    const z = startPos.z + (endPos.z - startPos.z) * particle.progress;
+                    
+                    // Add some randomness
+                    const offset = Math.sin(particle.progress * Math.PI * 2 + particle.offset) * 0.2;
+                    
+                    particle.mesh.position.set(x + offset, y, z);
+                    particle.mesh.visible = (this.currentStep >= 0);
+                });
+                
+                // Update H2 particles
+                this.particles.h2.forEach(particle => {
+                    particle.progress += particle.speed;
+                    if (particle.progress > 1) particle.progress = 0;
+                    
+                    const startPos = this.components.hydrogenFeed.position.clone();
+                    const endPos = this.components.reactor.position.clone();
+                    
+                    const x = startPos.x + (endPos.x - startPos.x) * particle.progress;
+                    const y = startPos.y + (endPos.y - startPos.y) * particle.progress;
+                    const z = startPos.z + (endPos.z - startPos.z) * particle.progress;
+                    
+                    const offset = Math.sin(particle.progress * Math.PI * 2 + particle.offset) * 0.2;
+                    
+                    particle.mesh.position.set(x + offset, y, z);
+                    particle.mesh.visible = (this.currentStep >= 0);
+                });
+                
+                // Update NH3 particles
+                this.particles.nh3.forEach(particle => {
+                    particle.progress += particle.speed * 0.8;
+                    if (particle.progress > 1) particle.progress = 0;
+                    
+                    const startPos = this.components.reactor.position.clone();
+                    const endPos = this.components.separator.position.clone();
+                    
+                    const x = startPos.x + (endPos.x - startPos.x) * particle.progress;
+                    const y = startPos.y + (endPos.y - startPos.y) * particle.progress;
+                    const z = startPos.z + (endPos.z - startPos.z) * particle.progress;
+                    
+                    particle.mesh.position.set(x, y, z);
+                    particle.mesh.visible = (this.currentStep >= 2);
+                });
+                
+                // Update recycle particles
+                this.particles.recycle.forEach(particle => {
+                    particle.progress += particle.speed * 0.7;
+                    if (particle.progress > 1) particle.progress = 0;
+                    
+                    // Alternate between separator->compressor and compressor->reactor
+                    let startPos, endPos;
+                    if (particle.progress < 0.5) {
+                        startPos = this.components.separator.position.clone();
+                        endPos = this.components.recycleCompressor.position.clone();
+                    } else {
+                        startPos = this.components.recycleCompressor.position.clone();
+                        endPos = this.components.reactor.position.clone();
+                    }
+                    
+                    const x = startPos.x + (endPos.x - startPos.x) * (particle.progress * 2 % 1);
+                    const y = startPos.y + (endPos.y - startPos.y) * (particle.progress * 2 % 1);
+                    const z = startPos.z + (endPos.z - startPos.z) * (particle.progress * 2 % 1);
+                    
+                    particle.mesh.position.set(x, y, z);
+                    particle.mesh.visible = (this.currentStep >= 3);
+                });
+            }
+            
+            updateReactorAnimation() {
+                // Animate reactor internal mixer
+                if (this.components.reactor && this.currentStep >= 2) {
+                    const catalyst = this.components.reactor.children[3]; // Catalyst bed
+                    if (catalyst) {
+                        catalyst.rotation.y += 0.01;
+                    }
+                }
+            }
+            
+            onTargetFound() {
+                console.log('AR target found');
+                // Could add visual feedback here
+            }
+            
+            onTargetLost() {
+                console.log('AR target lost');
+                // Could add visual feedback here
+            }
+            
+            resetView() {
+                // Reset model group position and rotation
+                if (this.modelsGroup) {
+                    this.modelsGroup.position.set(0, 0, 0);
+                    this.modelsGroup.rotation.set(0, 0, 0);
+                    this.modelsGroup.scale.set(0.5, 0.5, 0.5);
+                }
+            }
+            
+            toggleAudio() {
+                this.isAudioEnabled = !this.isAudioEnabled;
+                const btn = document.getElementById('toggleAudio');
+                
+                if (this.isAudioEnabled) {
+                    btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    btn.title = 'Mute Audio';
+                } else {
+                    btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    btn.title = 'Unmute Audio';
+                    this.speechSynth.cancel(); // Stop any ongoing speech
+                }
+            }
+            
+            showHelp() {
+                this.speak("You are viewing an interactive Augmented Reality model of the Haber-Bosch ammonia synthesis process. Tap on any component to learn about its function. Use the slider at the bottom to step through the process stages. The toggle buttons control audio, reset the view, and exit AR mode.");
+            }
+            
+            exitAR() {
+                // Stop AR
+                if (this.mindARThree) {
+                    this.mindARThree.stop();
+                }
+                
+                // Stop any audio
+                if (this.speechSynth) {
+                    this.speechSynth.cancel();
+                }
+                
+                // Show instruction view
+                document.getElementById('instructionView').style.display = 'block';
+                document.getElementById('arContainer').style.display = 'none';
+                
+                // Reset state
+                this.isARActive = false;
+                this.selectedComponent = null;
+                this.closeInfoCard();
+            }
+            
+            onWindowResize() {
+                if (this.renderer && this.camera) {
+                    this.camera.aspect = window.innerWidth / window.innerHeight;
+                    this.camera.updateProjectionMatrix();
+                    this.renderer.setSize(window.innerWidth, window.innerHeight);
+                }
+            }
+        }
+
+        // Initialize the application when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.haberBoschAR = new HaberBoschAR();
+        });
+    </script>
+</body>
+</html>
