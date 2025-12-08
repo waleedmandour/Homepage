@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Haber-Bosch Process WebAR Lab | Chemical Engineering</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0d1b2a">
     <meta name="description" content="Interactive WebAR simulation of the Haber-Bosch ammonia synthesis process for chemical engineering education">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/examples/js/libs/stats.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image-three.prod.js"></script>
+    <!-- Using specific Three.js version known to work well with iOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- MindAR with iOS compatibility fixes -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
@@ -19,6 +21,8 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         :root {
@@ -39,12 +43,14 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
             color: var(--highlight);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
@@ -53,7 +59,7 @@
             padding: 0 20px;
         }
 
-        /* Loading Screen */
+        /* Enhanced Loading Screen */
         #loadingScreen {
             position: fixed;
             top: 0;
@@ -81,6 +87,92 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        /* iOS Permission Prompt */
+        #permissionPrompt {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 27, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .permission-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .permission-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--highlight);
+        }
+
+        .permission-content p {
+            margin-bottom: 25px;
+            color: var(--light-blue);
+            line-height: 1.6;
+        }
+
+        .permission-icon {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
+
+        .permission-steps {
+            text-align: left;
+            margin: 25px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .permission-steps ol {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        .permission-steps li {
+            margin-bottom: 12px;
+            color: var(--light-blue);
+        }
+
+        .permission-btn {
+            background: linear-gradient(135deg, var(--accent-blue), var(--light-blue));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(65, 90, 119, 0.3);
+        }
+
+        .permission-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(65, 90, 119, 0.4);
         }
 
         /* Instruction View */
@@ -114,6 +206,25 @@
             margin: 0 auto;
         }
 
+        .ios-warning {
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ios-warning i {
+            color: var(--warning);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Rest of your existing CSS remains the same */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -324,6 +435,7 @@
             height: 100%;
             z-index: 10;
             display: none;
+            background: #000;
         }
 
         #arScene {
@@ -375,6 +487,7 @@
             font-size: 1.4rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .control-btn:hover {
@@ -472,6 +585,7 @@
             align-items: center;
             justify-content: center;
             transition: background 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .close-card:hover {
@@ -538,6 +652,7 @@
             cursor: pointer;
             font-weight: 500;
             transition: background 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .audio-btn:hover {
@@ -637,6 +752,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 6px 20px rgba(65, 90, 119, 0.3);
             max-width: 300px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .start-ar-btn:hover {
@@ -668,6 +784,23 @@
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .start-ar-btn, .control-btn, .audio-btn {
+                cursor: default;
+            }
+            
+            .info-card, #controlPanel, #processVisualization {
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+            }
+            
+            /* Prevent zoom on input */
+            input, select, textarea {
+                font-size: 16px !important;
+            }
         }
 
         /* Responsive adjustments */
@@ -715,6 +848,15 @@
                 left: 20px;
                 width: calc(100% - 40px);
             }
+            
+            /* iOS safe areas */
+            .control-btn, #controlPanel {
+                margin-bottom: env(safe-area-inset-bottom, 0px);
+            }
+            
+            .info-card, #processVisualization {
+                margin-top: env(safe-area-inset-top, 0px);
+            }
         }
 
         /* Animation for particles */
@@ -726,14 +868,6 @@
         @keyframes flow {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(1000%); }
-        }
-
-        /* Stats */
-        #stats {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 100;
         }
     </style>
 </head>
@@ -747,12 +881,48 @@
         </p>
     </div>
 
+    <!-- iOS Permission Prompt -->
+    <div id="permissionPrompt">
+        <div class="permission-content">
+            <div class="permission-icon">
+                <i class="fas fa-camera"></i>
+            </div>
+            <h2>Camera Access Required</h2>
+            <p>To use the AR experience, we need access to your camera. Please follow these steps:</p>
+            
+            <div class="permission-steps">
+                <p><strong>iOS Safari Instructions:</strong></p>
+                <ol>
+                    <li>Tap "Allow Camera" below</li>
+                    <li>If prompted, tap "Allow" in the permission dialog</li>
+                    <li>If you previously denied access, go to Settings > Safari > Camera and set to "Allow"</li>
+                    <li>Refresh the page and try again</li>
+                </ol>
+            </div>
+            
+            <button id="requestPermission" class="permission-btn">
+                <i class="fas fa-camera"></i> Allow Camera Access
+            </button>
+            <button id="skipPermission" class="permission-btn" style="background: rgba(255,255,255,0.1); margin-left: 10px;">
+                <i class="fas fa-eye-slash"></i> View Without AR
+            </button>
+        </div>
+    </div>
+
     <!-- Instruction View -->
     <div id="instructionView">
         <div class="container">
             <header class="header">
                 <h1>Haber-Bosch Process AR Lab</h1>
                 <p class="subtitle">Interactive WebAR simulation for chemical engineering education. Visualize and interact with the ammonia synthesis process in augmented reality.</p>
+                
+                <!-- iOS Specific Warning -->
+                <div class="ios-warning" id="iosWarning" style="display: none;">
+                    <i class="fas fa-mobile-alt"></i>
+                    <div>
+                        <strong>iPhone/iPad Users:</strong> For best AR experience, use Safari and ensure camera permissions are enabled. If AR doesn't start, tap the "View Without AR" option.
+                    </div>
+                </div>
             </header>
             
             <div class="content-grid">
@@ -775,7 +945,7 @@
                     <div class="compatibility-warning">
                         <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
                         <div>
-                            <strong>Compatibility Note:</strong> For best results, use a mobile device with a modern browser (Chrome, Safari) and ensure good lighting conditions.
+                            <strong>Compatibility Note:</strong> For best AR results, use Safari on iOS or Chrome on Android. Ensure good lighting conditions.
                         </div>
                     </div>
                 </section>
@@ -838,13 +1008,18 @@
                 </div>
             </section>
             
-            <button id="startAR" class="start-ar-btn">
-                <i class="fas fa-cube"></i> Launch AR Experience
-            </button>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button id="startAR" class="start-ar-btn">
+                    <i class="fas fa-cube"></i> Launch AR Experience
+                </button>
+                <button id="startNonAR" class="start-ar-btn" style="background: rgba(255,255,255,0.1); display: none;">
+                    <i class="fas fa-eye-slash"></i> View Without AR
+                </button>
+            </div>
             
             <div class="footer">
                 <p>WebAR Haber-Bosch Process Simulator | Designed for Chemical Engineering Education</p>
-                <p style="margin-top: 10px; font-size: 0.8rem;">Uses MindAR.js + Three.js | Optimized for mobile devices</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">Optimized for iOS Safari & Android Chrome | Uses MindAR.js + Three.js</p>
             </div>
         </div>
     </div>
@@ -878,7 +1053,7 @@
             
             <div id="infoCard" class="info-card">
                 <div class="info-card-header">
-                    <h3 class="info-card-title">Component Name</h3>
+                    <h3 class="info-card-title" id="infoCardTitle">Component Name</h3>
                     <button class="close-card" id="closeCard">
                         <i class="fas fa-times"></i>
                     </button>
@@ -929,11 +1104,12 @@
         </div>
     </div>
 
-    <!-- Stats for debugging -->
-    <div id="stats"></div>
-
     <script>
-        // Main Application Controller
+        // iOS Detection
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        
+        // Main Application Controller with iOS fixes
         class HaberBoschAR {
             constructor() {
                 // State variables
@@ -942,13 +1118,13 @@
                 this.currentStep = 0;
                 this.selectedComponent = null;
                 this.lastAudioUtterance = null;
+                this.isNonARMode = false;
                 
                 // AR variables
                 this.mindARThree = null;
                 this.renderer = null;
                 this.scene = null;
                 this.camera = null;
-                this.controls = null;
                 
                 // 3D objects
                 this.components = {};
@@ -959,7 +1135,7 @@
                     recycle: []
                 };
                 
-                // Component data
+                // Component data (same as before)
                 this.componentData = {
                     reactor: {
                         title: "Catalytic Reactor",
@@ -1044,6 +1220,12 @@
             }
             
             async init() {
+                // Show iOS warning if needed
+                if (isIOS) {
+                    document.getElementById('iosWarning').style.display = 'flex';
+                    document.getElementById('startNonAR').style.display = 'inline-flex';
+                }
+                
                 // Update loading text
                 document.getElementById('loadingText').textContent = 'Loading 3D models and AR engine...';
                 
@@ -1069,9 +1251,6 @@
                 // Check browser support
                 if (!('speechSynthesis' in window)) {
                     console.warn('Web Speech API not supported');
-                    document.getElementById('toggleAudio').style.display = 'none';
-                    document.getElementById('playAudio').style.display = 'none';
-                    document.getElementById('repeatAudio').style.display = 'none';
                     this.isAudioEnabled = false;
                 }
                 
@@ -1090,7 +1269,14 @@
             
             setupEventListeners() {
                 // Start AR button
-                document.getElementById('startAR').addEventListener('click', () => this.startAR());
+                document.getElementById('startAR').addEventListener('click', () => this.checkPermissionsAndStartAR());
+                
+                // Start Non-AR mode
+                document.getElementById('startNonAR').addEventListener('click', () => this.startNonARMode());
+                
+                // Permission buttons
+                document.getElementById('requestPermission').addEventListener('click', () => this.requestCameraPermission());
+                document.getElementById('skipPermission').addEventListener('click', () => this.startNonARMode());
                 
                 // Control panel buttons
                 document.getElementById('resetView').addEventListener('click', () => this.resetView());
@@ -1108,11 +1294,247 @@
                 
                 // Handle window resize
                 window.addEventListener('resize', () => this.onWindowResize());
+                
+                // Handle page visibility change (iOS specific)
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && this.isARActive) {
+                        this.pauseAR();
+                    } else if (!document.hidden && this.isARActive) {
+                        this.resumeAR();
+                    }
+                });
+            }
+            
+            async checkPermissionsAndStartAR() {
+                // Check if we're on iOS Safari
+                if (isIOS && isSafari) {
+                    // iOS Safari requires user gesture for camera access
+                    this.showPermissionPrompt();
+                    return;
+                }
+                
+                // For other browsers, check camera permissions
+                try {
+                    // Test camera access
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            facingMode: 'environment',
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        } 
+                    });
+                    
+                    // Stop the stream immediately (we just needed permission)
+                    stream.getTracks().forEach(track => track.stop());
+                    
+                    // Start AR
+                    this.startAR();
+                } catch (error) {
+                    console.error('Camera permission denied:', error);
+                    this.showPermissionPrompt();
+                }
+            }
+            
+            showPermissionPrompt() {
+                document.getElementById('permissionPrompt').style.display = 'flex';
+            }
+            
+            hidePermissionPrompt() {
+                document.getElementById('permissionPrompt').style.display = 'none';
+            }
+            
+            async requestCameraPermission() {
+                try {
+                    // For iOS, we need to create a video element and request camera
+                    const video = document.createElement('video');
+                    video.style.position = 'fixed';
+                    video.style.top = '-1000px';
+                    video.style.left = '-1000px';
+                    video.style.width = '1px';
+                    video.style.height = '1px';
+                    document.body.appendChild(video);
+                    
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            facingMode: 'environment'
+                        } 
+                    });
+                    
+                    video.srcObject = stream;
+                    
+                    // Wait a moment for iOS to register the permission
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Clean up
+                    stream.getTracks().forEach(track => track.stop());
+                    video.remove();
+                    
+                    // Hide permission prompt
+                    this.hidePermissionPrompt();
+                    
+                    // Start AR
+                    await this.startAR();
+                    
+                } catch (error) {
+                    console.error('Failed to get camera permission:', error);
+                    alert('Camera permission denied. You can still use the app in non-AR mode.');
+                    this.startNonARMode();
+                }
+            }
+            
+            startNonARMode() {
+                this.isNonARMode = true;
+                this.hidePermissionPrompt();
+                this.showNonARMode();
+            }
+            
+            async showNonARMode() {
+                // Show AR container but without camera feed
+                document.getElementById('instructionView').style.display = 'none';
+                document.getElementById('arContainer').style.display = 'block';
+                document.getElementById('processVisualization').style.display = 'block';
+                document.getElementById('controlPanel').style.display = 'flex';
+                
+                // Update loading
+                document.getElementById('loadingScreen').style.display = 'flex';
+                document.getElementById('loadingScreen').style.opacity = '1';
+                document.getElementById('loadingText').textContent = 'Loading 3D visualization...';
+                
+                // Initialize Three.js scene without AR
+                await this.initThreeJSScene();
+                
+                // Hide loading screen
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.display = 'none';
+                    }, 500);
+                }, 1500);
+                
+                // Play welcome audio
+                setTimeout(() => {
+                    if (this.isAudioEnabled) {
+                        this.speak("Welcome to the Haber-Bosch Process visualization. This is running in non-AR mode. Tap on any component to learn more about it.");
+                    }
+                }, 2000);
+            }
+            
+            async initThreeJSScene() {
+                // Create a basic Three.js scene for non-AR mode
+                const container = document.getElementById('arScene');
+                
+                // Create scene
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0d1b2a);
+                
+                // Create camera
+                this.camera = new THREE.PerspectiveCamera(
+                    75,
+                    container.clientWidth / container.clientHeight,
+                    0.1,
+                    1000
+                );
+                this.camera.position.set(0, 5, 10);
+                
+                // Create renderer
+                this.renderer = new THREE.WebGLRenderer({ 
+                    antialias: true,
+                    alpha: true,
+                    powerPreference: "high-performance"
+                });
+                this.renderer.setSize(container.clientWidth, container.clientHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit for performance
+                container.appendChild(this.renderer.domElement);
+                
+                // Add lighting
+                this.addLighting();
+                
+                // Create 3D models
+                this.create3DModels();
+                
+                // Add orbit controls for non-AR mode
+                this.setupOrbitControls();
+                
+                // Start animation loop
+                this.startAnimationLoop();
+                
+                // Set initial step
+                this.changeStep(0);
+            }
+            
+            setupOrbitControls() {
+                // Simple manual orbit controls for non-AR mode
+                let isDragging = false;
+                let previousMousePosition = { x: 0, y: 0 };
+                const container = document.getElementById('arScene');
+                
+                container.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                });
+                
+                container.addEventListener('mousemove', (e) => {
+                    if (!isDragging || !this.modelsGroup) return;
+                    
+                    const deltaX = e.clientX - previousMousePosition.x;
+                    const deltaY = e.clientY - previousMousePosition.y;
+                    
+                    this.modelsGroup.rotation.y += deltaX * 0.01;
+                    this.modelsGroup.rotation.x += deltaY * 0.01;
+                    
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                });
+                
+                container.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+                
+                container.addEventListener('mouseleave', () => {
+                    isDragging = false;
+                });
+                
+                // Touch events for mobile
+                container.addEventListener('touchstart', (e) => {
+                    isDragging = true;
+                    previousMousePosition = { 
+                        x: e.touches[0].clientX, 
+                        y: e.touches[0].clientY 
+                    };
+                    e.preventDefault();
+                });
+                
+                container.addEventListener('touchmove', (e) => {
+                    if (!isDragging || !this.modelsGroup) return;
+                    
+                    const deltaX = e.touches[0].clientX - previousMousePosition.x;
+                    const deltaY = e.touches[0].clientY - previousMousePosition.y;
+                    
+                    this.modelsGroup.rotation.y += deltaX * 0.01;
+                    this.modelsGroup.rotation.x += deltaY * 0.01;
+                    
+                    previousMousePosition = { 
+                        x: e.touches[0].clientX, 
+                        y: e.touches[0].clientY 
+                    };
+                    e.preventDefault();
+                });
+                
+                container.addEventListener('touchend', () => {
+                    isDragging = false;
+                });
+                
+                // Add zoom with wheel/pinch
+                container.addEventListener('wheel', (e) => {
+                    if (!this.modelsGroup) return;
+                    
+                    const zoomAmount = e.deltaY * 0.001;
+                    this.modelsGroup.scale.x = Math.max(0.3, Math.min(1.5, this.modelsGroup.scale.x + zoomAmount));
+                    this.modelsGroup.scale.y = Math.max(0.3, Math.min(1.5, this.modelsGroup.scale.y + zoomAmount));
+                    this.modelsGroup.scale.z = Math.max(0.3, Math.min(1.5, this.modelsGroup.scale.z + zoomAmount));
+                });
             }
             
             async preloadAssets() {
-                // In a real application, you would preload 3D models here
-                // For this demo, we'll create simple geometries at runtime
                 return Promise.resolve();
             }
             
@@ -1155,49 +1577,73 @@
                     
                 } catch (error) {
                     console.error('Failed to start AR:', error);
-                    alert('Failed to initialize AR. Please ensure you have granted camera permissions and are using a compatible device.');
-                    this.exitAR();
+                    
+                    // Try to fall back to non-AR mode
+                    alert('AR initialization failed. Switching to non-AR mode.');
+                    this.startNonARMode();
                 }
             }
             
             async initMindAR() {
-                // Initialize MindAR
-                const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-                    container: document.getElementById('arScene'),
-                    imageTargetSrc: 'https://raw.githubusercontent.com/hiukim/mind-ar-js/master/examples/image-tracking/assets/band-example/band.mind',
-                    maxTrack: 1,
-                    filterMinCF: 0.001,
-                    filterBeta: 0.001,
-                });
-                
-                this.mindARThree = mindarThree;
-                this.renderer = mindarThree.renderer;
-                this.scene = mindarThree.scene;
-                this.camera = mindarThree.camera;
-                
-                // Start MindAR
-                await mindarThree.start();
-                
-                // Create 3D models
-                this.create3DModels();
-                
-                // Set up anchor
-                const anchor = mindarThree.addAnchor(0);
-                anchor.group.add(this.modelsGroup);
-                
-                // Add lighting
-                this.addLighting();
-                
-                // Handle anchor found/lost
-                anchor.onTargetFound = () => {
-                    console.log('Target found');
-                    this.onTargetFound();
-                };
-                
-                anchor.onTargetLost = () => {
-                    console.log('Target lost');
-                    this.onTargetLost();
-                };
+                try {
+                    // Use a simple image target for iOS compatibility
+                    const imageTargetSrc = isIOS 
+                        ? 'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind'
+                        : 'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind';
+                    
+                    // Initialize MindAR with iOS-optimized settings
+                    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+                        container: document.getElementById('arScene'),
+                        imageTargetSrc: imageTargetSrc,
+                        uiScanning: isIOS ? "no" : "yes", // Disable scanning UI on iOS for better performance
+                        uiLoading: "yes",
+                        uiError: "yes",
+                        filterMinCF: 0.001,
+                        filterBeta: 1000,
+                        missTolerance: 10,
+                        warmupTolerance: 5,
+                        maxTrack: 2
+                    });
+                    
+                    this.mindARThree = mindarThree;
+                    this.renderer = mindarThree.renderer;
+                    this.scene = mindarThree.scene;
+                    this.camera = mindarThree.camera;
+                    
+                    // Configure renderer for iOS
+                    if (isIOS) {
+                        this.renderer.setPixelRatio(1); // Lower pixel ratio for better performance
+                        this.renderer.outputEncoding = THREE.sRGBEncoding;
+                    }
+                    
+                    // Start MindAR
+                    await mindarThree.start();
+                    
+                    // Create 3D models
+                    this.create3DModels();
+                    
+                    // Set up anchor
+                    const anchor = mindarThree.addAnchor(0);
+                    anchor.group.add(this.modelsGroup);
+                    
+                    // Add lighting
+                    this.addLighting();
+                    
+                    // Handle anchor found/lost
+                    anchor.onTargetFound = () => {
+                        console.log('Target found');
+                    };
+                    
+                    anchor.onTargetLost = () => {
+                        console.log('Target lost');
+                    };
+                    
+                    this.isARActive = true;
+                    
+                } catch (error) {
+                    console.error('MindAR initialization failed:', error);
+                    throw error;
+                }
             }
             
             create3DModels() {
@@ -1227,7 +1673,7 @@
             
             createReactor() {
                 // Main reactor vessel
-                const reactorGeometry = new THREE.CylinderGeometry(1.2, 1.2, 3, 32);
+                const reactorGeometry = new THREE.CylinderGeometry(1.2, 1.2, 3, 16); // Reduced segments for performance
                 const reactorMaterial = new THREE.MeshPhongMaterial({ 
                     color: 0x5a6268,
                     shininess: 30,
@@ -1238,19 +1684,23 @@
                 reactor.position.set(0, 1.5, 0);
                 reactor.userData = { component: 'reactor' };
                 
+                // Make interactive
+                reactor.castShadow = false; // Disable shadow for performance
+                reactor.receiveShadow = false;
+                
                 // Reactor head (top)
-                const headGeometry = new THREE.CylinderGeometry(1.3, 1.2, 0.3, 32);
+                const headGeometry = new THREE.CylinderGeometry(1.3, 1.2, 0.3, 16);
                 const headMaterial = new THREE.MeshPhongMaterial({ color: 0x4a545c });
                 const head = new THREE.Mesh(headGeometry, headMaterial);
                 head.position.set(0, 3.15, 0);
                 
                 // Reactor bottom
-                const bottomGeometry = new THREE.CylinderGeometry(1.2, 1.3, 0.3, 32);
+                const bottomGeometry = new THREE.CylinderGeometry(1.2, 1.3, 0.3, 16);
                 const bottom = new THREE.Mesh(bottomGeometry, headMaterial);
                 bottom.position.set(0, -0.15, 0);
                 
                 // Internal catalyst bed (visualization)
-                const catalystGeometry = new THREE.CylinderGeometry(1.1, 1.1, 2, 32);
+                const catalystGeometry = new THREE.CylinderGeometry(1.1, 1.1, 2, 16);
                 const catalystMaterial = new THREE.MeshPhongMaterial({ 
                     color: 0xa0522d,
                     transparent: true,
@@ -1274,7 +1724,30 @@
                 this.modelsGroup.add(reactorGroup);
                 
                 // Make interactive
-                reactor.addEventListener('click', () => this.onComponentClick('reactor'));
+                const interactiveReactor = this.createInteractiveMesh(reactor, 'reactor');
+                reactorGroup.add(interactiveReactor);
+            }
+            
+            createInteractiveMesh(mesh, componentId) {
+                // Create a transparent mesh for interaction
+                const geometry = mesh.geometry.clone();
+                const material = new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.0
+                });
+                
+                const interactiveMesh = new THREE.Mesh(geometry, material);
+                interactiveMesh.position.copy(mesh.position);
+                interactiveMesh.rotation.copy(mesh.rotation);
+                interactiveMesh.scale.copy(mesh.scale);
+                interactiveMesh.userData = { component: componentId };
+                
+                // Store reference for raycasting
+                if (!this.interactiveMeshes) this.interactiveMeshes = [];
+                this.interactiveMeshes.push(interactiveMesh);
+                
+                return interactiveMesh;
             }
             
             createFeedSystems() {
@@ -1283,15 +1756,14 @@
                 n2FeedGroup.position.set(-2.5, 2, 0);
                 
                 // N2 feed pipe
-                const n2PipeGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 16);
+                const n2PipeGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 8); // Reduced segments
                 const n2Material = new THREE.MeshPhongMaterial({ color: 0x4d8ac8 });
                 const n2Pipe = new THREE.Mesh(n2PipeGeometry, n2Material);
                 n2Pipe.rotation.z = Math.PI / 2;
                 n2Pipe.position.set(0, 0, 0);
-                n2Pipe.userData = { component: 'nitrogenFeed' };
                 
                 // N2 feed tank
-                const n2TankGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.2, 32);
+                const n2TankGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.2, 16);
                 const n2Tank = new THREE.Mesh(n2TankGeometry, n2Material);
                 n2Tank.position.set(-1.2, 0, 0);
                 
@@ -1303,22 +1775,22 @@
                 this.modelsGroup.add(n2FeedGroup);
                 
                 // Make interactive
-                n2Pipe.addEventListener('click', () => this.onComponentClick('nitrogenFeed'));
+                const interactiveN2 = this.createInteractiveMesh(n2Pipe, 'nitrogenFeed');
+                n2FeedGroup.add(interactiveN2);
                 
                 // Hydrogen feed system
                 const h2FeedGroup = new THREE.Group();
                 h2FeedGroup.position.set(2.5, 2, 0);
                 
                 // H2 feed pipe
-                const h2PipeGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 16);
+                const h2PipeGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 8);
                 const h2Material = new THREE.MeshPhongMaterial({ color: 0x2ecc71 });
                 const h2Pipe = new THREE.Mesh(h2PipeGeometry, h2Material);
                 h2Pipe.rotation.z = Math.PI / 2;
                 h2Pipe.position.set(0, 0, 0);
-                h2Pipe.userData = { component: 'hydrogenFeed' };
                 
                 // H2 feed tank
-                const h2TankGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.2, 32);
+                const h2TankGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.2, 16);
                 const h2Tank = new THREE.Mesh(h2TankGeometry, h2Material);
                 h2Tank.position.set(1.2, 0, 0);
                 
@@ -1330,7 +1802,8 @@
                 this.modelsGroup.add(h2FeedGroup);
                 
                 // Make interactive
-                h2Pipe.addEventListener('click', () => this.onComponentClick('hydrogenFeed'));
+                const interactiveH2 = this.createInteractiveMesh(h2Pipe, 'hydrogenFeed');
+                h2FeedGroup.add(interactiveH2);
             }
             
             createSeparationSystem() {
@@ -1339,14 +1812,13 @@
                 separatorGroup.position.set(2, -1, 0);
                 
                 // Separator vessel
-                const separatorGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2, 32);
+                const separatorGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2, 16);
                 const separatorMaterial = new THREE.MeshPhongMaterial({ color: 0x7f8c8d });
                 const separator = new THREE.Mesh(separatorGeometry, separatorMaterial);
                 separator.position.set(0, 1, 0);
-                separator.userData = { component: 'separator' };
                 
                 // Separator dome
-                const domeGeometry = new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+                const domeGeometry = new THREE.SphereGeometry(0.8, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2);
                 const dome = new THREE.Mesh(domeGeometry, separatorMaterial);
                 dome.position.set(0, 2, 0);
                 
@@ -1358,17 +1830,17 @@
                 this.modelsGroup.add(separatorGroup);
                 
                 // Make interactive
-                separator.addEventListener('click', () => this.onComponentClick('separator'));
+                const interactiveSeparator = this.createInteractiveMesh(separator, 'separator');
+                separatorGroup.add(interactiveSeparator);
                 
                 // Storage tank
                 const storageGroup = new THREE.Group();
                 storageGroup.position.set(0, -2.5, 0);
                 
                 // Storage sphere
-                const storageGeometry = new THREE.SphereGeometry(1, 32, 32);
+                const storageGeometry = new THREE.SphereGeometry(1, 16, 16);
                 const storageMaterial = new THREE.MeshPhongMaterial({ color: 0xe67e22 });
                 const storage = new THREE.Mesh(storageGeometry, storageMaterial);
-                storage.userData = { component: 'storage' };
                 
                 storageGroup.add(storage);
                 this.addLabel(storageGroup, "NH₃ Storage", new THREE.Vector3(0, -1.5, 0));
@@ -1377,7 +1849,8 @@
                 this.modelsGroup.add(storageGroup);
                 
                 // Make interactive
-                storage.addEventListener('click', () => this.onComponentClick('storage'));
+                const interactiveStorage = this.createInteractiveMesh(storage, 'storage');
+                storageGroup.add(interactiveStorage);
             }
             
             createRecycleCompressor() {
@@ -1389,10 +1862,9 @@
                 const compressorMaterial = new THREE.MeshPhongMaterial({ color: 0x95a5a6 });
                 const compressor = new THREE.Mesh(compressorGeometry, compressorMaterial);
                 compressor.position.set(0, 0.75, 0);
-                compressor.userData = { component: 'recycleCompressor' };
                 
                 // Inlet and outlet pipes
-                const pipeGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.8, 16);
+                const pipeGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.8, 8);
                 const pipeMaterial = new THREE.MeshPhongMaterial({ color: 0x7f8c8d });
                 
                 const inletPipe = new THREE.Mesh(pipeGeometry, pipeMaterial);
@@ -1412,55 +1884,34 @@
                 this.modelsGroup.add(compressorGroup);
                 
                 // Make interactive
-                compressor.addEventListener('click', () => this.onComponentClick('recycleCompressor'));
+                const interactiveCompressor = this.createInteractiveMesh(compressor, 'recycleCompressor');
+                compressorGroup.add(interactiveCompressor);
             }
             
             createParticleSystems() {
-                // Create particle systems for gas flow visualization
-                this.createParticleStream(
-                    this.components.nitrogenFeed, 
-                    this.components.reactor, 
-                    0x4d8ac8, 
-                    'n2',
-                    10
-                );
-                
-                this.createParticleStream(
-                    this.components.hydrogenFeed, 
-                    this.components.reactor, 
-                    0x2ecc71, 
-                    'h2',
-                    30
-                );
-                
-                this.createParticleStream(
-                    this.components.reactor, 
-                    this.components.separator, 
-                    0xe67e22, 
-                    'nh3',
-                    20
-                );
-                
-                this.createParticleStream(
-                    this.components.separator, 
-                    this.components.recycleCompressor, 
-                    0x95a5a6, 
-                    'recycle',
-                    15
-                );
-                
-                this.createParticleStream(
-                    this.components.recycleCompressor, 
-                    this.components.reactor, 
-                    0x7f8c8d, 
-                    'recycleReturn',
-                    15
-                );
+                // Create simplified particle systems for better performance
+                if (!isIOS) { // Skip particles on iOS for better performance
+                    this.createParticleStream(
+                        this.components.nitrogenFeed, 
+                        this.components.reactor, 
+                        0x4d8ac8, 
+                        'n2',
+                        8 // Reduced particle count
+                    );
+                    
+                    this.createParticleStream(
+                        this.components.hydrogenFeed, 
+                        this.components.reactor, 
+                        0x2ecc71, 
+                        'h2',
+                        8
+                    );
+                }
             }
             
             createParticleStream(startObj, endObj, color, type, count) {
                 const particles = [];
-                const particleGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+                const particleGeometry = new THREE.SphereGeometry(0.05, 4, 4); // Reduced detail
                 const particleMaterial = new THREE.MeshBasicMaterial({ color: color });
                 
                 // Get start and end positions
@@ -1484,21 +1935,21 @@
                 if (type === 'n2') this.particles.n2 = particles;
                 else if (type === 'h2') this.particles.h2 = particles;
                 else if (type === 'nh3') this.particles.nh3 = particles;
-                else if (type === 'recycle' || type === 'recycleReturn') this.particles.recycle = particles;
+                else if (type === 'recycle') this.particles.recycle = particles;
             }
             
             addLabel(object, text, position) {
                 // Create a canvas for the label
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
-                canvas.width = 512;
-                canvas.height = 128;
+                canvas.width = 256; // Reduced size for performance
+                canvas.height = 64;
                 
                 // Draw text
                 context.fillStyle = 'rgba(13, 27, 42, 0.9)';
                 context.fillRect(0, 0, canvas.width, canvas.height);
                 
-                context.font = 'bold 40px Inter, sans-serif';
+                context.font = 'bold 24px Inter, sans-serif';
                 context.textAlign = 'center';
                 context.textBaseline = 'middle';
                 context.fillStyle = '#e0e1dd';
@@ -1509,25 +1960,20 @@
                 const labelMaterial = new THREE.SpriteMaterial({ map: texture });
                 const label = new THREE.Sprite(labelMaterial);
                 label.position.copy(position);
-                label.scale.set(2, 0.5, 1);
+                label.scale.set(1.5, 0.4, 1); // Reduced scale
                 
                 object.add(label);
                 return label;
             }
             
             addLighting() {
-                // Ambient light
+                // Simplified lighting for better performance
                 const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
                 this.scene.add(ambientLight);
                 
-                // Directional light
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
                 directionalLight.position.set(5, 10, 5);
                 this.scene.add(directionalLight);
-                
-                // Hemisphere light
-                const hemisphereLight = new THREE.HemisphereLight(0x4d8ac8, 0xe67e22, 0.3);
-                this.scene.add(hemisphereLight);
             }
             
             onComponentClick(componentId) {
@@ -1600,7 +2046,7 @@
                 const component = this.components[componentId];
                 if (component) {
                     component.traverse(child => {
-                        if (child.isMesh) {
+                        if (child.isMesh && child.material && child.material.emissive) {
                             child.material.emissive = new THREE.Color(0x333333);
                             child.material.emissiveIntensity = 0.5;
                         }
@@ -1612,7 +2058,7 @@
                 const component = this.components[componentId];
                 if (component) {
                     component.traverse(child => {
-                        if (child.isMesh) {
+                        if (child.isMesh && child.material && child.material.emissive) {
                             child.material.emissive = new THREE.Color(0x000000);
                             child.material.emissiveIntensity = 0;
                         }
@@ -1629,7 +2075,7 @@
             
             repeatAudio() {
                 if (this.lastAudioUtterance) {
-                    this.speechSynth.cancel(); // Cancel any ongoing speech
+                    this.speechSynth.cancel();
                     this.speak(this.lastAudioUtterance.text);
                 }
             }
@@ -1642,7 +2088,7 @@
                 
                 // Create new utterance
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9; // Slightly slower for clarity
+                utterance.rate = 0.9;
                 utterance.pitch = 1.0;
                 utterance.volume = 1.0;
                 
@@ -1693,7 +2139,7 @@
                     const component = this.components[componentId];
                     if (component) {
                         component.traverse(child => {
-                            if (child.isMesh) {
+                            if (child.isMesh && child.material && child.material.emissive) {
                                 child.material.emissive = new THREE.Color(0x111111);
                                 child.material.emissiveIntensity = 0.3;
                             }
@@ -1703,10 +2149,49 @@
             }
             
             startAnimationLoop() {
+                // Set up raycaster for interaction
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+                
+                // Set up click/touch handler
+                const container = document.getElementById('arScene');
+                
+                const handleInteraction = (clientX, clientY) => {
+                    // Calculate mouse position in normalized device coordinates
+                    const rect = container.getBoundingClientRect();
+                    this.mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+                    this.mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+                    
+                    // Update the picking ray with the camera and mouse position
+                    this.raycaster.setFromCamera(this.mouse, this.camera);
+                    
+                    // Calculate objects intersecting the picking ray
+                    if (this.interactiveMeshes) {
+                        const intersects = this.raycaster.intersectObjects(this.interactiveMeshes);
+                        
+                        if (intersects.length > 0) {
+                            const componentId = intersects[0].object.userData.component;
+                            this.onComponentClick(componentId);
+                        }
+                    }
+                };
+                
+                // Mouse click
+                container.addEventListener('click', (e) => {
+                    handleInteraction(e.clientX, e.clientY);
+                });
+                
+                // Touch (for mobile)
+                container.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    handleInteraction(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+                });
+                
+                // Animation loop
                 const animate = () => {
                     requestAnimationFrame(animate);
                     
-                    if (this.renderer && this.mindARThree) {
+                    if (this.renderer && this.scene && this.camera) {
                         // Update particle systems
                         this.updateParticles();
                         
@@ -1722,6 +2207,9 @@
             }
             
             updateParticles() {
+                // Skip particle updates on iOS for better performance
+                if (isIOS) return;
+                
                 // Update N2 particles
                 this.particles.n2.forEach(particle => {
                     particle.progress += particle.speed;
@@ -1759,45 +2247,6 @@
                     particle.mesh.position.set(x + offset, y, z);
                     particle.mesh.visible = (this.currentStep >= 0);
                 });
-                
-                // Update NH3 particles
-                this.particles.nh3.forEach(particle => {
-                    particle.progress += particle.speed * 0.8;
-                    if (particle.progress > 1) particle.progress = 0;
-                    
-                    const startPos = this.components.reactor.position.clone();
-                    const endPos = this.components.separator.position.clone();
-                    
-                    const x = startPos.x + (endPos.x - startPos.x) * particle.progress;
-                    const y = startPos.y + (endPos.y - startPos.y) * particle.progress;
-                    const z = startPos.z + (endPos.z - startPos.z) * particle.progress;
-                    
-                    particle.mesh.position.set(x, y, z);
-                    particle.mesh.visible = (this.currentStep >= 2);
-                });
-                
-                // Update recycle particles
-                this.particles.recycle.forEach(particle => {
-                    particle.progress += particle.speed * 0.7;
-                    if (particle.progress > 1) particle.progress = 0;
-                    
-                    // Alternate between separator->compressor and compressor->reactor
-                    let startPos, endPos;
-                    if (particle.progress < 0.5) {
-                        startPos = this.components.separator.position.clone();
-                        endPos = this.components.recycleCompressor.position.clone();
-                    } else {
-                        startPos = this.components.recycleCompressor.position.clone();
-                        endPos = this.components.reactor.position.clone();
-                    }
-                    
-                    const x = startPos.x + (endPos.x - startPos.x) * (particle.progress * 2 % 1);
-                    const y = startPos.y + (endPos.y - startPos.y) * (particle.progress * 2 % 1);
-                    const z = startPos.z + (endPos.z - startPos.z) * (particle.progress * 2 % 1);
-                    
-                    particle.mesh.position.set(x, y, z);
-                    particle.mesh.visible = (this.currentStep >= 3);
-                });
             }
             
             updateReactorAnimation() {
@@ -1808,16 +2257,6 @@
                         catalyst.rotation.y += 0.01;
                     }
                 }
-            }
-            
-            onTargetFound() {
-                console.log('AR target found');
-                // Could add visual feedback here
-            }
-            
-            onTargetLost() {
-                console.log('AR target lost');
-                // Could add visual feedback here
             }
             
             resetView() {
@@ -1839,12 +2278,25 @@
                 } else {
                     btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
                     btn.title = 'Unmute Audio';
-                    this.speechSynth.cancel(); // Stop any ongoing speech
+                    this.speechSynth.cancel();
                 }
             }
             
             showHelp() {
-                this.speak("You are viewing an interactive Augmented Reality model of the Haber-Bosch ammonia synthesis process. Tap on any component to learn about its function. Use the slider at the bottom to step through the process stages. The toggle buttons control audio, reset the view, and exit AR mode.");
+                const mode = this.isNonARMode ? "non-AR" : "AR";
+                this.speak(`You are viewing an interactive ${mode} model of the Haber-Bosch ammonia synthesis process. Tap on any component to learn about its function. Use the slider at the bottom to step through the process stages. The toggle buttons control audio, reset the view, and exit the ${mode} mode.`);
+            }
+            
+            pauseAR() {
+                if (this.mindARThree && this.isARActive) {
+                    this.mindARThree.stop();
+                }
+            }
+            
+            resumeAR() {
+                if (this.mindARThree && this.isARActive) {
+                    this.mindARThree.start();
+                }
             }
             
             exitAR() {
@@ -1858,29 +2310,55 @@
                     this.speechSynth.cancel();
                 }
                 
+                // Clean up Three.js
+                if (this.renderer) {
+                    this.renderer.dispose();
+                    const container = document.getElementById('arScene');
+                    if (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                }
+                
                 // Show instruction view
                 document.getElementById('instructionView').style.display = 'block';
                 document.getElementById('arContainer').style.display = 'none';
                 
                 // Reset state
                 this.isARActive = false;
+                this.isNonARMode = false;
                 this.selectedComponent = null;
                 this.closeInfoCard();
+                
+                // Show both start buttons again
+                document.getElementById('startNonAR').style.display = 'inline-flex';
             }
             
             onWindowResize() {
                 if (this.renderer && this.camera) {
-                    this.camera.aspect = window.innerWidth / window.innerHeight;
+                    const container = document.getElementById('arScene');
+                    this.camera.aspect = container.clientWidth / container.clientHeight;
                     this.camera.updateProjectionMatrix();
-                    this.renderer.setSize(window.innerWidth, window.innerHeight);
+                    this.renderer.setSize(container.clientWidth, container.clientHeight);
                 }
             }
         }
 
         // Initialize the application when the page loads
         document.addEventListener('DOMContentLoaded', () => {
+            // Add a temporary event listener for iOS gesture handling
+            if (isIOS) {
+                document.addEventListener('touchstart', function() {}, {passive: true});
+            }
+            
             window.haberBoschAR = new HaberBoschAR();
         });
+        
+        // Prevent iOS rubber band effect
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
