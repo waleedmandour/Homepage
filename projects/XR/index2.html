@@ -833,7 +833,57 @@ function playSirenTone() {
 
         window.addEventListener('resize', () => {
             if(camera) { camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); }
+        }
+                               
+        // GLOBAL VARIABLE: Define this at the top of your script variables (near 'state')
+let toastTimer = null;
+
+// FUNCTION: Replace the existing selectComponent function with this one
+function selectComponent(name) {
+    // 1. Update Internal State
+    state.activeComponent = name;
+
+    // 2. Get UI Elements
+    const toast = document.getElementById('infoToast');
+    const toastText = document.getElementById('toastText');
+
+    // 3. Update Text and Visibility
+    toastText.innerText = name;
+    
+    // Ensure it's visible before animating
+    toast.style.display = 'block';
+    
+    // Animate In (Fly up and fade in)
+    gsap.killTweensOf(toast); // Stop any previous fading animation
+    gsap.fromTo(toast, 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.3 }
+    );
+
+    // 4. Play Audio (If enabled and not in emergency mode)
+    if (state.audioEnabled && !state.isEmergency) {
+        speak(name);
+    }
+
+    // 5. Update the 3D Molecule Popup
+    updateMoleculeView(name);
+
+    // 6. Auto-Hide Timer (Requirement #3)
+    // Clear any existing timer so it doesn't disappear too early if clicked again
+    if (toastTimer) clearTimeout(toastTimer);
+
+    // Set a new timer to hide after 2 seconds
+    toastTimer = setTimeout(() => {
+        gsap.to(toast, {
+            opacity: 0,
+            y: 20,
+            duration: 0.3,
+            onComplete: () => {
+                toast.style.display = 'none';
+            }
         });
+    }, 2000);
+});
     </script>
 </body>
 </html>
