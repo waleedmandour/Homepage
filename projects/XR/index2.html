@@ -662,37 +662,110 @@
             document.getElementById('btnNextQ').onclick = () => { state.currentQ=(state.currentQ+1)%quizQuestions.length; render(); };
         }
 
-        function triggerEmergency() {
-            if(state.isEmergency) return;
-            state.isEmergency = true;
-            document.body.classList.add('critical-state');
-            document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
-            document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
-            document.getElementById('controlPanel').classList.add('active');
-            playAlarm();
-        }
+        // GLOBAL VARIABLE for the siren interval
+let sirenInterval = null;
 
-        function resolveEmergency() {
-            state.isEmergency=false; state.lastEmergency=Date.now();
-            document.body.classList.remove('critical-state');
-            document.getElementById('statusText').innerText = "System Active";
-            document.getElementById('monitorLabel').style.color = "var(--text-muted)";
-            setTimeout(()=>document.getElementById('controlPanel').classList.remove('active'), 1500);
-        }
+function triggerEmergency() {
+    if(state.isEmergency) return;
+    state.isEmergency = true;
+    
+    document.body.classList.add('critical-state');
+    document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
+    
+    // MODIFIED: Voice Alert
+    if(state.audioEnabled) {
+        window.speechSynthesis.cancel();
+        speak("Warning. System Decomposing.");
+    }
 
-        function playAlarm() {
-            if(!state.audioEnabled) return;
-            try {
-                if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-                if(audioCtx.state==='suspended') audioCtx.resume();
-                const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
-                osc.type='sawtooth'; osc.frequency.value=440;
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime+1);
-                setTimeout(()=>osc.stop(), 1000);
-            } catch(e){}
-        }
+    document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
+    document.getElementById('controlPanel').classList.add('active');
+    
+    // MODIFIED: Continuous Siren
+    toggleSiren(true);
+}
 
+function resolveEmergency() {
+    state.isEmergency = false; 
+    state.lastEmergency = Date.now();
+    
+    document.body.classList.remove('critical-state');
+    document.getElementById('statusText').innerText = "System Active";
+    document.getElementById('monitorLabel').style.color = "var(--text-muted)";
+    
+    // MODIFIED: Stop Siren, Voice Alert, and Star Reward
+    toggleSiren(false);
+    
+    if(state.audioEnabled) {
+        window.speechSynthesis.cancel();
+        speak("System Stabilized.");
+    }
+
+    // Show Star
+    showStarReward();
+
+    setTimeout(()=>document.getElementById('controlPanel').classList.remove('active'), 1500);
+}
+
+function showStarReward() {
+    const starContainer = document.getElementById('starReward');
+    const starIcon = starContainer.querySelector('i');
+    
+    starContainer.style.display = 'block';
+    starIcon.classList.remove('star-pop'); // reset animation
+    void starIcon.offsetWidth; // trigger reflow
+    starIcon.classList.add('star-pop');
+    
+    // Hide after animation
+    setTimeout(() => {
+        gsap.to(starContainer, {opacity: 0, duration: 0.5, onComplete: () => {
+            starContainer.style.display = 'none';
+            starContainer.style.opacity = 1; // Reset for next time
+        }});
+    }, 2000);
+}
+
+// MODIFIED: Continuous Siren Function using AudioContext
+function toggleSiren(active) {
+    if (!state.audioEnabled) return;
+    
+    // Stop existing siren
+    if (sirenInterval) {
+        clearInterval(sirenInterval);
+        sirenInterval = null;
+    }
+
+    if (active) {
+        // Play sound immediately
+        playSirenTone();
+        // Loop every 1 second
+        sirenInterval = setInterval(playSirenTone, 1000);
+    }
+}
+
+function playSirenTone() {
+    try {
+        if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+        if(audioCtx.state==='suspended') audioCtx.resume();
+        
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.type = 'sawtooth';
+        // Siren pitch drop effect
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.8);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.start();
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+        
+        osc.stop(audioCtx.currentTime + 0.9);
+    } catch(e){ console.log("Audio error", e); }
+}
         function onMouseClick(e) {
             const m = new THREE.Vector2((e.clientX/window.innerWidth)*2-1, -(e.clientY/window.innerHeight)*2+1);
             if(e.type==='touchstart') { m.x=(e.touches[0].clientX/window.innerWidth)*2-1; m.y=-(e.touches[0].clientY/window.innerHeight)*2+1; }
