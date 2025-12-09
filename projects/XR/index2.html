@@ -154,6 +154,8 @@
             overflow-y: auto;
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateX(-120%);
+            opacity: 0;
         }
 
         .control-room-panel { 
@@ -162,7 +164,8 @@
         }
         .quiz-panel { 
             right: 20px; 
-            border-right: 4px solid var(--accent-orange); 
+            border-right: 4px solid var(--accent-orange);
+            transform: translateX(120%);
         }
         .data-panel { 
             right: 20px; 
@@ -170,7 +173,8 @@
             display: none;
         }
         .side-panel.active { 
-            transform: translateX(0); 
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .panel-header { 
@@ -612,6 +616,16 @@
             opacity: 0.7;
             animation: pulse 2s infinite;
         }
+
+        /* Star Particles for Quiz */
+        .star-particle {
+            position: absolute;
+            font-size: 1.5rem;
+            color: gold;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
@@ -690,7 +704,7 @@
             <i class="fas fa-star" style="color: gold; font-size: 6rem; filter: drop-shadow(0 0 30px gold);"></i>
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; text-align: center;">
                 <div style="font-size: 1.5rem; margin-top: 120px;">ACHIEVEMENT UNLOCKED!</div>
-                <div style="font-size: 1rem; color: gold;">System Stabilization Expert</div>
+                <div style="font-size: 1rem; color: gold;" id="achievementText">System Stabilization Expert</div>
             </div>
         </div>
 
@@ -839,7 +853,9 @@
             startTime: 0, lastEmergency: 0, isEmergency: false, emergencyCount: 0,
             currentQ: 0, score: 0, achievements: [],
             isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-            audioContextInitialized: false
+            audioContextInitialized: false,
+            emergencyInterval: null,  // For auto-changing parameters during emergency
+            totalStars: 0  // Track total stars earned
         };
 
         // ==================== ENHANCED 3D ENGINE ====================
@@ -1460,20 +1476,47 @@
                 const pathT = (p.t % 100) / 100;
                 
                 if(p.type === 'N2') {
-                    // Nitrogen path
-                    x = -2.5 + pathT * 2.5;
-                    y = 0.8 + Math.sin(p.t + p.phase) * p.amplitude;
-                    z = Math.sin(p.t * 2) * 0.1;
+                    // Nitrogen path from N2 tank to reactor
+                    if(pathT < 0.5) {
+                        // Traveling from N2 tank to reactor
+                        x = -2.5 + pathT * 5;
+                        y = 0.8 + Math.sin(p.t + p.phase) * p.amplitude;
+                        z = Math.sin(p.t * 2) * 0.1;
+                    } else {
+                        // Reactor processing and moving to condenser
+                        const reactorT = (pathT - 0.5) * 2;
+                        x = Math.sin(reactorT * Math.PI) * 0.3;
+                        y = 1.6 + reactorT * 1.4;
+                        z = -reactorT * 2;
+                    }
                 } else if(p.type === 'H2') {
-                    // Hydrogen path
-                    x = 2.5 - pathT * 2.5;
-                    y = 0.8 + Math.cos(p.t + p.phase) * p.amplitude;
-                    z = Math.cos(p.t * 2) * 0.1;
+                    // Hydrogen path from H2 tank to reactor
+                    if(pathT < 0.5) {
+                        // Traveling from H2 tank to reactor
+                        x = 2.5 - pathT * 5;
+                        y = 0.8 + Math.cos(p.t + p.phase) * p.amplitude;
+                        z = Math.cos(p.t * 2) * 0.1;
+                    } else {
+                        // Reactor processing and moving to condenser
+                        const reactorT = (pathT - 0.5) * 2;
+                        x = Math.cos(reactorT * Math.PI) * 0.3;
+                        y = 1.6 + reactorT * 1.4;
+                        z = -reactorT * 2;
+                    }
                 } else {
-                    // Ammonia path
+                    // Ammonia path from reactor to condenser
+                    const reactorT = pathT * 0.7;
                     x = Math.sin(p.t) * 0.2;
-                    y = 2 + pathT * 2;
-                    z = -1 - pathT * 2;
+                    y = 1.6 + reactorT * 2.5;
+                    z = -1 - reactorT * 3;
+                    
+                    if(pathT > 0.7) {
+                        // In condenser
+                        const condenserT = (pathT - 0.7) / 0.3;
+                        x = 0 + Math.sin(condenserT * 10) * 0.5;
+                        y = 2.5 - condenserT * 0.5;
+                        z = -3 + condenserT * 0.2;
+                    }
                 }
                 
                 positions[i * 3] = x;
@@ -1494,7 +1537,7 @@
 
         // ==================== ENHANCED UI LOGIC ====================
         function initEnhancedUI() {
-            // Control panel toggle
+            // Control panel toggle - MODIFIED: Don't show by default
             document.getElementById('btnSettings').onclick = () => {
                 togglePanel('controlPanel');
                 document.getElementById('quizPanel').classList.remove('active');
@@ -1505,7 +1548,7 @@
                 document.getElementById('controlPanel').classList.remove('active');
             };
             
-            // Quiz panel toggle
+            // Quiz panel toggle - MODIFIED: Don't show by default
             document.getElementById('btnQuiz').onclick = () => {
                 togglePanel('quizPanel');
                 document.getElementById('controlPanel').classList.remove('active');
@@ -1665,7 +1708,10 @@
             // Toggle the requested panel
             if(!isActive) {
                 panel.classList.add('active');
-                gsap.from(panel, {x: panelId === 'controlRoomPanel' ? -50 : 50, opacity: 0, duration: 0.3});
+                gsap.fromTo(panel, 
+                    {x: panelId === 'controlPanel' ? -50 : 50, opacity: 0}, 
+                    {x: 0, opacity: 1, duration: 0.3}
+                );
             }
         }
 
@@ -1691,7 +1737,7 @@
             
             // Visual effects
             document.body.classList.add('critical-state');
-            document.getElementById('statusText').innerText = "SYSTEM CRITICAL";
+            document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
             document.getElementById('statusText').style.animation = "flash 0.5s infinite";
             
             // Audio alerts
@@ -1700,7 +1746,7 @@
                 window.speechSynthesis.cancel();
                 
                 // Emergency voice alert
-                speak(`Emergency! System parameters critical. Temperature: ${state.temp}°C. Pressure: ${state.pressure} atmospheres.`);
+                speak(`Emergency! System decomposing. Temperature: ${state.temp}°C. Pressure: ${state.pressure} atmospheres.`);
                 
                 // Start continuous siren
                 startSiren();
@@ -1711,13 +1757,51 @@
                 el.style.color = 'var(--accent-danger)';
             });
             
-            // Show control panel automatically
+            // Show control panel automatically during emergency
             document.getElementById('controlPanel').classList.add('active');
             
             // Log emergency
             addDataStreamEntry("EMERGENCY", `System parameters out of range: T=${state.temp}°C, P=${state.pressure}atm`);
             
             showToast("EMERGENCY!", "Adjust parameters to stabilize system", 0);
+            
+            // MODIFICATION 2: Start auto-changing parameters during emergency
+            startEmergencyParameterChange();
+        }
+
+        function startEmergencyParameterChange() {
+            if(state.emergencyInterval) clearInterval(state.emergencyInterval);
+            
+            state.emergencyInterval = setInterval(() => {
+                if(!state.isEmergency) {
+                    clearInterval(state.emergencyInterval);
+                    return;
+                }
+                
+                // Simulate system decomposition by randomly changing parameters
+                const tempChange = (Math.random() - 0.5) * 10; // Random change ±5°C
+                const pressureChange = (Math.random() - 0.5) * 20; // Random change ±10 atm
+                
+                // Update sliders and values
+                let newTemp = parseInt(document.getElementById('sliderTemp').value) + tempChange;
+                let newPressure = parseInt(document.getElementById('sliderPress').value) + pressureChange;
+                
+                // Clamp values within slider ranges
+                newTemp = Math.max(300, Math.min(600, Math.round(newTemp)));
+                newPressure = Math.max(50, Math.min(400, Math.round(newPressure)));
+                
+                // Update slider values
+                document.getElementById('sliderTemp').value = newTemp;
+                document.getElementById('sliderPress').value = newPressure;
+                
+                // Update displayed values
+                document.getElementById('valTemp').innerText = `${newTemp}°C`;
+                document.getElementById('valPress').innerText = `${newPressure} atm`;
+                
+                // Trigger calculations
+                updateThermodynamicCalculations();
+                
+            }, 2000); // Change every 2 seconds
         }
 
         function resolveEmergency() {
@@ -1725,6 +1809,12 @@
             
             state.isEmergency = false;
             state.lastEmergency = Date.now();
+            
+            // Stop auto-changing parameters
+            if(state.emergencyInterval) {
+                clearInterval(state.emergencyInterval);
+                state.emergencyInterval = null;
+            }
             
             // Remove visual effects
             document.body.classList.remove('critical-state');
@@ -1743,8 +1833,9 @@
             // Restore UI colors
             updateThermodynamicCalculations();
             
-            // Show achievement
-            showStarReward();
+            // MODIFICATION 3: Show star reward for stabilizing system
+            showStarReward("System Stabilized!", "Emergency Response Expert");
+            state.totalStars += 1;
             
             // Log resolution
             addDataStreamEntry("SYSTEM", "Emergency resolved - parameters stabilized");
@@ -1813,8 +1904,12 @@
             }
         }
 
-        function showStarReward() {
+        // MODIFICATION 3: Enhanced star reward function
+        function showStarReward(title, subtitle) {
             const starContainer = document.getElementById('starReward');
+            const achievementText = document.getElementById('achievementText');
+            
+            achievementText.innerText = subtitle;
             
             starContainer.style.display = 'block';
             starContainer.style.opacity = '0';
@@ -1884,6 +1979,7 @@
             };
         }
 
+        // MODIFICATION 3: Enhanced answer handling with star particles
         function handleAnswer(selected, correct, button) {
             const options = button.parentElement.children;
             
@@ -1897,6 +1993,10 @@
                 button.classList.add('correct');
                 state.score += 10;
                 
+                // MODIFICATION 3: Show star particles for correct answer
+                showQuizStarParticles(button);
+                state.totalStars += 1;
+                
                 if(state.audioEnabled) {
                     playSuccessSound();
                 }
@@ -1905,6 +2005,7 @@
                 if(state.score >= 50 && !state.achievements.includes("quiz_master")) {
                     state.achievements.push("quiz_master");
                     addDataStreamEntry("ACHIEVEMENT", "Quiz Master - Scored 50+ points in knowledge check");
+                    showStarReward("Quiz Master!", "Scored 50+ points");
                 }
             } else {
                 // Wrong answer
@@ -1922,8 +2023,46 @@
             // Update score display
             document.getElementById('quizScore').innerHTML = `
                 Score: <span style="color: var(--accent-orange);">${state.score}</span> |
-                Progress: ${state.currentQ + 1}/${quizQuestions.length}
+                Progress: ${state.currentQ + 1}/${quizQuestions.length} |
+                Stars: <span style="color: gold;">${state.totalStars}</span>
             `;
+        }
+
+        // MODIFICATION 3: Star particle animation for quiz
+        function showQuizStarParticles(button) {
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Create multiple star particles
+            for(let i = 0; i < 5; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.innerHTML = '<i class="fas fa-star"></i>';
+                star.style.position = 'fixed';
+                star.style.left = centerX + 'px';
+                star.style.top = centerY + 'px';
+                star.style.color = 'gold';
+                star.style.fontSize = (1 + Math.random() * 0.5) + 'rem';
+                star.style.opacity = '0';
+                star.style.zIndex = '1000';
+                star.style.pointerEvents = 'none';
+                
+                document.body.appendChild(star);
+                
+                // Animate star particle
+                gsap.to(star, {
+                    duration: 1 + Math.random() * 0.5,
+                    x: (Math.random() - 0.5) * 200,
+                    y: (Math.random() - 0.5) * 200 - 100,
+                    opacity: 1,
+                    scale: 0,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.body.removeChild(star);
+                    }
+                });
+            }
         }
 
         // ==================== ENHANCED INTERACTION ====================
@@ -2385,7 +2524,7 @@
             
             const time = Date.now() * 0.001;
             
-            // Update flow visualization
+            // MODIFICATION 4: Update flow visualization (always maintain visual flow)
             updateEnhancedFlow();
             
             // Animate molecules
