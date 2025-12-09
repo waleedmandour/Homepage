@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>Haber-Bosch Process: Engineering Lab | WebAR</title>
+    <meta name="theme-color" content="#0b1120">
+    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process.">
+    
+    <!-- Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0b1120;
+            --glass-panel: rgba(16, 24, 40, 0.85);
+            --glass-border: rgba(56, 189, 248, 0.3);
+            --accent-cyan: #38bdf8;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-danger: #ef4444;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --font-tech: 'Rajdhani', sans-serif;
+            --font-code: 'Roboto Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+
+        body {
+            font-family: var(--font-tech);
+            background: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            transition: background 0.5s ease;
+        }
+
+        /* AR Transparent Mode */
+        body.ar-active { background: transparent !important; }
+
+        /* UI Containers */
+        .hud-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px;
+        }
+
+        .pointer-events-auto { pointer-events: auto; }
+
+        /* Status Bar */
+        .top-bar { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 20px; }
+        
+        .status-badge {
+            background: var(--glass-panel); border: 1px solid var(--glass-border);
+            border-radius: 4px; padding: 8px 16px; backdrop-filter: blur(12px);
+            display: flex; align-items: center; gap: 10px; transition: all 0.3s;
+        }
+        
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        /* Emergency State Styles */
+        .critical-state .status-badge { border-color: var(--accent-danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
+        .critical-state .status-dot { background: var(--accent-danger); box-shadow: 0 0 15px var(--accent-danger); animation: flash 0.5s infinite; }
+        .critical-state .tech-title h1 { color: var(--accent-danger); }
+
+        .tech-title h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); }
+        .tech-title span { font-family: var(--font-code); font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Side Panels (Controls & Quiz) */
+        .side-panel {
+            position: absolute; top: 90px; width: 280px;
+            background: var(--glass-panel); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px); padding: 20px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto; max-height: 60vh; overflow-y: auto;
+        }
+
+        .control-room-panel { left: 20px; border-left: 3px solid var(--accent-cyan); border-radius: 0 12px 12px 0; transform: translateX(-120%); }
+        .quiz-panel { right: 20px; border-right: 3px solid var(--accent-orange); border-radius: 12px 0 0 12px; transform: translateX(120%); }
+        .side-panel.active { transform: translateX(0); }
+
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .panel-label { font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; }
+
+        /* Controls */
+        .slider-group { margin-bottom: 15px; }
+        .slider-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .slider-label { font-size: 0.8rem; color: var(--text-muted); }
+        .slider-value { font-family: var(--font-code); font-size: 0.9rem; color: var(--accent-orange); }
+        
+        input[type="range"] {
+            width: 100%; height: 4px; background: rgba(255,255,255,0.1);
+            outline: none; -webkit-appearance: none; border-radius: 2px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 16px; height: 16px;
+            background: var(--accent-cyan); border-radius: 50%; cursor: pointer;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .yield-monitor {
+            background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px;
+            margin-top: 15px; text-align: center; transition: background 0.3s;
+        }
+        .yield-value { font-size: 1.5rem; font-weight: 700; color: var(--accent-green); font-family: var(--font-code); }
+
+        /* Quiz UI */
+        .quiz-question { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.4; }
+        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+        .quiz-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px; border-radius: 6px; color: var(--text-muted);
+            text-align: left; cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+        }
+        .quiz-btn:hover { background: rgba(255,255,255,0.1); }
+        .quiz-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
+        .quiz-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-danger); color: var(--accent-danger); }
+        .next-q-btn { margin-top: 15px; width: 100%; padding: 8px; background: var(--accent-cyan); border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
+
+        /* Bottom Controls */
+        .bottom-dock { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; padding-bottom: 30px; }
+        .mode-toggles { display: flex; gap: 10px; background: var(--glass-panel); padding: 8px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); pointer-events: auto; }
+        .icon-btn {
+            width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent;
+            color: var(--text-muted); font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .icon-btn.active { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+
+        /* Molecule Popup */
+        .molecule-popup {
+            position: absolute; right: 20px; bottom: 120px; width: 180px; height: 120px;
+            background: var(--glass-panel); border: 1px solid var(--accent-green); border-radius: 12px;
+            display: none; flex-direction: column; align-items: center; padding: 10px; backdrop-filter: blur(10px);
+        }
+        .molecule-canvas { width: 100%; height: 120px; }
+        .molecule-label { font-family: var(--font-code); color: var(--accent-green); font-size: 0.9rem; }
+
+        /* Screens */
+        #loadingScreen, #startScreen, #targetModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark); z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        #targetModal { background: rgba(0,0,0,0.95); z-index: 2000; display: none; }
+
+        .loader-ring {
+            width: 60px; height: 60px; border: 3px solid rgba(56, 189, 248, 0.2);
+            border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 1s linear infinite;
+        }
+
+        .btn-primary {
+            margin-top: 30px; padding: 15px 40px; background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
+            color: #000; border: none; border-radius: 4px; font-family: var(--font-tech); font-weight: 700;
+            font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+        }
+        .btn-secondary { margin-top: 15px; background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; cursor: pointer; font-family: var(--font-code); font-size: 0.9rem; }
+        .btn-text { margin-top: 10px; background: none; border: none; color: var(--accent-cyan); text-decoration: underline; cursor: pointer; font-size: 0.9rem; }
+
+        .target-image-display {
+            width: 80%; max-width: 300px; height: 300px; background: #fff; border-radius: 8px; margin-bottom: 20px;
+            color: #000; text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: center;
+        }
+        .star-pop { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
+        @keyframes popIn { 0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        video { transform: scaleX(-1) !important; }
+        .ar-target-guide {
+            width: 200px; height: 200px; border: 2px dashed var(--accent-cyan);
+            border-radius: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; align-items: center; justify-content: center; opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loader-ring"></div>
+        <h2 style="margin-top: 20px; color: var(--accent-cyan); letter-spacing: 2px;">INITIALIZING SYSTEM</h2>
+    </div>
+
+    <!-- Target Image Modal -->
+    <div id="targetModal">
+        <h3 style="color: white; margin-bottom: 20px;">Scan this Image</h3>
+        <div class="target-image-display">
+            <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 20px; color: #333;"></i>
+            <p style="font-weight: bold;">Haber-Bosch AR Lab</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at the printed QR Card</p>
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" style="display: none;">
+        <i class="fas fa-industry" style="font-size: 4rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
+        <h1 style="font-size: 2.5rem; text-align: center; line-height: 1.1;">HABER-BOSCH<br><span style="color: var(--accent-cyan)">VR LAB</span></h1>
+        <p style="max-width: 300px; text-align: center; margin-top: 20px; color: var(--text-muted);">
+            Interactive engineering simulation of ammonia synthesis. Explore thermodynamics and process flow.
+        </p>
+        <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
+        <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View Target Marker</button>
+        <button class="btn-secondary" id="btnStart3D">Desktop / Non-AR Mode</button>
+        
+        <div id="mobileWarning" style="display: none; margin-top: 20px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-danger); border-radius: 8px; max-width: 300px;">
+            <p style="color: var(--accent-danger); font-size: 0.8rem; margin: 0;">
+                <i class="fas fa-exclamation-triangle"></i> Use Safari (iOS) or Chrome (Android). Grant Camera Permissions.
+            </p>
+        </div>
+        
+        <div style="margin-top: 40px; font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; width: 80%; text-align: center;">
+            AR Engineering Lab v2.0
+        </div>
+    </div>
+
+    <!-- Main HUD -->
+    <div id="mainHUD" class="hud-container" style="display: none;">
+        <!-- Top Info -->
+        <div class="top-bar">
+            <div class="status-badge" id="sysStatus">
+                <div class="status-dot"></div>
+                <div class="tech-title">
+                    <h1 id="statusText">System Active</h1>
+                    <span id="modeIndicator">AR TRACKING</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Take Quiz" style="background: var(--glass-panel);">
+                    <i class="fas fa-clipboard-check"></i>
+                </button>
+                <button class="icon-btn pointer-events-auto" id="btnSettings" title="Controls" style="background: var(--glass-panel);">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+        </div>
+      
+        <div id="starReward" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; z-index: 200; pointer-events: none;">
+            <i class="fas fa-star" style="color: gold; font-size: 5rem; filter: drop-shadow(0 0 20px gold);"></i>
+        </div>
+
+        <!-- Control Panel (Left) -->
+        <div class="side-panel control-room-panel" id="controlPanel">
+            <div class="panel-header">
+                <span class="panel-label">Reactor Control</span>
+                <button class="icon-btn" id="btnCloseControls" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Temperature (T)</span>
+                    <span class="slider-value" id="valTemp">450°C</span>
+                </div>
+                <input type="range" id="sliderTemp" min="300" max="600" value="450">
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">Low T favors yield (Exothermic)</div>
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Pressure (P)</span>
+                    <span class="slider-value" id="valPress">200 atm</span>
+                </div>
+                <input type="range" id="sliderPress" min="100" max="400" value="200">
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">High P favors yield (Moles)</div>
+            </div>
+
+            <div class="yield-monitor">
+                <div id="monitorLabel" style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;">Calculated Yield</div>
+                <div class="yield-value" id="valYield">15.4%</div>
+            </div>
+        </div>
+
+        <!-- Quiz Panel (Right) -->
+        <div class="side-panel quiz-panel" id="quizPanel">
+            <div class="panel-header">
+                <span class="panel-label">Knowledge Check</span>
+                <button class="icon-btn" id="btnCloseQuiz" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="quizContent">
+                <div class="quiz-question" id="qText">Question loading...</div>
+                <div class="quiz-options" id="qOptions"></div>
+                <button class="next-q-btn" id="btnNextQ">NEXT QUESTION</button>
+            </div>
+            <div id="quizScore" style="margin-top: 20px; text-align: center; color: var(--accent-orange); font-weight: bold;">Score: 0</div>
+        </div>
+
+        <!-- Molecule View Popup -->
+        <div class="molecule-popup" id="moleculePopup">
+            <div id="moleculeCanvas" class="molecule-canvas"></div>
+            <div class="molecule-label" id="moleculeLabel">N₂ + 3H₂</div>
+        </div>
+
+        <!-- Center Guide (AR only) -->
+        <div class="ar-target-guide" id="arGuide">
+            <span style="color: white; font-size: 0.8rem; background: rgba(0,0,0,0.5); padding: 4px;">SCAN TARGET</span>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-dock">
+            <div id="infoToast" style="background: var(--glass-panel); padding: 10px 20px; border-radius: 8px; border: 1px solid var(--accent-cyan); display: none; margin-bottom: 10px;">
+                <span id="toastText">Component Selected</span>
+            </div>
+
+            <div class="mode-toggles">
+                <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
+                <button class="icon-btn pointer-events-auto active" id="btnFlow" title="Toggle Flow"><i class="fas fa-wind"></i></button>
+                <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AR/3D Container -->
+    <div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+
+    <script>
+        // --- ENGINEERING CONSTANTS ---
+        const COLORS = {
+            metal: 0x8899a6, darkMetal: 0x2c3e50, n2: 0x38bdf8,
+            h2: 0xffffff, nh3: 0xf59e0b, catalyst: 0x8b4513, highlight: 0x10b981
+        };
+
+        // --- QUIZ DATA ---
+        const quizQuestions = [
+            { q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?", options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"], correct: 1 },
+            { q: "In chemical engineering, what does 'Decomposition' mean?", options: ["Combining elements", "Breaking down a compound", "Increasing pressure", "Creating equilibrium"], correct: 1 },
+            { q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...", options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"], correct: 1 },
+            { q: "Select the best definition for 'Chemical Equilibrium':", options: ["Reaction stops completely", "Reactants are used up", "Forward & reverse rates are equal", "Temperature is zero"], correct: 2 },
+            { q: "What catalyst is primarily used in the Haber-Bosch process?", options: ["Platinum", "Iron", "Copper", "Nickel"], correct: 1 },
+            { q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?", options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"], correct: 0 }
+            { q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?", options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"], correct: 1 },
+            { q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...", options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"], correct: 1 },
+            { q: "What catalyst is primarily used in the Haber-Bosch process?", options: ["Platinum", "Iron", "Copper", "Nickel"], correct: 1 },
+            { q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?", options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"], correct: 0 }
+        ];
+
+        // --- APP STATE ---
+        const state = {
+            temp: 450, pressure: 200, yield: 15.4,
+            isXray: false, flowActive: true, audioEnabled: true, mode: 'AR', activeComponent: null,
+            startTime: 0, lastEmergency: 0, isEmergency: false,
+            currentQ: 0, score: 0,
+            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+            audioContextInitialized: false
+        };
+
+        // --- 3D ENGINE VARIABLES ---
+        let scene, camera, renderer, clock, mixer, mindarThree, rootGroup;
+        let particles = { mesh: null, data: [] };
+        let molecules = [];
+        let molScene, molCamera, molRenderer;
+        let audioCtx = null;
+
+        // --- INIT SEQUENCE ---
+        window.addEventListener('load', () => {
+            if (state.isMobile) document.getElementById('mobileWarning').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('startScreen').style.display = 'flex';
+                }, 500);
+            }, 1500);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btnStartAR').addEventListener('click', handleStartAR);
+            document.getElementById('btnStart3D').addEventListener('click', () => startApp('3D'));
+        });
+
+        async function handleStartAR() {
+            if (state.isMobile) await requestCameraPermission();
+            else await startApp('AR');
+        }
+
+        async function requestCameraPermission() {
+            try {
+                if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                    alert('AR requires HTTPS.'); return;
+                }
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                stream.getTracks().forEach(track => track.stop());
+                initAudioContextForMobile();
+                await startApp('AR');
+            } catch (error) {
+                alert('Camera access denied. Falling back to 3D mode.');
+                await startApp('3D');
+            }
+        }
+
+        function initAudioContextForMobile() {
+            if (state.audioEnabled && !audioCtx) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const resume = () => { if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); };
+                    document.addEventListener('click', resume, { once: true });
+                    document.addEventListener('touchstart', resume, { once: true });
+                } catch (e) { console.log('Audio init error', e); }
+            }
+        }
+
+        async function startApp(mode) {
+            state.mode = mode;
+            state.startTime = Date.now();
+            state.lastEmergency = Date.now();
+            
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('mainHUD').style.display = 'flex';
+            document.getElementById('modeIndicator').innerText = mode === 'AR' ? 'AR TRACKING' : 'SIMULATION MODE';
+            
+            if (mode === '3D') {
+                document.getElementById('arGuide').style.display = 'none';
+                init3DMode();
+            } else {
+                document.body.classList.add('ar-active');
+                await initARMode();
+            }
+            
+            initUI(); initQuiz(); initAudio(); initMoleculeViewer(); animate();
+        }
+
+        // --- 3D SCENE SETUP ---
+        function createCommonScene() {
+            scene = new THREE.Scene();
+            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(5, 10, 7); dirLight.name = "MainLight";
+            scene.add(dirLight);
+            const blueLight = new THREE.PointLight(0x38bdf8, 0.8, 10);
+            blueLight.position.set(0, 2, 2); blueLight.name = "AccentLight";
+            scene.add(blueLight);
+            rootGroup = new THREE.Group();
+            scene.add(rootGroup);
+            buildProcessingPlant();
+        }
+
+        function init3DMode() {
+            createCommonScene();
+            scene.background = new THREE.Color(0x0f172a);
+            const container = document.getElementById('container');
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
+            camera.position.set(0, 2, 6);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            container.appendChild(renderer.domElement);
+
+            let isDragging = false, prev = {x:0, y:0};
+            container.addEventListener('mousedown', (e) => { isDragging=true; prev={x:e.offsetX, y:e.offsetY}; });
+            window.addEventListener('mouseup', () => isDragging=false);
+            container.addEventListener('mousemove', (e) => {
+                if(isDragging) {
+                    rootGroup.rotation.y += (e.offsetX - prev.x) * 0.01;
+                    rootGroup.rotation.x += (e.offsetY - prev.y) * 0.01;
+                    prev = {x:e.offsetX, y:e.offsetY};
+                }
+            });
+            container.addEventListener('touchstart', (e) => { isDragging=true; prev={x:e.touches[0].clientX, y:e.touches[0].clientY}; });
+            container.addEventListener('touchend', () => isDragging=false);
+            container.addEventListener('touchmove', (e) => {
+                if(isDragging) {
+                    e.preventDefault();
+                    rootGroup.rotation.y += (e.touches[0].clientX - prev.x) * 0.01;
+                    rootGroup.rotation.x += (e.touches[0].clientY - prev.y) * 0.01;
+                    prev = {x:e.touches[0].clientX, y:e.touches[0].clientY};
+                }
+            });
+            container.addEventListener('click', onMouseClick);
+        }
+
+        async function initARMode() {
+            const container = document.getElementById('container');
+            document.body.classList.add('ar-active');
+            
+            // Try to use local target file, fallback to demo if missing
+            const targetSrc = "./images/targets.mind";
+            
+            try {
+                const mindar = new window.MINDAR.IMAGE.MindARThree({
+                    container: container,
+                    imageTargetSrc: targetSrc,
+                    uiLoading: "yes", uiScanning: "yes", uiError: "yes",
+                    filterMinCF: 0.001, filterBeta: 1000, maxTrack: 2, warmupTolerance: 10
+                });
+
+                mindarThree = mindar;
+                renderer = mindar.renderer; scene = mindar.scene; camera = mindar.camera;
+                
+                scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+                const dl = new THREE.DirectionalLight(0xffffff, 1);
+                dl.position.set(0, 5, 5); dl.name = "MainLight"; scene.add(dl);
+
+                const anchor = mindarThree.addAnchor(0);
+                rootGroup = new THREE.Group();
+                rootGroup.scale.set(0.5, 0.5, 0.5); // Scaled for QR card
+                anchor.group.add(rootGroup);
+
+                buildProcessingPlant();
+                await mindarThree.start();
+            } catch (err) {
+                console.error(err);
+                alert("AR Start Failed. Falling back to 3D.");
+                init3DMode();
+            }
+        }
+
+        // --- MODEL BUILDING ---
+        function getIndustrialMaterial(color, transparent=false) {
+            return new THREE.MeshStandardMaterial({
+                color: color, roughness: 0.3, metalness: 0.7,
+                transparent: transparent, opacity: transparent?0.3:1.0, side: THREE.DoubleSide
+            });
+        }
+
+        function buildProcessingPlant() {
+            const reactorGroup = new THREE.Group(); reactorGroup.name = "Reactor";
+            const shell = new THREE.Mesh(new THREE.CylinderGeometry(0.8,0.8,3,24), getIndustrialMaterial(COLORS.metal));
+            shell.position.y=1.5; shell.name="Shell"; reactorGroup.add(shell);
+            
+            const bed = new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,2,16), new THREE.MeshStandardMaterial({color:COLORS.catalyst, wireframe:true}));
+            bed.position.y=1.5; bed.visible=false; bed.name="Internals"; reactorGroup.add(bed);
+            
+            const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,0.2,16), getIndustrialMaterial(COLORS.darkMetal));
+            const top=cap.clone(); top.position.y=3.1;
+            const bot=cap.clone(); bot.position.y=-0.1;
+            reactorGroup.add(top, bot);
+
+            const tankGeo = new THREE.SphereGeometry(0.6,16,16);
+            const createTank = (c,x,n) => {
+                const t=new THREE.Group(); t.name=n; t.position.set(x,0.6,0);
+                t.add(new THREE.Mesh(tankGeo, getIndustrialMaterial(c)));
+                return t;
+            };
+
+            rootGroup.add(reactorGroup);
+            rootGroup.add(createTank(COLORS.n2, -2, "Nitrogen Feed"));
+            rootGroup.add(createTank(COLORS.h2, 2, "Hydrogen Feed"));
+
+            // Pipes
+            const pipeMat = getIndustrialMaterial(0xcccccc);
+            const createPipe = (s,e) => {
+                const path = new THREE.CatmullRomCurve3([s, new THREE.Vector3((s.x+e.x)/2,s.y,s.z), new THREE.Vector3((s.x+e.x)/2,e.y,e.z), e]);
+                return new THREE.Mesh(new THREE.TubeGeometry(path, 6, 0.1, 8, false), pipeMat);
+            };
+            rootGroup.add(createPipe(new THREE.Vector3(-2,1.2,0), new THREE.Vector3(0,0.5,0)));
+            rootGroup.add(createPipe(new THREE.Vector3(2,1.2,0), new THREE.Vector3(0,0.5,0)));
+            rootGroup.add(createPipe(new THREE.Vector3(0,3,0), new THREE.Vector3(0,4,-1)));
+
+            const cond = new THREE.Group(); cond.name="Condenser"; cond.position.set(0,2,-2);
+            cond.add(new THREE.Mesh(new THREE.BoxGeometry(1.5,2,1), getIndustrialMaterial(COLORS.darkMetal)));
+            rootGroup.add(cond);
+
+            initFlowSystem();
+        }
+
+        function initFlowSystem() {
+            const count=50, pos = new Float32Array(count*3);
+            const mat = new THREE.PointsMaterial({color:COLORS.n2, size:0.1, transparent:true});
+            const sys = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pos,3)), mat);
+            rootGroup.add(sys);
+            particles={mesh:sys, data:[]};
+            for(let i=0; i<count; i++) particles.data.push({type:i%3===0?'N2':'H2', t:Math.random(), speed:0.01, path:i%3===0?1:2});
+        }
+
+        function updateFlow() {
+            if(!state.flowActive || !particles.mesh) return;
+            const pos = particles.mesh.geometry.attributes.position.array;
+            const speed = state.temp/450;
+            particles.data.forEach((p,i) => {
+                p.t += p.speed*speed; if(p.t>1) p.t=0;
+                let x,y,z;
+                if(p.t<0.5) { x=(p.path===1?-2:2)*(1-p.t*2); y=0.6+(p.t*2); z=0; }
+                else { const lt=(p.t-0.5)*2; x=0; y=1.6+lt*2; z=-lt*2; }
+                pos[i*3]=x; pos[i*3+1]=y; pos[i*3+2]=z;
+            });
+            particles.mesh.geometry.attributes.position.needsUpdate=true;
+        }
+
+        // --- UI LOGIC ---
+        function initUI() {
+            document.getElementById('btnSettings').onclick = () => { document.getElementById('controlPanel').classList.add('active'); document.getElementById('quizPanel').classList.remove('active'); };
+            document.getElementById('btnCloseControls').onclick = () => document.getElementById('controlPanel').classList.remove('active');
+            document.getElementById('btnQuiz').onclick = () => { document.getElementById('quizPanel').classList.add('active'); document.getElementById('controlPanel').classList.remove('active'); };
+            document.getElementById('btnCloseQuiz').onclick = () => document.getElementById('quizPanel').classList.remove('active');
+
+            const updateCalc = () => {
+                state.temp = parseInt(document.getElementById('sliderTemp').value);
+                state.pressure = parseInt(document.getElementById('sliderPress').value);
+                document.getElementById('valTemp').innerText = state.temp+"°C";
+                document.getElementById('valPress').innerText = state.pressure+" atm";
+                
+                if(state.isEmergency) {
+                    const stable = Math.max(0, 100 - Math.abs(state.temp-425) - Math.abs(state.pressure-225));
+                    document.getElementById('valYield').innerText = Math.floor(stable)+"%";
+                    if(state.temp>=400 && state.temp<=450 && state.pressure>=200 && state.pressure<=250) resolveEmergency();
+                } else {
+                    let y = (20000/state.temp)+(state.pressure/10)-20;
+                    document.getElementById('valYield').innerText = Math.max(0,Math.min(98,y)).toFixed(1)+"%";
+                }
+            };
+            document.getElementById('sliderTemp').oninput = updateCalc;
+            document.getElementById('sliderPress').oninput = updateCalc;
+
+            document.getElementById('btnXray').onclick = (e) => {
+                state.isXray=!state.isXray; e.currentTarget.classList.toggle('active');
+                rootGroup.traverse(c => {
+                    if(c.name==="Shell") { c.material.transparent=true; c.material.opacity=state.isXray?0.2:1.0; }
+                    if(c.name==="Internals") c.visible=state.isXray;
+                });
+            };
+            document.getElementById('btnFlow').onclick = (e) => { state.flowActive=!state.flowActive; e.currentTarget.classList.toggle('active'); };
+            document.getElementById('btnReset').onclick = () => { if(rootGroup) gsap.to(rootGroup.rotation, {x:0,y:0,z:0,duration:1}); };
+            document.getElementById('btnExit').onclick = () => location.reload();
+        }
+
+        // --- QUIZ & EVENTS ---
+        function initQuiz() {
+            const render = () => {
+                const q = quizQuestions[state.currentQ];
+                document.getElementById('qText').innerText = `Q${state.currentQ+1}: ${q.q}`;
+                const div = document.getElementById('qOptions'); div.innerHTML='';
+                document.getElementById('btnNextQ').style.display='none';
+                q.options.forEach((opt,i) => {
+                    const b=document.createElement('div'); b.className='quiz-btn'; b.innerText=opt;
+                    b.onclick = () => {
+                        if(i===q.correct) { b.classList.add('correct'); state.score+=10; }
+                        else { b.classList.add('wrong'); div.children[q.correct].classList.add('correct'); }
+                        document.getElementById('quizScore').innerText=`Score: ${state.score}`;
+                        document.getElementById('btnNextQ').style.display='block';
+                        Array.from(div.children).forEach(btn=>btn.style.pointerEvents='none');
+                    };
+                    div.appendChild(b);
+                });
+            };
+            render();
+            document.getElementById('btnNextQ').onclick = () => { state.currentQ=(state.currentQ+1)%quizQuestions.length; render(); };
+        }
+
+        function triggerEmergency() {
+            if(state.isEmergency) return;
+            state.isEmergency = true;
+            document.body.classList.add('critical-state');
+            document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
+            document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
+            document.getElementById('controlPanel').classList.add('active');
+            playAlarm();
+        }
+
+        function resolveEmergency() {
+            state.isEmergency=false; state.lastEmergency=Date.now();
+            document.body.classList.remove('critical-state');
+            document.getElementById('statusText').innerText = "System Active";
+            document.getElementById('monitorLabel').style.color = "var(--text-muted)";
+            setTimeout(()=>document.getElementById('controlPanel').classList.remove('active'), 1500);
+        }
+
+        function playAlarm() {
+            if(!state.audioEnabled) return;
+            try {
+                if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+                if(audioCtx.state==='suspended') audioCtx.resume();
+                const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+                osc.type='sawtooth'; osc.frequency.value=440;
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime+1);
+                setTimeout(()=>osc.stop(), 1000);
+            } catch(e){}
+        }
+
+        function onMouseClick(e) {
+            const m = new THREE.Vector2((e.clientX/window.innerWidth)*2-1, -(e.clientY/window.innerHeight)*2+1);
+            if(e.type==='touchstart') { m.x=(e.touches[0].clientX/window.innerWidth)*2-1; m.y=-(e.touches[0].clientY/window.innerHeight)*2+1; }
+            const ray = new THREE.Raycaster(); ray.setFromCamera(m, camera);
+            const hits = ray.intersectObjects(rootGroup.children, true);
+            if(hits.length>0) {
+                let o = hits[0].object; while(o.parent && o.parent!==rootGroup) o=o.parent;
+                if(o.name) {
+                    state.activeComponent = o.name;
+                    const t=document.getElementById('infoToast'); document.getElementById('toastText').innerText=o.name;
+                    t.style.display='block'; gsap.fromTo(t,{opacity:0,y:20},{opacity:1,y:0,duration:0.3});
+                    updateMoleculeView(o.name);
+                    if(state.audioEnabled) { window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance(o.name)); }
+                }
+            }
+        }
+
+        function initMoleculeViewer() {
+            const c = document.getElementById('moleculeCanvas');
+            molScene=new THREE.Scene(); molScene.background=new THREE.Color(0x101828);
+            molCamera=new THREE.PerspectiveCamera(50, c.clientWidth/c.clientHeight, 0.1, 10); molCamera.position.z=5;
+            molRenderer=new THREE.WebGLRenderer({alpha:true, antialias:true}); molRenderer.setSize(c.clientWidth,c.clientHeight);
+            c.appendChild(molRenderer.domElement);
+            molScene.add(new THREE.DirectionalLight(0xffffff,1));
+            molScene.add(new THREE.AmbientLight(0xffffff,0.5));
+        }
+
+        function updateMoleculeView(name) {
+            const p = document.getElementById('moleculePopup');
+            while(molScene.children.length>2) molScene.remove(molScene.children[molScene.children.length-1]);
+            let label = "";
+            const ball = new THREE.SphereGeometry(0.8,12,12), mat = (c)=>new THREE.MeshPhongMaterial({color:c});
+            const grp = new THREE.Group();
+            
+            if(name.includes("Nitrogen")) {
+                const a=new THREE.Mesh(ball,mat(0x38bdf8)); a.position.x=-0.6; grp.add(a, a.clone().translateX(1.2));
+                label="N₂";
+            } else if(name.includes("Hydrogen")) {
+                const a=new THREE.Mesh(ball,mat(0xffffff)); a.position.x=-0.6; grp.add(a, a.clone().translateX(1.2));
+                label="H₂";
+            } else {
+                const n=new THREE.Mesh(ball,mat(0xf59e0b)); 
+                const h=new THREE.Mesh(new THREE.SphereGeometry(0.4,8,8),mat(0xffffff));
+                grp.add(n, h.clone().position.set(0.8,-0.5,0), h.clone().position.set(-0.6,-0.5,0.7), h.clone().position.set(-0.6,-0.5,-0.7));
+                label="NH₃";
+            }
+            if(label) { molScene.add(grp); molecules=[grp]; p.style.display='flex'; document.getElementById('moleculeLabel').innerText=label; }
+            else p.style.display='none';
+        }
+
+        function initAudio() {
+            document.getElementById('btnAudio').onclick = (e) => {
+                state.audioEnabled=!state.audioEnabled; e.currentTarget.classList.toggle('active');
+                if(!state.audioEnabled) { window.speechSynthesis.cancel(); if(audioCtx) audioCtx.suspend(); }
+            };
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if(!state.isEmergency && Date.now()-state.lastEmergency > 60000) triggerEmergency();
+            if(molecules.length) { molecules[0].rotation.y+=0.01; molRenderer.render(molScene,molCamera); }
+            updateFlow();
+            if(renderer && scene) renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            if(camera) { camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); }
+        });
+    </script>
+</body>
+</html>
