@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <title>Haber-Bosch Process: Engineering Lab | WebAR</title>
+    <title>Haber-Bosch Process: Advanced Engineering Lab | Next-Gen WebAR</title>
     <meta name="theme-color" content="#0b1120">
-    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process.">
+    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process with real-time thermodynamics, interactive components, and AI-assisted learning.">
     
     <!-- Dependencies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,24 +17,34 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --bg-dark: #0b1120;
-            --glass-panel: rgba(16, 24, 40, 0.85);
-            --glass-border: rgba(56, 189, 248, 0.3);
+            --glass-panel: rgba(16, 24, 40, 0.92);
+            --glass-border: rgba(56, 189, 248, 0.4);
             --accent-cyan: #38bdf8;
             --accent-green: #10b981;
             --accent-orange: #f59e0b;
+            --accent-purple: #8b5cf6;
             --accent-danger: #ef4444;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --font-tech: 'Rajdhani', sans-serif;
             --font-code: 'Roboto Mono', monospace;
+            --glow-cyan: 0 0 20px rgba(56, 189, 248, 0.5);
+            --glow-green: 0 0 20px rgba(16, 185, 129, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none; 
+        }
 
         body {
             font-family: var(--font-tech);
@@ -47,151 +57,560 @@
         }
 
         /* AR Transparent Mode */
-        body.ar-active { background: transparent !important; }
+        body.ar-active { 
+            background: transparent !important; 
+        }
 
         /* UI Containers */
         .hud-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 100;
-            display: flex; flex-direction: column; justify-content: space-between;
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            pointer-events: none; 
+            z-index: 100;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
             padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px;
         }
 
-        .pointer-events-auto { pointer-events: auto; }
+        .pointer-events-auto { 
+            pointer-events: auto; 
+        }
 
         /* Status Bar */
-        .top-bar { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 20px; }
+        .top-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            padding-top: 20px; 
+        }
         
         .status-badge {
-            background: var(--glass-panel); border: 1px solid var(--glass-border);
-            border-radius: 4px; padding: 8px 16px; backdrop-filter: blur(12px);
-            display: flex; align-items: center; gap: 10px; transition: all 0.3s;
+            background: var(--glass-panel); 
+            border: 1px solid var(--glass-border);
+            border-radius: 8px; 
+            padding: 10px 20px; 
+            backdrop-filter: blur(20px);
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            transition: all 0.3s;
+            box-shadow: var(--glow-cyan);
         }
         
         .status-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%;
+            background: var(--accent-green); 
+            box-shadow: 0 0 15px var(--accent-green);
             animation: pulse 2s infinite;
         }
 
-        /* Emergency State Styles */
-        .critical-state .status-badge { border-color: var(--accent-danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
-        .critical-state .status-dot { background: var(--accent-danger); box-shadow: 0 0 15px var(--accent-danger); animation: flash 0.5s infinite; }
-        .critical-state .tech-title h1 { color: var(--accent-danger); }
-
-        .tech-title h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); }
-        .tech-title span { font-family: var(--font-code); font-size: 0.7rem; color: var(--text-muted); }
-
-        /* Side Panels (Controls & Quiz) */
-        .side-panel {
-            position: absolute; top: 90px; width: 280px;
-            background: var(--glass-panel); border: 1px solid var(--glass-border);
-            backdrop-filter: blur(12px); padding: 20px;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: auto; max-height: 60vh; overflow-y: auto;
+        /* Enhanced Critical State */
+        .critical-state .status-badge { 
+            border-color: var(--accent-danger); 
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+            animation: shake 0.5s infinite;
+        }
+        .critical-state .status-dot { 
+            background: var(--accent-danger); 
+            box-shadow: 0 0 20px var(--accent-danger); 
+            animation: flash 0.3s infinite; 
+        }
+        .critical-state .tech-title h1 { 
+            color: var(--accent-danger); 
         }
 
-        .control-room-panel { left: 20px; border-left: 3px solid var(--accent-cyan); border-radius: 0 12px 12px 0; transform: translateX(-120%); }
-        .quiz-panel { right: 20px; border-right: 3px solid var(--accent-orange); border-radius: 12px 0 0 12px; transform: translateX(120%); }
-        .side-panel.active { transform: translateX(0); }
+        .tech-title h1 { 
+            font-size: 1.3rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            color: var(--accent-cyan); 
+            font-weight: 700;
+        }
+        .tech-title span { 
+            font-family: var(--font-code); 
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
+            letter-spacing: 1px;
+        }
 
-        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-        .panel-label { font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; }
+        /* Enhanced Side Panels */
+        .side-panel {
+            position: absolute; 
+            top: 90px; 
+            width: 320px;
+            background: var(--glass-panel); 
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px); 
+            padding: 24px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto; 
+            max-height: 70vh; 
+            overflow-y: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
 
-        /* Controls */
-        .slider-group { margin-bottom: 15px; }
-        .slider-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .slider-label { font-size: 0.8rem; color: var(--text-muted); }
-        .slider-value { font-family: var(--font-code); font-size: 0.9rem; color: var(--accent-orange); }
+        .control-room-panel { 
+            left: 20px; 
+            border-left: 4px solid var(--accent-cyan); 
+        }
+        .quiz-panel { 
+            right: 20px; 
+            border-right: 4px solid var(--accent-orange); 
+        }
+        .data-panel { 
+            right: 20px; 
+            border-right: 4px solid var(--accent-purple); 
+            display: none;
+        }
+        .side-panel.active { 
+            transform: translateX(0); 
+        }
+
+        .panel-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid rgba(255,255,255,0.15); 
+            padding-bottom: 12px; 
+        }
+        .panel-label { 
+            font-size: 1rem; 
+            font-weight: 700; 
+            color: var(--accent-cyan); 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Enhanced Controls */
+        .slider-group { 
+            margin-bottom: 20px; 
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+        .slider-header { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 8px; 
+        }
+        .slider-label { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            font-weight: 500;
+        }
+        .slider-value { 
+            font-family: var(--font-code); 
+            font-size: 1rem; 
+            color: var(--accent-orange); 
+            font-weight: 600;
+        }
         
         input[type="range"] {
-            width: 100%; height: 4px; background: rgba(255,255,255,0.1);
-            outline: none; -webkit-appearance: none; border-radius: 2px;
+            width: 100%; 
+            height: 6px; 
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+            outline: none; 
+            -webkit-appearance: none; 
+            border-radius: 3px;
         }
         input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 16px; height: 16px;
-            background: var(--accent-cyan); border-radius: 50%; cursor: pointer;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            -webkit-appearance: none; 
+            width: 20px; 
+            height: 20px;
+            background: white; 
+            border-radius: 50%; 
+            cursor: pointer;
+            box-shadow: var(--glow-cyan);
+            border: 2px solid var(--accent-cyan);
         }
 
-        .yield-monitor {
-            background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px;
-            margin-top: 15px; text-align: center; transition: background 0.3s;
+        .parameter-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
         }
-        .yield-value { font-size: 1.5rem; font-weight: 700; color: var(--accent-green); font-family: var(--font-code); }
+        .param-box {
+            background: rgba(0,0,0,0.3); 
+            border-radius: 8px; 
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .param-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .param-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: var(--font-code);
+        }
+        .param-value.temp { color: #f97316; }
+        .param-value.pressure { color: #8b5cf6; }
+        .param-value.flow { color: #10b981; }
+        .param-value.yield { color: var(--accent-orange); }
 
-        /* Quiz UI */
-        .quiz-question { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.4; }
-        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+        /* Enhanced Quiz UI */
+        .quiz-question { 
+            font-size: 1rem; 
+            margin-bottom: 20px; 
+            line-height: 1.5;
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .quiz-options { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
         .quiz-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px; border-radius: 6px; color: var(--text-muted);
-            text-align: left; cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+            background: rgba(255,255,255,0.07); 
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 16px; 
+            border-radius: 8px; 
+            color: var(--text-muted);
+            text-align: left; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            font-size: 0.9rem;
         }
-        .quiz-btn:hover { background: rgba(255,255,255,0.1); }
-        .quiz-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
-        .quiz-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-danger); color: var(--accent-danger); }
-        .next-q-btn { margin-top: 15px; width: 100%; padding: 8px; background: var(--accent-cyan); border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
+        .quiz-btn:hover { 
+            background: rgba(255,255,255,0.15); 
+            transform: translateX(4px);
+        }
+        .quiz-btn.correct { 
+            background: rgba(16, 185, 129, 0.25); 
+            border-color: var(--accent-green); 
+            color: var(--accent-green); 
+        }
+        .quiz-btn.wrong { 
+            background: rgba(239, 68, 68, 0.25); 
+            border-color: var(--accent-danger); 
+            color: var(--accent-danger); 
+        }
+        .next-q-btn { 
+            margin-top: 20px; 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--accent-cyan); 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            display: none;
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         /* Bottom Controls */
-        .bottom-dock { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; padding-bottom: 30px; }
-        .mode-toggles { display: flex; gap: 10px; background: var(--glass-panel); padding: 8px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); pointer-events: auto; }
+        .bottom-dock { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            align-items: center; 
+            width: 100%; 
+            padding-bottom: 30px; 
+        }
+        .mode-toggles { 
+            display: flex; 
+            gap: 10px; 
+            background: var(--glass-panel); 
+            padding: 12px; 
+            border-radius: 30px; 
+            border: 1px solid rgba(255,255,255,0.15); 
+            pointer-events: auto; 
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
         .icon-btn {
-            width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent;
-            color: var(--text-muted); font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
-            display: flex; align-items: center; justify-content: center;
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            border: none; 
+            background: rgba(255,255,255,0.1);
+            color: var(--text-muted); 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            position: relative;
         }
-        .icon-btn.active { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .icon-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .icon-btn.active { 
+            background: var(--accent-cyan); 
+            color: #000; 
+            box-shadow: var(--glow-cyan);
+        }
+        .icon-btn.badge::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
 
-        /* Molecule Popup */
+        /* Enhanced Molecule Popup */
         .molecule-popup {
-            position: absolute; right: 20px; bottom: 120px; width: 180px; height: 120px;
-            background: var(--glass-panel); border: 1px solid var(--accent-green); border-radius: 12px;
-            display: none; flex-direction: column; align-items: center; padding: 10px; backdrop-filter: blur(10px);
+            position: absolute; 
+            right: 20px; 
+            bottom: 140px; 
+            width: 200px; 
+            height: 160px;
+            background: var(--glass-panel); 
+            border: 2px solid var(--accent-green); 
+            border-radius: 16px;
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 15px; 
+            backdrop-filter: blur(20px);
+            box-shadow: var(--glow-green);
         }
-        .molecule-canvas { width: 100%; height: 120px; }
-        .molecule-label { font-family: var(--font-code); color: var(--accent-green); font-size: 0.9rem; }
+        .molecule-canvas { 
+            width: 100%; 
+            height: 120px; 
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+        .molecule-label { 
+            font-family: var(--font-code); 
+            color: var(--accent-green); 
+            font-size: 1rem; 
+            font-weight: 600;
+            margin-top: 10px;
+        }
 
-        /* Screens */
+        /* Enhanced Screens */
         #loadingScreen, #startScreen, #targetModal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark); z-index: 1000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: var(--bg-dark); 
+            z-index: 1000;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
         }
-        #targetModal { background: rgba(0,0,0,0.95); z-index: 2000; display: none; }
+        #targetModal { 
+            background: rgba(0,0,0,0.95); 
+            z-index: 2000; 
+            display: none; 
+        }
 
         .loader-ring {
-            width: 60px; height: 60px; border: 3px solid rgba(56, 189, 248, 0.2);
-            border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 1s linear infinite;
+            width: 80px; 
+            height: 80px; 
+            border: 4px solid rgba(56, 189, 248, 0.2);
+            border-top-color: var(--accent-cyan); 
+            border-radius: 50%; 
+            animation: spin 1.5s linear infinite;
         }
 
         .btn-primary {
-            margin-top: 30px; padding: 15px 40px; background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
-            color: #000; border: none; border-radius: 4px; font-family: var(--font-tech); font-weight: 700;
-            font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+            margin-top: 30px; 
+            padding: 16px 48px; 
+            background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
+            color: #000; 
+            border: none; 
+            border-radius: 8px; 
+            font-family: var(--font-tech); 
+            font-weight: 700;
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
         }
-        .btn-secondary { margin-top: 15px; background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; cursor: pointer; font-family: var(--font-code); font-size: 0.9rem; }
-        .btn-text { margin-top: 10px; background: none; border: none; color: var(--accent-cyan); text-decoration: underline; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+        }
+        .btn-secondary { 
+            margin-top: 15px; 
+            background: transparent; 
+            color: var(--text-muted); 
+            border: 2px solid rgba(255,255,255,0.3); 
+            padding: 12px 24px; 
+            cursor: pointer; 
+            font-family: var(--font-code); 
+            font-size: 0.9rem; 
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+        .btn-text { 
+            margin-top: 10px; 
+            background: none; 
+            border: none; 
+            color: var(--accent-cyan); 
+            text-decoration: underline; 
+            cursor: pointer; 
+            font-size: 0.9rem; 
+            transition: all 0.3s;
+        }
+        .btn-text:hover {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
 
         .target-image-display {
-            width: 80%; max-width: 300px; height: 300px; background: #fff; border-radius: 8px; margin-bottom: 20px;
-            color: #000; text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: center;
+            width: 300px; 
+            height: 300px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px; 
+            margin-bottom: 20px;
+            color: white; 
+            text-align: center; 
+            padding: 30px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-        .star-pop { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
 
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
-        @keyframes popIn { 0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        .star-pop { 
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Data Stream */
+        .data-stream {
+            position: absolute;
+            bottom: 120px;
+            left: 20px;
+            width: 300px;
+            background: var(--glass-panel);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(20px);
+            display: none;
+            pointer-events: auto;
+        }
+        .data-stream.active {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        /* Achievement System */
+        .achievement-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--accent-orange);
+            border-radius: 16px;
+            padding: 20px;
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            min-width: 300px;
+        }
+        .achievement-icon {
+            font-size: 3rem;
+            color: gold;
+            margin-bottom: 15px;
+        }
+
+        /* Animations */
+        @keyframes spin { 
+            to { 
+                transform: rotate(360deg); 
+            } 
+        }
+        @keyframes pulse { 
+            0% { 
+                opacity: 1; 
+            } 
+            50% { 
+                opacity: 0.5; 
+            } 
+            100% { 
+                opacity: 1; 
+            } 
+        }
+        @keyframes flash { 
+            0% { 
+                opacity: 1; 
+            } 
+            50% { 
+                opacity: 0.2; 
+            } 
+            100% { 
+                opacity: 1; 
+            } 
+        }
+        @keyframes popIn { 
+            0% { 
+                transform: scale(0) rotate(-180deg); 
+                opacity: 0; 
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1; 
+            }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
-        video { transform: scaleX(-1) !important; }
+        video { 
+            transform: scaleX(-1) !important; 
+        }
         .ar-target-guide {
-            width: 200px; height: 200px; border: 2px dashed var(--accent-cyan);
-            border-radius: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            display: flex; align-items: center; justify-content: center; opacity: 0.5;
+            width: 250px; 
+            height: 250px; 
+            border: 3px dashed var(--accent-cyan);
+            border-radius: 20px; 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 0.7;
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
@@ -200,39 +619,45 @@
     <!-- Loading Screen -->
     <div id="loadingScreen">
         <div class="loader-ring"></div>
-        <h2 style="margin-top: 20px; color: var(--accent-cyan); letter-spacing: 2px;">INITIALIZING SYSTEM</h2>
+        <h2 style="margin-top: 30px; color: var(--accent-cyan); letter-spacing: 3px; font-size: 1.5rem;">INITIALIZING ADVANCED LAB</h2>
+        <div id="loadProgress" style="margin-top: 20px; width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+            <div style="width: 0%; height: 100%; background: var(--accent-cyan); border-radius: 2px; transition: width 0.3s;"></div>
+        </div>
     </div>
 
     <!-- Target Image Modal -->
     <div id="targetModal">
-        <h3 style="color: white; margin-bottom: 20px;">Scan this Image</h3>
+        <h3 style="color: white; margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase;">Scan this AR Marker</h3>
         <div class="target-image-display">
-            <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 20px; color: #333;"></i>
-            <p style="font-weight: bold;">Haber-Bosch AR Lab</p>
-            <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at the printed QR Card</p>
+            <i class="fas fa-atom" style="font-size: 4rem; margin-bottom: 20px; color: white;"></i>
+            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">HABER-BOSCH AR LAB</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this marker or print it</p>
+            <div style="margin-top: 20px; padding: 10px; background: white; border-radius: 8px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=HaberBoschARLab2.0" alt="QR Code" style="width: 150px; height: 150px;">
+            </div>
         </div>
         <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
     </div>
 
     <!-- Start Screen -->
     <div id="startScreen" style="display: none;">
-        <i class="fas fa-industry" style="font-size: 4rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
-        <h1 style="font-size: 2.5rem; text-align: center; line-height: 1.1;">HABER-BOSCH<br><span style="color: var(--accent-cyan)">VR LAB</span></h1>
-        <p style="max-width: 300px; text-align: center; margin-top: 20px; color: var(--text-muted);">
-            Interactive engineering simulation of ammonia synthesis. Explore thermodynamics and process flow.
+        <i class="fas fa-industry" style="font-size: 5rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
+        <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">HABER-BOSCH<br><span style="color: var(--accent-cyan)">NEXT-GEN LAB</span></h1>
+        <p style="max-width: 400px; text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 1.1rem;">
+            Advanced engineering simulation with real-time thermodynamics, AI-assisted learning, and interactive process optimization.
         </p>
         <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
-        <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View Target Marker</button>
-        <button class="btn-secondary" id="btnStart3D">Desktop / Non-AR Mode</button>
+        <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View AR Marker</button>
+        <button class="btn-secondary" id="btnStart3D">Desktop / Simulation Mode</button>
         
-        <div id="mobileWarning" style="display: none; margin-top: 20px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-danger); border-radius: 8px; max-width: 300px;">
-            <p style="color: var(--accent-danger); font-size: 0.8rem; margin: 0;">
+        <div id="mobileWarning" style="display: none; margin-top: 20px; padding: 15px; background: rgba(239, 68, 68, 0.15); border: 2px solid var(--accent-danger); border-radius: 12px; max-width: 350px;">
+            <p style="color: var(--accent-danger); font-size: 0.9rem; margin: 0;">
                 <i class="fas fa-exclamation-triangle"></i> Use Safari (iOS) or Chrome (Android). Grant Camera Permissions.
             </p>
         </div>
         
-        <div style="margin-top: 40px; font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; width: 80%; text-align: center;">
-            AR Engineering Lab v2.0
+        <div style="margin-top: 40px; font-size: 0.9rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 80%; text-align: center;">
+            ADVANCED AR ENGINEERING LAB v3.0 | Thermodynamics Simulation
         </div>
     </div>
 
@@ -248,25 +673,32 @@
                 </div>
             </div>
             
-            <div style="display: flex; gap: 10px;">
-                <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Take Quiz" style="background: var(--glass-panel);">
-                    <i class="fas fa-clipboard-check"></i>
+            <div style="display: flex; gap: 12px;">
+                <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Knowledge Check" style="background: var(--glass-panel);">
+                    <i class="fas fa-brain"></i>
                 </button>
-                <button class="icon-btn pointer-events-auto" id="btnSettings" title="Controls" style="background: var(--glass-panel);">
+                <button class="icon-btn pointer-events-auto" id="btnData" title="Live Data" style="background: var(--glass-panel);">
+                    <i class="fas fa-chart-line"></i>
+                </button>
+                <button class="icon-btn pointer-events-auto" id="btnSettings" title="Process Controls" style="background: var(--glass-panel);">
                     <i class="fas fa-sliders-h"></i>
                 </button>
             </div>
         </div>
       
         <div id="starReward" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; z-index: 200; pointer-events: none;">
-            <i class="fas fa-star" style="color: gold; font-size: 5rem; filter: drop-shadow(0 0 20px gold);"></i>
+            <i class="fas fa-star" style="color: gold; font-size: 6rem; filter: drop-shadow(0 0 30px gold);"></i>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; text-align: center;">
+                <div style="font-size: 1.5rem; margin-top: 120px;">ACHIEVEMENT UNLOCKED!</div>
+                <div style="font-size: 1rem; color: gold;">System Stabilization Expert</div>
+            </div>
         </div>
 
         <!-- Control Panel (Left) -->
         <div class="side-panel control-room-panel" id="controlPanel">
             <div class="panel-header">
-                <span class="panel-label">Reactor Control</span>
-                <button class="icon-btn" id="btnCloseControls" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
+                <span class="panel-label">PROCESS CONTROL</span>
+                <button class="icon-btn" id="btnCloseControls" style="width: 32px; height: 32px; font-size: 1rem;"><i class="fas fa-times"></i></button>
             </div>
             
             <div class="slider-group">
@@ -274,8 +706,8 @@
                     <span class="slider-label">Temperature (T)</span>
                     <span class="slider-value" id="valTemp">450°C</span>
                 </div>
-                <input type="range" id="sliderTemp" min="300" max="600" value="450">
-                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">Low T favors yield (Exothermic)</div>
+                <input type="range" id="sliderTemp" min="300" max="600" value="450" step="5">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">ΔH = -92.4 kJ/mol | Low T favors equilibrium</div>
             </div>
 
             <div class="slider-group">
@@ -283,54 +715,84 @@
                     <span class="slider-label">Pressure (P)</span>
                     <span class="slider-value" id="valPress">200 atm</span>
                 </div>
-                <input type="range" id="sliderPress" min="100" max="400" value="200">
-                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">High P favors yield (Moles)</div>
+                <input type="range" id="sliderPress" min="50" max="400" value="200" step="10">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Δn = -2 | High P shifts equilibrium toward NH₃</div>
             </div>
 
-            <div class="yield-monitor">
-                <div id="monitorLabel" style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;">Calculated Yield</div>
-                <div class="yield-value" id="valYield">15.4%</div>
+            <div class="parameter-display">
+                <div class="param-box">
+                    <div class="param-label">Reaction Rate</div>
+                    <div class="param-value flow" id="valRate">k = 1.24</div>
+                </div>
+                <div class="param-box">
+                    <div class="param-label">Equilibrium Kₚ</div>
+                    <div class="param-value pressure" id="valKp">6.8×10⁻⁵</div>
+                </div>
+                <div class="param-box">
+                    <div class="param-label">Energy Eff.</div>
+                    <div class="param-value temp" id="valEnergy">78%</div>
+                </div>
+                <div class="param-box">
+                    <div class="param-label">Yield</div>
+                    <div class="param-value yield" id="valYield">15.4%</div>
+                </div>
             </div>
         </div>
 
         <!-- Quiz Panel (Right) -->
         <div class="side-panel quiz-panel" id="quizPanel">
             <div class="panel-header">
-                <span class="panel-label">Knowledge Check</span>
-                <button class="icon-btn" id="btnCloseQuiz" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
+                <span class="panel-label">KNOWLEDGE CHECK</span>
+                <button class="icon-btn" id="btnCloseQuiz" style="width: 32px; height: 32px; font-size: 1rem;"><i class="fas fa-times"></i></button>
             </div>
             
             <div id="quizContent">
                 <div class="quiz-question" id="qText">Question loading...</div>
                 <div class="quiz-options" id="qOptions"></div>
-                <button class="next-q-btn" id="btnNextQ">NEXT QUESTION</button>
+                <button class="next-q-btn" id="btnNextQ">NEXT QUESTION <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></button>
             </div>
-            <div id="quizScore" style="margin-top: 20px; text-align: center; color: var(--accent-orange); font-weight: bold;">Score: 0</div>
+            <div id="quizScore" style="margin-top: 20px; text-align: center; color: var(--accent-orange); font-weight: bold; font-size: 1.2rem;">Score: 0</div>
+        </div>
+
+        <!-- Data Panel -->
+        <div class="side-panel data-panel" id="dataPanel">
+            <div class="panel-header">
+                <span class="panel-label">LIVE DATA STREAM</span>
+                <button class="icon-btn" id="btnCloseData" style="width: 32px; height: 32px; font-size: 1rem;"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="dataStreamContent" style="font-family: var(--font-code);">
+                <!-- Data will be populated here -->
+            </div>
         </div>
 
         <!-- Molecule View Popup -->
         <div class="molecule-popup" id="moleculePopup">
             <div id="moleculeCanvas" class="molecule-canvas"></div>
-            <div class="molecule-label" id="moleculeLabel">N₂ + 3H₂</div>
+            <div class="molecule-label" id="moleculeLabel">N₂ + 3H₂ ⇌ 2NH₃</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; text-align: center;">
+                ΔH = -92.4 kJ/mol | ΔS = -198.7 J/mol·K
+            </div>
         </div>
 
         <!-- Center Guide (AR only) -->
         <div class="ar-target-guide" id="arGuide">
-            <span style="color: white; font-size: 0.8rem; background: rgba(0,0,0,0.5); padding: 4px;">SCAN TARGET</span>
+            <span style="color: white; font-size: 0.9rem; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-weight: 600;">SCAN AR MARKER</span>
         </div>
 
         <!-- Bottom Controls -->
         <div class="bottom-dock">
-            <div id="infoToast" style="background: var(--glass-panel); padding: 10px 20px; border-radius: 8px; border: 1px solid var(--accent-cyan); display: none; margin-bottom: 10px;">
-                <span id="toastText">Component Selected</span>
+            <div id="infoToast" style="background: var(--glass-panel); padding: 12px 24px; border-radius: 12px; border: 2px solid var(--accent-cyan); display: none; margin-bottom: 10px; backdrop-filter: blur(20px); min-width: 200px; text-align: center;">
+                <span id="toastText" style="font-weight: 600;">Component Selected</span>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="toastSubtext">Click to interact</div>
             </div>
 
             <div class="mode-toggles">
-                <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync-alt"></i></button>
                 <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
                 <button class="icon-btn pointer-events-auto active" id="btnFlow" title="Toggle Flow"><i class="fas fa-wind"></i></button>
                 <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
-                <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnInfo" title="Component Info"><i class="fas fa-info-circle"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit Lab" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
             </div>
         </div>
     </div>
@@ -339,53 +801,67 @@
     <div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
 
     <script>
-        // --- ENGINEERING CONSTANTS ---
+        // ==================== ENHANCED ENGINEERING CONSTANTS ====================
         const COLORS = {
             metal: 0x8899a6, darkMetal: 0x2c3e50, n2: 0x38bdf8,
-            h2: 0xffffff, nh3: 0xf59e0b, catalyst: 0x8b4513, highlight: 0x10b981
+            h2: 0xffffff, nh3: 0xf59e0b, catalyst: 0x8b4513, highlight: 0x10b981,
+            pipe: 0x64748b, condenser: 0x475569, valve: 0x94a3b8
         };
 
-        // --- QUIZ DATA ---
+        const THERMO_CONSTANTS = {
+            ΔH: -92.4, // kJ/mol
+            ΔS: -198.7, // J/mol·K
+            R: 0.008314, // kJ/mol·K
+            optimalTemp: 450, // °C
+            optimalPressure: 200 // atm
+        };
+
+        // ==================== ENHANCED QUIZ DATA ====================
         const quizQuestions = [
-            { q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?", options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"], correct: 1 },
+            { q: "What thermodynamic property makes the Haber-Bosch process exothermic?", options: ["Positive ΔH", "Negative ΔH", "ΔG = 0", "ΔS > 0"], correct: 1 },
             { q: "In chemical engineering, what does 'Decomposition' mean?", options: ["Combining elements", "Breaking down a compound", "Increasing pressure", "Creating equilibrium"], correct: 1 },
-            { q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...", options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"], correct: 1 },
-            { q: "Select the best definition for 'Chemical Equilibrium':", options: ["Reaction stops completely", "Reactants are used up", "Forward & reverse rates are equal", "Temperature is zero"], correct: 2 },
-            { q: "What catalyst is primarily used in the Haber-Bosch process?", options: ["Platinum", "Iron", "Copper", "Nickel"], correct: 1 },
-            { q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?", options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"], correct: 0 }
-            { q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?", options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"], correct: 1 },
-            { q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...", options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"], correct: 1 },
-            { q: "What catalyst is primarily used in the Haber-Bosch process?", options: ["Platinum", "Iron", "Copper", "Nickel"], correct: 1 },
-            { q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?", options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"], correct: 0 }
+            { q: "According to Le Chatelier's principle, increasing pressure shifts equilibrium to...", options: ["Side with more moles", "Side with fewer moles", "No change", "Reactants side"], correct: 1 },
+            { q: "What is 'Chemical Equilibrium'?", options: ["Reaction stops", "Reactants used up", "Forward & reverse rates equal", "Temperature is zero"], correct: 2 },
+            { q: "Primary catalyst in Haber-Bosch process?", options: ["Platinum", "Iron with promoters", "Copper", "Nickel"], correct: 1 },
+            { q: "Why use 400-450°C despite lower T favoring yield?", options: ["Increase rate, catalyst activation", "Reduce pressure", "Save energy", "Melt catalyst"], correct: 0 },
+            { q: "What's the mole ratio of H₂:N₂ in the feed?", options: ["1:1", "2:1", "3:1", "4:1"], correct: 2 },
+            { q: "What's recycled in industrial Haber-Bosch?", options: ["Unreacted N₂ & H₂", "Ammonia", "Catalyst", "All of above"], correct: 0 },
+            { q: "What's the main industrial use of ammonia?", options: ["Fuel", "Fertilizer production", "Plastics", "Pharmaceuticals"], correct: 1 },
+            { q: "What's the role of potassium oxide promoter?", options: ["Increase surface area", "Prevent sintering", "Electronic promoter", "All of above"], correct: 3 }
         ];
 
-        // --- APP STATE ---
+        // ==================== ENHANCED APP STATE ====================
         const state = {
             temp: 450, pressure: 200, yield: 15.4,
-            isXray: false, flowActive: true, audioEnabled: true, mode: 'AR', activeComponent: null,
-            startTime: 0, lastEmergency: 0, isEmergency: false,
-            currentQ: 0, score: 0,
+            flowRate: 1.24, equilibriumConstant: 0.000068, energyEfficiency: 78,
+            isXray: false, flowActive: true, audioEnabled: true, dataStream: false,
+            mode: 'AR', activeComponent: null, lastInteraction: Date.now(),
+            startTime: 0, lastEmergency: 0, isEmergency: false, emergencyCount: 0,
+            currentQ: 0, score: 0, achievements: [],
             isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
             audioContextInitialized: false
         };
 
-        // --- 3D ENGINE VARIABLES ---
+        // ==================== ENHANCED 3D ENGINE ====================
         let scene, camera, renderer, clock, mixer, mindarThree, rootGroup;
         let particles = { mesh: null, data: [] };
         let molecules = [];
         let molScene, molCamera, molRenderer;
-        let audioCtx = null;
+        let audioCtx = null, ambientSound = null;
+        let sirenInterval = null, toastTimer = null;
+        let interactiveObjects = [];
 
-        // --- INIT SEQUENCE ---
+        // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
-            if (state.isMobile) document.getElementById('mobileWarning').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('loadingScreen').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').style.display = 'none';
-                    document.getElementById('startScreen').style.display = 'flex';
-                }, 500);
-            }, 1500);
+            // Simulate loading progress
+            simulateLoading();
+            
+            if (state.isMobile) {
+                document.getElementById('mobileWarning').style.display = 'block';
+            }
+            
+            // Initialize audio context early for mobile
+            initAudioContext();
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -393,34 +869,100 @@
             document.getElementById('btnStart3D').addEventListener('click', () => startApp('3D'));
         });
 
+        function simulateLoading() {
+            let progress = 0;
+            const progressBar = document.querySelector('#loadProgress div');
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.opacity = 0;
+                        setTimeout(() => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                            document.getElementById('startScreen').style.display = 'flex';
+                        }, 500);
+                    }, 300);
+                }
+                progressBar.style.width = progress + '%';
+            }, 100);
+        }
+
         async function handleStartAR() {
-            if (state.isMobile) await requestCameraPermission();
-            else await startApp('AR');
+            if (state.isMobile) {
+                await requestCameraPermission();
+            } else {
+                await startApp('AR');
+            }
         }
 
         async function requestCameraPermission() {
             try {
                 if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-                    alert('AR requires HTTPS.'); return;
+                    alert('AR requires HTTPS for security.'); 
+                    await startApp('3D');
+                    return;
                 }
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                
+                // Show permission guidance
+                showToast("Camera access required for AR mode", "Please allow camera permissions when prompted");
+                
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment',
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 }
+                    } 
+                });
+                
                 stream.getTracks().forEach(track => track.stop());
-                initAudioContextForMobile();
+                
+                // Initialize enhanced audio
+                initEnhancedAudio();
+                
                 await startApp('AR');
+                
             } catch (error) {
-                alert('Camera access denied. Falling back to 3D mode.');
+                console.warn('Camera access denied:', error);
+                showToast("Falling back to 3D mode", "Camera access was denied");
                 await startApp('3D');
             }
         }
 
-        function initAudioContextForMobile() {
-            if (state.audioEnabled && !audioCtx) {
+        function initAudioContext() {
+            if (!audioCtx && state.audioEnabled) {
                 try {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const resume = () => { if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); };
-                    document.addEventListener('click', resume, { once: true });
-                    document.addEventListener('touchstart', resume, { once: true });
-                } catch (e) { console.log('Audio init error', e); }
+                    audioCtx.suspend(); // Start suspended, will resume on user interaction
+                    
+                    // Resume on any user interaction
+                    const resumeAudio = () => {
+                        if (audioCtx && audioCtx.state === 'suspended') {
+                            audioCtx.resume();
+                            document.removeEventListener('click', resumeAudio);
+                            document.removeEventListener('touchstart', resumeAudio);
+                        }
+                    };
+                    
+                    document.addEventListener('click', resumeAudio, { once: true });
+                    document.addEventListener('touchstart', resumeAudio, { once: true });
+                    
+                } catch (e) { 
+                    console.log('Audio Context init error:', e); 
+                }
+            }
+        }
+
+        function initEnhancedAudio() {
+            if (state.audioEnabled) {
+                // Initialize Howler.js sounds
+                ambientSound = new Howl({
+                    src: ['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'],
+                    volume: 0.1,
+                    loop: true,
+                    autoplay: true
+                });
             }
         }
 
@@ -429,461 +971,1470 @@
             state.startTime = Date.now();
             state.lastEmergency = Date.now();
             
-            document.getElementById('startScreen').style.display = 'none';
-            document.getElementById('mainHUD').style.display = 'flex';
-            document.getElementById('modeIndicator').innerText = mode === 'AR' ? 'AR TRACKING' : 'SIMULATION MODE';
+            // Transition screens
+            gsap.to(document.getElementById('startScreen'), {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    document.getElementById('startScreen').style.display = 'none';
+                    document.getElementById('mainHUD').style.display = 'flex';
+                    
+                    // Animate HUD in
+                    gsap.from('.top-bar', { y: -50, opacity: 0, duration: 0.5 });
+                    gsap.from('.bottom-dock', { y: 50, opacity: 0, duration: 0.5 });
+                }
+            });
+            
+            document.getElementById('modeIndicator').innerText = mode === 'AR' ? 'AR TRACKING ACTIVE' : 'SIMULATION MODE';
             
             if (mode === '3D') {
                 document.getElementById('arGuide').style.display = 'none';
-                init3DMode();
+                initEnhanced3DMode();
             } else {
                 document.body.classList.add('ar-active');
-                await initARMode();
+                await initEnhancedARMode();
             }
             
-            initUI(); initQuiz(); initAudio(); initMoleculeViewer(); animate();
+            initEnhancedUI();
+            initQuiz();
+            initMoleculeViewer();
+            startDataStream();
+            animate();
         }
 
-        // --- 3D SCENE SETUP ---
-        function createCommonScene() {
+        // ==================== ENHANCED 3D SCENE ====================
+        function createEnhancedScene() {
             scene = new THREE.Scene();
-            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-            dirLight.position.set(5, 10, 7); dirLight.name = "MainLight";
-            scene.add(dirLight);
-            const blueLight = new THREE.PointLight(0x38bdf8, 0.8, 10);
-            blueLight.position.set(0, 2, 2); blueLight.name = "AccentLight";
-            scene.add(blueLight);
+            
+            // Enhanced lighting
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+            
+            const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            mainLight.position.set(5, 15, 10);
+            mainLight.castShadow = true;
+            mainLight.shadow.mapSize.width = 2048;
+            mainLight.shadow.mapSize.height = 2048;
+            scene.add(mainLight);
+            
+            const fillLight = new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.4);
+            scene.add(fillLight);
+            
+            // Add atmospheric fog
+            scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
+            
             rootGroup = new THREE.Group();
             scene.add(rootGroup);
-            buildProcessingPlant();
+            
+            buildEnhancedProcessingPlant();
         }
 
-        function init3DMode() {
-            createCommonScene();
+        function initEnhanced3DMode() {
+            createEnhancedScene();
             scene.background = new THREE.Color(0x0f172a);
-            const container = document.getElementById('container');
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
-            camera.position.set(0, 2, 6);
             
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            const container = document.getElementById('container');
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 3, 8);
+            
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: true,
+                powerPreference: "high-performance"
+            });
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            
             container.appendChild(renderer.domElement);
 
-            let isDragging = false, prev = {x:0, y:0};
-            container.addEventListener('mousedown', (e) => { isDragging=true; prev={x:e.offsetX, y:e.offsetY}; });
-            window.addEventListener('mouseup', () => isDragging=false);
+            // Enhanced camera controls
+            let isDragging = false, prev = {x: 0, y: 0};
+            let zoomLevel = 1;
+            
+            container.addEventListener('mousedown', (e) => { 
+                isDragging = true; 
+                prev = {x: e.offsetX, y: e.offsetY}; 
+            });
+            
+            window.addEventListener('mouseup', () => isDragging = false);
+            
             container.addEventListener('mousemove', (e) => {
                 if(isDragging) {
-                    rootGroup.rotation.y += (e.offsetX - prev.x) * 0.01;
-                    rootGroup.rotation.x += (e.offsetY - prev.y) * 0.01;
-                    prev = {x:e.offsetX, y:e.offsetY};
+                    rootGroup.rotation.y += (e.offsetX - prev.x) * 0.005;
+                    rootGroup.rotation.x = Math.max(-Math.PI/4, Math.min(Math.PI/4, 
+                        rootGroup.rotation.x + (e.offsetY - prev.y) * 0.005));
+                    prev = {x: e.offsetX, y: e.offsetY};
                 }
             });
-            container.addEventListener('touchstart', (e) => { isDragging=true; prev={x:e.touches[0].clientX, y:e.touches[0].clientY}; });
-            container.addEventListener('touchend', () => isDragging=false);
+            
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                zoomLevel += e.deltaY * -0.001;
+                zoomLevel = Math.min(Math.max(0.5, zoomLevel), 3);
+                camera.position.z = 8 * zoomLevel;
+            });
+            
+            // Touch controls
+            container.addEventListener('touchstart', (e) => { 
+                if(e.touches.length === 1) {
+                    isDragging = true; 
+                    prev = {x: e.touches[0].clientX, y: e.touches[0].clientY}; 
+                }
+            });
+            
+            container.addEventListener('touchend', () => isDragging = false);
+            
             container.addEventListener('touchmove', (e) => {
-                if(isDragging) {
+                if(isDragging && e.touches.length === 1) {
                     e.preventDefault();
                     rootGroup.rotation.y += (e.touches[0].clientX - prev.x) * 0.01;
                     rootGroup.rotation.x += (e.touches[0].clientY - prev.y) * 0.01;
-                    prev = {x:e.touches[0].clientX, y:e.touches[0].clientY};
+                    prev = {x: e.touches[0].clientX, y: e.touches[0].clientY};
                 }
             });
-            container.addEventListener('click', onMouseClick);
+            
+            container.addEventListener('click', onEnhancedMouseClick);
         }
 
-        async function initARMode() {
+        async function initEnhancedARMode() {
             const container = document.getElementById('container');
             document.body.classList.add('ar-active');
             
-            // Try to use local target file, fallback to demo if missing
-            const targetSrc = "./images/targets.mind";
+            // Use demo target for reliability
+            const targetSrc = "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/assets/image-templates/card-example/card.mind";
             
             try {
                 const mindar = new window.MINDAR.IMAGE.MindARThree({
                     container: container,
                     imageTargetSrc: targetSrc,
-                    uiLoading: "yes", uiScanning: "yes", uiError: "yes",
-                    filterMinCF: 0.001, filterBeta: 1000, maxTrack: 2, warmupTolerance: 10
+                    uiLoading: "yes", 
+                    uiScanning: "yes", 
+                    uiError: "yes",
+                    filterMinCF: 0.0001, 
+                    filterBeta: 1000, 
+                    maxTrack: 3,
+                    warmupTolerance: 5,
+                    missTolerance: 8
                 });
 
                 mindarThree = mindar;
-                renderer = mindar.renderer; scene = mindar.scene; camera = mindar.camera;
+                renderer = mindar.renderer; 
+                scene = mindar.scene; 
+                camera = mindar.camera;
                 
-                scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-                const dl = new THREE.DirectionalLight(0xffffff, 1);
-                dl.position.set(0, 5, 5); dl.name = "MainLight"; scene.add(dl);
+                // Enhanced AR lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(0, 5, 5);
+                scene.add(directionalLight);
+                
+                const pointLight = new THREE.PointLight(0x38bdf8, 0.5, 20);
+                pointLight.position.set(0, 2, 2);
+                scene.add(pointLight);
 
                 const anchor = mindarThree.addAnchor(0);
                 rootGroup = new THREE.Group();
-                rootGroup.scale.set(0.5, 0.5, 0.5); // Scaled for QR card
+                rootGroup.scale.set(0.4, 0.4, 0.4);
                 anchor.group.add(rootGroup);
 
-                buildProcessingPlant();
+                buildEnhancedProcessingPlant();
+                
+                // Add AR success indicator
+                mindarThree.onTargetFound = () => {
+                    showToast("Target Found!", "AR tracking activated", 2000);
+                    document.getElementById('arGuide').style.opacity = 0.3;
+                };
+                
+                mindarThree.onTargetLost = () => {
+                    document.getElementById('arGuide').style.opacity = 0.7;
+                };
+                
                 await mindarThree.start();
+                
             } catch (err) {
-                console.error(err);
-                alert("AR Start Failed. Falling back to 3D.");
-                init3DMode();
+                console.error("AR initialization failed:", err);
+                showToast("AR Failed - Switching to 3D", err.message, 3000);
+                initEnhanced3DMode();
             }
         }
 
-        // --- MODEL BUILDING ---
-        function getIndustrialMaterial(color, transparent=false) {
+        // ==================== ENHANCED 3D MODEL BUILDING ====================
+        function getEnhancedMaterial(color, options = {}) {
+            const defaults = {
+                roughness: 0.2,
+                metalness: 0.8,
+                transparent: false,
+                opacity: 1.0,
+                emissive: 0x000000,
+                emissiveIntensity: 0
+            };
+            
+            const settings = {...defaults, ...options};
+            
             return new THREE.MeshStandardMaterial({
-                color: color, roughness: 0.3, metalness: 0.7,
-                transparent: transparent, opacity: transparent?0.3:1.0, side: THREE.DoubleSide
+                color: color,
+                roughness: settings.roughness,
+                metalness: settings.metalness,
+                transparent: settings.transparent,
+                opacity: settings.opacity,
+                emissive: settings.emissive,
+                emissiveIntensity: settings.emissiveIntensity,
+                side: THREE.DoubleSide
             });
         }
 
-        function buildProcessingPlant() {
-            const reactorGroup = new THREE.Group(); reactorGroup.name = "Reactor";
-            const shell = new THREE.Mesh(new THREE.CylinderGeometry(0.8,0.8,3,24), getIndustrialMaterial(COLORS.metal));
-            shell.position.y=1.5; shell.name="Shell"; reactorGroup.add(shell);
+        function buildEnhancedProcessingPlant() {
+            // Clear previous objects
+            rootGroup.clear();
+            interactiveObjects = [];
             
-            const bed = new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,2,16), new THREE.MeshStandardMaterial({color:COLORS.catalyst, wireframe:true}));
-            bed.position.y=1.5; bed.visible=false; bed.name="Internals"; reactorGroup.add(bed);
+            // Main Reactor
+            const reactorGroup = new THREE.Group(); 
+            reactorGroup.name = "Reactor";
             
-            const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,0.2,16), getIndustrialMaterial(COLORS.darkMetal));
-            const top=cap.clone(); top.position.y=3.1;
-            const bot=cap.clone(); bot.position.y=-0.1;
-            reactorGroup.add(top, bot);
-
-            const tankGeo = new THREE.SphereGeometry(0.6,16,16);
-            const createTank = (c,x,n) => {
-                const t=new THREE.Group(); t.name=n; t.position.set(x,0.6,0);
-                t.add(new THREE.Mesh(tankGeo, getIndustrialMaterial(c)));
-                return t;
+            const shell = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.9, 0.9, 3.2, 32),
+                getEnhancedMaterial(COLORS.metal, {emissive: 0x0f172a, emissiveIntensity: 0.1})
+            );
+            shell.position.y = 1.6;
+            shell.castShadow = true;
+            shell.receiveShadow = true;
+            reactorGroup.add(shell);
+            
+            // Catalyst bed with animation
+            const bedGeometry = new THREE.CylinderGeometry(0.75, 0.75, 2.2, 24);
+            const bedMaterial = getEnhancedMaterial(COLORS.catalyst, {wireframe: false, emissive: 0x8b4513, emissiveIntensity: 0.1});
+            const bed = new THREE.Mesh(bedGeometry, bedMaterial);
+            bed.position.y = 1.6;
+            bed.visible = false;
+            bed.name = "CatalystBed";
+            reactorGroup.add(bed);
+            
+            // Temperature gradient visualization
+            const tempGradient = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.76, 0.76, 2.2, 24, 1, true),
+                getEnhancedMaterial(0xff6b35, {transparent: true, opacity: 0.3, wireframe: true})
+            );
+            tempGradient.position.y = 1.6;
+            tempGradient.name = "TemperatureGradient";
+            reactorGroup.add(tempGradient);
+            
+            // Reactor caps with details
+            const createCap = (yPos, radius) => {
+                const capGroup = new THREE.Group();
+                
+                const mainCap = new THREE.Mesh(
+                    new THREE.CylinderGeometry(radius, radius, 0.25, 24),
+                    getEnhancedMaterial(COLORS.darkMetal)
+                );
+                mainCap.position.y = yPos;
+                capGroup.add(mainCap);
+                
+                // Bolt details
+                const boltGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.15, 8);
+                const boltMaterial = getEnhancedMaterial(0xcccccc);
+                
+                for(let i = 0; i < 8; i++) {
+                    const angle = (i / 8) * Math.PI * 2;
+                    const bolt = new THREE.Mesh(boltGeometry, boltMaterial);
+                    bolt.position.set(
+                        Math.cos(angle) * (radius - 0.15),
+                        yPos,
+                        Math.sin(angle) * (radius - 0.15)
+                    );
+                    capGroup.add(bolt);
+                }
+                
+                return capGroup;
             };
-
+            
+            reactorGroup.add(createCap(3.225, 1.0));
+            reactorGroup.add(createCap(-0.025, 1.0));
+            
             rootGroup.add(reactorGroup);
-            rootGroup.add(createTank(COLORS.n2, -2, "Nitrogen Feed"));
-            rootGroup.add(createTank(COLORS.h2, 2, "Hydrogen Feed"));
-
-            // Pipes
-            const pipeMat = getIndustrialMaterial(0xcccccc);
-            const createPipe = (s,e) => {
-                const path = new THREE.CatmullRomCurve3([s, new THREE.Vector3((s.x+e.x)/2,s.y,s.z), new THREE.Vector3((s.x+e.x)/2,e.y,e.z), e]);
-                return new THREE.Mesh(new THREE.TubeGeometry(path, 6, 0.1, 8, false), pipeMat);
+            
+            // Enhanced Feed Tanks
+            const createEnhancedTank = (color, xPos, name, gasType) => {
+                const tankGroup = new THREE.Group();
+                tankGroup.name = name;
+                tankGroup.position.set(xPos, 0.8, 0);
+                tankGroup.userData = { type: 'tank', gasType: gasType };
+                
+                // Main tank body
+                const tankBody = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.7, 24, 20, 0, Math.PI * 2, 0, Math.PI),
+                    getEnhancedMaterial(color)
+                );
+                tankBody.castShadow = true;
+                tankGroup.add(tankBody);
+                
+                // Tank legs
+                const legGeometry = new THREE.CylinderGeometry(0.08, 0.08, 0.8, 8);
+                for(let i = 0; i < 3; i++) {
+                    const angle = (i / 3) * Math.PI * 2;
+                    const leg = new THREE.Mesh(legGeometry, getEnhancedMaterial(COLORS.darkMetal));
+                    leg.position.set(
+                        Math.cos(angle) * 0.5,
+                        -0.4,
+                        Math.sin(angle) * 0.5
+                    );
+                    tankGroup.add(leg);
+                }
+                
+                // Pressure gauge
+                const gauge = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.15, 0.15, 0.05, 16),
+                    getEnhancedMaterial(0xffffff)
+                );
+                gauge.position.set(0, 0.7, 0.7);
+                tankGroup.add(gauge);
+                
+                interactiveObjects.push(tankGroup);
+                return tankGroup;
             };
-            rootGroup.add(createPipe(new THREE.Vector3(-2,1.2,0), new THREE.Vector3(0,0.5,0)));
-            rootGroup.add(createPipe(new THREE.Vector3(2,1.2,0), new THREE.Vector3(0,0.5,0)));
-            rootGroup.add(createPipe(new THREE.Vector3(0,3,0), new THREE.Vector3(0,4,-1)));
-
-            const cond = new THREE.Group(); cond.name="Condenser"; cond.position.set(0,2,-2);
-            cond.add(new THREE.Mesh(new THREE.BoxGeometry(1.5,2,1), getIndustrialMaterial(COLORS.darkMetal)));
-            rootGroup.add(cond);
-
-            initFlowSystem();
+            
+            rootGroup.add(createEnhancedTank(COLORS.n2, -2.5, "Nitrogen Feed", "N₂"));
+            rootGroup.add(createEnhancedTank(COLORS.h2, 2.5, "Hydrogen Feed", "H₂"));
+            
+            // Enhanced Piping System
+            const createEnhancedPipe = (start, end, radius = 0.12, color = COLORS.pipe) => {
+                const path = new THREE.CatmullRomCurve3([
+                    start,
+                    new THREE.Vector3((start.x + end.x) / 2, start.y + 1, start.z),
+                    new THREE.Vector3((start.x + end.x) / 2, end.y - 0.5, end.z),
+                    end
+                ]);
+                
+                const pipeGeometry = new THREE.TubeGeometry(path, 20, radius, 16, false);
+                const pipe = new THREE.Mesh(pipeGeometry, getEnhancedMaterial(color));
+                pipe.castShadow = true;
+                return pipe;
+            };
+            
+            // Feed pipes
+            rootGroup.add(createEnhancedPipe(
+                new THREE.Vector3(-2.5, 1.5, 0),
+                new THREE.Vector3(-0.8, 0.5, 0)
+            ));
+            
+            rootGroup.add(createEnhancedPipe(
+                new THREE.Vector3(2.5, 1.5, 0),
+                new THREE.Vector3(0.8, 0.5, 0)
+            ));
+            
+            // Product pipe
+            const productPipe = createEnhancedPipe(
+                new THREE.Vector3(0, 3, 0),
+                new THREE.Vector3(0, 4, -2),
+                0.15,
+                0xf59e0b
+            );
+            rootGroup.add(productPipe);
+            
+            // Control Valves
+            const createValve = (position, rotation) => {
+                const valveGroup = new THREE.Group();
+                valveGroup.position.copy(position);
+                valveGroup.rotation.set(rotation.x, rotation.y, rotation.z);
+                
+                const valveBody = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.2, 0.2, 0.3, 16),
+                    getEnhancedMaterial(COLORS.valve)
+                );
+                valveGroup.add(valveBody);
+                
+                const valveHandle = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.4, 0.05, 0.1),
+                    getEnhancedMaterial(0xffffff)
+                );
+                valveHandle.position.y = 0.2;
+                valveGroup.add(valveHandle);
+                
+                valveGroup.name = "ControlValve";
+                interactiveObjects.push(valveGroup);
+                return valveGroup;
+            };
+            
+            rootGroup.add(createValve(new THREE.Vector3(-1.5, 1, 0), {x: 0, y: 0, z: Math.PI/2}));
+            rootGroup.add(createValve(new THREE.Vector3(1.5, 1, 0), {x: 0, y: 0, z: Math.PI/2}));
+            
+            // Enhanced Condenser
+            const condenserGroup = new THREE.Group(); 
+            condenserGroup.name = "Condenser";
+            condenserGroup.position.set(0, 2, -3);
+            
+            const condenserBody = new THREE.Mesh(
+                new THREE.BoxGeometry(1.8, 2.5, 1.2),
+                getEnhancedMaterial(COLORS.condenser)
+            );
+            condenserBody.castShadow = true;
+            condenserBody.receiveShadow = true;
+            condenserGroup.add(condenserBody);
+            
+            // Cooling fins
+            for(let i = 0; i < 8; i++) {
+                const fin = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.9, 0.05, 0.5),
+                    getEnhancedMaterial(0x94a3b8)
+                );
+                fin.position.set(0, -1 + i * 0.3, 0.65);
+                condenserGroup.add(fin);
+            }
+            
+            rootGroup.add(condenserGroup);
+            interactiveObjects.push(condenserGroup);
+            
+            // Initialize enhanced particle system
+            initEnhancedFlowSystem();
+            
+            // Add floating labels for components
+            addComponentLabels();
         }
 
-        function initFlowSystem() {
-            const count=50, pos = new Float32Array(count*3);
-            const mat = new THREE.PointsMaterial({color:COLORS.n2, size:0.1, transparent:true});
-            const sys = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pos,3)), mat);
-            rootGroup.add(sys);
-            particles={mesh:sys, data:[]};
-            for(let i=0; i<count; i++) particles.data.push({type:i%3===0?'N2':'H2', t:Math.random(), speed:0.01, path:i%3===0?1:2});
+        function addComponentLabels() {
+            // This would create 3D text labels for each component
+            // Implemented as a placeholder for future enhancement
         }
 
-        function updateFlow() {
-            if(!state.flowActive || !particles.mesh) return;
-            const pos = particles.mesh.geometry.attributes.position.array;
-            const speed = state.temp/450;
-            particles.data.forEach((p,i) => {
-                p.t += p.speed*speed; if(p.t>1) p.t=0;
-                let x,y,z;
-                if(p.t<0.5) { x=(p.path===1?-2:2)*(1-p.t*2); y=0.6+(p.t*2); z=0; }
-                else { const lt=(p.t-0.5)*2; x=0; y=1.6+lt*2; z=-lt*2; }
-                pos[i*3]=x; pos[i*3+1]=y; pos[i*3+2]=z;
+        function initEnhancedFlowSystem() {
+            const particleCount = 100;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            
+            particles.data = [];
+            
+            for(let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 5;
+                positions[i * 3 + 1] = Math.random() * 5;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
+                
+                const type = i % 3 === 0 ? 'N2' : i % 3 === 1 ? 'H2' : 'NH3';
+                const color = type === 'N2' ? [56/255, 189/255, 248/255] : 
+                            type === 'H2' ? [1, 1, 1] : [245/255, 158/255, 11/255];
+                
+                colors[i * 3] = color[0];
+                colors[i * 3 + 1] = color[1];
+                colors[i * 3 + 2] = color[2];
+                
+                particles.data.push({
+                    type: type,
+                    t: Math.random() * 100,
+                    speed: 0.02 + Math.random() * 0.02,
+                    phase: Math.random() * Math.PI * 2,
+                    amplitude: 0.1 + Math.random() * 0.2
+                });
+            }
+            
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const material = new THREE.PointsMaterial({
+                size: 0.15,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
             });
-            particles.mesh.geometry.attributes.position.needsUpdate=true;
+            
+            particles.mesh = new THREE.Points(geometry, material);
+            rootGroup.add(particles.mesh);
         }
 
-        // --- UI LOGIC ---
-        function initUI() {
-            document.getElementById('btnSettings').onclick = () => { document.getElementById('controlPanel').classList.add('active'); document.getElementById('quizPanel').classList.remove('active'); };
-            document.getElementById('btnCloseControls').onclick = () => document.getElementById('controlPanel').classList.remove('active');
-            document.getElementById('btnQuiz').onclick = () => { document.getElementById('quizPanel').classList.add('active'); document.getElementById('controlPanel').classList.remove('active'); };
-            document.getElementById('btnCloseQuiz').onclick = () => document.getElementById('quizPanel').classList.remove('active');
+        function updateEnhancedFlow() {
+            if(!state.flowActive || !particles.mesh) return;
+            
+            const positions = particles.mesh.geometry.attributes.position.array;
+            const speedFactor = state.temp / 450;
+            const time = Date.now() * 0.001;
+            
+            particles.data.forEach((p, i) => {
+                p.t += p.speed * speedFactor;
+                
+                let x, y, z;
+                const pathT = (p.t % 100) / 100;
+                
+                if(p.type === 'N2') {
+                    // Nitrogen path
+                    x = -2.5 + pathT * 2.5;
+                    y = 0.8 + Math.sin(p.t + p.phase) * p.amplitude;
+                    z = Math.sin(p.t * 2) * 0.1;
+                } else if(p.type === 'H2') {
+                    // Hydrogen path
+                    x = 2.5 - pathT * 2.5;
+                    y = 0.8 + Math.cos(p.t + p.phase) * p.amplitude;
+                    z = Math.cos(p.t * 2) * 0.1;
+                } else {
+                    // Ammonia path
+                    x = Math.sin(p.t) * 0.2;
+                    y = 2 + pathT * 2;
+                    z = -1 - pathT * 2;
+                }
+                
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+            });
+            
+            particles.mesh.geometry.attributes.position.needsUpdate = true;
+            
+            // Animate temperature gradient
+            const tempGradient = rootGroup.getObjectByName("TemperatureGradient");
+            if(tempGradient) {
+                tempGradient.material.opacity = 0.2 + (state.temp - 300) / 300 * 0.3;
+                const hue = (1 - (state.temp - 300) / 300) * 0.6 + 0.1;
+                tempGradient.material.color.setHSL(hue, 0.8, 0.5);
+            }
+        }
 
-            const updateCalc = () => {
+        // ==================== ENHANCED UI LOGIC ====================
+        function initEnhancedUI() {
+            // Control panel toggle
+            document.getElementById('btnSettings').onclick = () => {
+                togglePanel('controlPanel');
+                document.getElementById('quizPanel').classList.remove('active');
+                document.getElementById('dataPanel').classList.remove('active');
+            };
+            
+            document.getElementById('btnCloseControls').onclick = () => {
+                document.getElementById('controlPanel').classList.remove('active');
+            };
+            
+            // Quiz panel toggle
+            document.getElementById('btnQuiz').onclick = () => {
+                togglePanel('quizPanel');
+                document.getElementById('controlPanel').classList.remove('active');
+                document.getElementById('dataPanel').classList.remove('active');
+            };
+            
+            document.getElementById('btnCloseQuiz').onclick = () => {
+                document.getElementById('quizPanel').classList.remove('active');
+            };
+            
+            // Data panel toggle
+            document.getElementById('btnData').onclick = () => {
+                togglePanel('dataPanel');
+                document.getElementById('controlPanel').classList.remove('active');
+                document.getElementById('quizPanel').classList.remove('active');
+            };
+            
+            document.getElementById('btnCloseData').onclick = () => {
+                document.getElementById('dataPanel').classList.remove('active');
+            };
+            
+            // Enhanced slider controls with real-time calculations
+            const updateThermodynamicCalculations = () => {
                 state.temp = parseInt(document.getElementById('sliderTemp').value);
                 state.pressure = parseInt(document.getElementById('sliderPress').value);
-                document.getElementById('valTemp').innerText = state.temp+"°C";
-                document.getElementById('valPress').innerText = state.pressure+" atm";
                 
-                if(state.isEmergency) {
-                    const stable = Math.max(0, 100 - Math.abs(state.temp-425) - Math.abs(state.pressure-225));
-                    document.getElementById('valYield').innerText = Math.floor(stable)+"%";
-                    if(state.temp>=400 && state.temp<=450 && state.pressure>=200 && state.pressure<=250) resolveEmergency();
-                } else {
-                    let y = (20000/state.temp)+(state.pressure/10)-20;
-                    document.getElementById('valYield').innerText = Math.max(0,Math.min(98,y)).toFixed(1)+"%";
-                }
+                document.getElementById('valTemp').innerText = `${state.temp}°C`;
+                document.getElementById('valPress').innerText = `${state.pressure} atm`;
+                
+                // Calculate enhanced thermodynamic properties
+                const tempK = state.temp + 273.15;
+                
+                // Van't Hoff equation: ln(K2/K1) = -ΔH/R * (1/T2 - 1/T1)
+                const referenceTemp = 298; // K
+                const referenceKp = 6.8e-5;
+                const lnK = (-THERMO_CONSTANTS.ΔH / THERMO_CONSTANTS.R) * (1/tempK - 1/referenceTemp);
+                const Kp = referenceKp * Math.exp(lnK);
+                
+                // Calculate yield using simplified equilibrium
+                const initialPressure = state.pressure;
+                const N2Partial = initialPressure * 0.25;
+                const H2Partial = initialPressure * 0.75;
+                
+                // Simplified equilibrium calculation
+                let conversion = Math.sqrt(Kp * state.pressure) / (1 + Math.sqrt(Kp * state.pressure));
+                conversion = Math.max(0.1, Math.min(0.99, conversion));
+                
+                const yieldPercent = conversion * 100;
+                state.yield = yieldPercent;
+                
+                // Update all displays
+                document.getElementById('valYield').innerText = `${yieldPercent.toFixed(1)}%`;
+                document.getElementById('valKp').innerText = `${Kp.toExponential(2)}`;
+                
+                // Update reaction rate (Arrhenius equation approximation)
+                const rateConstant = Math.exp(20 - 10000/tempK);
+                state.flowRate = rateConstant;
+                document.getElementById('valRate').innerText = `k = ${rateConstant.toFixed(2)}`;
+                
+                // Energy efficiency calculation
+                const optimalEfficiency = 85;
+                const tempDeviation = Math.abs(state.temp - 450) / 150;
+                const pressureDeviation = Math.abs(state.pressure - 200) / 200;
+                const efficiency = optimalEfficiency * (1 - 0.3 * tempDeviation - 0.2 * pressureDeviation);
+                state.energyEfficiency = Math.max(50, efficiency);
+                document.getElementById('valEnergy').innerText = `${Math.round(state.energyEfficiency)}%`;
+                
+                // Check for emergency conditions
+                checkForEmergency();
             };
-            document.getElementById('sliderTemp').oninput = updateCalc;
-            document.getElementById('sliderPress').oninput = updateCalc;
-
-            document.getElementById('btnXray').onclick = (e) => {
-                state.isXray=!state.isXray; e.currentTarget.classList.toggle('active');
-                rootGroup.traverse(c => {
-                    if(c.name==="Shell") { c.material.transparent=true; c.material.opacity=state.isXray?0.2:1.0; }
-                    if(c.name==="Internals") c.visible=state.isXray;
-                });
-            };
-            document.getElementById('btnFlow').onclick = (e) => { state.flowActive=!state.flowActive; e.currentTarget.classList.toggle('active'); };
-            document.getElementById('btnReset').onclick = () => { if(rootGroup) gsap.to(rootGroup.rotation, {x:0,y:0,z:0,duration:1}); };
-            document.getElementById('btnExit').onclick = () => location.reload();
-        }
-
-        // --- QUIZ & EVENTS ---
-        function initQuiz() {
-            const render = () => {
-                const q = quizQuestions[state.currentQ];
-                document.getElementById('qText').innerText = `Q${state.currentQ+1}: ${q.q}`;
-                const div = document.getElementById('qOptions'); div.innerHTML='';
-                document.getElementById('btnNextQ').style.display='none';
-                q.options.forEach((opt,i) => {
-                    const b=document.createElement('div'); b.className='quiz-btn'; b.innerText=opt;
-                    b.onclick = () => {
-                        if(i===q.correct) { b.classList.add('correct'); state.score+=10; }
-                        else { b.classList.add('wrong'); div.children[q.correct].classList.add('correct'); }
-                        document.getElementById('quizScore').innerText=`Score: ${state.score}`;
-                        document.getElementById('btnNextQ').style.display='block';
-                        Array.from(div.children).forEach(btn=>btn.style.pointerEvents='none');
-                    };
-                    div.appendChild(b);
-                });
-            };
-            render();
-            document.getElementById('btnNextQ').onclick = () => { state.currentQ=(state.currentQ+1)%quizQuestions.length; render(); };
-        }
-
-        // GLOBAL VARIABLE for the siren interval
-let sirenInterval = null;
-
-function triggerEmergency() {
-    if(state.isEmergency) return;
-    state.isEmergency = true;
-    
-    document.body.classList.add('critical-state');
-    document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
-    
-    // MODIFIED: Voice Alert
-    if(state.audioEnabled) {
-        window.speechSynthesis.cancel();
-        speak("Warning. System Decomposing.");
-    }
-
-    document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
-    document.getElementById('controlPanel').classList.add('active');
-    
-    // MODIFIED: Continuous Siren
-    toggleSiren(true);
-}
-
-function resolveEmergency() {
-    state.isEmergency = false; 
-    state.lastEmergency = Date.now();
-    
-    document.body.classList.remove('critical-state');
-    document.getElementById('statusText').innerText = "System Active";
-    document.getElementById('monitorLabel').style.color = "var(--text-muted)";
-    
-    // MODIFIED: Stop Siren, Voice Alert, and Star Reward
-    toggleSiren(false);
-    
-    if(state.audioEnabled) {
-        window.speechSynthesis.cancel();
-        speak("System Stabilized.");
-    }
-
-    // Show Star
-    showStarReward();
-
-    setTimeout(()=>document.getElementById('controlPanel').classList.remove('active'), 1500);
-}
-
-function showStarReward() {
-    const starContainer = document.getElementById('starReward');
-    const starIcon = starContainer.querySelector('i');
-    
-    starContainer.style.display = 'block';
-    starIcon.classList.remove('star-pop'); // reset animation
-    void starIcon.offsetWidth; // trigger reflow
-    starIcon.classList.add('star-pop');
-    
-    // Hide after animation
-    setTimeout(() => {
-        gsap.to(starContainer, {opacity: 0, duration: 0.5, onComplete: () => {
-            starContainer.style.display = 'none';
-            starContainer.style.opacity = 1; // Reset for next time
-        }});
-    }, 2000);
-}
-
-// MODIFIED: Continuous Siren Function using AudioContext
-function toggleSiren(active) {
-    if (!state.audioEnabled) return;
-    
-    // Stop existing siren
-    if (sirenInterval) {
-        clearInterval(sirenInterval);
-        sirenInterval = null;
-    }
-
-    if (active) {
-        // Play sound immediately
-        playSirenTone();
-        // Loop every 1 second
-        sirenInterval = setInterval(playSirenTone, 1000);
-    }
-}
-
-function playSirenTone() {
-    try {
-        if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-        if(audioCtx.state==='suspended') audioCtx.resume();
-        
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        
-        osc.type = 'sawtooth';
-        // Siren pitch drop effect
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.8);
-        
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        
-        osc.start();
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
-        
-        osc.stop(audioCtx.currentTime + 0.9);
-    } catch(e){ console.log("Audio error", e); }
-}
-        function onMouseClick(e) {
-            const m = new THREE.Vector2((e.clientX/window.innerWidth)*2-1, -(e.clientY/window.innerHeight)*2+1);
-            if(e.type==='touchstart') { m.x=(e.touches[0].clientX/window.innerWidth)*2-1; m.y=-(e.touches[0].clientY/window.innerHeight)*2+1; }
-            const ray = new THREE.Raycaster(); ray.setFromCamera(m, camera);
-            const hits = ray.intersectObjects(rootGroup.children, true);
-            if(hits.length>0) {
-                let o = hits[0].object; while(o.parent && o.parent!==rootGroup) o=o.parent;
-                if(o.name) {
-                    state.activeComponent = o.name;
-                    const t=document.getElementById('infoToast'); document.getElementById('toastText').innerText=o.name;
-                    t.style.display='block'; gsap.fromTo(t,{opacity:0,y:20},{opacity:1,y:0,duration:0.3});
-                    updateMoleculeView(o.name);
-                    if(state.audioEnabled) { window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance(o.name)); }
-                }
-            }
-        }
-
-        function initMoleculeViewer() {
-            const c = document.getElementById('moleculeCanvas');
-            molScene=new THREE.Scene(); molScene.background=new THREE.Color(0x101828);
-            molCamera=new THREE.PerspectiveCamera(50, c.clientWidth/c.clientHeight, 0.1, 10); molCamera.position.z=5;
-            molRenderer=new THREE.WebGLRenderer({alpha:true, antialias:true}); molRenderer.setSize(c.clientWidth,c.clientHeight);
-            c.appendChild(molRenderer.domElement);
-            molScene.add(new THREE.DirectionalLight(0xffffff,1));
-            molScene.add(new THREE.AmbientLight(0xffffff,0.5));
-        }
-
-        function updateMoleculeView(name) {
-            const p = document.getElementById('moleculePopup');
-            while(molScene.children.length>2) molScene.remove(molScene.children[molScene.children.length-1]);
-            let label = "";
-            const ball = new THREE.SphereGeometry(0.8,12,12), mat = (c)=>new THREE.MeshPhongMaterial({color:c});
-            const grp = new THREE.Group();
             
-            if(name.includes("Nitrogen")) {
-                const a=new THREE.Mesh(ball,mat(0x38bdf8)); a.position.x=-0.6; grp.add(a, a.clone().translateX(1.2));
-                label="N₂";
-            } else if(name.includes("Hydrogen")) {
-                const a=new THREE.Mesh(ball,mat(0xffffff)); a.position.x=-0.6; grp.add(a, a.clone().translateX(1.2));
-                label="H₂";
-            } else {
-                const n=new THREE.Mesh(ball,mat(0xf59e0b)); 
-                const h=new THREE.Mesh(new THREE.SphereGeometry(0.4,8,8),mat(0xffffff));
-                grp.add(n, h.clone().position.set(0.8,-0.5,0), h.clone().position.set(-0.6,-0.5,0.7), h.clone().position.set(-0.6,-0.5,-0.7));
-                label="NH₃";
-            }
-            if(label) { molScene.add(grp); molecules=[grp]; p.style.display='flex'; document.getElementById('moleculeLabel').innerText=label; }
-            else p.style.display='none';
-        }
-
-        function initAudio() {
+            document.getElementById('sliderTemp').oninput = updateThermodynamicCalculations;
+            document.getElementById('sliderPress').oninput = updateThermodynamicCalculations;
+            
+            // Initialize calculations
+            updateThermodynamicCalculations();
+            
+            // Enhanced feature toggles
+            document.getElementById('btnXray').onclick = (e) => {
+                state.isXray = !state.isXray;
+                e.currentTarget.classList.toggle('active');
+                
+                rootGroup.traverse(child => {
+                    if(child.name === "Reactor") {
+                        child.children.forEach(c => {
+                            if(c.material) {
+                                c.material.transparent = state.isXray;
+                                c.material.opacity = state.isXray ? 0.3 : 1.0;
+                            }
+                        });
+                    }
+                    if(child.name === "CatalystBed") {
+                        child.visible = state.isXray;
+                    }
+                });
+                
+                showToast(state.isXray ? "X-Ray Mode ON" : "X-Ray Mode OFF", 
+                         state.isXray ? "Viewing internal components" : "Normal view restored");
+            };
+            
+            document.getElementById('btnFlow').onclick = (e) => { 
+                state.flowActive = !state.flowActive; 
+                e.currentTarget.classList.toggle('active');
+                showToast(state.flowActive ? "Flow Visualization ON" : "Flow Visualization OFF");
+            };
+            
+            document.getElementById('btnReset').onclick = () => { 
+                if(rootGroup) {
+                    gsap.to(rootGroup.rotation, {x: 0, y: 0, z: 0, duration: 1});
+                    gsap.to(rootGroup.position, {x: 0, y: 0, z: 0, duration: 1});
+                }
+                showToast("View Reset", "Camera position restored");
+            };
+            
+            document.getElementById('btnInfo').onclick = () => {
+                showToast("Component Information", "Click on any plant component to learn more");
+            };
+            
+            document.getElementById('btnExit').onclick = () => {
+                if(confirm("Exit the Haber-Bosch Lab?")) {
+                    location.reload();
+                }
+            };
+            
+            // Audio toggle
             document.getElementById('btnAudio').onclick = (e) => {
-                state.audioEnabled=!state.audioEnabled; e.currentTarget.classList.toggle('active');
-                if(!state.audioEnabled) { window.speechSynthesis.cancel(); if(audioCtx) audioCtx.suspend(); }
+                state.audioEnabled = !state.audioEnabled;
+                e.currentTarget.classList.toggle('active');
+                
+                if(state.audioEnabled) {
+                    if(audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                    if(ambientSound) {
+                        ambientSound.play();
+                    }
+                    showToast("Audio Enabled", "Sound effects and voice guide ON");
+                } else {
+                    if(ambientSound) {
+                        ambientSound.pause();
+                    }
+                    window.speechSynthesis.cancel();
+                    showToast("Audio Disabled", "All sounds muted");
+                }
             };
         }
 
+        function togglePanel(panelId) {
+            const panel = document.getElementById(panelId);
+            const isActive = panel.classList.contains('active');
+            
+            // Close all panels first
+            document.querySelectorAll('.side-panel').forEach(p => {
+                p.classList.remove('active');
+            });
+            
+            // Toggle the requested panel
+            if(!isActive) {
+                panel.classList.add('active');
+                gsap.from(panel, {x: panelId === 'controlRoomPanel' ? -50 : 50, opacity: 0, duration: 0.3});
+            }
+        }
+
+        function checkForEmergency() {
+            const tempOk = state.temp >= 350 && state.temp <= 550;
+            const pressureOk = state.pressure >= 100 && state.pressure <= 350;
+            
+            if(!tempOk || !pressureOk) {
+                if(!state.isEmergency) {
+                    triggerEmergency();
+                }
+            } else if(state.isEmergency) {
+                resolveEmergency();
+            }
+        }
+
+        // ==================== ENHANCED EMERGENCY SYSTEM ====================
+        function triggerEmergency() {
+            if(state.isEmergency) return;
+            
+            state.isEmergency = true;
+            state.emergencyCount++;
+            
+            // Visual effects
+            document.body.classList.add('critical-state');
+            document.getElementById('statusText').innerText = "SYSTEM CRITICAL";
+            document.getElementById('statusText').style.animation = "flash 0.5s infinite";
+            
+            // Audio alerts
+            if(state.audioEnabled) {
+                // Stop any current speech
+                window.speechSynthesis.cancel();
+                
+                // Emergency voice alert
+                speak(`Emergency! System parameters critical. Temperature: ${state.temp}°C. Pressure: ${state.pressure} atmospheres.`);
+                
+                // Start continuous siren
+                startSiren();
+            }
+            
+            // Update UI indicators
+            document.querySelectorAll('.param-value').forEach(el => {
+                el.style.color = 'var(--accent-danger)';
+            });
+            
+            // Show control panel automatically
+            document.getElementById('controlPanel').classList.add('active');
+            
+            // Log emergency
+            addDataStreamEntry("EMERGENCY", `System parameters out of range: T=${state.temp}°C, P=${state.pressure}atm`);
+            
+            showToast("EMERGENCY!", "Adjust parameters to stabilize system", 0);
+        }
+
+        function resolveEmergency() {
+            if(!state.isEmergency) return;
+            
+            state.isEmergency = false;
+            state.lastEmergency = Date.now();
+            
+            // Remove visual effects
+            document.body.classList.remove('critical-state');
+            document.getElementById('statusText').innerText = "System Active";
+            document.getElementById('statusText').style.animation = "";
+            
+            // Stop siren
+            stopSiren();
+            
+            // Success voice alert
+            if(state.audioEnabled) {
+                window.speechSynthesis.cancel();
+                speak("System stabilized. Parameters within optimal range.");
+            }
+            
+            // Restore UI colors
+            updateThermodynamicCalculations();
+            
+            // Show achievement
+            showStarReward();
+            
+            // Log resolution
+            addDataStreamEntry("SYSTEM", "Emergency resolved - parameters stabilized");
+            
+            // Hide toast after delay
+            setTimeout(() => {
+                const toast = document.getElementById('infoToast');
+                gsap.to(toast, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.3,
+                    onComplete: () => {
+                        toast.style.display = 'none';
+                    }
+                });
+            }, 2000);
+            
+            // Auto-hide control panel after stabilization
+            setTimeout(() => {
+                document.getElementById('controlPanel').classList.remove('active');
+            }, 3000);
+        }
+
+        function startSiren() {
+            if(sirenInterval) clearInterval(sirenInterval);
+            
+            let sirenPhase = 0;
+            sirenInterval = setInterval(() => {
+                if(!state.isEmergency) {
+                    clearInterval(sirenInterval);
+                    return;
+                }
+                
+                // Create a simple siren effect using Web Audio API
+                if(audioCtx && state.audioEnabled) {
+                    try {
+                        const oscillator = audioCtx.createOscillator();
+                        const gainNode = audioCtx.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioCtx.destination);
+                        
+                        oscillator.frequency.setValueAtTime(
+                            sirenPhase % 2 === 0 ? 880 : 440,
+                            audioCtx.currentTime
+                        );
+                        
+                        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+                        
+                        oscillator.start();
+                        oscillator.stop(audioCtx.currentTime + 0.8);
+                        
+                        sirenPhase++;
+                    } catch(e) {
+                        console.log("Siren audio error:", e);
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopSiren() {
+            if(sirenInterval) {
+                clearInterval(sirenInterval);
+                sirenInterval = null;
+            }
+        }
+
+        function showStarReward() {
+            const starContainer = document.getElementById('starReward');
+            
+            starContainer.style.display = 'block';
+            starContainer.style.opacity = '0';
+            
+            gsap.to(starContainer, {
+                opacity: 1,
+                duration: 0.5,
+                onComplete: () => {
+                    // Add achievement
+                    if(!state.achievements.includes("emergency_resolved")) {
+                        state.achievements.push("emergency_resolved");
+                        addDataStreamEntry("ACHIEVEMENT", "Emergency Response Expert - Stabilized critical system");
+                    }
+                    
+                    // Hide after animation
+                    setTimeout(() => {
+                        gsap.to(starContainer, {
+                            opacity: 0,
+                            duration: 0.5,
+                            delay: 1.5,
+                            onComplete: () => {
+                                starContainer.style.display = 'none';
+                            }
+                        });
+                    }, 1000);
+                }
+            });
+        }
+
+        // ==================== ENHANCED QUIZ SYSTEM ====================
+        function initQuiz() {
+            const renderQuestion = () => {
+                const q = quizQuestions[state.currentQ];
+                document.getElementById('qText').innerHTML = `
+                    <strong>Q${state.currentQ + 1}/${quizQuestions.length}:</strong> ${q.q}
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">
+                        Thermodynamics | Chemical Engineering
+                    </div>
+                `;
+                
+                const optionsDiv = document.getElementById('qOptions');
+                optionsDiv.innerHTML = '';
+                
+                document.getElementById('btnNextQ').style.display = 'none';
+                
+                q.options.forEach((opt, i) => {
+                    const btn = document.createElement('div');
+                    btn.className = 'quiz-btn';
+                    btn.innerHTML = `<span style="margin-right: 10px; opacity: 0.7;">${String.fromCharCode(65 + i)}.</span> ${opt}`;
+                    
+                    btn.onclick = () => handleAnswer(i, q.correct, btn);
+                    optionsDiv.appendChild(btn);
+                });
+            };
+            
+            renderQuestion();
+            
+            document.getElementById('btnNextQ').onclick = () => {
+                state.currentQ = (state.currentQ + 1) % quizQuestions.length;
+                renderQuestion();
+                
+                // Update score display
+                document.getElementById('quizScore').innerHTML = `
+                    Score: <span style="color: var(--accent-orange);">${state.score}</span> |
+                    Progress: ${state.currentQ + 1}/${quizQuestions.length}
+                `;
+            };
+        }
+
+        function handleAnswer(selected, correct, button) {
+            const options = button.parentElement.children;
+            
+            // Disable all buttons
+            Array.from(options).forEach(btn => {
+                btn.style.pointerEvents = 'none';
+            });
+            
+            if(selected === correct) {
+                // Correct answer
+                button.classList.add('correct');
+                state.score += 10;
+                
+                if(state.audioEnabled) {
+                    playSuccessSound();
+                }
+                
+                // Check for achievement
+                if(state.score >= 50 && !state.achievements.includes("quiz_master")) {
+                    state.achievements.push("quiz_master");
+                    addDataStreamEntry("ACHIEVEMENT", "Quiz Master - Scored 50+ points in knowledge check");
+                }
+            } else {
+                // Wrong answer
+                button.classList.add('wrong');
+                options[correct].classList.add('correct');
+                
+                if(state.audioEnabled) {
+                    playErrorSound();
+                }
+            }
+            
+            // Show next button
+            document.getElementById('btnNextQ').style.display = 'block';
+            
+            // Update score display
+            document.getElementById('quizScore').innerHTML = `
+                Score: <span style="color: var(--accent-orange);">${state.score}</span> |
+                Progress: ${state.currentQ + 1}/${quizQuestions.length}
+            `;
+        }
+
+        // ==================== ENHANCED INTERACTION ====================
+        function onEnhancedMouseClick(e) {
+            const mouse = new THREE.Vector2();
+            const rect = renderer.domElement.getBoundingClientRect();
+            
+            if(e.type === 'click') {
+                mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            } else if(e.type === 'touchstart') {
+                mouse.x = ((e.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((e.touches[0].clientY - rect.top) / rect.height) * 2 + 1;
+            }
+            
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            
+            // Check interactive objects first
+            const interactiveHits = raycaster.intersectObjects(interactiveObjects, true);
+            if(interactiveHits.length > 0) {
+                const object = interactiveHits[0].object;
+                let parent = object;
+                
+                // Find the top-level interactive object
+                while(parent.parent && !interactiveObjects.includes(parent)) {
+                    parent = parent.parent;
+                }
+                
+                if(parent.name) {
+                    selectComponent(parent.name, parent.userData);
+                    return;
+                }
+            }
+            
+            // Fallback to general scene objects
+            const hits = raycaster.intersectObjects(rootGroup.children, true);
+            if(hits.length > 0) {
+                let object = hits[0].object;
+                
+                // Find a named parent
+                while(object.parent && object.parent !== rootGroup && !object.name) {
+                    object = object.parent;
+                }
+                
+                if(object.name) {
+                    selectComponent(object.name, object.userData || {});
+                }
+            }
+        }
+
+        function selectComponent(name, data = {}) {
+            state.activeComponent = name;
+            state.lastInteraction = Date.now();
+            
+            const toast = document.getElementById('infoToast');
+            const toastText = document.getElementById('toastText');
+            const toastSubtext = document.getElementById('toastSubtext');
+            
+            // Component-specific information
+            const componentInfo = {
+                "Reactor": {
+                    title: "REACTOR VESSEL",
+                    desc: "High-pressure vessel containing iron catalyst",
+                    info: "Operates at 400-500°C, 150-300 atm. Contains promoted iron catalyst beds."
+                },
+                "Nitrogen Feed": {
+                    title: "NITROGEN FEED TANK",
+                    desc: "Source of N₂ gas (from air separation)",
+                    info: "Pure nitrogen gas feed. Air separation via cryogenic distillation or PSA."
+                },
+                "Hydrogen Feed": {
+                    title: "HYDROGEN FEED TANK",
+                    desc: "Source of H₂ gas (from steam reforming)",
+                    info: "Hydrogen from natural gas steam reforming. Typically 3:1 H₂:N₂ ratio."
+                },
+                "CatalystBed": {
+                    title: "CATALYST BED",
+                    desc: "Promoted iron catalyst (Fe₃O₄ with K₂O, Al₂O₃)",
+                    info: "Iron oxide reduced to active α-Fe. Promoters increase activity & lifespan."
+                },
+                "Condenser": {
+                    title: "AMMONIA CONDENSER",
+                    desc: "Cools product gas to liquefy NH₃",
+                    info: "Cools to -33°C at 1 atm. Unreacted gases recycled to reactor."
+                },
+                "ControlValve": {
+                    title: "FLOW CONTROL VALVE",
+                    desc: "Regulates gas flow rates",
+                    info: "Maintains optimal 3:1 H₂:N₂ ratio. Critical for process control."
+                }
+            };
+            
+            const info = componentInfo[name] || {
+                title: name.toUpperCase(),
+                desc: "Plant Component",
+                info: "Click components to learn about the Haber-Bosch process"
+            };
+            
+            toastText.innerText = info.title;
+            toastSubtext.innerText = info.desc;
+            
+            // Show toast with animation
+            toast.style.display = 'block';
+            gsap.killTweensOf(toast);
+            gsap.fromTo(toast, 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.3 }
+            );
+            
+            // Auto-hide after delay
+            if(toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                gsap.to(toast, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.3,
+                    onComplete: () => {
+                        toast.style.display = 'none';
+                    }
+                });
+            }, 3000);
+            
+            // Update molecule view
+            updateMoleculeView(name, data);
+            
+            // Voice description
+            if(state.audioEnabled && !state.isEmergency) {
+                speak(info.title + ". " + info.info);
+            }
+            
+            // Log interaction
+            addDataStreamEntry("INTERACTION", `Selected: ${name}`);
+        }
+
+        // ==================== ENHANCED MOLECULE VIEWER ====================
+        function initMoleculeViewer() {
+            const canvas = document.getElementById('moleculeCanvas');
+            molScene = new THREE.Scene();
+            molScene.background = new THREE.Color(0x101828);
+            
+            molCamera = new THREE.PerspectiveCamera(
+                50, 
+                canvas.clientWidth / canvas.clientHeight, 
+                0.1, 
+                20
+            );
+            molCamera.position.z = 8;
+            
+            molRenderer = new THREE.WebGLRenderer({
+                alpha: true, 
+                antialias: true,
+                powerPreference: "high-performance"
+            });
+            molRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            molRenderer.shadowMap.enabled = true;
+            
+            canvas.appendChild(molRenderer.domElement);
+            
+            // Lighting
+            const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+            mainLight.position.set(5, 10, 7);
+            molScene.add(mainLight);
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            molScene.add(ambientLight);
+            
+            // Add subtle background particles
+            for(let i = 0; i < 20; i++) {
+                const particle = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.05, 8, 8),
+                    new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.2 })
+                );
+                particle.position.set(
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10 - 5
+                );
+                molScene.add(particle);
+            }
+        }
+
+        function updateMoleculeView(name, data = {}) {
+            const popup = document.getElementById('moleculePopup');
+            
+            // Clear previous molecules
+            while(molScene.children.length > 22) { // Keep lights and background particles
+                molScene.remove(molScene.children[molScene.children.length - 1]);
+            }
+            
+            let moleculeGroup = new THREE.Group();
+            let label = "";
+            let equation = "";
+            
+            // Create different molecules based on component
+            if(name.includes("Nitrogen")) {
+                // N₂ molecule
+                const n1 = createAtom(0xf59e0b, 0.8, -1, 0, 0);
+                const n2 = createAtom(0xf59e0b, 0.8, 1, 0, 0);
+                createBond(n1, n2, 0xf59e0b);
+                moleculeGroup.add(n1, n2);
+                label = "N₂";
+                equation = "Nitrogen Molecule";
+            } else if(name.includes("Hydrogen")) {
+                // H₂ molecule
+                const h1 = createAtom(0xffffff, 0.6, -0.8, 0, 0);
+                const h2 = createAtom(0xffffff, 0.6, 0.8, 0, 0);
+                createBond(h1, h2, 0xffffff);
+                moleculeGroup.add(h1, h2);
+                label = "H₂";
+                equation = "Hydrogen Molecule";
+            } else if(name.includes("Condenser") || name.includes("Catalyst")) {
+                // NH₃ molecule
+                const n = createAtom(0x10b981, 0.8, 0, 0, 0);
+                const h1 = createAtom(0xffffff, 0.5, 1, 0.5, 0);
+                const h2 = createAtom(0xffffff, 0.5, -0.5, 0.8, 0.5);
+                const h3 = createAtom(0xffffff, 0.5, -0.5, -0.8, 0.5);
+                createBond(n, h1, 0xffffff);
+                createBond(n, h2, 0xffffff);
+                createBond(n, h3, 0xffffff);
+                moleculeGroup.add(n, h1, h2, h3);
+                label = "NH₃";
+                equation = "Ammonia Molecule";
+            } else {
+                // Reaction equation: N₂ + 3H₂ ⇌ 2NH₃
+                const n2 = createAtom(0xf59e0b, 0.7, -3, 0, 0);
+                const n2b = createAtom(0xf59e0b, 0.7, -2, 0, 0);
+                createBond(n2, n2b, 0xf59e0b);
+                
+                const h1 = createAtom(0xffffff, 0.5, 0, 1, 0);
+                const h2 = createAtom(0xffffff, 0.5, 0, -1, 0);
+                const h3 = createAtom(0xffffff, 0.5, 1, 0, 0);
+                createBond(h1, h2, 0xffffff, false);
+                createBond(h2, h3, 0xffffff, false);
+                
+                const nh3_1 = createAtom(0x10b981, 0.6, 3, 0.5, 0);
+                const nh3_2 = createAtom(0x10b981, 0.6, 4, -0.5, 0);
+                
+                moleculeGroup.add(n2, n2b, h1, h2, h3, nh3_1, nh3_2);
+                label = "N₂ + 3H₂ ⇌ 2NH₃";
+                equation = "Haber-Bosch Reaction";
+            }
+            
+            if(label) {
+                molScene.add(moleculeGroup);
+                molecules = [moleculeGroup];
+                popup.style.display = 'flex';
+                document.getElementById('moleculeLabel').innerHTML = `
+                    <strong>${label}</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">${equation}</span>
+                `;
+                
+                // Animate molecule in
+                gsap.from(moleculeGroup.scale, {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                    duration: 0.5,
+                    ease: "back.out(1.7)"
+                });
+            } else {
+                popup.style.display = 'none';
+            }
+        }
+
+        function createAtom(color, size, x, y, z) {
+            const geometry = new THREE.SphereGeometry(size, 16, 16);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: color,
+                shininess: 100,
+                specular: 0x222222
+            });
+            const atom = new THREE.Mesh(geometry, material);
+            atom.position.set(x, y, z);
+            atom.castShadow = true;
+            return atom;
+        }
+
+        function createBond(atom1, atom2, color, visible = true) {
+            const distance = atom1.position.distanceTo(atom2.position);
+            const center = new THREE.Vector3().addVectors(atom1.position, atom2.position).multiplyScalar(0.5);
+            
+            const bond = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.1, 0.1, distance, 8),
+                new THREE.MeshPhongMaterial({ color: color, transparent: !visible, opacity: visible ? 0.7 : 0 })
+            );
+            
+            bond.position.copy(center);
+            bond.lookAt(atom2.position);
+            bond.rotation.x += Math.PI / 2;
+            
+            return bond;
+        }
+
+        // ==================== DATA STREAM SYSTEM ====================
+        function startDataStream() {
+            // Initial data
+            addDataStreamEntry("SYSTEM", "Advanced Haber-Bosch Lab initialized");
+            addDataStreamEntry("PARAMETERS", `Initial: T=${state.temp}°C, P=${state.pressure}atm`);
+            
+            // Update data stream periodically
+            setInterval(() => {
+                if(!document.getElementById('dataPanel').classList.contains('active')) return;
+                
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('en-US', {hour12: false});
+                
+                // Simulate data updates
+                const dataTypes = [
+                    `[${timeStr}] Flow rate: ${(state.flowRate * (0.9 + Math.random()*0.2)).toFixed(2)} mol/s`,
+                    `[${timeStr}] Catalyst activity: ${(95 + Math.random()*5).toFixed(1)}%`,
+                    `[${timeStr}] Energy consumption: ${(state.energyEfficiency * (0.95 + Math.random()*0.1)).toFixed(1)} MJ/ton`,
+                    `[${timeStr}] System stability: ${state.isEmergency ? "CRITICAL" : "NOMINAL"}`,
+                    `[${timeStr}] Equilibrium shift: ${(Math.random()*0.1).toFixed(3)}`
+                ];
+                
+                addDataStreamEntry("DATA", dataTypes[Math.floor(Math.random() * dataTypes.length)]);
+            }, 5000);
+        }
+
+        function addDataStreamEntry(type, message) {
+            const contentDiv = document.getElementById('dataStreamContent');
+            const entry = document.createElement('div');
+            
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', {hour12: false});
+            
+            let typeClass = "";
+            switch(type) {
+                case "EMERGENCY": typeClass = "color: var(--accent-danger);"; break;
+                case "ACHIEVEMENT": typeClass = "color: gold;"; break;
+                case "SYSTEM": typeClass = "color: var(--accent-cyan);"; break;
+                case "INTERACTION": typeClass = "color: var(--accent-green);"; break;
+                default: typeClass = "color: var(--text-muted);";
+            }
+            
+            entry.innerHTML = `
+                <div style="margin-bottom: 8px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; border-left: 3px solid ${typeClass.split(':')[1].trim().replace(';','')}">
+                    <div style="font-size: 0.75rem; ${typeClass} margin-bottom: 2px;">
+                        ${type} • ${timeStr}
+                    </div>
+                    <div style="font-size: 0.85rem;">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.insertBefore(entry, contentDiv.firstChild);
+            
+            // Limit number of entries
+            if(contentDiv.children.length > 20) {
+                contentDiv.removeChild(contentDiv.lastChild);
+            }
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function speak(text) {
+            if(state.audioEnabled && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                // Select a voice
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(v => v.name.includes('Google') && v.lang.includes('en')) ||
+                                     voices.find(v => v.lang.includes('en'));
+                
+                if(preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function showToast(title, subtitle = "", duration = 2000) {
+            const toast = document.getElementById('infoToast');
+            const toastText = document.getElementById('toastText');
+            const toastSubtext = document.getElementById('toastSubtext');
+            
+            toastText.innerText = title;
+            toastSubtext.innerText = subtitle;
+            
+            // Show toast
+            toast.style.display = 'block';
+            gsap.killTweensOf(toast);
+            gsap.fromTo(toast, 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.3 }
+            );
+            
+            // Auto-hide
+            if(toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                gsap.to(toast, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.3,
+                    onComplete: () => {
+                        toast.style.display = 'none';
+                    }
+                });
+            }, duration);
+        }
+
+        function playSuccessSound() {
+            if(audioCtx && state.audioEnabled) {
+                try {
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    
+                    oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                    oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.5);
+                } catch(e) {
+                    console.log("Success sound error:", e);
+                }
+            }
+        }
+
+        function playErrorSound() {
+            if(audioCtx && state.audioEnabled) {
+                try {
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    
+                    oscillator.frequency.setValueAtTime(349.23, audioCtx.currentTime); // F4
+                    oscillator.frequency.setValueAtTime(293.66, audioCtx.currentTime + 0.1); // D4
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.3);
+                } catch(e) {
+                    console.log("Error sound error:", e);
+                }
+            }
+        }
+
+        // ==================== ANIMATION LOOP ====================
         function animate() {
             requestAnimationFrame(animate);
-            if(!state.isEmergency && Date.now()-state.lastEmergency > 60000) triggerEmergency();
-            if(molecules.length) { molecules[0].rotation.y+=0.01; molRenderer.render(molScene,molCamera); }
-            updateFlow();
-            if(renderer && scene) renderer.render(scene, camera);
+            
+            const time = Date.now() * 0.001;
+            
+            // Update flow visualization
+            updateEnhancedFlow();
+            
+            // Animate molecules
+            if(molecules.length > 0) {
+                molecules.forEach(group => {
+                    group.rotation.y += 0.005;
+                    group.rotation.x = Math.sin(time * 0.5) * 0.1;
+                });
+                
+                if(molRenderer && molScene && molCamera) {
+                    molRenderer.render(molScene, molCamera);
+                }
+            }
+            
+            // Auto-emergency check (every 45-75 seconds)
+            if(!state.isEmergency && Date.now() - state.lastEmergency > 45000 + Math.random() * 30000) {
+                triggerEmergency();
+            }
+            
+            // Render main scene
+            if(renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
         }
 
+        // ==================== WINDOW RESIZE HANDLER ====================
         window.addEventListener('resize', () => {
-            if(camera) { camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); }
-        }
-                               
-        // GLOBAL VARIABLE: Define this at the top of your script variables (near 'state')
-let toastTimer = null;
-
-// FUNCTION: Replace the existing selectComponent function with this one
-function selectComponent(name) {
-    // 1. Update Internal State
-    state.activeComponent = name;
-
-    // 2. Get UI Elements
-    const toast = document.getElementById('infoToast');
-    const toastText = document.getElementById('toastText');
-
-    // 3. Update Text and Visibility
-    toastText.innerText = name;
-    
-    // Ensure it's visible before animating
-    toast.style.display = 'block';
-    
-    // Animate In (Fly up and fade in)
-    gsap.killTweensOf(toast); // Stop any previous fading animation
-    gsap.fromTo(toast, 
-        { opacity: 0, y: 20 }, 
-        { opacity: 1, y: 0, duration: 0.3 }
-    );
-
-    // 4. Play Audio (If enabled and not in emergency mode)
-    if (state.audioEnabled && !state.isEmergency) {
-        speak(name);
-    }
-
-    // 5. Update the 3D Molecule Popup
-    updateMoleculeView(name);
-
-    // 6. Auto-Hide Timer (Requirement #3)
-    // Clear any existing timer so it doesn't disappear too early if clicked again
-    if (toastTimer) clearTimeout(toastTimer);
-
-    // Set a new timer to hide after 2 seconds
-    toastTimer = setTimeout(() => {
-        gsap.to(toast, {
-            opacity: 0,
-            y: 20,
-            duration: 0.3,
-            onComplete: () => {
-                toast.style.display = 'none';
+            if(camera) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            }
+            
+            if(renderer) {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            
+            if(molCamera && molRenderer) {
+                const canvas = document.getElementById('moleculeCanvas');
+                molCamera.aspect = canvas.clientWidth / canvas.clientHeight;
+                molCamera.updateProjectionMatrix();
+                molRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
             }
         });
-    }, 2000);
-});
+
+        // ==================== START THE APPLICATION ====================
+        // Preload voices for speech synthesis
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+        }
     </script>
 </body>
 </html>
