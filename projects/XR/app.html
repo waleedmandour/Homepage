@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <title>Haber-Bosch Process: Engineering Lab | WebAR</title>
     <meta name="theme-color" content="#0b1120">
-    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process with thermodynamic controls.">
+    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process.">
     
     <!-- Dependencies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,142 +38,72 @@
 
         body {
             font-family: var(--font-tech);
-            /* This background will be made transparent by JS when AR starts */
-            background: radial-gradient(circle at center, #1e293b 0%, var(--bg-dark) 100%);
+            background: var(--bg-dark);
             color: var(--text-main);
             overflow: hidden;
             height: 100vh;
             width: 100vw;
+            transition: background 0.5s ease;
+            touch-action: none;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- UI Components --- */
-        
+        /* AR Transparent Mode */
+        body.ar-active { background: transparent !important; }
+
+        /* UI Containers */
         .hud-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100;
+            display: flex; flex-direction: column; justify-content: space-between;
             padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px;
         }
 
         .pointer-events-auto { pointer-events: auto; }
 
-        /* Top Bar */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding-top: 20px;
-        }
-
+        /* Status Bar */
+        .top-bar { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 20px; }
+        
         .status-badge {
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: 4px;
-            padding: 8px 16px;
-            backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
+            background: var(--glass-panel); border: 1px solid var(--glass-border);
+            border-radius: 4px; padding: 8px 16px; backdrop-filter: blur(12px);
+            display: flex; align-items: center; gap: 10px; transition: all 0.3s;
         }
-
+        
         .status-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: var(--accent-green);
-            box-shadow: 0 0 10px var(--accent-green);
+            background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);
             animation: pulse 2s infinite;
         }
 
-        /* Emergency State */
+        /* Emergency State Styles */
         .critical-state .status-badge { border-color: var(--accent-danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
         .critical-state .status-dot { background: var(--accent-danger); box-shadow: 0 0 15px var(--accent-danger); animation: flash 0.5s infinite; }
         .critical-state .tech-title h1 { color: var(--accent-danger); }
 
-        .tech-title h1 {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-cyan);
-        }
+        .tech-title h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); }
+        .tech-title span { font-family: var(--font-code); font-size: 0.7rem; color: var(--text-muted); }
 
-        .tech-title span {
-            font-family: var(--font-code);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        .menu-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* Side Panels */
+        /* Side Panels (Controls & Quiz) */
         .side-panel {
-            position: absolute;
-            top: 90px;
-            width: 280px;
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(12px);
-            padding: 20px;
+            position: absolute; top: 90px; width: 280px;
+            background: var(--glass-panel); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px); padding: 20px;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: auto;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        .control-room-panel {
-            left: 20px;
-            border-left: 3px solid var(--accent-cyan);
-            border-radius: 0 12px 12px 0;
+            pointer-events: auto; max-height: 60vh; overflow-y: auto;
+            z-index: 150;
             transform: translateX(-120%);
         }
 
-        .quiz-panel {
-            right: 20px;
-            border-right: 3px solid var(--accent-orange);
-            border-radius: 12px 0 0 12px;
-            transform: translateX(120%);
-        }
-
+        .control-room-panel { left: 20px; border-left: 3px solid var(--accent-cyan); border-radius: 0 12px 12px 0; }
+        .quiz-panel { right: 20px; border-right: 3px solid var(--accent-orange); border-radius: 12px 0 0 12px; transform: translateX(120%); }
         .side-panel.active { transform: translateX(0); }
 
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
-        }
-
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
         .panel-label { font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; }
 
-        /* Quiz Styles */
-        .quiz-question { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.4; }
-        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
-        .quiz-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 6px;
-            color: var(--text-muted);
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-        }
-        .quiz-btn:hover { background: rgba(255,255,255,0.1); }
-        .quiz-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
-        .quiz-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-danger); color: var(--accent-danger); }
-        .next-q-btn { margin-top: 15px; width: 100%; padding: 8px; background: var(--accent-cyan); border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
-
-        /* Sliders */
+        /* Controls */
         .slider-group { margin-bottom: 15px; }
         .slider-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
         .slider-label { font-size: 0.8rem; color: var(--text-muted); }
@@ -186,157 +120,95 @@
         }
 
         .yield-monitor {
-            background: rgba(0,0,0,0.3);
-            border-radius: 8px;
-            padding: 10px;
-            margin-top: 15px;
-            text-align: center;
-            transition: background 0.3s;
+            background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px;
+            margin-top: 15px; text-align: center; transition: background 0.3s;
         }
-        .yield-value {
-            font-size: 1.5rem; font-weight: 700; color: var(--accent-green);
-            font-family: var(--font-code);
+        .yield-value { font-size: 1.5rem; font-weight: 700; color: var(--accent-green); font-family: var(--font-code); }
+
+        /* Quiz UI */
+        .quiz-question { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.4; }
+        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+        .quiz-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px; border-radius: 6px; color: var(--text-muted);
+            text-align: left; cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+            -webkit-touch-callout: none;
         }
+        .quiz-btn:hover { background: rgba(255,255,255,0.1); }
+        .quiz-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
+        .quiz-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-danger); color: var(--accent-danger); }
+        .next-q-btn { margin-top: 15px; width: 100%; padding: 8px; background: var(--accent-cyan); border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
 
         /* Bottom Controls */
-        .bottom-dock {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-            width: 100%;
-            padding-bottom: 30px;
-        }
-
-        .mode-toggles {
-            display: flex;
-            gap: 10px;
-            background: var(--glass-panel);
-            padding: 8px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-            pointer-events: auto;
-        }
-
+        .bottom-dock { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; padding-bottom: 30px; }
+        .mode-toggles { display: flex; gap: 10px; background: var(--glass-panel); padding: 8px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); pointer-events: auto; }
         .icon-btn {
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent;
+            color: var(--text-muted); font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
             display: flex; align-items: center; justify-content: center;
+            -webkit-touch-callout: none;
         }
-
         .icon-btn.active { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
-        .icon-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.1); }
 
         /* Molecule Popup */
         .molecule-popup {
-            position: absolute;
-            right: 20px; bottom: 120px;
-            width: 180px; height: 180px;
-            background: var(--glass-panel);
-            border: 1px solid var(--accent-green);
-            border-radius: 12px;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            backdrop-filter: blur(10px);
+            position: absolute; right: 20px; bottom: 120px; width: 180px; height: 120px;
+            background: var(--glass-panel); border: 1px solid var(--accent-green); border-radius: 12px;
+            display: none; flex-direction: column; align-items: center; padding: 10px; backdrop-filter: blur(10px);
+            z-index: 140;
         }
         .molecule-canvas { width: 100%; height: 120px; }
         .molecule-label { font-family: var(--font-code); color: var(--accent-green); font-size: 0.9rem; }
 
-        /* Start Screen */
-        #loadingScreen, #startScreen {
+        /* Screens */
+        #loadingScreen, #startScreen, #targetModal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark);
-            z-index: 1000;
+            background: var(--bg-dark); z-index: 1000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.5s;
         }
+        #targetModal { background: rgba(0,0,0,0.95); z-index: 2000; display: none; }
 
         .loader-ring {
-            width: 60px; height: 60px;
-            border: 3px solid rgba(56, 189, 248, 0.2);
-            border-top-color: var(--accent-cyan);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            width: 60px; height: 60px; border: 3px solid rgba(56, 189, 248, 0.2);
+            border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 1s linear infinite;
         }
 
         .btn-primary {
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
-            color: #000;
-            border: none;
-            border-radius: 4px;
-            font-family: var(--font-tech);
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: transform 0.2s;
+            margin-top: 30px; padding: 15px 40px; background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
+            color: #000; border: none; border-radius: 4px; font-family: var(--font-tech); font-weight: 700;
+            font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
         }
-        .btn-primary:active { transform: scale(0.98); }
+        .btn-secondary { margin-top: 15px; background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; cursor: pointer; font-family: var(--font-code); font-size: 0.9rem; }
+        .btn-text { margin-top: 10px; background: none; border: none; color: var(--accent-cyan); text-decoration: underline; cursor: pointer; font-size: 0.9rem; }
 
-        .btn-secondary {
-            margin-top: 15px;
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: var(--font-code);
-            font-size: 0.9rem;
-        }
-        
-        .btn-text {
-            margin-top: 10px;
-            background: none;
-            border: none;
-            color: var(--accent-cyan);
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        /* Modal for Target Image */
-        #targetModal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
         .target-image-display {
-            width: 80%; max-width: 300px; height: 300px;
-            background: #fff; border-radius: 8px; margin-bottom: 20px;
-            color: #000; text-align: center; padding: 20px;
+            width: 80%; max-width: 300px; height: 300px; background: #fff; border-radius: 8px; margin-bottom: 20px;
+            color: #000; text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: center;
         }
+        .star-pop { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
-
-        video { transform: scaleX(-1) !important; }
+        @keyframes popIn { 0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
         
+        video { transform: scaleX(-1) !important; }
         .ar-target-guide {
-            width: 200px; height: 200px;
-            border: 2px dashed var(--accent-cyan);
-            border-radius: 12px;
+            width: 200px; height: 200px; border: 2px dashed var(--accent-cyan);
+            border-radius: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; align-items: center; justify-content: center; opacity: 0.5;
+        }
+
+        /* Star Particles */
+        .star-particle {
             position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0.5;
+            font-size: 1.5rem;
+            color: gold;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
         }
     </style>
 </head>
@@ -352,10 +224,9 @@
     <div id="targetModal">
         <h3 style="color: white; margin-bottom: 20px;">Scan this Image</h3>
         <div class="target-image-display">
-            <div style="border: 2px dashed #333; padding: 20px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 10px;"></i>
-                <p>Point camera at the Haber-Bosch Target Marker</p>
-            </div>
+            <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 20px; color: #333;"></i>
+            <p style="font-weight: bold;">Haber-Bosch AR Lab</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at the printed QR Card</p>
         </div>
         <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
     </div>
@@ -370,17 +241,23 @@
         <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
         <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View Target Marker</button>
         <button class="btn-secondary" id="btnStart3D">Desktop / Non-AR Mode</button>
+        
+        <div id="mobileWarning" style="display: none; margin-top: 20px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-danger); border-radius: 8px; max-width: 300px;">
+            <p style="color: var(--accent-danger); font-size: 0.8rem; margin: 0;">
+                <i class="fas fa-exclamation-triangle"></i> Use Safari (iOS) or Chrome (Android). Grant Camera Permissions.
+            </p>
+        </div>
+        
         <div style="margin-top: 40px; font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; width: 80%; text-align: center;">
-            Developed by: Waleed Mandour, 2025
+            AR Engineering Lab v2.0
         </div>
     </div>
 
     <!-- Main HUD -->
     <div id="mainHUD" class="hud-container" style="display: none;">
-        
         <!-- Top Info -->
         <div class="top-bar">
-            <div class="status-badge" id="systemStatus">
+            <div class="status-badge" id="sysStatus">
                 <div class="status-dot"></div>
                 <div class="tech-title">
                     <h1 id="statusText">System Active</h1>
@@ -388,20 +265,22 @@
                 </div>
             </div>
             
-            <div class="menu-buttons">
-                <!-- Settings Button -->
-                <button class="icon-btn pointer-events-auto" id="btnSettings" style="background: var(--glass-panel);" title="Reactor Controls">
-                    <i class="fas fa-sliders-h"></i>
+            <div style="display: flex; gap: 10px;">
+                <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Take Quiz" style="background: var(--glass-panel);">
+                    <i class="fas fa-clipboard-check"></i>
                 </button>
-                <!-- New Quiz Button -->
-                <button class="icon-btn pointer-events-auto" id="btnQuiz" style="background: var(--glass-panel);" title="Definition Quiz">
-                    <i class="fas fa-clipboard-list"></i>
+                <button class="icon-btn pointer-events-auto" id="btnSettings" title="Controls" style="background: var(--glass-panel);">
+                    <i class="fas fa-sliders-h"></i>
                 </button>
             </div>
         </div>
+      
+        <div id="starReward" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; z-index: 200; pointer-events: none;">
+            <i class="fas fa-star" style="color: gold; font-size: 5rem; filter: drop-shadow(0 0 20px gold);"></i>
+        </div>
 
-        <!-- Left Panel: Engineering Controls -->
-        <div class="control-room-panel side-panel" id="controlPanel">
+        <!-- Control Panel (Left) -->
+        <div class="side-panel control-room-panel" id="controlPanel">
             <div class="panel-header">
                 <span class="panel-label">Reactor Control</span>
                 <button class="icon-btn" id="btnCloseControls" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
@@ -425,24 +304,27 @@
                 <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">High P favors yield (Moles)</div>
             </div>
 
-            <div class="yield-monitor" id="yieldMonitor">
-                <div style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;" id="monitorLabel">Calculated Yield</div>
+            <div class="yield-monitor">
+                <div id="monitorLabel" style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;">Calculated Yield</div>
                 <div class="yield-value" id="valYield">15.4%</div>
+                <div id="monitorEnergy" style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; margin-bottom: 5px;">Energy Efficiency</div>
+                <div class="yield-value" id="valEnergy" style="color: var(--accent-orange);">78%</div>
             </div>
         </div>
 
-        <!-- Right Panel: Quiz -->
-        <div class="quiz-panel side-panel" id="quizPanel">
+        <!-- Quiz Panel (Right) -->
+        <div class="side-panel quiz-panel" id="quizPanel">
             <div class="panel-header">
-                <span class="panel-label" style="color: var(--accent-orange)">Knowledge Check</span>
+                <span class="panel-label">Knowledge Check</span>
                 <button class="icon-btn" id="btnCloseQuiz" style="width: 30px; height: 30px; font-size: 0.9rem;"><i class="fas fa-times"></i></button>
             </div>
+            
             <div id="quizContent">
-                <div class="quiz-question" id="qText">Loading...</div>
+                <div class="quiz-question" id="qText">Question loading...</div>
                 <div class="quiz-options" id="qOptions"></div>
-                <button class="next-q-btn" id="btnNextQ">Next Question <i class="fas fa-arrow-right"></i></button>
+                <button class="next-q-btn" id="btnNextQ">NEXT QUESTION</button>
             </div>
-            <div id="quizScore" style="margin-top: 15px; font-family: var(--font-code); font-size: 0.8rem; color: var(--text-muted);">Score: 0</div>
+            <div id="quizScore" style="margin-top: 20px; text-align: center; color: var(--accent-orange); font-weight: bold;">Score: 0</div>
         </div>
 
         <!-- Molecule View Popup -->
@@ -466,7 +348,7 @@
                 <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync"></i></button>
                 <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
                 <button class="icon-btn pointer-events-auto active" id="btnFlow" title="Toggle Flow"><i class="fas fa-wind"></i></button>
-                <button class="icon-btn pointer-events-auto" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
+                <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
                 <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
             </div>
         </div>
@@ -476,599 +358,1298 @@
     <div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
 
     <script>
-        // --- ENGINEERING CONSTANTS ---
+        // ==================== DEVICE OPTIMIZATION ====================
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        const isMobile = isIOS || isAndroid;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
+        
+        // ==================== ENGINEERING CONSTANTS ====================
         const COLORS = {
-            metal: 0x8899a6,
-            darkMetal: 0x2c3e50,
-            n2: 0x38bdf8,
-            h2: 0xffffff,
-            nh3: 0xf59e0b,
-            catalyst: 0x8b4513,
-            highlight: 0x10b981
+            metal: 0x8899a6, darkMetal: 0x2c3e50, n2: 0x38bdf8,
+            h2: 0xffffff, nh3: 0xf59e0b, catalyst: 0x8b4513, highlight: 0x10b981
         };
 
-        // --- QUIZ DATA ---
+        // ==================== QUIZ DATA ====================
         const quizQuestions = [
-            {
-                q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?",
-                options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"],
-                correct: 1
-            },
-            {
-                q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...",
-                options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"],
-                correct: 1
-            },
-            {
-                q: "What catalyst is primarily used in the Haber-Bosch process?",
-                options: ["Platinum", "Iron", "Copper", "Nickel"],
-                correct: 1
-            },
-            {
-                q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?",
-                options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"],
-                correct: 0
-            }
+            { q: "What implies that the reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic?", options: ["Heat is absorbed", "Heat is released", "Pressure increases", "Volume expands"], correct: 1 },
+            { q: "In chemical engineering, what does 'Decomposition' mean?", options: ["Combining elements", "Breaking down a compound", "Increasing pressure", "Creating equilibrium"], correct: 1 },
+            { q: "According to Le Chatelier's principle, increasing pressure will shift the equilibrium to...", options: ["The side with more moles", "The side with fewer moles", "No change", "The reactants side"], correct: 1 },
+            { q: "Select the best definition for 'Chemical Equilibrium':", options: ["Reaction stops completely", "Reactants are used up", "Forward & reverse rates are equal", "Temperature is zero"], correct: 2 },
+            { q: "What catalyst is primarily used in the Haber-Bosch process?", options: ["Platinum", "Iron", "Copper", "Nickel"], correct: 1 },
+            { q: "Why is the temperature kept at 400-450°C despite lower temperatures favoring yield?", options: ["To increase reaction rate", "To reduce pressure", "To save energy", "To melt the catalyst"], correct: 0 }
         ];
 
-        // --- APP STATE ---
+        // ==================== APP STATE ====================
         const state = {
-            temp: 450,
-            pressure: 200,
-            yield: 15.4,
-            isXray: false,
-            flowActive: true,
-            audioEnabled: true,
-            mode: 'AR',
-            activeComponent: null,
-            // Gamification States
-            startTime: 0,
-            lastEmergency: 0,
-            isEmergency: false,
-            emergencySolved: false,
-            // Quiz States
-            currentQ: 0,
-            score: 0
+            temp: 450, pressure: 200, yield: 15.4, energyEfficiency: 78,
+            isXray: false, flowActive: true, audioEnabled: true, mode: 'AR', activeComponent: null,
+            startTime: 0, lastEmergency: 0, isEmergency: false, emergencyInterval: null,
+            currentQ: 0, score: 0, totalStars: 0,
+            audioContextInitialized: false,
+            cameraPermissionGranted: false,
+            isLowPowerMode: false
         };
 
-        // --- 3D ENGINE VARIABLES ---
-        let scene, camera, renderer, clock, mixer;
-        let mindarThree;
-        let rootGroup;
+        // ==================== 3D ENGINE VARIABLES ====================
+        let scene, camera, renderer, clock, mixer, mindarThree, rootGroup;
         let particles = { mesh: null, data: [] };
         let molecules = [];
         let molScene, molCamera, molRenderer;
-        
-        // Audio Context for Alarm
-        let audioCtx;
+        let audioCtx = null;
+        let sirenInterval = null;
+        let toastTimer = null;
 
-        // --- INIT SEQUENCE ---
+        // ==================== INITIALIZATION OPTIMIZED FOR MOBILE ====================
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loadingScreen').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').style.display = 'none';
-                    document.getElementById('startScreen').style.display = 'flex';
-                }, 500);
-            }, 1500);
+            // Check for low power mode (iOS)
+            if (isIOS) {
+                const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+                state.isLowPowerMode = mediaQuery.matches;
+            }
+            
+            if (isMobile) {
+                document.getElementById('mobileWarning').style.display = 'block';
+                // Show device-specific instructions
+                if (isIOS && !isSafari) {
+                    document.getElementById('mobileWarning').innerHTML = `
+                        <p style="color: var(--accent-danger); font-size: 0.8rem; margin: 0;">
+                            <i class="fas fa-exclamation-triangle"></i> Please use Safari browser for best AR experience on iOS.
+                        </p>
+                    `;
+                }
+            }
+            
+            // Initialize with progress indication
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 20;
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.opacity = 0;
+                        setTimeout(() => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                            document.getElementById('startScreen').style.display = 'flex';
+                        }, 500);
+                    }, 300);
+                }
+            }, 300);
         });
 
-        document.getElementById('btnStartAR').addEventListener('click', () => startApp('AR'));
-        document.getElementById('btnStart3D').addEventListener('click', () => startApp('3D'));
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btnStartAR').addEventListener('click', handleStartAR);
+            document.getElementById('btnStart3D').addEventListener('click', () => startApp('3D'));
+        });
+
+        // ==================== ENHANCED CAMERA HANDLING ====================
+        async function handleStartAR() {
+            if (isMobile) {
+                await requestCameraPermission();
+            } else {
+                await startApp('AR');
+            }
+        }
+
+        async function requestCameraPermission() {
+            try {
+                // Check if we're on HTTPS (required for camera access)
+                if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                    alert('AR requires HTTPS for camera access. Please use HTTPS or localhost.');
+                    await startApp('3D');
+                    return;
+                }
+
+                // Show camera permission request
+                document.getElementById('startScreen').style.opacity = '0.5';
+                
+                // Use a more compatible approach for iOS
+                if (isIOS) {
+                    // For iOS, we need to trigger camera in a very specific way
+                    const video = document.createElement('video');
+                    video.style.position = 'fixed';
+                    video.style.top = '-1000px';
+                    video.style.left = '-1000px';
+                    video.style.width = '1px';
+                    video.style.height = '1px';
+                    document.body.appendChild(video);
+                    
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ 
+                            video: {
+                                facingMode: 'environment',
+                                width: { ideal: 1280 },
+                                height: { ideal: 720 }
+                            } 
+                        });
+                        
+                        video.srcObject = stream;
+                        await video.play();
+                        
+                        // Stop the stream after verification
+                        stream.getTracks().forEach(track => track.stop());
+                        document.body.removeChild(video);
+                        
+                        state.cameraPermissionGranted = true;
+                        initAudioContextForMobile();
+                        await startApp('AR');
+                        
+                    } catch (error) {
+                        document.body.removeChild(video);
+                        throw error;
+                    }
+                } else {
+                    // For Android/other browsers
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: {
+                            facingMode: 'environment',
+                            width: { ideal: isMobile ? 1280 : 1920 },
+                            height: { ideal: isMobile ? 720 : 1080 }
+                        } 
+                    });
+                    
+                    stream.getTracks().forEach(track => track.stop());
+                    state.cameraPermissionGranted = true;
+                    initAudioContextForMobile();
+                    await startApp('AR');
+                }
+                
+            } catch (error) {
+                console.error('Camera access error:', error);
+                document.getElementById('startScreen').style.opacity = '1';
+                
+                let errorMessage = 'Camera access was denied. Falling back to 3D mode.';
+                
+                if (error.name === 'NotAllowedError') {
+                    errorMessage = 'Camera permission denied. Please allow camera access in your browser settings.';
+                } else if (error.name === 'NotFoundError') {
+                    errorMessage = 'No camera found. Please check your device has a camera.';
+                } else if (error.name === 'NotSupportedError') {
+                    errorMessage = 'Your browser does not support camera access.';
+                }
+                
+                alert(errorMessage);
+                await startApp('3D');
+            }
+        }
+
+        function initAudioContextForMobile() {
+            if (state.audioEnabled && !audioCtx) {
+                try {
+                    // Use webkitAudioContext for Safari compatibility
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    // iOS requires audio context to be resumed after user gesture
+                    const resumeAudio = () => {
+                        if (audioCtx && audioCtx.state === 'suspended') {
+                            audioCtx.resume();
+                        }
+                    };
+                    
+                    // Add multiple event listeners for better compatibility
+                    document.addEventListener('click', resumeAudio);
+                    document.addEventListener('touchstart', resumeAudio);
+                    document.addEventListener('touchend', resumeAudio);
+                    
+                } catch (e) { 
+                    console.log('Audio init error:', e);
+                }
+            }
+        }
 
         async function startApp(mode) {
             state.mode = mode;
             state.startTime = Date.now();
-            state.lastEmergency = Date.now(); // Reset timer
+            state.lastEmergency = Date.now();
             
-            document.getElementById('startScreen').style.display = 'none';
-            document.getElementById('mainHUD').style.display = 'flex';
+            // Transition screens with animation
+            gsap.to(document.getElementById('startScreen'), {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    document.getElementById('startScreen').style.display = 'none';
+                    document.getElementById('mainHUD').style.display = 'flex';
+                    
+                    // Animate HUD in
+                    gsap.from('.top-bar', { y: -50, opacity: 0, duration: 0.5 });
+                    gsap.from('.bottom-dock', { y: 50, opacity: 0, duration: 0.5 });
+                }
+            });
+            
             document.getElementById('modeIndicator').innerText = mode === 'AR' ? 'AR TRACKING' : 'SIMULATION MODE';
             
             if (mode === '3D') {
                 document.getElementById('arGuide').style.display = 'none';
                 init3DMode();
             } else {
+                document.body.classList.add('ar-active');
                 await initARMode();
             }
             
-            initUI();
-            initQuiz();
-            initAudio();
-            initMoleculeViewer();
+            initUI(); 
+            initQuiz(); 
+            initAudio(); 
+            initMoleculeViewer(); 
             animate();
         }
 
-        // --- 3D SCENE SETUP ---
+        // ==================== OPTIMIZED 3D SCENE SETUP ====================
         function createCommonScene() {
             scene = new THREE.Scene();
-            
-            // Industrial Lighting
-            const ambient = new THREE.AmbientLight(0xffffff, 0.4);
-            scene.add(ambient);
-            
+            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
             const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-            dirLight.position.set(5, 10, 7);
+            dirLight.position.set(5, 10, 7); 
             dirLight.name = "MainLight";
             scene.add(dirLight);
-
-            const blueLight = new THREE.PointLight(0x38bdf8, 0.8, 10);
-            blueLight.position.set(0, 2, 2);
-            blueLight.name = "AccentLight";
-            scene.add(blueLight);
-
-            // Root Group
+            
+            // Reduce light count for mobile
+            if (!isMobile) {
+                const blueLight = new THREE.PointLight(0x38bdf8, 0.8, 10);
+                blueLight.position.set(0, 2, 2); 
+                blueLight.name = "AccentLight";
+                scene.add(blueLight);
+            }
+            
             rootGroup = new THREE.Group();
             scene.add(rootGroup);
-
             buildProcessingPlant();
         }
 
         function init3DMode() {
             createCommonScene();
             scene.background = new THREE.Color(0x0f172a);
-
             const container = document.getElementById('container');
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+            
+            // Adjust camera FOV for mobile
+            const fov = isMobile ? 50 : 45;
+            camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 0.1, 100);
             camera.position.set(0, 2, 6);
             
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            // Optimize renderer for mobile
+            const rendererOptions = {
+                antialias: !isMobile, // Disable antialiasing on mobile for performance
+                alpha: true,
+                powerPreference: "high-performance"
+            };
+            
+            // For iOS, use high-performance mode
+            if (isIOS) {
+                rendererOptions.powerPreference = "default";
+            }
+            
+            renderer = new THREE.WebGLRenderer(rendererOptions);
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2)); // Limit pixel ratio on mobile
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
             container.appendChild(renderer.domElement);
 
-            // Controls
-            let isDragging = false;
-            let previousMousePosition = { x: 0, y: 0 };
-            container.addEventListener('mousedown', () => isDragging = true);
-            container.addEventListener('touchstart', (e) => { isDragging = true; previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY }; });
-            window.addEventListener('mouseup', () => isDragging = false);
-            window.addEventListener('touchend', () => isDragging = false);
-            const moveHandler = (x, y) => {
-                if (isDragging) {
-                    const deltaMove = { x: x - previousMousePosition.x, y: y - previousMousePosition.y };
-                    rootGroup.rotation.y += deltaMove.x * 0.01;
-                    rootGroup.rotation.x += deltaMove.y * 0.01;
-                    previousMousePosition = { x: x, y: y };
+            // Touch-optimized controls
+            let isDragging = false, prev = {x:0, y:0};
+            let touchStartTime = 0;
+            
+            // Mouse/touch event handlers with better mobile support
+            const handleStart = (clientX, clientY) => {
+                isDragging = true;
+                prev = {x: clientX, y: clientY};
+                touchStartTime = Date.now();
+            };
+            
+            const handleMove = (clientX, clientY) => {
+                if(isDragging && Date.now() - touchStartTime > 50) { // Prevent immediate dragging
+                    rootGroup.rotation.y += (clientX - prev.x) * 0.01;
+                    rootGroup.rotation.x = Math.max(-Math.PI/4, Math.min(Math.PI/4, 
+                        rootGroup.rotation.x + (clientY - prev.y) * 0.01));
+                    prev = {x: clientX, y: clientY};
                 }
             };
-            container.addEventListener('mousemove', (e) => moveHandler(e.offsetX, e.offsetY));
-            container.addEventListener('touchmove', (e) => { e.preventDefault(); moveHandler(e.touches[0].clientX, e.touches[0].clientY); });
-            container.addEventListener('click', (event) => onMouseClick(event));
+            
+            const handleEnd = () => {
+                isDragging = false;
+            };
+            
+            // Mouse events
+            container.addEventListener('mousedown', (e) => handleStart(e.clientX, e.clientY));
+            window.addEventListener('mouseup', handleEnd);
+            container.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+            
+            // Touch events with preventDefault for better scrolling
+            container.addEventListener('touchstart', (e) => {
+                if(e.touches.length === 1) {
+                    e.preventDefault();
+                    handleStart(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: false });
+            
+            container.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                handleEnd();
+            }, { passive: false });
+            
+            container.addEventListener('touchmove', (e) => {
+                if(isDragging && e.touches.length === 1) {
+                    e.preventDefault();
+                    handleMove(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: false });
+            
+            // Pinch zoom for mobile
+            let initialDistance = 0;
+            container.addEventListener('touchstart', (e) => {
+                if(e.touches.length === 2) {
+                    e.preventDefault();
+                    initialDistance = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+                }
+            }, { passive: false });
+            
+            container.addEventListener('touchmove', (e) => {
+                if(e.touches.length === 2) {
+                    e.preventDefault();
+                    const currentDistance = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+                    const zoomFactor = currentDistance / initialDistance;
+                    camera.position.z = Math.max(3, Math.min(10, 6 / zoomFactor));
+                }
+            }, { passive: false });
+            
+            container.addEventListener('click', onMouseClick);
         }
 
         async function initARMode() {
             const container = document.getElementById('container');
+            document.body.classList.add('ar-active');
             
-            // **FIX: Make background transparent so camera feed is visible**
-            document.body.style.background = 'transparent';
+            // Use a reliable target source
+            let targetSrc;
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                // For local development, use a simple target
+                targetSrc = "./images/targets.mind";
+            } else {
+                // For production, use a CDN target that's guaranteed to work
+                targetSrc = "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/assets/image-templates/card-example/card.mind";
+            }
             
-            const mindar = new window.MINDAR.IMAGE.MindARThree({
-                container: container,
-                imageTargetSrc: "http://waleedmandour.org/projects/AR/images/targets.mind",
-                // **FIX: Disable default loading UI to prevent double loaders**
-                uiLoading: "no",
-                filterMinCF: 0.001, 
-                filterBeta: 1000
-            });
-
-            mindarThree = mindar;
-            const { renderer: arRenderer, scene: arScene, camera: arCamera } = mindarThree;
-            renderer = arRenderer;
-            scene = arScene;
-            camera = arCamera;
-
-            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
-            scene.add(ambient);
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-            dirLight.position.set(0, 5, 5);
-            dirLight.name = "MainLight";
-            scene.add(dirLight);
-
-            const anchor = mindarThree.addAnchor(0);
-            rootGroup = new THREE.Group();
-            rootGroup.scale.set(0.3, 0.3, 0.3);
-            anchor.group.add(rootGroup);
-
-            buildProcessingPlant();
-            
-            // **CRITICAL: Ensure this runs on HTTPS or localhost**
             try {
+                // Configure MindAR with mobile optimizations
+                const mindar = new window.MINDAR.IMAGE.MindARThree({
+                    container: container,
+                    imageTargetSrc: targetSrc,
+                    uiLoading: "yes", 
+                    uiScanning: "yes", 
+                    uiError: "yes",
+                    filterMinCF: 0.001, 
+                    filterBeta: 1000, 
+                    maxTrack: 2,
+                    warmupTolerance: 10,
+                    missTolerance: 5,
+                    // Mobile-specific optimizations
+                    maxTrackFPS: isMobile ? 30 : 60,
+                    minDetectionPeriod: isMobile ? 100 : 50
+                });
+
+                mindarThree = mindar;
+                renderer = mindar.renderer; 
+                scene = mindar.scene; 
+                camera = mindar.camera;
+                
+                // Optimize rendering for mobile
+                if (isMobile) {
+                    renderer.setPixelRatio(1);
+                }
+                
+                scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+                const dl = new THREE.DirectionalLight(0xffffff, 1);
+                dl.position.set(0, 5, 5); 
+                dl.name = "MainLight"; 
+                scene.add(dl);
+
+                const anchor = mindarThree.addAnchor(0);
+                rootGroup = new THREE.Group();
+                rootGroup.scale.set(0.5, 0.5, 0.5);
+                anchor.group.add(rootGroup);
+
+                buildProcessingPlant();
+                
+                // Add AR event handlers
+                mindarThree.onTargetFound = () => {
+                    showToast("Target Found!", "AR tracking activated", 2000);
+                    document.getElementById('arGuide').style.opacity = 0.3;
+                };
+                
+                mindarThree.onTargetLost = () => {
+                    document.getElementById('arGuide').style.opacity = 0.7;
+                };
+                
                 await mindarThree.start();
-            } catch (error) {
-                console.error("AR Start Failed:", error);
-                alert("Camera access failed. Please ensure you are using HTTPS.");
+                
+            } catch (err) {
+                console.error("AR Start Failed:", err);
+                
+                // Try fallback approach for iOS
+                if (isIOS && !state.cameraPermissionGranted) {
+                    showToast("Camera access needed", "Please allow camera permissions in Safari settings", 3000);
+                }
+                
+                // Fallback to 3D mode
+                showToast("AR Failed - Switching to 3D", err.message, 3000);
+                setTimeout(() => {
+                    init3DMode();
+                }, 1000);
             }
         }
 
-        // --- MODEL & PARTICLES ---
-        function getIndustrialMaterial(color, transparent = false) {
+        // ==================== MODEL BUILDING ====================
+        function getIndustrialMaterial(color, transparent=false) {
+            // Use simpler materials for mobile
+            const roughness = isMobile ? 0.5 : 0.3;
+            const metalness = isMobile ? 0.5 : 0.7;
+            
             return new THREE.MeshStandardMaterial({
-                color: color, roughness: 0.3, metalness: 0.7,
-                transparent: transparent, opacity: transparent ? 0.3 : 1.0, side: THREE.DoubleSide
+                color: color, 
+                roughness: roughness, 
+                metalness: metalness,
+                transparent: transparent, 
+                opacity: transparent ? 0.3 : 1.0, 
+                side: THREE.DoubleSide
             });
         }
 
         function buildProcessingPlant() {
-            // Reactor
-            const reactorGroup = new THREE.Group();
+            // Clear previous objects
+            if (rootGroup.children.length > 0) {
+                while(rootGroup.children.length > 0) { 
+                    rootGroup.remove(rootGroup.children[0]); 
+                }
+            }
+            
+            const reactorGroup = new THREE.Group(); 
             reactorGroup.name = "Reactor";
-            const vesselGeo = new THREE.CylinderGeometry(0.8, 0.8, 3, 32);
-            const shell = new THREE.Mesh(vesselGeo, getIndustrialMaterial(COLORS.metal));
-            shell.position.y = 1.5; shell.name = "Shell";
+            
+            // Use simpler geometry for mobile
+            const segments = isMobile ? 16 : 24;
+            const shell = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.8, 0.8, 3, segments),
+                getIndustrialMaterial(COLORS.metal)
+            );
+            shell.position.y = 1.5; 
+            shell.name = "Shell"; 
             reactorGroup.add(shell);
             
-            const bedGeo = new THREE.CylinderGeometry(0.7, 0.7, 2, 32);
-            const bed = new THREE.Mesh(bedGeo, new THREE.MeshStandardMaterial({ color: COLORS.catalyst, wireframe: true }));
-            bed.position.y = 1.5; bed.visible = false; bed.name = "Internals";
+            const bed = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.7, 0.7, 2, isMobile ? 12 : 16),
+                new THREE.MeshStandardMaterial({color: COLORS.catalyst, wireframe: true})
+            );
+            bed.position.y = 1.5; 
+            bed.visible = false; 
+            bed.name = "Internals"; 
             reactorGroup.add(bed);
             
-            const capGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.2, 32);
-            const topCap = new THREE.Mesh(capGeo, getIndustrialMaterial(COLORS.darkMetal)); topCap.position.y = 3.1;
-            const botCap = new THREE.Mesh(capGeo, getIndustrialMaterial(COLORS.darkMetal)); botCap.position.y = -0.1;
-            reactorGroup.add(topCap, botCap);
+            const cap = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.9, 0.9, 0.2, isMobile ? 12 : 16),
+                getIndustrialMaterial(COLORS.darkMetal)
+            );
+            const top = cap.clone(); 
+            top.position.y = 3.1;
+            const bot = cap.clone(); 
+            bot.position.y = -0.1;
+            reactorGroup.add(top, bot);
 
-            // Tanks
-            const createTank = (color, xPos, label) => {
-                const tank = new THREE.Group();
-                const geo = new THREE.SphereGeometry(0.6, 32, 32);
-                const mesh = new THREE.Mesh(geo, getIndustrialMaterial(color));
-                tank.position.set(xPos, 0.6, 0); tank.name = label;
-                const legGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.6, 8);
-                for(let i=0; i<3; i++) {
-                    const leg = new THREE.Mesh(legGeo, getIndustrialMaterial(COLORS.darkMetal));
-                    const angle = (i / 3) * Math.PI * 2;
-                    leg.position.set(xPos + Math.cos(angle)*0.3, 0.3, Math.sin(angle)*0.3);
-                    tank.add(leg);
-                }
-                tank.add(mesh);
-                return tank;
+            const tankGeo = new THREE.SphereGeometry(0.6, isMobile ? 12 : 16, isMobile ? 12 : 16);
+            const createTank = (c, x, n) => {
+                const t = new THREE.Group(); 
+                t.name = n; 
+                t.position.set(x, 0.6, 0);
+                t.add(new THREE.Mesh(tankGeo, getIndustrialMaterial(c)));
+                return t;
             };
 
             rootGroup.add(reactorGroup);
             rootGroup.add(createTank(COLORS.n2, -2, "Nitrogen Feed"));
             rootGroup.add(createTank(COLORS.h2, 2, "Hydrogen Feed"));
 
-            // Pipes
+            // Pipes with simpler geometry
             const pipeMat = getIndustrialMaterial(0xcccccc);
-            const createBentPipe = (start, end) => {
-                const path = new THREE.CatmullRomCurve3([start, new THREE.Vector3((start.x + end.x)/2, start.y, start.z), new THREE.Vector3((start.x + end.x)/2, end.y, end.z), end]);
-                return new THREE.Mesh(new THREE.TubeGeometry(path, 10, 0.1, 8, false), pipeMat);
-            }
-            rootGroup.add(createBentPipe(new THREE.Vector3(-2, 1.2, 0), new THREE.Vector3(0, 0.5, 0)));
-            rootGroup.add(createBentPipe(new THREE.Vector3(2, 1.2, 0), new THREE.Vector3(0, 0.5, 0)));
-            rootGroup.add(createBentPipe(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 4, -1)));
+            const createPipe = (s, e) => {
+                const path = new THREE.CatmullRomCurve3([
+                    s, 
+                    new THREE.Vector3((s.x + e.x) / 2, s.y, s.z), 
+                    new THREE.Vector3((s.x + e.x) / 2, e.y, e.z), 
+                    e
+                ]);
+                return new THREE.Mesh(
+                    new THREE.TubeGeometry(path, 6, 0.1, isMobile ? 6 : 8, false), 
+                    pipeMat
+                );
+            };
+            rootGroup.add(createPipe(new THREE.Vector3(-2, 1.2, 0), new THREE.Vector3(0, 0.5, 0)));
+            rootGroup.add(createPipe(new THREE.Vector3(2, 1.2, 0), new THREE.Vector3(0, 0.5, 0)));
+            rootGroup.add(createPipe(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 4, -1)));
 
-            // Condenser
-            const condenserGroup = new THREE.Group();
-            condenserGroup.name = "Condenser"; condenserGroup.position.set(0, 2, -2);
-            condenserGroup.add(new THREE.Mesh(new THREE.BoxGeometry(1.5, 2, 1), getIndustrialMaterial(COLORS.darkMetal)));
-            rootGroup.add(condenserGroup);
+            const cond = new THREE.Group(); 
+            cond.name = "Condenser"; 
+            cond.position.set(0, 2, -2);
+            cond.add(new THREE.Mesh(
+                new THREE.BoxGeometry(1.5, 2, 1), 
+                getIndustrialMaterial(COLORS.darkMetal)
+            ));
+            rootGroup.add(cond);
 
             initFlowSystem();
         }
 
         function initFlowSystem() {
-            const count = 100;
-            const positions = new Float32Array(count * 3);
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            const material = new THREE.PointsMaterial({ color: COLORS.n2, size: 0.1, transparent: true, opacity: 0.8 });
-            const particleSystem = new THREE.Points(geometry, material);
-            rootGroup.add(particleSystem);
+            // Adjust particle count based on device
+            const count = isMobile ? 30 : 50;
+            const pos = new Float32Array(count * 3);
+            const mat = new THREE.PointsMaterial({
+                color: COLORS.n2, 
+                size: isMobile ? 0.08 : 0.1, 
+                transparent: true,
+                opacity: 0.8
+            });
             
-            particles = { mesh: particleSystem, data: [] };
-            for(let i=0; i<count; i++) {
-                particles.data.push({ type: i%3===0?'N2':'H2', t: Math.random(), speed: 0.005 + Math.random()*0.005, path: i%3===0?1:2 });
+            const sys = new THREE.Points(
+                new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pos, 3)), 
+                mat
+            );
+            rootGroup.add(sys);
+            particles = {mesh: sys, data: []};
+            
+            for(let i = 0; i < count; i++) {
+                particles.data.push({
+                    type: i % 3 === 0 ? 'N2' : 'H2', 
+                    t: Math.random(), 
+                    speed: 0.01, 
+                    path: i % 3 === 0 ? 1 : 2
+                });
             }
         }
 
         function updateFlow() {
-            if (!state.flowActive || !particles.mesh) return;
-            const positions = particles.mesh.geometry.attributes.position.array;
-            const speedFactor = (state.temp / 450); 
+            if(!state.flowActive || !particles.mesh) return;
             
-            for (let i = 0; i < particles.data.length; i++) {
-                const p = particles.data[i];
-                p.t += p.speed * speedFactor;
-                if (p.t > 1) p.t = 0;
+            const pos = particles.mesh.geometry.attributes.position.array;
+            const speed = state.temp / 450;
+            
+            particles.data.forEach((p, i) => {
+                p.t += p.speed * speed; 
+                if(p.t > 1) p.t = 0;
                 
                 let x, y, z;
-                if (p.t < 0.5) {
-                    const startX = p.path === 1 ? -2 : 2;
-                    x = startX * (1 - p.t * 2); y = 0.6 + (p.t * 2); z = 0;
-                } else {
-                    const localT = (p.t - 0.5) * 2;
-                    x = 0; y = 1.6 + localT * 2; z = -localT * 2;
+                if(p.t < 0.5) { 
+                    x = (p.path === 1 ? -2 : 2) * (1 - p.t * 2); 
+                    y = 0.6 + (p.t * 2); 
+                    z = 0; 
+                } else { 
+                    const lt = (p.t - 0.5) * 2; 
+                    x = 0; 
+                    y = 1.6 + lt * 2; 
+                    z = -lt * 2; 
                 }
-                positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
-            }
+                
+                pos[i * 3] = x;
+                pos[i * 3 + 1] = y;
+                pos[i * 3 + 2] = z;
+            });
+            
             particles.mesh.geometry.attributes.position.needsUpdate = true;
         }
 
-        // --- UI & LOGIC ---
+        // ==================== UI LOGIC ====================
         function initUI() {
-            // Panel Toggles
+            // Control panel toggle
             document.getElementById('btnSettings').addEventListener('click', () => {
                 document.getElementById('controlPanel').classList.add('active');
                 document.getElementById('quizPanel').classList.remove('active');
             });
-            document.getElementById('btnCloseControls').addEventListener('click', () => document.getElementById('controlPanel').classList.remove('active'));
             
+            document.getElementById('btnCloseControls').addEventListener('click', () => {
+                document.getElementById('controlPanel').classList.remove('active');
+            });
+            
+            // Quiz panel toggle
             document.getElementById('btnQuiz').addEventListener('click', () => {
                 document.getElementById('quizPanel').classList.add('active');
                 document.getElementById('controlPanel').classList.remove('active');
             });
-            document.getElementById('btnCloseQuiz').addEventListener('click', () => document.getElementById('quizPanel').classList.remove('active'));
+            
+            document.getElementById('btnCloseQuiz').addEventListener('click', () => {
+                document.getElementById('quizPanel').classList.remove('active');
+            });
 
-            // Sliders & Emergency Logic
-            const sliderTemp = document.getElementById('sliderTemp');
-            const sliderPress = document.getElementById('sliderPress');
-
-            const updateCalc = () => {
-                state.temp = parseInt(sliderTemp.value);
-                state.pressure = parseInt(sliderPress.value);
+            // MODIFIED: Enhanced thermodynamic calculations with emergency effects
+            const updateThermodynamicCalculations = () => {
+                state.temp = parseInt(document.getElementById('sliderTemp').value);
+                state.pressure = parseInt(document.getElementById('sliderPress').value);
                 document.getElementById('valTemp').innerText = state.temp + "°C";
                 document.getElementById('valPress').innerText = state.pressure + " atm";
                 
-                // GAMIFICATION: Check for Equilibrium during Emergency
-                if (state.isEmergency) {
-                    // Target: Temp 400-450, Pressure 200-250
-                    const tGood = state.temp >= 400 && state.temp <= 450;
-                    const pGood = state.pressure >= 200 && state.pressure <= 250;
+                if(state.isEmergency) {
+                    // Emergency mode: yield and efficiency degrade rapidly
+                    const tempDeviation = Math.abs(state.temp - 425) / 125;
+                    const pressureDeviation = Math.abs(state.pressure - 225) / 175;
                     
-                    const stability = Math.max(0, 100 - (Math.abs(state.temp - 425)/2) - (Math.abs(state.pressure - 225)/2));
+                    // Calculate emergency degradation
+                    const emergencyFactor = 0.3 + (tempDeviation + pressureDeviation) * 0.35;
+                    const stableYield = Math.max(0, 100 - Math.abs(state.temp - 425) - Math.abs(state.pressure - 225));
+                    const stableEfficiency = Math.max(20, 100 - Math.abs(state.temp - 425) * 0.8 - Math.abs(state.pressure - 225) * 0.6);
                     
-                    document.getElementById('monitorLabel').innerText = "SYSTEM STABILITY";
-                    document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
-                    document.getElementById('valYield').innerText = Math.floor(stability) + "%";
+                    // Apply emergency degradation
+                    state.yield = Math.floor(stableYield * emergencyFactor);
+                    state.energyEfficiency = Math.floor(stableEfficiency * emergencyFactor);
                     
-                    if (tGood && pGood) {
-                        resolveEmergency();
-                    }
+                    document.getElementById('valYield').innerText = state.yield + "%";
+                    document.getElementById('valEnergy').innerText = state.energyEfficiency + "%";
+                    
+                    // Change colors to indicate emergency
+                    document.getElementById('valYield').style.color = "var(--accent-danger)";
+                    document.getElementById('valEnergy').style.color = "var(--accent-danger)";
+                    
                 } else {
-                    // Normal Yield Calc
-                    let yieldVal = (20000 / state.temp) + (state.pressure / 10) - 20; 
-                    yieldVal = Math.max(0, Math.min(98, yieldVal));
-                    document.getElementById('monitorLabel').innerText = "Calculated Yield";
-                    document.getElementById('monitorLabel').style.color = "var(--text-muted)";
-                    document.getElementById('valYield').innerText = yieldVal.toFixed(1) + "%";
+                    // Normal mode calculations
+                    const tempK = state.temp + 273.15;
+                    const pressureRatio = state.pressure / 200;
+                    
+                    // Calculate equilibrium constant (simplified)
+                    const equilibriumConstant = Math.exp(20.3 - 9140 / tempK);
+                    
+                    // Calculate conversion (simplified)
+                    const conversion = equilibriumConstant * pressureRatio / (1 + equilibriumConstant * pressureRatio);
+                    
+                    // Calculate yield
+                    let y = conversion * 100;
+                    y = Math.max(5, Math.min(95, y)); // Clamp between 5% and 95%
+                    state.yield = y;
+                    
+                    // Calculate energy efficiency based on optimal conditions
+                    const tempOptimal = 450;
+                    const pressureOptimal = 200;
+                    const tempEfficiency = 1 - Math.abs(state.temp - tempOptimal) / 150;
+                    const pressureEfficiency = 1 - Math.abs(state.pressure - pressureOptimal) / 200;
+                    const efficiency = (tempEfficiency * 0.6 + pressureEfficiency * 0.4) * 85;
+                    
+                    state.energyEfficiency = Math.max(30, Math.min(95, efficiency));
+                    
+                    document.getElementById('valYield').innerText = y.toFixed(1) + "%";
+                    document.getElementById('valEnergy').innerText = Math.round(state.energyEfficiency) + "%";
+                    
+                    // Reset colors to normal
+                    document.getElementById('valYield').style.color = "var(--accent-green)";
+                    document.getElementById('valEnergy').style.color = "var(--accent-orange)";
                 }
+                
+                // Check for emergency conditions
+                checkForEmergency();
             };
-
-            sliderTemp.addEventListener('input', updateCalc);
-            sliderPress.addEventListener('input', updateCalc);
-
-            // Bottom Toggles
+            
+            document.getElementById('sliderTemp').addEventListener('input', updateThermodynamicCalculations);
+            document.getElementById('sliderPress').addEventListener('input', updateThermodynamicCalculations);
+            
+            // Initialize calculations
+            updateThermodynamicCalculations();
+            
+            // Feature toggles
             document.getElementById('btnXray').addEventListener('click', (e) => {
-                state.isXray = !state.isXray; e.currentTarget.classList.toggle('active');
-                rootGroup.traverse((child) => {
-                    if (child.name === "Shell") { child.material.transparent = true; child.material.opacity = state.isXray ? 0.2 : 1.0; }
-                    if (child.name === "Internals") child.visible = state.isXray;
+                state.isXray = !state.isXray;
+                e.currentTarget.classList.toggle('active');
+                rootGroup.traverse(c => {
+                    if(c.name === "Shell") { 
+                        c.material.transparent = true; 
+                        c.material.opacity = state.isXray ? 0.2 : 1.0; 
+                    }
+                    if(c.name === "Internals") c.visible = state.isXray;
                 });
             });
-            document.getElementById('btnFlow').addEventListener('click', (e) => { state.flowActive = !state.flowActive; e.currentTarget.classList.toggle('active'); });
-            document.getElementById('btnReset').addEventListener('click', () => { if(rootGroup) gsap.to(rootGroup.rotation, {x:0, y:0, z:0, duration: 1}); });
-            document.getElementById('btnExit').addEventListener('click', () => location.reload());
+            
+            document.getElementById('btnFlow').addEventListener('click', (e) => { 
+                state.flowActive = !state.flowActive; 
+                e.currentTarget.classList.toggle('active'); 
+            });
+            
+            document.getElementById('btnReset').addEventListener('click', () => { 
+                if(rootGroup) {
+                    gsap.to(rootGroup.rotation, {x:0, y:0, z:0, duration:1});
+                }
+            });
+            
+            document.getElementById('btnExit').addEventListener('click', () => {
+                if(confirm("Exit the Haber-Bosch Lab?")) {
+                    location.reload();
+                }
+            });
+            
+            // Audio toggle
+            document.getElementById('btnAudio').addEventListener('click', (e) => {
+                state.audioEnabled = !state.audioEnabled;
+                e.currentTarget.classList.toggle('active');
+                
+                if(!state.audioEnabled) {
+                    window.speechSynthesis.cancel();
+                    if(audioCtx) audioCtx.suspend();
+                } else {
+                    if(audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                }
+            });
         }
 
-        // --- QUIZ LOGIC ---
+        // ==================== QUIZ SYSTEM ====================
         function initQuiz() {
+            const renderQuestion = () => {
+                const q = quizQuestions[state.currentQ];
+                document.getElementById('qText').innerText = `Q${state.currentQ + 1}: ${q.q}`;
+                const div = document.getElementById('qOptions');
+                div.innerHTML = '';
+                document.getElementById('btnNextQ').style.display = 'none';
+                
+                q.options.forEach((opt, i) => {
+                    const b = document.createElement('div');
+                    b.className = 'quiz-btn';
+                    b.innerText = opt;
+                    
+                    b.addEventListener('click', () => {
+                        if(i === q.correct) {
+                            b.classList.add('correct');
+                            state.score += 10;
+                            state.totalStars += 1;
+                            
+                            // Show star particles for correct answer
+                            showQuizStarParticles(b);
+                            
+                            // Play success sound
+                            if(state.audioEnabled) {
+                                playSuccessSound();
+                            }
+                            
+                        } else {
+                            b.classList.add('wrong');
+                            div.children[q.correct].classList.add('correct');
+                            
+                            if(state.audioEnabled) {
+                                playErrorSound();
+                            }
+                        }
+                        
+                        document.getElementById('quizScore').innerText = `Score: ${state.score}`;
+                        document.getElementById('btnNextQ').style.display = 'block';
+                        Array.from(div.children).forEach(btn => btn.style.pointerEvents = 'none');
+                    });
+                    
+                    div.appendChild(b);
+                });
+            };
+            
             renderQuestion();
+            
             document.getElementById('btnNextQ').addEventListener('click', () => {
                 state.currentQ = (state.currentQ + 1) % quizQuestions.length;
                 renderQuestion();
             });
         }
 
-        function renderQuestion() {
-            const q = quizQuestions[state.currentQ];
-            document.getElementById('qText').innerText = `Q${state.currentQ + 1}: ${q.q}`;
-            const optsDiv = document.getElementById('qOptions');
-            optsDiv.innerHTML = '';
-            document.getElementById('btnNextQ').style.display = 'none';
-
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('div');
-                btn.className = 'quiz-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(idx, btn, q.correct);
-                optsDiv.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(selected, btnElement, correct) {
-            const btns = document.querySelectorAll('.quiz-btn');
-            btns.forEach(b => b.style.pointerEvents = 'none'); // Disable clicks
+        // Star particles for quiz answers
+        function showQuizStarParticles(button) {
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
             
-            if (selected === correct) {
-                btnElement.classList.add('correct');
-                state.score += 10;
-            } else {
-                btnElement.classList.add('wrong');
-                btns[correct].classList.add('correct');
+            for(let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.innerHTML = '<i class="fas fa-star"></i>';
+                star.style.position = 'fixed';
+                star.style.left = centerX + 'px';
+                star.style.top = centerY + 'px';
+                star.style.color = 'gold';
+                star.style.fontSize = (1 + Math.random() * 0.5) + 'rem';
+                star.style.opacity = '0';
+                star.style.zIndex = '1000';
+                star.style.pointerEvents = 'none';
+                
+                document.body.appendChild(star);
+                
+                gsap.to(star, {
+                    duration: 1 + Math.random() * 0.5,
+                    x: (Math.random() - 0.5) * 100,
+                    y: (Math.random() - 0.5) * 100 - 50,
+                    opacity: 1,
+                    scale: 0,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.body.removeChild(star);
+                    }
+                });
             }
-            document.getElementById('quizScore').innerText = `Score: ${state.score}`;
-            document.getElementById('btnNextQ').style.display = 'block';
         }
 
-        // --- GAMIFICATION: EMERGENCY SYSTEM ---
+        // ==================== EMERGENCY SYSTEM ====================
+        function checkForEmergency() {
+            const tempOk = state.temp >= 350 && state.temp <= 550;
+            const pressureOk = state.pressure >= 150 && state.pressure <= 300;
+            
+            if(!tempOk || !pressureOk) {
+                if(!state.isEmergency) {
+                    triggerEmergency();
+                }
+            } else if(state.isEmergency) {
+                resolveEmergency();
+            }
+        }
+
         function triggerEmergency() {
-            if (state.isEmergency) return;
+            if(state.isEmergency) return;
+            
             state.isEmergency = true;
             
-            // UI Changes
             document.body.classList.add('critical-state');
             document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
-            document.getElementById('monitorLabel').innerText = "STABILITY CRITICAL";
+            
+            // Voice alert
+            if(state.audioEnabled) {
+                window.speechSynthesis.cancel();
+                speak("Warning. System Decomposing. Adjust temperature and pressure.");
+            }
+
             document.getElementById('monitorLabel').style.color = "var(--accent-danger)";
-            document.getElementById('valYield').style.color = "var(--accent-danger)";
-            
-            // Open Controls automatically
             document.getElementById('controlPanel').classList.add('active');
-            document.getElementById('quizPanel').classList.remove('active');
             
-            // Audio Alarm
-            playAlarmSound();
+            // Start emergency parameter fluctuation
+            startEmergencyParameterChange();
             
-            // 3D Lighting Red Pulse
-            const light = scene.getObjectByName("MainLight");
-            const accent = scene.getObjectByName("AccentLight");
-            if(light) light.color.setHex(0xff0000);
-            if(accent) accent.color.setHex(0xff0000);
+            // Start siren
+            startSiren();
+        }
+
+        function startEmergencyParameterChange() {
+            if(state.emergencyInterval) clearInterval(state.emergencyInterval);
+            
+            state.emergencyInterval = setInterval(() => {
+                if(!state.isEmergency) {
+                    clearInterval(state.emergencyInterval);
+                    return;
+                }
+                
+                // Randomly fluctuate parameters during emergency
+                const tempChange = (Math.random() - 0.5) * 20; // ±10°C
+                const pressureChange = (Math.random() - 0.5) * 40; // ±20 atm
+                
+                let newTemp = parseInt(document.getElementById('sliderTemp').value) + tempChange;
+                let newPressure = parseInt(document.getElementById('sliderPress').value) + pressureChange;
+                
+                // Clamp values
+                newTemp = Math.max(300, Math.min(600, Math.round(newTemp)));
+                newPressure = Math.max(100, Math.min(400, Math.round(newPressure)));
+                
+                // Update sliders
+                document.getElementById('sliderTemp').value = newTemp;
+                document.getElementById('sliderPress').value = newPressure;
+                
+                // Trigger calculations (which will update yield and efficiency)
+                state.temp = newTemp;
+                state.pressure = newPressure;
+                document.getElementById('valTemp').innerText = newTemp + "°C";
+                document.getElementById('valPress').innerText = newPressure + " atm";
+                
+                // Force update of thermodynamic calculations
+                const updateThermodynamicCalculations = () => {
+                    if(state.isEmergency) {
+                        const tempDeviation = Math.abs(state.temp - 425) / 125;
+                        const pressureDeviation = Math.abs(state.pressure - 225) / 175;
+                        
+                        const emergencyFactor = 0.3 + (tempDeviation + pressureDeviation) * 0.35;
+                        const stableYield = Math.max(0, 100 - Math.abs(state.temp - 425) - Math.abs(state.pressure - 225));
+                        const stableEfficiency = Math.max(20, 100 - Math.abs(state.temp - 425) * 0.8 - Math.abs(state.pressure - 225) * 0.6);
+                        
+                        state.yield = Math.floor(stableYield * emergencyFactor);
+                        state.energyEfficiency = Math.floor(stableEfficiency * emergencyFactor);
+                        
+                        document.getElementById('valYield').innerText = state.yield + "%";
+                        document.getElementById('valEnergy').innerText = state.energyEfficiency + "%";
+                    }
+                };
+                
+                updateThermodynamicCalculations();
+                
+            }, 2000); // Change every 2 seconds
         }
 
         function resolveEmergency() {
-            state.isEmergency = false;
+            state.isEmergency = false; 
             state.lastEmergency = Date.now();
             
-            // UI Reset
             document.body.classList.remove('critical-state');
-            document.getElementById('statusText').innerText = "Equilibrium Restored";
-            document.getElementById('monitorLabel').innerText = "Calculated Yield";
+            document.getElementById('statusText').innerText = "System Active";
             document.getElementById('monitorLabel').style.color = "var(--text-muted)";
-            document.getElementById('valYield').style.color = "var(--accent-green)";
             
-            // Stop Sound
-            if(audioCtx) audioCtx.close();
-            audioCtx = null;
+            // Stop emergency parameter changes
+            if(state.emergencyInterval) {
+                clearInterval(state.emergencyInterval);
+                state.emergencyInterval = null;
+            }
             
-            // 3D Lighting Reset
-            const light = scene.getObjectByName("MainLight");
-            const accent = scene.getObjectByName("AccentLight");
-            if(light) light.color.setHex(0xffffff);
-            if(accent) accent.color.setHex(0x38bdf8);
+            // Stop siren
+            stopSiren();
+            
+            // Show star reward
+            showStarReward();
+            state.totalStars += 1;
+            
+            // Voice alert
+            if(state.audioEnabled) {
+                window.speechSynthesis.cancel();
+                speak("System Stabilized. Good work!");
+            }
+
+            setTimeout(() => document.getElementById('controlPanel').classList.remove('active'), 1500);
+        }
+
+        function startSiren() {
+            if(sirenInterval) clearInterval(sirenInterval);
+            
+            let sirenPhase = 0;
+            sirenInterval = setInterval(() => {
+                if(!state.isEmergency) {
+                    clearInterval(sirenInterval);
+                    return;
+                }
+                
+                if(audioCtx && state.audioEnabled) {
+                    try {
+                        const oscillator = audioCtx.createOscillator();
+                        const gainNode = audioCtx.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioCtx.destination);
+                        
+                        oscillator.frequency.setValueAtTime(
+                            sirenPhase % 2 === 0 ? 880 : 440,
+                            audioCtx.currentTime
+                        );
+                        
+                        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+                        
+                        oscillator.start();
+                        oscillator.stop(audioCtx.currentTime + 0.8);
+                        
+                        sirenPhase++;
+                    } catch(e) {
+                        console.log("Siren audio error", e);
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopSiren() {
+            if(sirenInterval) {
+                clearInterval(sirenInterval);
+                sirenInterval = null;
+            }
+        }
+
+        function showStarReward() {
+            const starContainer = document.getElementById('starReward');
+            starContainer.style.display = 'block';
+            
+            gsap.fromTo(starContainer, 
+                { scale: 0, rotation: -180 },
+                { scale: 1, rotation: 0, duration: 0.8, ease: "back.out(1.7)" }
+            );
             
             setTimeout(() => {
-                document.getElementById('statusText').innerText = "System Active";
-                document.getElementById('controlPanel').classList.remove('active');
-            }, 2000);
+                gsap.to(starContainer, {
+                    opacity: 0,
+                    scale: 1.5,
+                    duration: 0.5,
+                    onComplete: () => {
+                        starContainer.style.display = 'none';
+                        starContainer.style.opacity = 1;
+                        starContainer.style.scale = 1;
+                    }
+                });
+            }, 1500);
         }
 
-        function playAlarmSound() {
-            if (!state.audioEnabled) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                
-                oscillator.type = 'sawtooth';
-                oscillator.frequency.value = 440; // A4
-                
-                // Siren LFO
-                const lfo = audioCtx.createOscillator();
-                lfo.type = 'sine';
-                lfo.frequency.value = 2; // 2Hz siren speed
-                const lfoGain = audioCtx.createGain();
-                lfoGain.gain.value = 200; // range
-                
-                lfo.connect(lfoGain);
-                lfoGain.connect(oscillator.frequency);
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.start();
-                lfo.start();
-                
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            } catch(e) { console.log("Audio play failed"); }
-        }
-
-        // --- STANDARD FUNCTIONS ---
-        function onMouseClick(event) {
+        // ==================== INTERACTION ====================
+        function onMouseClick(e) {
             const mouse = new THREE.Vector2();
-            if (event.type === 'touchstart') {
-                mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
-            } else {
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            const rect = renderer.domElement.getBoundingClientRect();
+            
+            if(e.type === 'click') {
+                mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            } else if(e.type === 'touchstart') {
+                mouse.x = ((e.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((e.touches[0].clientY - rect.top) / rect.height) * 2 + 1;
             }
+            
             const raycaster = new THREE.Raycaster();
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(rootGroup.children, true);
-            if (intersects.length > 0) {
-                let obj = intersects[0].object;
-                while(obj.parent && obj.parent !== rootGroup) obj = obj.parent;
-                if (obj.name) selectComponent(obj.name);
+            const hits = raycaster.intersectObjects(rootGroup.children, true);
+            
+            if(hits.length > 0) {
+                let o = hits[0].object;
+                while(o.parent && o.parent !== rootGroup) o = o.parent;
+                
+                if(o.name) {
+                    state.activeComponent = o.name;
+                    const t = document.getElementById('infoToast');
+                    document.getElementById('toastText').innerText = o.name;
+                    t.style.display = 'block';
+                    
+                    gsap.fromTo(t, {opacity:0, y:20}, {opacity:1, y:0, duration:0.3});
+                    
+                    updateMoleculeView(o.name);
+                    
+                    if(state.audioEnabled && !state.isEmergency) {
+                        window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(new SpeechSynthesisUtterance(o.name));
+                    }
+                    
+                    // Auto-hide toast
+                    if(toastTimer) clearTimeout(toastTimer);
+                    toastTimer = setTimeout(() => {
+                        gsap.to(t, {
+                            opacity: 0,
+                            y: 20,
+                            duration: 0.3,
+                            onComplete: () => {
+                                t.style.display = 'none';
+                            }
+                        });
+                    }, 2000);
+                }
             }
         }
 
-        function selectComponent(name) {
-            state.activeComponent = name;
-            const toast = document.getElementById('infoToast');
-            document.getElementById('toastText').innerText = name;
-            toast.style.display = 'block';
-            gsap.fromTo(toast, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.3});
-            if (state.audioEnabled && !state.isEmergency) speak(name);
-            updateMoleculeView(name);
-        }
-
+        // ==================== MOLECULE VIEWER ====================
         function initMoleculeViewer() {
-            const container = document.getElementById('moleculeCanvas');
-            molScene = new THREE.Scene(); molScene.background = new THREE.Color(0x101828);
-            molCamera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 10); molCamera.position.z = 5;
-            molRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            molRenderer.setSize(container.clientWidth, container.clientHeight); container.appendChild(molRenderer.domElement);
-            molScene.add(new THREE.DirectionalLight(0xffffff, 1)); molScene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        }
-
-        function updateMoleculeView(componentName) {
-            const popup = document.getElementById('moleculePopup');
-            while(molScene.children.length > 2) molScene.remove(molScene.children[molScene.children.length-1]);
-            let label = "";
-            if (componentName === "Nitrogen Feed") { createMolecule("N2", 0x38bdf8); label = "Dinitrogen (N≡N)"; } 
-            else if (componentName === "Hydrogen Feed") { createMolecule("H2", 0xffffff); label = "Dihydrogen (H-H)"; }
-            else if (componentName === "Reactor") { createMolecule("NH3", 0xf59e0b); label = "N₂ + 3H₂ ⇌ 2NH₃"; }
-            else if (componentName === "Condenser") { createMolecule("NH3", 0xf59e0b); label = "Ammonia (NH₃)"; }
+            const c = document.getElementById('moleculeCanvas');
+            molScene = new THREE.Scene();
+            molScene.background = new THREE.Color(0x101828);
+            molCamera = new THREE.PerspectiveCamera(50, c.clientWidth / c.clientHeight, 0.1, 10);
+            molCamera.position.z = 5;
             
-            if (label) { popup.style.display = 'flex'; document.getElementById('moleculeLabel').innerText = label; } 
-            else popup.style.display = 'none';
+            const rendererOptions = {
+                alpha: true,
+                antialias: !isMobile
+            };
+            
+            molRenderer = new THREE.WebGLRenderer(rendererOptions);
+            molRenderer.setSize(c.clientWidth, c.clientHeight);
+            c.appendChild(molRenderer.domElement);
+            
+            molScene.add(new THREE.DirectionalLight(0xffffff, 1));
+            molScene.add(new THREE.AmbientLight(0xffffff, 0.5));
         }
 
-        function createMolecule(type, color) {
-            const group = new THREE.Group();
-            const geo = new THREE.SphereGeometry(0.8, 16, 16);
-            const mat = new THREE.MeshPhongMaterial({ color: color, shininess: 50 });
-            if (type === "N2") {
-                const a1 = new THREE.Mesh(geo, mat); a1.position.x = -0.6;
-                const a2 = new THREE.Mesh(geo, mat); a2.position.x = 0.6; group.add(a1, a2);
-            } else if (type === "NH3") {
-                const n = new THREE.Mesh(geo, mat);
-                const hGeo = new THREE.SphereGeometry(0.4, 16, 16); const hMat = new THREE.MeshPhongMaterial({color:0xffffff});
-                const h1 = new THREE.Mesh(hGeo, hMat); h1.position.set(0.8,-0.5,0);
-                const h2 = new THREE.Mesh(hGeo, hMat); h2.position.set(-0.6,-0.5,0.7);
-                const h3 = new THREE.Mesh(hGeo, hMat); h3.position.set(-0.6,-0.5,-0.7); group.add(n, h1, h2, h3);
-            } else { const h1 = new THREE.Mesh(new THREE.SphereGeometry(0.5), mat); h1.position.x = -0.4; const h2 = new THREE.Mesh(new THREE.SphereGeometry(0.5), mat); h2.position.x = 0.4; group.add(h1, h2); }
-            molScene.add(group); molecules = [group];
+        function updateMoleculeView(name) {
+            const p = document.getElementById('moleculePopup');
+            
+            // Clear previous molecules
+            while(molScene.children.length > 2) {
+                molScene.remove(molScene.children[molScene.children.length - 1]);
+            }
+            
+            let label = "";
+            const ball = new THREE.SphereGeometry(0.8, isMobile ? 8 : 12, isMobile ? 8 : 12);
+            const mat = (c) => new THREE.MeshPhongMaterial({color: c});
+            const grp = new THREE.Group();
+            
+            if(name.includes("Nitrogen")) {
+                const a = new THREE.Mesh(ball, mat(0x38bdf8));
+                a.position.x = -0.6;
+                grp.add(a, a.clone().translateX(1.2));
+                label = "N₂";
+            } else if(name.includes("Hydrogen")) {
+                const a = new THREE.Mesh(ball, mat(0xffffff));
+                a.position.x = -0.6;
+                grp.add(a, a.clone().translateX(1.2));
+                label = "H₂";
+            } else {
+                const n = new THREE.Mesh(ball, mat(0xf59e0b));
+                const h = new THREE.Mesh(new THREE.SphereGeometry(0.4, isMobile ? 6 : 8, isMobile ? 6 : 8), mat(0xffffff));
+                grp.add(n, 
+                    h.clone().position.set(0.8, -0.5, 0),
+                    h.clone().position.set(-0.6, -0.5, 0.7),
+                    h.clone().position.set(-0.6, -0.5, -0.7)
+                );
+                label = "NH₃";
+            }
+            
+            if(label) {
+                molScene.add(grp);
+                molecules = [grp];
+                p.style.display = 'flex';
+                document.getElementById('moleculeLabel').innerText = label;
+            } else {
+                p.style.display = 'none';
+            }
         }
 
+        // ==================== AUDIO FUNCTIONS ====================
         function initAudio() {
             document.getElementById('btnAudio').addEventListener('click', (e) => {
-                state.audioEnabled = !state.audioEnabled; e.currentTarget.classList.toggle('active');
-                if(!state.audioEnabled) { window.speechSynthesis.cancel(); if(audioCtx) audioCtx.close(); }
+                state.audioEnabled = !state.audioEnabled;
+                e.currentTarget.classList.toggle('active');
+                if(!state.audioEnabled) {
+                    window.speechSynthesis.cancel();
+                    if(audioCtx) audioCtx.suspend();
+                }
             });
         }
+
         function speak(text) {
-            if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); window.speechSynthesis.speak(u); }
+            if(state.audioEnabled && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                window.speechSynthesis.speak(utterance);
+            }
         }
 
-        // --- ANIMATION LOOP ---
-        clock = new THREE.Clock();
+        function playSuccessSound() {
+            if(audioCtx && state.audioEnabled) {
+                try {
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    
+                    oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    
+                    gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.5);
+                } catch(e) {
+                    console.log("Success sound error", e);
+                }
+            }
+        }
 
+        function playErrorSound() {
+            if(audioCtx && state.audioEnabled) {
+                try {
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    
+                    oscillator.frequency.setValueAtTime(349.23, audioCtx.currentTime);
+                    oscillator.frequency.setValueAtTime(293.66, audioCtx.currentTime + 0.1);
+                    
+                    gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.3);
+                } catch(e) {
+                    console.log("Error sound error", e);
+                }
+            }
+        }
+
+        // ==================== ANIMATION LOOP ====================
         function animate() {
             requestAnimationFrame(animate);
-
-            // Timer for Gamification
-            const now = Date.now();
-            if (!state.isEmergency && now - state.lastEmergency > 60000) { // 60 seconds
+            
+            // Check for emergency (every 30-60 seconds)
+            if(!state.isEmergency && Date.now() - state.lastEmergency > 30000 + Math.random() * 30000) {
                 triggerEmergency();
             }
-
-            if (molScene && molecules.length > 0) { molecules.forEach(m => { m.rotation.x += 0.01; m.rotation.y += 0.01; }); molRenderer.render(molScene, molCamera); }
+            
+            // Update flow visualization
             updateFlow();
-            renderer.render(scene, camera);
+            
+            // Animate molecules
+            if(molecules.length) {
+                molecules[0].rotation.y += 0.01;
+                molRenderer.render(molScene, molCamera);
+            }
+            
+            // Render main scene
+            if(renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+
+        // ==================== WINDOW RESIZE HANDLER ====================
+        window.addEventListener('resize', () => {
+            if(camera) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            
+            if(molCamera && molRenderer) {
+                const canvas = document.getElementById('moleculeCanvas');
+                molCamera.aspect = canvas.clientWidth / canvas.clientHeight;
+                molCamera.updateProjectionMatrix();
+                molRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            }
+        });
+
+        // ==================== TOAST FUNCTION ====================
+        function showToast(title, subtitle = "", duration = 2000) {
+            const toast = document.getElementById('infoToast');
+            const toastText = document.getElementById('toastText');
+            
+            toastText.innerText = title;
+            toast.style.display = 'block';
+            
+            gsap.fromTo(toast, 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.3 }
+            );
+            
+            if(toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                gsap.to(toast, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.3,
+                    onComplete: () => {
+                        toast.style.display = 'none';
+                    }
+                });
+            }, duration);
+        }
+
+        // ==================== DEVICE ORIENTATION HANDLING ====================
+        if (isMobile) {
+            // Handle device orientation for better AR experience
+            window.addEventListener('deviceorientation', handleOrientation, true);
+            
+            function handleOrientation(event) {
+                // This helps with AR stability on mobile devices
+                // No action needed, but listener improves performance
+            }
+            
+            // Prevent zoom on mobile
+            document.addEventListener('touchmove', function(e) {
+                if(e.scale !== 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+
+        // Preload voices for speech synthesis
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
         }
     </script>
 </body>
