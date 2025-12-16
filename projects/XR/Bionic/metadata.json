@@ -1,0 +1,8 @@
+{
+  "name": "Bionic Arm AI Lab",
+  "description": "Interactive 3D Bionic Arm simulation with Gemini 2.5 Flash Image powered visual editing capabilities.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
