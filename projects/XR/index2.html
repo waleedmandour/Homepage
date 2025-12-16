@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <title>Haber-Bosch Process: Advanced Engineering Lab | Next-Gen WebAR</title>
+    <title>Bionic Arm Engineering Lab | Advanced Mechatronics WebAR Simulation</title>
     <meta name="theme-color" content="#0b1120">
-    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process with real-time thermodynamics, interactive components, and AI-assisted learning.">
+    <meta name="description" content="Advanced WebAR simulation of bionic arm mechatronics with real-time biomechanics, interactive components, and engineering language learning.">
     
     <!-- Dependencies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,12 +30,15 @@
             --accent-orange: #f59e0b;
             --accent-purple: #8b5cf6;
             --accent-danger: #ef4444;
+            --accent-pink: #ec4899;
+            --accent-teal: #14b8a6;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --font-tech: 'Rajdhani', sans-serif;
             --font-code: 'Roboto Mono', monospace;
             --glow-cyan: 0 0 20px rgba(56, 189, 248, 0.5);
             --glow-green: 0 0 20px rgba(16, 185, 129, 0.5);
+            --glow-pink: 0 0 20px rgba(236, 72, 153, 0.5);
         }
 
         * { 
@@ -110,19 +113,19 @@
             animation: pulse 2s infinite;
         }
 
-        /* Enhanced Critical State */
+        /* Critical State for Bionic Arm */
         .critical-state .status-badge { 
-            border-color: var(--accent-danger); 
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+            border-color: var(--accent-pink); 
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
             animation: shake 0.5s infinite;
         }
         .critical-state .status-dot { 
-            background: var(--accent-danger); 
-            box-shadow: 0 0 20px var(--accent-danger); 
+            background: var(--accent-pink); 
+            box-shadow: 0 0 20px var(--accent-pink); 
             animation: flash 0.3s infinite; 
         }
         .critical-state .tech-title h1 { 
-            color: var(--accent-danger); 
+            color: var(--accent-pink); 
         }
 
         .tech-title h1 { 
@@ -156,11 +159,12 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transform: translateX(-120%);
             opacity: 0;
+            z-index: 150;
         }
 
         .control-room-panel { 
             left: 20px; 
-            border-left: 4px solid var(--accent-cyan); 
+            border-left: 4px solid var(--accent-teal); 
         }
         .quiz-panel { 
             right: 20px; 
@@ -170,6 +174,11 @@
         .data-panel { 
             right: 20px; 
             border-right: 4px solid var(--accent-purple); 
+            display: none;
+        }
+        .game-panel {
+            left: 20px;
+            border-left: 4px solid var(--accent-pink);
             display: none;
         }
         .side-panel.active { 
@@ -193,7 +202,29 @@
             letter-spacing: 1px;
         }
 
-        /* Enhanced Controls */
+        .close-btn {
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            border: none; 
+            background: rgba(255,255,255,0.1);
+            color: var(--text-muted); 
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            position: relative;
+            z-index: 160;
+        }
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+            color: var(--accent-cyan);
+        }
+
+        /* Enhanced Controls for Bionic Arm */
         .slider-group { 
             margin-bottom: 20px; 
             padding: 12px;
@@ -213,14 +244,14 @@
         .slider-value { 
             font-family: var(--font-code); 
             font-size: 1rem; 
-            color: var(--accent-orange); 
+            color: var(--accent-teal); 
             font-weight: 600;
         }
         
         input[type="range"] {
             width: 100%; 
             height: 6px; 
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-pink));
             outline: none; 
             -webkit-appearance: none; 
             border-radius: 3px;
@@ -233,7 +264,7 @@
             border-radius: 50%; 
             cursor: pointer;
             box-shadow: var(--glow-cyan);
-            border: 2px solid var(--accent-cyan);
+            border: 2px solid var(--accent-teal);
         }
 
         .parameter-display {
@@ -259,10 +290,96 @@
             font-weight: 700;
             font-family: var(--font-code);
         }
-        .param-value.temp { color: #f97316; }
-        .param-value.pressure { color: #8b5cf6; }
-        .param-value.flow { color: #10b981; }
-        .param-value.yield { color: var(--accent-orange); }
+        .param-value.torque { color: #f97316; }
+        .param-value.power { color: #8b5cf6; }
+        .param-value.signal { color: #10b981; }
+        .param-value.battery { color: var(--accent-teal); }
+        .param-value.force { color: var(--accent-pink); }
+
+        /* Game Panel Styles */
+        .game-instruction {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+        
+        .game-objective {
+            font-size: 1rem;
+            color: var(--accent-pink);
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game-btn {
+            padding: 12px;
+            background: linear-gradient(90deg, var(--accent-pink), #db2777);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+        }
+        
+        .game-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .game-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .game-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), #ec4899);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .game-score {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--accent-pink);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .game-timer {
+            font-family: var(--font-code);
+            color: var(--accent-orange);
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+        }
 
         /* Enhanced Quiz UI */
         .quiz-question { 
@@ -358,9 +475,9 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .icon-btn.active { 
-            background: var(--accent-cyan); 
+            background: var(--accent-teal); 
             color: #000; 
-            box-shadow: var(--glow-cyan);
+            box-shadow: 0 0 15px rgba(20, 184, 166, 0.5);
         }
         .icon-btn.badge::after {
             content: '';
@@ -369,17 +486,17 @@
             right: 8px;
             width: 8px;
             height: 8px;
-            background: var(--accent-orange);
+            background: var(--accent-pink);
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
 
-        /* Enhanced Molecule Popup */
-        .molecule-popup {
+        /* Neural Signal Visualization */
+        .signal-popup {
             position: absolute; 
             right: 20px; 
             bottom: 140px; 
-            width: 200px; 
+            width: 250px; 
             height: 160px;
             background: var(--glass-panel); 
             border: 2px solid var(--accent-green); 
@@ -390,14 +507,15 @@
             padding: 15px; 
             backdrop-filter: blur(20px);
             box-shadow: var(--glow-green);
+            z-index: 140;
         }
-        .molecule-canvas { 
+        .signal-canvas { 
             width: 100%; 
             height: 120px; 
             background: rgba(0,0,0,0.2);
             border-radius: 8px;
         }
-        .molecule-label { 
+        .signal-label { 
             font-family: var(--font-code); 
             color: var(--accent-green); 
             font-size: 1rem; 
@@ -437,7 +555,7 @@
         .btn-primary {
             margin-top: 30px; 
             padding: 16px 48px; 
-            background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
+            background: linear-gradient(90deg, var(--accent-teal), #0d9488);
             color: #000; 
             border: none; 
             border-radius: 8px; 
@@ -448,11 +566,11 @@
             letter-spacing: 1px; 
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3);
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
         }
         .btn-secondary { 
             margin-top: 15px; 
@@ -467,27 +585,27 @@
             transition: all 0.3s;
         }
         .btn-secondary:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
+            border-color: var(--accent-teal);
+            color: var(--accent-teal);
         }
         .btn-text { 
             margin-top: 10px; 
             background: none; 
             border: none; 
-            color: var(--accent-cyan); 
+            color: var(--accent-teal); 
             text-decoration: underline; 
             cursor: pointer; 
             font-size: 0.9rem; 
             transition: all 0.3s;
         }
         .btn-text:hover {
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            text-shadow: 0 0 10px rgba(20, 184, 166, 0.5);
         }
 
         .target-image-display {
             width: 300px; 
             height: 300px; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
             border-radius: 16px; 
             margin-bottom: 20px;
             color: white; 
@@ -529,7 +647,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: linear-gradient(135deg, #1e293b, #0f172a);
-            border: 2px solid var(--accent-orange);
+            border: 2px solid var(--accent-pink);
             border-radius: 16px;
             padding: 20px;
             z-index: 1000;
@@ -542,6 +660,21 @@
             font-size: 3rem;
             color: gold;
             margin-bottom: 15px;
+        }
+
+        /* Object to Grab in Game */
+        .game-object {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 50;
         }
 
         /* Animations */
@@ -597,6 +730,14 @@
                 opacity: 1;
             }
         }
+        @keyframes pulseSignal {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
         
         video { 
             transform: scaleX(-1) !important; 
@@ -604,7 +745,7 @@
         .ar-target-guide {
             width: 250px; 
             height: 250px; 
-            border: 3px dashed var(--accent-cyan);
+            border: 3px dashed var(--accent-teal);
             border-radius: 20px; 
             position: absolute; 
             top: 50%; 
@@ -626,6 +767,20 @@
             z-index: 1000;
             opacity: 0;
         }
+        
+        /* Bionic Arm Joint Indicators */
+        .joint-indicator {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            border: 2px solid white;
+            box-shadow: 0 0 10px var(--accent-pink);
+            z-index: 200;
+            pointer-events: none;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -633,9 +788,9 @@
     <!-- Loading Screen -->
     <div id="loadingScreen">
         <div class="loader-ring"></div>
-        <h2 style="margin-top: 30px; color: var(--accent-cyan); letter-spacing: 3px; font-size: 1.5rem;">INITIALIZING ADVANCED LAB</h2>
+        <h2 style="margin-top: 30px; color: var(--accent-teal); letter-spacing: 3px; font-size: 1.5rem;">INITIALIZING BIONIC ARM LAB</h2>
         <div id="loadProgress" style="margin-top: 20px; width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-            <div style="width: 0%; height: 100%; background: var(--accent-cyan); border-radius: 2px; transition: width 0.3s;"></div>
+            <div style="width: 0%; height: 100%; background: var(--accent-teal); border-radius: 2px; transition: width 0.3s;"></div>
         </div>
     </div>
 
@@ -643,11 +798,11 @@
     <div id="targetModal">
         <h3 style="color: white; margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase;">Scan this AR Marker</h3>
         <div class="target-image-display">
-            <i class="fas fa-atom" style="font-size: 4rem; margin-bottom: 20px; color: white;"></i>
-            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">HABER-BOSCH AR LAB</p>
+            <i class="fas fa-robot" style="font-size: 4rem; margin-bottom: 20px; color: white;"></i>
+            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">BIONIC ARM AR LAB</p>
             <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this marker or print it</p>
             <div style="margin-top: 20px; padding: 10px; background: white; border-radius: 8px;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=HaberBoschARLab2.0" alt="QR Code" style="width: 150px; height: 150px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BionicArmARLab2.0" alt="QR Code" style="width: 150px; height: 150px;">
             </div>
         </div>
         <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
@@ -655,10 +810,10 @@
 
     <!-- Start Screen -->
     <div id="startScreen" style="display: none;">
-        <i class="fas fa-industry" style="font-size: 5rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
-        <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">HABER-BOSCH<br><span style="color: var(--accent-cyan)">NEXT-GEN LAB</span></h1>
+        <i class="fas fa-robot" style="font-size: 5rem; color: var(--accent-teal); margin-bottom: 20px;"></i>
+        <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">BIONIC ARM<br><span style="color: var(--accent-pink)">MECHATRONICS LAB</span></h1>
         <p style="max-width: 400px; text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 1.1rem;">
-            Advanced engineering simulation with real-time thermodynamics, AI-assisted learning, and interactive process optimization.
+            Advanced engineering simulation with real-time biomechanics, EMG signal analysis, and interactive prosthetic control.
         </p>
         <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
         <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View AR Marker</button>
@@ -670,8 +825,8 @@
             </p>
         </div>
         
-        <div style="margin-top: 40px; font-size: 0.9rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 80%; text-align: center;">
-            ADVANCED AR ENGINEERING LAB v3.0 | Thermodynamics Simulation
+        <div style="margin-top: 40px; font-size: 0.9rem; color: var(--accent-teal); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 80%; text-align: center;">
+            ADVANCED AR ENGINEERING LAB v3.0 | Mechatronics Simulation
         </div>
     </div>
 
@@ -691,10 +846,13 @@
                 <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Knowledge Check" style="background: var(--glass-panel);">
                     <i class="fas fa-brain"></i>
                 </button>
+                <button class="icon-btn pointer-events-auto" id="btnGame" title="Gamification Task" style="background: var(--glass-panel);">
+                    <i class="fas fa-gamepad"></i>
+                </button>
                 <button class="icon-btn pointer-events-auto" id="btnData" title="Live Data" style="background: var(--glass-panel);">
                     <i class="fas fa-chart-line"></i>
                 </button>
-                <button class="icon-btn pointer-events-auto" id="btnSettings" title="Process Controls" style="background: var(--glass-panel);">
+                <button class="icon-btn pointer-events-auto" id="btnSettings" title="Arm Controls" style="background: var(--glass-panel);">
                     <i class="fas fa-sliders-h"></i>
                 </button>
             </div>
@@ -704,51 +862,107 @@
             <i class="fas fa-star" style="color: gold; font-size: 6rem; filter: drop-shadow(0 0 30px gold);"></i>
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; text-align: center;">
                 <div style="font-size: 1.5rem; margin-top: 120px;">ACHIEVEMENT UNLOCKED!</div>
-                <div style="font-size: 1rem; color: gold;" id="achievementText">System Stabilization Expert</div>
+                <div style="font-size: 1rem; color: gold;" id="achievementText">Precision Control Expert</div>
             </div>
         </div>
 
         <!-- Control Panel (Left) -->
         <div class="side-panel control-room-panel" id="controlPanel">
             <div class="panel-header">
-                <span class="panel-label">PROCESS CONTROL</span>
-                <button class="icon-btn" id="btnCloseControls" style="width: 32px; height: 32px; font-size: 1rem;"><i class="fas fa-times"></i></button>
+                <span class="panel-label">ARM CONTROL</span>
+                <button class="close-btn" id="btnCloseControls">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
             <div class="slider-group">
                 <div class="slider-header">
-                    <span class="slider-label">Temperature (T)</span>
-                    <span class="slider-value" id="valTemp">450°C</span>
+                    <span class="slider-label">Shoulder Flexion</span>
+                    <span class="slider-value" id="valShoulder">0°</span>
                 </div>
-                <input type="range" id="sliderTemp" min="300" max="600" value="450" step="5">
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">ΔH = -92.4 kJ/mol | Low T favors equilibrium</div>
+                <input type="range" id="sliderShoulder" min="-90" max="90" value="0" step="1">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Range: -90° to 90° | Servo: MG996R</div>
             </div>
 
             <div class="slider-group">
                 <div class="slider-header">
-                    <span class="slider-label">Pressure (P)</span>
-                    <span class="slider-value" id="valPress">200 atm</span>
+                    <span class="slider-label">Elbow Flexion</span>
+                    <span class="slider-value" id="valElbow">0°</span>
                 </div>
-                <input type="range" id="sliderPress" min="50" max="400" value="200" step="10">
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Δn = -2 | High P shifts equilibrium toward NH₃</div>
+                <input type="range" id="sliderElbow" min="0" max="135" value="0" step="1">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Range: 0° to 135° | Torque: 15 kg·cm</div>
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Wrist Rotation</span>
+                    <span class="slider-value" id="valWrist">0°</span>
+                </div>
+                <input type="range" id="sliderWrist" min="-90" max="90" value="0" step="1">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Range: -90° to 90° | Precision: 0.1°</div>
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Grip Strength</span>
+                    <span class="slider-value" id="valGrip">0%</span>
+                </div>
+                <input type="range" id="sliderGrip" min="0" max="100" value="0" step="1">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Force: 0-20 kg | Tactile sensors: ON</div>
             </div>
 
             <div class="parameter-display">
                 <div class="param-box">
-                    <div class="param-label">Reaction Rate</div>
-                    <div class="param-value flow" id="valRate">k = 1.24</div>
+                    <div class="param-label">EMG Signal</div>
+                    <div class="param-value signal" id="valSignal">78%</div>
                 </div>
                 <div class="param-box">
-                    <div class="param-label">Equilibrium Kₚ</div>
-                    <div class="param-value pressure" id="valKp">6.8×10⁻⁵</div>
+                    <div class="param-label">Battery</div>
+                    <div class="param-value battery" id="valBattery">92%</div>
                 </div>
                 <div class="param-box">
-                    <div class="param-label">Energy Eff.</div>
-                    <div class="param-value temp" id="valEnergy">78%</div>
+                    <div class="param-label">Torque Output</div>
+                    <div class="param-value torque" id="valTorque">8.2 N·m</div>
                 </div>
                 <div class="param-box">
-                    <div class="param-label">Yield</div>
-                    <div class="param-value yield" id="valYield">15.4%</div>
+                    <div class="param-label">Power Draw</div>
+                    <div class="param-value power" id="valPower">24W</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Panel (Left) -->
+        <div class="side-panel game-panel" id="gamePanel">
+            <div class="panel-header">
+                <span class="panel-label">PRECISION CHALLENGE</span>
+                <button class="close-btn" id="btnCloseGame">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="game-objective">
+                <i class="fas fa-trophy"></i> GRAB & STACK CHALLENGE
+            </div>
+            
+            <div class="game-instruction">
+                Control the bionic arm to grab the floating objects and stack them in the target zone. Complete as many as possible in 60 seconds!
+            </div>
+            
+            <div class="game-timer" id="gameTimer">60s</div>
+            <div class="game-progress">
+                <div class="game-progress-bar" id="gameProgressBar"></div>
+            </div>
+            <div class="game-score" id="gameScore">Score: 0</div>
+            
+            <div class="game-controls">
+                <button class="game-btn" id="btnStartGame">
+                    <i class="fas fa-play"></i> START CHALLENGE
+                </button>
+                <button class="game-btn" id="btnResetGame" disabled>
+                    <i class="fas fa-redo"></i> RESTART
+                </button>
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 10px;">
+                    Use sliders to control the arm. Grab objects when they turn <span style="color: var(--accent-green);">green</span>.
                 </div>
             </div>
         </div>
@@ -757,7 +971,9 @@
         <div class="side-panel quiz-panel" id="quizPanel">
             <div class="panel-header">
                 <span class="panel-label">KNOWLEDGE CHECK</span>
-                <button class="icon-btn" id="btnCloseQuiz" style="width: 32px; height: 32px; font-size: 1rem;"><i class="fas fa-times"></i></button>
+                <button class="close-btn" id="btnCloseQuiz">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
             <div id="quizContent">
@@ -771,20 +987,22 @@
         <!-- Data Panel -->
         <div class="side-panel data-panel" id="dataPanel">
             <div class="panel-header">
-                <span class="panel-label">LIVE DATA STREAM</span>
-                <button class="icon-btn" id="btnCloseData" style="width: 32px; height: 32px; font-size: 1rem;"><i class="fas fa-times"></i></button>
+                <span class="panel-label">BIOMECHANICAL DATA</span>
+                <button class="close-btn" id="btnCloseData">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div id="dataStreamContent" style="font-family: var(--font-code);">
                 <!-- Data will be populated here -->
             </div>
         </div>
 
-        <!-- Molecule View Popup -->
-        <div class="molecule-popup" id="moleculePopup">
-            <div id="moleculeCanvas" class="molecule-canvas"></div>
-            <div class="molecule-label" id="moleculeLabel">N₂ + 3H₂ ⇌ 2NH₃</div>
+        <!-- Signal Visualization Popup -->
+        <div class="signal-popup" id="signalPopup">
+            <canvas id="signalCanvas" class="signal-canvas"></canvas>
+            <div class="signal-label" id="signalLabel">EMG Signal Pattern</div>
             <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; text-align: center;">
-                ΔH = -92.4 kJ/mol | ΔS = -198.7 J/mol·K
+                Frequency: 100 Hz | Amplitude: 0-5 mV
             </div>
         </div>
 
@@ -795,19 +1013,30 @@
 
         <!-- Bottom Controls -->
         <div class="bottom-dock">
-            <div id="infoToast" style="background: var(--glass-panel); padding: 12px 24px; border-radius: 12px; border: 2px solid var(--accent-cyan); display: none; margin-bottom: 10px; backdrop-filter: blur(20px); min-width: 200px; text-align: center;">
+            <div id="infoToast" style="background: var(--glass-panel); padding: 12px 24px; border-radius: 12px; border: 2px solid var(--accent-teal); display: none; margin-bottom: 10px; backdrop-filter: blur(20px); min-width: 200px; text-align: center;">
                 <span id="toastText" style="font-weight: 600;">Component Selected</span>
                 <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="toastSubtext">Click to interact</div>
             </div>
 
             <div class="mode-toggles">
-                <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync-alt"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset Arm"><i class="fas fa-sync-alt"></i></button>
                 <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
-                <button class="icon-btn pointer-events-auto active" id="btnFlow" title="Toggle Flow"><i class="fas fa-wind"></i></button>
+                <button class="icon-btn pointer-events-auto active" id="btnSignal" title="Signal Visualization"><i class="fas fa-wave-square"></i></button>
                 <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
                 <button class="icon-btn pointer-events-auto" id="btnInfo" title="Component Info"><i class="fas fa-info-circle"></i></button>
                 <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit Lab" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
             </div>
+        </div>
+        
+        <!-- Game Objects (will be positioned dynamically) -->
+        <div class="game-object" id="gameObject1" style="display: none; background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <i class="fas fa-cube"></i>
+        </div>
+        <div class="game-object" id="gameObject2" style="display: none; background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+            <i class="fas fa-sphere"></i>
+        </div>
+        <div class="game-object" id="gameObject3" style="display: none; background: linear-gradient(135deg, #10b981, #059669);">
+            <i class="fas fa-cube"></i>
         </div>
     </div>
 
@@ -815,68 +1044,114 @@
     <div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
 
     <script>
-        // ==================== ENHANCED ENGINEERING CONSTANTS ====================
+        // ==================== BIONIC ARM CONSTANTS ====================
         const COLORS = {
-            metal: 0x8899a6, darkMetal: 0x2c3e50, n2: 0x38bdf8,
-            h2: 0xffffff, nh3: 0xf59e0b, catalyst: 0x8b4513, highlight: 0x10b981,
-            pipe: 0x64748b, condenser: 0x475569, valve: 0x94a3b8
+            carbon: 0x374151, darkMetal: 0x1f2937, servo: 0xdc2626,
+            actuator: 0x3b82f6, sensor: 0x10b981, battery: 0xf59e0b,
+            wiring: 0x6b7280, joint: 0x8b5cf6, grip: 0xec4899,
+            highlight: 0x14b8a6
         };
 
-        const THERMO_CONSTANTS = {
-            ΔH: -92.4, // kJ/mol
-            ΔS: -198.7, // J/mol·K
-            R: 0.008314, // kJ/mol·K
-            optimalTemp: 450, // °C
-            optimalPressure: 200 // atm
+        const BIOMECHANICAL_CONSTANTS = {
+            maxShoulderTorque: 12, // N·m
+            maxElbowTorque: 8, // N·m
+            gripForce: 20, // kg
+            batteryCapacity: 5000, // mAh
+            signalFrequency: 100, // Hz
+            emgAmplitude: 5 // mV
         };
 
         // ==================== ENHANCED QUIZ DATA ====================
         const quizQuestions = [
-            { q: "What thermodynamic property makes the Haber-Bosch process exothermic?", options: ["Positive ΔH", "Negative ΔH", "ΔG = 0", "ΔS > 0"], correct: 1 },
-            { q: "In chemical engineering, what does 'Decomposition' mean?", options: ["Combining elements", "Breaking down a compound", "Increasing pressure", "Creating equilibrium"], correct: 1 },
-            { q: "According to Le Chatelier's principle, increasing pressure shifts equilibrium to...", options: ["Side with more moles", "Side with fewer moles", "No change", "Reactants side"], correct: 1 },
-            { q: "What is 'Chemical Equilibrium'?", options: ["Reaction stops", "Reactants used up", "Forward & reverse rates equal", "Temperature is zero"], correct: 2 },
-            { q: "Primary catalyst in Haber-Bosch process?", options: ["Platinum", "Iron with promoters", "Copper", "Nickel"], correct: 1 },
-            { q: "Why use 400-450°C despite lower T favoring yield?", options: ["Increase rate, catalyst activation", "Reduce pressure", "Save energy", "Melt catalyst"], correct: 0 },
-            { q: "What's the mole ratio of H₂:N₂ in the feed?", options: ["1:1", "2:1", "3:1", "4:1"], correct: 2 },
-            { q: "What's recycled in industrial Haber-Bosch?", options: ["Unreacted N₂ & H₂", "Ammonia", "Catalyst", "All of above"], correct: 0 },
-            { q: "What's the main industrial use of ammonia?", options: ["Fuel", "Fertilizer production", "Plastics", "Pharmaceuticals"], correct: 1 },
-            { q: "What's the role of potassium oxide promoter?", options: ["Increase surface area", "Prevent sintering", "Electronic promoter", "All of above"], correct: 3 }
+            { 
+                q: "What does EMG stand for in bionic arm control?", 
+                options: ["Electro-Muscular Graph", "Electromyography", "Electronic Motion Generator", "Electro-Mechanical Gear"], 
+                correct: 1 
+            },
+            { 
+                q: "Which type of motor is commonly used in prosthetic joints for precision control?", 
+                options: ["DC Brushed Motor", "Stepper Motor", "Servo Motor", "AC Induction Motor"], 
+                correct: 2 
+            },
+            { 
+                q: "What is the primary function of a myoelectric sensor?", 
+                options: ["Measure temperature", "Detect muscle electrical activity", "Measure joint angle", "Detect pressure"], 
+                correct: 1 
+            },
+            { 
+                q: "In mechatronics, what does 'DOF' stand for?", 
+                options: ["Degree of Freedom", "Digital Output Frequency", "Direct Operational Force", "Dynamic Oscillation Factor"], 
+                correct: 0 
+            },
+            { 
+                q: "Which material is commonly used for bionic arm structural components?", 
+                options: ["Steel", "Carbon Fiber", "Wood", "Aluminum"], 
+                correct: 1 
+            },
+            { 
+                q: "What is the purpose of a tendon-driven mechanism in prosthetic hands?", 
+                options: ["Increase weight", "Reduce cost", "Allow natural finger movement", "Generate electricity"], 
+                correct: 2 
+            },
+            { 
+                q: "Which sensor type provides tactile feedback in bionic hands?", 
+                options: ["Gyroscope", "Force-Sensitive Resistor", "Thermistor", "Photoresistor"], 
+                correct: 1 
+            },
+            { 
+                q: "What is 'pattern recognition' in myoelectric control?", 
+                options: ["Identifying different muscle activation patterns", "Recognizing facial expressions", "Patterns in battery usage", "Signal noise filtering"], 
+                correct: 0 
+            },
+            { 
+                q: "Which joint typically has the highest range of motion in a bionic arm?", 
+                options: ["Wrist", "Elbow", "Shoulder", "Finger"], 
+                correct: 2 
+            },
+            { 
+                q: "What does 'haptic feedback' provide to prosthetic users?", 
+                options: ["Visual display", "Tactile sensation", "Audio signals", "Temperature reading"], 
+                correct: 1 
+            }
         ];
 
         // ==================== ENHANCED APP STATE ====================
         const state = {
-            temp: 450, pressure: 200, yield: 15.4,
-            flowRate: 1.24, equilibriumConstant: 0.000068, energyEfficiency: 78,
-            isXray: false, flowActive: true, audioEnabled: true, dataStream: false,
+            shoulderAngle: 0, elbowAngle: 0, wristAngle: 0, gripStrength: 0,
+            emgSignal: 78, batteryLevel: 92, torqueOutput: 8.2, powerDraw: 24,
+            isXray: false, signalActive: true, audioEnabled: true, dataStream: false,
             mode: 'AR', activeComponent: null, lastInteraction: Date.now(),
             startTime: 0, lastEmergency: 0, isEmergency: false, emergencyCount: 0,
             currentQ: 0, score: 0, achievements: [],
             isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
             audioContextInitialized: false,
-            emergencyInterval: null,  // For auto-changing parameters during emergency
-            totalStars: 0  // Track total stars earned
+            gameActive: false, gameScore: 0, gameTime: 60, gameObjects: [],
+            gameInterval: null, totalStars: 0,
+            armJoints: {
+                shoulder: { angle: 0, min: -90, max: 90 },
+                elbow: { angle: 0, min: 0, max: 135 },
+                wrist: { angle: 0, min: -90, max: 90 },
+                grip: { strength: 0, min: 0, max: 100 }
+            }
         };
 
         // ==================== ENHANCED 3D ENGINE ====================
         let scene, camera, renderer, clock, mixer, mindarThree, rootGroup;
-        let particles = { mesh: null, data: [] };
-        let molecules = [];
-        let molScene, molCamera, molRenderer;
+        let signalScene, signalCamera, signalRenderer;
         let audioCtx = null, ambientSound = null;
         let sirenInterval = null, toastTimer = null;
         let interactiveObjects = [];
+        let armGroup, shoulderJoint, elbowJoint, wristJoint, handGroup;
+        let gameObjects3D = [];
 
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
-            // Simulate loading progress
             simulateLoading();
             
             if (state.isMobile) {
                 document.getElementById('mobileWarning').style.display = 'block';
             }
             
-            // Initialize audio context early for mobile
             initAudioContext();
         });
 
@@ -921,7 +1196,6 @@
                     return;
                 }
                 
-                // Show permission guidance
                 showToast("Camera access required for AR mode", "Please allow camera permissions when prompted");
                 
                 const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -934,7 +1208,6 @@
                 
                 stream.getTracks().forEach(track => track.stop());
                 
-                // Initialize enhanced audio
                 initEnhancedAudio();
                 
                 await startApp('AR');
@@ -950,9 +1223,8 @@
             if (!audioCtx && state.audioEnabled) {
                 try {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    audioCtx.suspend(); // Start suspended, will resume on user interaction
+                    audioCtx.suspend();
                     
-                    // Resume on any user interaction
                     const resumeAudio = () => {
                         if (audioCtx && audioCtx.state === 'suspended') {
                             audioCtx.resume();
@@ -972,10 +1244,9 @@
 
         function initEnhancedAudio() {
             if (state.audioEnabled) {
-                // Initialize Howler.js sounds
                 ambientSound = new Howl({
-                    src: ['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'],
-                    volume: 0.1,
+                    src: ['https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-ambience-loop-365.mp3'],
+                    volume: 0.05,
                     loop: true,
                     autoplay: true
                 });
@@ -987,7 +1258,6 @@
             state.startTime = Date.now();
             state.lastEmergency = Date.now();
             
-            // Transition screens
             gsap.to(document.getElementById('startScreen'), {
                 opacity: 0,
                 duration: 0.5,
@@ -995,7 +1265,6 @@
                     document.getElementById('startScreen').style.display = 'none';
                     document.getElementById('mainHUD').style.display = 'flex';
                     
-                    // Animate HUD in
                     gsap.from('.top-bar', { y: -50, opacity: 0, duration: 0.5 });
                     gsap.from('.bottom-dock', { y: 50, opacity: 0, duration: 0.5 });
                 }
@@ -1013,7 +1282,7 @@
             
             initEnhancedUI();
             initQuiz();
-            initMoleculeViewer();
+            initSignalVisualization();
             startDataStream();
             animate();
         }
@@ -1022,7 +1291,6 @@
         function createEnhancedScene() {
             scene = new THREE.Scene();
             
-            // Enhanced lighting
             scene.add(new THREE.AmbientLight(0xffffff, 0.6));
             
             const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -1032,16 +1300,15 @@
             mainLight.shadow.mapSize.height = 2048;
             scene.add(mainLight);
             
-            const fillLight = new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.4);
+            const fillLight = new THREE.HemisphereLight(0x14b8a6, 0x0f172a, 0.4);
             scene.add(fillLight);
             
-            // Add atmospheric fog
             scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
             
             rootGroup = new THREE.Group();
             scene.add(rootGroup);
             
-            buildEnhancedProcessingPlant();
+            buildBionicArm();
         }
 
         function initEnhanced3DMode() {
@@ -1050,7 +1317,7 @@
             
             const container = document.getElementById('container');
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 3, 8);
+            camera.position.set(0, 1, 6);
             
             renderer = new THREE.WebGLRenderer({ 
                 antialias: true, 
@@ -1066,7 +1333,6 @@
             
             container.appendChild(renderer.domElement);
 
-            // Enhanced camera controls
             let isDragging = false, prev = {x: 0, y: 0};
             let zoomLevel = 1;
             
@@ -1090,10 +1356,9 @@
                 e.preventDefault();
                 zoomLevel += e.deltaY * -0.001;
                 zoomLevel = Math.min(Math.max(0.5, zoomLevel), 3);
-                camera.position.z = 8 * zoomLevel;
+                camera.position.z = 6 * zoomLevel;
             });
             
-            // Touch controls
             container.addEventListener('touchstart', (e) => { 
                 if(e.touches.length === 1) {
                     isDragging = true; 
@@ -1119,7 +1384,6 @@
             const container = document.getElementById('container');
             document.body.classList.add('ar-active');
             
-            // Use demo target for reliability
             const targetSrc = "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/assets/image-templates/card-example/card.mind";
             
             try {
@@ -1141,7 +1405,6 @@
                 scene = mindar.scene; 
                 camera = mindar.camera;
                 
-                // Enhanced AR lighting
                 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
                 scene.add(ambientLight);
                 
@@ -1149,18 +1412,17 @@
                 directionalLight.position.set(0, 5, 5);
                 scene.add(directionalLight);
                 
-                const pointLight = new THREE.PointLight(0x38bdf8, 0.5, 20);
+                const pointLight = new THREE.PointLight(0x14b8a6, 0.5, 20);
                 pointLight.position.set(0, 2, 2);
                 scene.add(pointLight);
 
                 const anchor = mindarThree.addAnchor(0);
                 rootGroup = new THREE.Group();
-                rootGroup.scale.set(0.4, 0.4, 0.4);
+                rootGroup.scale.set(0.3, 0.3, 0.3);
                 anchor.group.add(rootGroup);
 
-                buildEnhancedProcessingPlant();
+                buildBionicArm();
                 
-                // Add AR success indicator
                 mindarThree.onTargetFound = () => {
                     showToast("Target Found!", "AR tracking activated", 2000);
                     document.getElementById('arGuide').style.opacity = 0.3;
@@ -1179,11 +1441,11 @@
             }
         }
 
-        // ==================== ENHANCED 3D MODEL BUILDING ====================
+        // ==================== BIONIC ARM 3D MODEL ====================
         function getEnhancedMaterial(color, options = {}) {
             const defaults = {
-                roughness: 0.2,
-                metalness: 0.8,
+                roughness: 0.3,
+                metalness: 0.7,
                 transparent: false,
                 opacity: 1.0,
                 emissive: 0x000000,
@@ -1204,444 +1466,497 @@
             });
         }
 
-        function buildEnhancedProcessingPlant() {
-            // Clear previous objects
+        function buildBionicArm() {
             rootGroup.clear();
             interactiveObjects = [];
+            gameObjects3D = [];
             
-            // Main Reactor
-            const reactorGroup = new THREE.Group(); 
-            reactorGroup.name = "Reactor";
+            armGroup = new THREE.Group();
+            armGroup.name = "BionicArm";
             
-            const shell = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.9, 0.9, 3.2, 32),
-                getEnhancedMaterial(COLORS.metal, {emissive: 0x0f172a, emissiveIntensity: 0.1})
+            // Shoulder Assembly
+            const shoulderGroup = new THREE.Group();
+            shoulderGroup.name = "Shoulder";
+            shoulderGroup.position.set(0, 0, 0);
+            
+            const shoulderHousing = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.8, 0.8, 1.2, 16),
+                getEnhancedMaterial(COLORS.carbon, {emissive: 0x1f2937, emissiveIntensity: 0.1})
             );
-            shell.position.y = 1.6;
-            shell.castShadow = true;
-            shell.receiveShadow = true;
-            reactorGroup.add(shell);
+            shoulderHousing.castShadow = true;
+            shoulderGroup.add(shoulderHousing);
             
-            // Catalyst bed with animation
-            const bedGeometry = new THREE.CylinderGeometry(0.75, 0.75, 2.2, 24);
-            const bedMaterial = getEnhancedMaterial(COLORS.catalyst, {wireframe: false, emissive: 0x8b4513, emissiveIntensity: 0.1});
-            const bed = new THREE.Mesh(bedGeometry, bedMaterial);
-            bed.position.y = 1.6;
-            bed.visible = false;
-            bed.name = "CatalystBed";
-            reactorGroup.add(bed);
-            
-            // Temperature gradient visualization
-            const tempGradient = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.76, 0.76, 2.2, 24, 1, true),
-                getEnhancedMaterial(0xff6b35, {transparent: true, opacity: 0.3, wireframe: true})
+            const servoShoulder = new THREE.Mesh(
+                new THREE.BoxGeometry(1, 1, 1),
+                getEnhancedMaterial(COLORS.servo)
             );
-            tempGradient.position.y = 1.6;
-            tempGradient.name = "TemperatureGradient";
-            reactorGroup.add(tempGradient);
+            servoShoulder.position.set(0, 0.8, 0);
+            servoShoulder.name = "ShoulderServo";
+            shoulderGroup.add(servoShoulder);
             
-            // Reactor caps with details
-            const createCap = (yPos, radius) => {
-                const capGroup = new THREE.Group();
+            shoulderJoint = new THREE.Mesh(
+                new THREE.SphereGeometry(0.5, 16, 16),
+                getEnhancedMaterial(COLORS.joint)
+            );
+            shoulderJoint.position.set(0, 1.2, 0);
+            shoulderJoint.name = "ShoulderJoint";
+            shoulderGroup.add(shoulderJoint);
+            
+            armGroup.add(shoulderGroup);
+            interactiveObjects.push(shoulderGroup);
+            
+            // Upper Arm
+            const upperArmGroup = new THREE.Group();
+            upperArmGroup.name = "UpperArm";
+            upperArmGroup.position.set(0, 1.2, 0);
+            
+            const upperArm = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.4, 0.6, 2.5, 12),
+                getEnhancedMaterial(COLORS.carbon)
+            );
+            upperArm.castShadow = true;
+            upperArmGroup.add(upperArm);
+            
+            const wiringBundle = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.15, 0.15, 2.3, 8),
+                getEnhancedMaterial(COLORS.wiring)
+            );
+            wiringBundle.position.set(0.3, 0, 0);
+            upperArmGroup.add(wiringBundle);
+            
+            armGroup.add(upperArmGroup);
+            
+            // Elbow Assembly
+            const elbowGroup = new THREE.Group();
+            elbowGroup.name = "Elbow";
+            elbowGroup.position.set(0, 2.5, 0);
+            upperArmGroup.add(elbowGroup);
+            
+            const elbowJoint = new THREE.Mesh(
+                new THREE.SphereGeometry(0.6, 16, 16),
+                getEnhancedMaterial(COLORS.joint)
+            );
+            elbowJoint.name = "ElbowJoint";
+            elbowGroup.add(elbowJoint);
+            
+            const elbowServo = new THREE.Mesh(
+                new THREE.BoxGeometry(0.8, 0.8, 0.8),
+                getEnhancedMaterial(COLORS.servo)
+            );
+            elbowServo.position.set(0.5, 0, 0);
+            elbowServo.name = "ElbowServo";
+            elbowGroup.add(elbowServo);
+            
+            interactiveObjects.push(elbowGroup);
+            
+            // Forearm
+            const forearmGroup = new THREE.Group();
+            forearmGroup.name = "Forearm";
+            forearmGroup.position.set(0, 0, 0);
+            elbowGroup.add(forearmGroup);
+            
+            const forearm = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.35, 0.45, 2.2, 12),
+                getEnhancedMaterial(COLORS.carbon)
+            );
+            forearm.position.set(0, -1.1, 0);
+            forearm.castShadow = true;
+            forearmGroup.add(forearm);
+            
+            // Battery compartment
+            const batteryCompartment = new THREE.Mesh(
+                new THREE.BoxGeometry(0.8, 0.6, 0.4),
+                getEnhancedMaterial(COLORS.battery)
+            );
+            batteryCompartment.position.set(0.4, -0.5, 0);
+            batteryCompartment.name = "Battery";
+            forearmGroup.add(batteryCompartment);
+            
+            // Wrist Assembly
+            const wristGroup = new THREE.Group();
+            wristGroup.name = "Wrist";
+            wristGroup.position.set(0, -2.2, 0);
+            forearmGroup.add(wristGroup);
+            
+            const wristJoint = new THREE.Mesh(
+                new THREE.SphereGeometry(0.4, 16, 16),
+                getEnhancedMaterial(COLORS.joint)
+            );
+            wristJoint.name = "WristJoint";
+            wristGroup.add(wristJoint);
+            
+            const wristServo = new THREE.Mesh(
+                new THREE.BoxGeometry(0.6, 0.6, 0.6),
+                getEnhancedMaterial(COLORS.servo)
+            );
+            wristServo.position.set(0, 0, 0.4);
+            wristServo.name = "WristServo";
+            wristGroup.add(wristServo);
+            
+            interactiveObjects.push(wristGroup);
+            
+            // Hand Assembly
+            handGroup = new THREE.Group();
+            handGroup.name = "Hand";
+            handGroup.position.set(0, 0, 0);
+            wristGroup.add(handGroup);
+            
+            const palm = new THREE.Mesh(
+                new THREE.BoxGeometry(1, 0.8, 0.4),
+                getEnhancedMaterial(COLORS.carbon)
+            );
+            palm.position.set(0, 0, 0.2);
+            palm.castShadow = true;
+            handGroup.add(palm);
+            
+            // Create fingers
+            const createFinger = (xOffset, length, isThumb = false) => {
+                const fingerGroup = new THREE.Group();
+                fingerGroup.position.set(xOffset, 0, 0.2);
                 
-                const mainCap = new THREE.Mesh(
-                    new THREE.CylinderGeometry(radius, radius, 0.25, 24),
-                    getEnhancedMaterial(COLORS.darkMetal)
-                );
-                mainCap.position.y = yPos;
-                capGroup.add(mainCap);
+                const segments = isThumb ? 2 : 3;
+                const segmentLength = length / segments;
                 
-                // Bolt details
-                const boltGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.15, 8);
-                const boltMaterial = getEnhancedMaterial(0xcccccc);
-                
-                for(let i = 0; i < 8; i++) {
-                    const angle = (i / 8) * Math.PI * 2;
-                    const bolt = new THREE.Mesh(boltGeometry, boltMaterial);
-                    bolt.position.set(
-                        Math.cos(angle) * (radius - 0.15),
-                        yPos,
-                        Math.sin(angle) * (radius - 0.15)
+                for(let i = 0; i < segments; i++) {
+                    const segment = new THREE.Mesh(
+                        new THREE.BoxGeometry(0.15, segmentLength, 0.15),
+                        getEnhancedMaterial(COLORS.carbon)
                     );
-                    capGroup.add(bolt);
+                    segment.position.set(0, -segmentLength * i - segmentLength/2, 0);
+                    segment.castShadow = true;
+                    fingerGroup.add(segment);
+                    
+                    if(i < segments - 1) {
+                        const joint = new THREE.Mesh(
+                            new THREE.SphereGeometry(0.08, 8, 8),
+                            getEnhancedMaterial(COLORS.joint)
+                        );
+                        joint.position.set(0, -segmentLength * (i + 1), 0);
+                        fingerGroup.add(joint);
+                    }
                 }
                 
-                return capGroup;
+                // Add tactile sensor at tip
+                const sensor = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.1, 8, 8),
+                    getEnhancedMaterial(COLORS.sensor, {emissive: 0x10b981, emissiveIntensity: 0.3})
+                );
+                sensor.position.set(0, -length, 0);
+                sensor.name = "TactileSensor";
+                fingerGroup.add(sensor);
+                
+                return fingerGroup;
             };
             
-            reactorGroup.add(createCap(3.225, 1.0));
-            reactorGroup.add(createCap(-0.025, 1.0));
+            // Thumb
+            const thumb = createFinger(-0.3, 0.8, true);
+            thumb.rotation.z = Math.PI / 6;
+            handGroup.add(thumb);
             
-            rootGroup.add(reactorGroup);
+            // Fingers
+            handGroup.add(createFinger(-0.15, 1.2));
+            handGroup.add(createFinger(0, 1.3));
+            handGroup.add(createFinger(0.15, 1.2));
+            handGroup.add(createFinger(0.3, 1.0));
             
-            // Enhanced Feed Tanks
-            const createEnhancedTank = (color, xPos, name, gasType) => {
-                const tankGroup = new THREE.Group();
-                tankGroup.name = name;
-                tankGroup.position.set(xPos, 0.8, 0);
-                tankGroup.userData = { type: 'tank', gasType: gasType };
-                
-                // Main tank body
-                const tankBody = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.7, 24, 20, 0, Math.PI * 2, 0, Math.PI),
-                    getEnhancedMaterial(color)
+            // Grip actuators
+            const gripActuator = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.2, 0.2, 0.6, 12),
+                getEnhancedMaterial(COLORS.actuator)
+            );
+            gripActuator.position.set(0, -0.2, 0.5);
+            gripActuator.name = "GripActuator";
+            handGroup.add(gripActuator);
+            
+            interactiveObjects.push(handGroup);
+            
+            // EMG Sensors on arm
+            const createEMGSensor = (position) => {
+                const sensor = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.1, 0.1, 0.05, 12),
+                    getEnhancedMaterial(COLORS.sensor, {emissive: 0x10b981, emissiveIntensity: 0.5})
                 );
-                tankBody.castShadow = true;
-                tankGroup.add(tankBody);
-                
-                // Tank legs
-                const legGeometry = new THREE.CylinderGeometry(0.08, 0.08, 0.8, 8);
-                for(let i = 0; i < 3; i++) {
-                    const angle = (i / 3) * Math.PI * 2;
-                    const leg = new THREE.Mesh(legGeometry, getEnhancedMaterial(COLORS.darkMetal));
-                    leg.position.set(
-                        Math.cos(angle) * 0.5,
-                        -0.4,
-                        Math.sin(angle) * 0.5
-                    );
-                    tankGroup.add(leg);
+                sensor.position.copy(position);
+                sensor.name = "EMGSensor";
+                return sensor;
+            };
+            
+            upperArmGroup.add(createEMGSensor(new THREE.Vector3(0.3, 0.5, 0)));
+            forearmGroup.add(createEMGSensor(new THREE.Vector3(0.3, -1, 0)));
+            
+            rootGroup.add(armGroup);
+            
+            // Create game objects for the gamification task
+            createGameObjects3D();
+        }
+
+        function createGameObjects3D() {
+            // Clear previous game objects
+            gameObjects3D.forEach(obj => scene.remove(obj));
+            gameObjects3D = [];
+            
+            // Create 3 floating objects to grab
+            const colors = [0xf59e0b, 0x8b5cf6, 0x10b981];
+            const shapes = ['cube', 'sphere', 'cylinder'];
+            
+            for(let i = 0; i < 3; i++) {
+                let geometry;
+                if(shapes[i] === 'cube') {
+                    geometry = new THREE.BoxGeometry(0.4, 0.4, 0.4);
+                } else if(shapes[i] === 'sphere') {
+                    geometry = new THREE.SphereGeometry(0.3, 16, 16);
+                } else {
+                    geometry = new THREE.CylinderGeometry(0.2, 0.2, 0.5, 12);
                 }
                 
-                // Pressure gauge
-                const gauge = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.15, 0.15, 0.05, 16),
-                    getEnhancedMaterial(0xffffff)
+                const material = new THREE.MeshStandardMaterial({
+                    color: colors[i],
+                    roughness: 0.3,
+                    metalness: 0.7,
+                    emissive: colors[i],
+                    emissiveIntensity: 0.2
+                });
+                
+                const object = new THREE.Mesh(geometry, material);
+                object.position.set(
+                    (Math.random() - 0.5) * 3,
+                    2 + Math.random() * 2,
+                    (Math.random() - 0.5) * 3
                 );
-                gauge.position.set(0, 0.7, 0.7);
-                tankGroup.add(gauge);
+                object.castShadow = true;
+                object.name = `GameObject${i+1}`;
+                object.userData = {
+                    type: 'gameObject',
+                    collected: false,
+                    index: i
+                };
                 
-                interactiveObjects.push(tankGroup);
-                return tankGroup;
-            };
-            
-            rootGroup.add(createEnhancedTank(COLORS.n2, -2.5, "Nitrogen Feed", "N₂"));
-            rootGroup.add(createEnhancedTank(COLORS.h2, 2.5, "Hydrogen Feed", "H₂"));
-            
-            // Enhanced Piping System
-            const createEnhancedPipe = (start, end, radius = 0.12, color = COLORS.pipe) => {
-                const path = new THREE.CatmullRomCurve3([
-                    start,
-                    new THREE.Vector3((start.x + end.x) / 2, start.y + 1, start.z),
-                    new THREE.Vector3((start.x + end.x) / 2, end.y - 0.5, end.z),
-                    end
-                ]);
-                
-                const pipeGeometry = new THREE.TubeGeometry(path, 20, radius, 16, false);
-                const pipe = new THREE.Mesh(pipeGeometry, getEnhancedMaterial(color));
-                pipe.castShadow = true;
-                return pipe;
-            };
-            
-            // Feed pipes
-            rootGroup.add(createEnhancedPipe(
-                new THREE.Vector3(-2.5, 1.5, 0),
-                new THREE.Vector3(-0.8, 0.5, 0)
-            ));
-            
-            rootGroup.add(createEnhancedPipe(
-                new THREE.Vector3(2.5, 1.5, 0),
-                new THREE.Vector3(0.8, 0.5, 0)
-            ));
-            
-            // Product pipe
-            const productPipe = createEnhancedPipe(
-                new THREE.Vector3(0, 3, 0),
-                new THREE.Vector3(0, 4, -2),
-                0.15,
-                0xf59e0b
-            );
-            rootGroup.add(productPipe);
-            
-            // Control Valves
-            const createValve = (position, rotation) => {
-                const valveGroup = new THREE.Group();
-                valveGroup.position.copy(position);
-                valveGroup.rotation.set(rotation.x, rotation.y, rotation.z);
-                
-                const valveBody = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.2, 0.2, 0.3, 16),
-                    getEnhancedMaterial(COLORS.valve)
-                );
-                valveGroup.add(valveBody);
-                
-                const valveHandle = new THREE.Mesh(
-                    new THREE.BoxGeometry(0.4, 0.05, 0.1),
-                    getEnhancedMaterial(0xffffff)
-                );
-                valveHandle.position.y = 0.2;
-                valveGroup.add(valveHandle);
-                
-                valveGroup.name = "ControlValve";
-                interactiveObjects.push(valveGroup);
-                return valveGroup;
-            };
-            
-            rootGroup.add(createValve(new THREE.Vector3(-1.5, 1, 0), {x: 0, y: 0, z: Math.PI/2}));
-            rootGroup.add(createValve(new THREE.Vector3(1.5, 1, 0), {x: 0, y: 0, z: Math.PI/2}));
-            
-            // Enhanced Condenser
-            const condenserGroup = new THREE.Group(); 
-            condenserGroup.name = "Condenser";
-            condenserGroup.position.set(0, 2, -3);
-            
-            const condenserBody = new THREE.Mesh(
-                new THREE.BoxGeometry(1.8, 2.5, 1.2),
-                getEnhancedMaterial(COLORS.condenser)
-            );
-            condenserBody.castShadow = true;
-            condenserBody.receiveShadow = true;
-            condenserGroup.add(condenserBody);
-            
-            // Cooling fins
-            for(let i = 0; i < 8; i++) {
-                const fin = new THREE.Mesh(
-                    new THREE.BoxGeometry(1.9, 0.05, 0.5),
-                    getEnhancedMaterial(0x94a3b8)
-                );
-                fin.position.set(0, -1 + i * 0.3, 0.65);
-                condenserGroup.add(fin);
+                scene.add(object);
+                gameObjects3D.push(object);
+            }
+        }
+
+        function updateArmPosition() {
+            // Update shoulder rotation
+            const shoulderGroup = armGroup.getObjectByName("Shoulder");
+            if(shoulderGroup) {
+                shoulderGroup.rotation.x = state.armJoints.shoulder.angle * Math.PI / 180;
             }
             
-            rootGroup.add(condenserGroup);
-            interactiveObjects.push(condenserGroup);
+            // Update elbow rotation
+            const upperArmGroup = armGroup.getObjectByName("UpperArm");
+            if(upperArmGroup) {
+                const elbowGroup = upperArmGroup.getObjectByName("Elbow");
+                if(elbowGroup) {
+                    elbowGroup.rotation.x = state.armJoints.elbow.angle * Math.PI / 180;
+                }
+            }
             
-            // Initialize enhanced particle system
-            initEnhancedFlowSystem();
+            // Update wrist rotation
+            const forearmGroup = armGroup.getObjectByName("Forearm");
+            if(forearmGroup) {
+                const wristGroup = forearmGroup.getObjectByName("Wrist");
+                if(wristGroup) {
+                    wristGroup.rotation.x = state.armJoints.wrist.angle * Math.PI / 180;
+                }
+            }
             
-            // Add floating labels for components
-            addComponentLabels();
-        }
-
-        function addComponentLabels() {
-            // This would create 3D text labels for each component
-            // Implemented as a placeholder for future enhancement
-        }
-
-        function initEnhancedFlowSystem() {
-            const particleCount = 100;
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            
-            particles.data = [];
-            
-            for(let i = 0; i < particleCount; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 5;
-                positions[i * 3 + 1] = Math.random() * 5;
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
-                
-                const type = i % 3 === 0 ? 'N2' : i % 3 === 1 ? 'H2' : 'NH3';
-                const color = type === 'N2' ? [56/255, 189/255, 248/255] : 
-                            type === 'H2' ? [1, 1, 1] : [245/255, 158/255, 11/255];
-                
-                colors[i * 3] = color[0];
-                colors[i * 3 + 1] = color[1];
-                colors[i * 3 + 2] = color[2];
-                
-                particles.data.push({
-                    type: type,
-                    t: Math.random() * 100,
-                    speed: 0.02 + Math.random() * 0.02,
-                    phase: Math.random() * Math.PI * 2,
-                    amplitude: 0.1 + Math.random() * 0.2
+            // Update finger positions based on grip strength
+            const gripFactor = state.armJoints.grip.strength / 100;
+            if(handGroup) {
+                handGroup.children.forEach(child => {
+                    if(child.type === "Group") { // Finger groups
+                        child.rotation.x = -gripFactor * Math.PI / 6;
+                    }
                 });
             }
             
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            
-            const material = new THREE.PointsMaterial({
-                size: 0.15,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8,
-                blending: THREE.AdditiveBlending
+            // Update tactile sensor emission based on grip
+            const sensors = scene.getObjectsByName("TactileSensor");
+            sensors.forEach(sensor => {
+                sensor.material.emissiveIntensity = 0.3 + gripFactor * 0.7;
             });
             
-            particles.mesh = new THREE.Points(geometry, material);
-            rootGroup.add(particles.mesh);
+            // Update game object grabbing logic
+            if(state.gameActive) {
+                checkObjectGrabbing();
+            }
         }
 
-        function updateEnhancedFlow() {
-            if(!state.flowActive || !particles.mesh) return;
+        function checkObjectGrabbing() {
+            if(!handGroup || gameObjects3D.length === 0) return;
             
-            const positions = particles.mesh.geometry.attributes.position.array;
-            const speedFactor = state.temp / 450;
-            const time = Date.now() * 0.001;
+            const handPosition = new THREE.Vector3();
+            handGroup.getWorldPosition(handPosition);
             
-            particles.data.forEach((p, i) => {
-                p.t += p.speed * speedFactor;
+            gameObjects3D.forEach((obj, index) => {
+                if(obj.userData.collected) return;
                 
-                let x, y, z;
-                const pathT = (p.t % 100) / 100;
+                const distance = handPosition.distanceTo(obj.position);
+                const gripThreshold = 0.8 + (state.armJoints.grip.strength / 100) * 0.5;
                 
-                if(p.type === 'N2') {
-                    // Nitrogen path from N2 tank to reactor
-                    if(pathT < 0.5) {
-                        // Traveling from N2 tank to reactor
-                        x = -2.5 + pathT * 5;
-                        y = 0.8 + Math.sin(p.t + p.phase) * p.amplitude;
-                        z = Math.sin(p.t * 2) * 0.1;
-                    } else {
-                        // Reactor processing and moving to condenser
-                        const reactorT = (pathT - 0.5) * 2;
-                        x = Math.sin(reactorT * Math.PI) * 0.3;
-                        y = 1.6 + reactorT * 1.4;
-                        z = -reactorT * 2;
-                    }
-                } else if(p.type === 'H2') {
-                    // Hydrogen path from H2 tank to reactor
-                    if(pathT < 0.5) {
-                        // Traveling from H2 tank to reactor
-                        x = 2.5 - pathT * 5;
-                        y = 0.8 + Math.cos(p.t + p.phase) * p.amplitude;
-                        z = Math.cos(p.t * 2) * 0.1;
-                    } else {
-                        // Reactor processing and moving to condenser
-                        const reactorT = (pathT - 0.5) * 2;
-                        x = Math.cos(reactorT * Math.PI) * 0.3;
-                        y = 1.6 + reactorT * 1.4;
-                        z = -reactorT * 2;
-                    }
-                } else {
-                    // Ammonia path from reactor to condenser
-                    const reactorT = pathT * 0.7;
-                    x = Math.sin(p.t) * 0.2;
-                    y = 1.6 + reactorT * 2.5;
-                    z = -1 - reactorT * 3;
+                if(distance < gripThreshold && state.armJoints.grip.strength > 30) {
+                    // Object grabbed!
+                    obj.userData.collected = true;
+                    state.gameScore += 10;
                     
-                    if(pathT > 0.7) {
-                        // In condenser
-                        const condenserT = (pathT - 0.7) / 0.3;
-                        x = 0 + Math.sin(condenserT * 10) * 0.5;
-                        y = 2.5 - condenserT * 0.5;
-                        z = -3 + condenserT * 0.2;
+                    // Visual feedback
+                    obj.material.emissiveIntensity = 1;
+                    obj.material.color.setHex(0x10b981);
+                    
+                    // Move object to stack position
+                    gsap.to(obj.position, {
+                        x: -2 + (index * 0.5),
+                        y: 0.5 + (index * 0.4),
+                        z: -2,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                    
+                    // Update game score
+                    document.getElementById('gameScore').innerText = `Score: ${state.gameScore}`;
+                    document.getElementById('gameProgressBar').style.width = `${Math.min(100, (state.gameScore / 30) * 100)}%`;
+                    
+                    // Play success sound
+                    playSuccessSound();
+                    
+                    // Show toast
+                    showToast("Object Grabbed!", "+10 points", 1000);
+                    
+                    // Check if all objects collected
+                    const allCollected = gameObjects3D.every(obj => obj.userData.collected);
+                    if(allCollected) {
+                        endGame(true);
                     }
                 }
-                
-                positions[i * 3] = x;
-                positions[i * 3 + 1] = y;
-                positions[i * 3 + 2] = z;
             });
-            
-            particles.mesh.geometry.attributes.position.needsUpdate = true;
-            
-            // Animate temperature gradient
-            const tempGradient = rootGroup.getObjectByName("TemperatureGradient");
-            if(tempGradient) {
-                tempGradient.material.opacity = 0.2 + (state.temp - 300) / 300 * 0.3;
-                const hue = (1 - (state.temp - 300) / 300) * 0.6 + 0.1;
-                tempGradient.material.color.setHSL(hue, 0.8, 0.5);
-            }
         }
 
         // ==================== ENHANCED UI LOGIC ====================
         function initEnhancedUI() {
-            // Control panel toggle - MODIFIED: Don't show by default
+            // Control panel toggle
             document.getElementById('btnSettings').onclick = () => {
                 togglePanel('controlPanel');
                 document.getElementById('quizPanel').classList.remove('active');
                 document.getElementById('dataPanel').classList.remove('active');
+                document.getElementById('gamePanel').classList.remove('active');
             };
             
-            document.getElementById('btnCloseControls').onclick = () => {
+            document.getElementById('btnCloseControls').addEventListener('click', function(e) {
+                e.stopPropagation();
                 document.getElementById('controlPanel').classList.remove('active');
+            });
+            
+            // Game panel toggle
+            document.getElementById('btnGame').onclick = () => {
+                togglePanel('gamePanel');
+                document.getElementById('controlPanel').classList.remove('active');
+                document.getElementById('quizPanel').classList.remove('active');
+                document.getElementById('dataPanel').classList.remove('active');
             };
             
-            // Quiz panel toggle - MODIFIED: Don't show by default
+            document.getElementById('btnCloseGame').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('gamePanel').classList.remove('active');
+            });
+            
+            // Quiz panel toggle
             document.getElementById('btnQuiz').onclick = () => {
                 togglePanel('quizPanel');
                 document.getElementById('controlPanel').classList.remove('active');
                 document.getElementById('dataPanel').classList.remove('active');
+                document.getElementById('gamePanel').classList.remove('active');
             };
             
-            document.getElementById('btnCloseQuiz').onclick = () => {
+            document.getElementById('btnCloseQuiz').addEventListener('click', function(e) {
+                e.stopPropagation();
                 document.getElementById('quizPanel').classList.remove('active');
-            };
+            });
             
             // Data panel toggle
             document.getElementById('btnData').onclick = () => {
                 togglePanel('dataPanel');
                 document.getElementById('controlPanel').classList.remove('active');
                 document.getElementById('quizPanel').classList.remove('active');
+                document.getElementById('gamePanel').classList.remove('active');
             };
             
-            document.getElementById('btnCloseData').onclick = () => {
+            document.getElementById('btnCloseData').addEventListener('click', function(e) {
+                e.stopPropagation();
                 document.getElementById('dataPanel').classList.remove('active');
-            };
+            });
             
-            // Enhanced slider controls with real-time calculations
-            const updateThermodynamicCalculations = () => {
-                state.temp = parseInt(document.getElementById('sliderTemp').value);
-                state.pressure = parseInt(document.getElementById('sliderPress').value);
+            // Enhanced slider controls for bionic arm
+            const updateArmCalculations = () => {
+                state.armJoints.shoulder.angle = parseInt(document.getElementById('sliderShoulder').value);
+                state.armJoints.elbow.angle = parseInt(document.getElementById('sliderElbow').value);
+                state.armJoints.wrist.angle = parseInt(document.getElementById('sliderWrist').value);
+                state.armJoints.grip.strength = parseInt(document.getElementById('sliderGrip').value);
                 
-                document.getElementById('valTemp').innerText = `${state.temp}°C`;
-                document.getElementById('valPress').innerText = `${state.pressure} atm`;
+                document.getElementById('valShoulder').innerText = `${state.armJoints.shoulder.angle}°`;
+                document.getElementById('valElbow').innerText = `${state.armJoints.elbow.angle}°`;
+                document.getElementById('valWrist').innerText = `${state.armJoints.wrist.angle}°`;
+                document.getElementById('valGrip').innerText = `${state.armJoints.grip.strength}%`;
                 
-                // Calculate enhanced thermodynamic properties
-                const tempK = state.temp + 273.15;
+                // Calculate biomechanical parameters
+                const shoulderLoad = Math.abs(state.armJoints.shoulder.angle) / 90;
+                const elbowLoad = state.armJoints.elbow.angle / 135;
+                const gripLoad = state.armJoints.grip.strength / 100;
                 
-                // Van't Hoff equation: ln(K2/K1) = -ΔH/R * (1/T2 - 1/T1)
-                const referenceTemp = 298; // K
-                const referenceKp = 6.8e-5;
-                const lnK = (-THERMO_CONSTANTS.ΔH / THERMO_CONSTANTS.R) * (1/tempK - 1/referenceTemp);
-                const Kp = referenceKp * Math.exp(lnK);
+                // Torque calculation
+                state.torqueOutput = 8.2 + shoulderLoad * 4 + elbowLoad * 2;
+                document.getElementById('valTorque').innerText = `${state.torqueOutput.toFixed(1)} N·m`;
                 
-                // Calculate yield using simplified equilibrium
-                const initialPressure = state.pressure;
-                const N2Partial = initialPressure * 0.25;
-                const H2Partial = initialPressure * 0.75;
+                // Power calculation
+                state.powerDraw = 24 + shoulderLoad * 8 + elbowLoad * 4 + gripLoad * 6;
+                document.getElementById('valPower').innerText = `${Math.round(state.powerDraw)}W`;
                 
-                // Simplified equilibrium calculation
-                let conversion = Math.sqrt(Kp * state.pressure) / (1 + Math.sqrt(Kp * state.pressure));
-                conversion = Math.max(0.1, Math.min(0.99, conversion));
+                // Battery drain simulation
+                state.batteryLevel = Math.max(0, 92 - (state.powerDraw - 24) * 0.2);
+                document.getElementById('valBattery').innerText = `${Math.round(state.batteryLevel)}%`;
                 
-                const yieldPercent = conversion * 100;
-                state.yield = yieldPercent;
+                // EMG signal simulation
+                const baseSignal = 78;
+                const signalVariation = Math.sin(Date.now() * 0.01) * 10;
+                const effortFactor = (shoulderLoad + elbowLoad + gripLoad) / 3 * 15;
+                state.emgSignal = Math.max(0, Math.min(100, baseSignal + signalVariation + effortFactor));
+                document.getElementById('valSignal').innerText = `${Math.round(state.emgSignal)}%`;
                 
-                // Update all displays
-                document.getElementById('valYield').innerText = `${yieldPercent.toFixed(1)}%`;
-                document.getElementById('valKp').innerText = `${Kp.toExponential(2)}`;
-                
-                // Update reaction rate (Arrhenius equation approximation)
-                const rateConstant = Math.exp(20 - 10000/tempK);
-                state.flowRate = rateConstant;
-                document.getElementById('valRate').innerText = `k = ${rateConstant.toFixed(2)}`;
-                
-                // Energy efficiency calculation
-                const optimalEfficiency = 85;
-                const tempDeviation = Math.abs(state.temp - 450) / 150;
-                const pressureDeviation = Math.abs(state.pressure - 200) / 200;
-                const efficiency = optimalEfficiency * (1 - 0.3 * tempDeviation - 0.2 * pressureDeviation);
-                state.energyEfficiency = Math.max(50, efficiency);
-                document.getElementById('valEnergy').innerText = `${Math.round(state.energyEfficiency)}%`;
+                // Update arm position in 3D
+                updateArmPosition();
                 
                 // Check for emergency conditions
                 checkForEmergency();
             };
             
-            document.getElementById('sliderTemp').oninput = updateThermodynamicCalculations;
-            document.getElementById('sliderPress').oninput = updateThermodynamicCalculations;
+            document.getElementById('sliderShoulder').oninput = updateArmCalculations;
+            document.getElementById('sliderElbow').oninput = updateArmCalculations;
+            document.getElementById('sliderWrist').oninput = updateArmCalculations;
+            document.getElementById('sliderGrip').oninput = updateArmCalculations;
             
             // Initialize calculations
-            updateThermodynamicCalculations();
+            updateArmCalculations();
+            
+            // Game controls
+            document.getElementById('btnStartGame').onclick = startGame;
+            document.getElementById('btnResetGame').onclick = resetGame;
             
             // Enhanced feature toggles
             document.getElementById('btnXray').onclick = (e) => {
                 state.isXray = !state.isXray;
                 e.currentTarget.classList.toggle('active');
                 
-                rootGroup.traverse(child => {
-                    if(child.name === "Reactor") {
-                        child.children.forEach(c => {
-                            if(c.material) {
-                                c.material.transparent = state.isXray;
-                                c.material.opacity = state.isXray ? 0.3 : 1.0;
-                            }
-                        });
-                    }
-                    if(child.name === "CatalystBed") {
-                        child.visible = state.isXray;
+                // Toggle transparency of arm components
+                armGroup.traverse(child => {
+                    if(child.material) {
+                        if(child.name.includes("Servo") || child.name.includes("Joint") || 
+                           child.name.includes("Sensor") || child.name.includes("Actuator")) {
+                            child.material.transparent = state.isXray;
+                            child.material.opacity = state.isXray ? 0.7 : 1.0;
+                        } else if(child.material && !child.name.includes("GameObject")) {
+                            child.material.transparent = state.isXray;
+                            child.material.opacity = state.isXray ? 0.3 : 1.0;
+                        }
                     }
                 });
                 
@@ -1649,26 +1964,39 @@
                          state.isXray ? "Viewing internal components" : "Normal view restored");
             };
             
-            document.getElementById('btnFlow').onclick = (e) => { 
-                state.flowActive = !state.flowActive; 
+            document.getElementById('btnSignal').onclick = (e) => { 
+                state.signalActive = !state.signalActive; 
                 e.currentTarget.classList.toggle('active');
-                showToast(state.flowActive ? "Flow Visualization ON" : "Flow Visualization OFF");
+                
+                if(state.signalActive) {
+                    document.getElementById('signalPopup').style.display = 'flex';
+                } else {
+                    document.getElementById('signalPopup').style.display = 'none';
+                }
+                
+                showToast(state.signalActive ? "Signal Visualization ON" : "Signal Visualization OFF");
             };
             
             document.getElementById('btnReset').onclick = () => { 
+                // Reset arm to neutral position
+                document.getElementById('sliderShoulder').value = 0;
+                document.getElementById('sliderElbow').value = 0;
+                document.getElementById('sliderWrist').value = 0;
+                document.getElementById('sliderGrip').value = 0;
+                updateArmCalculations();
+                
                 if(rootGroup) {
                     gsap.to(rootGroup.rotation, {x: 0, y: 0, z: 0, duration: 1});
-                    gsap.to(rootGroup.position, {x: 0, y: 0, z: 0, duration: 1});
                 }
-                showToast("View Reset", "Camera position restored");
+                showToast("Arm Reset", "All joints returned to neutral position");
             };
             
             document.getElementById('btnInfo').onclick = () => {
-                showToast("Component Information", "Click on any plant component to learn more");
+                showToast("Component Information", "Click on any arm component to learn more");
             };
             
             document.getElementById('btnExit').onclick = () => {
-                if(confirm("Exit the Haber-Bosch Lab?")) {
+                if(confirm("Exit the Bionic Arm Lab?")) {
                     location.reload();
                 }
             };
@@ -1700,26 +2028,25 @@
             const panel = document.getElementById(panelId);
             const isActive = panel.classList.contains('active');
             
-            // Close all panels first
             document.querySelectorAll('.side-panel').forEach(p => {
                 p.classList.remove('active');
             });
             
-            // Toggle the requested panel
             if(!isActive) {
                 panel.classList.add('active');
                 gsap.fromTo(panel, 
-                    {x: panelId === 'controlPanel' ? -50 : 50, opacity: 0}, 
+                    {x: panelId === 'controlPanel' || panelId === 'gamePanel' ? -50 : 50, opacity: 0}, 
                     {x: 0, opacity: 1, duration: 0.3}
                 );
             }
         }
 
         function checkForEmergency() {
-            const tempOk = state.temp >= 350 && state.temp <= 550;
-            const pressureOk = state.pressure >= 100 && state.pressure <= 350;
+            const torqueOk = state.torqueOutput <= 15;
+            const batteryOk = state.batteryLevel >= 15;
+            const signalOk = state.emgSignal >= 20;
             
-            if(!tempOk || !pressureOk) {
+            if(!torqueOk || !batteryOk || !signalOk) {
                 if(!state.isEmergency) {
                     triggerEmergency();
                 }
@@ -1728,80 +2055,136 @@
             }
         }
 
-        // ==================== ENHANCED EMERGENCY SYSTEM ====================
+        // ==================== GAMIFICATION SYSTEM ====================
+        function startGame() {
+            if(state.gameActive) return;
+            
+            state.gameActive = true;
+            state.gameScore = 0;
+            state.gameTime = 60;
+            
+            document.getElementById('btnStartGame').disabled = true;
+            document.getElementById('btnResetGame').disabled = false;
+            document.getElementById('gameScore').innerText = `Score: 0`;
+            document.getElementById('gameProgressBar').style.width = `0%`;
+            
+            // Reset game objects
+            gameObjects3D.forEach(obj => {
+                obj.userData.collected = false;
+                obj.material.emissiveIntensity = 0.2;
+                obj.position.set(
+                    (Math.random() - 0.5) * 3,
+                    2 + Math.random() * 2,
+                    (Math.random() - 0.5) * 3
+                );
+                scene.add(obj);
+            });
+            
+            // Show UI game objects
+            for(let i = 1; i <= 3; i++) {
+                const obj = document.getElementById(`gameObject${i}`);
+                if(obj) {
+                    obj.style.display = 'flex';
+                    const x = 50 + Math.random() * 70;
+                    const y = 30 + Math.random() * 40;
+                    obj.style.left = `${x}%`;
+                    obj.style.top = `${y}%`;
+                    obj.style.animation = `float 3s infinite ease-in-out`;
+                    obj.style.animationDelay = `${i * 0.5}s`;
+                }
+            }
+            
+            // Start game timer
+            const timerElement = document.getElementById('gameTimer');
+            state.gameInterval = setInterval(() => {
+                state.gameTime--;
+                timerElement.innerText = `${state.gameTime}s`;
+                
+                if(state.gameTime <= 0) {
+                    endGame(false);
+                }
+                
+                // Make objects float
+                gameObjects3D.forEach(obj => {
+                    if(!obj.userData.collected) {
+                        obj.position.y = 2 + Math.sin(Date.now() * 0.002 + obj.userData.index) * 0.5;
+                    }
+                });
+            }, 1000);
+            
+            showToast("Game Started!", "Grab all objects before time runs out!", 2000);
+        }
+
+        function endGame(success) {
+            if(!state.gameActive) return;
+            
+            state.gameActive = false;
+            clearInterval(state.gameInterval);
+            
+            document.getElementById('btnStartGame').disabled = false;
+            
+            // Hide UI game objects
+            for(let i = 1; i <= 3; i++) {
+                const obj = document.getElementById(`gameObject${i}`);
+                if(obj) obj.style.display = 'none';
+            }
+            
+            if(success) {
+                showToast("Challenge Complete!", `Final Score: ${state.gameScore}`, 3000);
+                showStarReward("Precision Master!", "Perfect object collection");
+                state.totalStars += 3;
+                
+                // Add achievement
+                if(!state.achievements.includes("game_complete")) {
+                    state.achievements.push("game_complete");
+                    addDataStreamEntry("ACHIEVEMENT", "Precision Challenge Master - Collected all objects");
+                }
+            } else {
+                showToast("Time's Up!", `Final Score: ${state.gameScore}`, 3000);
+                if(state.gameScore >= 20) {
+                    showStarReward("Good Effort!", "Partial completion bonus");
+                    state.totalStars += 1;
+                }
+            }
+            
+            // Update quiz score display with stars
+            document.getElementById('quizScore').innerHTML = `
+                Score: <span style="color: var(--accent-orange);">${state.score}</span> |
+                Stars: <span style="color: gold;">${state.totalStars}</span>
+            `;
+        }
+
+        function resetGame() {
+            endGame(false);
+            startGame();
+        }
+
+        // ==================== EMERGENCY SYSTEM ====================
         function triggerEmergency() {
             if(state.isEmergency) return;
             
             state.isEmergency = true;
             state.emergencyCount++;
             
-            // Visual effects
             document.body.classList.add('critical-state');
-            document.getElementById('statusText').innerText = "SYSTEM DECOMPOSING";
+            document.getElementById('statusText').innerText = "SYSTEM OVERLOAD";
             document.getElementById('statusText').style.animation = "flash 0.5s infinite";
             
-            // Audio alerts
             if(state.audioEnabled) {
-                // Stop any current speech
                 window.speechSynthesis.cancel();
-                
-                // Emergency voice alert
-                speak(`Emergency! System decomposing. Temperature: ${state.temp}°C. Pressure: ${state.pressure} atmospheres.`);
-                
-                // Start continuous siren
+                speak(`Emergency! System overload detected. Torque: ${state.torqueOutput.toFixed(1)} Newton meters. Battery: ${Math.round(state.batteryLevel)} percent.`);
                 startSiren();
             }
             
-            // Update UI indicators
             document.querySelectorAll('.param-value').forEach(el => {
-                el.style.color = 'var(--accent-danger)';
+                el.style.color = 'var(--accent-pink)';
             });
             
-            // Show control panel automatically during emergency
             document.getElementById('controlPanel').classList.add('active');
             
-            // Log emergency
-            addDataStreamEntry("EMERGENCY", `System parameters out of range: T=${state.temp}°C, P=${state.pressure}atm`);
+            addDataStreamEntry("EMERGENCY", `System overload: Torque=${state.torqueOutput.toFixed(1)}N·m, Battery=${Math.round(state.batteryLevel)}%`);
             
             showToast("EMERGENCY!", "Adjust parameters to stabilize system", 0);
-            
-            // MODIFICATION 2: Start auto-changing parameters during emergency
-            startEmergencyParameterChange();
-        }
-
-        function startEmergencyParameterChange() {
-            if(state.emergencyInterval) clearInterval(state.emergencyInterval);
-            
-            state.emergencyInterval = setInterval(() => {
-                if(!state.isEmergency) {
-                    clearInterval(state.emergencyInterval);
-                    return;
-                }
-                
-                // Simulate system decomposition by randomly changing parameters
-                const tempChange = (Math.random() - 0.5) * 10; // Random change ±5°C
-                const pressureChange = (Math.random() - 0.5) * 20; // Random change ±10 atm
-                
-                // Update sliders and values
-                let newTemp = parseInt(document.getElementById('sliderTemp').value) + tempChange;
-                let newPressure = parseInt(document.getElementById('sliderPress').value) + pressureChange;
-                
-                // Clamp values within slider ranges
-                newTemp = Math.max(300, Math.min(600, Math.round(newTemp)));
-                newPressure = Math.max(50, Math.min(400, Math.round(newPressure)));
-                
-                // Update slider values
-                document.getElementById('sliderTemp').value = newTemp;
-                document.getElementById('sliderPress').value = newPressure;
-                
-                // Update displayed values
-                document.getElementById('valTemp').innerText = `${newTemp}°C`;
-                document.getElementById('valPress').innerText = `${newPressure} atm`;
-                
-                // Trigger calculations
-                updateThermodynamicCalculations();
-                
-            }, 2000); // Change every 2 seconds
         }
 
         function resolveEmergency() {
@@ -1810,37 +2193,24 @@
             state.isEmergency = false;
             state.lastEmergency = Date.now();
             
-            // Stop auto-changing parameters
-            if(state.emergencyInterval) {
-                clearInterval(state.emergencyInterval);
-                state.emergencyInterval = null;
-            }
-            
-            // Remove visual effects
             document.body.classList.remove('critical-state');
             document.getElementById('statusText').innerText = "System Active";
             document.getElementById('statusText').style.animation = "";
             
-            // Stop siren
             stopSiren();
             
-            // Success voice alert
             if(state.audioEnabled) {
                 window.speechSynthesis.cancel();
-                speak("System stabilized. Parameters within optimal range.");
+                speak("System stabilized. All parameters within safe range.");
             }
             
-            // Restore UI colors
-            updateThermodynamicCalculations();
+            updateArmCalculations();
             
-            // MODIFICATION 3: Show star reward for stabilizing system
             showStarReward("System Stabilized!", "Emergency Response Expert");
             state.totalStars += 1;
             
-            // Log resolution
             addDataStreamEntry("SYSTEM", "Emergency resolved - parameters stabilized");
             
-            // Hide toast after delay
             setTimeout(() => {
                 const toast = document.getElementById('infoToast');
                 gsap.to(toast, {
@@ -1853,7 +2223,6 @@
                 });
             }, 2000);
             
-            // Auto-hide control panel after stabilization
             setTimeout(() => {
                 document.getElementById('controlPanel').classList.remove('active');
             }, 3000);
@@ -1869,7 +2238,6 @@
                     return;
                 }
                 
-                // Create a simple siren effect using Web Audio API
                 if(audioCtx && state.audioEnabled) {
                     try {
                         const oscillator = audioCtx.createOscillator();
@@ -1904,7 +2272,6 @@
             }
         }
 
-        // MODIFICATION 3: Enhanced star reward function
         function showStarReward(title, subtitle) {
             const starContainer = document.getElementById('starReward');
             const achievementText = document.getElementById('achievementText');
@@ -1918,13 +2285,6 @@
                 opacity: 1,
                 duration: 0.5,
                 onComplete: () => {
-                    // Add achievement
-                    if(!state.achievements.includes("emergency_resolved")) {
-                        state.achievements.push("emergency_resolved");
-                        addDataStreamEntry("ACHIEVEMENT", "Emergency Response Expert - Stabilized critical system");
-                    }
-                    
-                    // Hide after animation
                     setTimeout(() => {
                         gsap.to(starContainer, {
                             opacity: 0,
@@ -1946,7 +2306,7 @@
                 document.getElementById('qText').innerHTML = `
                     <strong>Q${state.currentQ + 1}/${quizQuestions.length}:</strong> ${q.q}
                     <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">
-                        Thermodynamics | Chemical Engineering
+                        Bionics | Mechatronics | Engineering Terminology
                     </div>
                 `;
                 
@@ -1971,29 +2331,25 @@
                 state.currentQ = (state.currentQ + 1) % quizQuestions.length;
                 renderQuestion();
                 
-                // Update score display
                 document.getElementById('quizScore').innerHTML = `
                     Score: <span style="color: var(--accent-orange);">${state.score}</span> |
-                    Progress: ${state.currentQ + 1}/${quizQuestions.length}
+                    Progress: ${state.currentQ + 1}/${quizQuestions.length} |
+                    Stars: <span style="color: gold;">${state.totalStars}</span>
                 `;
             };
         }
 
-        // MODIFICATION 3: Enhanced answer handling with star particles
         function handleAnswer(selected, correct, button) {
             const options = button.parentElement.children;
             
-            // Disable all buttons
             Array.from(options).forEach(btn => {
                 btn.style.pointerEvents = 'none';
             });
             
             if(selected === correct) {
-                // Correct answer
                 button.classList.add('correct');
                 state.score += 10;
                 
-                // MODIFICATION 3: Show star particles for correct answer
                 showQuizStarParticles(button);
                 state.totalStars += 1;
                 
@@ -2001,14 +2357,12 @@
                     playSuccessSound();
                 }
                 
-                // Check for achievement
                 if(state.score >= 50 && !state.achievements.includes("quiz_master")) {
                     state.achievements.push("quiz_master");
                     addDataStreamEntry("ACHIEVEMENT", "Quiz Master - Scored 50+ points in knowledge check");
                     showStarReward("Quiz Master!", "Scored 50+ points");
                 }
             } else {
-                // Wrong answer
                 button.classList.add('wrong');
                 options[correct].classList.add('correct');
                 
@@ -2017,10 +2371,8 @@
                 }
             }
             
-            // Show next button
             document.getElementById('btnNextQ').style.display = 'block';
             
-            // Update score display
             document.getElementById('quizScore').innerHTML = `
                 Score: <span style="color: var(--accent-orange);">${state.score}</span> |
                 Progress: ${state.currentQ + 1}/${quizQuestions.length} |
@@ -2028,13 +2380,11 @@
             `;
         }
 
-        // MODIFICATION 3: Star particle animation for quiz
         function showQuizStarParticles(button) {
             const rect = button.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            // Create multiple star particles
             for(let i = 0; i < 5; i++) {
                 const star = document.createElement('div');
                 star.className = 'star-particle';
@@ -2050,7 +2400,6 @@
                 
                 document.body.appendChild(star);
                 
-                // Animate star particle
                 gsap.to(star, {
                     duration: 1 + Math.random() * 0.5,
                     x: (Math.random() - 0.5) * 200,
@@ -2065,7 +2414,78 @@
             }
         }
 
-        // ==================== ENHANCED INTERACTION ====================
+        // ==================== SIGNAL VISUALIZATION ====================
+        function initSignalVisualization() {
+            const canvas = document.getElementById('signalCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            
+            let signalData = [];
+            for(let i = 0; i < 100; i++) {
+                signalData.push(Math.random() * 50 + 25);
+            }
+            
+            function drawSignal() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw grid
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                
+                // Vertical lines
+                for(let i = 0; i <= 10; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(i * canvas.width / 10, 0);
+                    ctx.lineTo(i * canvas.width / 10, canvas.height);
+                    ctx.stroke();
+                }
+                
+                // Horizontal lines
+                for(let i = 0; i <= 5; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, i * canvas.height / 5);
+                    ctx.lineTo(canvas.width, i * canvas.height / 5);
+                    ctx.stroke();
+                }
+                
+                // Draw signal
+                ctx.beginPath();
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 2;
+                ctx.lineJoin = 'round';
+                
+                const time = Date.now() * 0.01;
+                
+                for(let i = 0; i < signalData.length; i++) {
+                    const x = i * canvas.width / (signalData.length - 1);
+                    const baseValue = signalData[i];
+                    const variation = Math.sin(time * 0.05 + i * 0.3) * 10;
+                    const amplitude = (state.emgSignal / 100) * 30;
+                    const y = canvas.height - ((baseValue + variation) * amplitude / 100);
+                    
+                    if(i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                ctx.stroke();
+                
+                // Update signal data
+                signalData.shift();
+                const newValue = 25 + Math.sin(time * 0.1) * 15 + (state.emgSignal / 100) * 10;
+                signalData.push(newValue);
+                
+                requestAnimationFrame(drawSignal);
+            }
+            
+            drawSignal();
+        }
+
+        // ==================== INTERACTION SYSTEM ====================
         function onEnhancedMouseClick(e) {
             const mouse = new THREE.Vector2();
             const rect = renderer.domElement.getBoundingClientRect();
@@ -2081,13 +2501,11 @@
             const raycaster = new THREE.Raycaster();
             raycaster.setFromCamera(mouse, camera);
             
-            // Check interactive objects first
             const interactiveHits = raycaster.intersectObjects(interactiveObjects, true);
             if(interactiveHits.length > 0) {
                 const object = interactiveHits[0].object;
                 let parent = object;
                 
-                // Find the top-level interactive object
                 while(parent.parent && !interactiveObjects.includes(parent)) {
                     parent = parent.parent;
                 }
@@ -2098,12 +2516,10 @@
                 }
             }
             
-            // Fallback to general scene objects
             const hits = raycaster.intersectObjects(rootGroup.children, true);
             if(hits.length > 0) {
                 let object = hits[0].object;
                 
-                // Find a named parent
                 while(object.parent && object.parent !== rootGroup && !object.name) {
                     object = object.parent;
                 }
@@ -2122,50 +2538,73 @@
             const toastText = document.getElementById('toastText');
             const toastSubtext = document.getElementById('toastSubtext');
             
-            // Component-specific information
             const componentInfo = {
-                "Reactor": {
-                    title: "REACTOR VESSEL",
-                    desc: "High-pressure vessel containing iron catalyst",
-                    info: "Operates at 400-500°C, 150-300 atm. Contains promoted iron catalyst beds."
+                "Shoulder": {
+                    title: "SHOULDER JOINT",
+                    desc: "3-DOF spherical joint with MG996R servo",
+                    info: "Provides flexion/extension, abduction/adduction, and rotation. Maximum torque: 12 N·m."
                 },
-                "Nitrogen Feed": {
-                    title: "NITROGEN FEED TANK",
-                    desc: "Source of N₂ gas (from air separation)",
-                    info: "Pure nitrogen gas feed. Air separation via cryogenic distillation or PSA."
+                "Elbow": {
+                    title: "ELBOW JOINT",
+                    desc: "1-DOF hinge joint with position feedback",
+                    info: "Provides 0-135° flexion. Equipped with potentiometer for position sensing."
                 },
-                "Hydrogen Feed": {
-                    title: "HYDROGEN FEED TANK",
-                    desc: "Source of H₂ gas (from steam reforming)",
-                    info: "Hydrogen from natural gas steam reforming. Typically 3:1 H₂:N₂ ratio."
+                "Wrist": {
+                    title: "WRIST JOINT",
+                    desc: "2-DOF joint with precision servo",
+                    info: "Allows flexion/extension and rotation. Precision: ±0.1° with encoder feedback."
                 },
-                "CatalystBed": {
-                    title: "CATALYST BED",
-                    desc: "Promoted iron catalyst (Fe₃O₄ with K₂O, Al₂O₃)",
-                    info: "Iron oxide reduced to active α-Fe. Promoters increase activity & lifespan."
+                "Hand": {
+                    title: "MYOELECTRIC HAND",
+                    desc: "5-finger anthropomorphic design",
+                    info: "Independently controlled fingers with tactile sensors. Grip force: 0-20 kg."
                 },
-                "Condenser": {
-                    title: "AMMONIA CONDENSER",
-                    desc: "Cools product gas to liquefy NH₃",
-                    info: "Cools to -33°C at 1 atm. Unreacted gases recycled to reactor."
+                "ShoulderServo": {
+                    title: "SHOULDER SERVO",
+                    desc: "High-torque digital servo",
+                    info: "MG996R metal-gear servo. Torque: 12 kg·cm at 6V. Speed: 0.17s/60°."
                 },
-                "ControlValve": {
-                    title: "FLOW CONTROL VALVE",
-                    desc: "Regulates gas flow rates",
-                    info: "Maintains optimal 3:1 H₂:N₂ ratio. Critical for process control."
+                "ElbowServo": {
+                    title: "ELBOW SERVO",
+                    desc: "Feedback servo with encoder",
+                    info: "Equipped with magnetic encoder for precise position control. IP54 rated."
+                },
+                "WristServo": {
+                    title: "WRIST SERVO",
+                    desc: "Micro digital servo",
+                    info: "Compact size with metal gears. Provides smooth rotation control."
+                },
+                "Battery": {
+                    title: "LITHIUM-ION BATTERY",
+                    desc: "High-capacity power source",
+                    info: "5000mAh, 14.8V. Provides 8-12 hours of continuous operation."
+                },
+                "EMGSensor": {
+                    title: "EMG SENSOR",
+                    desc: "Surface electromyography electrode",
+                    info: "Detects muscle electrical activity. Sampling rate: 1000 Hz. Resolution: 10-bit."
+                },
+                "TactileSensor": {
+                    title: "TACTILE SENSOR",
+                    desc: "Force-sensitive resistor array",
+                    info: "Provides grip force feedback. Range: 0-20 N. Resolution: 0.1 N."
+                },
+                "GripActuator": {
+                    title: "GRIP ACTUATOR",
+                    desc: "Linear actuator for finger control",
+                    info: "Provides smooth finger movement. Stroke: 20mm. Force: 50N."
                 }
             };
             
             const info = componentInfo[name] || {
                 title: name.toUpperCase(),
-                desc: "Plant Component",
-                info: "Click components to learn about the Haber-Bosch process"
+                desc: "Bionic Arm Component",
+                info: "Click components to learn about bionic arm mechatronics"
             };
             
             toastText.innerText = info.title;
             toastSubtext.innerText = info.desc;
             
-            // Show toast with animation
             toast.style.display = 'block';
             gsap.killTweensOf(toast);
             gsap.fromTo(toast, 
@@ -2173,7 +2612,6 @@
                 { opacity: 1, y: 0, duration: 0.3 }
             );
             
-            // Auto-hide after delay
             if(toastTimer) clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
                 gsap.to(toast, {
@@ -2186,197 +2624,30 @@
                 });
             }, 3000);
             
-            // Update molecule view
-            updateMoleculeView(name, data);
-            
-            // Voice description
             if(state.audioEnabled && !state.isEmergency) {
                 speak(info.title + ". " + info.info);
             }
             
-            // Log interaction
             addDataStreamEntry("INTERACTION", `Selected: ${name}`);
-        }
-
-        // ==================== ENHANCED MOLECULE VIEWER ====================
-        function initMoleculeViewer() {
-            const canvas = document.getElementById('moleculeCanvas');
-            molScene = new THREE.Scene();
-            molScene.background = new THREE.Color(0x101828);
-            
-            molCamera = new THREE.PerspectiveCamera(
-                50, 
-                canvas.clientWidth / canvas.clientHeight, 
-                0.1, 
-                20
-            );
-            molCamera.position.z = 8;
-            
-            molRenderer = new THREE.WebGLRenderer({
-                alpha: true, 
-                antialias: true,
-                powerPreference: "high-performance"
-            });
-            molRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            molRenderer.shadowMap.enabled = true;
-            
-            canvas.appendChild(molRenderer.domElement);
-            
-            // Lighting
-            const mainLight = new THREE.DirectionalLight(0xffffff, 1);
-            mainLight.position.set(5, 10, 7);
-            molScene.add(mainLight);
-            
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-            molScene.add(ambientLight);
-            
-            // Add subtle background particles
-            for(let i = 0; i < 20; i++) {
-                const particle = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.05, 8, 8),
-                    new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.2 })
-                );
-                particle.position.set(
-                    (Math.random() - 0.5) * 10,
-                    (Math.random() - 0.5) * 10,
-                    (Math.random() - 0.5) * 10 - 5
-                );
-                molScene.add(particle);
-            }
-        }
-
-        function updateMoleculeView(name, data = {}) {
-            const popup = document.getElementById('moleculePopup');
-            
-            // Clear previous molecules
-            while(molScene.children.length > 22) { // Keep lights and background particles
-                molScene.remove(molScene.children[molScene.children.length - 1]);
-            }
-            
-            let moleculeGroup = new THREE.Group();
-            let label = "";
-            let equation = "";
-            
-            // Create different molecules based on component
-            if(name.includes("Nitrogen")) {
-                // N₂ molecule
-                const n1 = createAtom(0xf59e0b, 0.8, -1, 0, 0);
-                const n2 = createAtom(0xf59e0b, 0.8, 1, 0, 0);
-                createBond(n1, n2, 0xf59e0b);
-                moleculeGroup.add(n1, n2);
-                label = "N₂";
-                equation = "Nitrogen Molecule";
-            } else if(name.includes("Hydrogen")) {
-                // H₂ molecule
-                const h1 = createAtom(0xffffff, 0.6, -0.8, 0, 0);
-                const h2 = createAtom(0xffffff, 0.6, 0.8, 0, 0);
-                createBond(h1, h2, 0xffffff);
-                moleculeGroup.add(h1, h2);
-                label = "H₂";
-                equation = "Hydrogen Molecule";
-            } else if(name.includes("Condenser") || name.includes("Catalyst")) {
-                // NH₃ molecule
-                const n = createAtom(0x10b981, 0.8, 0, 0, 0);
-                const h1 = createAtom(0xffffff, 0.5, 1, 0.5, 0);
-                const h2 = createAtom(0xffffff, 0.5, -0.5, 0.8, 0.5);
-                const h3 = createAtom(0xffffff, 0.5, -0.5, -0.8, 0.5);
-                createBond(n, h1, 0xffffff);
-                createBond(n, h2, 0xffffff);
-                createBond(n, h3, 0xffffff);
-                moleculeGroup.add(n, h1, h2, h3);
-                label = "NH₃";
-                equation = "Ammonia Molecule";
-            } else {
-                // Reaction equation: N₂ + 3H₂ ⇌ 2NH₃
-                const n2 = createAtom(0xf59e0b, 0.7, -3, 0, 0);
-                const n2b = createAtom(0xf59e0b, 0.7, -2, 0, 0);
-                createBond(n2, n2b, 0xf59e0b);
-                
-                const h1 = createAtom(0xffffff, 0.5, 0, 1, 0);
-                const h2 = createAtom(0xffffff, 0.5, 0, -1, 0);
-                const h3 = createAtom(0xffffff, 0.5, 1, 0, 0);
-                createBond(h1, h2, 0xffffff, false);
-                createBond(h2, h3, 0xffffff, false);
-                
-                const nh3_1 = createAtom(0x10b981, 0.6, 3, 0.5, 0);
-                const nh3_2 = createAtom(0x10b981, 0.6, 4, -0.5, 0);
-                
-                moleculeGroup.add(n2, n2b, h1, h2, h3, nh3_1, nh3_2);
-                label = "N₂ + 3H₂ ⇌ 2NH₃";
-                equation = "Haber-Bosch Reaction";
-            }
-            
-            if(label) {
-                molScene.add(moleculeGroup);
-                molecules = [moleculeGroup];
-                popup.style.display = 'flex';
-                document.getElementById('moleculeLabel').innerHTML = `
-                    <strong>${label}</strong><br>
-                    <span style="font-size: 0.8rem; color: var(--text-muted);">${equation}</span>
-                `;
-                
-                // Animate molecule in
-                gsap.from(moleculeGroup.scale, {
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                    duration: 0.5,
-                    ease: "back.out(1.7)"
-                });
-            } else {
-                popup.style.display = 'none';
-            }
-        }
-
-        function createAtom(color, size, x, y, z) {
-            const geometry = new THREE.SphereGeometry(size, 16, 16);
-            const material = new THREE.MeshPhongMaterial({ 
-                color: color,
-                shininess: 100,
-                specular: 0x222222
-            });
-            const atom = new THREE.Mesh(geometry, material);
-            atom.position.set(x, y, z);
-            atom.castShadow = true;
-            return atom;
-        }
-
-        function createBond(atom1, atom2, color, visible = true) {
-            const distance = atom1.position.distanceTo(atom2.position);
-            const center = new THREE.Vector3().addVectors(atom1.position, atom2.position).multiplyScalar(0.5);
-            
-            const bond = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.1, 0.1, distance, 8),
-                new THREE.MeshPhongMaterial({ color: color, transparent: !visible, opacity: visible ? 0.7 : 0 })
-            );
-            
-            bond.position.copy(center);
-            bond.lookAt(atom2.position);
-            bond.rotation.x += Math.PI / 2;
-            
-            return bond;
         }
 
         // ==================== DATA STREAM SYSTEM ====================
         function startDataStream() {
-            // Initial data
-            addDataStreamEntry("SYSTEM", "Advanced Haber-Bosch Lab initialized");
-            addDataStreamEntry("PARAMETERS", `Initial: T=${state.temp}°C, P=${state.pressure}atm`);
+            addDataStreamEntry("SYSTEM", "Bionic Arm Engineering Lab initialized");
+            addDataStreamEntry("PARAMETERS", `Initial: Shoulder=0°, Elbow=0°, Grip=0%`);
             
-            // Update data stream periodically
             setInterval(() => {
                 if(!document.getElementById('dataPanel').classList.contains('active')) return;
                 
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString('en-US', {hour12: false});
                 
-                // Simulate data updates
                 const dataTypes = [
-                    `[${timeStr}] Flow rate: ${(state.flowRate * (0.9 + Math.random()*0.2)).toFixed(2)} mol/s`,
-                    `[${timeStr}] Catalyst activity: ${(95 + Math.random()*5).toFixed(1)}%`,
-                    `[${timeStr}] Energy consumption: ${(state.energyEfficiency * (0.95 + Math.random()*0.1)).toFixed(1)} MJ/ton`,
-                    `[${timeStr}] System stability: ${state.isEmergency ? "CRITICAL" : "NOMINAL"}`,
-                    `[${timeStr}] Equilibrium shift: ${(Math.random()*0.1).toFixed(3)}`
+                    `[${timeStr}] EMG Signal Strength: ${state.emgSignal.toFixed(1)}%`,
+                    `[${timeStr}] Power Consumption: ${state.powerDraw.toFixed(1)}W`,
+                    `[${timeStr}] System Temperature: ${(35 + Math.random() * 5).toFixed(1)}°C`,
+                    `[${timeStr}] Data Rate: 1000 packets/sec`,
+                    `[${timeStr}] Control Loop: ${(5 + Math.random() * 2).toFixed(1)}ms`
                 ];
                 
                 addDataStreamEntry("DATA", dataTypes[Math.floor(Math.random() * dataTypes.length)]);
@@ -2392,9 +2663,9 @@
             
             let typeClass = "";
             switch(type) {
-                case "EMERGENCY": typeClass = "color: var(--accent-danger);"; break;
+                case "EMERGENCY": typeClass = "color: var(--accent-pink);"; break;
                 case "ACHIEVEMENT": typeClass = "color: gold;"; break;
-                case "SYSTEM": typeClass = "color: var(--accent-cyan);"; break;
+                case "SYSTEM": typeClass = "color: var(--accent-teal);"; break;
                 case "INTERACTION": typeClass = "color: var(--accent-green);"; break;
                 default: typeClass = "color: var(--text-muted);";
             }
@@ -2412,7 +2683,6 @@
             
             contentDiv.insertBefore(entry, contentDiv.firstChild);
             
-            // Limit number of entries
             if(contentDiv.children.length > 20) {
                 contentDiv.removeChild(contentDiv.lastChild);
             }
@@ -2428,7 +2698,6 @@
                 utterance.pitch = 1;
                 utterance.volume = 1;
                 
-                // Select a voice
                 const voices = window.speechSynthesis.getVoices();
                 const preferredVoice = voices.find(v => v.name.includes('Google') && v.lang.includes('en')) ||
                                      voices.find(v => v.lang.includes('en'));
@@ -2449,7 +2718,6 @@
             toastText.innerText = title;
             toastSubtext.innerText = subtitle;
             
-            // Show toast
             toast.style.display = 'block';
             gsap.killTweensOf(toast);
             gsap.fromTo(toast, 
@@ -2457,7 +2725,6 @@
                 { opacity: 1, y: 0, duration: 0.3 }
             );
             
-            // Auto-hide
             if(toastTimer) clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
                 gsap.to(toast, {
@@ -2480,9 +2747,9 @@
                     oscillator.connect(gainNode);
                     gainNode.connect(audioCtx.destination);
                     
-                    oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                    oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
-                    oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
                     
                     gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
@@ -2504,8 +2771,8 @@
                     oscillator.connect(gainNode);
                     gainNode.connect(audioCtx.destination);
                     
-                    oscillator.frequency.setValueAtTime(349.23, audioCtx.currentTime); // F4
-                    oscillator.frequency.setValueAtTime(293.66, audioCtx.currentTime + 0.1); // D4
+                    oscillator.frequency.setValueAtTime(349.23, audioCtx.currentTime);
+                    oscillator.frequency.setValueAtTime(293.66, audioCtx.currentTime + 0.1);
                     
                     gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
@@ -2524,22 +2791,17 @@
             
             const time = Date.now() * 0.001;
             
-            // MODIFICATION 4: Update flow visualization (always maintain visual flow)
-            updateEnhancedFlow();
-            
-            // Animate molecules
-            if(molecules.length > 0) {
-                molecules.forEach(group => {
-                    group.rotation.y += 0.005;
-                    group.rotation.x = Math.sin(time * 0.5) * 0.1;
+            // Animate game objects if game is active
+            if(state.gameActive && gameObjects3D.length > 0) {
+                gameObjects3D.forEach((obj, index) => {
+                    if(!obj.userData.collected) {
+                        obj.rotation.y += 0.01;
+                        obj.rotation.x = Math.sin(time * 0.5 + index) * 0.1;
+                    }
                 });
-                
-                if(molRenderer && molScene && molCamera) {
-                    molRenderer.render(molScene, molCamera);
-                }
             }
             
-            // Auto-emergency check (every 45-75 seconds)
+            // Auto-emergency check
             if(!state.isEmergency && Date.now() - state.lastEmergency > 45000 + Math.random() * 30000) {
                 triggerEmergency();
             }
@@ -2561,16 +2823,14 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
             }
             
-            if(molCamera && molRenderer) {
-                const canvas = document.getElementById('moleculeCanvas');
-                molCamera.aspect = canvas.clientWidth / canvas.clientHeight;
-                molCamera.updateProjectionMatrix();
-                molRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            const signalCanvas = document.getElementById('signalCanvas');
+            if(signalCanvas) {
+                signalCanvas.width = signalCanvas.clientWidth;
+                signalCanvas.height = signalCanvas.clientHeight;
             }
         });
 
         // ==================== START THE APPLICATION ====================
-        // Preload voices for speech synthesis
         if ('speechSynthesis' in window) {
             window.speechSynthesis.getVoices();
         }
