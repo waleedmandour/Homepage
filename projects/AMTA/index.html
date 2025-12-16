@@ -403,6 +403,40 @@
             border-bottom-color: var(--primary);
         }
 
+        /* ===== DEMO SECTION ===== */
+        .demo-section {
+            margin: 64px 0;
+            text-align: center;
+        }
+
+        .demo-container {
+            position: relative;
+            max-width: 900px;
+            margin: 32px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .demo-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2);
+        }
+
+        .demo-gif {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .demo-caption {
+            margin-top: 16px;
+            color: var(--gray);
+            font-style: italic;
+            font-size: 14px;
+        }
+
         /* ===== WORKFLOW SECTION ===== */
         .section-title {
             text-align: center;
@@ -1113,6 +1147,20 @@
             </p>
         </div>
 
+        <!-- Demo Section -->
+        <section class="demo-section">
+            <h2 class="section-title lang-en">Application Demo</h2>
+            <h2 class="section-title lang-ar">عرض توضيحي للتطبيق</h2>
+            
+            <div class="demo-container">
+                <img src="https://waleedmandour.org/projects/AMTA/AMTADemo.gif" 
+                     class="demo-gif" 
+                     alt="AMTA Lexicography Assistant Demo">
+            </div>
+            <p class="demo-caption lang-en">Watch the AMTA Assistant in action: From term extraction to dictionary entry creation</p>
+            <p class="demo-caption lang-ar">شاهد مساعد AMTA في العمل: من استخراج المصطلحات إلى إنشاء مداخل المعجم</p>
+        </section>
+
         <section class="workflow-container">
             <h2 class="section-title lang-en">How It Works</h2>
             <h2 class="section-title lang-ar">كيف يعمل النظام</h2>
@@ -1289,6 +1337,11 @@
                     <i class="fas fa-database"></i>
                     <span class="lang-en">CORE API</span>
                     <span class="lang-ar">CORE API</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-book"></i>
+                    <span class="lang-en">arXiv API</span>
+                    <span class="lang-ar">arXiv API</span>
                 </div>
                 <div class="api-badge">
                     <i class="fas fa-search"></i>
