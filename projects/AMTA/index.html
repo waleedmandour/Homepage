@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Added for Verification: App Description -->
     <meta name="description" content="AMTA Lexicography Assistant: An AI-powered Google Workspace Add-on for automated dictionary creation, term extraction, and corpus analysis.">
+    
     <title>AMTA Lexicography Assistant - Dr. Waleed Mandour</title>
-    <!-- Added Favicon for Verification Professionalism -->
+    
+    <!-- Added for Verification: Favicon -->
     <link rel="icon" href="images/AMTA2.png" type="image/png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -82,7 +86,7 @@
             background: var(--secondary);
         }
         
-        /* ===== HEADER STYLES (Matching other pages) ===== */
+        /* ===== HEADER STYLES ===== */
         header {
             background: 
                 linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
@@ -379,7 +383,6 @@
             margin-bottom: 12px;
             font-size: 18px;
             font-weight: 700;
-            display: flex;
             align-items: center;
             gap: 8px;
         }
@@ -1015,22 +1018,23 @@
             }
         }
 
-        /* Language-specific content */
-        .lang-en {
-            display: block;
-        }
+        /* ===== LANGUAGE LOGIC (FIXED) ===== */
+        /* Default: English Visible, Arabic Hidden */
+        .lang-en { display: block; }
+        .lang-ar { display: none !important; }
         
-        .lang-ar {
-            display: none;
-        }
+        /* Flex containers need flex, not block, but hide logic comes first */
+        .data-notice h4.lang-en { display: flex; }
+        .data-notice h4.lang-ar { display: none !important; }
+
+        /* When body has class 'arabic': Flip visibility */
+        body.arabic .lang-en { display: none !important; }
+        body.arabic .lang-ar { display: block; }
         
-        body.arabic .lang-en {
-            display: none;
-        }
-        
-        body.arabic .lang-ar {
-            display: block;
-        }
+        /* Restore flex for the H4 specifically in Arabic mode */
+        body.arabic .data-notice h4.lang-ar { display: flex; }
+        body.arabic .data-notice h4.lang-en { display: none !important; }
+
     </style>
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
@@ -1110,6 +1114,7 @@
         </section>
 
         <div class="data-notice">
+            <!-- Ensure correct H4 tags with language classes -->
             <h4 class="lang-en"><i class="fas fa-shield-alt"></i> Important Notice Regarding Google Data</h4>
             <h4 class="lang-ar"><i class="fas fa-shield-alt"></i> ملاحظة هامة بشأن بيانات جوجل</h4>
             
