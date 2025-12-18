@@ -47,6 +47,19 @@
             direction: rtl;
         }
 
+        /* Ensure RTL inheritance for all containers */
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic div,
+        body.arabic .hero-content,
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .audience-grid {
+            direction: rtl;
+            text-align: right;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -371,6 +384,11 @@
             max-width: 800px;
             box-shadow: var(--shadow);
             animation: fadeIn 0.6s ease-out;
+        }
+
+        body.arabic .data-notice {
+            border-left: none;
+            border-right: 4px solid #f59f00;
         }
 
         .data-notice h4 {
@@ -871,6 +889,53 @@
         .feature-card:nth-child(2) { animation-delay: 0.2s; }
         .feature-card:nth-child(3) { animation-delay: 0.3s; }
 
+        /* ===== LANGUAGE LOGIC (CORRECTED) ===== */
+        /* Base state: English visible, Arabic hidden */
+        .lang-en { 
+            display: block; 
+        }
+        .lang-ar { 
+            display: none; 
+        }
+        
+        /* For flex containers in data-notice */
+        .data-notice h4.lang-en { 
+            display: flex; 
+        }
+        .data-notice h4.lang-ar { 
+            display: none; 
+        }
+        
+        /* For inline elements in footer */
+        .footer-content > div > .lang-en {
+            display: inline;
+        }
+        .footer-content > div > .lang-ar {
+            display: none;
+        }
+        
+        /* Arabic state: Arabic visible, English hidden */
+        body.arabic .lang-en { 
+            display: none; 
+        }
+        body.arabic .lang-ar { 
+            display: block; 
+        }
+        
+        body.arabic .data-notice h4.lang-en { 
+            display: none; 
+        }
+        body.arabic .data-notice h4.lang-ar { 
+            display: flex; 
+        }
+        
+        body.arabic .footer-content > div > .lang-en {
+            display: none;
+        }
+        body.arabic .footer-content > div > .lang-ar {
+            display: inline;
+        }
+
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) {
             .header-content {
@@ -1013,20 +1078,6 @@
                 padding: 10px;
             }
         }
-
-        /* ===== LANGUAGE LOGIC (FIXED) ===== */
-        .lang-en { display: block; }
-        .lang-ar { display: none !important; }
-        
-        /* Flex containers need flex, not block, but hide logic comes first */
-        .data-notice h4.lang-en { display: flex; }
-        .data-notice h4.lang-ar { display: none !important; }
-
-        body.arabic .lang-en { display: none !important; }
-        body.arabic .lang-ar { display: block; }
-        
-        body.arabic .data-notice h4.lang-ar { display: flex; }
-        body.arabic .data-notice h4.lang-en { display: none !important; }
     </style>
 </head>
 <body>
@@ -1086,14 +1137,14 @@
 
                 <div>
                 <p class="hero-description lang-en">
-    A Google Sheets Add-on for automated computational lexicography. It orchestrates academic APIs (arXiv, Semantic Scholar) to extract terminology, performs statistical analysis against reference corpus files uploaded from Google Drive, and utilizes RAG to generate definitions. Final dictionary datasets are structured (XML/JSON) and saved directly to your Drive.
+                    A Google Sheets Add-on for automated computational lexicography. It orchestrates academic APIs (arXiv, Semantic Scholar) to extract terminology, performs statistical analysis against reference corpus files uploaded from Google Drive, and utilizes RAG to generate definitions. Final dictionary datasets are structured (XML/JSON) and saved directly to your Drive.
                 </p>
                 
-                <p class="hero-description lang-ar" dir="rtl">
-    إضافة لجداول بيانات جوجل (Google Sheets) مخصصة للمعجمية الحاسوبية الآلية. تقوم بتنسيق واجهات برمجة التطبيقات الأكاديمية (مثل arXiv وSemantic Scholar) لاستخلاص المصطلحات، وإجراء التحليل الإحصائي مقابل ملفات المدونات المرجعية المحملة من Google Drive، واستخدام الذكاء الاصطناعي لتوليد التعريفات. يتم تنظيم بيانات المعجم النهائية (XML/JSON) وحفظها مباشرة في Drive الخاص بك.
+                <p class="hero-description lang-ar">
+                    إضافة لجداول بيانات جوجل (Google Sheets) مخصصة للمعجمية الحاسوبية الآلية. تقوم بتنسيق واجهات برمجة التطبيقات الأكاديمية (مثل arXiv وSemantic Scholar) لاستخلاص المصطلحات، وإجراء التحليل الإحصائي مقابل ملفات المدونات المرجعية المحملة من Google Drive، واستخدام الذكاء الاصطناعي لتوليد التعريفات. يتم تنظيم بيانات المعجم النهائية (XML/JSON) وحفظها مباشرة في Drive الخاص بك.
                 </p>
                 </div>
-
+            </div>
         </section>
 
         <div class="data-notice">
