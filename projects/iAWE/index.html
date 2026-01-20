@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta Description for SEO and Google Verification -->
-    <meta name="description" content="EAP Writing Assistant (iAWE): A Google Sheets Add-on for bilingual academic writing feedback using Gemini 2.5, NAWL profiling, and Conceptual RAG.">
-    <title>EAP Writing Assistant (iAWE) - Dr. Waleed Mandour</title>
+    <!-- Updated for iAWE -->
+    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluator - AI-assisted deterministic feedback system for EAP writing analysis and evaluation.">
+    <title>iAWE: Intelligent Academic Writing Evaluator - Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ===== CSS VARIABLES & RESET (Matched to your Brand) ===== */
+        /* ===== CSS VARIABLES & RESET ===== */
         :root {
             --primary: #0A1C3C;
             --secondary: #20B2AA;
@@ -23,22 +23,31 @@
             --transition: all 0.3s ease;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--dark);
             background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* RTL Support for Arabic */
         body.arabic {
             font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
             direction: rtl;
         }
 
+        /* Ensure RTL inheritance for all containers */
         body.arabic .container,
         body.arabic main,
         body.arabic section,
@@ -47,10 +56,15 @@
         body.arabic .features-grid,
         body.arabic .workflow-steps,
         body.arabic .audience-grid {
+            direction: rtl;
             text-align: right;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
         /* ===== LANGUAGE TOGGLE ===== */
         .language-toggle {
@@ -76,27 +90,27 @@
             transition: var(--transition);
         }
         
-        .language-toggle button.active { 
-            background: var(--secondary); 
-            color: white;
+        .language-toggle button.active {
+            background: var(--secondary);
         }
         
-        .language-toggle button:hover {
-            background: rgba(32, 178, 170, 0.7);
-        }
-
-        /* ===== HEADER ===== */
+        /* ===== HEADER STYLES (Matching other pages) ===== */
         header {
-            background: linear-gradient(135deg, rgba(10, 28, 60, 0.95) 0%, rgba(26, 95, 122, 0.9) 100%),
-                        url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=2000&q=80');
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
             color: var(--white);
             padding: 60px 0 40px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .header-content {
+            position: relative;
+            z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,348 +119,692 @@
             margin-bottom: 40px;
         }
         
-        .header-text { text-align: left; max-width: 600px; }
-        body.arabic .header-text { text-align: right; }
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
         
-        h1 { font-size: 2.5em; margin-bottom: 5px; font-weight: 700; }
-        .tagline { font-size: 1.1em; opacity: 0.9; }
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
         
         .header-photo {
-            width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
             border: 4px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
         }
         
         nav ul {
-            list-style: none; 
-            display: flex; 
-            justify-content: center; 
-            flex-wrap: wrap; 
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 30px;
-            background: rgba(10, 28, 60, 0.7); 
-            padding: 15px 30px; 
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            max-width: 800px; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
             margin: 0 auto;
         }
         
-        nav a { 
-            color: var(--white); 
-            text-decoration: none; 
-            font-weight: 600; 
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
             transition: var(--transition);
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 5px 0;
+            position: relative;
         }
         
-        nav a:hover, 
-        nav a:focus { 
-            color: var(--secondary); 
-            background: rgba(255, 255, 255, 0.1);
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
         }
 
-        /* ===== HERO & LOGO ===== */
+        /* ===== ENHANCED APP LOGO SECTION ===== */
         .app-logo-container {
-            width: 180px; height: 180px; margin: 0 auto 30px;
-            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             animation: float 6s ease-in-out infinite;
         }
 
         .app-logo-frame {
-            width: 100%; height: 100%; border-radius: 30px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
-            border: 1px solid rgba(255,255,255,0.6);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+                0 0 30px rgba(32, 178, 170, 0.3);
             padding: 15px;
-            display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .app-logo-icon { 
-            font-size: 80px; 
-            color: var(--primary); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 0 40px rgba(32, 178, 170, 0.4);
+        }
+
+        .app-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            transition: filter 0.3s ease;
+        }
+
+        .app-logo-frame:hover .app-logo-img {
+            filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
+        }
+
+        /* Decorative elements around logo */
+        .app-logo-container::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(32, 178, 170, 0.2) 0%, rgba(26, 95, 122, 0.2) 100%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .app-logo-container::after {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            animation: rotate 25s linear infinite reverse;
+            z-index: -2;
+        }
+
+        /* Add a subtle shine effect */
+        .app-logo-frame::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 60%);
+            background-size: 300% 300%;
+            animation: shine 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
         }
 
-        .hero h1 { color: var(--primary); font-size: 42px; line-height: 1.2; margin-bottom: 10px; }
-        .hero-subtitle { font-size: 22px; color: var(--accent); margin-bottom: 20px; font-weight: 600; }
-        .hero-description { font-size: 18px; color: var(--gray); max-width: 750px; margin: 0 auto 30px; }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { background-position: -100% -100%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--dark);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
 
         /* ===== DATA NOTICE ===== */
         .data-notice {
-            background: #fff9db; 
-            border-left: 4px solid #f59f00; 
+            background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
+            border-left: 4px solid #f59f00;
             padding: 24px;
-            margin: 40px auto; 
-            border-radius: 8px; 
+            margin: 40px auto;
+            border-radius: 12px;
             max-width: 800px;
-        }
-        
-        body.arabic .data-notice { 
-            border-left: none; 
-            border-right: 4px solid #f59f00; 
-        }
-        
-        .data-notice h4 { 
-            color: #5c4400; 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-        }
-        
-        .data-notice a { 
-            color: var(--primary); 
-            font-weight: 700; 
-            text-decoration: underline;
-        }
-        
-        .data-notice a:hover,
-        .data-notice a:focus {
-            color: var(--accent);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.6s ease-out;
         }
 
-        /* ===== SECTIONS ===== */
-        .section-title { 
-            text-align: center; 
-            color: var(--primary); 
-            margin: 60px 0 40px; 
-            font-size: 32px; 
-            position: relative; 
+        body.arabic .data-notice {
+            border-left: none;
+            border-right: 4px solid #f59f00;
         }
-        
+
+        .data-notice h4 {
+            color: #5c4400;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-notice h4 i {
+            font-size: 20px;
+        }
+
+        .data-notice p {
+            color: #8a6d00;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .data-notice a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .data-notice a:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        /* ===== WORKFLOW SECTION ===== */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 48px;
+            position: relative;
+        }
+
         .section-title::after {
-            content: ''; 
-            display: block; 
-            width: 60px; 
-            height: 4px; 
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
             background: var(--secondary);
-            margin: 10px auto 0; 
             border-radius: 2px;
         }
 
-        .features-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; 
+        body.arabic .section-title::after {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
         }
-        
-        .feature-card {
-            background: var(--white); 
-            padding: 30px; 
+
+        .workflow-container {
+            position: relative;
+            margin: 64px 0;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .workflow-step {
+            background: var(--white);
+            padding: 32px 24px;
             border-radius: 12px;
-            box-shadow: var(--shadow); 
-            border-top: 4px solid var(--primary);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent-light));
+            opacity: 0;
             transition: var(--transition);
         }
-        
-        .feature-card:hover { 
-            transform: translateY(-5px); 
+
+        .workflow-step:hover {
+            transform: translateY(-8px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-        
-        .feature-icon { 
-            font-size: 32px; 
-            color: var(--secondary); 
-            margin-bottom: 20px; 
-            display: flex;
+
+        .workflow-step:hover::before {
+            opacity: 1;
+        }
+
+        .step-number {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* ===== WORKFLOW ===== */
-        .workflow-steps { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 20px; 
-            margin-top: 40px; 
-        }
-        
-        .workflow-step {
-            background: var(--white); 
-            padding: 25px; 
-            border-radius: 10px; 
-            text-align: center;
-            box-shadow: var(--shadow); 
-            border: 1px solid #eee;
-            transition: var(--transition);
-        }
-        
-        .workflow-step:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
-        
-        .step-number {
-            width: 40px; 
-            height: 40px; 
-            background: var(--primary); 
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
             color: white;
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            margin: 0 auto 15px; 
-            font-weight: bold;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 18px;
         }
 
-        /* ===== BADGES ===== */
-        .apis-grid { 
-            display: flex; 
-            justify-content: center; 
-            gap: 15px; 
-            flex-wrap: wrap; 
-            margin-top: 30px; 
+        .workflow-step h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 700;
         }
-        
-        .api-badge {
-            background: #e0f2f1; 
-            color: #00695c; 
-            padding: 8px 16px; 
-            border-radius: 20px;
-            font-weight: 600; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
+
+        .workflow-step p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
             transition: var(--transition);
-        }
-        
-        .api-badge:hover {
-            background: #b2dfdb;
-            transform: translateY(-2px);
+            border: 1px solid var(--light);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ===== CTA ===== */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--secondary);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 16px;
+            background: rgba(10, 28, 60, 0.1);
+            border-radius: 12px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* ===== CTA SECTION ===== */
         .cta-section {
-            background: linear-gradient(135deg, var(--light) 0%, #e0f7fa 100%);
-            padding: 60px 20px; 
-            text-align: center; 
-            border-radius: 12px; 
-            margin: 60px 0;
-        }
-        
-        .cta-button {
-            background: var(--primary); 
-            color: white; 
-            padding: 15px 30px; 
-            border-radius: 50px;
-            text-decoration: none; 
-            font-weight: 600; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 10px;
-            transition: var(--transition); 
-            border: none; 
-            cursor: pointer; 
-            font-size: 1.1em;
-        }
-        
-        .cta-button:hover,
-        .cta-button:focus { 
-            background: var(--accent); 
-            transform: scale(1.05); 
-            outline: none;
+            text-align: center;
+            padding: 64px 0;
+            background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.1) 100%);
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
         }
 
-        /* ===== CITATION SECTION ===== */
-        .citation-section {
-            background: #f8f9fa; 
-            border-left: 4px solid var(--accent); 
-            padding: 20px; 
-            margin: 40px 0; 
-            border-radius: 8px;
+        .cta-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
         }
-        
-        body.arabic .citation-section {
-            border-left: none;
-            border-right: 4px solid var(--accent);
+
+        .cta-subtitle {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
         }
-        
-        .citation-text {
-            font-family: 'Courier New', monospace; 
-            font-size: 14px; 
-            background: white; 
-            padding: 15px; 
-            border: 1px solid #ddd;
-            line-height: 1.5;
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(10, 28, 60, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4);
         }
 
         /* ===== FOOTER ===== */
-        .footer { 
-            text-align: center; 
-            padding: 40px 0; 
-            border-top: 1px solid #eee; 
-            margin-top: 60px; 
-            color: var(--gray); 
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid var(--light);
+            margin-top: 64px;
         }
-        
-        .footer a { 
-            color: var(--primary); 
-            text-decoration: none; 
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-email {
+            color: var(--primary);
+            text-decoration: none;
             font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .footer-email:hover {
+            color: var(--secondary);
         }
         
-        .footer a:hover,
-        .footer a:focus {
-            color: var(--accent);
+        /* Legal links style */
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer a:hover {
+            color: var(--secondary);
             text-decoration: underline;
         }
 
-        /* Language Display Logic */
-        .lang-en { display: block; }
-        .lang-ar { display: none; }
-        body.arabic .lang-en { display: none; }
-        body.arabic .lang-ar { display: block; }
-
-        /* ===== ACCESSIBILITY & FOCUS STYLES ===== */
-        button:focus,
-        a:focus,
-        .cta-button:focus {
-            outline: 3px solid var(--secondary);
-            outline-offset: 2px;
+        .footer-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
         }
 
-        .sr-only {
+        .footer-links a {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
             position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+            right: -5px;
+            color: var(--gray);
+        }
+
+        body.arabic .footer-links a:not(:last-child)::after {
+            right: auto;
+            left: -5px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* ===== LANGUAGE LOGIC (CORRECTED) ===== */
+        /* Base state: English visible, Arabic hidden */
+        .lang-en { 
+            display: block; 
+        }
+        .lang-ar { 
+            display: none; 
+        }
+        
+        /* For flex containers in data-notice */
+        .data-notice h4.lang-en { 
+            display: flex; 
+        }
+        .data-notice h4.lang-ar { 
+            display: none; 
+        }
+        
+        /* For inline elements in footer */
+        .footer-content > div > .lang-en {
+            display: inline;
+        }
+        .footer-content > div > .lang-ar {
+            display: none;
+        }
+        
+        /* Arabic state: Arabic visible, English hidden */
+        body.arabic .lang-en { 
+            display: none; 
+        }
+        body.arabic .lang-ar { 
+            display: block; 
+        }
+        
+        body.arabic .data-notice h4.lang-en { 
+            display: none; 
+        }
+        body.arabic .data-notice h4.lang-ar { 
+            display: flex; 
+        }
+        
+        body.arabic .footer-content > div > .lang-en {
+            display: none;
+        }
+        body.arabic .footer-content > div > .lang-ar {
+            display: inline;
+        }
+
+        /* Center the Arabic hero title and subtitle */
+        body.arabic .hero h1.lang-ar,
+        body.arabic .hero .hero-subtitle.lang-ar {
+            text-align: center;
+        }
+
+        /* Center the Arabic text in the footer */
+        body.arabic .footer,
+        body.arabic .footer-content,
+        body.arabic .footer-content > div {
+            text-align: center;
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text {
+                text-align: center;
+            }
+            
+            body.arabic .header-text {
+                text-align: center;
+            }
+        }
+
         @media (max-width: 768px) {
-            .header-content { 
-                flex-direction: column; 
-                text-align: center; 
-                gap: 30px;
-            }
-            
-            .header-text { 
-                text-align: center !important; 
-            }
-            
-            h1 { font-size: 2em; }
-            
-            .hero h1 { font-size: 32px; }
-            
-            .hero-subtitle { font-size: 18px; }
-            
             nav ul {
                 gap: 15px;
-                padding: 10px 20px;
-                border-radius: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.1em;
+            }
+            
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .hero h1 { 
+                font-size: 36px; 
+            }
+            
+            .hero-subtitle { 
+                font-size: 20px; 
+            }
+            
+            .section-title { 
+                font-size: 28px; 
             }
             
             .features-grid,
@@ -455,391 +813,384 @@
             }
             
             .language-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 6px 12px;
+                top: 16px;
+                right: 16px;
             }
             
             .app-logo-container {
                 width: 140px;
                 height: 140px;
+                margin-bottom: 30px;
             }
             
-            .app-logo-icon {
-                font-size: 60px;
+            .app-logo-container::before {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .app-logo-container::after {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .app-logo-frame {
+                border-radius: 25px;
+                padding: 12px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .footer-links a:not(:last-child)::after {
+                display: none;
             }
         }
 
         @media (max-width: 480px) {
-            .section-title { font-size: 26px; }
-            
-            .feature-card { padding: 20px; }
-            
-            .workflow-step { padding: 20px; }
-            
-            .apis-grid { gap: 10px; }
-            
-            .api-badge {
-                padding: 6px 12px;
-                font-size: 14px;
-            }
-        }
-
-        /* Print styles */
-        @media print {
-            .language-toggle,
-            .cta-button,
-            .data-notice,
-            .citation-section {
-                display: none !important;
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
             }
             
-            .feature-card,
-            .workflow-step {
-                box-shadow: none;
-                border: 1px solid #ddd;
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .hero h1 { 
+                font-size: 28px; 
+            }
+            
+            .hero-description { 
+                font-size: 16px; 
+            }
+            
+            .feature-card {
+                padding: 24px;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .app-logo-container {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 25px;
+            }
+            
+            .app-logo-container::before {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .app-logo-container::after {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .app-logo-frame {
+                border-radius: 20px;
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Language Toggle -->
-    <div class="language-toggle" aria-label="Language selector">
-        <button id="lang-en" class="active" aria-label="Switch to English" aria-pressed="true">English</button>
-        <button id="lang-ar" aria-label="التبديل إلى العربية" aria-pressed="false" lang="ar">العربية</button>
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
     </div>
     
-    <!-- Header -->
+    <!-- Header Section (Matching other pages) -->
     <header>
         <div class="container header-content">
             <div class="header-text">
                 <h1 class="lang-en">Dr. Waleed Mandour</h1>
-                <h1 class="lang-ar" lang="ar" dir="rtl">د. وليد مندور</h1>
-                <p class="tagline lang-en">Applied Linguistics & CALL Researcher</p>
-                <p class="tagline lang-ar" lang="ar" dir="rtl">باحث في اللغويات التطبيقية وتعليم اللغات بمساعدة الحاسوب</p>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">Lexicography & Corpus Studies Researcher</p>
+                <p class="tagline lang-ar">باحث في علم المعاجم والمدونات اللغوية</p>
             </div>
+            
             <div class="header-photo-container">
-                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" 
-                     alt="Dr. Waleed Mandour" 
-                     class="header-photo"
-                     width="150"
-                     height="150">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
             </div>
         </div>
-        <nav aria-label="Main navigation">
+        
+        <nav>
             <div class="container">
                 <ul>
-                    <li>
-                        <a href="https://waleedmandour.org/">
-                            <span class="lang-en">Home</span>
-                            <span class="lang-ar" lang="ar" dir="rtl">الرئيسية</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://waleedmandour.org/research/">
-                            <span class="lang-en">Research</span>
-                            <span class="lang-ar" lang="ar" dir="rtl">البحث العلمي</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://waleedmandour.org/projects/">
-                            <span class="lang-en">Projects</span>
-                            <span class="lang-ar" lang="ar" dir="rtl">المشاريع</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://waleedmandour.org/contact/">
-                            <span class="lang-en">Contact</span>
-                            <span class="lang-ar" lang="ar" dir="rtl">اتصل بي</span>
-                        </a>
-                    </li>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
+    <!-- Main Content Area -->
     <main class="container">
-        <!-- Hero Section -->
-        <section class="hero" aria-labelledby="hero-title">
+        <!-- iAWE Hero Section -->
+        <section class="hero">
             <div class="hero-content">
+                <!-- Enhanced App Logo -->
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
-                        <i class="fas fa-pen-fancy app-logo-icon" aria-hidden="true"></i>
-                        <span class="sr-only">iAWE Logo</span>
+                        <img src="images/iAWE.png" alt="iAWE System Logo" class="app-logo-img">
                     </div>
                 </div>
                 
-                <h1 id="hero-title" class="lang-en">EAP Writing Assistant (iAWE)</h1>
-                <h1 id="hero-title-ar" class="lang-ar" lang="ar" dir="rtl">مساعد الكتابة الأكاديمية (iAWE)</h1>
+                <h1 class="lang-en">iAWE: Intelligent Academic Writing Evaluator</h1>
+                <h1 class="lang-ar">نظام iAWE لتقييم الكتابة الأكاديمية الذكي</h1>
                 
-                <div class="hero-subtitle lang-en">Intelligent Automated Writing Evaluation</div>
-                <div class="hero-subtitle lang-ar" lang="ar" dir="rtl">بيئة ذكية لتقييم الكتابة الأكاديمية</div>
+                <div class="hero-subtitle lang-en">AI-Assisted, Deterministic Feedback for EAP Writing</div>
+                <div class="hero-subtitle lang-ar">تغذية راجعة ذكية ومنضبطة لكتابة اللغة الإنجليزية للأغراض الأكاديمية</div>
 
-                <div class="hero-description">
-                    <p class="lang-en">
-                        A Google Sheets Add-on designed for EAP students. It combines <strong>Gemini 2.5 Flash</strong>, 
-                        the <strong>New Academic Word List (NAWL)</strong>, and <strong>Conceptual RAG</strong> to provide 
-                        schema-enforced, bilingual feedback across 13 linguistic dimensions—from lexical sophistication to rhetorical stance.
-                    </p>
-                    <p class="lang-ar" lang="ar" dir="rtl">
-                        إضافة لجداول بيانات جوجل مخصصة لطلاب اللغة الإنجليزية للأغراض الأكاديمية (EAP). تجمع بين 
-                        <strong>Gemini 2.5</strong>، و<strong>قائمة الكلمات الأكاديمية الجديدة (NAWL)</strong>، 
-                        و<strong>التوليد المعزز بالمفاهيم (RAG)</strong> لتقديم تغذية راجعة ثنائية اللغة ومنضبطة هيكلياً 
-                        عبر 13 بعداً لغوياً—من التعقيد المعجمي إلى الموقف البلاغي.
-                    </p>
+                <div>
+                <p class="hero-description lang-en">
+                    iAWE is an AI-assisted academic writing evaluation system designed for English for Academic Purposes (EAP).
+                    It delivers deterministic, schema-enforced feedback on student essays by combining corpus-informed metrics,
+                    rule-based validation, and controlled large-language-model outputs.
+                </p>
+                
+                <p class="hero-description lang-ar">
+                    iAWE هو نظام ذكي لتقييم الكتابة الأكاديمية في سياق اللغة الإنجليزية للأغراض الأكاديمية.
+                    يجمع بين التحليل المعتمد على المدونات اللغوية، والتحقق القاعدي، والتوليد المقيد بالذكاء الاصطناعي
+                    لتقديم تغذية راجعة دقيقة، متسقة، وقابلة للتفسير.
+                </p>
                 </div>
             </div>
         </section>
 
-        <!-- Data Notice (Required for Verification) -->
-        <div class="data-notice" role="region" aria-labelledby="data-notice-title">
-            <h4 id="data-notice-title" class="lang-en"><i class="fas fa-shield-alt" aria-hidden="true"></i> Google Data Usage</h4>
-            <h4 id="data-notice-title-ar" class="lang-ar" lang="ar" dir="rtl"><i class="fas fa-shield-alt" aria-hidden="true"></i> استخدام بيانات جوجل</h4>
-            
+        <!-- iAWE System Evidence Notice -->
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-flask"></i> Research Transparency Notice</h4>
+            <h4 class="lang-ar"><i class="fas fa-flask"></i> ملاحظة الشفافية البحثية</h4>
+
             <p class="lang-en">
-                The EAP Writing Assistant requires access to your Google Sheets to read student text for analysis and write feedback 
-                into the dashboard columns. Text is processed ephemerally by the AI model and is not stored by us.
+                The current public release of iAWE is based on an evaluative study of
+                <strong>20 student essays (300–400 words)</strong> analysed by the system
+                and benchmarked against expert human feedback.
             </p>
-            <p class="lang-ar" lang="ar" dir="rtl">
-                يتطلب مساعد الكتابة الأكاديمية الوصول إلى جداول جوجل لقراءة نصوص الطلاب للتحليل وكتابة التغذية الراجعة 
-                في أعمدة لوحة المعلومات. تتم معالجة النص لحظياً بواسطة نموذج الذكاء الاصطناعي ولا يتم تخزينه لدينا.
+
+            <p class="lang-ar">
+                تعتمد النسخة الحالية من نظام iAWE على دراسة تقييمية شملت
+                <strong>20 مقالة طلابية (300–400 كلمة)</strong>،
+                حيث تمت مقارنة مخرجات النظام بتغذية راجعة بشرية متخصصة.
+            </p>
+
+            <p class="lang-en">
+                While the analytical accuracy was found to be closely aligned with human judgment,
+                learners did not directly interact with the system during the evaluation phase.
+                This constitutes a documented limitation addressed in future iterations.
+            </p>
+
+            <p class="lang-ar">
+                وعلى الرغم من تقارب نتائج النظام مع التقييم البشري،
+                إلا أن الطلاب لم يتفاعلوا مباشرة مع النظام خلال مرحلة التقييم،
+                وهو ما يُعد قيداً منهجياً سيتم معالجته مستقبلاً.
             </p>
             
-            <p class="lang-en" style="font-weight: 600; color: #b45309; margin-top:10px;">
-                The EAP Writing Assistant's use of information received from Google APIs adheres to the 
-                <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, 
-                including the Limited Use requirements.
+            <!-- Academic Positioning Statement -->
+            <p class="lang-en" style="font-weight: 700; color: #b45309; margin-top: 15px;">
+                <i class="fas fa-info-circle"></i> iAWE is presented as a research-grade evaluative prototype, 
+                not a replacement for human assessment. It serves pedagogical experimentation and academic transparency.
             </p>
-            <p class="lang-ar" style="font-weight: 600; color: #b45309; margin-top:10px;" lang="ar" dir="rtl">
-                يلتزم استخدام مساعد الكتابة الأكاديمية للمعلومات المستلمة من واجهات برمجة تطبيقات جوجل بـ 
-                <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">سياسة بيانات مستخدمي خدمات Google API</a>، 
-                بما في ذلك متطلبات الاستخدام المحدود.
+            <p class="lang-ar" style="font-weight: 700; color: #b45309; margin-top: 15px;">
+                <i class="fas fa-info-circle"></i> يُعرض نظام iAWE كنموذج تقويمي لأغراض البحث العلمي، 
+                وليس بديلاً عن التقييم البشري. إنه مخصص للتجريب التربوي والشفافية الأكاديمية.
             </p>
-            
-            <div style="margin-top: 15px;">
-                <a href="privacy.html" class="lang-en">Privacy Policy</a>
-                <a href="privacy.html" class="lang-ar" lang="ar" dir="rtl">سياسة الخصوصية</a>
-                <span style="margin:0 10px" aria-hidden="true">|</span>
-                <a href="terms.html" class="lang-en">Terms of Service</a>
-                <a href="terms.html" class="lang-ar" lang="ar" dir="rtl">شروط الخدمة</a>
-            </div>
         </div>
 
-        <!-- Workflow -->
-        <section class="workflow-container" aria-labelledby="workflow-title">
-            <h2 id="workflow-title" class="section-title lang-en">System Workflow</h2>
-            <h2 id="workflow-title-ar" class="section-title lang-ar" lang="ar" dir="rtl">آلية العمل</h2>
-            
-            <!-- Workflow Diagram -->
-            <div style="text-align:center; margin-bottom:30px;">
-                <img src="images/iAWE_Workflow.png" 
-                     alt="iAWE Workflow Diagram showing the three-step process: Input & Profiling, Conceptual RAG, and Dashboard Output"
-                     onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400/0A1C3C/20B2AA?text=iAWE+Workflow+Diagram';"
-                     style="max-width:100%; height:auto; border-radius:10px; box-shadow:var(--shadow);"
-                     width="800"
-                     height="400">
-            </div>
+        <!-- iAWE How It Works Section -->
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">How iAWE Works</h2>
+            <h2 class="section-title lang-ar">آلية عمل نظام iAWE</h2>
             
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <h4 class="lang-en">Input & Profiling</h4>
-                    <h4 class="lang-ar" lang="ar" dir="rtl">المدخلات والتحليل المعجمي</h4>
-                    <p class="lang-en">Text is validated and profiled against the hardcoded NAWL dataset (O(1) lookup).</p>
-                    <p class="lang-ar" lang="ar" dir="rtl">يتم التحقق من النص وتحليله معجمياً مقابل قاعدة بيانات NAWL المدمجة.</p>
+                    <h4 class="lang-en">Text Ingestion</h4>
+                    <h4 class="lang-ar">إدخال النص</h4>
+                    <p class="lang-en">
+                        Student essays are tokenised and structurally analysed according to academic writing criteria.
+                    </p>
+                    <p class="lang-ar">
+                        تتم معالجة المقالات الطلابية وتحليل بنيتها وفق معايير الكتابة الأكاديمية.
+                    </p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
-                    <h4 class="lang-en">Conceptual RAG</h4>
-                    <h4 class="lang-ar" lang="ar" dir="rtl">التوليد المعزز (RAG)</h4>
-                    <p class="lang-en">Key dimensions trigger semantic searches to retrieve scholarly definitions (Hyland, Swales).</p>
-                    <p class="lang-ar" lang="ar" dir="rtl">تستدعي الأبعاد الرئيسية بحثاً دلالياً لاسترجاع التعريفات الأكاديمية الموثقة.</p>
+                    <h4 class="lang-en">Schema-Enforced Analysis</h4>
+                    <h4 class="lang-ar">التحليل المنضبط بنموذج صارم</h4>
+                    <p class="lang-en">
+                        Feedback generation is constrained by a deterministic schema to ensure consistency,
+                        reproducibility, and auditability.
+                    </p>
+                    <p class="lang-ar">
+                        يتم توليد التغذية الراجعة ضمن نموذج صارم يضمن الاتساق وقابلية التتبع والمراجعة.
+                    </p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
-                    <h4 class="lang-en">Dashboard Output</h4>
-                    <h4 class="lang-ar" lang="ar" dir="rtl">لوحة التغذية الراجعة</h4>
-                    <p class="lang-en">AI feedback is parsed into a 13-column dashboard with bilingual support.</p>
-                    <p class="lang-ar" lang="ar" dir="rtl">يتم تحليل ردود الذكاء الاصطناعي وتوزيعها في لوحة معلومات مكونة من 13 عموداً.</p>
+                    <h4 class="lang-en">Validated Feedback Output</h4>
+                    <h4 class="lang-ar">مخرجات تغذية راجعة موثوقة</h4>
+                    <p class="lang-en">
+                        The final output includes structured comments, diagnostic indicators,
+                        and an audit log explaining every evaluative decision.
+                    </p>
+                    <p class="lang-ar">
+                        تشمل المخرجات تعليقات منظمة، ومؤشرات تشخيصية،
+                        وسجل تدقيق يوضح منطق كل قرار تقويمي.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- Citation -->
-        <section class="citation-section" aria-label="Citation">
-            <h4 style="color: var(--primary); margin-bottom: 10px;">
-                <i class="fas fa-quote-right" aria-hidden="true"></i> 
-                <span class="lang-en">Citation</span>
-                <span class="lang-ar" lang="ar" dir="rtl">الاقتباس</span>
-            </h4>
-            <p class="citation-text">
-                Mandour, W. & Mourssi, A. (2026). <em>Enhancing EAP Writing through AI-Driven Bilingual Text Analysis: A Schema-Enforced, Corpus-Informed Approach</em>. URL:....
-            </p>
-        </section>
-
-        <!-- Key Features -->
-        <section aria-labelledby="features-title">
-            <h2 id="features-title" class="section-title lang-en">Core Features</h2>
-            <h2 id="features-title-ar" class="section-title lang-ar" lang="ar" dir="rtl">الميزات الأساسية</h2>
+        <!-- iAWE Key Features Section -->
+        <section>
+            <h2 class="section-title lang-en">Core Design Principles</h2>
+            <h2 class="section-title lang-ar">مرتكزات التصميم الأساسية</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
-                    <h3 class="lang-en">Schema Enforcement</h3>
-                    <h3 class="lang-ar" lang="ar" dir="rtl">الالتزام الهيكلي (JSON Schema)</h3>
-                    <p class="lang-en">Utilizes <strong>Schmitt et al.'s (2024)</strong> patterns to force the AI into valid JSON, eliminating conversational fluff and hallucinations.</p>
-                    <p class="lang-ar" lang="ar" dir="rtl">استخدام أنماط هندسة الأوامر لإجبار الذكاء الاصطناعي على مخرجات JSON دقيقة، مما يلغي الهلوسة.</p>
+                    <div class="feature-icon">📐</div>
+                    <h3 class="lang-en">Deterministic Architecture</h3>
+                    <h3 class="lang-ar">بنية حتمية منضبطة</h3>
+                    <p class="lang-en">
+                        Unlike open-ended AI feedback tools, iAWE enforces fixed analytical pathways,
+                        ensuring stable and replicable evaluative outcomes.
+                    </p>
+                    <p class="lang-ar">
+                        بخلاف أدوات الذكاء الاصطناعي المفتوحة،
+                        يعتمد iAWE مسارات تحليل ثابتة تضمن نتائج متسقة وقابلة للتكرار.
+                    </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-book" aria-hidden="true"></i></div>
-                    <h3 class="lang-en">NAWL Integration</h3>
-                    <h3 class="lang-ar" lang="ar" dir="rtl">قائمة الكلمات الأكاديمية (NAWL)</h3>
-                    <p class="lang-en">Deterministically identifies academic vocabulary coverage (92%) using a local, latency-free script integration.</p>
-                    <p class="lang-ar" lang="ar" dir="rtl">تحديد تغطية المفردات الأكاديمية بدقة باستخدام دمج محلي سريع داخل البرمجية.</p>
+                    <div class="feature-icon">🧾</div>
+                    <h3 class="lang-en">Audit-Ready Feedback</h3>
+                    <h3 class="lang-ar">تغذية راجعة قابلة للتدقيق</h3>
+                    <p class="lang-en">
+                        Each feedback instance is accompanied by an audit log
+                        documenting rules triggered and criteria applied.
+                    </p>
+                    <p class="lang-ar">
+                        تُرفق كل تغذية راجعة بسجل تدقيق
+                        يوضح القواعد والمعايير التي تم تفعيلها.
+                    </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-language" aria-hidden="true"></i></div>
-                    <h3 class="lang-en">Bilingual Scaffolding</h3>
-                    <h3 class="lang-ar" lang="ar" dir="rtl">سقالات تعليمية ثنائية اللغة</h3>
-                    <p class="lang-en">Provides explanatory feedback in Arabic or English, translating complex Applied Linguistics terminology for learners.</p>
-                    <p class="lang-ar" lang="ar" dir="rtl">توفير تغذية راجعة توضيحية بالعربية أو الإنجليزية، مع ترجمة مصطلحات اللغويات التطبيقية.</p>
+                    <div class="feature-icon">🎓</div>
+                    <h3 class="lang-en">EAP-Specific Design</h3>
+                    <h3 class="lang-ar">تصميم مخصص للكتابة الأكاديمية</h3>
+                    <p class="lang-en">
+                        The system is tailored for academic discourse conventions,
+                        not generic grammar correction.
+                    </p>
+                    <p class="lang-ar">
+                        صُمم النظام خصيصاً لخطاب الكتابة الأكاديمية،
+                        وليس للتصحيح اللغوي العام.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- Tech Stack -->
-        <section style="text-align:center; margin-top:50px;" aria-label="Technology stack">
-            <span class="lang-en" style="text-transform:uppercase; letter-spacing:2px; font-size:12px; color:#777;">Powered By</span>
-            <span class="lang-ar" style="text-transform:uppercase; letter-spacing:2px; font-size:12px; color:#777;" lang="ar" dir="rtl">مدعوم بتقنيات</span>
-            <div class="apis-grid">
-                <div class="api-badge"><i class="fas fa-robot" aria-hidden="true"></i> Gemini 2.5 Flash</div>
-                <div class="api-badge"><i class="fas fa-table" aria-hidden="true"></i> Google Sheets</div>
-                <div class="api-badge"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Semantic Scholar</div>
-                <div class="api-badge"><i class="fas fa-code" aria-hidden="true"></i> Google Apps Script</div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="cta-section" aria-labelledby="cta-title">
-            <h2 id="cta-title" class="lang-en">Try the EAP Writing Assistant</h2>
-            <h2 id="cta-title-ar" class="lang-ar" lang="ar" dir="rtl">جرب مساعد الكتابة الأكاديمية</h2>
-            <p class="lang-en" style="margin-bottom:20px;">Available for research and educational purposes.</p>
-            <p class="lang-ar" style="margin-bottom:20px;" lang="ar" dir="rtl">متاح للأغراض البحثية والتعليمية.</p>
+        <!-- iAWE Call to Action Section -->
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">Explore iAWE</h2>
+            <h2 class="cta-title lang-ar">استكشف نظام iAWE</h2>
             
-            <button class="cta-button" onclick="window.open('#', '_blank')" aria-label="Install Add-on (Coming Soon)">
-                <i class="fas fa-rocket" aria-hidden="true"></i> 
-                <span class="lang-en">Install Add-on (Coming Soon)</span>
-                <span class="lang-ar" lang="ar" dir="rtl">تثبيت الإضافة (قريباً)</span>
-            </button>
+            <p class="cta-subtitle lang-en">
+                iAWE is provided for research dissemination, academic transparency,
+                and pedagogical experimentation.
+            </p>
+            <p class="cta-subtitle lang-ar">
+                يُتاح نظام iAWE لأغراض البحث العلمي،
+                والشفافية الأكاديمية، والتجريب التربوي.
+            </p>
+            
+            <a href="#" class="cta-button">
+                <i class="fas fa-file-alt"></i>
+                <span class="lang-en">View Sample Analysis</span>
+                <span class="lang-ar">عرض تحليل نموذجي</span>
+            </a>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
-            <p>© 2026 Dr. Waleed Mandour. All rights reserved.</p>
-            <p>
-                <a href="mailto:w.abumandour@squ.edu.om">w.abumandour@squ.edu.om</a>
-            </p>
+            <div class="footer-content">
+                <div>
+                    <span class="lang-en">© 2025 Waleed Mandour • </span>
+                    <span class="lang-ar">© 2025 وليد مندور • </span>
+                    <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                </div>
+                
+                <div class="footer-links">
+                    <span class="lang-en">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                        <a href="support.html">Support</a>
+                    </span>
+                    <span class="lang-ar">
+                        <a href="privacy.html">سياسة الخصوصية</a>
+                        <a href="terms.html">شروط الخدمة</a>
+                        <a href="support.html">الدعم</a>
+                    </span>
+                </div>
+
+                <div style="margin-top: 8px;">
+                    <span class="lang-en">Part of the <strong>waleedmandour.org/projects/</strong> portfolio</span>
+                    <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
+                </div>
+            </div>
         </footer>
     </main>
 
     <script>
-        // Language Toggle Logic
-        const btnEn = document.getElementById('lang-en');
-        const btnAr = document.getElementById('lang-ar');
-        
-        btnEn.addEventListener('click', () => {
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
             document.body.classList.remove('arabic');
-            btnEn.classList.add('active');
-            btnEn.setAttribute('aria-pressed', 'true');
-            btnAr.classList.remove('active');
-            btnAr.setAttribute('aria-pressed', 'false');
-            document.documentElement.lang = 'en';
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
         });
         
-        btnAr.addEventListener('click', () => {
+        document.getElementById('lang-ar').addEventListener('click', function() {
             document.body.classList.add('arabic');
-            btnAr.classList.add('active');
-            btnAr.setAttribute('aria-pressed', 'true');
-            btnEn.classList.remove('active');
-            btnEn.setAttribute('aria-pressed', 'false');
-            document.documentElement.lang = 'ar';
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
         });
 
-        // Keyboard navigation for language toggle
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '1' && (e.ctrlKey || e.metaKey)) {
-                btnEn.click();
-                e.preventDefault();
-            }
-            if (e.key === '2' && (e.ctrlKey || e.metaKey)) {
-                btnAr.click();
-                e.preventDefault();
-            }
-        });
+        // Add scroll animation for elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-        // Simple Fade-in Animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        // Observe elements for animation
-        document.querySelectorAll('.feature-card, .workflow-step').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId !== '#') {
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
                     }
-                }
+                });
+            }, observerOptions);
+
+            // Observe all cards and steps
+            document.querySelectorAll('.feature-card, .workflow-step').forEach(el => {
+                observer.observe(el);
             });
         });
-
-        // Add focus trap for accessibility
-        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        const modal = document.querySelector('.language-toggle');
-        
-        if (modal) {
-            const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
-            const focusableContent = modal.querySelectorAll(focusableElements);
-            const lastFocusableElement = focusableContent[focusableContent.length - 1];
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstFocusableElement) {
-                            lastFocusableElement.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastFocusableElement) {
-                            firstFocusableElement.focus();
-                            e.preventDefault();
-                        }
-                    }
-                }
-            });
-        }
     </script>
 </body>
 </html>
