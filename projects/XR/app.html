@@ -866,7 +866,7 @@
             { q: "What thermodynamic property makes the Haber-Bosch process exothermic?", options: ["Positive ΔH", "Negative ΔH", "ΔG = 0", "ΔS > 0"], correct: 1 },
             { q: "In chemical engineering, what does 'Decomposition' mean?", options: ["Combining elements", "Breaking down a compound", "Increasing pressure", "Creating equilibrium"], correct: 1 },
             { q: "According to Le Chatelier's principle, increasing pressure shifts equilibrium to...", options: ["Side with more moles", "Side with fewer moles", "No change", "Reactants side"], correct: 1 },
-            { q: "What is 'Chemical Equilibrium'?", options: ["Reaction stops", "Reactants used up", "Forward & reverse rates equal", "Temperature is zero"], correct: 2 },
+            { q: "What's 'Chemical Equilibrium'?", options: ["Reaction stops", "Reactants used up", "Forward & reverse rates equal", "Temperature is zero"], correct: 2 },
             { q: "Primary catalyst in Haber-Bosch process?", options: ["Platinum", "Iron with promoters", "Copper", "Nickel"], correct: 1 },
             { q: "Why use 400-450°C despite lower T favoring yield?", options: ["Increase rate, catalyst activation", "Reduce pressure", "Save energy", "Melt catalyst"], correct: 0 },
             { q: "What's the mole ratio of H₂:N₂ in the feed?", options: ["1:1", "2:1", "3:1", "4:1"], correct: 2 },
@@ -937,23 +937,21 @@
         }
 
         async function handleStartAR() {
-            if (state.isMobile) {
-                await requestCameraPermission();
-            } else {
-                await startApp('AR');
-            }
+            // FIX: Removed manual camera permission request.
+            // Directly start app. MindAR handles the camera request internally.
+            // The user's click on "Initialize AR Mode" satisfies browser security policies.
+            await startApp('AR');
         }
 
         async function requestCameraPermission() {
+            // This function is kept for structure but is no longer called to avoid camera conflicts.
+            // Manually requesting and stopping the stream causes MindAR to fail on many devices.
             try {
                 if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
                     alert('AR requires HTTPS for security.'); 
                     await startApp('3D');
                     return;
                 }
-                
-                // Show permission guidance
-                showToast("Camera access required for AR mode", "Please allow camera permissions when prompted");
                 
                 const stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { 
@@ -1150,8 +1148,9 @@
             const container = document.getElementById('container');
             document.body.classList.add('ar-active');
             
-            // Use demo target for reliability
-            const targetSrc = "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/assets/image-templates/card-example/card.mind";
+            // FIX: Updated targetSrc to use the local file './targets.mind' 
+            // instead of the CDN demo file.
+            const targetSrc = "./targets.mind";
             
             try {
                 const mindar = new window.MINDAR.IMAGE.MindARThree({
