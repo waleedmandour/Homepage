@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haber-Bosch WebAR Lab | Chemical Engineering LANC2160</title>
+    <title>Haber-Bosch WebAR Lab | Chemical Engineering LANC2130</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -204,11 +204,12 @@
             width: 100%;
         }
 
-        /* ===== ENHANCED APP LOGO SECTION ===== */
+        /* ===== ENHANCED APP LOGO SECTION (ADJUSTED) ===== */
         .app-logo-container {
             position: relative;
-            width: 220px;
-            height: 220px;
+            /* Changed from fixed width/height to max-width for responsiveness */
+            max-width: 400px; 
+            width: 90%; /* Fills 90% of the parent container on smaller screens */
             margin: 0 auto 40px;
             display: flex;
             align-items: center;
@@ -218,7 +219,7 @@
 
         .app-logo-frame {
             width: 100%;
-            height: 100%;
+            height: auto; /* ADJUSTED: Allows flexible height */
             position: relative;
             border-radius: 30px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
@@ -233,7 +234,7 @@
         }
 
         .app-logo-frame:hover {
-            transform: scale(1.05) rotate(3deg);
+            transform: scale(1.02) rotate(1deg); /* Subtler rotation */
             border-color: rgba(255, 255, 255, 0.6);
             box-shadow: 
                 0 20px 45px rgba(0, 0, 0, 0.3),
@@ -243,7 +244,7 @@
 
         .app-logo-img {
             width: 100%;
-            height: 100%;
+            height: auto; /* ADJUSTED: Maintains aspect ratio */
             object-fit: contain;
             border-radius: 20px;
             filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
@@ -253,8 +254,10 @@
         .app-logo-container::before {
             content: '';
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
             border-radius: 40px;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(13, 27, 42, 0.2) 100%);
             animation: rotate 20s linear infinite;
@@ -264,8 +267,10 @@
         .app-logo-container::after {
             content: '';
             position: absolute;
-            width: 220px;
-            height: 220px;
+            width: 110%;
+            height: 110%;
+            top: -5%;
+            left: -5%;
             border-radius: 50px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             animation: rotate 25s linear infinite reverse;
@@ -461,7 +466,7 @@
         /* ===== FEATURES GRID ===== */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, min-width(350px, 1fr));
             gap: 32px;
             margin: 64px 0;
         }
@@ -739,6 +744,47 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== PRINT STYLES (Added for Marker Functionality) ===== */
+        @media print {
+            /* Hide everything except the marker */
+            body * {
+                visibility: hidden;
+            }
+            
+            /* Show the marker container and its children */
+            .app-logo-container, .app-logo-container * {
+                visibility: visible;
+            }
+            
+            /* Position the marker at the top left of the page */
+            .app-logo-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width for maximum tracking quality */
+                max-width: none;
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                box-shadow: none;
+                animation: none;
+            }
+            
+            /* Remove decorative elements for clean print */
+            .app-logo-container::before, 
+            .app-logo-container::after {
+                display: none;
+            }
+            
+            .app-logo-frame {
+                border: none;
+                background: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
@@ -746,6 +792,7 @@
             .header-content { flex-direction: column; text-align: center; }
             .header-text { text-align: center; }
             body.arabic .header-text { text-align: center; }
+            .app-logo-container { max-width: 300px; }
         }
     </style>
 </head>
@@ -792,11 +839,11 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <!-- App Logo -->
+                <!-- App Logo / AR Marker -->
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
-                        <!-- REPLACE WITH YOUR APP LOGO -->
-                        <img src="images/Haber-Bosch-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Haber-Bosch AR Logo" class="app-logo-img">
+                        <!-- This image serves as both the Logo and the AR Marker -->
+                        <img src="images/Haber-Bosch-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Haber-Bosch AR Marker - Scan this image" class="app-logo-img">
                     </div>
                 </div>
                 
@@ -1034,8 +1081,8 @@
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">© 2025 AR Engineering Labs • Designed for LANC2160</span>
-                    <span class="lang-ar">© 2025 مختبرات الهندسة للواقع المعزز • صُمم لمقرر LANC2160</span>
+                    <span class="lang-en">© 2025 AR Engineering Labs • Designed for LANC2130</span>
+                    <span class="lang-ar">© 2025 مختبرات الهندسة للواقع المعزز • صُمم لمقرر LANC2130</span>
                 </div>
                 
                 <div style="margin-top: 8px;">
