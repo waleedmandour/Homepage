@@ -1,0 +1,116 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- 3D Sphere Gradients -->
+    <radialGradient id="nitrogen3D" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#7dd3fc" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#082f49" />
+    </radialGradient>
+    <radialGradient id="hydrogen3D" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="50%" stop-color="#94a3b8" />
+      <stop offset="100%" stop-color="#334155" />
+    </radialGradient>
+    <radialGradient id="orangeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Grid Pattern for Tracking Points -->
+    <pattern id="techGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <rect width="40" height="40" fill="none" />
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#38bdf8" stroke-width="0.5" stroke-opacity="0.3" />
+      <circle cx="40" cy="40" r="1.5" fill="#38bdf8" opacity="0.6"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bgGrad)" />
+  <rect width="1024" height="1024" fill="url(#techGrid)" />
+
+  <!-- Tracking Borders & Corners -->
+  <path d="M 50 200 L 50 50 L 200 50" fill="none" stroke="#38bdf8" stroke-width="12" />
+  <path d="M 824 50 L 974 50 L 974 200" fill="none" stroke="#38bdf8" stroke-width="12" />
+  <path d="M 50 824 L 50 974 L 200 974" fill="none" stroke="#38bdf8" stroke-width="12" />
+  <path d="M 974 824 L 974 974 L 824 974" fill="none" stroke="#38bdf8" stroke-width="12" />
+
+  <!-- Decorative Circuit Lines -->
+  <path d="M 150 150 L 300 150 L 350 200 L 350 800" fill="none" stroke="#10b981" stroke-width="4" stroke-opacity="0.6" stroke-dasharray="10 5" />
+  <path d="M 874 150 L 724 150 L 674 200 L 674 800" fill="none" stroke="#f59e0b" stroke-width="4" stroke-opacity="0.6" stroke-dasharray="15 10" />
+
+  <!-- Top Headers -->
+  <rect x="312" y="60" width="400" height="60" fill="#38bdf8" fill-opacity="0.1" stroke="#38bdf8" stroke-width="2" />
+  <text x="512" y="100" font-family="monospace" font-size="32" font-weight="bold" fill="#38bdf8" text-anchor="middle" letter-spacing="4">HABER-BOSCH AR LAB</text>
+
+  <!-- High-Contrast Mock Barcode (Top Left) -->
+  <g transform="translate(80, 80)">
+    <rect x="0" y="0" width="10" height="60" fill="#e2e8f0" />
+    <rect x="15" y="0" width="20" height="60" fill="#e2e8f0" />
+    <rect x="45" y="0" width="5" height="60" fill="#e2e8f0" />
+    <rect x="55" y="0" width="30" height="60" fill="#e2e8f0" />
+    <rect x="95" y="0" width="10" height="60" fill="#e2e8f0" />
+    <rect x="115" y="0" width="15" height="60" fill="#e2e8f0" />
+  </g>
+
+  <!-- Central 3D Ammonia Molecule (NH3) -->
+  <g transform="translate(512, 480)">
+    <!-- Glow -->
+    <circle cx="0" cy="0" r="250" fill="url(#orangeGlow)" />
+    
+    <!-- 3D Bonds -->
+    <line x1="0" y1="0" x2="-140" y2="120" stroke="#94a3b8" stroke-width="24" stroke-linecap="round" />
+    <line x1="0" y1="0" x2="140" y2="120" stroke="#94a3b8" stroke-width="24" stroke-linecap="round" />
+    <line x1="0" y1="0" x2="0" y2="-160" stroke="#94a3b8" stroke-width="24" stroke-linecap="round" />
+
+    <!-- Nitrogen Atom (Center) -->
+    <circle cx="0" cy="0" r="100" fill="url(#nitrogen3D)" stroke="#38bdf8" stroke-width="4" />
+    <!-- Hydrogen Atoms -->
+    <circle cx="-140" cy="120" r="60" fill="url(#hydrogen3D)" stroke="#e2e8f0" stroke-width="3" />
+    <circle cx="140" cy="120" r="60" fill="url(#hydrogen3D)" stroke="#e2e8f0" stroke-width="3" />
+    <circle cx="0" cy="-160" r="60" fill="url(#hydrogen3D)" stroke="#e2e8f0" stroke-width="3" />
+  </g>
+
+  <!-- Process Info Data Boxes -->
+  <g transform="translate(80, 740)">
+    <rect width="250" height="120" fill="#0f172a" stroke="#f59e0b" stroke-width="3" opacity="0.9"/>
+    <text x="20" y="40" font-family="sans-serif" font-size="20" fill="#f59e0b" font-weight="bold">TARGET THERMODYNAMICS</text>
+    <text x="20" y="75" font-family="monospace" font-size="24" fill="#e2e8f0">TEMP: 450°C</text>
+    <text x="20" y="105" font-family="monospace" font-size="24" fill="#e2e8f0">PRES: 200 atm</text>
+  </g>
+
+  <!-- Equation -->
+  <g transform="translate(694, 740)">
+    <rect width="260" height="120" fill="#0f172a" stroke="#10b981" stroke-width="3" opacity="0.9"/>
+    <text x="20" y="40" font-family="sans-serif" font-size="20" fill="#10b981" font-weight="bold">SYNTHESIS EQUATION</text>
+    <text x="20" y="85" font-family="monospace" font-size="34" fill="#e2e8f0">N₂ + 3H₂ ⇌ 2NH₃</text>
+  </g>
+
+  <!-- Center Target Reticle -->
+  <circle cx="512" cy="480" r="350" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="20 15" opacity="0.4"/>
+  <circle cx="512" cy="480" r="380" fill="none" stroke="#38bdf8" stroke-width="1" opacity="0.2"/>
+  
+  <path d="M 512 100 L 512 130 M 512 830 L 512 860 M 100 480 L 130 480 M 894 480 L 924 480" fill="none" stroke="#ef4444" stroke-width="4" />
+
+  <!-- Professional Credits Section -->
+  <g transform="translate(0, 950)">
+    <!-- Separator Line -->
+    <line x1="100" y1="0" x2="924" y2="0" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="4 4"/>
+    
+    <!-- Credit Line 1 -->
+    <text x="512" y="30" font-family="monospace" font-size="24" fill="#94a3b8" text-anchor="middle" letter-spacing="1">
+      Developed by: Dr. Waleed Mandour
+    </text>
+    
+    <!-- Credit Line 2 -->
+    <text x="512" y="60" font-family="monospace" font-size="22" fill="#64748b" text-anchor="middle" letter-spacing="1">
+      In collaboration with the VR Lab Team at Sultan Qaboos University, 2026
+    </text>
+  </g>
+</svg>
