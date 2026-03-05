@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Student Peer Assessment Hub: An AI-powered Google Slides Add-on for instant classroom feedback, live dashboards, and Gemini-assisted evaluation.">
-    <title>Student Peer Assessment Hub - Dr. Waleed Mandour</title>
+    <meta name="description" content="Student Peer Assessment Suite: AI-powered Google Workspace Add-ons (Slides & Docs) for instant classroom feedback, live dashboards, and Gemini-assisted evaluation.">
+    <title>Student Peer Assessment Suite - Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -54,7 +54,8 @@
         body.arabic .hero-content,
         body.arabic .features-grid,
         body.arabic .workflow-steps,
-        body.arabic .audience-grid {
+        body.arabic .audience-grid,
+        body.arabic .suite-grid {
             direction: rtl;
             text-align: right;
         }
@@ -322,7 +323,7 @@
         .hero-description {
             font-size: 18px;
             color: var(--gray);
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto 32px;
             line-height: 1.7;
         }
@@ -335,14 +336,14 @@
             padding: 0 25px;
         }
 
-        /* ===== DATA NOTICE ===== */
+        /* ===== DATA NOTICE (GOOGLE VALIDATION) ===== */
         .data-notice {
             background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
             border-left: 4px solid #f59f00;
-            padding: 24px;
+            padding: 30px;
             margin: 40px auto;
             border-radius: 12px;
-            max-width: 800px;
+            max-width: 900px;
             box-shadow: var(--shadow);
             animation: fadeIn 0.6s ease-out;
         }
@@ -354,7 +355,7 @@
 
         .data-notice h4 {
             color: #5c4400;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-size: 18px;
             font-weight: 700;
             display: flex;
@@ -367,39 +368,65 @@
             margin-bottom: 12px;
             line-height: 1.6;
         }
-
-        /* ===== DEMO SECTION ===== */
-        .demo-section {
-            margin: 64px 0;
-            text-align: center;
+        
+        .scope-list {
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #8a6d00;
         }
+        
+        body.arabic .scope-list {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+        
+        .scope-list li { margin-bottom: 6px; }
 
-        .demo-container {
-            position: relative;
-            max-width: 900px;
-            margin: 32px auto;
-            border-radius: 12px;
-            overflow: hidden;
+        /* ===== SUITE COMPARISON SECTION ===== */
+        .suite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
+            margin: 40px 0 64px;
+        }
+        
+        .suite-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--light);
             transition: var(--transition);
         }
-
-        .demo-container:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2);
+        
+        .suite-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }
-
-        .demo-gif {
-            width: 100%;
-            height: auto;
-            display: block;
+        
+        .suite-card.slides { border-top: 5px solid #FBBC05; }
+        .suite-card.docs { border-top: 5px solid #4285F4; }
+        
+        .suite-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
         }
-
-        .demo-caption {
-            margin-top: 16px;
+        
+        .slides .suite-icon { color: #FBBC05; }
+        .docs .suite-icon { color: #4285F4; }
+        
+        .suite-card h3 {
+            font-size: 26px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .suite-card p {
             color: var(--gray);
-            font-style: italic;
-            font-size: 14px;
+            margin-bottom: 20px;
+            min-height: 50px;
         }
 
         /* ===== WORKFLOW SECTION ===== */
@@ -484,7 +511,7 @@
         /* ===== FEATURES GRID ===== */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 32px;
             margin: 64px 0;
         }
@@ -751,7 +778,7 @@
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
-            .features-grid, .audience-grid, .workflow-steps { grid-template-columns: 1fr; }
+            .features-grid, .audience-grid, .workflow-steps, .suite-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -799,69 +826,138 @@
                 <!-- App Logo -->
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
-                        <!-- Use an appropriate icon/logo image here -->
                         <img src="images/palogo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3554/3554316.png'" alt="Student Peer Assessment Logo" class="app-logo-img">
                     </div>
                 </div>
                 
-                <h1 class="lang-en">Student Peer Assessment Hub</h1>
-                <h1 class="lang-ar">منصة تقييم الأقران للطلاب</h1>
+                <h1 class="lang-en">Student Peer Assessment Suite</h1>
+                <h1 class="lang-ar">حزمة تقييم الأقران للطلاب</h1>
                 
-                <div class="hero-subtitle lang-en">AI-Powered Google Slides Add-on for Classroom Feedback</div>
-                <div class="hero-subtitle lang-ar">إضافة عروض جوجل التقديمية المدعومة بالذكاء الاصطناعي للتقييم الصفي</div>
+                <div class="hero-subtitle lang-en">AI-Powered Add-ons for Google Slides & Docs</div>
+                <div class="hero-subtitle lang-ar">إضافات مدعومة بالذكاء الاصطناعي لعروض ومستندات جوجل</div>
 
                 <div>
                 <p class="hero-description lang-en">
-                    Transform your Google Slides into an interactive peer-feedback platform. Instantly generate auto-linked Google Forms and QR codes for student assignments, collect live ratings (Task Achievement, Coherence, Lexical Resource, Grammar), and use Gemini AI to dynamically summarize constructive feedback directly on your presentation slides.
+                    A unified suite of pedagogical tools designed to transform how students give and receive feedback. Whether you are running live presentations in Google Slides or managing asynchronous essay workshops in Google Docs, these add-ons automate rubric generation, generate visual data charts, and leverage Gemini AI to guide student revisions.
                 </p>
                 
                 <p class="hero-description lang-ar">
-                    حوّل عروض جوجل التقديمية الخاصة بك إلى منصة تفاعلية لتقييم الأقران. قم بإنشاء نماذج جوجل مرتبطة تلقائياً ورموز استجابة سريعة (QR) لواجبات الطلاب، واجمع التقييمات المباشرة (إنجاز المهمة، الترابط، الموارد المعجمية، والقواعد)، واستخدم ذكاء Gemini لتلخيص التعليقات البناءة وعرضها مباشرة على شرائح العرض.
+                    مجموعة موحدة من الأدوات التربوية المصممة لتحويل كيفية تقديم الطلاب للتعليقات وتلقيها. سواء كنت تدير عروضاً تقديمية مباشرة في شرائح جوجل أو ورش عمل مقالية غير متزامنة في مستندات جوجل، تقوم هذه الإضافات بأتمتة إنشاء النماذج، وإنشاء مخططات بيانية مرئية، والاستفادة من ذكاء Gemini لتوجيه مراجعات الطلاب.
                 </p>
                 </div>
             </div>
         </section>
 
-        <!-- Google Data Notice -->
+        <!-- Google Data Notice (Crucial for Trust & Safety) -->
         <div class="data-notice">
-            <h4 class="lang-en"><i class="fas fa-shield-alt"></i> Important Notice Regarding Google Data</h4>
-            <h4 class="lang-ar"><i class="fas fa-shield-alt"></i> ملاحظة هامة بشأن بيانات جوجل</h4>
+            <h4 class="lang-en"><i class="fas fa-shield-alt"></i> Important Notice Regarding Google Data Usage</h4>
+            <h4 class="lang-ar"><i class="fas fa-shield-alt"></i> ملاحظة هامة بشأن استخدام بيانات جوجل</h4>
             
             <p class="lang-en">
-                The Student Peer Assessment Hub requires access to your Google Slides, Google Forms, and Google Sheets to perform its core pedagogical functions (i.e., generating feedback forms, linking response sheets, and writing live data back to your slides).
+                To provide its core educational functions, the Peer Assessment Suite requires specific permissions to interact securely with your Google Workspace. We strictly adhere to the Limited Use Policy and <strong>never store your data on external servers.</strong> The Add-ons use these scopes exclusively to:
             </p>
             <p class="lang-ar">
-                تتطلب المنصة الوصول إلى عروض جوجل التقديمية، ونماذج جوجل، وجداول البيانات الخاصة بك لأداء وظائفها التربوية الأساسية (مثل، إنشاء نماذج التعليقات، وربط أوراق الاستجابة، وكتابة البيانات المباشرة على شرائحك).
+                لتقديم وظائفها التعليمية الأساسية، تتطلب حزمة تقييم الأقران أذونات محددة للتفاعل بشكل آمن مع مساحة عمل جوجل الخاصة بك. نحن نلتزم بصرامة بسياسة الاستخدام المحدود و <strong>لا نقوم بتخزين بياناتك على خوادم خارجية.</strong> تستخدم الإضافات هذه النطاقات حصرياً من أجل:
             </p>
+
+            <ul class="scope-list lang-en">
+                <li><strong>Google Slides & Docs:</strong> To inject "Cover Page" dashboards, format live Average Tables, and read student text explicitly for AI Originality checking.</li>
+                <li><strong>Google Forms:</strong> To automatically generate bespoke grading rubrics connected to your specific assignment.</li>
+                <li><strong>Google Sheets:</strong> To create a private backend database in your Drive, storing all peer scores and comments safely.</li>
+            </ul>
+            <ul class="scope-list lang-ar">
+                <li><strong>مستندات وشرائح جوجل:</strong> لإدراج لوحات "صفحة الغلاف"، وتنسيق جداول المتوسطات المباشرة، وقراءة نص الطالب بشكل صريح لفحص الأصالة عبر الذكاء الاصطناعي.</li>
+                <li><strong>نماذج جوجل:</strong> لإنشاء نماذج تقييم مخصصة مرتبطة بواجبك المحدد تلقائياً.</li>
+                <li><strong>جداول بيانات جوجل:</strong> لإنشاء قاعدة بيانات خلفية خاصة في Drive الخاص بك، لتخزين جميع درجات وتعليقات الأقران بأمان.</li>
+            </ul>
             
-            <p class="lang-en" style="font-weight: 700; color: #b45309;">
+            <p class="lang-en" style="font-weight: 700; color: #b45309; margin-top: 15px;">
                 The Add-on's use and transfer of information received from Google APIs will strictly adhere to the 
                 <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" style="color: #b45309; text-decoration: underline;">Google API Services User Data Policy</a>.
             </p>
-            <p class="lang-ar" style="font-weight: 700; color: #b45309;">
+            <p class="lang-ar" style="font-weight: 700; color: #b45309; margin-top: 15px;">
                 سيخضع استخدام الإضافة ونقلها للمعلومات المستلمة من واجهات برمجة تطبيقات جوجل بدقة لـ
                 <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" style="color: #b45309; text-decoration: underline;">سياسة بيانات مستخدمي خدمات Google API</a>.
             </p>
             
-            <p class="lang-en">
-                Please review our <a href="https://waleedmandour.org/projects/PA/privacy.html"><strong>Privacy Policy</strong></a> and <a href="https://waleedmandour.org/projects/PA/terms.html"><strong>Terms of Service</strong></a>.
+            <p class="lang-en" style="margin-top: 15px;">
+                Please review our <a href="https://waleedmandour.org/projects/PA/privacy.html" target="_blank"><strong>Privacy Policy</strong></a> and <a href="https://waleedmandour.org/projects/PA/terms.html" target="_blank"><strong>Terms of Service</strong></a>.
             </p>
-            <p class="lang-ar">
-                يرجى مراجعة <a href="https://waleedmandour.org/projects/PA/privacy.html"><strong>سياسة الخصوصية</strong></a> و <a href="https://waleedmandour.org/projects/PA/terms.html"><strong>شروط الخدمة</strong></a>.
+            <p class="lang-ar" style="margin-top: 15px;">
+                يرجى مراجعة <a href="https://waleedmandour.org/projects/PA/privacy.html" target="_blank"><strong>سياسة الخصوصية</strong></a> و <a href="https://waleedmandour.org/projects/PA/terms.html" target="_blank"><strong>شروط الخدمة</strong></a>.
             </p>
         </div>
 
-        <!-- Demo Section -->
-        <section class="demo-section">
-            <h2 class="section-title lang-en">Application Demo</h2>
-            <h2 class="section-title lang-ar">عرض توضيحي للتطبيق</h2>
+        <!-- NEW: The Suite Comparison Section -->
+        <section>
+            <h2 class="section-title lang-en">One Suite, Two Powerful Contexts</h2>
+            <h2 class="section-title lang-ar">حزمة واحدة، سياقان قويان</h2>
             
-            <div class="demo-container">
-                <!-- Placeholder for the demo GIF -->
-                <img src="images/PeerAssessDemo.gif" onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80'" class="demo-gif" alt="Peer Assessment Addon Demo">
+            <div class="suite-grid">
+                <!-- Slides Card -->
+                <div class="suite-card slides">
+                    <i class="fas fa-file-powerpoint suite-icon"></i>
+                    <h3 class="lang-en">Google Slides Edition</h3>
+                    <h3 class="lang-ar">نسخة عروض جوجل</h3>
+                    <p class="lang-en"><strong>Best for:</strong> Synchronous Learning, Live Presentations, and Speaking Skills.</p>
+                    <p class="lang-ar"><strong>الأفضل لـ:</strong> التعلم المتزامن، العروض المباشرة، ومهارات التحدث.</p>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <span class="lang-en">Live Projector Updates (8-Second Polling)</span>
+                                <span class="lang-ar">تحديثات مباشرة على جهاز العرض (كل 8 ثوانٍ)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <span class="lang-en">Interactive Class Voting (Bar Graphs)</span>
+                                <span class="lang-ar">تصويت صفي تفاعلي (رسوم بيانية شريطية)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <span class="lang-en">Student Handwriting Auto-Enhancer</span>
+                                <span class="lang-ar">مُحسّن تلقائي لصور الكتابة اليدوية للطلاب</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Docs Card -->
+                <div class="suite-card docs">
+                    <i class="fas fa-file-word suite-icon"></i>
+                    <h3 class="lang-en">Google Docs Edition</h3>
+                    <h3 class="lang-ar">نسخة مستندات جوجل</h3>
+                    <p class="lang-en"><strong>Best for:</strong> Asynchronous Learning, Long-form Essays, and Writing Workshops.</p>
+                    <p class="lang-ar"><strong>الأفضل لـ:</strong> التعلم غير المتزامن، المقالات الطويلة، وورش الكتابة.</p>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <span class="lang-en">Generates "Feedback Cover Pages"</span>
+                                <span class="lang-ar">يولد "صفحات غلاف للتغذية الراجعة"</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <span class="lang-en">Visual Radar Charts for Gap Analysis</span>
+                                <span class="lang-ar">مخططات رادار مرئية لتحليل الفجوات</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <span class="lang-en">AI Style & Originality Checking</span>
+                                <span class="lang-ar">فحص الأسلوب والأصالة بالذكاء الاصطناعي</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <p class="demo-caption lang-en">Watch the Add-on in action: From slide setup to live AI-summarized feedback</p>
-            <p class="demo-caption lang-ar">شاهد الإضافة في العمل: من إعداد الشريحة إلى التقييمات المباشرة الملخصة بالذكاء الاصطناعي</p>
         </section>
 
         <!-- Workflow Section -->
@@ -872,154 +968,75 @@
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <h4 class="lang-en">Setup Slides</h4>
-                    <h4 class="lang-ar">إعداد الشرائح</h4>
-                    <p class="lang-en">Click "Setup ALL Slides" to instantly generate custom Google Forms and inject scanable QR codes onto every student's presentation slide.</p>
-                    <p class="lang-ar">انقر على "إعداد جميع الشرائح" لإنشاء نماذج جوجل مخصصة فوراً وحقن رموز استجابة سريعة (QR) قابلة للمسح على شريحة كل طالب.</p>
+                    <h4 class="lang-en">Setup Slide / Cover Page</h4>
+                    <h4 class="lang-ar">إعداد الشريحة / صفحة الغلاف</h4>
+                    <p class="lang-en">Instantly generate custom Google Forms and inject scanable/clickable QR codes onto your document or slide.</p>
+                    <p class="lang-ar">أنشئ نماذج جوجل مخصصة فوراً واحقن رموز استجابة سريعة (QR) قابلة للمسح والنقر على مستندك أو شريحتك.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
-                    <h4 class="lang-en">Scan & Assess</h4>
-                    <h4 class="lang-ar">المسح والتقييم</h4>
-                    <p class="lang-en">Students scan the QR code with their phones to anonymously evaluate their peers using a 4-point IELTS criteria rubric.</p>
-                    <p class="lang-ar">يقوم الطلاب بمسح رمز الـ QR بهواتفهم لتقييم أقرانهم بشكل مجهول باستخدام معايير التقييم الأربعة (IELTS).</p>
+                    <h4 class="lang-en">Scan, Read, & Assess</h4>
+                    <h4 class="lang-ar">المسح والقراءة والتقييم</h4>
+                    <p class="lang-en">Peers use the dynamic rubrics to anonymously evaluate the text based on customizable criteria.</p>
+                    <p class="lang-ar">يستخدم الأقران النماذج لتقييم النص بشكل مجهول بناءً على معايير تقييم قابلة للتخصيص.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
                     <h4 class="lang-en">Live Dashboards & AI</h4>
                     <h4 class="lang-ar">لوحات مباشرة وذكاء اصطناعي</h4>
-                    <p class="lang-en">Watch the slides update in real-time with average scores and an AI-generated consensus of all written peer comments.</p>
-                    <p class="lang-ar">شاهد الشرائح تتحدث في الوقت الفعلي بمتوسط الدرجات وملخص موحد بالذكاء الاصطناعي لجميع تعليقات الأقران المكتوبة.</p>
+                    <p class="lang-en">Watch the UI update with average scores, visual charts, and AI-generated consensus summaries.</p>
+                    <p class="lang-ar">شاهد واجهة المستخدم تتحدث بمتوسط الدرجات، والرسوم البيانية المرئية، والملخصات التوافقية المولدة بالذكاء الاصطناعي.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Citation Section -->
-        <section class="citation-section" style="background: #f8f9fa; border-left: 4px solid var(--accent); padding: 20px; margin: 30px 0; border-radius: 8px;">
-            <h4 style="color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                <i class="fas fa-quote-right"></i>
-                <span class="lang-en">Citation</span>
-                <span class="lang-ar">الاقتباس</span>
-            </h4>
-            <p style="font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.5; color: #333; padding: 15px; background: white; border-radius: 4px; border: 1px solid #e9ecef;">
-                Mandour, W. (2026). <em>AI-Augmented Peer Assessment Hub: Integrating LLMs into Real-time Classroom Feedback</em>. Google Workspace Marketplace.
-            </p>
-        </section>
-
-        <!-- Features Section -->
+        <!-- Expanded Features Section -->
         <section>
-            <h2 class="section-title lang-en">Key Features</h2>
-            <h2 class="section-title lang-ar">الميزات الرئيسية</h2>
+            <h2 class="section-title lang-en">Comprehensive Pedagogical Features</h2>
+            <h2 class="section-title lang-ar">ميزات تربوية شاملة</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
                     <h3 class="lang-en">AI Comment Summarization</h3>
                     <h3 class="lang-ar">تلخيص التعليقات بالذكاء الاصطناعي</h3>
-                    <p class="lang-en">
-                        Integrates securely with the <strong>Gemini API</strong> to read dozens of student comments and distill them into a single, constructive consensus sentence directly on the presentation slide.
-                    </p>
-                    <p class="lang-ar">
-                        يتكامل بشكل آمن مع <strong>Gemini API</strong> لقراءة العشرات من تعليقات الطلاب واستخلاصها في جملة توافقية بناءة واحدة مباشرة على شريحة العرض.
-                    </p>
+                    <p class="lang-en">Integrates securely with the <strong>Gemini API</strong> to read dozens of student comments and distill them into a single, constructive consensus sentence.</p>
+                    <p class="lang-ar">يتكامل بشكل آمن مع <strong>Gemini API</strong> لقراءة العشرات من تعليقات الطلاب واستخلاصها في جملة توافقية بناءة واحدة.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-image"></i></div>
-                    <h3 class="lang-en">Auto-Enhance Student Writing</h3>
-                    <h3 class="lang-ar">التحسين التلقائي للكتابة اليدوية</h3>
-                    <p class="lang-en">
-                        Fix unreadable photos of handwritten essays! With one click, the Add-on batch-updates image contrast and brightness to make student ink pop clearly on the projector.
-                    </p>
-                    <p class="lang-ar">
-                        قم بإصلاح الصور غير المقروءة للمقالات المكتوبة بخط اليد! بنقرة واحدة، تقوم الإضافة بتحديث تباين الصور وسطوعها لجعل حبر الطالب يظهر بوضوح على جهاز العرض.
-                    </p>
+                    <div class="feature-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3 class="lang-en">Visual Radar Charts (Docs)</h3>
+                    <h3 class="lang-ar">مخططات رادار مرئية (Docs)</h3>
+                    <p class="lang-en">Automatically generates "Spider Graphs" on the essay cover page, allowing students to instantly visualize the structural shape of their writing proficiency.</p>
+                    <p class="lang-ar">يولد تلقائياً مخططات شبكية على صفحة غلاف المقال، مما يسمح للطلاب برؤية الشكل الهيكلي لكفاءتهم الكتابية على الفور.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-cloud"></i></div>
-                    <h3 class="lang-en">Gamification & Word Clouds</h3>
-                    <h3 class="lang-ar">التحفيز وسحابة الكلمات</h3>
-                    <p class="lang-en">
-                        Instantly turn classroom feedback into beautiful <strong>Word Clouds</strong>. The built-in Teacher Dashboard also identifies "Top Critics" and flags "Lazy Graders" automatically.
-                    </p>
-                    <p class="lang-ar">
-                        حوّل التعليقات الصفية فوراً إلى <strong>سحابات كلمات</strong> جميلة. كما تحدد لوحة تحكم المعلم المدمجة "أفضل النقاد" وتشير إلى "المقيمين الكسالى" تلقائياً.
-                    </p>
+                    <div class="feature-icon"><i class="fas fa-list-check"></i></div>
+                    <h3 class="lang-en">AI Feedforward Action Plans</h3>
+                    <h3 class="lang-ar">خطط العمل المستقبلية بالذكاء</h3>
+                    <p class="lang-en">Shifts the focus from grading to drafting. Gemini reads the essay *and* peer comments to generate a 3-step actionable revision plan for the next draft.</p>
+                    <p class="lang-ar">يقرأ الذكاء الاصطناعي المقال وتعليقات الأقران معاً لإنشاء خطة مراجعة من 3 خطوات قابلة للتنفيذ للمسودة التالية.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- Benefits Section -->
-        <section class="benefits-section">
-            <h2 class="section-title lang-en">Who Is It For?</h2>
-            <h2 class="section-title lang-ar">لمن هذا التطبيق؟</h2>
-            
-            <div class="audience-grid">
-                <div class="audience-column">
-                    <h3 class="lang-en">For Educators</h3>
-                    <h3 class="lang-ar">للمعلمين والأساتذة</h3>
-                    <ul class="benefit-list">
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Zero Prep-Time</strong>
-                                <span class="lang-en">Generates individual forms for 30+ slides in seconds. No manual link-copying needed.</span>
-                                <strong class="lang-ar">وقت تحضير صفر</strong>
-                                <span class="lang-ar">ينشئ نماذج فردية لأكثر من 30 شريحة في ثوانٍ. لا حاجة لنسخ الروابط يدوياً.</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Teacher Dashboard</strong>
-                                <span class="lang-en">Access a side-panel to view live class averages, participation rates, and AI insights.</span>
-                                <strong class="lang-ar">لوحة تحكم المعلم</strong>
-                                <span class="lang-ar">الوصول إلى لوحة جانبية لعرض متوسطات الفصل المباشرة ومعدلات المشاركة ورؤى الذكاء الاصطناعي.</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Classroom Control</strong>
-                                <span class="lang-en">Stamp a massive "TIME'S UP" on slides, or quickly reset and clean up all data for the next class.</span>
-                                <strong class="lang-ar">التحكم في الفصل الدراسي</strong>
-                                <span class="lang-ar">ختم عبارة "انتهى الوقت" بضخامة على الشرائح، أو إعادة ضبط ومسح جميع البيانات للفصل التالي بسرعة.</span>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-poll"></i></div>
+                    <h3 class="lang-en">Live Class Voting (Slides)</h3>
+                    <h3 class="lang-ar">تصويت صفي مباشر (Slides)</h3>
+                    <p class="lang-en">Host interactive class polls! Enter student names and generate a live bar chart that visually grows as the class votes for the best presentation.</p>
+                    <p class="lang-ar">استضف استطلاعات صفية تفاعلية! يولد رسماً بيانياً شريطياً مباشراً ينمو بصرياً عندما يصوت الفصل لأفضل عرض تقديمي.</p>
                 </div>
-
-                <div class="audience-column">
-                    <h3 class="lang-en">For Students</h3>
-                    <h3 class="lang-ar">للطلاب الأقران</h3>
-                    <ul class="benefit-list">
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Frictionless Access</strong>
-                                <span class="lang-en">No apps to download. Just open the phone camera, scan the slide's QR, and start rating.</span>
-                                <strong class="lang-ar">وصول سلس</strong>
-                                <span class="lang-ar">لا توجد تطبيقات للتحميل. فقط افتح كاميرا الهاتف، امسح رمز الـ QR الخاص بالشريحة، وابدأ التقييم.</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Clear Assessment Rubric</strong>
-                                <span class="lang-en">Evaluates writing based on standardized criteria: Task Achievement, Cohesion, Lexical Resources, and Grammar.</span>
-                                <strong class="lang-ar">معايير تقييم واضحة</strong>
-                                <span class="lang-ar">يقيّم الكتابة بناءً على معايير قياسية: إنجاز المهمة، الترابط، الموارد المعجمية، والقواعد.</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <div class="benefit-content">
-                                <strong class="lang-en">Engaging Gamification</strong>
-                                <span class="lang-en">Entering their name allows the system to recognize top constructive critics in the classroom.</span>
-                                <strong class="lang-ar">تحفيز ممتع</strong>
-                                <span class="lang-ar">يتيح إدخال أسمائهم للنظام التعرف على أفضل النقاد البنائين في الفصل الدراسي.</span>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-secret"></i></div>
+                    <h3 class="lang-en">AI Style & Originality Check</h3>
+                    <h3 class="lang-ar">فحص الأسلوب والأصالة </h3>
+                    <p class="lang-en">Highlight suspicious text and let Gemini analyze it for sudden shifts in tone, vocabulary spikes, or phrasing typical of LLM (ChatGPT) generation.</p>
+                    <p class="lang-ar">ظلل النص المشبوه ودع Gemini يحلله بحثاً عن تحولات مفاجئة في النبرة، أو طفرات في المفردات، أو صياغة نموذجية للذكاء الاصطناعي.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+                    <h3 class="lang-en">Customizable Rubrics</h3>
+                    <h3 class="lang-ar">معايير تقييم قابلة للتخصيص</h3>
+                    <p class="lang-en">Not teaching ESL? Easily swap the default IELTS criteria for your own custom 4-point rubric (e.g., Thesis, Evidence, Format, Tone) to fit any subject.</p>
+                    <p class="lang-ar">ببساطة استبدل معايير IELTS الافتراضية بمعاييرك المخصصة المكونة من 4 نقاط لتناسب أي موضوع أكاديمي.</p>
                 </div>
             </div>
         </section>
@@ -1030,10 +1047,10 @@
             <span class="apis-label lang-ar">مدعوم بتكاملات الأنظمة البيئية</span>
             
             <div class="apis-grid">
-                <div class="api-badge"><i class="fas fa-file-lines"></i> <span class="lang-en">Google Forms API</span><span class="lang-ar">Google Forms API</span></div>
+                <div class="api-badge"><i class="fas fa-file-word"></i> <span class="lang-en">Google Docs API</span><span class="lang-ar">Google Docs API</span></div>
                 <div class="api-badge"><i class="fas fa-desktop"></i> <span class="lang-en">Google Slides API</span><span class="lang-ar">Google Slides API</span></div>
-                <div class="api-badge"><i class="fas fa-robot"></i> <span class="lang-en">Gemini 3.5 Flash</span><span class="lang-ar">Gemini 3.5 Flash</span></div>
-                <div class="api-badge"><i class="fas fa-qrcode"></i> <span class="lang-en">QR Server API</span><span class="lang-ar">QR Server API</span></div>
+                <div class="api-badge"><i class="fas fa-file-lines"></i> <span class="lang-en">Google Forms API</span><span class="lang-ar">Google Forms API</span></div>
+                <div class="api-badge"><i class="fas fa-robot"></i> <span class="lang-en">Gemini 1.5 Flash</span><span class="lang-ar">Gemini 1.5 Flash</span></div>
                 <div class="api-badge"><i class="fas fa-cloud"></i> <span class="lang-en">QuickChart API</span><span class="lang-ar">QuickChart API</span></div>
             </div>
         </section>
@@ -1044,17 +1061,16 @@
             <h2 class="cta-title lang-ar">مستعد لتعزيز فصلك الدراسي؟</h2>
             
             <p class="cta-subtitle lang-en">
-                Install the Add-on directly into Google Slides and turn passive presentations into engaging peer-review hubs.
+                Install the Suite directly into Google Workspace and turn passive assignments into highly engaging peer-review hubs.
             </p>
             <p class="cta-subtitle lang-ar">
-                قم بتثبيت الإضافة مباشرة في عروض جوجل التقديمية وحوّل العروض السلبية إلى منصات تفاعلية لتقييم الأقران.
+                قم بتثبيت الحزمة مباشرة في مساحة عمل جوجل وحوّل الواجبات السلبية إلى منصات تفاعلية لتقييم الأقران.
             </p>
             
-            <!-- Update link when published to Workspace Marketplace -->
             <button class="cta-button" onclick="window.open('https://workspace.google.com/marketplace', '_blank')">
                 <i class="fas fa-rocket"></i> 
-                <span class="lang-en">Install for Google Slides</span>
-                <span class="lang-ar">تثبيت لعروض جوجل</span>
+                <span class="lang-en">Install from Google Marketplace</span>
+                <span class="lang-ar">تثبيت من متجر جوجل</span>
             </button>
         </section>
 
@@ -1069,13 +1085,13 @@
                 
                 <div class="footer-links" style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
                     <span class="lang-en">
-                        <a href="privacy.html">Privacy Policy</a> | 
-                        <a href="terms.html">Terms of Service</a> | 
+                        <a href="https://waleedmandour.org/projects/PA/privacy.html">Privacy Policy</a> | 
+                        <a href="https://waleedmandour.org/projects/PA/terms.html">Terms of Service</a> | 
                         <a href="support.html">Support</a>
                     </span>
                     <span class="lang-ar">
-                        <a href="privacy.html">سياسة الخصوصية</a> | 
-                        <a href="terms.html">شروط الخدمة</a> | 
+                        <a href="https://waleedmandour.org/projects/PA/privacy.html">سياسة الخصوصية</a> | 
+                        <a href="https://waleedmandour.org/projects/PA/terms.html">شروط الخدمة</a> | 
                         <a href="support.html">الدعم</a>
                     </span>
                 </div>
@@ -1118,7 +1134,7 @@
             }, observerOptions);
 
             // Observe all cards and steps
-            document.querySelectorAll('.feature-card, .workflow-step, .audience-column').forEach(el => {
+            document.querySelectorAll('.feature-card, .workflow-step, .audience-column, .suite-card').forEach(el => {
                 observer.observe(el);
             });
         });
