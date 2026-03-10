@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Engineering Labs | Chemical & Mechanical Engineering</title>
+    <title>Engineering WebAR Labs | Mechanical & Chemical Engineering</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -13,13 +13,16 @@
             --secondary: #38bdf8;     /* Cyan */
             --accent: #1b263b;        /* Secondary Blue */
             --accent-light: #778da9;  /* Light Blue */
-            --accent-orange: #ff6b35; /* Orange for Mechanical Eng */
             --light: #f0f4f7;
             --dark: #333;
             --white: #ffffff;
             --gray: #777;
             --shadow: 0 4px 15px rgba(0,0,0,0.08);
             --transition: all 0.3s ease;
+            
+            /* Lab Specific Colors for accents */
+            --haber-color: #38bdf8;   /* Cyan for Haber-Bosch */
+            --engine-color: #ff6b35;  /* Orange for Engine Lab */
         }
 
         * {
@@ -205,107 +208,6 @@
             width: 100%;
         }
 
-        /* ===== APP LOGO SECTION ===== */
-        .app-logo-container {
-            position: relative;
-            max-width: 400px; 
-            width: 90%;
-            margin: 0 auto 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .app-logo-frame {
-            width: 100%;
-            height: auto;
-            position: relative;
-            border-radius: 30px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-                0 0 30px rgba(56, 189, 248, 0.3);
-            padding: 15px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Variant for Mechanical Lab */
-        .app-logo-frame.mechanical {
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-                0 0 30px rgba(255, 107, 53, 0.3);
-        }
-
-        .app-logo-frame:hover {
-            transform: scale(1.02) rotate(1deg);
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 
-                0 20px 45px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-                0 0 40px rgba(56, 189, 248, 0.4);
-        }
-
-        .app-logo-frame.mechanical:hover {
-             box-shadow: 
-                0 20px 45px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-                0 0 40px rgba(255, 107, 53, 0.4);
-        }
-
-        .app-logo-img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            border-radius: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
-        }
-
-        .app-logo-container::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            border-radius: 40px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(13, 27, 42, 0.2) 100%);
-            animation: rotate 20s linear infinite;
-            z-index: -1;
-        }
-        
-        /* Variant for Mechanical Lab */
-        .app-logo-container.mechanical::before {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(13, 27, 42, 0.2) 100%);
-        }
-
-        .app-logo-container::after {
-            content: '';
-            position: absolute;
-            width: 110%;
-            height: 110%;
-            top: -5%;
-            left: -5%;
-            border-radius: 50px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            animation: rotate 25s linear infinite reverse;
-            z-index: -2;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(0.5deg); }
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* ===== HERO SECTION ===== */
         .hero {
             position: relative;
@@ -335,14 +237,10 @@
         .hero-subtitle {
             font-size: 24px;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--secondary); /* Cyan Accent */
             margin-bottom: 24px;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .hero-subtitle.mechanical {
-            color: var(--accent-orange);
         }
 
         .hero-description {
@@ -351,6 +249,96 @@
             max-width: 700px;
             margin: 0 auto 32px;
             line-height: 1.7;
+        }
+
+        /* ===== LAB SELECTION GRID ===== */
+        .lab-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+
+        .lab-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .lab-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Lab Specific Border Accents */
+        .lab-card.haber { border-top: 6px solid var(--haber-color); }
+        .lab-card.engine { border-top: 6px solid var(--engine-color); }
+
+        .lab-card h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .lab-card h3 span {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .lab-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* ===== ENHANCED APP LOGO SECTION ===== */
+        .app-logo-container {
+            position: relative;
+            max-width: 300px; 
+            width: 90%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-logo-frame {
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-logo-frame:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .app-logo-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
         }
 
         /* ===== DATA NOTICE ===== */
@@ -381,7 +369,7 @@
             line-height: 1.6;
         }
 
-        /* ===== SECTIONS ===== */
+        /* ===== SECTION TITLES ===== */
         .section-title {
             text-align: center;
             font-size: 32px;
@@ -402,18 +390,14 @@
             background: var(--secondary);
             border-radius: 2px;
         }
-        
-        .section-title.mechanical::after {
-            background: var(--accent-orange);
-        }
 
         body.arabic .section-title::after {
             left: auto;
             right: 50%;
             transform: translateX(50%);
         }
-        
-        /* ===== FEATURE CARDS ===== */
+
+        /* ===== FEATURES GRID ===== */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -442,18 +426,20 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
         
-        .feature-card.mechanical::before {
-            background: linear-gradient(90deg, #1a1a1a, var(--accent-orange));
+        /* Engine Feature Card Override */
+        .feature-card.engine-feature::before {
+            background: linear-gradient(90deg, var(--engine-color), #ff8c00);
+        }
+        
+        .feature-card.engine-feature .feature-icon {
+            color: var(--engine-color);
+            background: rgba(255, 107, 53, 0.1);
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             border-color: var(--secondary);
-        }
-        
-        .feature-card.mechanical:hover {
-            border-color: var(--accent-orange);
         }
 
         .feature-icon {
@@ -464,11 +450,6 @@
             background: rgba(56, 189, 248, 0.1);
             border-radius: 12px;
             color: var(--primary);
-        }
-        
-        .feature-icon.mechanical {
-            background: rgba(255, 107, 53, 0.1);
-            color: var(--accent-orange);
         }
 
         .feature-card h3 {
@@ -495,14 +476,139 @@
             background: rgba(239, 68, 68, 0.1);
         }
 
-        /* ===== PROJECT SPLIT SECTION ===== */
-        .project-split {
+        /* ===== BENEFITS SECTION ===== */
+        .benefits-section {
+            background: var(--light);
             padding: 64px 0;
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .audience-column {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .audience-column:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .audience-column h3 {
+            color: var(--primary);
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 700;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+
+        .benefit-list {
+            list-style: none;
+        }
+
+        .benefit-list li {
+            padding: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        body.arabic .benefit-list li {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .benefit-list li:not(:last-child) {
             border-bottom: 1px solid var(--light);
         }
-        
-        .project-split:nth-child(even) {
-            background: var(--light);
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .benefit-content strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .benefit-content span {
+            color: var(--dark);
+            display: block;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        /* ===== TECH STACK SECTION ===== */
+        .apis-section {
+            text-align: center;
+            padding: 48px 0;
+            border-top: 1px solid var(--light);
+            border-bottom: 1px solid var(--light);
+            margin: 48px 0;
+        }
+
+        .apis-label {
+            color: var(--gray);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .apis-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .api-badge {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .api-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            background: var(--secondary);
+            color: #000;
         }
 
         /* ===== CTA SECTION ===== */
@@ -513,10 +619,6 @@
             border-radius: 12px;
             margin: 64px 0;
             box-shadow: var(--shadow);
-        }
-        
-        .cta-section.mechanical {
-             background: linear-gradient(135deg, var(--light) 0%, rgba(255, 107, 53, 0.1) 100%);
         }
 
         .cta-title {
@@ -551,8 +653,8 @@
             cursor: pointer;
         }
         
-        .cta-button.mechanical {
-            background: linear-gradient(135deg, #1a1a1a 0%, var(--accent-orange) 100%);
+        .cta-button.engine-btn {
+             background: linear-gradient(135deg, #d35400 0%, var(--engine-color) 100%);
         }
 
         .cta-button:hover {
@@ -592,25 +694,51 @@
 
         /* ===== PRINT STYLES ===== */
         @media print {
-            body * { visibility: hidden; }
-            .app-logo-container, .app-logo-container * { visibility: visible; }
-            .app-logo-container {
-                position: absolute; left: 0; top: 0; width: 100%;
-                max-width: none; margin: 0; padding: 0; border: none;
-                background: none; box-shadow: none; animation: none;
+            /* Hide everything except the marker */
+            body * {
+                visibility: hidden;
             }
-            .app-logo-container::before, .app-logo-container::after { display: none; }
-            .app-logo-frame { border: none; background: none; box-shadow: none; padding: 0; }
+            
+            /* Show the marker container and its children */
+            .app-logo-container, .app-logo-container * {
+                visibility: visible;
+            }
+            
+            /* Position the marker at the top left of the page */
+            .app-logo-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%; 
+                max-width: none;
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                box-shadow: none;
+                animation: none;
+            }
+            
+            .app-logo-container::before, 
+            .app-logo-container::after {
+                display: none;
+            }
+            
+            .app-logo-frame {
+                border: none;
+                background: none;
+                box-shadow: none;
+                padding: 0;
+            }
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
-            .features-grid { grid-template-columns: 1fr; }
+            .features-grid, .audience-grid, .lab-selection-grid { grid-template-columns: 1fr; }
             .header-content { flex-direction: column; text-align: center; }
             .header-text { text-align: center; }
             body.arabic .header-text { text-align: center; }
-            .app-logo-container { max-width: 300px; }
         }
     </style>
 </head>
@@ -651,172 +779,222 @@
         </nav>
     </header>
 
+    <!-- Main Content Area -->
     <main class="container">
-        <!-- Global Introduction -->
-        <section class="hero" style="margin-bottom: 20px;">
+        <!-- Hero Section -->
+        <section class="hero">
             <div class="hero-content">
-                <h1 class="lang-en">AR Engineering Labs</h1>
-                <h1 class="lang-ar">مختبرات الهندسة بالواقع المعزز</h1>
+                <h1 class="lang-en">Engineering WebAR Labs</h1>
+                <h1 class="lang-ar">مختبرات الهندسة للواقع المعزز</h1>
+                
+                <div class="hero-subtitle lang-en">Interactive 3D Learning Experiences</div>
+                <div class="hero-subtitle lang-ar">تجربات تعليمية ثلاثية الأبعاد تفاعلية</div>
+                
                 <p class="hero-description lang-en">
-                    A collection of immersive WebAR experiences designed to visualize complex engineering principles. 
-                    Interact with industrial equipment, manipulate parameters, and master technical terminology.
+                    Access next-generation Augmented Reality simulations. 
+                    Visualize complex engineering concepts, from chemical thermodynamics to internal combustion kinematics.
                 </p>
                 <p class="hero-description lang-ar">
-                    مجموعة من تجارب الواقع المعزز المصممة لتصور المبادئ الهندسية المعقدة.
-                    تفاعل مع المعدات الصناعية، وتحكم في المعاملات، واتقن المصطلحات الفنية.
+                    الوصول إلى محاكانات الواقع المعزز من الجيل التالي.
+                    تصور المفاهيم الهندسية المعقدة، من الديناميكا الحرارية الكيميائية إلى حركيات الاحتراق الداخلي.
                 </p>
             </div>
         </section>
 
-        <!-- Camera Permission Notice (Global) -->
-        <div class="data-notice">
-            <h4 class="lang-en"><i class="fas fa-camera"></i> Camera Access Required</h4>
-            <h4 class="lang-ar"><i class="fas fa-camera"></i> الوصول للكاميرا مطلوب</h4>
-            <p class="lang-en">All applications require camera access for Augmented Reality. Video processing happens locally on your device.</p>
-            <p class="lang-ar">تتطلب جميع التطبيقات الوصول للكاميرا للواقع المعزز. تتم معالجة الفيديو محلياً على جهازك.</p>
-        </div>
+        <!-- Lab Selection Grid -->
+        <section>
+            <h2 class="section-title lang-en">Select Your Lab</h2>
+            <h2 class="section-title lang-ar">اختر مختبرك</h2>
 
-        <!-- ==========================================
-             PROJECT 1: HABER-BOSCH (Chemical Engineering)
-             ========================================== -->
-        <section id="haber-bosch" class="project-split">
-            <section class="hero">
-                <div class="hero-content">
+            <div class="lab-selection-grid">
+                <!-- Lab 1: Haber-Bosch -->
+                <div class="lab-card haber">
+                    <h3 class="lang-en">Haber-Bosch Process <span>Chemical Engineering</span></h3>
+                    <h3 class="lang-ar">عملية هابر-بوش <span>الهندسة الكيميائية</span></h3>
+                    
+                    <!-- Marker Image -->
                     <div class="app-logo-container">
                         <div class="app-logo-frame">
                             <img src="images/Haber-Bosch-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Haber-Bosch AR Marker" class="app-logo-img">
                         </div>
                     </div>
-                    
-                    <h1 class="lang-en">Haber-Bosch WebAR Lab</h1>
-                    <h1 class="lang-ar">مختبر هابر-بوش للواقع المعزز</h1>
-                    
-                    <div class="hero-subtitle lang-en">Chemical Engineering & Thermodynamics</div>
-                    <div class="hero-subtitle lang-ar">الهندسة الكيميائية والديناميكا الحرارية</div>
-                    
-                    <p class="hero-description lang-en">
-                        Visualize the invisible. Interact with industrial ammonia synthesis equipment, 
-                        manipulate temperature and pressure, and observe Le Chatelier's principle in real-time.
+
+                    <p class="lang-en">
+                        Visualize ammonia synthesis. Manipulate Temperature & Pressure to optimize yield. 
+                        Features "System Decomposition" challenges.
                     </p>
-                    <p class="hero-description lang-ar">
-                        تصور ما لا يمكن رؤيته. تفاعل مع معدات تصنيع الأمونيا الصناعية، 
-                        وتحكم في الحرارة والضغط، ولاحظ مبدأ لوشاتلييه في الوقت الحقيقي.
+                    <p class="lang-ar">
+                        تصور تخليق الأمونيا. تحكم في الحرارة والضغط لتحسين الناتج.
+                        يتضمن تحديات "تحلل النظام".
                     </p>
+
+                    <button class="cta-button" onclick="window.location.href='https://waleedmandour.org/projects/XR/app.html'">
+                        <i class="fas fa-flask"></i> 
+                        <span class="lang-en">Launch Lab</span>
+                        <span class="lang-ar">تشغيل المختبر</span>
+                    </button>
                 </div>
-            </section>
 
-            <section>
-                <h2 class="section-title lang-en">Key Features</h2>
-                <h2 class="section-title lang-ar">الميزات الرئيسية</h2>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-flask"></i></div>
-                        <h3 class="lang-en">Thermodynamic Engine</h3>
-                        <h3 class="lang-ar">محرك ديناميكا حرارية</h3>
-                        <p class="lang-en">Real-time calculation of ammonia yield. Visualizes the trade-off between kinetics and thermodynamics.</p>
-                        <p class="lang-ar">حساب فوري لناتج الأمونيا. يصور التوازن بين الحركية والديناميكا الحرارية.</p>
-                    </div>
+                <!-- Lab 2: 4-Stroke Engine -->
+                <div class="lab-card engine">
+                    <h3 class="lang-en">4-Stroke Engine <span>Mechanical Engineering</span></h3>
+                    <h3 class="lang-ar">محرك رباعي الأشواط <span>الهندسة الميكانيكية</span></h3>
                     
-                    <div class="feature-card gamified">
-                        <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
-                        <h3 class="lang-en">Gamified Learning</h3>
-                        <h3 class="lang-ar">التعلم القائم على اللعب</h3>
-                        <p class="lang-en"><strong>Challenge Mode:</strong> System destabilizes every 60 seconds. Restore equilibrium to earn stars.</p>
-                        <p class="lang-ar"><strong>وضع التحدي:</strong> يفقد النظام استقراره كل 60 ثانية. استعد التوازن لكسب النجوم.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-language"></i></div>
-                        <h3 class="lang-en">ESP Vocabulary</h3>
-                        <h3 class="lang-ar">مفردات اللغة الإنجليزية للأغراض الخاصة</h3>
-                        <p class="lang-en">Interactive quizzes reinforcing terms like "Exothermic," "Equilibrium," and "Catalyst".</p>
-                        <p class="lang-ar">اختبارات تفاعلية لتعزيز مصطلحات مثل "طارد للحرارة" و"التوازن" و"العامل المساعد".</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="cta-section">
-                <h2 class="cta-title lang-en">Launch Chemical Lab</h2>
-                <h2 class="cta-title lang-ar">تشغيل المختبر الكيميائي</h2>
-                <button class="cta-button" onclick="window.location.href='https://waleedmandour.org/projects/XR/app.html'">
-                    <i class="fas fa-rocket"></i> 
-                    <span class="lang-en">Launch WebAR Lab</span>
-                    <span class="lang-ar">تشغيل المختبر</span>
-                </button>
-            </section>
-        </section>
-
-        <!-- ==========================================
-             PROJECT 2: 4-STROKE ENGINE (Mechanical Engineering)
-             ========================================== -->
-        <section id="four-stroke" class="project-split">
-            <section class="hero">
-                <div class="hero-content">
-                    <div class="app-logo-container mechanical">
-                        <div class="app-logo-frame mechanical">
-                            <!-- Note: Replace src with actual engine marker image -->
-                            <img src="images/Engine-Marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="4-Stroke Engine AR Marker" class="app-logo-img">
+                    <!-- Marker Image -->
+                    <div class="app-logo-container">
+                        <div class="app-logo-frame">
+                            <!-- Placeholder for Engine Marker - User should replace src -->
+                            <img src="images/Engine-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Engine AR Marker" class="app-logo-img">
                         </div>
                     </div>
-                    
-                    <h1 class="lang-en">4-Stroke Engine AR Lab</h1>
-                    <h1 class="lang-ar">مختبر محرك الاحتراق الداخلي</h1>
-                    
-                    <div class="hero-subtitle mechanical lang-en">Mechanical Engineering & Kinematics</div>
-                    <div class="hero-subtitle mechanical lang-ar">الهندسة الميكانيكية والكينماتيكا</div>
-                    
-                    <p class="hero-description lang-en">
-                        Explore the Otto Cycle in 3D. Visualize piston kinematics, valve timing, 
-                        and combustion dynamics. Control RPM and Air-Fuel Ratios in real-time.
+
+                    <p class="lang-en">
+                        Explore the Otto Cycle. Visualize piston kinematics, valve timing, and combustion. 
+                        Manage Air-Fuel Ratios to prevent engine knock.
                     </p>
-                    <p class="hero-description lang-ar">
-                        استكشف دورة أوتو ثلاثية الأبعاد. تصور حركة المكبس، وتوقيت الصمامات، 
-                        وديناميكيات الاحتراق. تحكم في سرعة الدوران ونسبة الوقود للهواء.
+                    <p class="lang-ar">
+                        استكشف دورة أوتو. تصور حركيات المكبس، وتوقيت الصمامات، والاحتراق.
+                        إدارة نسبة الوقود والهواء لمنع خبط المحرك.
+                    </p>
+
+                    <button class="cta-button engine-btn" onclick="window.location.href='app1.html'">
+                        <i class="fas fa-cogs"></i> 
+                        <span class="lang-en">Launch Lab</span>
+                        <span class="lang-ar">تشغيل المختبر</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Camera Permission Notice -->
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-camera"></i> Camera Access Required</h4>
+            <h4 class="lang-ar"><i class="fas fa-camera"></i> الوصول للكاميرا مطلوب</h4>
+            
+            <p class="lang-en">
+                These applications require camera access to enable Augmented Reality.
+                Video processing happens locally on your device; no data is sent to external servers.
+            </p>
+            <p class="lang-ar">
+                تتطلب هذه التطبيقات الوصول إلى الكاميرا لتمكين الواقع المعزز.
+                تتم معالجة الفيديو محلياً على جهازك؛ لا يتم إرسال أي بيانات لخوادم خارجية.
+            </p>
+            
+            <p class="lang-en">Supported on <strong>iOS Safari</strong> and <strong>Android Chrome</strong>.</p>
+            <p class="lang-ar">مدعوم على <strong>iOS Safari</strong> و <strong>Android Chrome</strong>.</p>
+        </div>
+
+        <!-- Features Section (Split by Lab) -->
+        <section>
+            <h2 class="section-title lang-en">Lab Features</h2>
+            <h2 class="section-title lang-ar">ميزات المختبر</h2>
+            
+            <div class="features-grid">
+                <!-- Haber-Bosch Feature -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-temperature-high"></i></div>
+                    <h3 class="lang-en">Thermodynamics (Haber-Bosch)</h3>
+                    <h3 class="lang-ar">الديناميكا الحرارية (هابر-بوش)</h3>
+                    <p class="lang-en">
+                        Real-time ammonia yield calculations based on Le Chatelier’s principle. 
+                        Visualizes the trade-off between reaction rate and equilibrium.
+                    </p>
+                    <p class="lang-ar">
+                        حساب فوري لناتج الأمونيا بناءً على مبدأ لوشاتلييه.
+                        يصور التوازن بين معدل التفاعل والاتزان.
                     </p>
                 </div>
-            </section>
-
-            <section>
-                <h2 class="section-title mechanical lang-en">Key Features</h2>
-                <h2 class="section-title mechanical lang-ar">الميزات الرئيسية</h2>
                 
-                <div class="features-grid">
-                    <div class="feature-card mechanical">
-                        <div class="feature-icon mechanical"><i class="fas fa-cogs"></i></div>
-                        <h3 class="lang-en">Kinematics Visualization</h3>
-                        <h3 class="lang-ar">تصور الحركة الميكانيكية</h3>
-                        <p class="lang-en">Interactive slider-crank mechanism. Observe the relationship between piston position and crank angle.</p>
-                        <p class="lang-ar">آلية المقبض المنزلق التفاعلية. لاحظ العلاقة بين موضع المكبس وزاوية المقبض.</p>
-                    </div>
-                    
-                    <div class="feature-card mechanical gamified">
-                        <div class="feature-icon mechanical"><i class="fas fa-fire"></i></div>
-                        <h3 class="lang-en">Thermodynamics & Control</h3>
-                        <h3 class="lang-ar">الديناميكا الحرارية والتحكم</h3>
-                        <p class="lang-en">Adjust Throttle (RPM) and Air-Fuel Ratio (AFR). Handle "Engine Knock" and "Stall" emergencies.</p>
-                        <p class="lang-ar">اضبط الخانق (سرعة الدوران) ونسبة الوقود للهواء. تعامل مع حالات الطوارئ مثل "الخبط" و"التوقف".</p>
-                    </div>
-                    
-                    <div class="feature-card mechanical">
-                        <div class="feature-icon mechanical"><i class="fas fa-car"></i></div>
-                        <h3 class="lang-en">Otto Cycle Steps</h3>
-                        <h3 class="lang-ar">خطوات دورة أوتو</h3>
-                        <p class="lang-en">Visualize Intake, Compression, Power, and Exhaust strokes with particle flow effects.</p>
-                        <p class="lang-ar">تصور أشواط السحب، والضغط، والقدرة، والعادم مع تأثيرات تدفق الجسيمات.</p>
-                    </div>
+                <!-- Engine Feature -->
+                <div class="feature-card engine-feature">
+                    <div class="feature-icon"><i class="fas fa-car"></i></div>
+                    <h3 class="lang-en">Kinematics (4-Stroke Engine)</h3>
+                    <h3 class="lang-ar">الكينماتيك (المحرك الرباعي)</h3>
+                    <p class="lang-en">
+                        Animated 4-stroke cycle (Intake, Compression, Power, Exhaust). 
+                        Visualize Piston-Crankshaft motion and Valve timing logic.
+                    </p>
+                    <p class="lang-ar">
+                        رسوم متحركة لدورة الاشواط الاربعة (السحب، الضغط، القدرة، العادم).
+                        تصور حركة المكبس-المرفق ومنطق توقيت الصمامات.
+                    </p>
                 </div>
-            </section>
+                
+                <!-- Gamification Feature (Common) -->
+                <div class="feature-card gamified">
+                    <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3 class="lang-en">Gamified Challenges</h3>
+                    <h3 class="lang-ar">تحديات تفاعلية</h3>
+                    <p class="lang-en">
+                        <strong>Emergency Scenarios:</strong> 
+                        Respond to "System Alerts" (Overheating, Engine Knock) by adjusting parameters under time pressure.
+                    </p>
+                    <p class="lang-ar">
+                        <strong>سيناريوهات الطوارئ:</strong>
+                        الاستجابة لـ "تنبيهات النظام" (الارتفاع الحراري، خبط المحرك) عن طريق ضبط المعاملات تحت ضغط الوقت.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-            <section class="cta-section mechanical">
-                <h2 class="cta-title lang-en">Launch Mechanical Lab</h2>
-                <h2 class="cta-title lang-ar">تشغيل المختبر الميكانيكي</h2>
-                <button class="cta-button mechanical" onclick="window.location.href='app1.html'">
-                    <i class="fas fa-rocket"></i> 
-                    <span class="lang-en">Launch Engine Lab</span>
-                    <span class="lang-ar">تشغيل مختبر المحرك</span>
-                </button>
-            </section>
+        <!-- Pedagogical Benefits Section -->
+        <section class="benefits-section">
+            <h2 class="section-title lang-en">Pedagogical Value</h2>
+            <h2 class="section-title lang-ar">القيمة التربوية</h2>
+            
+            <div class="audience-grid">
+                <!-- For Language Learners -->
+                <div class="audience-column">
+                    <h3 class="lang-en">For Language Learners (ESP)</h3>
+                    <h3 class="lang-ar">لمتعلمي اللغة (ESP)</h3>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Technical Vocabulary</strong>
+                                <span class="lang-en">Learn terms like "Catalyst," "Equilibrium," "Piston," and "Stoichiometric" in a rich 3D context.</span>
+                                <strong class="lang-ar">المفردات التقنية</strong>
+                                <span class="lang-ar">تعلم مصطلحات مثل "محفز"، "توازن"، "مكبس"، و"ستويكيومتري" في سياق ثلاثي الأبعاد غني.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Task-Based Learning (TBL)</strong>
+                                <span class="lang-en">Emergency alerts force students to process instructions and act quickly, simulating real-world pressure.</span>
+                                <strong class="lang-ar">التعلم القائم على المهام</strong>
+                                <span class="lang-ar">تنبيهات الطوارئ تجبر الطلاب على معالجة التعليمات والتصرف بسرعة، محاكين ضغط الواقع.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- For Engineering Students -->
+                <div class="audience-column">
+                    <h3 class="lang-en">For Engineering Students</h3>
+                    <h3 class="lang-ar">لطلاب الهندسة</h3>
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Concept Visualization</strong>
+                                <span class="lang-en">Makes abstract concepts like bond breaking, phase changes, and slider-crank mechanisms visible.</span>
+                                <strong class="lang-ar">تصور المفاهيم</strong>
+                                <span class="lang-ar">يجعل المفاهيم المجردة مثل تكسير الروابط وتغيرات الطور وآليات المرفق مرئية.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <div class="benefit-content">
+                                <strong class="lang-en">Safe Experimentation</strong>
+                                <span class="lang-en">Simulate dangerous high-pressure or high-temperature environments safely within the classroom.</span>
+                                <strong class="lang-ar">تجريب آمن</strong>
+                                <span class="lang-ar">محاكاة بيئات الضغط العالي أو الحرارة العالية الخطرة بأمان داخل الفصل.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <!-- Tech Stack -->
@@ -825,10 +1003,22 @@
             <span class="apis-label lang-ar">بُني بتقنيات ويب حديثة</span>
             
             <div class="apis-grid">
-                <div class="api-badge"><i class="fas fa-cube"></i> <span>Three.js</span></div>
-                <div class="api-badge"><i class="fas fa-vr-cardboard"></i> <span>MindAR.js</span></div>
-                <div class="api-badge"><i class="fas fa-gamepad"></i> <span>Gamification</span></div>
-                <div class="api-badge"><i class="fas fa-graduation-cap"></i> <span>CLIL Methodology</span></div>
+                <div class="api-badge">
+                    <i class="fas fa-cube"></i>
+                    <span>Three.js</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-vr-cardboard"></i>
+                    <span>MindAR.js</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Gamification</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>CLIL Methodology</span>
+                </div>
             </div>
         </section>
 
@@ -876,7 +1066,8 @@
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.feature-card, .app-logo-container, .cta-section').forEach(el => {
+            // Observe all cards and steps
+            document.querySelectorAll('.feature-card, .lab-card, .audience-column').forEach(el => {
                 observer.observe(el);
             });
         });
