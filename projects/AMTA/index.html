@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Added for Verification: Clear App Description -->
-    <meta name="description" content="AMTA Lexicography Assistant: A Google Sheets Add-on for automated dictionary creation using academic APIs and Google Drive integration.">
+    <meta name="description" content="AMTA Lexicography Assistant: A Google Sheets Add-on for automated dictionary creation using advanced academic APIs (Scopus, OpenAlex, etc.) and Gemini 3.0 Flash.">
     <title>AMTA Lexicography Assistant - Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -361,7 +360,7 @@
         .hero-description {
             font-size: 18px;
             color: var(--gray);
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto 32px;
             line-height: 1.7;
         }
@@ -936,18 +935,18 @@
             display: inline;
         }
 
-/* Center the Arabic hero title and subtitle */
-body.arabic .hero h1.lang-ar,
-body.arabic .hero .hero-subtitle.lang-ar {
-    text-align: center;
-}
+        /* Center the Arabic hero title and subtitle */
+        body.arabic .hero h1.lang-ar,
+        body.arabic .hero .hero-subtitle.lang-ar {
+            text-align: center;
+        }
 
-/* Center the Arabic text in the footer */
-body.arabic .footer,
-body.arabic .footer-content,
-body.arabic .footer-content > div {
-    text-align: center;
-}
+        /* Center the Arabic text in the footer */
+        body.arabic .footer,
+        body.arabic .footer-content,
+        body.arabic .footer-content > div {
+            text-align: center;
+        }
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) {
@@ -1131,7 +1130,7 @@ body.arabic .footer-content > div {
 
     <!-- Main Content Area -->
     <main class="container">
-        <!-- Hero Section (replacing the old hero) -->
+        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
                 <!-- Enhanced App Logo -->
@@ -1149,18 +1148,17 @@ body.arabic .footer-content > div {
 
                 <div>
                 <p class="hero-description lang-en">
-                    A Google Sheets Add-on for automated computational lexicography. It orchestrates academic APIs (arXiv, Semantic Scholar) to extract terminology, performs statistical analysis against reference corpus files uploaded from Google Drive, and utilizes RAG to generate definitions. Final dictionary datasets are structured (XML/JSON) and saved directly to your Drive.
+                    A Google Sheets Add-on for automated computational lexicography. It orchestrates premium and open academic APIs (Scopus, OpenAlex, Semantic Scholar, arXiv, Europe PMC) to extract terminology, performs statistical analysis against reference corpus files, and utilizes RAG powered by Gemini 3.0 Flash to generate definitions. Final datasets are structured (XML/JSON) and saved directly to your Drive.
                 </p>
                 
                 <p class="hero-description lang-ar">
-                    إضافة لجداول بيانات جوجل (Google Sheets) مخصصة للمعجمية الحاسوبية الآلية. تقوم بتنسيق واجهات برمجة التطبيقات الأكاديمية (مثل arXiv وSemantic Scholar) لاستخلاص المصطلحات، وإجراء التحليل الإحصائي مقابل ملفات المدونات المرجعية المحملة من Google Drive، واستخدام الذكاء الاصطناعي لتوليد التعريفات. يتم تنظيم بيانات المعجم النهائية (XML/JSON) وحفظها مباشرة في Drive الخاص بك.
+                    إضافة لجداول بيانات جوجل (Google Sheets) مخصصة للمعجمية الحاسوبية الآلية. تقوم بتنسيق واجهات برمجة التطبيقات الأكاديمية (مثل Scopus و OpenAlex و arXiv و Semantic Scholar و Europe PMC) لاستخلاص المصطلحات، وإجراء التحليل الإحصائي مقابل المدونات المرجعية، واستخدام التوليد المعزز بالاسترجاع عبر نموذج Gemini 3.0 Flash لتوليد التعريفات. يتم تنظيم بيانات المعجم النهائية (XML/JSON) وحفظها مباشرة في Drive الخاص بك.
                 </p>
                 </div>
             </div>
         </section>
 
         <div class="data-notice">
-            <!-- Ensure correct H4 tags with language classes -->
             <h4 class="lang-en"><i class="fas fa-shield-alt"></i> Important Notice Regarding Google Data</h4>
             <h4 class="lang-ar"><i class="fas fa-shield-alt"></i> ملاحظة هامة بشأن بيانات جوجل</h4>
             
@@ -1173,7 +1171,7 @@ body.arabic .footer-content > div {
                 (مثل، قراءة المصطلحات للتحليل والكتابة مرة أخرى في مداخل المعجم). نحن نصل فقط إلى البيانات الضرورية لميزات التطبيق.
             </p>
             
-            <!-- LIMITED USE DISCLOSURE (Added for Compliance) -->
+            <!-- LIMITED USE DISCLOSURE -->
             <p class="lang-en" style="font-weight: 700; color: #b45309;">
                 The AMTA Lexicography Assistant's use and transfer of information received from Google APIs to any other app will adhere to 
                 <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" style="color: #b45309; text-decoration: underline;">Google API Services User Data Policy</a>, 
@@ -1263,7 +1261,7 @@ body.arabic .footer-content > div {
             </div>
         </section>
 
-                <!-- Citation Section -->
+        <!-- Citation Section -->
         <section class="citation-section" style="background: #f8f9fa; border-left: 4px solid var(--accent); padding: 20px; margin: 30px 0; border-radius: 8px;">
             <h4 style="color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
                 <i class="fas fa-quote-right"></i>
@@ -1290,11 +1288,11 @@ body.arabic .footer-content > div {
                     <h3 class="lang-en">AI-Powered Definitions</h3>
                     <h3 class="lang-ar">تعريفات مدعومة بالذكاء الاصطناعي</h3>
                     <p class="lang-en">
-                        Utilizes RAG (Retrieval-Augmented Generation) to draft precise technical definitions, 
+                        Utilizes RAG (Retrieval-Augmented Generation) powered by <strong>Gemini 3.0 Flash</strong> to draft precise technical definitions, 
                         translations, and context-aware examples by verifying against real academic papers.
                     </p>
                     <p class="lang-ar">
-                        يستخدم التوليد المعزز بالاسترجاع لصياغة تعاريف تقنية دقيقة وترجمات وأمثلة واعية بالسياق 
+                        يستخدم التوليد المعزز بالاسترجاع (RAG) المدعوم بنموذج <strong>Gemini 3.0 Flash</strong> لصياغة تعاريف تقنية دقيقة وترجمات وأمثلة واعية بالسياق 
                         من خلال التحقق من الأوراق الأكاديمية الحقيقية.
                     </p>
                 </div>
@@ -1402,6 +1400,7 @@ body.arabic .footer-content > div {
             </div>
         </section>
 
+        <!-- APIS Section with Scopus, OpenAlex, Europe PMC -->
         <section class="apis-section">
             <span class="apis-label lang-en">Powered By Academic APIs</span>
             <span class="apis-label lang-ar">مدعوم بواجهات برمجة تطبيقات أكاديمية</span>
@@ -1409,8 +1408,23 @@ body.arabic .footer-content > div {
             <div class="apis-grid">
                 <div class="api-badge">
                     <i class="fas fa-robot"></i>
-                    <span class="lang-en">Gemini AI</span>
-                    <span class="lang-ar">Gemini AI</span>
+                    <span class="lang-en">Gemini 3.0 Flash</span>
+                    <span class="lang-ar">Gemini 3.0 Flash</span>
+                </div>
+                <div class="api-badge" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
+                    <i class="fas fa-book-open"></i>
+                    <span class="lang-en">Scopus API</span>
+                    <span class="lang-ar">Scopus API</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-globe"></i>
+                    <span class="lang-en">OpenAlex</span>
+                    <span class="lang-ar">OpenAlex</span>
+                </div>
+                <div class="api-badge">
+                    <i class="fas fa-dna"></i>
+                    <span class="lang-en">Europe PMC</span>
+                    <span class="lang-ar">Europe PMC</span>
                 </div>
                 <div class="api-badge">
                     <i class="fas fa-graduation-cap"></i>
@@ -1457,8 +1471,8 @@ body.arabic .footer-content > div {
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">© 2025 Waleed Mandour • </span>
-                    <span class="lang-ar">© 2025 وليد مندور • </span>
+                    <span class="lang-en">© 2025-2026 Waleed Mandour • </span>
+                    <span class="lang-ar">© 2025-2026 وليد مندور • </span>
                     <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
                 </div>
                 
