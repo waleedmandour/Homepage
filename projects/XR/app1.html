@@ -610,6 +610,7 @@ input[type="range"]::-webkit-slider-thumb {
   justify-content: center;
   opacity: 0.7;
   animation: pulse 2s infinite;
+  z-index: 90;
 }
 
 .star-particle {
@@ -653,6 +654,39 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-top: 5px;
+}
+
+/* Footer Styles */
+.hud-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.footer-line {
+  width: 60px;
+  height: 2px;
+  background: var(--accent-cyan);
+  margin: 0 auto 8px;
+  opacity: 0.5;
+}
+
+.footer-text {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  font-family: var(--font-code);
+  text-transform: uppercase;
+}
+
+.footer-text strong {
+  color: var(--accent-cyan);
+  font-weight: 600;
 }
 </style>
 </head>
@@ -698,6 +732,11 @@ input[type="range"]::-webkit-slider-thumb {
 
 <!-- Main HUD -->
 <div id="mainHUD" class="hud-container" style="display: none;">
+  <!-- AR Guide -->
+  <div id="arGuide" class="ar-target-guide">
+    <span style="color: white; font-size: 0.9rem; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-weight: 600;">SCAN AR MARKER</span>
+  </div>
+
   <!-- Top Info -->
   <div class="top-bar">
     <div class="status-badge" id="sysStatus">
@@ -814,6 +853,15 @@ input[type="range"]::-webkit-slider-thumb {
       <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit Lab" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
     </div>
   </div>
+  
+  <!-- Footer inside HUD -->
+  <div class="hud-footer">
+      <div class="footer-line"></div>
+      <div class="footer-text">
+          <span>Developed by: <strong>Dr. Waleed Mandour</strong>, 2026</span>
+      </div>
+  </div>
+  
 </div>
 
 <!-- AR/3D Container -->
@@ -848,68 +896,18 @@ const ENGINE_CONSTANTS = {
   thermalEfficiency: 32
 };
 
-// ==================== QUIZ DATA - MECHANICAL ENGINEERING ====================
+// ==================== QUIZ DATA ====================
 const quizQuestions = [
-  { 
-    q: "What is the correct order of the 4-stroke engine cycle?", 
-    options: ["Intake, Power, Compression, Exhaust", "Intake, Compression, Power, Exhaust", "Compression, Intake, Power, Exhaust", "Power, Intake, Compression, Exhaust"], 
-    correct: 1 
-  },
-  { 
-    q: "During which stroke does the spark plug ignite the air-fuel mixture?", 
-    options: ["Intake", "Compression", "Power", "Exhaust"], 
-    correct: 2 
-  },
-  { 
-    q: "What does 'TDC' stand for in engine terminology?", 
-    options: ["Top Dead Center", "Total Displacement Capacity", "Thermal Dynamic Compression", "Torque Distribution Control"], 
-    correct: 0 
-  },
-  { 
-    q: "What is the stoichiometric air-fuel ratio for gasoline engines?", 
-    options: ["12.5:1", "14.7:1", "16.2:1", "18.0:1"], 
-    correct: 1 
-  },
-  { 
-    q: "Which component converts linear piston motion to rotational motion?", 
-    options: ["Camshaft", "Crankshaft", "Connecting Rod", "Flywheel"], 
-    correct: 1 
-  },
-  { 
-    q: "What happens during the compression stroke?", 
-    options: ["Air-fuel mixture enters cylinder", "Exhaust gases exit cylinder", "Mixture is compressed by piston", "Spark plug fires"], 
-    correct: 2 
-  },
-  { 
-    q: "What is 'volumetric efficiency' in an engine?", 
-    options: ["Fuel consumption rate", "Ratio of actual air drawn vs theoretical maximum", "Power output per liter", "Compression ratio measurement"], 
-    correct: 1 
-  },
-  { 
-    q: "Which valve opens during the intake stroke?", 
-    options: ["Exhaust valve", "Intake valve", "Both valves", "Neither valve"], 
-    correct: 1 
-  },
-  { 
-    q: "What is engine knock/detonation?", 
-    options: ["Normal combustion", "Premature fuel ignition", "Valve timing issue", "Oil pressure problem"], 
-    correct: 1 
-  },
-  { 
-    q: "What does BDC stand for?", 
-    options: ["Bottom Dead Center", "Base Displacement Capacity", "Brake Dynamic Control", "Bore Diameter Calculation"], 
-    correct: 0 
-  },
-  { 
-    q: "What is the purpose of the camshaft?", 
-    options: ["Generate spark", "Control valve timing", "Cool the engine", "Filter oil"], 
-    correct: 1 
-  },
-  { 
-    q: "Which stroke produces power in a 4-stroke engine?", 
-    options: ["Intake", "Compression", "Power/Combustion", "Exhaust"], 
-    correct: 2 
-  }
+  { q: "What is the correct order of the 4-stroke engine cycle?", options: ["Intake, Power, Compression, Exhaust", "Intake, Compression, Power, Exhaust", "Compression, Intake, Power, Exhaust", "Power, Intake, Compression, Exhaust"], correct: 1 },
+  { q: "During which stroke does the spark plug ignite the air-fuel mixture?", options: ["Intake", "End of Compression", "Power", "Exhaust"], correct: 1 },
+  { q: "What does 'TDC' stand for in engine terminology?", options: ["Top Dead Center", "Total Displacement Capacity", "Thermal Dynamic Compression", "Torque Distribution Control"], correct: 0 },
+  { q: "What is the stoichiometric air-fuel ratio for gasoline engines?", options: ["12.5:1", "14.7:1", "16.2:1", "18.0:1"], correct: 1 },
+  { q: "Which component converts linear piston motion to rotational motion?", options: ["Camshaft", "Crankshaft", "Connecting Rod", "Flywheel"], correct: 1 },
+  { q: "What happens during the compression stroke?", options: ["Air-fuel mixture enters cylinder", "Exhaust gases exit cylinder", "Mixture is compressed by piston", "Spark plug fires"], correct: 2 },
+  { q: "What is 'volumetric efficiency' in an engine?", options: ["Fuel consumption rate", "Ratio of actual air drawn vs theoretical maximum", "Power output per liter", "Compression ratio measurement"], correct: 1 },
+  { q: "Which valve opens during the intake stroke?", options: ["Exhaust valve", "Intake valve", "Both valves", "Neither valve"], correct: 1 },
+  { q: "What is engine knock/detonation?", options: ["Normal combustion", "Premature fuel ignition", "Valve timing issue", "Oil pressure problem"], correct: 1 },
+  { q: "What does BDC stand for?", options: ["Bottom Dead Center", "Base Displacement Capacity", "Brake Dynamic Control", "Bore Diameter Calculation"], correct: 0 }
 ];
 
 // ==================== APP STATE ====================
@@ -928,7 +926,7 @@ const state = {
   activeComponent: null,
   lastInteraction: Date.now(),
   startTime: 0,
-  lastEmergency: 0,
+  lastEmergency: Date.now(),
   isEmergency: false,
   emergencyCount: 0,
   currentQ: 0,
@@ -951,6 +949,7 @@ let audioCtx = null, ambientSound = null;
 let sirenInterval = null, toastTimer = null;
 let interactiveObjects = [];
 let piston, crankshaft, connectingRod, intakeValve, exhaustValve, sparkPlug, cylinder;
+let crankArm; 
 let strokeLabels = ['INTAKE', 'COMPRESSION', 'POWER', 'EXHAUST'];
 let strokeDescriptions = [
   'Piston moving down, intake valve open',
@@ -1048,7 +1047,6 @@ async function startApp(mode) {
   
   initEnhancedUI();
   initQuiz();
-  initMoleculeViewer();
   startDataStream();
   animate();
 }
@@ -1222,25 +1220,46 @@ function buildEngineModel() {
   rootGroup.add(connectingRod);
   interactiveObjects.push(connectingRod);
   
-  // Crankshaft
-  const crankGeo = new THREE.CylinderGeometry(0.5, 0.5, 2, 32);
-  crankshaft = new THREE.Mesh(crankGeo, getEnhancedMaterial(COLORS.crankshaft));
-  crankshaft.rotation.z = Math.PI / 2;
-  crankshaft.position.y = -1.5;
-  crankshaft.name = "Crankshaft";
-  rootGroup.add(crankshaft);
-  interactiveObjects.push(crankshaft);
+  // Crankshaft Group
+  const crankGroup = new THREE.Group();
+  crankGroup.position.y = -1.5;
+  crankGroup.name = "Crankshaft";
   
-  // Intake Valve
+  const mainJournal = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 0.3, 2, 32),
+    getEnhancedMaterial(COLORS.crankshaft)
+  );
+  mainJournal.rotation.z = Math.PI / 2;
+  crankGroup.add(mainJournal);
+  
+  crankArm = new THREE.Mesh(
+    new THREE.BoxGeometry(0.3, 1.0, 0.3),
+    getEnhancedMaterial(COLORS.crankshaft)
+  );
+  crankArm.position.y = 0.5;
+  crankGroup.add(crankArm);
+  
+  const crankPin = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.15, 0.15, 0.5, 16),
+    getEnhancedMaterial(COLORS.piston)
+  );
+  crankPin.rotation.z = Math.PI / 2;
+  crankPin.position.y = 1.0;
+  crankGroup.add(crankPin);
+  
+  rootGroup.add(crankGroup);
+  crankshaft = crankGroup;
+  interactiveObjects.push(crankGroup);
+  
+  // Valves
   const valveGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16);
-  intakeValve = new THREE.Mesh(valveGeo, getEnhancedMaterial(COLORS.valve));
+  intakeValve = new THREE.Mesh(valveGeo, getEnhancedMaterial(COLORS.intake));
   intakeValve.position.set(-0.5, 2.8, 0);
   intakeValve.name = "IntakeValve";
   rootGroup.add(intakeValve);
   interactiveObjects.push(intakeValve);
   
-  // Exhaust Valve
-  exhaustValve = new THREE.Mesh(valveGeo, getEnhancedMaterial(COLORS.valve));
+  exhaustValve = new THREE.Mesh(valveGeo, getEnhancedMaterial(COLORS.exhaust));
   exhaustValve.position.set(0.5, 2.8, 0);
   exhaustValve.name = "ExhaustValve";
   rootGroup.add(exhaustValve);
@@ -1254,16 +1273,6 @@ function buildEngineModel() {
   rootGroup.add(sparkPlug);
   interactiveObjects.push(sparkPlug);
   
-  // Camshaft
-  const camGeo = new THREE.CylinderGeometry(0.2, 0.2, 2.5, 16);
-  const camshaft = new THREE.Mesh(camGeo, getEnhancedMaterial(COLORS.camshaft));
-  camshaft.rotation.z = Math.PI / 2;
-  camshaft.position.set(0, 2.5, 1);
-  camshaft.name = "Camshaft";
-  rootGroup.add(camshaft);
-  interactiveObjects.push(camshaft);
-  
-  // Combustion chamber visualization
   const combustionGeo = new THREE.SphereGeometry(0.6, 16, 16);
   const combustion = new THREE.Mesh(combustionGeo, getEnhancedMaterial(COLORS.combustion, { transparent: true, opacity: 0 }));
   combustion.position.y = 2.5;
@@ -1274,15 +1283,15 @@ function buildEngineModel() {
 }
 
 function initFlowSystem() {
-  const particleCount = 50;
+  const particleCount = 80;
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
   particles.data = [];
   
   for (let i = 0; i < particleCount; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 2;
-    positions[i * 3 + 1] = Math.random() * 3;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    positions[i * 3] = (Math.random() - 0.5) * 0.1;
+    positions[i * 3 + 1] = 2.5;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 0.1;
     
     const type = i % 2 === 0 ? 'air' : 'fuel';
     const color = type === 'air' ? [56/255, 189/255, 248/255] : [245/255, 158/255, 11/255];
@@ -1294,7 +1303,8 @@ function initFlowSystem() {
     particles.data.push({
       type: type,
       t: Math.random() * 100,
-      speed: 0.02 + Math.random() * 0.02
+      speed: 0.05 + Math.random() * 0.05,
+      active: false
     });
   }
   
@@ -1303,7 +1313,7 @@ function initFlowSystem() {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   
   const material = new THREE.PointsMaterial({
-    size: 0.1,
+    size: 0.08,
     vertexColors: true,
     transparent: true,
     opacity: 0.8,
@@ -1318,47 +1328,58 @@ function updateEngineAnimation() {
   if (!state.animationActive) return;
   
   const rpm = state.rpm;
-  const rotationSpeed = (rpm / 60) * 0.01;
+  const rotationSpeed = (rpm / 60) * (Math.PI * 2 / 60);
   
   state.strokeAngle += rotationSpeed;
-  if (state.strokeAngle >= Math.PI * 4) {
-    state.strokeAngle = 0;
-  }
+  if (state.strokeAngle >= Math.PI * 4) state.strokeAngle = 0;
   
-  // Update stroke indicator
   const strokeIndex = Math.floor((state.strokeAngle / (Math.PI * 4)) * 4) % 4;
   if (strokeIndex !== state.currentStroke) {
     state.currentStroke = strokeIndex;
     updateStrokeIndicator();
   }
   
-  // Piston movement (sinusoidal)
-  const pistonPosition = Math.sin(state.strokeAngle) * 1.2 + 0.8;
-  piston.position.y = pistonPosition;
+  const angle = state.strokeAngle;
+  const crankRadius = 1.0;
+  const rodLength = 2.0;
+  const pistonAmplitude = 1.0;
+  const pistonCenterY = 1.5;
   
-  // Crankshaft rotation
-  crankshaft.rotation.x += rotationSpeed;
+  const pistonY = pistonCenterY + (crankRadius * Math.cos(angle) + Math.sqrt(Math.pow(rodLength, 2) - Math.pow(crankRadius * Math.sin(angle), 2)) - rodLength);
   
-  // Connecting rod angle
-  connectingRod.rotation.z = Math.sin(state.strokeAngle) * 0.3;
-  connectingRod.position.y = pistonPosition - 1;
+  piston.position.y = pistonY + 1.0;
   
-  // Valve timing
-  const intakeOpen = (state.strokeAngle % (Math.PI * 4)) < Math.PI;
-  const exhaustOpen = (state.strokeAngle % (Math.PI * 4)) > Math.PI * 3;
+  crankshaft.rotation.z = angle;
   
-  intakeValve.position.y = intakeOpen ? 2.6 : 2.8;
-  exhaustValve.position.y = exhaustOpen ? 2.6 : 2.8;
+  const crankPinX = crankRadius * Math.sin(angle);
+  const crankPinY = -1.5 + crankRadius * Math.cos(angle);
   
-  // Spark plug glow during power stroke
-  const powerStroke = (state.strokeAngle % (Math.PI * 4)) > Math.PI && (state.strokeAngle % (Math.PI * 4)) < Math.PI * 2;
-  sparkPlug.material.emissiveIntensity = powerStroke ? 1.0 : 0.3;
+  const dx = crankPinX - piston.position.x;
+  const dy = crankPinY - piston.position.y;
+  const dist = Math.sqrt(dx*dx + dy*dy);
   
-  // Update particles
-  updateFlowParticles();
+  connectingRod.position.y = (piston.position.y + crankPinY) / 2;
+  connectingRod.position.x = crankPinX / 2;
+  connectingRod.rotation.z = Math.atan2(dx, dy);
+  
+  const intakeOpen = (angle % (Math.PI * 4)) < Math.PI;
+  const exhaustOpen = (angle % (Math.PI * 4)) > Math.PI * 3;
+  
+  intakeValve.position.y = intakeOpen ? 3.0 : 2.8;
+  intakeValve.material.emissive.set(intakeOpen ? COLORS.intake : 0x000000);
+  intakeValve.material.emissiveIntensity = intakeOpen ? 0.5 : 0;
+
+  exhaustValve.position.y = exhaustOpen ? 3.0 : 2.8;
+  exhaustValve.material.emissive.set(exhaustOpen ? COLORS.exhaust : 0x000000);
+  exhaustValve.material.emissiveIntensity = exhaustOpen ? 0.5 : 0;
+  
+  const sparkTiming = (angle % (Math.PI * 4)) > (Math.PI * 2 - 0.2) && (angle % (Math.PI * 4)) < (Math.PI * 2 + 0.5);
+  sparkPlug.material.emissiveIntensity = sparkTiming ? 1.0 : 0.3;
+  
+  updateFlowParticles(intakeOpen, exhaustOpen, sparkTiming);
 }
 
-function updateFlowParticles() {
+function updateFlowParticles(intakeOpen, exhaustOpen, combustion) {
   if (!particles.mesh) return;
   
   const positions = particles.mesh.geometry.attributes.position.array;
@@ -1368,18 +1389,51 @@ function updateFlowParticles() {
     p.t += p.speed * speedFactor;
     const pathT = (p.t % 100) / 100;
     
-    if (p.type === 'air') {
-      positions[i * 3] = (Math.random() - 0.5) * 2;
-      positions[i * 3 + 1] = 2.5 + Math.sin(p.t) * 0.5;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    if (Math.random() < 0.05) p.active = false;
+    
+    if (intakeOpen && (p.type === 'air' || p.type === 'fuel')) {
+      if (!p.active) {
+        positions[i * 3] = (Math.random() - 0.5) * 0.2 - 0.5;
+        positions[i * 3 + 1] = 2.8;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 0.2;
+        p.active = true;
+      } else {
+        positions[i * 3 + 1] -= 0.05;
+        positions[i * 3] += (Math.random() - 0.5) * 0.01;
+      }
+    }
+    else if (combustion) {
+       positions[i * 3] += (Math.random() - 0.5) * 0.2;
+       positions[i * 3 + 1] += (Math.random() - 0.5) * 0.2;
+       if (Math.random() < 0.1) p.active = false;
+    }
+    else if (exhaustOpen) {
+       if (!p.active) {
+         positions[i * 3] = (Math.random() - 0.5) * 1.0;
+         positions[i * 3 + 1] = piston.position.y + 0.5;
+         positions[i * 3 + 2] = (Math.random() - 0.5) * 1.0;
+         p.active = true;
+         particles.mesh.geometry.attributes.color.array[i * 3] = 0.6;
+         particles.mesh.geometry.attributes.color.array[i * 3 + 1] = 0.6;
+         particles.mesh.geometry.attributes.color.array[i * 3 + 2] = 0.6;
+       } else {
+         positions[i * 3 + 1] += 0.08;
+         positions[i * 3] += (Math.random() - 0.5) * 0.01;
+         if (positions[i * 3 + 1] > 2.5) {
+           positions[i * 3] += (0.5 - positions[i * 3]) * 0.1;
+         }
+       }
     } else {
-      positions[i * 3] = (Math.random() - 0.5) * 2;
-      positions[i * 3 + 1] = 2.5 + Math.cos(p.t) * 0.5;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+      if (p.type === 'air') {
+         particles.mesh.geometry.attributes.color.array[i * 3] = 56/255;
+         particles.mesh.geometry.attributes.color.array[i * 3 + 1] = 189/255;
+         particles.mesh.geometry.attributes.color.array[i * 3 + 2] = 248/255;
+      }
     }
   });
   
   particles.mesh.geometry.attributes.position.needsUpdate = true;
+  particles.mesh.geometry.attributes.color.needsUpdate = true;
 }
 
 function updateStrokeIndicator() {
@@ -1391,7 +1445,6 @@ function updateStrokeIndicator() {
   label.innerText = strokeLabels[state.currentStroke];
   phase.innerText = strokeDescriptions[state.currentStroke];
   
-  // Color coding for strokes
   const colors = ['#38bdf8', '#8b5cf6', '#f59e0b', '#ef4444'];
   label.style.color = colors[state.currentStroke];
   indicator.style.borderColor = colors[state.currentStroke];
@@ -1439,19 +1492,16 @@ function initEnhancedUI() {
     document.getElementById('valRPM').innerText = `${state.rpm} RPM`;
     document.getElementById('valAFR').innerText = `${state.afr}:1`;
     
-    // Calculate power output
     const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
     const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
     state.power = 150 * rpmFactor * afrFactor;
     state.power = Math.max(50, Math.min(300, state.power));
     document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
     
-    // Calculate temperature
     state.temp = ENGINE_CONSTANTS.optimalTemp + (state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05;
     state.temp = Math.max(400, Math.min(1200, state.temp));
     document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
     
-    // Thermal efficiency
     const efficiencyLoss = Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2;
     state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - efficiencyLoss;
     state.efficiency = Math.max(20, Math.min(40, state.efficiency));
@@ -1467,7 +1517,8 @@ function initEnhancedUI() {
   document.getElementById('btnXray').onclick = (e) => {
     state.isXray = !state.isXray;
     e.currentTarget.classList.toggle('active');
-    cylinder.material.opacity = state.isXray ? 0.2 : 0.4;
+    cylinder.material.opacity = state.isXray ? 0.1 : 0.4;
+    cylinder.material.wireframe = state.isXray;
     showToast(state.isXray ? "X-Ray Mode ON" : "X-Ray Mode OFF", 
       state.isXray ? "Viewing internal components" : "Normal view restored");
   };
@@ -1484,6 +1535,7 @@ function initEnhancedUI() {
       gsap.to(rootGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
       gsap.to(rootGroup.position, { x: 0, y: 0, z: 0, duration: 1 });
     }
+    state.strokeAngle = 0;
     showToast("View Reset", "Camera position restored");
   };
   
@@ -1588,9 +1640,15 @@ function startEmergencyParameterChange() {
     document.getElementById('valRPM').innerText = `${newRPM} RPM`;
     document.getElementById('valAFR').innerText = `${newAFR}:1`;
     
-    const event = new Event('input');
-    document.getElementById('sliderRPM').dispatchEvent(event);
-    document.getElementById('sliderAFR').dispatchEvent(event);
+    state.rpm = newRPM;
+    state.afr = newAFR;
+    const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
+    const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
+    state.power = 150 * rpmFactor * afrFactor;
+    state.temp = ENGINE_CONSTANTS.optimalTemp + (state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05;
+    document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
+    document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
+    
   }, 2000);
 }
 
@@ -1615,7 +1673,14 @@ function resolveEmergency() {
     speak("Engine stabilized. Parameters within optimal range.");
   }
   
-  updateEngineCalculations();
+  const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
+  const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
+  state.power = 150 * rpmFactor * afrFactor;
+  state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2;
+  
+  document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
+  document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
+  
   showStarReward("Engine Stabilized!", "Emergency Response Expert");
   state.totalStars += 1;
   
@@ -1837,53 +1902,16 @@ function selectComponent(name, data = {}) {
   const toastSubtext = document.getElementById('toastSubtext');
   
   const componentInfo = {
-    "Piston": {
-      title: "PISTON",
-      desc: "Reciprocating component within cylinder",
-      info: "Moves up and down converting pressure to rotational motion via connecting rod."
-    },
-    "Cylinder": {
-      title: "CYLINDER",
-      desc: "Chamber where combustion occurs",
-      info: "Contains piston and combustion chamber. Typically made of cast iron or aluminum alloy."
-    },
-    "Crankshaft": {
-      title: "CRANKSHAFT",
-      desc: "Converts linear to rotational motion",
-      info: "Key component that transforms piston's reciprocating motion into rotational output."
-    },
-    "ConnectingRod": {
-      title: "CONNECTING ROD",
-      desc: "Links piston to crankshaft",
-      info: "Transmits force from piston to crankshaft. Subject to high stress during operation."
-    },
-    "IntakeValve": {
-      title: "INTAKE VALVE",
-      desc: "Controls air-fuel mixture entry",
-      info: "Opens during intake stroke to allow air-fuel mixture into combustion chamber."
-    },
-    "ExhaustValve": {
-      title: "EXHAUST VALVE",
-      desc: "Controls exhaust gas exit",
-      info: "Opens during exhaust stroke to release burned gases from cylinder."
-    },
-    "SparkPlug": {
-      title: "SPARK PLUG",
-      desc: "Ignites air-fuel mixture",
-      info: "Creates electrical spark at end of compression stroke to initiate combustion."
-    },
-    "Camshaft": {
-      title: "CAMSHAFT",
-      desc: "Controls valve timing",
-      info: "Rotating shaft with lobes that open and close valves at precise timing."
-    }
+    "Piston": { title: "PISTON", desc: "Reciprocating component", info: "Moves up and down converting pressure to motion." },
+    "Cylinder": { title: "CYLINDER", desc: "Combustion chamber", info: "Contains the piston and combustion process." },
+    "Crankshaft": { title: "CRANKSHAFT", desc: "Rotational output shaft", info: "Converts reciprocating motion to rotation." },
+    "ConnectingRod": { title: "CONNECTING ROD", desc: "Linkage arm", info: "Connects piston to crankshaft." },
+    "IntakeValve": { title: "INTAKE VALVE", desc: "Input control", info: "Lets air-fuel mixture into the cylinder." },
+    "ExhaustValve": { title: "EXHAUST VALVE", desc: "Output control", info: "Lets exhaust gases out of the cylinder." },
+    "SparkPlug": { title: "SPARK PLUG", desc: "Ignition source", info: "Ignites the air-fuel mixture." }
   };
   
-  const info = componentInfo[name] || {
-    title: name.toUpperCase(),
-    desc: "Engine Component",
-    info: "Click components to learn about 4-stroke engine operation"
-  };
+  const info = componentInfo[name] || { title: name, desc: "Component", info: "Click components for info." };
   
   toastText.innerText = info.title;
   toastSubtext.innerText = info.desc;
@@ -1899,40 +1927,11 @@ function selectComponent(name, data = {}) {
     });
   }, 3000);
   
-  updateMoleculeView(name, data);
-  
   if (state.audioEnabled && !state.isEmergency) {
     speak(info.title + ". " + info.info);
   }
   
   addDataStreamEntry("INTERACTION", `Selected: ${name}`);
-}
-
-// ==================== MOLECULE VIEWER ====================
-function initMoleculeViewer() {
-  const canvas = document.createElement('div');
-  canvas.id = 'moleculeCanvas';
-  canvas.style.cssText = 'width: 200px; height: 150px; background: rgba(0,0,0,0.3); border-radius: 8px;';
-  
-  molScene = new THREE.Scene();
-  molScene.background = new THREE.Color(0x101828);
-  molCamera = new THREE.PerspectiveCamera(50, 200/150, 0.1, 20);
-  molCamera.position.z = 8;
-  
-  molRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  molRenderer.setSize(200, 150);
-  canvas.appendChild(molRenderer.domElement);
-  
-  const mainLight = new THREE.DirectionalLight(0xffffff, 1);
-  mainLight.position.set(5, 10, 7);
-  molScene.add(mainLight);
-  
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-  molScene.add(ambientLight);
-}
-
-function updateMoleculeView(name, data = {}) {
-  // Simplified molecule viewer for engine components
 }
 
 // ==================== DATA STREAM ====================
@@ -2035,9 +2034,7 @@ function playSuccessSound() {
       gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
       oscillator.start();
       oscillator.stop(audioCtx.currentTime + 0.5);
-    } catch (e) {
-      console.log("Success sound error:", e);
-    }
+    } catch (e) { console.log("Audio error", e); }
   }
 }
 
@@ -2054,9 +2051,7 @@ function playErrorSound() {
       gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
       oscillator.start();
       oscillator.stop(audioCtx.currentTime + 0.3);
-    } catch (e) {
-      console.log("Error sound error:", e);
-    }
+    } catch (e) { console.log("Audio error", e); }
   }
 }
 
@@ -2065,15 +2060,6 @@ function animate() {
   requestAnimationFrame(animate);
   
   updateEngineAnimation();
-  
-  if (molecules.length > 0) {
-    molecules.forEach(group => {
-      group.rotation.y += 0.005;
-    });
-    if (molRenderer && molScene && molCamera) {
-      molRenderer.render(molScene, molCamera);
-    }
-  }
   
   if (!state.isEmergency && Date.now() - state.lastEmergency > 45000 + Math.random() * 30000) {
     triggerEmergency();
