@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>4-Stroke Engine Lab | Mechanical Engineering WebAR</title>
+<meta name="theme-color" content="#0b1120">
+<meta name="description" content="Interactive WebAR simulation of 4-stroke internal combustion engine with real-time thermodynamics, component visualization, and engineering assessments.">
+
+<!-- Dependencies -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+    "mindar-image-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"
+  }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-dark: #0b1120;
+  --glass-panel: rgba(16, 24, 40, 0.92);
+  --glass-border: rgba(56, 189, 248, 0.4);
+  --accent-cyan: #38bdf8;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --accent-purple: #8b5cf6;
+  --accent-danger: #ef4444;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --font-tech: 'Rajdhani', sans-serif;
+  --font-code: 'Roboto Mono', monospace;
+  --glow-cyan: 0 0 20px rgba(56, 189, 248, 0.5);
+  --glow-green: 0 0 20px rgba(16, 185, 129, 0.5);
+  --glow-orange: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: var(--font-tech);
+  background: var(--bg-dark);
+  color: var(--text-main);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  transition: background 0.5s ease;
+}
+
+body.ar-active {
+  background: transparent !important;
+}
+
+.hud-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px;
+}
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+.status-badge {
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 10px 20px;
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s;
+  box-shadow: var(--glow-cyan);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 15px var(--accent-green);
+  animation: pulse 2s infinite;
+}
+
+.critical-state .status-badge {
+  border-color: var(--accent-danger);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+  animation: shake 0.5s infinite;
+}
+
+.critical-state .status-dot {
+  background: var(--accent-danger);
+  box-shadow: 0 0 20px var(--accent-danger);
+  animation: flash 0.3s infinite;
+}
+
+.critical-state .tech-title h1 {
+  color: var(--accent-danger);
+}
+
+.tech-title h1 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.tech-title span {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.side-panel {
+  position: absolute;
+  top: 90px;
+  width: 320px;
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  padding: 24px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: translateX(-120%);
+  opacity: 0;
+  z-index: 150;
+}
+
+.control-room-panel {
+  left: 20px;
+  border-left: 4px solid var(--accent-cyan);
+}
+
+.quiz-panel {
+  right: 20px;
+  border-right: 4px solid var(--accent-orange);
+  transform: translateX(120%);
+}
+
+.data-panel {
+  right: 20px;
+  border-right: 4px solid var(--accent-purple);
+  display: none;
+}
+
+.side-panel.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 12px;
+}
+
+.panel-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 160;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  color: var(--accent-cyan);
+}
+
+.slider-group {
+  margin-bottom: 20px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.slider-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.slider-value {
+  font-family: var(--font-code);
+  font-size: 1rem;
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--glow-cyan);
+  border: 2px solid var(--accent-cyan);
+}
+
+.parameter-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.param-box {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.param-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.param-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: var(--font-code);
+}
+
+.param-value.rpm { color: #f97316; }
+.param-value.temp { color: #ef4444; }
+.param-value.pressure { color: #8b5cf6; }
+.param-value.efficiency { color: #10b981; }
+
+.quiz-question {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.quiz-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.quiz-btn.correct {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.quiz-btn.wrong {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: var(--accent-danger);
+  color: var(--accent-danger);
+}
+
+.next-q-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: var(--accent-cyan);
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: none;
+  font-family: var(--font-tech);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bottom-dock {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 30px;
+}
+
+.mode-toggles {
+  display: flex;
+  gap: 10px;
+  background: var(--glass-panel);
+  padding: 12px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: auto;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.icon-btn.active {
+  background: var(--accent-cyan);
+  color: #000;
+  box-shadow: var(--glow-cyan);
+}
+
+.icon-btn.badge::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-orange);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+#loadingScreen, #startScreen, #targetModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#targetModal {
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 2000;
+  display: none;
+}
+
+.loader-ring {
+  width: 80px;
+  height: 80px;
+  border: 4px solid rgba(56, 189, 248, 0.2);
+  border-top-color: var(--accent-cyan);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+.btn-primary {
+  margin-top: 30px;
+  padding: 16px 48px;
+  background: linear-gradient(90deg, var(--accent-cyan), #0ea5e9);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-tech);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+}
+
+.btn-secondary {
+  margin-top: 15px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 24px;
+  cursor: pointer;
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.btn-text {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: var(--accent-cyan);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.btn-text:hover {
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.target-image-display {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  color: white;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.star-pop {
+  animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.data-stream {
+  position: absolute;
+  bottom: 120px;
+  left: 20px;
+  width: 300px;
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(20px);
+  display: none;
+  pointer-events: auto;
+}
+
+.data-stream.active {
+  display: block;
+  animation: slideUp 0.5s ease;
+}
+
+.achievement-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 2px solid var(--accent-orange);
+  border-radius: 16px;
+  padding: 20px;
+  z-index: 1000;
+  display: none;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  min-width: 300px;
+}
+
+.achievement-icon {
+  font-size: 3rem;
+  color: gold;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ar-target-guide {
+  width: 250px;
+  height: 250px;
+  border: 3px dashed var(--accent-cyan);
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  animation: pulse 2s infinite;
+}
+
+.star-particle {
+  position: absolute;
+  font-size: 1.5rem;
+  color: gold;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+}
+
+.stroke-indicator {
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--glass-panel);
+  border: 2px solid var(--accent-orange);
+  border-radius: 12px;
+  padding: 15px 25px;
+  backdrop-filter: blur(20px);
+  display: none;
+  pointer-events: auto;
+  z-index: 140;
+}
+
+.stroke-indicator.active {
+  display: block;
+  animation: slideUp 0.5s ease;
+}
+
+.stroke-label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-orange);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.stroke-phase {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loadingScreen">
+  <div class="loader-ring"></div>
+  <h2 style="margin-top: 30px; color: var(--accent-cyan); letter-spacing: 3px; font-size: 1.5rem;">INITIALIZING ENGINE LAB</h2>
+  <div id="loadProgress" style="margin-top: 20px; width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+    <div style="width: 0%; height: 100%; background: var(--accent-cyan); border-radius: 2px; transition: width 0.3s;"></div>
+  </div>
+</div>
+
+<!-- Target Image Modal -->
+<div id="targetModal">
+  <h3 style="color: white; margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase;">Scan this AR Marker</h3>
+  <div class="target-image-display">
+    <i class="fas fa-cogs" style="font-size: 4rem; margin-bottom: 20px; color: white;"></i>
+    <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">4-STROKE ENGINE AR LAB</p>
+    <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this marker or print it</p>
+    <div style="margin-top: 20px; padding: 10px; background: white; border-radius: 8px;">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=FourStrokeEngineARLab2.0" alt="QR Code" style="width: 150px; height: 150px;">
+    </div>
+  </div>
+  <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
+</div>
+
+<!-- Start Screen -->
+<div id="startScreen" style="display: none;">
+  <i class="fas fa-engine" style="font-size: 5rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
+  <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">4-STROKE<br><span style="color: var(--accent-cyan)">ENGINE LAB</span></h1>
+  <p style="max-width: 400px; text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 1.1rem;">
+    Interactive mechanical engineering simulation with real-time thermodynamics, component visualization, and performance optimization.
+  </p>
+  <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
+  <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View AR Marker</button>
+  <button class="btn-secondary" id="btnStart3D">Desktop / Simulation Mode</button>
+  <div style="margin-top: 40px; font-size: 0.9rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 80%; text-align: center;">
+    MECHANICAL ENGINEERING LAB v3.0 | Internal Combustion Engine Simulation
+  </div>
+</div>
+
+<!-- Main HUD -->
+<div id="mainHUD" class="hud-container" style="display: none;">
+  <!-- Top Info -->
+  <div class="top-bar">
+    <div class="status-badge" id="sysStatus">
+      <div class="status-dot"></div>
+      <div class="tech-title">
+        <h1 id="statusText">Engine Running</h1>
+        <span id="modeIndicator">AR TRACKING</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Knowledge Check" style="background: var(--glass-panel);">
+        <i class="fas fa-brain"></i>
+      </button>
+      <button class="icon-btn pointer-events-auto" id="btnData" title="Live Data" style="background: var(--glass-panel);">
+        <i class="fas fa-chart-line"></i>
+      </button>
+      <button class="icon-btn pointer-events-auto" id="btnSettings" title="Engine Controls" style="background: var(--glass-panel);">
+        <i class="fas fa-sliders-h"></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="starReward" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; z-index: 200; pointer-events: none;">
+    <i class="fas fa-star" style="color: gold; font-size: 6rem; filter: drop-shadow(0 0 30px gold);"></i>
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; text-align: center;">
+      <div style="font-size: 1.5rem; margin-top: 120px;">ACHIEVEMENT UNLOCKED!</div>
+      <div style="font-size: 1rem; color: gold;" id="achievementText">Engine Optimization Expert</div>
+    </div>
+  </div>
+
+  <!-- Control Panel (Left) -->
+  <div class="side-panel control-room-panel" id="controlPanel">
+    <div class="panel-header">
+      <span class="panel-label">ENGINE CONTROL</span>
+      <button class="close-btn" id="btnCloseControls"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="slider-group">
+      <div class="slider-header">
+        <span class="slider-label">Engine Speed (RPM)</span>
+        <span class="slider-value" id="valRPM">3000 RPM</span>
+      </div>
+      <input type="range" id="sliderRPM" min="800" max="6000" value="3000" step="100">
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Idle: 800-1000 | Optimal: 2500-4000 | Redline: 6000+</div>
+    </div>
+    <div class="slider-group">
+      <div class="slider-header">
+        <span class="slider-label">Air-Fuel Ratio</span>
+        <span class="slider-value" id="valAFR">14.7:1</span>
+      </div>
+      <input type="range" id="sliderAFR" min="10" max="18" value="14.7" step="0.1">
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Stoichiometric: 14.7:1 | Lean: >14.7 | Rich: <14.7</div>
+    </div>
+    <div class="parameter-display">
+      <div class="param-box">
+        <div class="param-label">Power Output</div>
+        <div class="param-value rpm" id="valPower">150 kW</div>
+      </div>
+      <div class="param-box">
+        <div class="param-label">Cylinder Temp</div>
+        <div class="param-value temp" id="valTemp">850°C</div>
+      </div>
+      <div class="param-box">
+        <div class="param-label">Compression</div>
+        <div class="param-value pressure" id="valCompression">10:1</div>
+      </div>
+      <div class="param-box">
+        <div class="param-label">Thermal Eff.</div>
+        <div class="param-value efficiency" id="valEfficiency">32%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Panel (Right) -->
+  <div class="side-panel quiz-panel" id="quizPanel">
+    <div class="panel-header">
+      <span class="panel-label">KNOWLEDGE CHECK</span>
+      <button class="close-btn" id="btnCloseQuiz"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="quizContent">
+      <div class="quiz-question" id="qText">Question loading...</div>
+      <div class="quiz-options" id="qOptions"></div>
+      <button class="next-q-btn" id="btnNextQ">NEXT QUESTION <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></button>
+    </div>
+    <div id="quizScore" style="margin-top: 20px; text-align: center; color: var(--accent-orange); font-weight: bold; font-size: 1.2rem;">Score: 0</div>
+  </div>
+
+  <!-- Data Panel -->
+  <div class="side-panel data-panel" id="dataPanel">
+    <div class="panel-header">
+      <span class="panel-label">LIVE DATA STREAM</span>
+      <button class="close-btn" id="btnCloseData"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="dataStreamContent" style="font-family: var(--font-code);"></div>
+  </div>
+
+  <!-- Stroke Indicator -->
+  <div class="stroke-indicator" id="strokeIndicator">
+    <div class="stroke-label" id="strokeLabel">INTAKE</div>
+    <div class="stroke-phase" id="strokePhase">Piston moving down, intake valve open</div>
+  </div>
+
+  <!-- Bottom Controls -->
+  <div class="bottom-dock">
+    <div id="infoToast" style="background: var(--glass-panel); padding: 12px 24px; border-radius: 12px; border: 2px solid var(--accent-cyan); display: none; margin-bottom: 10px; backdrop-filter: blur(20px); min-width: 200px; text-align: center;">
+      <span id="toastText" style="font-weight: 600;">Component Selected</span>
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="toastSubtext">Click to interact</div>
+    </div>
+    <div class="mode-toggles">
+      <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync-alt"></i></button>
+      <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
+      <button class="icon-btn pointer-events-auto active" id="btnAnimation" title="Toggle Animation"><i class="fas fa-play"></i></button>
+      <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
+      <button class="icon-btn pointer-events-auto" id="btnInfo" title="Component Info"><i class="fas fa-info-circle"></i></button>
+      <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit Lab" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- AR/3D Container -->
+<div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { MindARThree } from 'mindar-image-three';
+
+// ==================== ENGINEERING CONSTANTS ====================
+const COLORS = {
+  piston: 0xc0c0c0,
+  cylinder: 0x8899a6,
+  crankshaft: 0x64748b,
+  connectingRod: 0x94a3b8,
+  valve: 0xb0b0b0,
+  sparkPlug: 0xf59e0b,
+  camshaft: 0x475569,
+  combustion: 0xff6b35,
+  intake: 0x38bdf8,
+  exhaust: 0xef4444,
+  highlight: 0x10b981
+};
+
+const ENGINE_CONSTANTS = {
+  optimalRPM: 3000,
+  maxRPM: 6000,
+  idleRPM: 800,
+  stoichiometricAFR: 14.7,
+  optimalTemp: 850,
+  compressionRatio: 10,
+  thermalEfficiency: 32
+};
+
+// ==================== QUIZ DATA - MECHANICAL ENGINEERING ====================
+const quizQuestions = [
+  { 
+    q: "What is the correct order of the 4-stroke engine cycle?", 
+    options: ["Intake, Power, Compression, Exhaust", "Intake, Compression, Power, Exhaust", "Compression, Intake, Power, Exhaust", "Power, Intake, Compression, Exhaust"], 
+    correct: 1 
+  },
+  { 
+    q: "During which stroke does the spark plug ignite the air-fuel mixture?", 
+    options: ["Intake", "Compression", "Power", "Exhaust"], 
+    correct: 2 
+  },
+  { 
+    q: "What does 'TDC' stand for in engine terminology?", 
+    options: ["Top Dead Center", "Total Displacement Capacity", "Thermal Dynamic Compression", "Torque Distribution Control"], 
+    correct: 0 
+  },
+  { 
+    q: "What is the stoichiometric air-fuel ratio for gasoline engines?", 
+    options: ["12.5:1", "14.7:1", "16.2:1", "18.0:1"], 
+    correct: 1 
+  },
+  { 
+    q: "Which component converts linear piston motion to rotational motion?", 
+    options: ["Camshaft", "Crankshaft", "Connecting Rod", "Flywheel"], 
+    correct: 1 
+  },
+  { 
+    q: "What happens during the compression stroke?", 
+    options: ["Air-fuel mixture enters cylinder", "Exhaust gases exit cylinder", "Mixture is compressed by piston", "Spark plug fires"], 
+    correct: 2 
+  },
+  { 
+    q: "What is 'volumetric efficiency' in an engine?", 
+    options: ["Fuel consumption rate", "Ratio of actual air drawn vs theoretical maximum", "Power output per liter", "Compression ratio measurement"], 
+    correct: 1 
+  },
+  { 
+    q: "Which valve opens during the intake stroke?", 
+    options: ["Exhaust valve", "Intake valve", "Both valves", "Neither valve"], 
+    correct: 1 
+  },
+  { 
+    q: "What is engine knock/detonation?", 
+    options: ["Normal combustion", "Premature fuel ignition", "Valve timing issue", "Oil pressure problem"], 
+    correct: 1 
+  },
+  { 
+    q: "What does BDC stand for?", 
+    options: ["Bottom Dead Center", "Base Displacement Capacity", "Brake Dynamic Control", "Bore Diameter Calculation"], 
+    correct: 0 
+  },
+  { 
+    q: "What is the purpose of the camshaft?", 
+    options: ["Generate spark", "Control valve timing", "Cool the engine", "Filter oil"], 
+    correct: 1 
+  },
+  { 
+    q: "Which stroke produces power in a 4-stroke engine?", 
+    options: ["Intake", "Compression", "Power/Combustion", "Exhaust"], 
+    correct: 2 
+  }
+];
+
+// ==================== APP STATE ====================
+const state = {
+  rpm: 3000,
+  afr: 14.7,
+  power: 150,
+  temp: 850,
+  compression: 10,
+  efficiency: 32,
+  isXray: false,
+  animationActive: true,
+  audioEnabled: true,
+  dataStream: false,
+  mode: 'AR',
+  activeComponent: null,
+  lastInteraction: Date.now(),
+  startTime: 0,
+  lastEmergency: 0,
+  isEmergency: false,
+  emergencyCount: 0,
+  currentQ: 0,
+  score: 0,
+  achievements: [],
+  isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+  audioContextInitialized: false,
+  emergencyInterval: null,
+  totalStars: 0,
+  currentStroke: 0,
+  strokeAngle: 0
+};
+
+// ==================== 3D ENGINE ====================
+let scene, camera, renderer, clock, mixer, mindarThree, rootGroup;
+let particles = { mesh: null, data: [] };
+let molecules = [];
+let molScene, molCamera, molRenderer;
+let audioCtx = null, ambientSound = null;
+let sirenInterval = null, toastTimer = null;
+let interactiveObjects = [];
+let piston, crankshaft, connectingRod, intakeValve, exhaustValve, sparkPlug, cylinder;
+let strokeLabels = ['INTAKE', 'COMPRESSION', 'POWER', 'EXHAUST'];
+let strokeDescriptions = [
+  'Piston moving down, intake valve open',
+  'Piston moving up, both valves closed',
+  'Combustion occurs, piston forced down',
+  'Piston moving up, exhaust valve open'
+];
+
+// ==================== INITIALIZATION ====================
+window.addEventListener('load', () => {
+  simulateLoading();
+  initAudioContext();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnStartAR').addEventListener('click', () => startApp('AR'));
+  document.getElementById('btnStart3D').addEventListener('click', () => startApp('3D'));
+});
+
+function simulateLoading() {
+  let progress = 0;
+  const progressBar = document.querySelector('#loadProgress div');
+  const interval = setInterval(() => {
+    progress += Math.random() * 10;
+    if (progress > 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(() => {
+        document.getElementById('loadingScreen').style.opacity = 0;
+        setTimeout(() => {
+          document.getElementById('loadingScreen').style.display = 'none';
+          document.getElementById('startScreen').style.display = 'flex';
+        }, 500);
+      }, 300);
+    }
+    progressBar.style.width = progress + '%';
+  }, 100);
+}
+
+function initAudioContext() {
+  if (!audioCtx && state.audioEnabled) {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      audioCtx.suspend();
+      const resumeAudio = () => {
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+          document.removeEventListener('click', resumeAudio);
+          document.removeEventListener('touchstart', resumeAudio);
+        }
+      };
+      document.addEventListener('click', resumeAudio, { once: true });
+      document.addEventListener('touchstart', resumeAudio, { once: true });
+    } catch (e) {
+      console.log('Audio Context init error:', e);
+    }
+  }
+}
+
+function initEnhancedAudio() {
+  if (state.audioEnabled) {
+    ambientSound = new Howl({
+      src: ['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'],
+      volume: 0.1,
+      loop: true,
+      autoplay: true
+    });
+  }
+}
+
+async function startApp(mode) {
+  state.mode = mode;
+  state.startTime = Date.now();
+  state.lastEmergency = Date.now();
+  
+  gsap.to(document.getElementById('startScreen'), {
+    opacity: 0,
+    duration: 0.5,
+    onComplete: () => {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('mainHUD').style.display = 'flex';
+      gsap.from('.top-bar', { y: -50, opacity: 0, duration: 0.5 });
+      gsap.from('.bottom-dock', { y: 50, opacity: 0, duration: 0.5 });
+    }
+  });
+  
+  if (mode === '3D') {
+    initEnhanced3DMode();
+  } else {
+    const success = await initARMode();
+    if (!success) {
+      initEnhanced3DMode();
+    }
+  }
+  
+  initEnhancedUI();
+  initQuiz();
+  initMoleculeViewer();
+  startDataStream();
+  animate();
+}
+
+async function initARMode() {
+  try {
+    document.body.classList.add('ar-active');
+    document.getElementById('arGuide').style.display = 'flex';
+    
+    mindarThree = new MindARThree({
+      container: document.getElementById('container'),
+      imageTargetSrc: "./targets.mind",
+      uiLoading: 'no',
+      uiScanning: 'yes',
+      uiError: 'no',
+      filterMinCF: 0.0001,
+      filterBeta: 1000
+    });
+    
+    ({ scene, camera, renderer } = mindarThree);
+    
+    const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+    const direct = new THREE.DirectionalLight(0xffffff, 1);
+    direct.position.set(0, 5, 5);
+    scene.add(ambient, direct);
+    
+    const anchor = mindarThree.addAnchor(0);
+    rootGroup = new THREE.Group();
+    rootGroup.scale.set(0.5, 0.5, 0.5);
+    anchor.group.add(rootGroup);
+    
+    anchor.onTargetFound = () => {
+      document.getElementById('arGuide').style.display = 'none';
+      showToast("Target Found!", "Engine model placed");
+    };
+    
+    anchor.onTargetLost = () => {
+      document.getElementById('arGuide').style.display = 'flex';
+    };
+    
+    buildEngineModel();
+    await mindarThree.start();
+    document.getElementById('modeIndicator').innerText = 'AR TRACKING ACTIVE';
+    return true;
+  } catch (err) {
+    console.warn("AR Mode failed, falling back:", err);
+    showToast("AR Mode failed! Switching to 3D Simulation Mode", "AR requires HTTPS and camera access");
+    return false;
+  }
+}
+
+// ==================== 3D SCENE ====================
+function createEnhancedScene() {
+  scene = new THREE.Scene();
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  
+  const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+  mainLight.position.set(5, 15, 10);
+  mainLight.castShadow = true;
+  scene.add(mainLight);
+  
+  const fillLight = new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.4);
+  scene.add(fillLight);
+  
+  scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
+  rootGroup = new THREE.Group();
+  scene.add(rootGroup);
+  
+  buildEngineModel();
+}
+
+function initEnhanced3DMode() {
+  document.getElementById('modeIndicator').innerText = 'SIMULATION MODE';
+  document.getElementById('arGuide').style.display = 'none';
+  createEnhancedScene();
+  
+  scene.background = new THREE.Color(0x0f172a);
+  const container = document.getElementById('container');
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 3, 8);
+  
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    powerPreference: "high-performance"
+  });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.shadowMap.enabled = true;
+  container.appendChild(renderer.domElement);
+  
+  let isDragging = false, prev = { x: 0, y: 0 };
+  let zoomLevel = 1;
+  
+  container.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    prev = { x: e.offsetX, y: e.offsetY };
+  });
+  
+  window.addEventListener('mouseup', () => isDragging = false);
+  
+  container.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      rootGroup.rotation.y += (e.offsetX - prev.x) * 0.005;
+      rootGroup.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, rootGroup.rotation.x + (e.offsetY - prev.y) * 0.005));
+      prev = { x: e.offsetX, y: e.offsetY };
+    }
+  });
+  
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    zoomLevel += e.deltaY * -0.001;
+    zoomLevel = Math.min(Math.max(0.5, zoomLevel), 3);
+    camera.position.z = 8 * zoomLevel;
+  });
+  
+  container.addEventListener('click', onEnhancedMouseClick);
+}
+
+// ==================== ENGINE MODEL BUILDING ====================
+function getEnhancedMaterial(color, options = {}) {
+  const defaults = {
+    roughness: 0.2,
+    metalness: 0.8,
+    transparent: false,
+    opacity: 1.0,
+    emissive: 0x000000,
+    emissiveIntensity: 0
+  };
+  const settings = { ...defaults, ...options };
+  return new THREE.MeshStandardMaterial({
+    color: color,
+    roughness: settings.roughness,
+    metalness: settings.metalness,
+    transparent: settings.transparent,
+    opacity: settings.opacity,
+    emissive: settings.emissive,
+    emissiveIntensity: settings.emissiveIntensity,
+    side: THREE.DoubleSide
+  });
+}
+
+function buildEngineModel() {
+  rootGroup.clear();
+  interactiveObjects = [];
+  
+  // Cylinder Block
+  cylinder = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.2, 1.2, 3, 32, 1, true),
+    getEnhancedMaterial(COLORS.cylinder, { transparent: true, opacity: 0.4 })
+  );
+  cylinder.position.y = 1.5;
+  cylinder.name = "Cylinder";
+  rootGroup.add(cylinder);
+  interactiveObjects.push(cylinder);
+  
+  // Piston
+  const pistonGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.8, 32);
+  piston = new THREE.Mesh(pistonGeo, getEnhancedMaterial(COLORS.piston));
+  piston.position.y = 0.8;
+  piston.name = "Piston";
+  rootGroup.add(piston);
+  interactiveObjects.push(piston);
+  
+  // Connecting Rod
+  const rodGeo = new THREE.CylinderGeometry(0.15, 0.15, 2, 16);
+  connectingRod = new THREE.Mesh(rodGeo, getEnhancedMaterial(COLORS.connectingRod));
+  connectingRod.position.y = -0.5;
+  connectingRod.name = "ConnectingRod";
+  rootGroup.add(connectingRod);
+  interactiveObjects.push(connectingRod);
+  
+  // Crankshaft
+  const crankGeo = new THREE.CylinderGeometry(0.5, 0.5, 2, 32);
+  crankshaft = new THREE.Mesh(crankGeo, getEnhancedMaterial(COLORS.crankshaft));
+  crankshaft.rotation.z = Math.PI / 2;
+  crankshaft.position.y = -1.5;
+  crankshaft.name = "Crankshaft";
+  rootGroup.add(crankshaft);
+  interactiveObjects.push(crankshaft);
+  
+  // Intake Valve
+  const valveGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16);
+  intakeValve = new THREE.Mesh(valveGeo, getEnhancedMaterial(COLORS.valve));
+  intakeValve.position.set(-0.5, 2.8, 0);
+  intakeValve.name = "IntakeValve";
+  rootGroup.add(intakeValve);
+  interactiveObjects.push(intakeValve);
+  
+  // Exhaust Valve
+  exhaustValve = new THREE.Mesh(valveGeo, getEnhancedMaterial(COLORS.valve));
+  exhaustValve.position.set(0.5, 2.8, 0);
+  exhaustValve.name = "ExhaustValve";
+  rootGroup.add(exhaustValve);
+  interactiveObjects.push(exhaustValve);
+  
+  // Spark Plug
+  const sparkGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.4, 16);
+  sparkPlug = new THREE.Mesh(sparkGeo, getEnhancedMaterial(COLORS.sparkPlug, { emissive: 0xf59e0b, emissiveIntensity: 0.3 }));
+  sparkPlug.position.set(0, 3, 0);
+  sparkPlug.name = "SparkPlug";
+  rootGroup.add(sparkPlug);
+  interactiveObjects.push(sparkPlug);
+  
+  // Camshaft
+  const camGeo = new THREE.CylinderGeometry(0.2, 0.2, 2.5, 16);
+  const camshaft = new THREE.Mesh(camGeo, getEnhancedMaterial(COLORS.camshaft));
+  camshaft.rotation.z = Math.PI / 2;
+  camshaft.position.set(0, 2.5, 1);
+  camshaft.name = "Camshaft";
+  rootGroup.add(camshaft);
+  interactiveObjects.push(camshaft);
+  
+  // Combustion chamber visualization
+  const combustionGeo = new THREE.SphereGeometry(0.6, 16, 16);
+  const combustion = new THREE.Mesh(combustionGeo, getEnhancedMaterial(COLORS.combustion, { transparent: true, opacity: 0 }));
+  combustion.position.y = 2.5;
+  combustion.name = "CombustionChamber";
+  rootGroup.add(combustion);
+  
+  initFlowSystem();
+}
+
+function initFlowSystem() {
+  const particleCount = 50;
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  particles.data = [];
+  
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 2;
+    positions[i * 3 + 1] = Math.random() * 3;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    
+    const type = i % 2 === 0 ? 'air' : 'fuel';
+    const color = type === 'air' ? [56/255, 189/255, 248/255] : [245/255, 158/255, 11/255];
+    
+    colors[i * 3] = color[0];
+    colors[i * 3 + 1] = color[1];
+    colors[i * 3 + 2] = color[2];
+    
+    particles.data.push({
+      type: type,
+      t: Math.random() * 100,
+      speed: 0.02 + Math.random() * 0.02
+    });
+  }
+  
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  
+  const material = new THREE.PointsMaterial({
+    size: 0.1,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.8,
+    blending: THREE.AdditiveBlending
+  });
+  
+  particles.mesh = new THREE.Points(geometry, material);
+  rootGroup.add(particles.mesh);
+}
+
+function updateEngineAnimation() {
+  if (!state.animationActive) return;
+  
+  const rpm = state.rpm;
+  const rotationSpeed = (rpm / 60) * 0.01;
+  
+  state.strokeAngle += rotationSpeed;
+  if (state.strokeAngle >= Math.PI * 4) {
+    state.strokeAngle = 0;
+  }
+  
+  // Update stroke indicator
+  const strokeIndex = Math.floor((state.strokeAngle / (Math.PI * 4)) * 4) % 4;
+  if (strokeIndex !== state.currentStroke) {
+    state.currentStroke = strokeIndex;
+    updateStrokeIndicator();
+  }
+  
+  // Piston movement (sinusoidal)
+  const pistonPosition = Math.sin(state.strokeAngle) * 1.2 + 0.8;
+  piston.position.y = pistonPosition;
+  
+  // Crankshaft rotation
+  crankshaft.rotation.x += rotationSpeed;
+  
+  // Connecting rod angle
+  connectingRod.rotation.z = Math.sin(state.strokeAngle) * 0.3;
+  connectingRod.position.y = pistonPosition - 1;
+  
+  // Valve timing
+  const intakeOpen = (state.strokeAngle % (Math.PI * 4)) < Math.PI;
+  const exhaustOpen = (state.strokeAngle % (Math.PI * 4)) > Math.PI * 3;
+  
+  intakeValve.position.y = intakeOpen ? 2.6 : 2.8;
+  exhaustValve.position.y = exhaustOpen ? 2.6 : 2.8;
+  
+  // Spark plug glow during power stroke
+  const powerStroke = (state.strokeAngle % (Math.PI * 4)) > Math.PI && (state.strokeAngle % (Math.PI * 4)) < Math.PI * 2;
+  sparkPlug.material.emissiveIntensity = powerStroke ? 1.0 : 0.3;
+  
+  // Update particles
+  updateFlowParticles();
+}
+
+function updateFlowParticles() {
+  if (!particles.mesh) return;
+  
+  const positions = particles.mesh.geometry.attributes.position.array;
+  const speedFactor = state.rpm / 3000;
+  
+  particles.data.forEach((p, i) => {
+    p.t += p.speed * speedFactor;
+    const pathT = (p.t % 100) / 100;
+    
+    if (p.type === 'air') {
+      positions[i * 3] = (Math.random() - 0.5) * 2;
+      positions[i * 3 + 1] = 2.5 + Math.sin(p.t) * 0.5;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    } else {
+      positions[i * 3] = (Math.random() - 0.5) * 2;
+      positions[i * 3 + 1] = 2.5 + Math.cos(p.t) * 0.5;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    }
+  });
+  
+  particles.mesh.geometry.attributes.position.needsUpdate = true;
+}
+
+function updateStrokeIndicator() {
+  const indicator = document.getElementById('strokeIndicator');
+  const label = document.getElementById('strokeLabel');
+  const phase = document.getElementById('strokePhase');
+  
+  indicator.classList.add('active');
+  label.innerText = strokeLabels[state.currentStroke];
+  phase.innerText = strokeDescriptions[state.currentStroke];
+  
+  // Color coding for strokes
+  const colors = ['#38bdf8', '#8b5cf6', '#f59e0b', '#ef4444'];
+  label.style.color = colors[state.currentStroke];
+  indicator.style.borderColor = colors[state.currentStroke];
+}
+
+// ==================== UI LOGIC ====================
+function initEnhancedUI() {
+  document.getElementById('btnSettings').onclick = () => {
+    togglePanel('controlPanel');
+    document.getElementById('quizPanel').classList.remove('active');
+    document.getElementById('dataPanel').classList.remove('active');
+  };
+  
+  document.getElementById('btnCloseControls').addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.getElementById('controlPanel').classList.remove('active');
+  });
+  
+  document.getElementById('btnQuiz').onclick = () => {
+    togglePanel('quizPanel');
+    document.getElementById('controlPanel').classList.remove('active');
+    document.getElementById('dataPanel').classList.remove('active');
+  };
+  
+  document.getElementById('btnCloseQuiz').addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.getElementById('quizPanel').classList.remove('active');
+  });
+  
+  document.getElementById('btnData').onclick = () => {
+    togglePanel('dataPanel');
+    document.getElementById('controlPanel').classList.remove('active');
+    document.getElementById('quizPanel').classList.remove('active');
+  };
+  
+  document.getElementById('btnCloseData').addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.getElementById('dataPanel').classList.remove('active');
+  });
+  
+  const updateEngineCalculations = () => {
+    state.rpm = parseInt(document.getElementById('sliderRPM').value);
+    state.afr = parseFloat(document.getElementById('sliderAFR').value);
+    
+    document.getElementById('valRPM').innerText = `${state.rpm} RPM`;
+    document.getElementById('valAFR').innerText = `${state.afr}:1`;
+    
+    // Calculate power output
+    const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
+    const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
+    state.power = 150 * rpmFactor * afrFactor;
+    state.power = Math.max(50, Math.min(300, state.power));
+    document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
+    
+    // Calculate temperature
+    state.temp = ENGINE_CONSTANTS.optimalTemp + (state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05;
+    state.temp = Math.max(400, Math.min(1200, state.temp));
+    document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
+    
+    // Thermal efficiency
+    const efficiencyLoss = Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2;
+    state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - efficiencyLoss;
+    state.efficiency = Math.max(20, Math.min(40, state.efficiency));
+    document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
+    
+    checkForEmergency();
+  };
+  
+  document.getElementById('sliderRPM').oninput = updateEngineCalculations;
+  document.getElementById('sliderAFR').oninput = updateEngineCalculations;
+  updateEngineCalculations();
+  
+  document.getElementById('btnXray').onclick = (e) => {
+    state.isXray = !state.isXray;
+    e.currentTarget.classList.toggle('active');
+    cylinder.material.opacity = state.isXray ? 0.2 : 0.4;
+    showToast(state.isXray ? "X-Ray Mode ON" : "X-Ray Mode OFF", 
+      state.isXray ? "Viewing internal components" : "Normal view restored");
+  };
+  
+  document.getElementById('btnAnimation').onclick = (e) => {
+    state.animationActive = !state.animationActive;
+    e.currentTarget.classList.toggle('active');
+    e.currentTarget.innerHTML = state.animationActive ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+    showToast(state.animationActive ? "Animation ON" : "Animation PAUSED");
+  };
+  
+  document.getElementById('btnReset').onclick = () => {
+    if (rootGroup) {
+      gsap.to(rootGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
+      gsap.to(rootGroup.position, { x: 0, y: 0, z: 0, duration: 1 });
+    }
+    showToast("View Reset", "Camera position restored");
+  };
+  
+  document.getElementById('btnInfo').onclick = () => {
+    showToast("Component Information", "Click on any engine component to learn more");
+  };
+  
+  document.getElementById('btnExit').onclick = () => {
+    if (confirm("Exit the 4-Stroke Engine Lab?")) {
+      location.reload();
+    }
+  };
+  
+  document.getElementById('btnAudio').onclick = (e) => {
+    state.audioEnabled = !state.audioEnabled;
+    e.currentTarget.classList.toggle('active');
+    if (state.audioEnabled) {
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      if (ambientSound) ambientSound.play();
+      showToast("Audio Enabled", "Sound effects and voice guide ON");
+    } else {
+      if (ambientSound) ambientSound.pause();
+      window.speechSynthesis.cancel();
+      showToast("Audio Disabled", "All sounds muted");
+    }
+  };
+}
+
+function togglePanel(panelId) {
+  const panel = document.getElementById(panelId);
+  const isActive = panel.classList.contains('active');
+  
+  document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
+  
+  if (!isActive) {
+    panel.classList.add('active');
+    gsap.fromTo(panel,
+      { x: panelId === 'controlPanel' ? -50 : 50, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.3 }
+    );
+  }
+}
+
+function checkForEmergency() {
+  const rpmOk = state.rpm >= 1000 && state.rpm <= 5500;
+  const afrOk = state.afr >= 12 && state.afr <= 16;
+  const tempOk = state.temp <= 1000;
+  
+  if (!rpmOk || !afrOk || !tempOk) {
+    if (!state.isEmergency) triggerEmergency();
+  } else if (state.isEmergency) {
+    resolveEmergency();
+  }
+}
+
+// ==================== EMERGENCY SYSTEM ====================
+function triggerEmergency() {
+  if (state.isEmergency) return;
+  state.isEmergency = true;
+  state.emergencyCount++;
+  
+  document.body.classList.add('critical-state');
+  document.getElementById('statusText').innerText = "ENGINE CRITICAL";
+  document.getElementById('statusText').style.animation = "flash 0.5s infinite";
+  
+  if (state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    speak(`Emergency! Engine critical. RPM: ${state.rpm}. Temperature: ${state.temp}°C.`);
+    startSiren();
+  }
+  
+  document.querySelectorAll('.param-value').forEach(el => {
+    el.style.color = 'var(--accent-danger)';
+  });
+  
+  document.getElementById('controlPanel').classList.add('active');
+  addDataStreamEntry("EMERGENCY", `Engine parameters critical: RPM=${state.rpm}, Temp=${state.temp}°C, AFR=${state.afr}`);
+  showToast("EMERGENCY!", "Adjust parameters to stabilize engine", 0);
+  
+  startEmergencyParameterChange();
+}
+
+function startEmergencyParameterChange() {
+  if (state.emergencyInterval) clearInterval(state.emergencyInterval);
+  state.emergencyInterval = setInterval(() => {
+    if (!state.isEmergency) {
+      clearInterval(state.emergencyInterval);
+      return;
+    }
+    
+    const rpmChange = (Math.random() - 0.5) * 200;
+    const afrChange = (Math.random() - 0.5) * 0.5;
+    
+    let newRPM = parseInt(document.getElementById('sliderRPM').value) + rpmChange;
+    let newAFR = parseFloat(document.getElementById('sliderAFR').value) + afrChange;
+    
+    newRPM = Math.max(800, Math.min(6000, Math.round(newRPM)));
+    newAFR = Math.max(10, Math.min(18, parseFloat(newAFR.toFixed(1))));
+    
+    document.getElementById('sliderRPM').value = newRPM;
+    document.getElementById('sliderAFR').value = newAFR;
+    document.getElementById('valRPM').innerText = `${newRPM} RPM`;
+    document.getElementById('valAFR').innerText = `${newAFR}:1`;
+    
+    const event = new Event('input');
+    document.getElementById('sliderRPM').dispatchEvent(event);
+    document.getElementById('sliderAFR').dispatchEvent(event);
+  }, 2000);
+}
+
+function resolveEmergency() {
+  if (!state.isEmergency) return;
+  state.isEmergency = false;
+  state.lastEmergency = Date.now();
+  
+  if (state.emergencyInterval) {
+    clearInterval(state.emergencyInterval);
+    state.emergencyInterval = null;
+  }
+  
+  document.body.classList.remove('critical-state');
+  document.getElementById('statusText').innerText = "Engine Running";
+  document.getElementById('statusText').style.animation = "";
+  
+  stopSiren();
+  
+  if (state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    speak("Engine stabilized. Parameters within optimal range.");
+  }
+  
+  updateEngineCalculations();
+  showStarReward("Engine Stabilized!", "Emergency Response Expert");
+  state.totalStars += 1;
+  
+  addDataStreamEntry("SYSTEM", "Emergency resolved - parameters stabilized");
+  
+  setTimeout(() => {
+    const toast = document.getElementById('infoToast');
+    gsap.to(toast, { opacity: 0, y: 20, duration: 0.3, onComplete: () => toast.style.display = 'none' });
+  }, 2000);
+  
+  setTimeout(() => {
+    document.getElementById('controlPanel').classList.remove('active');
+  }, 3000);
+}
+
+function startSiren() {
+  if (sirenInterval) clearInterval(sirenInterval);
+  let sirenPhase = 0;
+  sirenInterval = setInterval(() => {
+    if (!state.isEmergency) {
+      clearInterval(sirenInterval);
+      return;
+    }
+    
+    if (audioCtx && state.audioEnabled) {
+      try {
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.frequency.setValueAtTime(sirenPhase % 2 === 0 ? 880 : 440, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.8);
+        sirenPhase++;
+      } catch (e) {
+        console.log("Siren audio error:", e);
+      }
+    }
+  }, 1000);
+}
+
+function stopSiren() {
+  if (sirenInterval) {
+    clearInterval(sirenInterval);
+    sirenInterval = null;
+  }
+}
+
+function showStarReward(title, subtitle) {
+  const starContainer = document.getElementById('starReward');
+  const achievementText = document.getElementById('achievementText');
+  achievementText.innerText = subtitle;
+  starContainer.style.display = 'block';
+  starContainer.style.opacity = '0';
+  
+  gsap.to(starContainer, {
+    opacity: 1,
+    duration: 0.5,
+    onComplete: () => {
+      if (!state.achievements.includes("emergency_resolved")) {
+        state.achievements.push("emergency_resolved");
+        addDataStreamEntry("ACHIEVEMENT", "Emergency Response Expert - Stabilized critical engine");
+      }
+      setTimeout(() => {
+        gsap.to(starContainer, {
+          opacity: 0,
+          duration: 0.5,
+          delay: 1.5,
+          onComplete: () => starContainer.style.display = 'none'
+        });
+      }, 1000);
+    }
+  });
+}
+
+// ==================== QUIZ SYSTEM ====================
+function initQuiz() {
+  const renderQuestion = () => {
+    const q = quizQuestions[state.currentQ];
+    document.getElementById('qText').innerHTML = `
+      <strong>Q${state.currentQ + 1}/${quizQuestions.length}:</strong> ${q.q}
+      <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">
+        Mechanical Engineering | Internal Combustion Engines
+      </div>
+    `;
+    
+    const optionsDiv = document.getElementById('qOptions');
+    optionsDiv.innerHTML = '';
+    document.getElementById('btnNextQ').style.display = 'none';
+    
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('div');
+      btn.className = 'quiz-btn';
+      btn.innerHTML = `<span style="margin-right: 10px; opacity: 0.7;">${String.fromCharCode(65 + i)}.</span> ${opt}`;
+      btn.onclick = () => handleAnswer(i, q.correct, btn);
+      optionsDiv.appendChild(btn);
+    });
+  };
+  
+  renderQuestion();
+  
+  document.getElementById('btnNextQ').onclick = () => {
+    state.currentQ = (state.currentQ + 1) % quizQuestions.length;
+    renderQuestion();
+    document.getElementById('quizScore').innerHTML = `
+      Score: <span style="color: var(--accent-orange);">${state.score}</span> |
+      Progress: ${state.currentQ + 1}/${quizQuestions.length}
+    `;
+  };
+}
+
+function handleAnswer(selected, correct, button) {
+  const options = button.parentElement.children;
+  Array.from(options).forEach(btn => btn.style.pointerEvents = 'none');
+  
+  if (selected === correct) {
+    button.classList.add('correct');
+    state.score += 10;
+    showQuizStarParticles(button);
+    state.totalStars += 1;
+    if (state.audioEnabled) playSuccessSound();
+    
+    if (state.score >= 50 && !state.achievements.includes("quiz_master")) {
+      state.achievements.push("quiz_master");
+      addDataStreamEntry("ACHIEVEMENT", "Quiz Master - Scored 50+ points in knowledge check");
+      showStarReward("Quiz Master!", "Scored 50+ points");
+    }
+  } else {
+    button.classList.add('wrong');
+    options[correct].classList.add('correct');
+    if (state.audioEnabled) playErrorSound();
+  }
+  
+  document.getElementById('btnNextQ').style.display = 'block';
+  document.getElementById('quizScore').innerHTML = `
+    Score: <span style="color: var(--accent-orange);">${state.score}</span> |
+    Progress: ${state.currentQ + 1}/${quizQuestions.length} |
+    Stars: <span style="color: gold;">${state.totalStars}</span>
+  `;
+}
+
+function showQuizStarParticles(button) {
+  const rect = button.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement('div');
+    star.className = 'star-particle';
+    star.innerHTML = '<i class="fas fa-star"></i>';
+    star.style.position = 'fixed';
+    star.style.left = centerX + 'px';
+    star.style.top = centerY + 'px';
+    star.style.color = 'gold';
+    star.style.fontSize = (1 + Math.random() * 0.5) + 'rem';
+    star.style.opacity = '0';
+    star.style.zIndex = '1000';
+    star.style.pointerEvents = 'none';
+    document.body.appendChild(star);
+    
+    gsap.to(star, {
+      duration: 1 + Math.random() * 0.5,
+      x: (Math.random() - 0.5) * 200,
+      y: (Math.random() - 0.5) * 200 - 100,
+      opacity: 1,
+      scale: 0,
+      ease: "power2.out",
+      onComplete: () => document.body.removeChild(star)
+    });
+  }
+}
+
+// ==================== INTERACTION ====================
+function onEnhancedMouseClick(e) {
+  const mouse = new THREE.Vector2();
+  const rect = renderer.domElement.getBoundingClientRect();
+  
+  if (e.type === 'click') {
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  }
+  
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mouse, camera);
+  
+  const interactiveHits = raycaster.intersectObjects(interactiveObjects, true);
+  if (interactiveHits.length > 0) {
+    const object = interactiveHits[0].object;
+    let parent = object;
+    while (parent.parent && !interactiveObjects.includes(parent)) {
+      parent = parent.parent;
+    }
+    if (parent.name) {
+      selectComponent(parent.name, parent.userData);
+      return;
+    }
+  }
+  
+  const hits = raycaster.intersectObjects(rootGroup.children, true);
+  if (hits.length > 0) {
+    let object = hits[0].object;
+    while (object.parent && object.parent !== rootGroup && !object.name) {
+      object = object.parent;
+    }
+    if (object.name) {
+      selectComponent(object.name, object.userData || {});
+    }
+  }
+}
+
+function selectComponent(name, data = {}) {
+  state.activeComponent = name;
+  state.lastInteraction = Date.now();
+  
+  const toast = document.getElementById('infoToast');
+  const toastText = document.getElementById('toastText');
+  const toastSubtext = document.getElementById('toastSubtext');
+  
+  const componentInfo = {
+    "Piston": {
+      title: "PISTON",
+      desc: "Reciprocating component within cylinder",
+      info: "Moves up and down converting pressure to rotational motion via connecting rod."
+    },
+    "Cylinder": {
+      title: "CYLINDER",
+      desc: "Chamber where combustion occurs",
+      info: "Contains piston and combustion chamber. Typically made of cast iron or aluminum alloy."
+    },
+    "Crankshaft": {
+      title: "CRANKSHAFT",
+      desc: "Converts linear to rotational motion",
+      info: "Key component that transforms piston's reciprocating motion into rotational output."
+    },
+    "ConnectingRod": {
+      title: "CONNECTING ROD",
+      desc: "Links piston to crankshaft",
+      info: "Transmits force from piston to crankshaft. Subject to high stress during operation."
+    },
+    "IntakeValve": {
+      title: "INTAKE VALVE",
+      desc: "Controls air-fuel mixture entry",
+      info: "Opens during intake stroke to allow air-fuel mixture into combustion chamber."
+    },
+    "ExhaustValve": {
+      title: "EXHAUST VALVE",
+      desc: "Controls exhaust gas exit",
+      info: "Opens during exhaust stroke to release burned gases from cylinder."
+    },
+    "SparkPlug": {
+      title: "SPARK PLUG",
+      desc: "Ignites air-fuel mixture",
+      info: "Creates electrical spark at end of compression stroke to initiate combustion."
+    },
+    "Camshaft": {
+      title: "CAMSHAFT",
+      desc: "Controls valve timing",
+      info: "Rotating shaft with lobes that open and close valves at precise timing."
+    }
+  };
+  
+  const info = componentInfo[name] || {
+    title: name.toUpperCase(),
+    desc: "Engine Component",
+    info: "Click components to learn about 4-stroke engine operation"
+  };
+  
+  toastText.innerText = info.title;
+  toastSubtext.innerText = info.desc;
+  toast.style.display = 'block';
+  gsap.killTweensOf(toast);
+  gsap.fromTo(toast, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
+  
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    gsap.to(toast, {
+      opacity: 0, y: 20, duration: 0.3,
+      onComplete: () => toast.style.display = 'none'
+    });
+  }, 3000);
+  
+  updateMoleculeView(name, data);
+  
+  if (state.audioEnabled && !state.isEmergency) {
+    speak(info.title + ". " + info.info);
+  }
+  
+  addDataStreamEntry("INTERACTION", `Selected: ${name}`);
+}
+
+// ==================== MOLECULE VIEWER ====================
+function initMoleculeViewer() {
+  const canvas = document.createElement('div');
+  canvas.id = 'moleculeCanvas';
+  canvas.style.cssText = 'width: 200px; height: 150px; background: rgba(0,0,0,0.3); border-radius: 8px;';
+  
+  molScene = new THREE.Scene();
+  molScene.background = new THREE.Color(0x101828);
+  molCamera = new THREE.PerspectiveCamera(50, 200/150, 0.1, 20);
+  molCamera.position.z = 8;
+  
+  molRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  molRenderer.setSize(200, 150);
+  canvas.appendChild(molRenderer.domElement);
+  
+  const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+  mainLight.position.set(5, 10, 7);
+  molScene.add(mainLight);
+  
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  molScene.add(ambientLight);
+}
+
+function updateMoleculeView(name, data = {}) {
+  // Simplified molecule viewer for engine components
+}
+
+// ==================== DATA STREAM ====================
+function startDataStream() {
+  addDataStreamEntry("SYSTEM", "4-Stroke Engine Lab initialized");
+  addDataStreamEntry("PARAMETERS", `Initial: RPM=${state.rpm}, AFR=${state.afr}:1`);
+  
+  setInterval(() => {
+    if (!document.getElementById('dataPanel').classList.contains('active')) return;
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+    
+    const dataTypes = [
+      `[${timeStr}] Power output: ${(state.power * (0.95 + Math.random() * 0.1)).toFixed(1)} kW`,
+      `[${timeStr}] Volumetric efficiency: ${(85 + Math.random() * 10).toFixed(1)}%`,
+      `[${timeStr}] Fuel consumption: ${(state.rpm * 0.001 * (0.9 + Math.random() * 0.2)).toFixed(2)} L/min`,
+      `[${timeStr}] Engine stability: ${state.isEmergency ? "CRITICAL" : "NOMINAL"}`,
+      `[${timeStr}] Current stroke: ${strokeLabels[state.currentStroke]}`
+    ];
+    
+    addDataStreamEntry("DATA", dataTypes[Math.floor(Math.random() * dataTypes.length)]);
+  }, 5000);
+}
+
+function addDataStreamEntry(type, message) {
+  const contentDiv = document.getElementById('dataStreamContent');
+  const entry = document.createElement('div');
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+  
+  let typeClass = "";
+  switch (type) {
+    case "EMERGENCY": typeClass = "color: var(--accent-danger);"; break;
+    case "ACHIEVEMENT": typeClass = "color: gold;"; break;
+    case "SYSTEM": typeClass = "color: var(--accent-cyan);"; break;
+    case "INTERACTION": typeClass = "color: var(--accent-green);"; break;
+    default: typeClass = "color: var(--text-muted);";
+  }
+  
+  entry.innerHTML = `
+    <div style="margin-bottom: 8px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; border-left: 3px solid ${typeClass.split(':')[1].trim().replace(';', '')}">
+      <div style="font-size: 0.75rem; ${typeClass} margin-bottom: 2px;">${type} • ${timeStr}</div>
+      <div style="font-size: 0.85rem;">${message}</div>
+    </div>
+  `;
+  
+  contentDiv.insertBefore(entry, contentDiv.firstChild);
+  if (contentDiv.children.length > 20) {
+    contentDiv.removeChild(contentDiv.lastChild);
+  }
+}
+
+// ==================== UTILITY FUNCTIONS ====================
+function speak(text) {
+  if (state.audioEnabled && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => v.name.includes('Google') && v.lang.includes('en')) ||
+                          voices.find(v => v.lang.includes('en'));
+    if (preferredVoice) utterance.voice = preferredVoice;
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+function showToast(title, subtitle = "", duration = 2000) {
+  const toast = document.getElementById('infoToast');
+  const toastText = document.getElementById('toastText');
+  const toastSubtext = document.getElementById('toastSubtext');
+  
+  toastText.innerText = title;
+  toastSubtext.innerText = subtitle;
+  toast.style.display = 'block';
+  gsap.killTweensOf(toast);
+  gsap.fromTo(toast, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
+  
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    gsap.to(toast, {
+      opacity: 0, y: 20, duration: 0.3,
+      onComplete: () => toast.style.display = 'none'
+    });
+  }, duration);
+}
+
+function playSuccessSound() {
+  if (audioCtx && state.audioEnabled) {
+    try {
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch (e) {
+      console.log("Success sound error:", e);
+    }
+  }
+}
+
+function playErrorSound() {
+  if (audioCtx && state.audioEnabled) {
+    try {
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.frequency.setValueAtTime(349.23, audioCtx.currentTime);
+      oscillator.frequency.setValueAtTime(293.66, audioCtx.currentTime + 0.1);
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.3);
+    } catch (e) {
+      console.log("Error sound error:", e);
+    }
+  }
+}
+
+// ==================== ANIMATION LOOP ====================
+function animate() {
+  requestAnimationFrame(animate);
+  
+  updateEngineAnimation();
+  
+  if (molecules.length > 0) {
+    molecules.forEach(group => {
+      group.rotation.y += 0.005;
+    });
+    if (molRenderer && molScene && molCamera) {
+      molRenderer.render(molScene, molCamera);
+    }
+  }
+  
+  if (!state.isEmergency && Date.now() - state.lastEmergency > 45000 + Math.random() * 30000) {
+    triggerEmergency();
+  }
+  
+  if (renderer && scene && camera) {
+    renderer.render(scene, camera);
+  }
+}
+
+// ==================== WINDOW RESIZE ====================
+window.addEventListener('resize', () => {
+  if (camera) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  }
+  if (renderer) {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+});
+
+// ==================== PRELOAD ====================
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.getVoices();
+}
+</script>
+</body>
+</html>
