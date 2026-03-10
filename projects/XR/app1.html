@@ -624,7 +624,8 @@ input[type="range"]::-webkit-slider-thumb {
 
 .stroke-indicator {
   position: absolute;
-  bottom: 200px;
+  top: 90px;
+  bottom: auto; 
   left: 50%;
   transform: translateX(-50%);
   background: var(--glass-panel);
@@ -1328,7 +1329,7 @@ function updateEngineAnimation() {
   if (!state.animationActive) return;
   
   const rpm = state.rpm;
-  const rotationSpeed = (rpm / 60) * (Math.PI * 2 / 60);
+  const rotationSpeed = (rpm / 60) * (Math.PI * 2 / 1000);
   
   state.strokeAngle += rotationSpeed;
   if (state.strokeAngle >= Math.PI * 4) state.strokeAngle = 0;
