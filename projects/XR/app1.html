@@ -6,9 +6,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>4-Stroke Twin Engine Lab | Mechanical Engineering WebAR</title>
+<title>Twin‑Cylinder Engine Lab | Mechanical Engineering WebAR</title>
 <meta name="theme-color" content="#0b1120">
-<meta name="description" content="Interactive WebAR simulation of a 4-stroke inline-twin internal combustion engine with real-time thermodynamics.">
+<meta name="description" content="Interactive WebAR simulation of a twin‑cylinder 4‑stroke engine with engine hum and voice guidance.">
 
 <!-- Dependencies -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -41,11 +41,9 @@
   --font-code: 'Roboto Mono', monospace;
   --glow-cyan: 0 0 20px rgba(56, 189, 248, 0.5);
   --glow-danger: 0 0 30px rgba(239, 68, 68, 0.5);
-  --glow-orange: 0 0 20px rgba(245, 158, 11, 0.5);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
-
 body { font-family: var(--font-tech); background: var(--bg-dark); color: var(--text-main); overflow: hidden; height: 100vh; width: 100vw; transition: background 0.5s ease; }
 body.ar-active { background: transparent !important; }
 
@@ -102,9 +100,12 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
 .quiz-btn:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
 .quiz-btn.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--accent-green); color: var(--accent-green); }
 .quiz-btn.wrong { background: rgba(239, 68, 68, 0.25); border-color: var(--accent-danger); color: var(--accent-danger); }
-.next-q-btn { margin-top: 20px; width: 100%; padding: 12px; background: var(--accent-cyan); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: none; font-family: inherit; text-transform: uppercase; letter-spacing: 1px; }
+.next-q-btn { margin-top: 20px; width: 100%; padding: 12px; background: var(--accent-cyan); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: none; font-family: inherit; text-transform: uppercase; letter-spacing: 1px; color: #000; }
 
-.bottom-dock { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; padding-bottom: 30px; }
+/* Bottom Dock with Auto-Hide */
+.bottom-dock { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; padding-bottom: 30px; transition: opacity 0.5s ease, transform 0.5s ease; opacity: 1; transform: translateY(0); }
+.bottom-dock.hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+
 .mode-toggles { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; background: var(--glass-panel); padding: 12px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: auto; backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
 .icon-btn { width: 48px; height: 48px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; position: relative; }
 .icon-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); color: white;}
@@ -130,7 +131,7 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
 @keyframes popIn { 0% { transform: translate(-50%, -20px) scale(0.8); opacity: 0; } 100% { transform: translate(-50%, 0) scale(1); opacity: 1; } }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-.stroke-indicator { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); background: var(--glass-panel); border: 2px solid var(--accent-orange); border-radius: 12px; padding: 15px 25px; backdrop-filter: blur(20px); display: none; pointer-events: auto; z-index: 140; text-align: center;}
+.stroke-indicator { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); background: var(--glass-panel); border: 2px solid var(--accent-orange); border-radius: 12px; padding: 15px 25px; backdrop-filter: blur(20px); display: none; pointer-events: none; z-index: 140; text-align: center;}
 .stroke-indicator.active { display: block; }
 .stroke-label { font-size: 1.5rem; font-weight: 700; color: var(--accent-orange); text-transform: uppercase; letter-spacing: 2px; }
 .stroke-phase { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
@@ -167,9 +168,9 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
 <!-- Start Screen -->
 <div id="startScreen" style="display: none;">
   <i class="fas fa-engine" style="font-size: 5rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
-  <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">INLINE-TWIN<br><span style="color: var(--accent-cyan)">ENGINE LAB</span></h1>
+  <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">TWIN-CYLINDER<br><span style="color: var(--accent-cyan)">ENGINE LAB</span></h1>
   <p style="max-width: 400px; text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 1.1rem;">
-    Interactive mechanical engineering simulation with real-time thermodynamics.
+    Interactive mechanical engineering simulation of a 4-stroke twin engine.
   </p>
   <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
   <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View AR Marker</button>
@@ -180,15 +181,15 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
   </div>
 
   <div style="margin-top: 40px; font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-    MECHANICAL ENGINEERING LAB v4.0 | Oman 2026
+    MECHANICAL ENGINEERING LAB v4.0 | 2026
   </div>
 </div>
 
 <!-- Main HUD -->
 <div id="mainHUD" class="hud-container" style="display: none;">
   <!-- AR Guide -->
-  <div id="arGuide" class="ar-target-guide">
-    <span style="color: white; font-size: 0.9rem; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-weight: 600;">SCAN AR MARKER</span>
+  <div id="arGuide" class="ar-target-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 200; display: none; background: rgba(0,0,0,0.7); padding: 12px 24px; border-radius: 40px; border: 2px solid var(--accent-cyan); backdrop-filter: blur(5px);">
+    <span style="color: white; font-size: 1rem; font-weight: 600;">🔍 SCAN AR MARKER</span>
   </div>
 
   <!-- Top Info -->
@@ -247,7 +248,7 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
     <div class="parameter-display">
       <div class="param-box">
         <div class="param-label">Power Output</div>
-        <div class="param-value rpm" id="valPower">300 kW</div>
+        <div class="param-value rpm" id="valPower">150 kW</div>
       </div>
       <div class="param-box">
         <div class="param-label">Cylinder Temp</div>
@@ -284,14 +285,14 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
     </div>
   </div>
 
-  <!-- Data Panel with P-V Diagram -->
+  <!-- Data Panel -->
   <div class="side-panel data-panel" id="dataPanel">
     <div class="panel-header">
       <span class="panel-label">LIVE DATA & P-V DIAGRAM</span>
       <button class="close-btn" id="btnCloseData"><i class="fas fa-times"></i></button>
     </div>
     <div class="pv-diagram-container">
-      <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 5px; font-weight: bold;">Idealized Otto Cycle (Per Cylinder)</div>
+      <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 5px; font-weight: bold;">Idealized Otto Cycle (P-V)</div>
       <canvas id="pvCanvas" width="280" height="160"></canvas>
     </div>
     <div id="dataStreamContent" style="font-family: var(--font-code); margin-top: 15px; font-size: 0.85rem; max-height: 200px; overflow-y: auto;"></div>
@@ -301,11 +302,10 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
   <div class="stroke-indicator" id="strokeIndicator">
     <div class="stroke-label" id="strokeLabel">INTAKE</div>
     <div class="stroke-phase" id="strokePhase">Piston moving down, intake valve open</div>
-    <div style="font-size: 0.7rem; color: var(--accent-cyan); margin-top: 5px;">(Cylinder 1 Status)</div>
   </div>
 
-  <!-- Bottom Controls -->
-  <div class="bottom-dock">
+  <!-- Bottom Controls (Auto-hides) -->
+  <div class="bottom-dock" id="bottomDock">
     <div id="infoToast" style="background: var(--glass-panel); padding: 12px 24px; border-radius: 12px; border: 2px solid var(--accent-cyan); display: none; margin-bottom: 10px; backdrop-filter: blur(20px); min-width: 200px; text-align: center;">
       <span id="toastText" style="font-weight: 600;">Component Selected</span>
       <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="toastSubtext">Click to interact</div>
@@ -314,7 +314,7 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
       <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync-alt"></i></button>
       <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
       <button class="icon-btn pointer-events-auto" id="btnExplode" title="Exploded View"><i class="fas fa-expand-arrows-alt"></i></button>
-      <button class="icon-btn pointer-events-auto active" id="btnAnimation" title="Toggle Animation"><i class="fas fa-play"></i></button>
+      <button class="icon-btn pointer-events-auto active" id="btnAnimation" title="Toggle Animation"><i class="fas fa-pause"></i></button>
       <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
       <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit Lab" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
     </div>
@@ -322,7 +322,7 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
   
   <div class="hud-footer">
       <div class="footer-text">
-          <span>Developed by: <strong>Dr. Waleed Mandour</strong>, Oman 2026</span>
+          <span>Developed by: <strong>Dr. Waleed Mandour</strong>, 2026</span>
       </div>
   </div>
 </div>
@@ -336,23 +336,18 @@ import { MindARThree } from 'mindar-image-three';
 // ==================== ENGINE CONSTANTS ====================
 const COLORS = {
   piston: 0xc0c0c0, cylinder: 0x8899a6, crankshaft: 0x64748b, connectingRod: 0x94a3b8,
-  valve: 0xb0b0b0, sparkPlug: 0xf59e0b, camshaft: 0x475569, highlight: 0x10b981
+  valve: 0xb0b0b0, sparkPlug: 0xf59e0b, camshaft: 0x475569, highlight: 0x10b981,
+  intake: 0x3b82f6, exhaust: 0xef4444
 };
 const ENGINE_CONSTANTS = { optimalRPM: 3000, stoichiometricAFR: 14.7, optimalTemp: 850, thermalEfficiency: 32 };
+const Z_OFFSETS = [0.6, -0.6]; // 2 Cylinders
 
-const STRINGS = {
-  err_knock: "Knocking / Detonation", err_heat: "Overheating", err_flood: "Engine Flooding",
-  stroke_0: "INTAKE", stroke_1: "COMPRESSION", stroke_2: "POWER", stroke_3: "EXHAUST",
-  desc_0: "Piston down, intake open", desc_1: "Piston up, valves closed", desc_2: "Combustion, piston down", desc_3: "Piston up, exhaust open",
-  comp_piston: "PISTON", comp_piston_d: "Reciprocating component",
-  comp_cylinder: "CYLINDER", comp_cylinder_d: "Combustion chamber",
-  comp_crankshaft: "CRANKSHAFT", comp_crankshaft_d: "Rotational output shaft",
-  comp_camshaft: "CAMSHAFT", comp_camshaft_d: "Valve timing controller",
-  comp_connectingrod: "CONNECTING ROD", comp_connectingrod_d: "Linkage arm",
-  comp_intakevalve: "INTAKE VALVE", comp_intakevalve_d: "Input control",
-  comp_exhaustvalve: "EXHAUST VALVE", comp_exhaustvalve_d: "Output control",
-  comp_sparkplug: "SPARK PLUG", comp_sparkplug_d: "Ignition source"
-};
+const strokeInfo =[
+  { label: "INTAKE", desc: "Piston down, intake open" },
+  { label: "COMPRESSION", desc: "Piston up, valves closed" },
+  { label: "POWER", desc: "Combustion, piston down" },
+  { label: "EXHAUST", desc: "Piston up, exhaust open" }
+];
 
 // ==================== PROGRESSION & QUIZ DATA ====================
 const quizLevels = [[ 
@@ -370,17 +365,15 @@ const quizLevels = [[
 ];
 
 const state = {
-  rpm: 3000, afr: 14.7, boost: 0, power: 300, temp: 850, compression: 10, efficiency: 32,
+  rpm: 3000, afr: 14.7, boost: 0, power: 150, temp: 850, compression: 10, efficiency: 32,
   isXray: false, isExploded: false, animationActive: true, audioEnabled: true, mode: 'AR',
   lastEmergency: Date.now(), isEmergency: false, emergencyType: '', emergencyStars: 0,
   currentLevel: 0, currentQ: 0, score: 0, totalStars: 0, turboUnlocked: false,
-  currentStroke: 0, strokeAngle: 0
+  currentStroke: 0, strokeAngle: 0, bases: {} 
 };
 
 function saveProgress() {
-  localStorage.setItem('engineLabState', JSON.stringify({
-    totalStars: state.totalStars, turboUnlocked: state.turboUnlocked
-  }));
+  localStorage.setItem('engineLabState', JSON.stringify({ totalStars: state.totalStars, turboUnlocked: state.turboUnlocked }));
 }
 
 function loadProgress() {
@@ -397,17 +390,83 @@ function loadProgress() {
 
 // ==================== 3D ENGINE GLOBALS ====================
 let scene, camera, renderer, mindarThree, rootGroup, engineGroup;
-let cylinders =[]; // Array holding individual cylinder assemblies
 let particles = { mesh: null, data:[] };
-let combustionMaterial; 
-let audioCtx = null, ambientSound = null, sirenInterval = null, toastTimer = null;
+let combustionMaterial;
+let audioCtx = null, engineHumOscillator = null, engineHumGain = null, ambientSound = null;
+let sirenInterval = null, toastTimer = null;
 let interactiveObjects =[];
-let crankshaft, camshaft;
+
+// Component Arrays for Twin-Cylinder
+let cylinders = [], pistons =[], connectingRods = [], intakeValves = [], exhaustValves = [], sparkPlugs = [], combustionSpheres =[];
+let crankshaft, camshaftIntake, camshaftExhaust;
+
+// Auto-hide UI Logic
+let uiHideTimeout;
+function resetHideTimer() {
+  const dock = document.getElementById('bottomDock');
+  if (dock) dock.classList.remove('hidden');
+  clearTimeout(uiHideTimeout);
+  uiHideTimeout = setTimeout(() => {
+    if (dock) dock.classList.add('hidden');
+  }, 3500);
+}
+
+// ==================== AUDIO: ENGINE HUM & VOICE ====================
+function initAudioEngine() {
+  if (audioCtx) return;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    engineHumOscillator = audioCtx.createOscillator();
+    engineHumGain = audioCtx.createGain();
+    engineHumOscillator.type = 'sawtooth';
+    engineHumOscillator.frequency.value = 80; // base frequency
+    engineHumGain.gain.value = 0.05; // quiet hum
+    engineHumOscillator.connect(engineHumGain).connect(audioCtx.destination);
+    engineHumOscillator.start();
+    
+    // Add a bit of variation using a second oscillator (harmonic)
+    const osc2 = audioCtx.createOscillator();
+    osc2.type = 'triangle';
+    osc2.frequency.value = 160;
+    const gain2 = audioCtx.createGain();
+    gain2.gain.value = 0.02;
+    osc2.connect(gain2).connect(audioCtx.destination);
+    osc2.start();
+    
+    // Ambient sound via Howler (optional background)
+    ambientSound = new Howl({ src:['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'], volume: 0.05, loop: true });
+    if (state.audioEnabled) ambientSound.play();
+  } catch (e) { console.warn('Web Audio not supported', e); }
+}
+
+function updateEngineHum() {
+  if (!audioCtx || !engineHumOscillator) return;
+  // Map RPM to frequency: idle 800 -> 60 Hz, 6000 -> 200 Hz
+  const freq = 60 + (state.rpm / 6000) * 140;
+  engineHumOscillator.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
+  // Gain based on RPM (louder at high RPM)
+  if (engineHumGain) engineHumGain.gain.setTargetAtTime(0.02 + (state.rpm/6000)*0.1, audioCtx.currentTime, 0.1);
+}
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;
+    utterance.pitch = 1.1;
+    utterance.voice = speechSynthesis.getVoices().find(v => v.lang.includes('en'));
+    window.speechSynthesis.speak(utterance);
+  }
+}
 
 // ==================== INITIALIZATION ====================
 window.addEventListener('load', () => {
   loadProgress();
   simulateLoading();
+  ['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
+  resetHideTimer();
+  initAudioEngine(); // pre-init audio (needs user interaction later to start)
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -434,18 +493,10 @@ function simulateLoading() {
   }, 100);
 }
 
-function initAudio() {
-  if (!audioCtx) {
-    try {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      ambientSound = new Howl({ src:['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'], volume: 0.1, loop: true });
-      if (state.audioEnabled) ambientSound.play();
-    } catch (e) {}
-  }
-}
-
 async function startApp(mode) {
-  initAudio();
+  // Resume audio context if suspended (browsers require user interaction)
+  if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+  
   state.mode = mode;
   state.lastEmergency = Date.now();
   
@@ -456,10 +507,11 @@ async function startApp(mode) {
     }
   });
   
-  if (mode === '3D') { init3DMode(); } 
-  else {
+  if (mode === 'AR') {
     const success = await initARMode();
     if (!success) init3DMode();
+  } else {
+    init3DMode();
   }
   
   initUI();
@@ -486,28 +538,23 @@ async function initARMode() {
     const anchor = mindarThree.addAnchor(0);
     rootGroup = new THREE.Group();
     engineGroup = new THREE.Group(); 
-    engineGroup.scale.set(0.35, 0.35, 0.35); // Slightly smaller to fit Twin Engine
+    engineGroup.scale.set(0.4, 0.4, 0.4);
     rootGroup.add(engineGroup);
     anchor.group.add(rootGroup);
     
-    const shadowPlane = new THREE.Mesh(
-      new THREE.PlaneGeometry(10, 10),
-      new THREE.ShadowMaterial({ opacity: 0.5 })
-    );
-    shadowPlane.rotation.x = -Math.PI / 2;
-    shadowPlane.position.y = -2;
-    shadowPlane.receiveShadow = true;
+    const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), new THREE.ShadowMaterial({ opacity: 0.5 }));
+    shadowPlane.rotation.x = -Math.PI / 2; shadowPlane.position.y = -2; shadowPlane.receiveShadow = true;
     engineGroup.add(shadowPlane);
 
-    anchor.onTargetFound = () => { document.getElementById('arGuide').style.display = 'none'; };
-    anchor.onTargetLost = () => { document.getElementById('arGuide').style.display = 'flex'; };
+    anchor.onTargetFound = () => document.getElementById('arGuide').style.display = 'none';
+    anchor.onTargetLost = () => document.getElementById('arGuide').style.display = 'flex';
     
     buildEngineModel();
     setupTouchControls(document.getElementById('container'));
     await mindarThree.start();
     return true;
   } catch (err) {
-    showToast("AR Failed", "Switching to 3D Simulation");
+    showToast("AR Failed", "Switching to Simulation");
     return false;
   }
 }
@@ -525,9 +572,9 @@ function init3DMode() {
   scene.add(engineGroup);
   buildEngineModel();
   
-  // Placed further back to view the wider twin engine
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 3, 10);
+  camera.position.set(6, 2, 6);
+  camera.lookAt(0, 1.5, 0); 
   
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -541,15 +588,14 @@ function init3DMode() {
 function setupLighting() {
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
-  mainLight.position.set(5, 10, 7);
-  mainLight.castShadow = true;
+  mainLight.position.set(5, 10, 7); mainLight.castShadow = true;
   scene.add(mainLight);
   scene.add(new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.4));
 }
 
 function setupTouchControls(domElement) {
   let isDragging = false, prev = { x: 0, y: 0 }, initialPinchDistance = null;
-  let zoomLevel = engineGroup.scale.x;
+  let zoomLevel = engineGroup.scale.x || 1;
 
   const onStart = (clientX, clientY) => { isDragging = true; prev = { x: clientX, y: clientY }; };
   const onMove = (clientX, clientY) => {
@@ -563,9 +609,9 @@ function setupTouchControls(domElement) {
   window.addEventListener('mouseup', () => isDragging = false);
   domElement.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
   domElement.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    zoomLevel = Math.min(Math.max(0.2, zoomLevel - e.deltaY * 0.001), 2);
-    engineGroup.scale.set(zoomLevel, zoomLevel, zoomLevel);
+    e.preventDefault(); zoomLevel = Math.min(Math.max(0.2, zoomLevel - e.deltaY * 0.001), 2);
+    if(state.mode === 'AR') engineGroup.scale.set(zoomLevel, zoomLevel, zoomLevel);
+    else camera.position.z = 8 * (1/zoomLevel);
   });
 
   domElement.addEventListener('touchstart', (e) => {
@@ -582,7 +628,8 @@ function setupTouchControls(domElement) {
     else if (e.touches.length === 2 && initialPinchDistance) {
       const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
       zoomLevel = Math.min(Math.max(0.2, zoomLevel + (dist - initialPinchDistance) * 0.005), 2);
-      engineGroup.scale.set(zoomLevel, zoomLevel, zoomLevel);
+      if(state.mode === 'AR') engineGroup.scale.set(zoomLevel, zoomLevel, zoomLevel);
+      else camera.position.z = 8 * (1/zoomLevel);
       initialPinchDistance = dist;
     }
   }, { passive: false });
@@ -590,124 +637,89 @@ function setupTouchControls(domElement) {
   domElement.addEventListener('click', onEnhancedMouseClick);
 }
 
-// ==================== INLINE-TWIN ENGINE BUILDER ====================
+// ==================== ENGINE MODEL BUILDING ====================
 function getMat(color, opts = {}) {
-  return new THREE.MeshStandardMaterial({
-    color, roughness: 0.2, metalness: 0.8, side: THREE.DoubleSide, depthWrite: true, ...opts
-  });
+  return new THREE.MeshStandardMaterial({ color, roughness: 0.2, metalness: 0.8, side: THREE.DoubleSide, depthWrite: true, ...opts });
 }
 
 function buildEngineModel() {
-  engineGroup.clear();
-  interactiveObjects = [];
-  cylinders =[];
+  engineGroup.clear(); interactiveObjects =[];
+  cylinders = []; pistons =[]; connectingRods = []; intakeValves = []; exhaustValves = []; sparkPlugs =[]; combustionSpheres =[];
   
   combustionMaterial = new THREE.ShaderMaterial({
     uniforms: { time: { value: 0 }, intensity: { value: 0 } },
     vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-    fragmentShader: `
-      uniform float time; uniform float intensity; varying vec2 vUv;
-      void main() {
-        float dist = distance(vUv, vec2(0.5));
-        float alpha = smoothstep(0.5, 0.0, dist) * intensity;
-        vec3 color = mix(vec3(1.0, 0.2, 0.0), vec3(1.0, 0.8, 0.0), dist);
-        gl_FragColor = vec4(color, alpha);
-      }
-    `,
+    fragmentShader: `uniform float time; uniform float intensity; varying vec2 vUv; void main() { float dist = distance(vUv, vec2(0.5)); float alpha = smoothstep(0.5, 0.0, dist) * intensity; gl_FragColor = vec4(mix(vec3(1.0, 0.2, 0.0), vec3(1.0, 0.8, 0.0), dist), alpha); }`,
     transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
   });
 
-  // CRANKSHAFT 
-  crankshaft = new THREE.Group();
-  crankshaft.position.y = -1.5;
-  crankshaft.name = "Crankshaft";
-  const mainJ = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 4, 32), getMat(COLORS.crankshaft)); 
-  mainJ.rotation.x = Math.PI/2;
+  // Construct Crankshaft Base
+  crankshaft = new THREE.Group(); crankshaft.position.y = -1.5; crankshaft.name = "Crankshaft";
+  const mainJ = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 3, 32), getMat(COLORS.crankshaft)); mainJ.rotation.x = Math.PI/2;
   crankshaft.add(mainJ);
+  interactiveObjects.push(crankshaft); state.bases["Crankshaft"] = crankshaft.position.clone();
   engineGroup.add(crankshaft);
-  interactiveObjects.push(crankshaft);
 
-  // CAMSHAFT
-  camshaft = new THREE.Group();
-  camshaft.position.y = 3.8;
-  camshaft.name = "Camshaft";
-  const mainCam = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 4.2, 16), getMat(COLORS.camshaft));
-  mainCam.rotation.x = Math.PI / 2;
-  camshaft.add(mainCam);
-  engineGroup.add(camshaft);
-  interactiveObjects.push(camshaft);
+  // Construct Overhead Camshafts
+  camshaftIntake = new THREE.Group(); camshaftIntake.position.set(-0.5, 3.2, 0); camshaftIntake.name = "CamshaftIntake";
+  camshaftExhaust = new THREE.Group(); camshaftExhaust.position.set(0.5, 3.2, 0); camshaftExhaust.name = "CamshaftExhaust";
+  const camRod = new THREE.CylinderGeometry(0.15, 0.15, 3, 16); camRod.rotateX(Math.PI/2);
+  camshaftIntake.add(new THREE.Mesh(camRod, getMat(COLORS.camshaft)));
+  camshaftExhaust.add(new THREE.Mesh(camRod, getMat(COLORS.camshaft)));
+  interactiveObjects.push(camshaftIntake, camshaftExhaust);
+  state.bases["CamshaftIntake"] = camshaftIntake.position.clone(); state.bases["CamshaftExhaust"] = camshaftExhaust.position.clone();
+  engineGroup.add(camshaftIntake, camshaftExhaust);
 
-  // BUILD 2 CYLINDERS
-  for (let i = 0; i < 2; i++) {
-    const zOff = i === 0 ? -1.2 : 1.2;
-    // 180-degree physical crank offset for inline-twin
-    const phaseOffset = i === 0 ? 0 : Math.PI; 
+  // Build the 2 Cylinders
+  Z_OFFSETS.forEach((z, i) => {
+    const id = `_${i}`;
     
-    const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 3, 32, 1, true), getMat(COLORS.cylinder, { transparent: true, opacity: 0.4 }));
-    cylinder.position.set(0, 1.5, zOff); cylinder.name = "Cylinder";
+    // Cylinder Block
+    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 3, 32, 1, true), getMat(COLORS.cylinder, { transparent: true, opacity: 0.4 }));
+    cyl.position.set(0, 1.5, z); cyl.name = "Cylinder";
+    cylinders.push(cyl); interactiveObjects.push(cyl); engineGroup.add(cyl); state.bases[`Cylinder${id}`] = cyl.position.clone();
     
-    const piston = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 0.8, 32), getMat(COLORS.piston));
-    piston.position.set(0, 0.8, zOff); piston.name = "Piston";
+    // Piston
+    const pis = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 0.8, 32), getMat(COLORS.piston));
+    pis.position.set(0, 0.8, z); pis.name = "Piston";
+    pistons.push(pis); interactiveObjects.push(pis); engineGroup.add(pis); state.bases[`Piston${id}`] = pis.position.clone();
     
-    const connectingRod = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 2, 16), getMat(COLORS.connectingRod));
-    connectingRod.position.set(0, -0.5, zOff); connectingRod.name = "ConnectingRod";
+    // Connecting Rod
+    const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 2, 16), getMat(COLORS.connectingRod));
+    rod.position.set(0, -0.5, z); rod.name = "ConnectingRod";
+    connectingRods.push(rod); interactiveObjects.push(rod); engineGroup.add(rod);
     
-    // Add crank arm and pin specific to this cylinder into the Main Crankshaft group
-    const cArm = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.0, 0.3), getMat(COLORS.crankshaft)); 
-    cArm.position.set(0, i === 0 ? 0.5 : -0.5, zOff); 
-    const cPin = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.5, 16), getMat(COLORS.piston)); 
-    cPin.rotation.x = Math.PI/2; 
-    cPin.position.set(0, i === 0 ? 1.0 : -1.0, zOff);
+    // Crank components per cylinder
+    const cArm = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.0, 0.3), getMat(COLORS.crankshaft)); cArm.position.set(0, 0.5, z);
+    const cPin = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.5, 16), getMat(COLORS.piston)); cPin.rotation.x = Math.PI/2; cPin.position.set(0, 1.0, z);
     crankshaft.add(cArm, cPin);
 
-    // Add Cam Lobes
-    const lobeIn = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.3, 0.15), getMat(COLORS.camshaft));
-    lobeIn.position.set(-0.5, 0, zOff);
-    const lobeEx = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.3, 0.15), getMat(COLORS.camshaft));
-    lobeEx.position.set(0.5, 0, zOff);
-    camshaft.add(lobeIn, lobeEx);
-
-    const intakeValve = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16), getMat(COLORS.intake));
-    intakeValve.position.set(-0.5, 2.8, zOff); intakeValve.name = "IntakeValve";
+    // Valves
+    const vGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16);
+    const iV = new THREE.Mesh(vGeo, getMat(COLORS.intake)); iV.position.set(-0.5, 2.8, z); iV.name = "IntakeValve";
+    const eV = new THREE.Mesh(vGeo, getMat(COLORS.exhaust)); eV.position.set(0.5, 2.8, z); eV.name = "ExhaustValve";
+    intakeValves.push(iV); exhaustValves.push(eV); interactiveObjects.push(iV, eV); engineGroup.add(iV, eV);
+    state.bases[`IntakeValve${id}`] = iV.position.clone(); state.bases[`ExhaustValve${id}`] = eV.position.clone();
     
-    const exhaustValve = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16), getMat(COLORS.exhaust));
-    exhaustValve.position.set(0.5, 2.8, zOff); exhaustValve.name = "ExhaustValve";
+    // Cam lobes
+    const lobeGeo = new THREE.BoxGeometry(0.2, 0.4, 0.2);
+    const iLobe = new THREE.Mesh(lobeGeo, getMat(COLORS.camshaft)); iLobe.position.set(0, 0, z); camshaftIntake.add(iLobe);
+    const eLobe = new THREE.Mesh(lobeGeo, getMat(COLORS.camshaft)); eLobe.position.set(0, 0, z); camshaftExhaust.add(eLobe);
+
+    // Spark Plug & Combustion
+    const sp = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.4, 16), getMat(COLORS.sparkPlug)); sp.position.set(0, 3, z); sp.name = "SparkPlug";
+    sparkPlugs.push(sp); interactiveObjects.push(sp); engineGroup.add(sp); state.bases[`SparkPlug${id}`] = sp.position.clone();
     
-    const sparkPlug = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.4, 16), getMat(COLORS.sparkPlug));
-    sparkPlug.position.set(0, 3.2, zOff); sparkPlug.name = "SparkPlug";
-    
-    const combustionSphere = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 32), combustionMaterial.clone());
-    combustionSphere.position.set(0, 2.2, zOff);[cylinder, piston, connectingRod, intakeValve, exhaustValve, sparkPlug, combustionSphere].forEach(obj => {
-      engineGroup.add(obj);
-      if(obj.name) interactiveObjects.push(obj);
-    });
-
-    cylinders.push({
-      cylinder, piston, connectingRod, intakeValve, exhaustValve, sparkPlug, combustionSphere,
-      zOff, phaseOffset, strokeIndex: 0, localAngle: 0,
-      base: {
-        cylinder: cylinder.position.clone(), piston: piston.position.clone(),
-        intakeValve: intakeValve.position.clone(), exhaustValve: exhaustValve.position.clone(),
-        sparkPlug: sparkPlug.position.clone()
-      }
-    });
-  }
-
-  state.baseCrankshaft = crankshaft.position.clone();
-  state.baseCamshaft = camshaft.position.clone();
-
-  // Particles (Air & Fuel distributed to both cylinders)
+    const cs = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 32), combustionMaterial.clone()); cs.position.set(0, 2.2, z);
+    combustionSpheres.push(cs); engineGroup.add(cs);
+  });
+  
+  // Setup Particles spanning both cylinders
   const pCount = 120; const pos = new Float32Array(pCount * 3); const cols = new Float32Array(pCount * 3);
   for(let i=0; i<pCount; i++) {
-    const cIdx = i % 2;
-    const zOffset = cIdx === 0 ? -1.2 : 1.2;
-    pos[i*3] = (Math.random()-0.5)*0.2; 
-    pos[i*3+1] = 2.5; 
-    pos[i*3+2] = (Math.random()-0.5)*0.2 + zOffset;
-    
-    const isAir = Math.random() > 0.3;
-    cols[i*3] = isAir ? 56/255 : 245/255; cols[i*3+1] = isAir ? 189/255 : 158/255; cols[i*3+2] = isAir ? 248/255 : 11/255;
-    particles.data.push({ type: isAir?'air':'fuel', cyl: cIdx, t: Math.random()*100, speed: 0.05+Math.random()*0.05, active: false });
+    pos[i*3] = (Math.random()-0.5)*0.1; pos[i*3+1] = 2.5; pos[i*3+2] = (Math.random()-0.5)*2.5;
+    const isAir = i%2===0; cols[i*3] = isAir?56/255:245/255; cols[i*3+1] = isAir?189/255:158/255; cols[i*3+2] = isAir?248/255:11/255;
+    particles.data.push({ type: isAir?'air':'fuel', t: Math.random()*100, speed: 0.05+Math.random()*0.05, active: false });
   }
   const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(cols, 3));
   particles.mesh = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.08, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending }));
@@ -724,23 +736,21 @@ function updateEngineCalculations() {
   document.getElementById('valAFR').innerText = `${state.afr}:1`;
   if(state.turboUnlocked) document.getElementById('valBoost').innerText = `${state.boost.toFixed(1)} Bar`;
   
-  // Power Calculation (Twin Engine base power 300kW)
   const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
   const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
-  const boostMultiplier = 1 + (state.boost * 0.5); 
-  state.power = 300 * rpmFactor * afrFactor * boostMultiplier;
-  state.power = Math.max(40, Math.min(900, state.power));
+  const boostMultiplier = 1 + (state.boost * 0.5);
+  state.power = 150 * rpmFactor * afrFactor * boostMultiplier * 2; // Multiplied by 2 for Twin-Cyl
+  state.power = Math.max(40, Math.min(800, state.power));
   
   state.temp = ENGINE_CONSTANTS.optimalTemp + ((state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05) + (state.boost * 100);
-  if (state.afr > 15) state.temp += 100; 
-  
+  if (state.afr > 15) state.temp += 100;
   state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - (Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2);
   
   document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
   document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
   document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
   
-  const isKnock = state.rpm > 4000 && state.afr < 13;
+  const isKnock = state.rpm > 4500 && state.afr < 13;
   const isOverheat = state.temp > 1050;
   const isFlood = state.rpm < 1500 && state.afr < 12;
   
@@ -750,170 +760,123 @@ function updateEngineCalculations() {
   
   drawPVDiagram();
   checkSpecificEmergencies(isKnock, isOverheat, isFlood);
+  
+  // Update engine hum frequency based on RPM
+  updateEngineHum();
 }
 
 function checkSpecificEmergencies(isKnock, isOverheat, isFlood) {
   if (isKnock || isOverheat || isFlood) {
     if (!state.isEmergency) {
-      state.emergencyType = isKnock ? 'err_knock' : (isOverheat ? 'err_heat' : 'err_flood');
+      state.emergencyType = isKnock ? 'Knocking / Detonation' : (isOverheat ? 'Overheating' : 'Engine Flooding');
       triggerEmergency();
     }
-  } else if (state.isEmergency) {
-    resolveEmergency();
-  }
+  } else if (state.isEmergency) resolveEmergency();
 }
 
 function drawPVDiagram() {
   const canvas = document.getElementById('pvCanvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  
+  const ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height;
   ctx.clearRect(0,0,w,h);
   ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1;
   for(let i=0; i<w; i+=20) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
   for(let i=0; i<h; i+=20) { ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(w,i); ctx.stroke(); }
   
-  const vMin = 40, vMax = w - 20;
-  const pMin = h - 20; 
-  const pComp = pMin - 40 - (state.boost * 20); 
-  const pMax = pMin - 60 - (state.power * 0.15); // scaled for visual
-  
+  const vMin = 40, vMax = w - 20, pMin = h - 20;
+  const pComp = pMin - 40 - (state.boost * 20), pMax = pMin - 60 - (state.power * 0.15);
   ctx.beginPath(); ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2;
-  ctx.moveTo(vMax, pMin);
-  ctx.quadraticCurveTo(vMax - 30, pComp + 10, vMin, pComp);
-  ctx.lineTo(vMin, pMax);
-  ctx.quadraticCurveTo(vMin + 50, pMax + 10, vMax, pMin - 20);
-  ctx.lineTo(vMax, pMin);
-  
+  ctx.moveTo(vMax, pMin); ctx.quadraticCurveTo(vMax - 30, pComp + 10, vMin, pComp);
+  ctx.lineTo(vMin, pMax); ctx.quadraticCurveTo(vMin + 50, pMax + 10, vMax, pMin - 20); ctx.lineTo(vMax, pMin);
   ctx.stroke(); ctx.fillStyle = 'rgba(245, 158, 11, 0.2)'; ctx.fill();
 }
 
 // ==================== ANIMATION LOOP ====================
 function updateEngineAnimation() {
   if (!state.animationActive) return;
-  const rpm = state.rpm;
-  state.strokeAngle += (rpm / 60) * (Math.PI * 2 / 1000);
+  state.strokeAngle += (state.rpm / 60) * (Math.PI * 2 / 1000);
   if (state.strokeAngle >= Math.PI * 4) state.strokeAngle = 0;
   
-  const angle = state.strokeAngle;
-  
-  // Rotate primary shafts
-  if (!state.isExploded) {
-    crankshaft.rotation.z = angle;
-    camshaft.rotation.z = angle / 2; // Camshaft runs at 1/2 speed
-  }
-
-  // Update UI based on Cylinder 1
-  const c1Stroke = Math.floor((angle / (Math.PI * 4)) * 4) % 4;
-  if (c1Stroke !== state.currentStroke) {
-    state.currentStroke = c1Stroke;
-    updateStrokeIndicator();
+  // DOHC Rotation (Camshafts spin at half crankshaft speed)
+  if(!state.isExploded) {
+    camshaftIntake.rotation.z = state.strokeAngle / 2;
+    camshaftExhaust.rotation.z = state.strokeAngle / 2;
   }
   
+  // Base Crank Angle
   const crankRadius = 1.0, rodLength = 2.0;
 
-  cylinders.forEach((cyl) => {
-    cyl.localAngle = angle + cyl.phaseOffset;
-    cyl.strokeIndex = Math.floor((cyl.localAngle / (Math.PI * 4)) * 4) % 4;
-
-    const motionY = crankRadius * Math.cos(cyl.localAngle) + Math.sqrt(Math.pow(rodLength, 2) - Math.pow(crankRadius * Math.sin(cyl.localAngle), 2)) - rodLength;
+  Z_OFFSETS.forEach((z, i) => {
+    // 360-degree crank means pistons move together, but firing sequence is offset by 360 degrees (2*PI radians in the 4*PI cycle)
+    const localAngle = (state.strokeAngle + (i * Math.PI * 2)) % (Math.PI * 4);
+    const strokeIndex = Math.floor((localAngle / (Math.PI * 4)) * 4) % 4;
+    
+    // Update main UI Indicator based on Cylinder 0
+    if (i === 0 && strokeIndex !== state.currentStroke) {
+      state.currentStroke = strokeIndex;
+      updateStrokeIndicator();
+    }
+    
+    const motionY = crankRadius * Math.cos(localAngle) + Math.sqrt(Math.pow(rodLength, 2) - Math.pow(crankRadius * Math.sin(localAngle), 2)) - rodLength;
+    const pistonYBase = state.bases[`Piston_${i}`] ? state.bases[`Piston_${i}`].y - 0.8 : 0;
     
     if(!state.isExploded) {
-      cyl.piston.position.y = cyl.base.piston.y + motionY + 0.2; // adjusted offset
+      pistons[i].position.y = pistonYBase + motionY + 1.0;
+      crankshaft.rotation.z = localAngle; // Both move together
       
-      const crankPinX = crankRadius * Math.sin(cyl.localAngle);
-      const crankPinY = -1.5 + crankRadius * Math.cos(cyl.localAngle);
+      const crankPinX = crankRadius * Math.sin(localAngle), crankPinY = -1.5 + crankRadius * Math.cos(localAngle);
+      connectingRods[i].position.y = (pistons[i].position.y + crankPinY) / 2;
+      connectingRods[i].position.x = crankPinX / 2;
+      connectingRods[i].rotation.z = Math.atan2(crankPinX - pistons[i].position.x, crankPinY - pistons[i].position.y);
       
-      cyl.connectingRod.position.y = (cyl.piston.position.y + crankPinY) / 2;
-      cyl.connectingRod.position.x = crankPinX / 2;
-      cyl.connectingRod.rotation.z = Math.atan2(crankPinX - cyl.piston.position.x, crankPinY - cyl.piston.position.y);
+      const intakeOpen = strokeIndex === 0;
+      const exhaustOpen = strokeIndex === 3;
       
-      const intakeOpen = cyl.strokeIndex === 0;
-      const exhaustOpen = cyl.strokeIndex === 3;
-      
-      cyl.intakeValve.position.y = cyl.base.intakeValve.y - (intakeOpen ? 0.2 : 0);
-      cyl.intakeValve.material.emissive.set(intakeOpen ? COLORS.intake : 0x000000);
-      cyl.intakeValve.material.emissiveIntensity = intakeOpen ? 0.5 : 0;
+      intakeValves[i].position.y = intakeOpen ? 2.6 : 2.8;
+      intakeValves[i].material.emissive.set(intakeOpen ? COLORS.intake : 0x000000);
+      intakeValves[i].material.emissiveIntensity = intakeOpen ? 0.5 : 0;
 
-      cyl.exhaustValve.position.y = cyl.base.exhaustValve.y - (exhaustOpen ? 0.2 : 0);
-      cyl.exhaustValve.material.emissive.set(exhaustOpen ? COLORS.exhaust : 0x000000);
-      cyl.exhaustValve.material.emissiveIntensity = exhaustOpen ? 0.5 : 0;
+      exhaustValves[i].position.y = exhaustOpen ? 2.6 : 2.8;
+      exhaustValves[i].material.emissive.set(exhaustOpen ? COLORS.exhaust : 0x000000);
+      exhaustValves[i].material.emissiveIntensity = exhaustOpen ? 0.5 : 0;
     }
     
-    // Shader Combustion Logic
-    const isCombustion = cyl.strokeIndex === 2 && (cyl.localAngle % (Math.PI*4)) < Math.PI*2.5;
-    if (cyl.combustionSphere.material) {
-      cyl.combustionSphere.material.uniforms.time.value += 0.1;
-      cyl.combustionSphere.material.uniforms.intensity.value = isCombustion ? (1.0 - ((cyl.localAngle % (Math.PI*4)) - Math.PI*2)/(Math.PI*0.5)) : 0.0;
+    const isCombustion = strokeIndex === 2 && localAngle % (Math.PI*2) < Math.PI * 0.5;
+    if (combustionSpheres[i].material) {
+      combustionSpheres[i].material.uniforms.time.value += 0.1;
+      combustionSpheres[i].material.uniforms.intensity.value = isCombustion ? (1.0 - (localAngle % (Math.PI*2))/(Math.PI*0.5)) : 0.0;
     }
   });
-
+  
   updateFlowParticles();
 }
 
 function updateFlowParticles() {
   if (!particles.mesh) return;
   const positions = particles.mesh.geometry.attributes.position.array;
-  const speedFactor = state.rpm / 3000;
-  
   particles.data.forEach((p, i) => {
-    p.t += p.speed * speedFactor;
+    p.t += p.speed * (state.rpm / 3000);
     if (Math.random() < 0.05) p.active = false;
     
-    const cyl = cylinders[p.cyl];
-    const intakeOpen = cyl.strokeIndex === 0;
-    const exhaustOpen = cyl.strokeIndex === 3;
-    const isCombustion = cyl.strokeIndex === 2 && (cyl.localAngle % (Math.PI*4)) < Math.PI*2.5;
-
-    if (intakeOpen && (p.type === 'air' || p.type === 'fuel')) {
-      if (!p.active) {
-        positions[i * 3] = (Math.random() - 0.5) * 0.2 - 0.5;
-        positions[i * 3 + 1] = 2.8;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 0.2 + cyl.zOff;
-        p.active = true;
-      } else {
-        positions[i * 3 + 1] -= 0.05;
-        positions[i * 3] += (Math.random() - 0.5) * 0.01;
-      }
-    }
-    else if (isCombustion) {
-       positions[i * 3] += (Math.random() - 0.5) * 0.2;
-       positions[i * 3 + 1] += (Math.random() - 0.5) * 0.2;
-       if (Math.random() < 0.1) p.active = false;
-    }
-    else if (exhaustOpen) {
-       if (!p.active) {
-         positions[i * 3] = (Math.random() - 0.5) * 1.0;
-         positions[i * 3 + 1] = cyl.piston.position.y + 0.5;
-         positions[i * 3 + 2] = (Math.random() - 0.5) * 1.0 + cyl.zOff;
-         p.active = true;
-         particles.mesh.geometry.attributes.color.array[i * 3] = 0.6;
-         particles.mesh.geometry.attributes.color.array[i * 3 + 1] = 0.6;
-         particles.mesh.geometry.attributes.color.array[i * 3 + 2] = 0.6;
-       } else {
-         positions[i * 3 + 1] += 0.08;
-         positions[i * 3] += (Math.random() - 0.5) * 0.01;
-         if (positions[i * 3 + 1] > 2.5) positions[i * 3] += (0.5 - positions[i * 3]) * 0.1;
-       }
+    // Simplified fluid logic for both cylinders for visual flair
+    if (!p.active) {
+       positions[i*3] = (Math.random()-0.5)*0.5;
+       positions[i*3+1] = 2.8;
+       positions[i*3+2] = (Math.random()-0.5)*2.5;
+       p.active = true;
     } else {
-      if (p.type === 'air') {
-         particles.mesh.geometry.attributes.color.array[i * 3] = 56/255;
-         particles.mesh.geometry.attributes.color.array[i * 3 + 1] = 189/255;
-         particles.mesh.geometry.attributes.color.array[i * 3 + 2] = 248/255;
-      }
+       positions[i*3+1] -= 0.05;
+       if (positions[i*3+1] < 1.0) p.active = false;
     }
   });
-  
   particles.mesh.geometry.attributes.position.needsUpdate = true;
-  particles.mesh.geometry.attributes.color.needsUpdate = true;
 }
 
 function updateStrokeIndicator() {
   const ind = document.getElementById('strokeIndicator');
   ind.classList.add('active');
-  document.getElementById('strokeLabel').innerText = STRINGS[`stroke_${state.currentStroke}`];
-  document.getElementById('strokePhase').innerText = STRINGS[`desc_${state.currentStroke}`];
+  document.getElementById('strokeLabel').innerText = strokeInfo[state.currentStroke].label;
+  document.getElementById('strokePhase').innerText = strokeInfo[state.currentStroke].desc;
   const colors =['#38bdf8', '#8b5cf6', '#f59e0b', '#ef4444'];
   document.getElementById('strokeLabel').style.color = colors[state.currentStroke];
   ind.style.borderColor = colors[state.currentStroke];
@@ -932,10 +895,7 @@ function initUI() {
   document.getElementById('btnQuiz').onclick = () => togglePanel('quizPanel');
   document.getElementById('btnData').onclick = () => togglePanel('dataPanel');
   ['btnCloseControls', 'btnCloseQuiz', 'btnCloseData'].forEach(id => {
-    document.getElementById(id).onclick = (e) => {
-      e.stopPropagation();
-      e.currentTarget.parentElement.parentElement.classList.remove('active');
-    }
+    document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
   });
 
   document.getElementById('sliderRPM').oninput = updateEngineCalculations;
@@ -946,11 +906,7 @@ function initUI() {
   document.getElementById('btnXray').onclick = (e) => {
     state.isXray = !state.isXray;
     e.currentTarget.classList.toggle('active');
-    cylinders.forEach(c => {
-      c.cylinder.material.opacity = state.isXray ? 0.1 : 0.4;
-      c.cylinder.material.wireframe = state.isXray;
-      c.cylinder.material.depthWrite = !state.isXray;
-    });
+    cylinders.forEach(c => { c.material.opacity = state.isXray ? 0.1 : 0.4; c.material.wireframe = state.isXray; c.material.depthWrite = !state.isXray; });
   };
 
   document.getElementById('btnExplode').onclick = (e) => {
@@ -958,15 +914,17 @@ function initUI() {
     e.currentTarget.classList.toggle('active-explode');
     const d = state.isExploded ? 1 : 0;
     
-    cylinders.forEach(cyl => {
-      gsap.to(cyl.sparkPlug.position, { y: cyl.base.sparkPlug.y + (d * 1.5), duration: 1 });
-      gsap.to(cyl.intakeValve.position, { y: cyl.base.intakeValve.y + (d * 1.0), x: cyl.base.intakeValve.x - (d * 0.5), duration: 1 });
-      gsap.to(cyl.exhaustValve.position, { y: cyl.base.exhaustValve.y + (d * 1.0), x: cyl.base.exhaustValve.x + (d * 0.5), duration: 1 });
-      gsap.to(cyl.cylinder.position, { y: cyl.base.cylinder.y + (d * 0.5), duration: 1 });
-    });
+    gsap.to(camshaftIntake.position, { y: state.bases['CamshaftIntake'].y + (d * 1.5), x: state.bases['CamshaftIntake'].x - (d * 0.5), duration: 1 });
+    gsap.to(camshaftExhaust.position, { y: state.bases['CamshaftExhaust'].y + (d * 1.5), x: state.bases['CamshaftExhaust'].x + (d * 0.5), duration: 1 });
+    gsap.to(crankshaft.position, { y: state.bases['Crankshaft'].y - (d * 1.0), duration: 1 });
     
-    gsap.to(camshaft.position, { y: state.baseCamshaft.y + (d * 1.5), duration: 1 });
-    gsap.to(crankshaft.position, { y: state.baseCrankshaft.y - (d * 1.0), duration: 1 });
+    Z_OFFSETS.forEach((z, i) => {
+      const id = `_${i}`;
+      gsap.to(sparkPlugs[i].position, { y: state.bases[`SparkPlug${id}`].y + (d * 1.5), duration: 1 });
+      gsap.to(intakeValves[i].position, { y: state.bases[`IntakeValve${id}`].y + (d * 1.0), x: state.bases[`IntakeValve${id}`].x - (d * 0.5), duration: 1 });
+      gsap.to(exhaustValves[i].position, { y: state.bases[`ExhaustValve${id}`].y + (d * 1.0), x: state.bases[`ExhaustValve${id}`].x + (d * 0.5), duration: 1 });
+      gsap.to(cylinders[i].position, { y: state.bases[`Cylinder${id}`].y + (d * 0.5), duration: 1 });
+    });
     
     if(!state.isExploded) updateEngineAnimation(); 
   };
@@ -976,51 +934,43 @@ function initUI() {
     e.currentTarget.classList.toggle('active');
     e.currentTarget.innerHTML = state.animationActive ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
   };
+
+  document.getElementById('btnAudio').onclick = (e) => {
+    state.audioEnabled = !state.audioEnabled;
+    e.currentTarget.classList.toggle('active');
+    e.currentTarget.innerHTML = state.audioEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+    if (ambientSound) state.audioEnabled ? ambientSound.play() : ambientSound.pause();
+    if (!state.audioEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+  };
   
   document.getElementById('btnReset').onclick = () => {
     gsap.to(engineGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
-    gsap.to(engineGroup.scale, { x: 0.35, y: 0.35, z: 0.35, duration: 1 });
+    gsap.to(engineGroup.scale, { x: 0.4, y: 0.4, z: 0.4, duration: 1 });
+    if(state.mode !== 'AR') { gsap.to(camera.position, { x: 6, y: 2, z: 6, duration: 1 }); }
   };
   
   document.getElementById('btnExit').onclick = () => confirm("Exit Lab?") && location.reload();
 }
 
 function triggerEmergency() {
-  state.isEmergency = true;
-  document.body.classList.add('critical-state');
-  
-  const alertText = STRINGS[state.emergencyType];
-  document.getElementById('statusText').innerText = alertText;
-  
-  if (state.audioEnabled) {
-    window.speechSynthesis.cancel();
-    speak(alertText);
-  }
+  state.isEmergency = true; document.body.classList.add('critical-state');
+  document.getElementById('statusText').innerText = state.emergencyType;
+  if (state.audioEnabled) { window.speechSynthesis.cancel(); speak(state.emergencyType); }
   
   const p = document.getElementById('controlPanel');
-  if (!p.classList.contains('active')) {
-     document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active'));
-     p.classList.add('active');
-  }
-  addDataStreamEntry("EMERGENCY", alertText);
+  if (!p.classList.contains('active')) { document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active')); p.classList.add('active'); }
+  addDataStreamEntry("EMERGENCY", state.emergencyType);
 }
 
 function resolveEmergency() {
-  state.isEmergency = false;
-  state.lastEmergency = Date.now();
+  state.isEmergency = false; state.lastEmergency = Date.now();
   document.body.classList.remove('critical-state');
   document.getElementById('statusText').innerText = "Engine Running";
-  
-  if (state.audioEnabled) speak("Stabilized");
-  
-  if (state.emergencyStars < 3) {
-    awardStar("Stabilized!", "Emergency Response");
-    state.emergencyStars++;
-  }
+  if (state.audioEnabled) speak("Engine stabilized");
+  if (state.emergencyStars < 3) { awardStar("Stabilized!", "Emergency Response"); state.emergencyStars++; }
   setTimeout(() => document.getElementById('controlPanel').classList.remove('active'), 3500);
 }
 
-// ==================== PROGRESSION & QUIZ ====================
 function awardStar(title, subtitle) {
   state.totalStars++;
   document.getElementById('startScreenStars').innerText = state.totalStars;
@@ -1030,17 +980,12 @@ function awardStar(title, subtitle) {
   const r = document.getElementById('starReward');
   document.getElementById('achievementText').innerText = subtitle;
   r.style.display = 'block'; r.style.opacity = '0';
-  gsap.to(r, { opacity: 1, duration: 0.5, onComplete: () => {
-    setTimeout(() => gsap.to(r, { opacity: 0, duration: 0.5, onComplete:()=>r.style.display='none'}), 1500);
-  }});
+  gsap.to(r, { opacity: 1, duration: 0.5, onComplete: () => { setTimeout(() => gsap.to(r, { opacity: 0, duration: 0.5, onComplete:()=>r.style.display='none'}), 1500); }});
 
   if (state.totalStars === 5 && !state.turboUnlocked) {
-    state.turboUnlocked = true;
-    saveProgress();
+    state.turboUnlocked = true; saveProgress();
     setTimeout(() => {
-      const t = document.getElementById('unlockToast');
-      t.style.display = 'block';
-      document.getElementById('turboGroup').style.display = 'block';
+      const t = document.getElementById('unlockToast'); t.style.display = 'block'; document.getElementById('turboGroup').style.display = 'block';
       setTimeout(() => t.style.display = 'none', 4000);
     }, 2500);
   }
@@ -1048,41 +993,45 @@ function awardStar(title, subtitle) {
 
 function initQuiz() {
   const render = () => {
-    const qList = quizLevels[state.currentLevel];
-    const q = qList[state.currentQ];
+    const qList = quizLevels[state.currentLevel]; const q = qList[state.currentQ];
     document.getElementById('txtQuizLevel').innerText = `Level ${state.currentLevel + 1}`;
     document.getElementById('qText').innerHTML = `<strong>Q${state.currentQ + 1}/${qList.length}:</strong> ${q.q}`;
-    
     const optsDiv = document.getElementById('qOptions'); optsDiv.innerHTML = '';
     document.getElementById('btnNextQ').style.display = 'none';
     
     q.options.forEach((opt, i) => {
-      const btn = document.createElement('div'); btn.className = 'quiz-btn';
-      btn.innerHTML = `${opt}`;
+      const btn = document.createElement('div'); btn.className = 'quiz-btn'; btn.innerHTML = `${opt}`;
       btn.onclick = () => {
         Array.from(optsDiv.children).forEach(b => b.style.pointerEvents = 'none');
-        if(i === q.correct) {
-          btn.classList.add('correct'); awardStar("Correct!", "Knowledge Check");
-        } else {
-          btn.classList.add('wrong'); optsDiv.children[q.correct].classList.add('correct');
-        }
+        if(i === q.correct) { btn.classList.add('correct'); awardStar("Correct!", "Knowledge Check"); } 
+        else { btn.classList.add('wrong'); optsDiv.children[q.correct].classList.add('correct'); }
         document.getElementById('btnNextQ').style.display = 'block';
       };
       optsDiv.appendChild(btn);
     });
   };
   render();
-  
   document.getElementById('btnNextQ').onclick = () => {
     state.currentQ++;
     if(state.currentQ >= quizLevels[state.currentLevel].length) {
       state.currentQ = 0;
-      if (state.currentLevel < quizLevels.length - 1) state.currentLevel++;
-      else state.currentLevel = 0; 
+      if (state.currentLevel < quizLevels.length - 1) state.currentLevel++; else state.currentLevel = 0;
     }
     render();
   };
 }
+
+const compDict = {
+  "Piston": { name: "PISTON", desc: "Reciprocating component" },
+  "Cylinder": { name: "CYLINDER", desc: "Combustion chamber" },
+  "Crankshaft": { name: "CRANKSHAFT", desc: "Rotational output shaft" },
+  "ConnectingRod": { name: "CONNECTING ROD", desc: "Linkage arm" },
+  "IntakeValve": { name: "INTAKE VALVE", desc: "Input control" },
+  "ExhaustValve": { name: "EXHAUST VALVE", desc: "Output control" },
+  "SparkPlug": { name: "SPARK PLUG", desc: "Ignition source" },
+  "CamshaftIntake": { name: "INTAKE CAMSHAFT", desc: "Intake valve actuation" },
+  "CamshaftExhaust": { name: "EXHAUST CAMSHAFT", desc: "Exhaust valve actuation" }
+};
 
 function onEnhancedMouseClick(e) {
   if (e.target !== renderer.domElement && e.target.tagName !== 'CANVAS') return;
@@ -1090,7 +1039,6 @@ function onEnhancedMouseClick(e) {
   const cX = e.clientX || (e.touches && e.touches[0].clientX);
   const cY = e.clientY || (e.touches && e.touches[0].clientY);
   const mouse = new THREE.Vector2(((cX - rect.left) / rect.width) * 2 - 1, -((cY - rect.top) / rect.height) * 2 + 1);
-  
   const rc = new THREE.Raycaster(); rc.setFromCamera(mouse, camera);
   const hits = rc.intersectObjects(interactiveObjects, true);
   
@@ -1109,48 +1057,50 @@ function selectComponent(name, obj) {
   }
 
   const t = document.getElementById('infoToast');
-  const key = `comp_${name.toLowerCase().replace(" ", "")}`;
-  document.getElementById('toastText').innerText = STRINGS[key] || name;
-  document.getElementById('toastSubtext').innerText = STRINGS[`${key}_d`] || "";
+  document.getElementById('toastText').innerText = compDict[name]?.name || name;
+  document.getElementById('toastSubtext').innerText = compDict[name]?.desc || "";
   t.style.display = 'block';
   gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(() => gsap.to(t, { opacity: 0, y: 20, duration: 0.3, onComplete: () => t.style.display = 'none' }), 3000);
+  if (state.audioEnabled && !state.isEmergency) speak(compDict[name]?.name || name);
+  addDataStreamEntry("INTERACTION", `Selected: ${name}`);
 }
 
 function startDataStream() {
   setInterval(() => {
     if (!document.getElementById('dataPanel').classList.contains('active')) return;
     const t = new Date().toLocaleTimeString();
-    addDataStreamEntry("DATA", `[${t}] Twin-Power: ${state.power.toFixed(1)}kW | Eff: ${state.efficiency.toFixed(1)}%`);
+    addDataStreamEntry("DATA", `[${t}] Power: ${state.power.toFixed(1)}kW | Eff: ${state.efficiency.toFixed(1)}%`);
   }, 4000);
 }
-
 function addDataStreamEntry(type, msg) {
-  const div = document.getElementById('dataStreamContent');
-  const e = document.createElement('div');
+  const div = document.getElementById('dataStreamContent'), e = document.createElement('div');
   e.innerHTML = `<div style="margin-bottom:5px; color:var(--text-muted)">${msg}</div>`;
-  div.insertBefore(e, div.firstChild);
-  if (div.children.length > 15) div.removeChild(div.lastChild);
+  div.insertBefore(e, div.firstChild); if (div.children.length > 15) div.removeChild(div.lastChild);
 }
 
-function speak(text) {
-  if (state.audioEnabled && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-  }
+function showToast(title, msg) {
+  const t = document.getElementById('infoToast');
+  document.getElementById('toastText').innerText = title;
+  document.getElementById('toastSubtext').innerText = msg;
+  t.style.display = 'block';
+  gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => gsap.to(t, { opacity: 0, y: 20, duration: 0.3, onComplete: () => t.style.display = 'none' }), 3000);
 }
 
 function animate() {
   requestAnimationFrame(animate);
   updateEngineAnimation();
   
+  // Random failure injection if idle for long
   if (!state.isEmergency && !document.getElementById('quizPanel').classList.contains('active') && Date.now() - state.lastEmergency > 60000) {
-    document.getElementById('sliderRPM').value = 5800;
-    updateEngineCalculations();
+    document.getElementById('sliderRPM').value = 5800; updateEngineCalculations();
   }
   
   if (renderer && scene && camera && state.mode === '3D') renderer.render(scene, camera);
+  else if (mindarThree) mindarThree.processVideo(); // for AR
 }
 
 window.addEventListener('resize', () => {
