@@ -67,6 +67,17 @@ body.ar-active { background: transparent !important; }
 .data-panel { right: 20px; border-right: 4px solid var(--accent-purple); transform: translateX(120%); }
 .side-panel.active { transform: translateX(0) !important; opacity: 1; pointer-events: auto; }
 
+.ai-panel { left: 20px; border-left: 4px solid var(--accent-green); transform: translateX(-120%); }
+.chat-box { display: flex; flex-direction: column; gap: 10px; height: 250px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px; }
+.chat-msg { padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; max-width: 85%; word-wrap: break-word; }
+.chat-msg.bot { background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 2px; }
+.chat-msg.user { background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-cyan); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input-row input { flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px; border-radius: 8px; outline: none; font-family: inherit; }
+.chat-input-row input:focus { border-color: var(--accent-green); }
+.chat-input-row button { background: var(--accent-green); border: none; color: black; width: 40px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+.chat-input-row button:hover { transform: scale(1.05); }
+
 .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; }
 .panel-label { font-size: 1rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; }
 .close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 1rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; z-index: 160; }
@@ -208,6 +219,13 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
     </div>
   </div>
 
+  <div style="display: flex; gap: 10px;">
+      <button class="icon-btn pointer-events-auto" id="btnAI" title="AI Tutor" style="background: var(--glass-panel); color: var(--accent-green);"><i class="fas fa-robot"></i></button>
+      <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Knowledge Check" style="background: var(--glass-panel);"><i class="fas fa-brain"></i></button>
+      <button class="icon-btn pointer-events-auto" id="btnData" title="Live Data" style="background: var(--glass-panel);"><i class="fas fa-chart-line"></i></button>
+      <button class="icon-btn pointer-events-auto" id="btnSettings" title="Engine Controls" style="background: var(--glass-panel);"><i class="fas fa-sliders-h"></i></button>
+    </div>
+
   <div id="unlockToast" class="unlock-toast"><i class="fas fa-unlock-alt"></i> <span>Turbocharger Unlocked!</span></div>
 
   <div id="starReward" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; z-index: 200; pointer-events: none;">
@@ -296,6 +314,21 @@ canvas#pvCanvas { width: 100%; height: 160px; background: transparent; }
       <canvas id="pvCanvas" width="280" height="160"></canvas>
     </div>
     <div id="dataStreamContent" style="font-family: var(--font-code); margin-top: 15px; font-size: 0.85rem; max-height: 200px; overflow-y: auto;"></div>
+  </div>
+
+  <!-- AI Tutor Panel -->
+  <div class="side-panel ai-panel" id="aiPanel">
+    <div class="panel-header">
+      <span class="panel-label" style="color: var(--accent-green);"><i class="fas fa-robot"></i> AI TUTOR</span>
+      <button class="close-btn" id="btnCloseAI"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-box" id="aiChatBox">
+      <div class="chat-msg bot">Hello! I am your Engineering AI Tutor. Ask me about engine components, thermodynamics, or how to fix emergencies!</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="aiInput" placeholder="e.g. What is engine knocking?" autocomplete="off">
+      <button id="btnSendAI"><i class="fas fa-paper-plane"></i></button>
+    </div>
   </div>
 
   <!-- Stroke Indicator -->
@@ -907,7 +940,7 @@ function initUI() {
   document.getElementById('btnSettings').onclick = () => togglePanel('controlPanel');
   document.getElementById('btnQuiz').onclick = () => togglePanel('quizPanel');
   document.getElementById('btnData').onclick = () => togglePanel('dataPanel');
-  ['btnCloseControls', 'btnCloseQuiz', 'btnCloseData'].forEach(id => {
+  document.getElementById('btnAI').onclick = () => togglePanel('aiPanel');['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'].forEach(id => {
     document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
   });
 
@@ -1065,6 +1098,7 @@ function onEnhancedMouseClick(e) {
 }
 
 function selectComponent(name, obj) {
+  if (navigator.vibrate) navigator.vibrate(40);
   if (obj && obj.material && obj.material.emissive) {
     const oHex = obj.material.emissive.getHex(), oInt = obj.material.emissiveIntensity;
     obj.material.emissive.setHex(COLORS.highlight); obj.material.emissiveIntensity = 0.8;
@@ -1105,6 +1139,58 @@ function showToast(title, msg) {
   toastTimer = setTimeout(() => gsap.to(t, { opacity: 0, y: 20, duration: 0.3, onComplete: () => t.style.display = 'none' }), 3000);
 }
 
+// ==================== AI TUTOR LOGIC ====================
+const aiKnowledgeBase = {
+  "knock": "Engine knocking, or detonation, occurs when the air-fuel mixture ignites prematurely. It is usually caused by running too lean, or having too high of a compression ratio or RPM. Increase your Air-Fuel ratio to fix it.",
+  "detonation": "Detonation is an erratic, uncontrolled burning of fuel in the cylinder. It spikes temperatures and pressures, and can severely damage the piston.",
+  "stoichiometric": "A stoichiometric mixture is the perfect ratio of air to fuel where all fuel is burned completely. For gasoline, this is 14.7 parts air to 1 part fuel.",
+  "overheat": "Overheating happens when the engine generates more heat than the cooling system can handle. Running at maximum RPM with a lean air-fuel mixture is a common cause.",
+  "flood": "Engine flooding occurs when there is too much fuel and not enough air to ignite it. This often happens at low RPMs with an air-fuel ratio below 12.",
+  "turbo": "A turbocharger forces more compressed air into the combustion chamber, allowing the engine to burn more fuel and generate significantly more power per stroke.",
+  "camshaft": "The camshaft uses cam lobes to push the intake and exhaust valves open at the exact right time. It rotates at exactly half the speed of the crankshaft.",
+  "crankshaft": "The crankshaft converts the linear up-and-down motion of the pistons into rotational motion to drive the wheels.",
+  "piston": "The piston compresses the air-fuel mixture and absorbs the force of combustion, transferring that energy down to the connecting rod.",
+  "default": "That's an excellent engineering question! Try asking me specifically about engine knocking, stoichiometric ratios, turbochargers, or specific parts like the camshaft."
+};
+
+function processAIQuery() {
+  const inputEl = document.getElementById('aiInput');
+  const chatBox = document.getElementById('aiChatBox');
+  const query = inputEl.value.trim().toLowerCase();
+  if (!query) return;
+
+  // Add User Message
+  chatBox.innerHTML += `<div class="chat-msg user">${inputEl.value}</div>`;
+  inputEl.value = '';
+  
+  // Scroll to bottom
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Simple "AI" Keyword Matching
+  let response = aiKnowledgeBase["default"];
+  for (const keyword in aiKnowledgeBase) {
+    if (query.includes(keyword)) {
+      response = aiKnowledgeBase[keyword];
+      break;
+    }
+  }
+
+  // Simulate thinking delay
+  setTimeout(() => {
+    chatBox.innerHTML += `<div class="chat-msg bot">${response}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    // Speak the response using the existing voice function
+    if (state.audioEnabled) speak(response);
+  }, 600);
+}
+
+// Bind Enter key and Send button
+document.getElementById('btnSendAI').addEventListener('click', processAIQuery);
+document.getElementById('aiInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') processAIQuery();
+});
+  
 function animate() {
   requestAnimationFrame(animate);
   updateEngineAnimation();
