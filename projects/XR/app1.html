@@ -406,8 +406,15 @@ function resetHideTimer() {
   const dock = document.getElementById('bottomDock');
   if (dock) dock.classList.remove('hidden');
   clearTimeout(uiHideTimeout);
+  
   uiHideTimeout = setTimeout(() => {
-    if (dock) dock.classList.add('hidden');
+    // Check if any side panels (Controls, Quiz, Data) are currently open
+    const isPanelOpen = document.querySelector('.side-panel.active') !== null;
+    
+    // Only auto-hide the dock if the student isn't actively using a menu
+    if (dock && !isPanelOpen) {
+      dock.classList.add('hidden');
+    }
   }, 3500);
 }
 
@@ -441,13 +448,19 @@ function initAudioEngine() {
 
 function updateEngineHum() {
   if (!audioCtx || !engineHumOscillator) return;
-  // Map RPM to frequency: idle 800 -> 60 Hz, 6000 -> 200 Hz
   const freq = 60 + (state.rpm / 6000) * 140;
   engineHumOscillator.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
-  // Gain based on RPM (louder at high RPM)
-  if (engineHumGain) engineHumGain.gain.setTargetAtTime(0.02 + (state.rpm/6000)*0.1, audioCtx.currentTime, 0.1);
+  
+  if (engineHumGain) {
+    // Only make sound if audio is enabled AND the engine is actively animating
+    if (state.audioEnabled && state.animationActive) {
+      engineHumGain.gain.setTargetAtTime(0.02 + (state.rpm/6000)*0.1, audioCtx.currentTime, 0.1);
+    } else {
+      // Mute instantly
+      engineHumGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+    }
+  }
 }
-
 function speak(text) {
   if (!state.audioEnabled) return;
   if ('speechSynthesis' in window) {
@@ -933,6 +946,7 @@ function initUI() {
     state.animationActive = !state.animationActive;
     e.currentTarget.classList.toggle('active');
     e.currentTarget.innerHTML = state.animationActive ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+    updateEngineHum(); 
   };
 
   document.getElementById('btnAudio').onclick = (e) => {
@@ -941,6 +955,7 @@ function initUI() {
     e.currentTarget.innerHTML = state.audioEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
     if (ambientSound) state.audioEnabled ? ambientSound.play() : ambientSound.pause();
     if (!state.audioEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+    updateEngineHum(); 
   };
   
   document.getElementById('btnReset').onclick = () => {
