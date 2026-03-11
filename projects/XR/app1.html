@@ -1110,8 +1110,28 @@ function animate() {
   updateEngineAnimation();
   
   // Random failure injection if idle for long
+// Gamification: Random failure injection every 60 seconds (Paused during quizzes)
   if (!state.isEmergency && !document.getElementById('quizPanel').classList.contains('active') && Date.now() - state.lastEmergency > 60000) {
-    document.getElementById('sliderRPM').value = 5800; updateEngineCalculations();
+    
+    // Randomly select one of the three specific failure conditions
+    const failType = Math.random();
+    
+    if (failType < 0.33) {
+      // 1. Force Knocking / Detonation (High RPM + Rich AFR)
+      document.getElementById('sliderRPM').value = 5500;
+      document.getElementById('sliderAFR').value = 11.5;
+    } else if (failType < 0.66) {
+      // 2. Force Overheating (High RPM + Lean AFR)
+      document.getElementById('sliderRPM').value = 6000;
+      document.getElementById('sliderAFR').value = 16.5;
+    } else {
+      // 3. Force Engine Flooding (Low RPM + Extremely Rich AFR)
+      document.getElementById('sliderRPM').value = 1000;
+      document.getElementById('sliderAFR').value = 10.5;
+    }
+    
+    // Apply the broken parameters to trigger the alarm instantly
+    updateEngineCalculations();
   }
   
   if (renderer && scene && camera && state.mode === '3D') renderer.render(scene, camera);
