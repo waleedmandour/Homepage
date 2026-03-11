@@ -708,9 +708,10 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="target-image-display">
     <i class="fas fa-cogs" style="font-size: 4rem; margin-bottom: 20px; color: white;"></i>
     <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">4-STROKE ENGINE AR LAB</p>
-    <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this marker or print it</p>
+    <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this feature image</p>
     <div style="margin-top: 20px; padding: 10px; background: white; border-radius: 8px;">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=FourStrokeEngineARLab2.0" alt="QR Code" style="width: 150px; height: 150px;">
+      <!-- Corrected: AR Feature image placeholder instead of generic QR code -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Engine_diagram.svg/150px-Engine_diagram.svg.png" alt="AR Target Marker" style="width: 150px; height: 150px; object-fit: contain;">
     </div>
   </div>
   <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
@@ -808,6 +809,10 @@ input[type="range"]::-webkit-slider-thumb {
         <div class="param-value efficiency" id="valEfficiency">32%</div>
       </div>
     </div>
+    <!-- Pedagogical Disclaimer Added -->
+    <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 15px; text-align: center; font-style: italic;">
+      * Note: Thermodynamic values are simplified for simulation purposes.
+    </div>
   </div>
 
   <!-- Quiz Panel (Right) -->
@@ -884,7 +889,7 @@ const COLORS = {
   combustion: 0xff6b35,
   intake: 0x38bdf8,
   exhaust: 0xef4444,
-  highlight: 0x10b981
+  highlight: 0x10b981 // Used for component interaction highlighting
 };
 
 const ENGINE_CONSTANTS = {
@@ -898,17 +903,17 @@ const ENGINE_CONSTANTS = {
 };
 
 // ==================== QUIZ DATA ====================
-const quizQuestions = [
-  { q: "What is the correct order of the 4-stroke engine cycle?", options: ["Intake, Power, Compression, Exhaust", "Intake, Compression, Power, Exhaust", "Compression, Intake, Power, Exhaust", "Power, Intake, Compression, Exhaust"], correct: 1 },
-  { q: "During which stroke does the spark plug ignite the air-fuel mixture?", options: ["Intake", "End of Compression", "Power", "Exhaust"], correct: 1 },
-  { q: "What does 'TDC' stand for in engine terminology?", options: ["Top Dead Center", "Total Displacement Capacity", "Thermal Dynamic Compression", "Torque Distribution Control"], correct: 0 },
-  { q: "What is the stoichiometric air-fuel ratio for gasoline engines?", options: ["12.5:1", "14.7:1", "16.2:1", "18.0:1"], correct: 1 },
-  { q: "Which component converts linear piston motion to rotational motion?", options: ["Camshaft", "Crankshaft", "Connecting Rod", "Flywheel"], correct: 1 },
-  { q: "What happens during the compression stroke?", options: ["Air-fuel mixture enters cylinder", "Exhaust gases exit cylinder", "Mixture is compressed by piston", "Spark plug fires"], correct: 2 },
-  { q: "What is 'volumetric efficiency' in an engine?", options: ["Fuel consumption rate", "Ratio of actual air drawn vs theoretical maximum", "Power output per liter", "Compression ratio measurement"], correct: 1 },
-  { q: "Which valve opens during the intake stroke?", options: ["Exhaust valve", "Intake valve", "Both valves", "Neither valve"], correct: 1 },
+const quizQuestions =[
+  { q: "What is the correct order of the 4-stroke engine cycle?", options:["Intake, Power, Compression, Exhaust", "Intake, Compression, Power, Exhaust", "Compression, Intake, Power, Exhaust", "Power, Intake, Compression, Exhaust"], correct: 1 },
+  { q: "During which stroke does the spark plug ignite the air-fuel mixture?", options:["Intake", "End of Compression", "Power", "Exhaust"], correct: 1 },
+  { q: "What does 'TDC' stand for in engine terminology?", options:["Top Dead Center", "Total Displacement Capacity", "Thermal Dynamic Compression", "Torque Distribution Control"], correct: 0 },
+  { q: "What is the stoichiometric air-fuel ratio for gasoline engines?", options:["12.5:1", "14.7:1", "16.2:1", "18.0:1"], correct: 1 },
+  { q: "Which component converts linear piston motion to rotational motion?", options:["Camshaft", "Crankshaft", "Connecting Rod", "Flywheel"], correct: 1 },
+  { q: "What happens during the compression stroke?", options:["Air-fuel mixture enters cylinder", "Exhaust gases exit cylinder", "Mixture is compressed by piston", "Spark plug fires"], correct: 2 },
+  { q: "What is 'volumetric efficiency' in an engine?", options:["Fuel consumption rate", "Ratio of actual air drawn vs theoretical maximum", "Power output per liter", "Compression ratio measurement"], correct: 1 },
+  { q: "Which valve opens during the intake stroke?", options:["Exhaust valve", "Intake valve", "Both valves", "Neither valve"], correct: 1 },
   { q: "What is engine knock/detonation?", options: ["Normal combustion", "Premature fuel ignition", "Valve timing issue", "Oil pressure problem"], correct: 1 },
-  { q: "What does BDC stand for?", options: ["Bottom Dead Center", "Base Displacement Capacity", "Brake Dynamic Control", "Bore Diameter Calculation"], correct: 0 }
+  { q: "What does BDC stand for?", options:["Bottom Dead Center", "Base Displacement Capacity", "Brake Dynamic Control", "Bore Diameter Calculation"], correct: 0 }
 ];
 
 // ==================== APP STATE ====================
@@ -930,9 +935,10 @@ const state = {
   lastEmergency: Date.now(),
   isEmergency: false,
   emergencyCount: 0,
+  emergencyStars: 0, // Cap added to prevent star farming
   currentQ: 0,
   score: 0,
-  achievements: [],
+  achievements:[],
   isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
   audioContextInitialized: false,
   emergencyInterval: null,
@@ -944,15 +950,15 @@ const state = {
 // ==================== 3D ENGINE ====================
 let scene, camera, renderer, clock, mixer, mindarThree, rootGroup;
 let particles = { mesh: null, data: [] };
-let molecules = [];
+let molecules =[];
 let molScene, molCamera, molRenderer;
 let audioCtx = null, ambientSound = null;
 let sirenInterval = null, toastTimer = null;
-let interactiveObjects = [];
+let interactiveObjects =[];
 let piston, crankshaft, connectingRod, intakeValve, exhaustValve, sparkPlug, cylinder;
 let crankArm; 
-let strokeLabels = ['INTAKE', 'COMPRESSION', 'POWER', 'EXHAUST'];
-let strokeDescriptions = [
+let strokeLabels =['INTAKE', 'COMPRESSION', 'POWER', 'EXHAUST'];
+let strokeDescriptions =[
   'Piston moving down, intake valve open',
   'Piston moving up, both valves closed',
   'Combustion occurs, piston forced down',
@@ -1013,7 +1019,7 @@ function initAudioContext() {
 function initEnhancedAudio() {
   if (state.audioEnabled) {
     ambientSound = new Howl({
-      src: ['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'],
+      src:['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'],
       volume: 0.1,
       loop: true,
       autoplay: true
@@ -1089,6 +1095,11 @@ async function initARMode() {
     };
     
     buildEngineModel();
+    
+    // Assign click raycasting for AR
+    const container = document.getElementById('container');
+    container.addEventListener('click', onEnhancedMouseClick);
+
     await mindarThree.start();
     document.getElementById('modeIndicator').innerText = 'AR TRACKING ACTIVE';
     return true;
@@ -1142,29 +1153,74 @@ function initEnhanced3DMode() {
   
   let isDragging = false, prev = { x: 0, y: 0 };
   let zoomLevel = 1;
+  let initialPinchDistance = null;
   
+  // Mouse Controls
   container.addEventListener('mousedown', (e) => {
+    if (e.target !== renderer.domElement) return; // Prevent raycasting through UI
     isDragging = true;
-    prev = { x: e.offsetX, y: e.offsetY };
+    prev = { x: e.clientX, y: e.clientY };
   });
   
   window.addEventListener('mouseup', () => isDragging = false);
   
   container.addEventListener('mousemove', (e) => {
+    if (e.target !== renderer.domElement) return;
     if (isDragging) {
-      rootGroup.rotation.y += (e.offsetX - prev.x) * 0.005;
-      rootGroup.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, rootGroup.rotation.x + (e.offsetY - prev.y) * 0.005));
-      prev = { x: e.offsetX, y: e.offsetY };
+      rootGroup.rotation.y += (e.clientX - prev.x) * 0.005;
+      rootGroup.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, rootGroup.rotation.x + (e.clientY - prev.y) * 0.005));
+      prev = { x: e.clientX, y: e.clientY };
     }
   });
   
   container.addEventListener('wheel', (e) => {
+    if (e.target !== renderer.domElement) return;
     e.preventDefault();
     zoomLevel += e.deltaY * -0.001;
     zoomLevel = Math.min(Math.max(0.5, zoomLevel), 3);
     camera.position.z = 8 * zoomLevel;
   });
   
+  // Touch Controls Added for Mobile 3D Interaction
+  container.addEventListener('touchstart', (e) => {
+    if (e.target !== renderer.domElement) return;
+    if (e.touches.length === 1) {
+      isDragging = true;
+      prev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else if (e.touches.length === 2) {
+      isDragging = false;
+      initialPinchDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    }
+  }, { passive: false });
+
+  container.addEventListener('touchmove', (e) => {
+    if (e.target !== renderer.domElement) return;
+    e.preventDefault(); 
+    if (isDragging && e.touches.length === 1) {
+      rootGroup.rotation.y += (e.touches[0].clientX - prev.x) * 0.005;
+      rootGroup.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, rootGroup.rotation.x + (e.touches[0].clientY - prev.y) * 0.005));
+      prev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else if (e.touches.length === 2 && initialPinchDistance) {
+      const currentDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const delta = initialPinchDistance - currentDistance;
+      zoomLevel += delta * 0.005;
+      zoomLevel = Math.min(Math.max(0.5, zoomLevel), 3);
+      camera.position.z = 8 * zoomLevel;
+      initialPinchDistance = currentDistance;
+    }
+  }, { passive: false });
+
+  container.addEventListener('touchend', () => {
+    isDragging = false;
+    initialPinchDistance = null;
+  });
+
   container.addEventListener('click', onEnhancedMouseClick);
 }
 
@@ -1176,7 +1232,8 @@ function getEnhancedMaterial(color, options = {}) {
     transparent: false,
     opacity: 1.0,
     emissive: 0x000000,
-    emissiveIntensity: 0
+    emissiveIntensity: 0,
+    depthWrite: true // Control for X-Ray
   };
   const settings = { ...defaults, ...options };
   return new THREE.MeshStandardMaterial({
@@ -1187,13 +1244,14 @@ function getEnhancedMaterial(color, options = {}) {
     opacity: settings.opacity,
     emissive: settings.emissive,
     emissiveIntensity: settings.emissiveIntensity,
+    depthWrite: settings.depthWrite,
     side: THREE.DoubleSide
   });
 }
 
 function buildEngineModel() {
   rootGroup.clear();
-  interactiveObjects = [];
+  interactiveObjects =[];
   
   // Cylinder Block
   cylinder = new THREE.Mesh(
@@ -1287,7 +1345,7 @@ function initFlowSystem() {
   const particleCount = 80;
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
-  particles.data = [];
+  particles.data =[];
   
   for (let i = 0; i < particleCount; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 0.1;
@@ -1295,7 +1353,7 @@ function initFlowSystem() {
     positions[i * 3 + 2] = (Math.random() - 0.5) * 0.1;
     
     const type = i % 2 === 0 ? 'air' : 'fuel';
-    const color = type === 'air' ? [56/255, 189/255, 248/255] : [245/255, 158/255, 11/255];
+    const color = type === 'air' ?[56/255, 189/255, 248/255] :[245/255, 158/255, 11/255];
     
     colors[i * 3] = color[0];
     colors[i * 3 + 1] = color[1];
@@ -1446,7 +1504,7 @@ function updateStrokeIndicator() {
   label.innerText = strokeLabels[state.currentStroke];
   phase.innerText = strokeDescriptions[state.currentStroke];
   
-  const colors = ['#38bdf8', '#8b5cf6', '#f59e0b', '#ef4444'];
+  const colors =['#38bdf8', '#8b5cf6', '#f59e0b', '#ef4444'];
   label.style.color = colors[state.currentStroke];
   indicator.style.borderColor = colors[state.currentStroke];
 }
@@ -1520,6 +1578,9 @@ function initEnhancedUI() {
     e.currentTarget.classList.toggle('active');
     cylinder.material.opacity = state.isXray ? 0.1 : 0.4;
     cylinder.material.wireframe = state.isXray;
+    // Fix applied: depthWrite to prevent inner components from disappearing
+    cylinder.material.depthWrite = !state.isXray; 
+    
     showToast(state.isXray ? "X-Ray Mode ON" : "X-Ray Mode OFF", 
       state.isXray ? "Viewing internal components" : "Normal view restored");
   };
@@ -1605,7 +1666,10 @@ function triggerEmergency() {
   if (state.audioEnabled) {
     window.speechSynthesis.cancel();
     speak(`Emergency! Engine critical. RPM: ${state.rpm}. Temperature: ${state.temp}°C.`);
-    startSiren();
+    // Delay siren to avoid audio clashing
+    setTimeout(() => {
+      if (state.isEmergency) startSiren();
+    }, 2500);
   }
   
   document.querySelectorAll('.param-value').forEach(el => {
@@ -1682,8 +1746,12 @@ function resolveEmergency() {
   document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
   document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
   
-  showStarReward("Engine Stabilized!", "Emergency Response Expert");
-  state.totalStars += 1;
+  // Anti-farming check before rewarding star
+  if (state.emergencyStars < 3) {
+    showStarReward("Engine Stabilized!", "Emergency Response Expert");
+    state.totalStars += 1;
+    state.emergencyStars += 1;
+  }
   
   addDataStreamEntry("SYSTEM", "Emergency resolved - parameters stabilized");
   
@@ -1858,12 +1926,19 @@ function showQuizStarParticles(button) {
 
 // ==================== INTERACTION ====================
 function onEnhancedMouseClick(e) {
+  // Ensure we are clicking on the canvas directly
+  if (e.target !== renderer.domElement && e.target.tagName !== 'CANVAS') return;
+  
   const mouse = new THREE.Vector2();
   const rect = renderer.domElement.getBoundingClientRect();
   
-  if (e.type === 'click') {
-    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  // Account for both click and touch interactions matching coordinates
+  if (e.type === 'click' || e.type === 'touchstart') {
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
   }
   
   const raycaster = new THREE.Raycaster();
@@ -1877,7 +1952,7 @@ function onEnhancedMouseClick(e) {
       parent = parent.parent;
     }
     if (parent.name) {
-      selectComponent(parent.name, parent.userData);
+      selectComponent(parent.name, parent.userData, object);
       return;
     }
   }
@@ -1889,15 +1964,29 @@ function onEnhancedMouseClick(e) {
       object = object.parent;
     }
     if (object.name) {
-      selectComponent(object.name, object.userData || {});
+      selectComponent(object.name, object.userData || {}, hits[0].object);
     }
   }
 }
 
-function selectComponent(name, data = {}) {
+function selectComponent(name, data = {}, object = null) {
   state.activeComponent = name;
   state.lastInteraction = Date.now();
   
+  // Visual Highlighting Fix
+  if (object && object.material && object.material.emissive) {
+    const origEmissive = object.material.emissive.getHex();
+    const origIntensity = object.material.emissiveIntensity;
+    object.material.emissive.setHex(COLORS.highlight);
+    object.material.emissiveIntensity = 0.8;
+    setTimeout(() => {
+      if (object && object.material) {
+        object.material.emissive.setHex(origEmissive);
+        object.material.emissiveIntensity = origIntensity;
+      }
+    }, 500);
+  }
+
   const toast = document.getElementById('infoToast');
   const toastText = document.getElementById('toastText');
   const toastSubtext = document.getElementById('toastSubtext');
@@ -2062,11 +2151,16 @@ function animate() {
   
   updateEngineAnimation();
   
-  if (!state.isEmergency && Date.now() - state.lastEmergency > 45000 + Math.random() * 30000) {
+  // Cognitive Flow Fix: Prevent emergencies from interrupting active quiz taking
+  if (!state.isEmergency && 
+      !document.getElementById('quizPanel').classList.contains('active') && 
+      Date.now() - state.lastEmergency > 45000 + Math.random() * 30000) {
     triggerEmergency();
   }
   
-  if (renderer && scene && camera) {
+  // Render Fix: Conditionally restrict manual render to 3D mode 
+  // MindAR WebXR handles its own camera matrix loop natively in AR mode.
+  if (renderer && scene && camera && state.mode === '3D') {
     renderer.render(scene, camera);
   }
 }
