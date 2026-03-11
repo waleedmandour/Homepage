@@ -152,8 +152,9 @@ body.ar-active {
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(20px);
   padding: 24px;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: auto;
+  /* Switched to native CSS transitions to prevent GSAP conflicts */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+  pointer-events: none; /* Block clicks when hidden */
   max-height: 70vh;
   overflow-y: auto;
   border-radius: 16px;
@@ -177,12 +178,13 @@ body.ar-active {
 .data-panel {
   right: 20px;
   border-right: 4px solid var(--accent-purple);
-  display: none;
+  transform: translateX(120%);
 }
 
 .side-panel.active {
   transform: translateX(0);
   opacity: 1;
+  pointer-events: auto; /* Re-enable clicks when active */
 }
 
 .panel-header {
@@ -249,6 +251,7 @@ body.ar-active {
   font-size: 1rem;
   color: var(--accent-orange);
   font-weight: 600;
+  transition: color 0.3s;
 }
 
 input[type="range"] {
@@ -296,6 +299,7 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 1.2rem;
   font-weight: 700;
   font-family: var(--font-code);
+  transition: color 0.3s;
 }
 
 .param-value.rpm { color: #f97316; }
@@ -710,7 +714,6 @@ input[type="range"]::-webkit-slider-thumb {
     <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">4-STROKE ENGINE AR LAB</p>
     <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this feature image</p>
     <div style="margin-top: 20px; padding: 10px; background: white; border-radius: 8px;">
-      <!-- Corrected: AR Feature image placeholder instead of generic QR code -->
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Engine_diagram.svg/150px-Engine_diagram.svg.png" alt="AR Target Marker" style="width: 150px; height: 150px; object-fit: contain;">
     </div>
   </div>
@@ -912,7 +915,7 @@ const quizQuestions =[
   { q: "What happens during the compression stroke?", options:["Air-fuel mixture enters cylinder", "Exhaust gases exit cylinder", "Mixture is compressed by piston", "Spark plug fires"], correct: 2 },
   { q: "What is 'volumetric efficiency' in an engine?", options:["Fuel consumption rate", "Ratio of actual air drawn vs theoretical maximum", "Power output per liter", "Compression ratio measurement"], correct: 1 },
   { q: "Which valve opens during the intake stroke?", options:["Exhaust valve", "Intake valve", "Both valves", "Neither valve"], correct: 1 },
-  { q: "What is engine knock/detonation?", options: ["Normal combustion", "Premature fuel ignition", "Valve timing issue", "Oil pressure problem"], correct: 1 },
+  { q: "What is engine knock/detonation?", options:["Normal combustion", "Premature fuel ignition", "Valve timing issue", "Oil pressure problem"], correct: 1 },
   { q: "What does BDC stand for?", options:["Bottom Dead Center", "Base Displacement Capacity", "Brake Dynamic Control", "Bore Diameter Calculation"], correct: 0 }
 ];
 
@@ -1509,66 +1512,78 @@ function updateStrokeIndicator() {
   indicator.style.borderColor = colors[state.currentStroke];
 }
 
+// ==================== PHYSICS & ENGINE CALCULATIONS ====================
+// Extracted to global scope so both UI interaction and background loops use exact same logic
+function updateEngineCalculations() {
+  state.rpm = parseInt(document.getElementById('sliderRPM').value);
+  state.afr = parseFloat(document.getElementById('sliderAFR').value);
+  
+  document.getElementById('valRPM').innerText = `${state.rpm} RPM`;
+  document.getElementById('valAFR').innerText = `${state.afr}:1`;
+  
+  const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
+  const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
+  state.power = 150 * rpmFactor * afrFactor;
+  state.power = Math.max(50, Math.min(300, state.power));
+  document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
+  
+  state.temp = ENGINE_CONSTANTS.optimalTemp + (state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05;
+  state.temp = Math.max(400, Math.min(1200, state.temp));
+  document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
+  
+  const efficiencyLoss = Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2;
+  state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - efficiencyLoss;
+  state.efficiency = Math.max(20, Math.min(40, state.efficiency));
+  document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
+  
+  // Highlighting specific parameters that are out of bounds logically limits UI confusion
+  const rpmOk = state.rpm >= 1000 && state.rpm <= 5500;
+  const afrOk = state.afr >= 12 && state.afr <= 16;
+  const tempOk = state.temp <= 1000;
+  
+  document.getElementById('valRPM').style.color = rpmOk ? 'var(--accent-orange)' : 'var(--accent-danger)';
+  document.getElementById('valAFR').style.color = afrOk ? 'var(--accent-orange)' : 'var(--accent-danger)';
+  document.getElementById('valTemp').style.color = tempOk ? '#ef4444' : 'var(--accent-danger)';
+  
+  checkForEmergency();
+}
+
 // ==================== UI LOGIC ====================
 function initEnhancedUI() {
-  document.getElementById('btnSettings').onclick = () => {
-    togglePanel('controlPanel');
+  // Relying entirely on native CSS classes & transitions fixes the 'cannot close pop-ups' bug completely.
+  function togglePanel(panelId) {
+    const panel = document.getElementById(panelId);
+    const isActive = panel.classList.contains('active');
+    
+    // Close all other panels
+    document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
+    
+    // Toggle requested panel
+    if (!isActive) {
+      setTimeout(() => panel.classList.add('active'), 10);
+    }
+  }
+
+  document.getElementById('btnSettings').onclick = () => togglePanel('controlPanel');
+  document.getElementById('btnQuiz').onclick = () => togglePanel('quizPanel');
+  document.getElementById('btnData').onclick = () => togglePanel('dataPanel');
+  
+  document.getElementById('btnCloseControls').onclick = (e) => {
+    e.stopPropagation();
+    document.getElementById('controlPanel').classList.remove('active');
+  };
+  
+  document.getElementById('btnCloseQuiz').onclick = (e) => {
+    e.stopPropagation();
     document.getElementById('quizPanel').classList.remove('active');
+  };
+  
+  document.getElementById('btnCloseData').onclick = (e) => {
+    e.stopPropagation();
     document.getElementById('dataPanel').classList.remove('active');
   };
   
-  document.getElementById('btnCloseControls').addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.getElementById('controlPanel').classList.remove('active');
-  });
-  
-  document.getElementById('btnQuiz').onclick = () => {
-    togglePanel('quizPanel');
-    document.getElementById('controlPanel').classList.remove('active');
-    document.getElementById('dataPanel').classList.remove('active');
-  };
-  
-  document.getElementById('btnCloseQuiz').addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.getElementById('quizPanel').classList.remove('active');
-  });
-  
-  document.getElementById('btnData').onclick = () => {
-    togglePanel('dataPanel');
-    document.getElementById('controlPanel').classList.remove('active');
-    document.getElementById('quizPanel').classList.remove('active');
-  };
-  
-  document.getElementById('btnCloseData').addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.getElementById('dataPanel').classList.remove('active');
-  });
-  
-  const updateEngineCalculations = () => {
-    state.rpm = parseInt(document.getElementById('sliderRPM').value);
-    state.afr = parseFloat(document.getElementById('sliderAFR').value);
-    
-    document.getElementById('valRPM').innerText = `${state.rpm} RPM`;
-    document.getElementById('valAFR').innerText = `${state.afr}:1`;
-    
-    const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
-    const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
-    state.power = 150 * rpmFactor * afrFactor;
-    state.power = Math.max(50, Math.min(300, state.power));
-    document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
-    
-    state.temp = ENGINE_CONSTANTS.optimalTemp + (state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05;
-    state.temp = Math.max(400, Math.min(1200, state.temp));
-    document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
-    
-    const efficiencyLoss = Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2;
-    state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - efficiencyLoss;
-    state.efficiency = Math.max(20, Math.min(40, state.efficiency));
-    document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
-    
-    checkForEmergency();
-  };
-  
+  // Connect Sliders to Global Physics Update
   document.getElementById('sliderRPM').oninput = updateEngineCalculations;
   document.getElementById('sliderAFR').oninput = updateEngineCalculations;
   updateEngineCalculations();
@@ -1578,7 +1593,6 @@ function initEnhancedUI() {
     e.currentTarget.classList.toggle('active');
     cylinder.material.opacity = state.isXray ? 0.1 : 0.4;
     cylinder.material.wireframe = state.isXray;
-    // Fix applied: depthWrite to prevent inner components from disappearing
     cylinder.material.depthWrite = !state.isXray; 
     
     showToast(state.isXray ? "X-Ray Mode ON" : "X-Ray Mode OFF", 
@@ -1626,21 +1640,6 @@ function initEnhancedUI() {
   };
 }
 
-function togglePanel(panelId) {
-  const panel = document.getElementById(panelId);
-  const isActive = panel.classList.contains('active');
-  
-  document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
-  
-  if (!isActive) {
-    panel.classList.add('active');
-    gsap.fromTo(panel,
-      { x: panelId === 'controlPanel' ? -50 : 50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.3 }
-    );
-  }
-}
-
 function checkForEmergency() {
   const rpmOk = state.rpm >= 1000 && state.rpm <= 5500;
   const afrOk = state.afr >= 12 && state.afr <= 16;
@@ -1672,13 +1671,15 @@ function triggerEmergency() {
     }, 2500);
   }
   
-  document.querySelectorAll('.param-value').forEach(el => {
-    el.style.color = 'var(--accent-danger)';
-  });
-  
-  document.getElementById('controlPanel').classList.add('active');
+  // Force control panel to open gracefully using CSS
+  const ctrlPanel = document.getElementById('controlPanel');
+  if (!ctrlPanel.classList.contains('active')) {
+     document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
+     ctrlPanel.classList.add('active');
+  }
+
   addDataStreamEntry("EMERGENCY", `Engine parameters critical: RPM=${state.rpm}, Temp=${state.temp}°C, AFR=${state.afr}`);
-  showToast("EMERGENCY!", "Adjust parameters to stabilize engine", 0);
+  showToast("EMERGENCY!", "Adjust RED parameters to stabilize engine", 0);
   
   startEmergencyParameterChange();
 }
@@ -1691,28 +1692,24 @@ function startEmergencyParameterChange() {
       return;
     }
     
-    const rpmChange = (Math.random() - 0.5) * 200;
-    const afrChange = (Math.random() - 0.5) * 0.5;
+    // Perturbations
+    const rpmChange = (Math.random() - 0.5) * 400; 
+    const afrChange = (Math.random() - 0.5) * 1.0;
     
     let newRPM = parseInt(document.getElementById('sliderRPM').value) + rpmChange;
     let newAFR = parseFloat(document.getElementById('sliderAFR').value) + afrChange;
     
+    // Clamp
     newRPM = Math.max(800, Math.min(6000, Math.round(newRPM)));
     newAFR = Math.max(10, Math.min(18, parseFloat(newAFR.toFixed(1))));
     
+    // Apply
     document.getElementById('sliderRPM').value = newRPM;
     document.getElementById('sliderAFR').value = newAFR;
-    document.getElementById('valRPM').innerText = `${newRPM} RPM`;
-    document.getElementById('valAFR').innerText = `${newAFR}:1`;
     
-    state.rpm = newRPM;
-    state.afr = newAFR;
-    const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
-    const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
-    state.power = 150 * rpmFactor * afrFactor;
-    state.temp = ENGINE_CONSTANTS.optimalTemp + (state.rpm - ENGINE_CONSTANTS.optimalRPM) * 0.05;
-    document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
-    document.getElementById('valTemp').innerText = `${state.temp.toFixed(0)}°C`;
+    // Re-run unified pipeline. Because this incorporates checkForEmergency(), 
+    // the system immediately stops alarming if the interval drops values back into safe ranges.
+    updateEngineCalculations();
     
   }, 2000);
 }
@@ -1738,14 +1735,6 @@ function resolveEmergency() {
     speak("Engine stabilized. Parameters within optimal range.");
   }
   
-  const rpmFactor = state.rpm / ENGINE_CONSTANTS.optimalRPM;
-  const afrFactor = 1 - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) / 5;
-  state.power = 150 * rpmFactor * afrFactor;
-  state.efficiency = ENGINE_CONSTANTS.thermalEfficiency - Math.abs(state.afr - ENGINE_CONSTANTS.stoichiometricAFR) * 2;
-  
-  document.getElementById('valPower').innerText = `${state.power.toFixed(0)} kW`;
-  document.getElementById('valEfficiency').innerText = `${state.efficiency.toFixed(1)}%`;
-  
   // Anti-farming check before rewarding star
   if (state.emergencyStars < 3) {
     showStarReward("Engine Stabilized!", "Emergency Response Expert");
@@ -1760,9 +1749,12 @@ function resolveEmergency() {
     gsap.to(toast, { opacity: 0, y: 20, duration: 0.3, onComplete: () => toast.style.display = 'none' });
   }, 2000);
   
+  // Allow the UI to elegantly close the control panel automatically
   setTimeout(() => {
-    document.getElementById('controlPanel').classList.remove('active');
-  }, 3000);
+    if (!state.isEmergency) {
+      document.getElementById('controlPanel').classList.remove('active');
+    }
+  }, 3500);
 }
 
 function startSiren() {
@@ -2034,7 +2026,7 @@ function startDataStream() {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
     
-    const dataTypes = [
+    const dataTypes =[
       `[${timeStr}] Power output: ${(state.power * (0.95 + Math.random() * 0.1)).toFixed(1)} kW`,
       `[${timeStr}] Volumetric efficiency: ${(85 + Math.random() * 10).toFixed(1)}%`,
       `[${timeStr}] Fuel consumption: ${(state.rpm * 0.001 * (0.9 + Math.random() * 0.2)).toFixed(2)} L/min`,
@@ -2159,7 +2151,6 @@ function animate() {
   }
   
   // Render Fix: Conditionally restrict manual render to 3D mode 
-  // MindAR WebXR handles its own camera matrix loop natively in AR mode.
   if (renderer && scene && camera && state.mode === '3D') {
     renderer.render(scene, camera);
   }
