@@ -3,16 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <title>Haber-Bosch Process: Advanced Engineering Lab | Next-Gen WebAR</title>
     <meta name="theme-color" content="#0b1120">
-    <meta name="description"
-        content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process with real-time thermodynamics, interactive components, and AI-assisted learning.">
+    <meta name="description" content="Advanced WebAR simulation of the Haber-Bosch ammonia synthesis process with real-time thermodynamics, interactive components, and AI-assisted learning.">
 
     <!-- Dependencies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,9 +25,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -204,7 +200,7 @@
         </div>
 
         <div style="margin-top: 40px; font-size: 0.9rem; color: var(--accent-cyan); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 80%; text-align: center;">
-            ADVANCED AR ENGINEERING LAB v4.0 | Thermodynamics Simulation
+            ADVANCED AR ENGINEERING LAB v5.0 | Thermodynamics Simulation
         </div>
     </div>
 
@@ -403,7 +399,8 @@
         let scene, camera, renderer, mindarThree, rootGroup, engineGroup;
         let particles = { mesh: null, data: [] };
         let molecules =[], molScene, molCamera, molRenderer;
-        let audioCtx = null, ambientSound = null, sirenInterval = null, toastTimer = null;
+        let audioCtx = null, engineHumOscillator = null, engineHumGain = null, ambientSound = null;
+        let sirenInterval = null, toastTimer = null;
         let interactiveObjects =[];
 
         // Auto-hide UI Logic
@@ -425,7 +422,6 @@
             if (audioCtx && audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
-            // Unlock speech synthesis on iOS/Safari silently
             if ('speechSynthesis' in window) {
                 const msg = new SpeechSynthesisUtterance('');
                 msg.volume = 0;
@@ -444,6 +440,33 @@
                 } catch (e) { console.log('Audio Context init error:', e); }
             }
         }
+        
+        function initAudioEngine() {
+            if (!audioCtx || engineHumOscillator) return;
+            try {
+                engineHumOscillator = audioCtx.createOscillator();
+                engineHumGain = audioCtx.createGain();
+                engineHumOscillator.type = 'sawtooth';
+                engineHumOscillator.frequency.value = 80;
+                engineHumGain.gain.value = 0.05;
+                engineHumOscillator.connect(engineHumGain).connect(audioCtx.destination);
+                engineHumOscillator.start();
+            } catch(e) {}
+        }
+
+        function updatePlantHum() {
+            if (!audioCtx || !engineHumOscillator) return;
+            const freq = 60 + ((state.pressure - 50) / 350) * 90;
+            engineHumOscillator.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
+            if (engineHumGain) {
+                if (state.audioEnabled && state.flowActive) {
+                    const vol = 0.02 + ((state.pressure - 50) / 350) * 0.08;
+                    engineHumGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
+                } else {
+                    engineHumGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+                }
+            }
+        }
 
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
@@ -451,8 +474,6 @@
             simulateLoading();['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
             resetHideTimer();
             initAudioContext();
-            
-            // Attach physical audio unlockers for mobile
             document.addEventListener('click', unlockAudioContext);
             document.addEventListener('touchstart', unlockAudioContext);
         });
@@ -482,8 +503,8 @@
         }
 
         async function startApp(mode) {
-            // Ensure audio is ready
             unlockAudioContext();
+            initAudioEngine();
             if (state.audioEnabled && ambientSound && !ambientSound.playing()) ambientSound.play();
 
             state.mode = mode;
@@ -767,6 +788,8 @@
 
                 if (!tempOk || !pressureOk) { if(!state.isEmergency) triggerEmergency(); }
                 else if (state.isEmergency) resolveEmergency();
+                
+                updatePlantHum();
             };
 
             document.getElementById('sliderTemp').oninput = updateCalculations;
@@ -782,19 +805,28 @@
                 });
             };
 
-            document.getElementById('btnFlow').onclick = (e) => { state.flowActive = !state.flowActive; e.currentTarget.classList.toggle('active'); };
+            document.getElementById('btnFlow').onclick = (e) => {
+                state.flowActive = !state.flowActive;
+                e.currentTarget.classList.toggle('active');
+                e.currentTarget.innerHTML = state.flowActive ? '<i class="fas fa-wind"></i>' : '<i class="fas fa-pause"></i>';
+                updatePlantHum(); 
+            };
+
+            document.getElementById('btnAudio').onclick = (e) => {
+                state.audioEnabled = !state.audioEnabled;
+                e.currentTarget.classList.toggle('active');
+                e.currentTarget.innerHTML = state.audioEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+                if (ambientSound) state.audioEnabled ? ambientSound.play() : ambientSound.pause();
+                if (!state.audioEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+                updatePlantHum(); 
+            };
+            
             document.getElementById('btnReset').onclick = () => {
                 gsap.to(engineGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
                 gsap.to(engineGroup.scale, { x: 0.4, y: 0.4, z: 0.4, duration: 1 });
                 if(state.mode !== 'AR') gsap.to(camera.position, { x: 0, y: 3, z: 8, duration: 1 });
             };
             document.getElementById('btnExit').onclick = () => confirm("Exit Lab?") && location.reload();
-            document.getElementById('btnAudio').onclick = (e) => {
-                state.audioEnabled = !state.audioEnabled; e.currentTarget.classList.toggle('active');
-                e.currentTarget.innerHTML = state.audioEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
-                if(ambientSound) state.audioEnabled?ambientSound.play():ambientSound.pause();
-                if(!state.audioEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
-            };
         }
 
         // ==================== AUDIO SOUND EFFECTS ====================
@@ -1013,12 +1045,26 @@
             div.insertBefore(e, div.firstChild); if (div.children.length > 15) div.removeChild(div.lastChild);
         }
 
+        function speak(text) {
+            if (!state.audioEnabled) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1.1;
+                utterance.voice = speechSynthesis.getVoices().find(v => v.lang.includes('en'));
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
         const aiKnowledgeBase = {
             "le chatelier": "Le Chatelier's principle states that a system at equilibrium will adjust to counteract changes. In Haber-Bosch, high pressure shifts equilibrium towards ammonia.",
-            "catalyst": "The primary catalyst is iron, typically promoted with K2O and Al2O3. It speeds up the reaction by lowering the activation energy.",
-            "temperature": "The reaction is exothermic. Low temperatures favor high yield, but high temperatures are needed for a fast reaction rate. 400-450°C is optimal.",
-            "pressure": "High pressure (150-300 atm) favors ammonia production because 4 moles of reactant gas form 2 moles of product gas.",
-            "ammonia": "Ammonia (NH3) is the product, rapidly condensed to a liquid to continually drive the equilibrium forward.",
+            "catalyst": "The primary catalyst is iron, typically promoted with potassium oxide and aluminum oxide. It speeds up the reaction by lowering the activation energy.",
+            "temperature": "The reaction is exothermic. Low temperatures favor high yield, but high temperatures are needed for a fast reaction rate. 400 to 450 degrees is optimal.",
+            "pressure": "High pressure of 150 to 300 atmospheres favors ammonia production because 4 moles of reactant gas form 2 moles of product gas.",
+            "ammonia": "Ammonia is the product, rapidly condensed to a liquid to continually drive the equilibrium forward.",
+            "nitrogen": "Nitrogen feed gas is usually obtained from air separation using cryogenic distillation or pressure swing adsorption.",
+            "hydrogen": "Hydrogen feed gas is typically generated from natural gas through steam methane reforming.",
             "default": "I am your Chemical Engineering AI Tutor. Ask me about Le Chatelier's principle, catalysts, or thermodynamics!"
         };
 
@@ -1062,7 +1108,7 @@
                     state.emergencyType = "Critical Pressure Drop!";
                 } else {
                     tempSlider.value = 300; pressSlider.value = 200;
-                    state.emergencyType = "Reaction Stalled (Low Temp)";
+                    state.emergencyType = "Reaction Stalled";
                 }
                 
                 // Trigger slider recalculation (which triggers the alarm)
