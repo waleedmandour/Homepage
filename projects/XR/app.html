@@ -701,48 +701,116 @@
         }
 
         function initFlowSystem() {
-            const pCount = 100; const pos = new Float32Array(pCount * 3); const cols = new Float32Array(pCount * 3);
+            const pCount = 250; // Increased from 100 to 250 for a denser fluid look
+            const pos = new Float32Array(pCount * 3); 
+            const cols = new Float32Array(pCount * 3);
             particles.data =[];
             for (let i = 0; i < pCount; i++) {
                 pos[i*3]=0; pos[i*3+1]=0; pos[i*3+2]=0;
                 const type = i%3===0?'N2':i%3===1?'H2':'NH3';
                 const col = type==='N2'?[56/255,189/255,248/255]:type==='H2'?[1,1,1]:[245/255,158/255,11/255];
                 cols[i*3]=col[0]; cols[i*3+1]=col[1]; cols[i*3+2]=col[2];
-                particles.data.push({ type: type, t: Math.random()*100, speed: 0.02+Math.random()*0.02, phase: Math.random()*Math.PI*2, amp: 0.1+Math.random()*0.2 });
+                
+                // Base speed increased drastically
+                particles.data.push({ 
+                    type: type, 
+                    t: Math.random()*100, 
+                    speed: 0.15 + Math.random()*0.1, 
+                    phase: Math.random()*Math.PI*2, 
+                    amp: 0.1 + Math.random()*0.2 
+                });
             }
-            const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(cols, 3));
-            particles.mesh = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending }));
+            const geo = new THREE.BufferGeometry(); 
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); 
+            geo.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+            
+            // Size slightly reduced to look like dense compressed gas
+            particles.mesh = new THREE.Points(geo, new THREE.PointsMaterial({ 
+                size: 0.12, 
+                vertexColors: true, 
+                transparent: true, 
+                opacity: 0.8, 
+                blending: THREE.AdditiveBlending 
+            }));
             engineGroup.add(particles.mesh);
         }
 
         function updateEnhancedFlow() {
             if (!state.flowActive || !particles.mesh) return;
             const pos = particles.mesh.geometry.attributes.position.array;
+            
+            // 1. Calculate Dynamic Speed: scales with both Temp and Pressure
+            const tempFactor = state.temp / 450;
+            const pressFactor = state.pressure / 200;
+            const flowSpeed = tempFactor * pressFactor * 2.5; // 2.5x multiplier for fast visible flow
+            
+            // 2. Calculate Condense/Density: High pressure = tight stream, Low = wide spread
+            const spreadFactor = 200 / state.pressure; 
+            
+            // 3. Calculate Volume: Lower pressure = fewer visible particles
+            const visibleRatio = Math.min(1.0, state.pressure / 150);
+
             particles.data.forEach((p, i) => {
-                p.t += p.speed * (state.temp/450);
+                // Hide particles if pressure is too low to simulate low density
+                if (i / particles.data.length > visibleRatio) {
+                    pos[i*3] = 0; pos[i*3+1] = -10; pos[i*3+2] = 0; // hide underground
+                    return;
+                }
+
+                p.t += p.speed * flowSpeed;
                 const pathT = (p.t % 100) / 100;
                 let x, y, z;
+                
+                // Apply the condensation spread
+                const currentAmp = p.amp * spreadFactor;
+
                 if (p.type === 'N2') {
-                    if (pathT < 0.5) { x = -2.5+pathT*5; y = 0.8+Math.sin(p.t+p.phase)*p.amp; z = Math.sin(p.t*2)*0.1; }
-                    else { const rT=(pathT-0.5)*2; x = Math.sin(rT*Math.PI)*0.3; y = 1.6+rT*1.4; z = -rT*2; }
+                    if (pathT < 0.5) { 
+                        x = -2.5+pathT*5; 
+                        y = 0.8+Math.sin(p.t+p.phase)*currentAmp; 
+                        z = Math.sin(p.t*2)*0.1 * spreadFactor; 
+                    }
+                    else { 
+                        const rT=(pathT-0.5)*2; 
+                        x = Math.sin(rT*Math.PI)*0.3 * spreadFactor; 
+                        y = 1.6+rT*1.4; 
+                        z = -rT*2; 
+                    }
                 } else if (p.type === 'H2') {
-                    if (pathT < 0.5) { x = 2.5-pathT*5; y = 0.8+Math.cos(p.t+p.phase)*p.amp; z = Math.cos(p.t*2)*0.1; }
-                    else { const rT=(pathT-0.5)*2; x = Math.cos(rT*Math.PI)*0.3; y = 1.6+rT*1.4; z = -rT*2; }
+                    if (pathT < 0.5) { 
+                        x = 2.5-pathT*5; 
+                        y = 0.8+Math.cos(p.t+p.phase)*currentAmp; 
+                        z = Math.cos(p.t*2)*0.1 * spreadFactor; 
+                    }
+                    else { 
+                        const rT=(pathT-0.5)*2; 
+                        x = Math.cos(rT*Math.PI)*0.3 * spreadFactor; 
+                        y = 1.6+rT*1.4; 
+                        z = -rT*2; 
+                    }
                 } else {
-                    const rT=pathT*0.7; x = Math.sin(p.t)*0.2; y = 1.6+rT*2.5; z = -1-rT*3;
-                    if (pathT > 0.7) { const cT=(pathT-0.7)/0.3; x = Math.sin(cT*10)*0.5; y = 2.5-cT*0.5; z = -3+cT*0.2; }
+                    const rT=pathT*0.7; 
+                    x = Math.sin(p.t)*0.2 * spreadFactor; 
+                    y = 1.6+rT*2.5; 
+                    z = -1-rT*3;
+                    if (pathT > 0.7) { 
+                        const cT=(pathT-0.7)/0.3; 
+                        x = Math.sin(cT*10)*0.5 * spreadFactor; 
+                        y = 2.5-cT*0.5; 
+                        z = -3+cT*0.2; 
+                    }
                 }
                 pos[i*3]=x; pos[i*3+1]=y; pos[i*3+2]=z;
             });
             particles.mesh.geometry.attributes.position.needsUpdate = true;
 
+            // Heat glow logic
             const tg = engineGroup.getObjectByName("TemperatureGradient");
             if (tg) {
                 tg.material.opacity = 0.2 + (state.temp - 300)/300*0.3;
                 tg.material.color.setHSL((1 - (state.temp-300)/300)*0.6 + 0.1, 0.8, 0.5);
             }
         }
-
         // ==================== UI & PHYSICS ====================
         function initUI() {
             function togglePanel(panelId) {
