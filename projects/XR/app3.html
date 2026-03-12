@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Robotic Kinematics & Control Lab | Mechatronics WebAR</title>
+    <meta name="theme-color" content="#0b1120">
+    <meta name="description" content="Advanced WebAR simulation of a 6-DOF Industrial Robotic Arm with real-time PID control tuning, step-response graphs, and AI-assisted learning.">
+
+    <!-- Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+        "mindar-image-three":"https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"
+      }
+    }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0b1120;
+            --glass-panel: rgba(16, 24, 40, 0.92);
+            --glass-border: rgba(139, 92, 246, 0.4); /* Purple Border for Robotics */
+            --accent-cyan: #38bdf8;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-purple: #8b5cf6; /* Primary Robotics Accent */
+            --accent-danger: #ef4444;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --font-tech: 'Rajdhani', sans-serif;
+            --font-code: 'Roboto Mono', monospace;
+            --glow-purple: 0 0 20px rgba(139, 92, 246, 0.5);
+            --glow-green: 0 0 20px rgba(16, 185, 129, 0.5);
+            --glow-danger: 0 0 30px rgba(239, 68, 68, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+        body { font-family: var(--font-tech); background: var(--bg-dark); color: var(--text-main); overflow: hidden; height: 100vh; width: 100vw; transition: background 0.5s ease; }
+        body.ar-active { background: transparent !important; }
+
+        .hud-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; display: flex; flex-direction: column; justify-content: space-between; padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px; }
+        .pointer-events-auto { pointer-events: auto; }
+
+        .top-bar { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 20px; }
+        .status-badge { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 8px; padding: 10px 20px; backdrop-filter: blur(20px); display: flex; align-items: center; gap: 12px; transition: all 0.3s; box-shadow: var(--glow-purple); }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 15px var(--accent-green); animation: pulse 2s infinite; }
+        .critical-state .status-badge { border-color: var(--accent-danger); box-shadow: var(--glow-danger); animation: shake 0.5s infinite; }
+        .critical-state .status-dot { background: var(--accent-danger); box-shadow: 0 0 20px var(--accent-danger); animation: flash 0.3s infinite; }
+        .critical-state .tech-title h1 { color: var(--accent-danger); }
+        .warning-icon { display: none; color: var(--accent-danger); }
+        .critical-state .warning-icon { display: inline-block; animation: flash 0.5s infinite; }
+
+        .tech-title h1 { font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-purple); font-weight: 700; display: flex; align-items: center; gap: 8px;}
+        .tech-title span { font-family: var(--font-code); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; }
+
+        .side-panel { position: absolute; top: 90px; width: 340px; background: var(--glass-panel); border: 1px solid var(--glass-border); backdrop-filter: blur(20px); padding: 24px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; pointer-events: none; max-height: 75vh; overflow-y: auto; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transform: translateX(-120%); opacity: 0; z-index: 150; }
+        .control-room-panel { left: 20px; border-left: 4px solid var(--accent-purple); }
+        .quiz-panel { right: 20px; border-right: 4px solid var(--accent-orange); transform: translateX(120%); }
+        .data-panel { right: 20px; border-right: 4px solid var(--accent-cyan); transform: translateX(120%); }
+        .ai-panel { left: 20px; border-left: 4px solid var(--accent-green); transform: translateX(-120%); }
+        .side-panel.active { transform: translateX(0) !important; opacity: 1; pointer-events: auto; }
+
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; }
+        .panel-label { font-size: 1rem; font-weight: 700; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; }
+        .close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 1rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; position: relative; z-index: 160; }
+        .close-btn:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); color: var(--accent-purple); }
+
+        .slider-group { margin-bottom: 20px; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; }
+        .slider-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .slider-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .slider-value { font-family: var(--font-code); font-size: 1rem; color: var(--accent-purple); font-weight: 600; transition: color 0.3s;}
+
+        input[type="range"] { width: 100%; height: 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); outline: none; -webkit-appearance: none; background: linear-gradient(90deg, var(--text-muted) 0%, var(--accent-purple) 100%); }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: white; border-radius: 50%; cursor: pointer; box-shadow: var(--glow-purple); border: 2px solid var(--accent-purple); }
+
+        .parameter-display { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .param-box { background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 12px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .param-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+        .param-value { font-size: 1.2rem; font-weight: 700; font-family: var(--font-code); }
+        
+        .val-p { color: #f97316; } .val-i { color: #38bdf8; } .val-d { color: #10b981; } .val-err { color: var(--accent-danger); }
+
+        /* AI Tutor CSS */
+        .chat-box { display: flex; flex-direction: column; gap: 10px; height: 250px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px; }
+        .chat-msg { padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; max-width: 85%; word-wrap: break-word; }
+        .chat-msg.bot { background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .chat-msg.user { background: rgba(139, 92, 246, 0.15); border: 1px solid var(--accent-purple); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .chat-input-row { display: flex; gap: 8px; }
+        .chat-input-row input { flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px; border-radius: 8px; outline: none; font-family: inherit; }
+        .chat-input-row input:focus { border-color: var(--accent-green); }
+        .chat-input-row button { background: var(--accent-green); border: none; color: black; width: 40px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+        .chat-input-row button:hover { transform: scale(1.05); }
+
+        /* Quiz UI */
+        .quiz-question { font-size: 1rem; margin-bottom: 20px; line-height: 1.5; background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+        .quiz-btn { background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 8px; color: var(--text-muted); text-align: left; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+        .quiz-btn:hover { background: rgba(255, 255, 255, 0.15); transform: translateX(4px); }
+        .quiz-btn.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--accent-green); color: var(--accent-green); }
+        .quiz-btn.wrong { background: rgba(239, 68, 68, 0.25); border-color: var(--accent-danger); color: var(--accent-danger); }
+        .next-q-btn { margin-top: 20px; width: 100%; padding: 12px; background: var(--accent-purple); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: none; font-family: var(--font-tech); text-transform: uppercase; letter-spacing: 1px; color:#fff;}
+
+        /* Step Response Graph */
+        .graph-container { margin-top: 20px; background: rgba(0,0,0,0.4); border-radius: 8px; padding: 10px; border: 1px solid rgba(255,255,255,0.1); text-align: center;}
+        canvas#stepGraph { width: 100%; height: 160px; background: transparent; }
+        .legend { display: flex; justify-content: center; gap: 15px; margin-top: 5px; font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-code);}
+        .leg-target { color: white; } .leg-actual { color: var(--accent-cyan); }
+
+        /* Bottom Controls with Auto Hide */
+        .bottom-dock { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; padding-bottom: 30px; transition: opacity 0.5s ease, transform 0.5s ease; opacity: 1; transform: translateY(0); }
+        .bottom-dock.hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+
+        .mode-toggles { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; background: var(--glass-panel); padding: 12px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: auto; backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .icon-btn { width: 48px; height: 48px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; position: relative; }
+        .icon-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); color:white;}
+        .icon-btn.active { background: var(--accent-purple); color: #fff; box-shadow: var(--glow-purple); }
+
+        /* Screens */
+        #loadingScreen, #startScreen, #targetModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #targetModal { background: rgba(0, 0, 0, 0.95); z-index: 2000; display: none; }
+        .loader-ring { width: 80px; height: 80px; border: 4px solid rgba(139, 92, 246, 0.2); border-top-color: var(--accent-purple); border-radius: 50%; animation: spin 1.5s linear infinite; }
+
+        .btn-primary { margin-top: 30px; padding: 16px 48px; background: linear-gradient(90deg, var(--accent-purple), #6d28d9); color: #fff; border: none; border-radius: 8px; font-family: var(--font-tech); font-weight: 700; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5); }
+        .btn-secondary { margin-top: 15px; background: transparent; color: var(--text-muted); border: 2px solid rgba(255, 255, 255, 0.3); padding: 12px 24px; cursor: pointer; font-family: var(--font-code); font-size: 0.9rem; border-radius: 8px; transition: all 0.3s; }
+        .btn-secondary:hover { border-color: var(--accent-purple); color: var(--accent-purple); }
+        .btn-text { margin-top: 10px; background: none; border: none; color: var(--accent-purple); text-decoration: underline; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
+
+        .target-image-display { width: 300px; height: 300px; background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border-radius: 16px; margin-bottom: 20px; color: white; text-align: center; padding: 30px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
+
+        .unlock-toast { position: fixed; top: 120px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; padding: 15px 30px; border-radius: 30px; font-weight: bold; z-index: 500; display: none; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5); text-transform: uppercase; letter-spacing: 1px; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; pointer-events: none;}
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+        @keyframes popIn { 0% { transform: translate(-50%, -20px) scale(0.8); opacity: 0; } 100% { transform: translate(-50%, 0) scale(1); opacity: 1; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        .ar-target-guide { width: 250px; height: 250px; border: 3px dashed var(--accent-purple); border-radius: 20px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; opacity: 0.7; animation: pulse 2s infinite; z-index: 90;}
+        .star-particle { position: absolute; font-size: 1.5rem; color: gold; pointer-events: none; z-index: 1000; opacity: 0; }
+        
+        .hud-footer { position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; pointer-events: none; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
+        .footer-text { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; font-family: var(--font-code); text-transform: uppercase; }
+        .footer-text strong { color: var(--accent-purple); font-weight: 600; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loader-ring"></div>
+        <h2 style="margin-top: 30px; color: var(--accent-purple); letter-spacing: 3px; font-size: 1.5rem;">INITIALIZING ROBOTICS LAB</h2>
+        <div id="loadProgress" style="margin-top: 20px; width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+            <div style="width: 0%; height: 100%; background: var(--accent-purple); border-radius: 2px; transition: width 0.3s;"></div>
+        </div>
+    </div>
+
+    <!-- Target Image Modal -->
+    <div id="targetModal">
+        <h3 style="color: white; margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase;">Scan this AR Marker</h3>
+        <div class="target-image-display">
+            <i class="fas fa-robot" style="font-size: 4rem; margin-bottom: 20px; color: white;"></i>
+            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">ROBOTICS AR LAB</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Point camera at this marker</p>
+            <div style="margin-top: 20px; padding: 10px; background: white; border-radius: 8px;">
+                <img src="images/Robotics-marker.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Engine_diagram.svg/150px-Engine_diagram.svg.png'" alt="Marker" style="width: 150px; height: 150px; object-fit: contain;">
+            </div>
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('targetModal').style.display='none'">Close</button>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" style="display: none;">
+        <i class="fas fa-robot" style="font-size: 5rem; color: var(--accent-purple); margin-bottom: 20px;"></i>
+        <h1 style="font-size: 3rem; text-align: center; line-height: 1.1; margin-bottom: 10px;">ROBOTIC KINEMATICS<br><span style="color: var(--accent-purple)">& PID CONTROL</span></h1>
+        <p style="max-width: 400px; text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 1.1rem;">
+            Advanced mechatronics simulation. Tune the closed-loop control system of a 6-DOF industrial arm in real-time.
+        </p>
+        <button class="btn-primary" id="btnStartAR">Initialize AR Mode</button>
+        <button class="btn-text" onclick="document.getElementById('targetModal').style.display='flex'">View AR Marker</button>
+        <button class="btn-secondary" id="btnStart3D">Desktop / Simulation Mode</button>
+        
+        <div style="margin-top: 30px; display: flex; gap: 10px; align-items: center; color: var(--text-muted);">
+            <i class="fas fa-star" style="color: gold;"></i> <span id="startScreenStars">0</span> Stars Collected
+        </div>
+
+        <div style="margin-top: 40px; font-size: 0.9rem; color: var(--accent-purple); font-family: var(--font-code); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 80%; text-align: center;">
+            MECHATRONICS ENGINEERING LAB v1.0 | Control Theory Simulation
+        </div>
+    </div>
+
+    <!-- Main HUD -->
+    <div id="mainHUD" class="hud-container" style="display: none;">
+        <!-- AR Guide -->
+        <div class="ar-target-guide" id="arGuide" style="display: none; background: rgba(0,0,0,0.7); padding: 12px 24px; border-radius: 40px; border: 2px solid var(--accent-purple); backdrop-filter: blur(5px);">
+            <span style="color: white; font-size: 1rem; font-weight: 600;">🔍 SCAN AR MARKER</span>
+        </div>
+
+        <!-- Top Info -->
+        <div class="top-bar">
+            <div class="status-badge" id="sysStatus">
+                <div class="status-dot"></div>
+                <div class="tech-title">
+                    <h1><i class="fas fa-exclamation-triangle warning-icon"></i> <span id="statusText" style="font-family: inherit; font-size: inherit; color: inherit; letter-spacing: inherit;">PID Active</span></h1>
+                    <span id="modeIndicator">AR TRACKING</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="icon-btn pointer-events-auto" id="btnAI" title="AI Tutor" style="background: var(--glass-panel); color: var(--accent-green);"><i class="fas fa-robot"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnQuiz" title="Knowledge Check" style="background: var(--glass-panel);"><i class="fas fa-brain"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnData" title="Step Response" style="background: var(--glass-panel);"><i class="fas fa-chart-line"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnSettings" title="PID Tuning" style="background: var(--glass-panel);"><i class="fas fa-sliders-h"></i></button>
+            </div>
+        </div>
+
+        <div id="unlockToast" class="unlock-toast"><i class="fas fa-route"></i> <span>Path Planning Unlocked!</span></div>
+
+        <div id="starReward" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; z-index: 200; pointer-events: none;">
+            <i class="fas fa-star" style="color: gold; font-size: 6rem; filter: drop-shadow(0 0 30px gold);"></i>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; text-align: center;">
+                <div style="font-size: 1.5rem; margin-top: 120px;">ACHIEVEMENT UNLOCKED!</div>
+                <div style="font-size: 1rem; color: gold;" id="achievementText">Control Systems Expert</div>
+            </div>
+        </div>
+
+        <!-- Control Panel (PID) -->
+        <div class="side-panel control-room-panel" id="controlPanel">
+            <div class="panel-header">
+                <span class="panel-label">PID CONTROLLER TUNING</span>
+                <button class="close-btn" id="btnCloseControls"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Proportional (Kₚ)</span>
+                    <span class="slider-value" id="valKp">80</span>
+                </div>
+                <input type="range" id="sliderKp" min="10" max="300" value="80" step="1">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Decreases rise time, increases overshoot</div>
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Derivative (K_d)</span>
+                    <span class="slider-value" id="valKd">25</span>
+                </div>
+                <input type="range" id="sliderKd" min="0" max="150" value="25" step="1">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Reduces overshoot, acts as damper</div>
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span class="slider-label">Integral (K_i)</span>
+                    <span class="slider-value" id="valKi">2</span>
+                </div>
+                <input type="range" id="sliderKi" min="0" max="20" value="2" step="0.5">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Eliminates steady-state error</div>
+            </div>
+            
+            <div class="slider-group" style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <div class="slider-header">
+                    <span class="slider-label" style="color: var(--accent-orange);">Payload Weight</span>
+                    <span class="slider-value" id="valPayload" style="color: var(--accent-orange);">2.0 kg</span>
+                </div>
+                <input type="range" id="sliderPayload" min="0" max="10" value="2" step="0.5" style="background: linear-gradient(90deg, var(--text-muted) 0%, var(--accent-orange) 100%);">
+            </div>
+
+            <div class="parameter-display">
+                <div class="param-box">
+                    <div class="param-label">Overshoot</div>
+                    <div class="param-value val-p" id="outOvershoot">0.0%</div>
+                </div>
+                <div class="param-box">
+                    <div class="param-label">Steady-State Err</div>
+                    <div class="param-value val-err" id="outError">0.0°</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Panel -->
+        <div class="side-panel quiz-panel" id="quizPanel">
+            <div class="panel-header">
+                <span class="panel-label">KNOWLEDGE CHECK</span>
+                <button class="close-btn" id="btnCloseQuiz"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="quizLevelUI" style="margin-bottom: 15px; font-size: 0.85rem; color: var(--accent-orange); font-weight: bold; display: flex; justify-content: space-between;">
+                <span id="txtQuizLevel">Level 1: Hardware Basics</span>
+                <span><i class="fas fa-star"></i> <span id="uiStars">0</span></span>
+            </div>
+
+            <div id="quizContent">
+                <div class="quiz-question" id="qText">Question loading...</div>
+                <div class="quiz-options" id="qOptions"></div>
+                <button class="next-q-btn" id="btnNextQ">NEXT QUESTION <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></button>
+            </div>
+        </div>
+
+        <!-- Data Panel (Step Response) -->
+        <div class="side-panel data-panel" id="dataPanel">
+            <div class="panel-header">
+                <span class="panel-label">STEP RESPONSE GRAPH</span>
+                <button class="close-btn" id="btnCloseData"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="graph-container">
+                <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 5px; font-weight: bold;">Time vs. Position (Base Joint)</div>
+                <canvas id="stepGraph" width="280" height="160"></canvas>
+                <div class="legend">
+                    <span class="leg-target">━ Target Setpoint</span>
+                    <span class="leg-actual">━ Actual Position</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Tutor Panel -->
+        <div class="side-panel ai-panel" id="aiPanel">
+            <div class="panel-header">
+                <span class="panel-label" style="color: var(--accent-green);"><i class="fas fa-robot"></i> AI TUTOR</span>
+                <button class="close-btn" id="btnCloseAI"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-box" id="aiChatBox">
+                <div class="chat-msg bot">Hello! I am your Mechatronics AI Tutor. Ask me about PID controllers, kinematics, or robot hardware!</div>
+            </div>
+            <div class="chat-input-row">
+                <input type="text" id="aiInput" placeholder="e.g. What does derivative do?" autocomplete="off">
+                <button id="btnSendAI"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Bottom Controls (Auto-Hides) -->
+        <div class="bottom-dock" id="bottomDock">
+            <div id="infoToast" style="background: var(--glass-panel); padding: 12px 24px; border-radius: 12px; border: 2px solid var(--accent-purple); display: none; margin-bottom: 10px; backdrop-filter: blur(20px); min-width: 200px; text-align: center;">
+                <span id="toastText" style="font-weight: 600;">Component Selected</span>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="toastSubtext">Click to interact</div>
+            </div>
+
+            <div class="mode-toggles">
+                <button class="icon-btn pointer-events-auto" id="btnReset" title="Reset View"><i class="fas fa-sync-alt"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnXray" title="X-Ray Mode"><i class="fas fa-layer-group"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnExplode" title="Exploded View"><i class="fas fa-cogs"></i></button>
+                <button class="icon-btn pointer-events-auto active" id="btnAnimation" title="Toggle Simulation"><i class="fas fa-pause"></i></button>
+                <button class="icon-btn pointer-events-auto active" id="btnAudio" title="Audio Guide"><i class="fas fa-volume-up"></i></button>
+                <button class="icon-btn pointer-events-auto" id="btnExit" title="Exit Lab" style="color: var(--accent-danger);"><i class="fas fa-power-off"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AR/3D Container -->
+    <div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { MindARThree } from 'mindar-image-three';
+
+        // ==================== ROBOTICS CONSTANTS ====================
+        const COLORS = {
+            base: 0x1e293b, casing: 0xf8fafc, joints: 0x334155, 
+            motors: 0xf59e0b, ghost: 0x38bdf8, highlight: 0x8b5cf6
+        };
+
+        // ==================== PROGRESSION & QUIZ DATA ====================
+        const quizLevels = [[
+            // Level 1: Hardware Basics (Vocab & Definitions)
+            { q: "What is a synonym for 'End-Effector' in robotics?", options:["Base plate", "Gripper or Tool", "Controller", "Encoder"], correct: 1 },
+            { q: "What term describes a sensor that measures the exact rotation angle of a joint?", options:["Actuator", "Potentiometer", "Optical Encoder", "Stator"], correct: 2 },
+            { q: "In mechatronics, what does 'Actuator' refer to?", options:["The brain/CPU", "A motor or mechanism causing movement", "The power supply", "A limit switch"], correct: 1 }
+        ],[
+            // Level 2: Control Theory
+            { q: "What does the 'P' in PID stand for?", options:["Position", "Proportional", "Predictive", "Pulse"], correct: 1 },
+            { q: "Which gain acts like a 'shock absorber' or damper to reduce overshoot?", options:["Proportional", "Integral", "Derivative", "Error"], correct: 2 },
+            { q: "Which term eliminates steady-state error by accumulating past errors over time?", options:["Proportional", "Integral", "Derivative", "Feedback"], correct: 1 }
+        ],[
+            // Level 3: Troubleshooting
+            { q: "If the arm oscillates violently back and forth, which gain is likely too low?", options:["Integral", "Proportional", "Derivative", "Voltage"], correct: 2 },
+            { q: "If the arm takes too long to reach the target (sluggish), what should you increase?", options:["Derivative", "Proportional", "Friction", "Payload"], correct: 1 },
+            { q: "What happens to inertia when you add a heavy payload?", options:["It decreases", "It increases, requiring higher gains", "It stays the same", "It removes friction"], correct: 1 }
+        ]];
+
+        // ==================== STATE & PHYSICS ====================
+        const state = {
+            Kp: 80, Ki: 2, Kd: 25, payload: 2.0,
+            targetAngle: 0, actualAngle: 0, velocity: 0, integralErr: 0, prevError: 0,
+            maxOvershoot: 0, steadyStateError: 0,
+            graphData: new Array(100).fill({t:0, a:0}),
+            
+            isXray: false, isExploded: false, animationActive: true, audioEnabled: true, mode: 'AR',
+            lastEmergency: Date.now(), isEmergency: false, emergencyType: '', emergencyStars: 0,
+            currentLevel: 0, currentQ: 0, score: 0, achievements:[], totalStars: 0, pathPlanningUnlocked: false,
+            bases: {} 
+        };
+
+        function saveProgress() { localStorage.setItem('mechaLabState', JSON.stringify({ totalStars: state.totalStars, pathPlanningUnlocked: state.pathPlanningUnlocked })); }
+        function loadProgress() {
+            const saved = localStorage.getItem('mechaLabState');
+            if (saved) {
+                const data = JSON.parse(saved);
+                state.totalStars = data.totalStars || 0;
+                state.pathPlanningUnlocked = data.pathPlanningUnlocked || false;
+            }
+            document.getElementById('startScreenStars').innerText = state.totalStars;
+            document.getElementById('uiStars').innerText = state.totalStars;
+        }
+
+        // ==================== 3D GLOBALS ====================
+        let scene, camera, renderer, mindarThree, rootGroup, robotGroup, ghostGroup;
+        let audioCtx = null, servoOscillator = null, servoGain = null, ambientSound = null;
+        let sirenInterval = null, toastTimer = null, commandTimer = null;
+        let interactiveObjects =[];
+        
+        // Robot Parts
+        let base, shoulder, upperArm, elbow, forearm, wrist, gripper;
+        let internalMotors =[];
+
+        // Auto-hide UI
+        let uiHideTimeout;
+        function resetHideTimer() {
+            const dock = document.getElementById('bottomDock');
+            if (dock) dock.classList.remove('hidden');
+            clearTimeout(uiHideTimeout);
+            uiHideTimeout = setTimeout(() => {
+                const isPanelOpen = document.querySelector('.side-panel.active') !== null;
+                if (dock && !isPanelOpen) dock.classList.add('hidden');
+            }, 3500);
+        }
+
+        // ==================== AUDIO SETUP ====================
+        let audioUnlocked = false;
+        function unlockAudioContext() {
+            if (audioUnlocked) return;
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            if ('speechSynthesis' in window) { const msg = new SpeechSynthesisUtterance(''); msg.volume = 0; window.speechSynthesis.speak(msg); }
+            audioUnlocked = true;
+            document.removeEventListener('click', unlockAudioContext); document.removeEventListener('touchstart', unlockAudioContext);
+        }
+
+        function initAudioContext() {
+            if (!audioCtx && state.audioEnabled) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    ambientSound = new Howl({ src:['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'], volume: 0.05, loop: true });
+                } catch (e) {}
+            }
+        }
+        
+        function initServoAudio() {
+            if (!audioCtx || servoOscillator) return;
+            try {
+                servoOscillator = audioCtx.createOscillator();
+                servoGain = audioCtx.createGain();
+                servoOscillator.type = 'square'; // harsher robotic sound
+                servoOscillator.frequency.value = 400;
+                servoGain.gain.value = 0; // muted by default
+                
+                // Add a lowpass filter to make it sound like a motor whining, not an 8-bit game
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 1000;
+                
+                servoOscillator.connect(filter).connect(servoGain).connect(audioCtx.destination);
+                servoOscillator.start();
+            } catch(e) {}
+        }
+
+        function updateServoHum() {
+            if (!audioCtx || !servoOscillator) return;
+            
+            // Map absolute velocity to pitch (whine)
+            const speed = Math.abs(state.velocity);
+            const freq = 300 + (speed * 150); 
+            servoOscillator.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.05);
+            
+            if (servoGain) {
+                if (state.audioEnabled && state.animationActive && speed > 0.05) {
+                    const vol = Math.min(0.08, speed * 0.02);
+                    servoGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.05);
+                } else {
+                    servoGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+                }
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('load', () => {
+            loadProgress(); simulateLoading();
+            ['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
+            resetHideTimer(); initAudioContext();
+            document.addEventListener('click', unlockAudioContext); document.addEventListener('touchstart', unlockAudioContext);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btnStartAR').addEventListener('click', () => startApp('AR'));
+            document.getElementById('btnStart3D').addEventListener('click', () => startApp('3D'));
+        });
+
+        function simulateLoading() {
+            let progress = 0; const pb = document.querySelector('#loadProgress div');
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.opacity = 0;
+                        setTimeout(() => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                            document.getElementById('startScreen').style.display = 'flex';
+                        }, 500);
+                    }, 300);
+                }
+                pb.style.width = Math.min(progress, 100) + '%';
+            }, 100);
+        }
+
+        async function startApp(mode) {
+            unlockAudioContext(); initServoAudio();
+            if (state.audioEnabled && ambientSound && !ambientSound.playing()) ambientSound.play();
+
+            state.mode = mode; state.lastEmergency = Date.now();
+            gsap.to(document.getElementById('startScreen'), {
+                opacity: 0, duration: 0.5, onComplete: () => {
+                    document.getElementById('startScreen').style.display = 'none';
+                    document.getElementById('mainHUD').style.display = 'flex';
+                }
+            });
+
+            if (mode === '3D') init3DMode();
+            else { const success = await initARMode(); if (!success) init3DMode(); }
+
+            initUI(); initQuiz(); startStepResponseGraph(); triggerNewCommand();
+            animate();
+        }
+
+        // ==================== AR & 3D SETUP ====================
+        async function initARMode() {
+            try {
+                document.body.classList.add('ar-active'); document.getElementById('arGuide').style.display = 'flex';
+                mindarThree = new MindARThree({ container: document.getElementById('container'), imageTargetSrc: "./targets.mind", uiLoading: 'no', uiScanning: 'yes', uiError: 'no' });
+                ({ scene, camera, renderer } = mindarThree);
+                setupLighting();
+
+                const anchor = mindarThree.addAnchor(0);
+                rootGroup = new THREE.Group(); robotGroup = new THREE.Group();
+                robotGroup.scale.set(0.5, 0.5, 0.5); rootGroup.add(robotGroup); anchor.group.add(rootGroup);
+
+                const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), new THREE.ShadowMaterial({ opacity: 0.5 }));
+                shadowPlane.rotation.x = -Math.PI / 2; shadowPlane.receiveShadow = true; robotGroup.add(shadowPlane);
+
+                anchor.onTargetFound = () => document.getElementById('arGuide').style.display = 'none';
+                anchor.onTargetLost = () => document.getElementById('arGuide').style.display = 'flex';
+
+                buildRoboticArm(); setupTouchControls(document.getElementById('container'));
+                await mindarThree.start(); return true;
+            } catch (err) { showToast("AR Failed", "Switching to Simulation"); return false; }
+        }
+
+        function init3DMode() {
+            document.getElementById('modeIndicator').innerText = 'SIMULATION MODE';
+            scene = new THREE.Scene(); scene.background = new THREE.Color(0x0f172a); scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
+            setupLighting();
+
+            robotGroup = new THREE.Group(); scene.add(robotGroup);
+            buildRoboticArm();
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(5, 4, 5); camera.lookAt(0, 1.5, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true; document.getElementById('container').appendChild(renderer.domElement);
+            setupTouchControls(renderer.domElement);
+        }
+
+        function setupLighting() {
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+            const main = new THREE.DirectionalLight(0xffffff, 1.2); main.position.set(5, 15, 10); main.castShadow = true; scene.add(main);
+            scene.add(new THREE.HemisphereLight(0x8b5cf6, 0x0f172a, 0.3)); // Purple tint
+        }
+
+        function setupTouchControls(dom) {
+            let isDragging = false, prev = { x: 0, y: 0 }, initialPinch = null;
+            let zoom = robotGroup.scale.x || 1;
+            const onStart = (x, y) => { isDragging = true; prev = { x, y }; };
+            const onMove = (x, y) => {
+                if (!isDragging) return;
+                robotGroup.rotation.y += (x - prev.x) * 0.005; robotGroup.rotation.x = Math.max(-Math.PI/4, Math.min(Math.PI/4, robotGroup.rotation.x + (y - prev.y) * 0.005));
+                prev = { x, y };
+            };
+            dom.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY)); window.addEventListener('mouseup', () => isDragging = false);
+            dom.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+            dom.addEventListener('wheel', (e) => { e.preventDefault(); zoom = Math.min(Math.max(0.2, zoom - e.deltaY*0.001), 2); if(state.mode==='AR') robotGroup.scale.set(zoom,zoom,zoom); else camera.position.z = 8*(1/zoom); });
+            dom.addEventListener('touchstart', (e) => { if(e.touches.length===1) onStart(e.touches[0].clientX, e.touches[0].clientY); else if(e.touches.length===2){ isDragging=false; initialPinch = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);}}, {passive:false});
+            dom.addEventListener('touchmove', (e) => { e.preventDefault(); if(isDragging && e.touches.length===1) onMove(e.touches[0].clientX, e.touches[0].clientY); else if(e.touches.length===2 && initialPinch){ const dist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY); zoom = Math.min(Math.max(0.2, zoom+(dist-initialPinch)*0.005), 2); if(state.mode==='AR') robotGroup.scale.set(zoom,zoom,zoom); else camera.position.z = 8*(1/zoom); initialPinch=dist; }}, {passive:false});
+            dom.addEventListener('click', onEnhancedMouseClick);
+        }
+
+        // ==================== 6-DOF ROBOT BUILDER ====================
+        function getMat(col, opts={}) { return new THREE.MeshStandardMaterial({color:col, roughness:0.3, metalness:0.7, ...opts}); }
+        
+        function buildRoboticArm() {
+            robotGroup.clear(); interactiveObjects = []; internalMotors =[];
+
+            // Build Solid Arm
+            const createArm = (isGhost) => {
+                const group = new THREE.Group();
+                const mOpts = isGhost ? { transparent:true, opacity:0.3, depthWrite:false } : {};
+                const cCasing = isGhost ? COLORS.ghost : COLORS.casing;
+                const cJoints = isGhost ? COLORS.ghost : COLORS.joints;
+
+                // Base
+                const b = new THREE.Group(); b.name = "Base"; b.position.y = 0.2;
+                b.add(new THREE.Mesh(new THREE.CylinderGeometry(0.8, 1.0, 0.4, 32), getMat(cJoints, mOpts)));
+                group.add(b); if(!isGhost) { base = b; interactiveObjects.push(b); }
+
+                // Shoulder (Rotates Y)
+                const s = new THREE.Group(); s.name = "Shoulder"; s.position.y = 0.2;
+                s.add(new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.6, 32), getMat(cCasing, mOpts)));
+                b.add(s); if(!isGhost) { shoulder = s; interactiveObjects.push(s); }
+
+                // Upper Arm (Rotates Z)
+                const u = new THREE.Group(); u.name = "UpperArm"; u.position.y = 0.4;
+                const uMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 2.0, 16), getMat(cCasing, mOpts));
+                uMesh.position.y = 1.0; u.add(uMesh);
+                
+                // Joint visuals
+                const j1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.8, 16), getMat(cJoints, mOpts)); j1.rotation.x = Math.PI/2;
+                u.add(j1); s.add(u); if(!isGhost) { upperArm = u; interactiveObjects.push(u); }
+
+                // Elbow (Rotates Z)
+                const e = new THREE.Group(); e.name = "Elbow"; e.position.y = 2.0;
+                const j2 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.7, 16), getMat(cJoints, mOpts)); j2.rotation.x = Math.PI/2;
+                e.add(j2); u.add(e); if(!isGhost) { elbow = e; interactiveObjects.push(e); }
+
+                // Forearm (Rotates Y)
+                const f = new THREE.Group(); f.name = "Forearm";
+                const fMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 1.5, 16), getMat(cCasing, mOpts));
+                fMesh.position.y = 0.75; f.add(fMesh); e.add(f); if(!isGhost) { forearm = f; interactiveObjects.push(f); }
+
+                // Wrist (Rotates Z & Y)
+                const w = new THREE.Group(); w.name = "Wrist"; w.position.y = 1.5;
+                const j3 = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), getMat(cJoints, mOpts));
+                w.add(j3); f.add(w); if(!isGhost) { wrist = w; interactiveObjects.push(w); }
+
+                // Gripper (End Effector)
+                const g = new THREE.Group(); g.name = "EndEffector"; g.position.y = 0.3;
+                const gBase = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 0.4), getMat(cJoints, mOpts));
+                const fng1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.4, 0.1), getMat(cCasing, mOpts)); fng1.position.set(-0.25, 0.2, 0);
+                const fng2 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.4, 0.1), getMat(cCasing, mOpts)); fng2.position.set(0.25, 0.2, 0);
+                g.add(gBase, fng1, fng2); w.add(g); if(!isGhost) { gripper = g; interactiveObjects.push(g); }
+
+                // Internal Motors (Only added to solid arm, hidden by default)
+                if(!isGhost) {
+                    const addMotor = (parent, y, rX) => {
+                        const m = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.5, 16), getMat(COLORS.motors, {emissive:COLORS.motors, emissiveIntensity:0.5}));
+                        m.position.y = y; m.rotation.x = rX; m.visible = false; m.name = "Actuator";
+                        internalMotors.push(m); parent.add(m);
+                    };
+                    addMotor(b, 0.2, 0);       // Base pan motor
+                    addMotor(u, 0, Math.PI/2); // Shoulder tilt motor
+                    addMotor(e, 0, Math.PI/2); // Elbow tilt motor
+                    addMotor(w, 0, 0);         // Wrist roll motor
+                }
+                
+                return group;
+            };
+
+            robotGroup.add(createArm(false)); // Solid Arm
+            ghostGroup = createArm(true);     // Ghost Target Arm
+            robotGroup.add(ghostGroup);
+        }
+
+        // ==================== PHYSICS: PID CONTROL ====================
+        function updatePID() {
+            if (!state.animationActive) return;
+
+            state.Kp = parseFloat(document.getElementById('sliderKp').value);
+            state.Kd = parseFloat(document.getElementById('sliderKd').value);
+            state.Ki = parseFloat(document.getElementById('sliderKi').value);
+            state.payload = parseFloat(document.getElementById('sliderPayload').value);
+
+            const dt = 0.016; // Approx 60fps
+            const error = state.targetAngle - state.actualAngle;
+            
+            // Integral with anti-windup
+            state.integralErr += error * dt;
+            state.integralErr = Math.max(-5, Math.min(5, state.integralErr)); 
+            
+            const derivative = (error - state.prevError) / dt;
+            state.prevError = error;
+
+            // PID Force Output
+            const force = (state.Kp * error) + (state.Ki * state.integralErr) + (state.Kd * derivative);
+            
+            // Physical System: Mass-Spring-Damper (J*a + b*v = F)
+            const inertia = 1.0 + (state.payload * 0.5); // Heavier payload = more sluggish/overshoots
+            const friction = 2.0; // Base mechanical friction
+            
+            const acceleration = (force - (friction * state.velocity)) / inertia;
+            state.velocity += acceleration * dt;
+            state.actualAngle += state.velocity * dt;
+
+            // Log max overshoot for UI
+            if (Math.abs(state.actualAngle) > Math.abs(state.targetAngle) && Math.abs(state.actualAngle) > state.maxOvershoot) {
+                const over = Math.abs((state.actualAngle - state.targetAngle) / (state.targetAngle || 1)) * 100;
+                state.maxOvershoot = Math.min(over, 999);
+                document.getElementById('outOvershoot').innerText = `${state.maxOvershoot.toFixed(1)}%`;
+                document.getElementById('outOvershoot').style.color = state.maxOvershoot > 20 ? 'var(--accent-danger)' : 'var(--accent-green)';
+            }
+
+            // Steady state error
+            if (Math.abs(state.velocity) < 0.01) {
+                state.steadyStateError = Math.abs(error) * 57.29; // Convert rad to deg
+                document.getElementById('outError').innerText = `${state.steadyStateError.toFixed(2)}°`;
+            }
+
+            // Apply Math to the Base Joint (Y-axis rotation) for the graph
+            shoulder.rotation.y = state.actualAngle;
+            
+            // Procedurally animate the rest of the arm based on the base angle to look cool
+            const normalizedExt = Math.sin(state.actualAngle);
+            upperArm.rotation.z = Math.PI/6 * normalizedExt;
+            elbow.rotation.z = -Math.PI/3 * Math.abs(normalizedExt);
+            wrist.rotation.z = Math.PI/4 * normalizedExt;
+
+            // Apply target to Ghost Arm instantly
+            ghostGroup.children[0].children[0].rotation.y = state.targetAngle; // Ghost Shoulder
+            ghostGroup.children[0].children[0].children[0].rotation.z = Math.PI/6 * Math.sin(state.targetAngle); // Ghost Upper
+            ghostGroup.children[0].children[0].children[0].children[1].rotation.z = -Math.PI/3 * Math.abs(Math.sin(state.targetAngle)); // Ghost Elbow
+
+            // Store data for Graph
+            state.graphData.push({ t: state.targetAngle, a: state.actualAngle });
+            if (state.graphData.length > 100) state.graphData.shift();
+
+            // Audio update
+            updateServoHum();
+
+            // Emergency Check
+            if (state.maxOvershoot > 60 || Math.abs(state.velocity) > 15) {
+                if(!state.isEmergency) { state.emergencyType = "Aggressive Oscillation!"; triggerEmergency(); }
+            } else if (state.steadyStateError > 10 && state.payload > 5) {
+                if(!state.isEmergency) { state.emergencyType = "Actuator Overload!"; triggerEmergency(); }
+            } else if (state.isEmergency) resolveEmergency();
+        }
+
+        // Random pick-and-place command generator
+        function triggerNewCommand() {
+            if (!state.animationActive) return;
+            if (state.pathPlanningUnlocked) {
+                // Smooth sine wave instead of harsh steps
+                state.targetAngle = Math.sin(Date.now() * 0.001) * 1.5;
+            } else {
+                // Harsh steps
+                state.targetAngle = (Math.random() - 0.5) * Math.PI; 
+                state.maxOvershoot = 0; // Reset metrics
+            }
+            if (!commandTimer) commandTimer = setInterval(triggerNewCommand, 4000);
+        }
+
+        // ==================== GRAPH CANVAS ====================
+        function startStepResponseGraph() {
+            const canvas = document.getElementById('stepGraph');
+            const ctx = canvas.getContext('2d');
+            
+            setInterval(() => {
+                if (!document.getElementById('dataPanel').classList.contains('active')) return;
+                const w = canvas.width, h = canvas.height;
+                ctx.clearRect(0,0,w,h);
+                
+                // Grid
+                ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke();
+                
+                if (state.graphData.length < 2) return;
+                
+                // Draw Target (White)
+                ctx.beginPath(); ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2;
+                ctx.moveTo(0, h/2 - (state.graphData[0].t * 40));
+                for(let i=1; i<state.graphData.length; i++) {
+                    ctx.lineTo(i * (w/100), h/2 - (state.graphData[i].t * 40));
+                }
+                ctx.stroke();
+
+                // Draw Actual (Cyan)
+                ctx.beginPath(); ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3;
+                ctx.moveTo(0, h/2 - (state.graphData[0].a * 40));
+                for(let i=1; i<state.graphData.length; i++) {
+                    ctx.lineTo(i * (w/100), h/2 - (state.graphData[i].a * 40));
+                }
+                ctx.stroke();
+            }, 50);
+        }
+
+        // ==================== UI & INTERACTION ====================
+        function initUI() {
+            function togglePanel(id) {
+                const p = document.getElementById(id); const active = p.classList.contains('active');
+                document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active'));
+                if (!active) setTimeout(() => p.classList.add('active'), 10);
+            }
+
+            document.getElementById('btnSettings').onclick = () => togglePanel('controlPanel');
+            document.getElementById('btnQuiz').onclick = () => togglePanel('quizPanel');
+            document.getElementById('btnData').onclick = () => togglePanel('dataPanel');
+            document.getElementById('btnAI').onclick = () => togglePanel('aiPanel');
+            ['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'].forEach(id => {
+                document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
+            });
+
+            document.getElementById('btnXray').onclick = (e) => {
+                state.isXray = !state.isXray; e.currentTarget.classList.toggle('active');
+                robotGroup.traverse(c => {
+                    if(c.material && c.name !== "Actuator" && c.name !== "EndEffector") { c.material.transparent = state.isXray; c.material.opacity = state.isXray?0.2:1.0; c.material.depthWrite = !state.isXray; }
+                });
+                internalMotors.forEach(m => m.visible = state.isXray);
+            };
+
+            document.getElementById('btnExplode').onclick = (e) => {
+                state.isExploded = !state.isExploded; e.currentTarget.classList.toggle('active-explode');
+                const d = state.isExploded ? 1 : 0;
+                gsap.to(upperArm.position, { y: 1.0 + (d*0.5), duration: 1});
+                gsap.to(elbow.position, { y: 2.0 + (d*1.0), duration: 1});
+                gsap.to(wrist.position, { y: 1.5 + (d*0.5), duration: 1});
+            };
+
+            document.getElementById('btnAnimation').onclick = (e) => {
+                state.animationActive = !state.animationActive; e.currentTarget.classList.toggle('active');
+                e.currentTarget.innerHTML = state.animationActive ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+                updateServoHum();
+            };
+
+            document.getElementById('btnAudio').onclick = (e) => {
+                state.audioEnabled = !state.audioEnabled; e.currentTarget.classList.toggle('active');
+                e.currentTarget.innerHTML = state.audioEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+                if(ambientSound) state.audioEnabled?ambientSound.play():ambientSound.pause();
+                if(!state.audioEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+                updateServoHum();
+            };
+            
+            document.getElementById('btnReset').onclick = () => {
+                gsap.to(robotGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
+                gsap.to(robotGroup.scale, { x: 0.5, y: 0.5, z: 0.5, duration: 1 });
+                if(state.mode !== 'AR') gsap.to(camera.position, { x: 5, y: 4, z: 5, duration: 1 });
+            };
+            document.getElementById('btnExit').onclick = () => confirm("Exit Lab?") && location.reload();
+        }
+
+        // ==================== GAMIFICATION ====================
+        function triggerEmergency() {
+            state.isEmergency = true; document.body.classList.add('critical-state');
+            document.getElementById('statusText').innerText = state.emergencyType;
+            if (state.audioEnabled) { window.speechSynthesis.cancel(); speak(state.emergencyType); setTimeout(()=>startSiren(), 1500);}
+            const p = document.getElementById('controlPanel');
+            if (!p.classList.contains('active')) { document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active')); p.classList.add('active'); }
+        }
+
+        function resolveEmergency() {
+            state.isEmergency = false; state.lastEmergency = Date.now();
+            document.body.classList.remove('critical-state'); document.getElementById('statusText').innerText = "PID Active";
+            stopSiren(); if (state.audioEnabled) speak("Controller stabilized.");
+            if (state.emergencyStars < 3) { awardStar("Stabilized!", "PID Tuning Fixed"); state.emergencyStars++; }
+            setTimeout(() => document.getElementById('controlPanel').classList.remove('active'), 3500);
+        }
+
+        function awardStar(title, subtitle) {
+            state.totalStars++; document.getElementById('startScreenStars').innerText = state.totalStars; document.getElementById('uiStars').innerText = state.totalStars;
+            saveProgress();
+            const r = document.getElementById('starReward'); document.getElementById('achievementText').innerText = subtitle;
+            r.style.display = 'block'; r.style.opacity = '0';
+            gsap.to(r, { opacity: 1, duration: 0.5, onComplete: () => setTimeout(() => gsap.to(r, { opacity: 0, duration: 0.5, onComplete:()=>r.style.display='none'}), 1500) });
+
+            if (state.totalStars === 5 && !state.pathPlanningUnlocked) {
+                state.pathPlanningUnlocked = true; saveProgress();
+                setTimeout(() => {
+                    const t = document.getElementById('unlockToast'); t.style.display = 'block';
+                    if(state.audioEnabled) speak("Path Planning Mode Unlocked.");
+                    setTimeout(() => t.style.display = 'none', 4000);
+                }, 2500);
+            }
+        }
+
+        function initQuiz() {
+            const render = () => {
+                const qList = quizLevels[state.currentLevel]; const q = qList[state.currentQ];
+                document.getElementById('txtQuizLevel').innerText = `Level ${state.currentLevel + 1}`;
+                document.getElementById('qText').innerHTML = `<strong>Q${state.currentQ + 1}/${qList.length}:</strong> ${q.q}`;
+                const optsDiv = document.getElementById('qOptions'); optsDiv.innerHTML = '';
+                document.getElementById('btnNextQ').style.display = 'none';
+                
+                q.options.forEach((opt, i) => {
+                    const btn = document.createElement('div'); btn.className = 'quiz-btn'; btn.innerHTML = `${opt}`;
+                    btn.onclick = () => {
+                        Array.from(optsDiv.children).forEach(b => b.style.pointerEvents = 'none');
+                        if(i === q.correct) { 
+                            btn.classList.add('correct'); awardStar("Correct!", "Knowledge Check"); showQuizStarParticles(btn);
+                            if(audioCtx && state.audioEnabled) { const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.connect(g).connect(audioCtx.destination);osc.frequency.value=600;g.gain.value=0.1;g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.5);osc.start();osc.stop(audioCtx.currentTime+0.5); }
+                        } else { 
+                            btn.classList.add('wrong'); optsDiv.children[q.correct].classList.add('correct'); 
+                            if(audioCtx && state.audioEnabled) { const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.connect(g).connect(audioCtx.destination);osc.frequency.value=200;g.gain.value=0.1;g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.3);osc.start();osc.stop(audioCtx.currentTime+0.3); }
+                        }
+                        document.getElementById('btnNextQ').style.display = 'block';
+                    };
+                    optsDiv.appendChild(btn);
+                });
+            };
+            render();
+            document.getElementById('btnNextQ').onclick = () => {
+                state.currentQ++;
+                if(state.currentQ >= quizLevels[state.currentLevel].length) { state.currentQ = 0; if (state.currentLevel < quizLevels.length - 1) state.currentLevel++; else state.currentLevel = 0; }
+                render();
+            };
+        }
+
+        function showQuizStarParticles(btn) {
+            const rect = btn.getBoundingClientRect();
+            for (let i=0; i<5; i++) {
+                const star = document.createElement('div'); star.className = 'star-particle'; star.innerHTML = '<i class="fas fa-star"></i>';
+                star.style.left = (rect.left + rect.width/2) + 'px'; star.style.top = (rect.top + rect.height/2) + 'px';
+                document.body.appendChild(star);
+                gsap.to(star, { duration: 1+Math.random()*0.5, x: (Math.random()-0.5)*200, y: (Math.random()-0.5)*200-100, opacity: 1, scale: 0, ease: "power2.out", onComplete: () => document.body.removeChild(star) });
+            }
+        }
+
+        function startSiren() {
+            if (sirenInterval) clearInterval(sirenInterval);
+            let phase = 0;
+            sirenInterval = setInterval(() => {
+                if (!state.isEmergency) { clearInterval(sirenInterval); return; }
+                if (audioCtx && state.audioEnabled) { try { const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); osc.connect(gain).connect(audioCtx.destination); osc.frequency.value = phase%2===0?800:600; gain.gain.value = 0.1; gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.8); osc.start(); osc.stop(audioCtx.currentTime+0.8); phase++; } catch(e){} }
+            }, 1000);
+        }
+        function stopSiren() { if (sirenInterval) { clearInterval(sirenInterval); sirenInterval = null; } }
+
+        // ==================== INTERACTION & AI ====================
+        const compDict = {
+            "Base": { title: "ROBOT BASE", info: "The foundation. Contains the primary yaw actuator." },
+            "Shoulder": { title: "SHOULDER JOINT", info: "Provides pitch articulation to lift the arm against gravity." },
+            "UpperArm": { title: "UPPER ARM LINK", info: "Rigid aluminum extrusion connecting shoulder to elbow." },
+            "Elbow": { title: "ELBOW JOINT", info: "Provides secondary pitch. Often experiences high torque loads." },
+            "Forearm": { title: "FOREARM LINK", info: "Connects elbow to wrist." },
+            "Wrist": { title: "WRIST JOINT", info: "Provides roll and pitch for orienting the tool." },
+            "EndEffector": { title: "END-EFFECTOR (GRIPPER)", info: "The tool at the end of the arm. Holds the payload." },
+            "Actuator": { title: "SERVO MOTOR", info: "Provides precise rotational movement and feedback via encoders." }
+        };
+
+        function onEnhancedMouseClick(e) {
+            if (e.target !== renderer.domElement && e.target.tagName !== 'CANVAS') return;
+            const rect = renderer.domElement.getBoundingClientRect();
+            const cX = e.clientX || (e.touches && e.touches[0].clientX); const cY = e.clientY || (e.touches && e.touches[0].clientY);
+            const mouse = new THREE.Vector2(((cX - rect.left) / rect.width) * 2 - 1, -((cY - rect.top) / rect.height) * 2 + 1);
+            const rc = new THREE.Raycaster(); rc.setFromCamera(mouse, camera);
+            const hits = rc.intersectObjects(interactiveObjects.concat(internalMotors), true);
+            if (hits.length > 0) {
+                let obj = hits[0].object; while (obj.parent && !interactiveObjects.includes(obj) && !internalMotors.includes(obj)) obj = obj.parent;
+                if (obj.name) {
+                    if (navigator.vibrate) navigator.vibrate(40);
+                    if (obj.material && obj.material.emissive) {
+                        const oHex = obj.material.emissive.getHex(), oInt = obj.material.emissiveIntensity;
+                        obj.material.emissive.setHex(COLORS.highlight); obj.material.emissiveIntensity = 0.8;
+                        setTimeout(() => { if(obj.material) { obj.material.emissive.setHex(oHex); obj.material.emissiveIntensity = oInt; } }, 500);
+                    }
+                    const info = compDict[obj.name] || { title: obj.name.toUpperCase(), info: "Robotic Component." };
+                    showToast(info.title, info.info);
+                    if (state.audioEnabled && !state.isEmergency) speak(`${info.title}. ${info.info}`);
+                }
+            }
+        }
+
+        function showToast(title, msg) {
+            const t = document.getElementById('infoToast'); document.getElementById('toastText').innerText = title; document.getElementById('toastSubtext').innerText = msg;
+            t.style.display = 'block'; gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
+            if (toastTimer) clearTimeout(toastTimer); toastTimer = setTimeout(() => gsap.to(t, { opacity: 0, y: 20, duration: 0.3, onComplete: () => t.style.display = 'none' }), 3000);
+        }
+
+        const aiKnowledgeBase = {
+            "pid": "PID stands for Proportional, Integral, Derivative. It calculates an error value as the difference between a desired setpoint and a measured process variable.",
+            "proportional": "The Proportional gain (Kp) produces an output value that is proportional to the current error value. High Kp makes the robot react faster but can cause overshoot.",
+            "integral": "The Integral gain (Ki) accelerates the movement of the process towards setpoint and eliminates the residual steady-state error that occurs with a pure proportional controller.",
+            "derivative": "The Derivative gain (Kd) predicts system behavior and acts like a shock absorber or damper, slowing the rate of change and preventing overshoot.",
+            "overshoot": "Overshoot is when the robot arm swings past its target position before settling back. You can fix this by increasing Derivative or lowering Proportional.",
+            "steady": "Steady-state error is the final difference between the process variable and setpoint. Increase the Integral gain to force this to zero.",
+            "payload": "Adding a payload increases the inertia of the arm. This requires the motors to generate more torque and completely changes how the PID controller must be tuned.",
+            "kinematics": "Forward kinematics uses joint angles to calculate the position of the end-effector. Inverse kinematics determines what joint angles are needed to reach a target.",
+            "default": "I am your Mechatronics AI Tutor. Ask me about PID tuning, overshoot, inertia, or specific robot parts!"
+        };
+
+        function processAIQuery() {
+            const inputEl = document.getElementById('aiInput'), chatBox = document.getElementById('aiChatBox'), query = inputEl.value.trim().toLowerCase();
+            if (!query) return;
+            chatBox.innerHTML += `<div class="chat-msg user">${inputEl.value}</div>`; inputEl.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
+            let response = aiKnowledgeBase["default"];
+            for (const key in aiKnowledgeBase) if (query.includes(key)) { response = aiKnowledgeBase[key]; break; }
+            setTimeout(() => { chatBox.innerHTML += `<div class="chat-msg bot">${response}</div>`; chatBox.scrollTop = chatBox.scrollHeight; if (state.audioEnabled) speak(response); }, 600);
+        }
+        document.getElementById('btnSendAI').addEventListener('click', processAIQuery);
+        document.getElementById('aiInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') processAIQuery(); });
+
+        // ==================== LOOP ====================
+        function animate() {
+            requestAnimationFrame(animate);
+            updatePID();
+
+            // Gamification: Specific Failures
+            if (!state.isEmergency && !document.getElementById('quizPanel').classList.contains('active') && Date.now() - state.lastEmergency > 60000) {
+                const failType = Math.random();
+                if (failType < 0.33) {
+                    document.getElementById('sliderKp').value = 250; document.getElementById('sliderKd').value = 0;
+                    state.emergencyType = "Aggressive Oscillation!";
+                } else if (failType < 0.66) {
+                    document.getElementById('sliderKp').value = 15; document.getElementById('sliderKd').value = 50;
+                    state.emergencyType = "Sluggish Response!";
+                } else {
+                    document.getElementById('sliderPayload').value = 10; document.getElementById('sliderKp').value = 200;
+                    state.emergencyType = "Actuator Overload!";
+                }
+                triggerEmergency();
+            }
+
+            if (renderer && scene && camera && state.mode === '3D') renderer.render(scene, camera);
+            else if (mindarThree) mindarThree.processVideo();
+        }
+
+        window.addEventListener('resize', () => {
+            if (camera) { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); }
+            if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
