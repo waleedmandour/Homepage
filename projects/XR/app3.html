@@ -550,7 +550,7 @@
         async function initARMode() {
             try {
                 document.body.classList.add('ar-active'); document.getElementById('arGuide').style.display = 'flex';
-                mindarThree = new MindARThree({ container: document.getElementById('container'), imageTargetSrc: "./targets.mind", uiLoading: 'no', uiScanning: 'yes', uiError: 'no' });
+                mindarThree = new MindARThree({ container: document.getElementById('container'), imageTargetSrc: "./targets3.mind", uiLoading: 'no', uiScanning: 'yes', uiError: 'no' });
                 ({ scene, camera, renderer } = mindarThree);
                 setupLighting();
 
