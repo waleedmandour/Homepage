@@ -523,11 +523,13 @@
             }, 100);
         }
 
-        async function startApp(mode) {
+                async function startApp(mode) {
             unlockAudioContext(); initServoAudio();
             if (state.audioEnabled && ambientSound && !ambientSound.playing()) ambientSound.play();
 
             state.mode = mode; state.lastEmergency = Date.now();
+            
+            // UI Transition
             gsap.to(document.getElementById('startScreen'), {
                 opacity: 0, duration: 0.5, onComplete: () => {
                     document.getElementById('startScreen').style.display = 'none';
@@ -535,22 +537,40 @@
                 }
             });
 
-            if (mode === '3D') {
-                init3DMode();
-            } else { 
+            // --- FIX: Check for HTTPS/Localhost ---
+            const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            
+            if (mode === 'AR' && isSecure) {
+                // Try AR with a timeout
                 const success = await initARMode(); 
-                if (!success) init3DMode(); 
+                if (!success) {
+                    showToast("AR Unavailable", "Switching to 3D Sim");
+                    init3DMode(); 
+                }
+            } else { 
+                if (mode === 'AR' && !isSecure) {
+                    alert("AR requires HTTPS or Localhost. Switching to Simulation Mode.");
+                }
+                init3DMode(); 
             }
 
             initUI(); initQuiz(); startStepResponseGraph(); startDataStream(); triggerNewCommand();
             animate();
         }
 
-        // ==================== AR & 3D SETUP ====================
         async function initARMode() {
             try {
-                document.body.classList.add('ar-active'); document.getElementById('arGuide').style.display = 'flex';
-                mindarThree = new MindARThree({ container: document.getElementById('container'), imageTargetSrc: "./targets3.mind", uiLoading: 'no', uiScanning: 'yes', uiError: 'no' });
+                document.body.classList.add('ar-active'); 
+                document.getElementById('arGuide').style.display = 'flex';
+                
+                mindarThree = new MindARThree({ 
+                    container: document.getElementById('container'), 
+                    // --- FIX: Use a publicly available demo target for testing if you don't have your own .mind file
+                    // Replace this URL with your own hosted .mind file if you have one:
+                    imageTargetSrc: "https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@master/examples/image-tracking/assets/card-example/card.mind", 
+                    uiLoading: 'no', uiScanning: 'yes', uiError: 'no' 
+                });
+                
                 ({ scene, camera, renderer } = mindarThree);
                 setupLighting();
 
@@ -565,10 +585,22 @@
                 anchor.onTargetLost = () => document.getElementById('arGuide').style.display = 'flex';
 
                 buildRoboticArm(); setupTouchControls(document.getElementById('container'));
-                await mindarThree.start(); return true;
-            } catch (err) { showToast("AR Failed", "Switching to Simulation"); return false; }
-        }
 
+                // --- FIX: Add a 10-second timeout for the AR start process ---
+                const startPromise = mindarThree.start();
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('AR Start Timeout')), 10000)
+                );
+
+                await Promise.race([startPromise, timeoutPromise]);
+                return true;
+
+            } catch (err) { 
+                console.error("AR Init Failed:", err);
+                showToast("AR Failed", err.message || "Check Console"); 
+                return false; 
+            }
+        }
         function init3DMode() {
             document.getElementById('modeIndicator').innerText = 'SIMULATION MODE';
             scene = new THREE.Scene(); scene.background = new THREE.Color(0x0f172a); scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
