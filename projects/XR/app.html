@@ -983,16 +983,40 @@
             }
         }
 
+        // Component Dictionary for Haber-Bosch
+        const compDict = {
+            "Reactor": { title: "REACTOR VESSEL", desc: "High-pressure synthesis vessel", info: "Operates at 450 degrees and 200 atmospheres." },
+            "Nitrogen Feed": { title: "NITROGEN FEED", desc: "Source of N₂ gas", info: "Pure nitrogen gas obtained from air separation." },
+            "Hydrogen Feed": { title: "HYDROGEN FEED", desc: "Source of H₂ gas", info: "Hydrogen gas generated from steam methane reforming." },
+            "CatalystBed": { title: "CATALYST BED", desc: "Iron-based catalyst", info: "Iron catalyst speeds up the reaction without being consumed." },
+            "Condenser": { title: "AMMONIA CONDENSER", desc: "Cools and liquefies product", info: "Cools the gas mixture to liquefy and extract pure ammonia." }
+        };
+
         function selectComponent(name, obj) {
+            // Haptic Feedback
             if (navigator.vibrate) navigator.vibrate(40);
+            
+            // Visual Highlight
             if (obj && obj.material && obj.material.emissive) {
                 const oHex = obj.material.emissive.getHex(), oInt = obj.material.emissiveIntensity;
                 obj.material.emissive.setHex(COLORS.highlight); obj.material.emissiveIntensity = 0.8;
                 setTimeout(() => { if(obj.material) { obj.material.emissive.setHex(oHex); obj.material.emissiveIntensity = oInt; } }, 500);
             }
+            
+            // Look up component information
+            const info = compDict[name] || { title: name.toUpperCase(), desc: "Plant Component", info: `${name} selected.` };
+
+            // Update the UI
             updateMoleculeView(name);
-            showToast(name.toUpperCase(), "Click to learn more");
-            if (state.audioEnabled && !state.isEmergency) speak(`${name} Selected.`);
+            showToast(info.title, info.desc);
+            
+            // Speak the name AND its function
+            if (state.audioEnabled && !state.isEmergency) {
+                speak(`${info.title}. ${info.info}`);
+            }
+            
+            // Log to Data Stream
+            addDataStreamEntry("INTERACTION", `Selected: ${info.title}`);
         }
 
         function initMoleculeViewer() {
