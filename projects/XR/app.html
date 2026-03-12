@@ -378,8 +378,8 @@
             { q: "According to Le Chatelier's principle, increasing pressure shifts equilibrium to...", options:["Side with more moles", "Side with fewer moles", "No change", "Reactants side"], correct: 1 },
             { q: "What's 'Chemical Equilibrium'?", options:["Reaction stops", "Reactants used up", "Forward & reverse rates equal", "Temperature is zero"], correct: 2 }
         ],[
-            { q: "Primary catalyst in Haber-Bosch process?", options: ["Platinum", "Iron with promoters", "Copper", "Nickel"], correct: 1 },
-            { q: "Why use 400-450°C despite lower T favoring yield?", options: ["Increase rate, catalyst activation", "Reduce pressure", "Save energy", "Melt catalyst"], correct: 0 },
+            { q: "Primary catalyst in Haber-Bosch process?", options:["Platinum", "Iron with promoters", "Copper", "Nickel"], correct: 1 },
+            { q: "Why use 400-450°C despite lower T favoring yield?", options:["Increase rate, catalyst activation", "Reduce pressure", "Save energy", "Melt catalyst"], correct: 0 },
             { q: "What's the mole ratio of H₂:N₂ in the feed?", options:["1:1", "2:1", "3:1", "4:1"], correct: 2 }
         ]];
 
@@ -418,13 +418,43 @@
             }, 3500);
         }
 
+        // ==================== AUDIO UNLOCK & SETUP ====================
+        let audioUnlocked = false;
+        function unlockAudioContext() {
+            if (audioUnlocked) return;
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            // Unlock speech synthesis on iOS/Safari silently
+            if ('speechSynthesis' in window) {
+                const msg = new SpeechSynthesisUtterance('');
+                msg.volume = 0;
+                window.speechSynthesis.speak(msg);
+            }
+            audioUnlocked = true;
+            document.removeEventListener('click', unlockAudioContext);
+            document.removeEventListener('touchstart', unlockAudioContext);
+        }
+
+        function initAudioContext() {
+            if (!audioCtx && state.audioEnabled) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    ambientSound = new Howl({ src:['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'], volume: 0.1, loop: true });
+                } catch (e) { console.log('Audio Context init error:', e); }
+            }
+        }
+
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
             loadProgress();
-            simulateLoading();
-            ['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
+            simulateLoading();['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
             resetHideTimer();
             initAudioContext();
+            
+            // Attach physical audio unlockers for mobile
+            document.addEventListener('click', unlockAudioContext);
+            document.addEventListener('touchstart', unlockAudioContext);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -451,18 +481,10 @@
             }, 100);
         }
 
-        function initAudioContext() {
-            if (!audioCtx && state.audioEnabled) {
-                try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    ambientSound = new Howl({ src:['https://assets.mixkit.co/sfx/preview/mixkit-ambient-sci-fi-hum-966.mp3'], volume: 0.1, loop: true });
-                } catch (e) { console.log('Audio Context init error:', e); }
-            }
-        }
-
         async function startApp(mode) {
-            if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
-            if (state.audioEnabled && ambientSound) ambientSound.play();
+            // Ensure audio is ready
+            unlockAudioContext();
+            if (state.audioEnabled && ambientSound && !ambientSound.playing()) ambientSound.play();
 
             state.mode = mode;
             state.lastEmergency = Date.now();
@@ -712,7 +734,8 @@
             document.getElementById('btnSettings').onclick = () => togglePanel('controlPanel');
             document.getElementById('btnQuiz').onclick = () => togglePanel('quizPanel');
             document.getElementById('btnData').onclick = () => togglePanel('dataPanel');
-            document.getElementById('btnAI').onclick = () => togglePanel('aiPanel');['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'].forEach(id => {
+            document.getElementById('btnAI').onclick = () => togglePanel('aiPanel');
+            ['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'].forEach(id => {
                 document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
             });
 
@@ -774,11 +797,73 @@
             };
         }
 
+        // ==================== AUDIO SOUND EFFECTS ====================
+        function startSiren() {
+            if (sirenInterval) clearInterval(sirenInterval);
+            let sirenPhase = 0;
+            sirenInterval = setInterval(() => {
+                if (!state.isEmergency) { clearInterval(sirenInterval); return; }
+                if (audioCtx && state.audioEnabled) {
+                    try {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.frequency.setValueAtTime(sirenPhase % 2 === 0 ? 880 : 440, audioCtx.currentTime);
+                        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+                        osc.start(); osc.stop(audioCtx.currentTime + 0.8);
+                        sirenPhase++;
+                    } catch (e) {}
+                }
+            }, 1000);
+        }
+
+        function stopSiren() {
+            if (sirenInterval) { clearInterval(sirenInterval); sirenInterval = null; }
+        }
+
+        function playSuccessSound() {
+            if (audioCtx && state.audioEnabled) {
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+                } catch (e) {}
+            }
+        }
+
+        function playErrorSound() {
+            if (audioCtx && state.audioEnabled) {
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.frequency.setValueAtTime(349.23, audioCtx.currentTime); // F4
+                    osc.frequency.setValueAtTime(293.66, audioCtx.currentTime + 0.1); // D4
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                } catch (e) {}
+            }
+        }
+
         // ==================== GAMIFICATION ====================
         function triggerEmergency() {
             state.isEmergency = true; document.body.classList.add('critical-state');
             document.getElementById('statusText').innerText = state.emergencyType || "SYSTEM DECOMPOSING";
-            if (state.audioEnabled) { window.speechSynthesis.cancel(); speak(state.emergencyType || "Emergency. System out of bounds."); }
+            
+            if (state.audioEnabled) { 
+                window.speechSynthesis.cancel(); 
+                speak(state.emergencyType || "Emergency. System parameters critical."); 
+                setTimeout(() => { if(state.isEmergency) startSiren(); }, 2000);
+            }
+            
             const p = document.getElementById('controlPanel');
             if (!p.classList.contains('active')) { document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active')); p.classList.add('active'); }
             addDataStreamEntry("EMERGENCY", state.emergencyType || "Parameter Violation");
@@ -787,6 +872,7 @@
         function resolveEmergency() {
             state.isEmergency = false; state.lastEmergency = Date.now();
             document.body.classList.remove('critical-state'); document.getElementById('statusText').innerText = "System Active";
+            stopSiren();
             if (state.audioEnabled) speak("System stabilized");
             if (state.emergencyStars < 3) { awardStar("Stabilized!", "Process Fixed"); state.emergencyStars++; }
             setTimeout(() => document.getElementById('controlPanel').classList.remove('active'), 3500);
@@ -815,8 +901,16 @@
                     const btn = document.createElement('div'); btn.className = 'quiz-btn'; btn.innerHTML = `${opt}`;
                     btn.onclick = () => {
                         Array.from(optsDiv.children).forEach(b => b.style.pointerEvents = 'none');
-                        if(i === q.correct) { btn.classList.add('correct'); awardStar("Correct!", "Knowledge Check"); showQuizStarParticles(btn); } 
-                        else { btn.classList.add('wrong'); optsDiv.children[q.correct].classList.add('correct'); }
+                        if(i === q.correct) { 
+                            btn.classList.add('correct'); 
+                            awardStar("Correct!", "Knowledge Check"); 
+                            showQuizStarParticles(btn); 
+                            playSuccessSound();
+                        } else { 
+                            btn.classList.add('wrong'); 
+                            optsDiv.children[q.correct].classList.add('correct'); 
+                            playErrorSound();
+                        }
                         document.getElementById('btnNextQ').style.display = 'block';
                     };
                     optsDiv.appendChild(btn);
