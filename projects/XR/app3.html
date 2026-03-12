@@ -31,11 +31,11 @@
         :root {
             --bg-dark: #0b1120;
             --glass-panel: rgba(16, 24, 40, 0.92);
-            --glass-border: rgba(139, 92, 246, 0.4); /* Purple Border for Robotics */
+            --glass-border: rgba(139, 92, 246, 0.4); 
             --accent-cyan: #38bdf8;
             --accent-green: #10b981;
             --accent-orange: #f59e0b;
-            --accent-purple: #8b5cf6; /* Primary Robotics Accent */
+            --accent-purple: #8b5cf6; 
             --accent-danger: #ef4444;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
@@ -324,6 +324,9 @@
                     <span class="leg-actual">━ Actual Position</span>
                 </div>
             </div>
+            
+            <!-- Restored Data Stream Content Box -->
+            <div id="dataStreamContent" style="font-family: var(--font-code); margin-top: 15px; font-size: 0.85rem; max-height: 120px; overflow-y: auto;"></div>
         </div>
 
         <!-- AI Tutor Panel -->
@@ -461,11 +464,10 @@
             try {
                 servoOscillator = audioCtx.createOscillator();
                 servoGain = audioCtx.createGain();
-                servoOscillator.type = 'square'; // harsher robotic sound
+                servoOscillator.type = 'square'; 
                 servoOscillator.frequency.value = 400;
-                servoGain.gain.value = 0; // muted by default
+                servoGain.gain.value = 0; 
                 
-                // Add a lowpass filter to make it sound like a motor whining, not an 8-bit game
                 const filter = audioCtx.createBiquadFilter();
                 filter.type = 'lowpass';
                 filter.frequency.value = 1000;
@@ -477,8 +479,6 @@
 
         function updateServoHum() {
             if (!audioCtx || !servoOscillator) return;
-            
-            // Map absolute velocity to pitch (whine)
             const speed = Math.abs(state.velocity);
             const freq = 300 + (speed * 150); 
             servoOscillator.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.05);
@@ -495,8 +495,7 @@
 
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
-            loadProgress(); simulateLoading();
-            ['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
+            loadProgress(); simulateLoading();['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
             resetHideTimer(); initAudioContext();
             document.addEventListener('click', unlockAudioContext); document.addEventListener('touchstart', unlockAudioContext);
         });
@@ -536,10 +535,14 @@
                 }
             });
 
-            if (mode === '3D') init3DMode();
-            else { const success = await initARMode(); if (!success) init3DMode(); }
+            if (mode === '3D') {
+                init3DMode();
+            } else { 
+                const success = await initARMode(); 
+                if (!success) init3DMode(); 
+            }
 
-            initUI(); initQuiz(); startStepResponseGraph(); triggerNewCommand();
+            initUI(); initQuiz(); startStepResponseGraph(); startDataStream(); triggerNewCommand();
             animate();
         }
 
@@ -586,7 +589,7 @@
         function setupLighting() {
             scene.add(new THREE.AmbientLight(0xffffff, 0.6));
             const main = new THREE.DirectionalLight(0xffffff, 1.2); main.position.set(5, 15, 10); main.castShadow = true; scene.add(main);
-            scene.add(new THREE.HemisphereLight(0x8b5cf6, 0x0f172a, 0.3)); // Purple tint
+            scene.add(new THREE.HemisphereLight(0x8b5cf6, 0x0f172a, 0.3)); 
         }
 
         function setupTouchControls(dom) {
@@ -612,72 +615,62 @@
         function buildRoboticArm() {
             robotGroup.clear(); interactiveObjects = []; internalMotors =[];
 
-            // Build Solid Arm
             const createArm = (isGhost) => {
-                const group = new THREE.Group();
+                const group = new THREE.Group(); group.name = isGhost ? "GhostArm" : "SolidArm";
                 const mOpts = isGhost ? { transparent:true, opacity:0.3, depthWrite:false } : {};
                 const cCasing = isGhost ? COLORS.ghost : COLORS.casing;
                 const cJoints = isGhost ? COLORS.ghost : COLORS.joints;
 
-                // Base
                 const b = new THREE.Group(); b.name = "Base"; b.position.y = 0.2;
                 b.add(new THREE.Mesh(new THREE.CylinderGeometry(0.8, 1.0, 0.4, 32), getMat(cJoints, mOpts)));
                 group.add(b); if(!isGhost) { base = b; interactiveObjects.push(b); }
 
-                // Shoulder (Rotates Y)
                 const s = new THREE.Group(); s.name = "Shoulder"; s.position.y = 0.2;
                 s.add(new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.6, 32), getMat(cCasing, mOpts)));
                 b.add(s); if(!isGhost) { shoulder = s; interactiveObjects.push(s); }
 
-                // Upper Arm (Rotates Z)
                 const u = new THREE.Group(); u.name = "UpperArm"; u.position.y = 0.4;
                 const uMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 2.0, 16), getMat(cCasing, mOpts));
                 uMesh.position.y = 1.0; u.add(uMesh);
                 
-                // Joint visuals
                 const j1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.8, 16), getMat(cJoints, mOpts)); j1.rotation.x = Math.PI/2;
                 u.add(j1); s.add(u); if(!isGhost) { upperArm = u; interactiveObjects.push(u); }
 
-                // Elbow (Rotates Z)
                 const e = new THREE.Group(); e.name = "Elbow"; e.position.y = 2.0;
                 const j2 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.7, 16), getMat(cJoints, mOpts)); j2.rotation.x = Math.PI/2;
                 e.add(j2); u.add(e); if(!isGhost) { elbow = e; interactiveObjects.push(e); }
 
-                // Forearm (Rotates Y)
                 const f = new THREE.Group(); f.name = "Forearm";
                 const fMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 1.5, 16), getMat(cCasing, mOpts));
                 fMesh.position.y = 0.75; f.add(fMesh); e.add(f); if(!isGhost) { forearm = f; interactiveObjects.push(f); }
 
-                // Wrist (Rotates Z & Y)
                 const w = new THREE.Group(); w.name = "Wrist"; w.position.y = 1.5;
                 const j3 = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), getMat(cJoints, mOpts));
                 w.add(j3); f.add(w); if(!isGhost) { wrist = w; interactiveObjects.push(w); }
 
-                // Gripper (End Effector)
                 const g = new THREE.Group(); g.name = "EndEffector"; g.position.y = 0.3;
                 const gBase = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 0.4), getMat(cJoints, mOpts));
                 const fng1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.4, 0.1), getMat(cCasing, mOpts)); fng1.position.set(-0.25, 0.2, 0);
                 const fng2 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.4, 0.1), getMat(cCasing, mOpts)); fng2.position.set(0.25, 0.2, 0);
                 g.add(gBase, fng1, fng2); w.add(g); if(!isGhost) { gripper = g; interactiveObjects.push(g); }
 
-                // Internal Motors (Only added to solid arm, hidden by default)
                 if(!isGhost) {
                     const addMotor = (parent, y, rX) => {
                         const m = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.5, 16), getMat(COLORS.motors, {emissive:COLORS.motors, emissiveIntensity:0.5}));
                         m.position.y = y; m.rotation.x = rX; m.visible = false; m.name = "Actuator";
                         internalMotors.push(m); parent.add(m);
                     };
-                    addMotor(b, 0.2, 0);       // Base pan motor
-                    addMotor(u, 0, Math.PI/2); // Shoulder tilt motor
-                    addMotor(e, 0, Math.PI/2); // Elbow tilt motor
-                    addMotor(w, 0, 0);         // Wrist roll motor
+                    addMotor(b, 0.2, 0);       
+                    addMotor(u, 0, Math.PI/2); 
+                    addMotor(e, 0, Math.PI/2); 
+                    addMotor(w, 0, 0);         
                 }
                 
                 return group;
             };
 
-            robotGroup.add(createArm(false)); // Solid Arm
-            ghostGroup = createArm(true);     // Ghost Target Arm
+            robotGroup.add(createArm(false)); 
+            ghostGroup = createArm(true);     
             robotGroup.add(ghostGroup);
         }
 
@@ -690,28 +683,24 @@
             state.Ki = parseFloat(document.getElementById('sliderKi').value);
             state.payload = parseFloat(document.getElementById('sliderPayload').value);
 
-            const dt = 0.016; // Approx 60fps
+            const dt = 0.016; 
             const error = state.targetAngle - state.actualAngle;
             
-            // Integral with anti-windup
             state.integralErr += error * dt;
             state.integralErr = Math.max(-5, Math.min(5, state.integralErr)); 
             
             const derivative = (error - state.prevError) / dt;
             state.prevError = error;
 
-            // PID Force Output
             const force = (state.Kp * error) + (state.Ki * state.integralErr) + (state.Kd * derivative);
             
-            // Physical System: Mass-Spring-Damper (J*a + b*v = F)
-            const inertia = 1.0 + (state.payload * 0.5); // Heavier payload = more sluggish/overshoots
-            const friction = 2.0; // Base mechanical friction
+            const inertia = 1.0 + (state.payload * 0.5); 
+            const friction = 2.0; 
             
             const acceleration = (force - (friction * state.velocity)) / inertia;
             state.velocity += acceleration * dt;
             state.actualAngle += state.velocity * dt;
 
-            // Log max overshoot for UI
             if (Math.abs(state.actualAngle) > Math.abs(state.targetAngle) && Math.abs(state.actualAngle) > state.maxOvershoot) {
                 const over = Math.abs((state.actualAngle - state.targetAngle) / (state.targetAngle || 1)) * 100;
                 state.maxOvershoot = Math.min(over, 999);
@@ -719,34 +708,36 @@
                 document.getElementById('outOvershoot').style.color = state.maxOvershoot > 20 ? 'var(--accent-danger)' : 'var(--accent-green)';
             }
 
-            // Steady state error
             if (Math.abs(state.velocity) < 0.01) {
-                state.steadyStateError = Math.abs(error) * 57.29; // Convert rad to deg
+                state.steadyStateError = Math.abs(error) * 57.29; 
                 document.getElementById('outError').innerText = `${state.steadyStateError.toFixed(2)}°`;
             }
 
-            // Apply Math to the Base Joint (Y-axis rotation) for the graph
+            // Apply Math to Base Joint
             shoulder.rotation.y = state.actualAngle;
             
-            // Procedurally animate the rest of the arm based on the base angle to look cool
+            // Procedurally animate rest
             const normalizedExt = Math.sin(state.actualAngle);
             upperArm.rotation.z = Math.PI/6 * normalizedExt;
             elbow.rotation.z = -Math.PI/3 * Math.abs(normalizedExt);
             wrist.rotation.z = Math.PI/4 * normalizedExt;
 
-            // Apply target to Ghost Arm instantly
-            ghostGroup.children[0].children[0].rotation.y = state.targetAngle; // Ghost Shoulder
-            ghostGroup.children[0].children[0].children[0].rotation.z = Math.PI/6 * Math.sin(state.targetAngle); // Ghost Upper
-            ghostGroup.children[0].children[0].children[0].children[1].rotation.z = -Math.PI/3 * Math.abs(Math.sin(state.targetAngle)); // Ghost Elbow
+            // Target Ghost Arm using Object names so hierarchy matches securely
+            const gShoulder = ghostGroup.getObjectByName("Shoulder");
+            const gUpperArm = ghostGroup.getObjectByName("UpperArm");
+            const gElbow = ghostGroup.getObjectByName("Elbow");
+            
+            if (gShoulder) gShoulder.rotation.y = state.targetAngle; 
+            if (gUpperArm) gUpperArm.rotation.z = Math.PI/6 * Math.sin(state.targetAngle); 
+            if (gElbow) gElbow.rotation.z = -Math.PI/3 * Math.abs(Math.sin(state.targetAngle));
 
             // Store data for Graph
             state.graphData.push({ t: state.targetAngle, a: state.actualAngle });
             if (state.graphData.length > 100) state.graphData.shift();
 
-            // Audio update
             updateServoHum();
 
-            // Emergency Check
+            // Emergency Checking
             if (state.maxOvershoot > 60 || Math.abs(state.velocity) > 15) {
                 if(!state.isEmergency) { state.emergencyType = "Aggressive Oscillation!"; triggerEmergency(); }
             } else if (state.steadyStateError > 10 && state.payload > 5) {
@@ -754,21 +745,18 @@
             } else if (state.isEmergency) resolveEmergency();
         }
 
-        // Random pick-and-place command generator
         function triggerNewCommand() {
             if (!state.animationActive) return;
             if (state.pathPlanningUnlocked) {
-                // Smooth sine wave instead of harsh steps
                 state.targetAngle = Math.sin(Date.now() * 0.001) * 1.5;
             } else {
-                // Harsh steps
                 state.targetAngle = (Math.random() - 0.5) * Math.PI; 
-                state.maxOvershoot = 0; // Reset metrics
+                state.maxOvershoot = 0; 
             }
             if (!commandTimer) commandTimer = setInterval(triggerNewCommand, 4000);
         }
 
-        // ==================== GRAPH CANVAS ====================
+        // ==================== GRAPH CANVAS & DATA ====================
         function startStepResponseGraph() {
             const canvas = document.getElementById('stepGraph');
             const ctx = canvas.getContext('2d');
@@ -778,31 +766,54 @@
                 const w = canvas.width, h = canvas.height;
                 ctx.clearRect(0,0,w,h);
                 
-                // Grid
                 ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke();
                 
                 if (state.graphData.length < 2) return;
                 
-                // Draw Target (White)
                 ctx.beginPath(); ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2;
                 ctx.moveTo(0, h/2 - (state.graphData[0].t * 40));
                 for(let i=1; i<state.graphData.length; i++) {
-                    ctx.lineTo(i * (w/100), h/2 - (state.graphData[i].t * 40));
+                    ctx.lineTo(i * (w/state.graphData.length), h/2 - (state.graphData[i].t * 40));
                 }
                 ctx.stroke();
 
-                // Draw Actual (Cyan)
                 ctx.beginPath(); ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3;
                 ctx.moveTo(0, h/2 - (state.graphData[0].a * 40));
                 for(let i=1; i<state.graphData.length; i++) {
-                    ctx.lineTo(i * (w/100), h/2 - (state.graphData[i].a * 40));
+                    ctx.lineTo(i * (w/state.graphData.length), h/2 - (state.graphData[i].a * 40));
                 }
                 ctx.stroke();
             }, 50);
         }
 
+        function startDataStream() {
+            setInterval(() => {
+                if (!document.getElementById('dataPanel').classList.contains('active')) return;
+                const t = new Date().toLocaleTimeString();
+                addDataStreamEntry("DATA", `[${t}] Kp:${state.Kp} | Error: ${state.steadyStateError.toFixed(1)}°`);
+            }, 3000);
+        }
+        function addDataStreamEntry(type, msg) {
+            const div = document.getElementById('dataStreamContent');
+            if (!div) return;
+            const e = document.createElement('div');
+            let color = "var(--text-muted)";
+            if(type === "EMERGENCY") color = "var(--accent-danger)";
+            else if(type === "INTERACTION") color = "var(--accent-purple)";
+            e.innerHTML = `<div style="margin-bottom:5px; color:${color}"><strong>${type}:</strong> ${msg}</div>`;
+            div.insertBefore(e, div.firstChild); 
+            if (div.children.length > 15) div.removeChild(div.lastChild);
+        }
+
         // ==================== UI & INTERACTION ====================
+        function updateSliderUI() {
+            document.getElementById('valKp').innerText = document.getElementById('sliderKp').value;
+            document.getElementById('valKd').innerText = document.getElementById('sliderKd').value;
+            document.getElementById('valKi').innerText = document.getElementById('sliderKi').value;
+            document.getElementById('valPayload').innerText = parseFloat(document.getElementById('sliderPayload').value).toFixed(1) + ' kg';
+        }
+
         function initUI() {
             function togglePanel(id) {
                 const p = document.getElementById(id); const active = p.classList.contains('active');
@@ -816,6 +827,10 @@
             document.getElementById('btnAI').onclick = () => togglePanel('aiPanel');
             ['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'].forEach(id => {
                 document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
+            });
+
+            // Bind slider UX numbers['sliderKp', 'sliderKd', 'sliderKi', 'sliderPayload'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateSliderUI);
             });
 
             document.getElementById('btnXray').onclick = (e) => {
@@ -863,6 +878,7 @@
             if (state.audioEnabled) { window.speechSynthesis.cancel(); speak(state.emergencyType); setTimeout(()=>startSiren(), 1500);}
             const p = document.getElementById('controlPanel');
             if (!p.classList.contains('active')) { document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active')); p.classList.add('active'); }
+            addDataStreamEntry("EMERGENCY", state.emergencyType);
         }
 
         function resolveEmergency() {
@@ -972,6 +988,7 @@
                     }
                     const info = compDict[obj.name] || { title: obj.name.toUpperCase(), info: "Robotic Component." };
                     showToast(info.title, info.info);
+                    addDataStreamEntry("INTERACTION", `Clicked: ${info.title}`);
                     if (state.audioEnabled && !state.isEmergency) speak(`${info.title}. ${info.info}`);
                 }
             }
@@ -981,6 +998,17 @@
             const t = document.getElementById('infoToast'); document.getElementById('toastText').innerText = title; document.getElementById('toastSubtext').innerText = msg;
             t.style.display = 'block'; gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
             if (toastTimer) clearTimeout(toastTimer); toastTimer = setTimeout(() => gsap.to(t, { opacity: 0, y: 20, duration: 0.3, onComplete: () => t.style.display = 'none' }), 3000);
+        }
+
+        function speak(text) {
+            if (!state.audioEnabled) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.rate = 0.9; u.pitch = 1.1;
+                u.voice = speechSynthesis.getVoices().find(v => v.lang.includes('en'));
+                window.speechSynthesis.speak(u);
+            }
         }
 
         const aiKnowledgeBase = {
@@ -1001,7 +1029,11 @@
             chatBox.innerHTML += `<div class="chat-msg user">${inputEl.value}</div>`; inputEl.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
             let response = aiKnowledgeBase["default"];
             for (const key in aiKnowledgeBase) if (query.includes(key)) { response = aiKnowledgeBase[key]; break; }
-            setTimeout(() => { chatBox.innerHTML += `<div class="chat-msg bot">${response}</div>`; chatBox.scrollTop = chatBox.scrollHeight; if (state.audioEnabled) speak(response); }, 600);
+            setTimeout(() => { 
+                chatBox.innerHTML += `<div class="chat-msg bot">${response}</div>`; chatBox.scrollTop = chatBox.scrollHeight; 
+                addDataStreamEntry("AI TUTOR", "Answered student query");
+                if (state.audioEnabled) speak(response); 
+            }, 600);
         }
         document.getElementById('btnSendAI').addEventListener('click', processAIQuery);
         document.getElementById('aiInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') processAIQuery(); });
@@ -1024,6 +1056,7 @@
                     document.getElementById('sliderPayload').value = 10; document.getElementById('sliderKp').value = 200;
                     state.emergencyType = "Actuator Overload!";
                 }
+                updateSliderUI();
                 triggerEmergency();
             }
 
