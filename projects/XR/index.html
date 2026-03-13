@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering WebAR Labs | Chemical, Mechanical & Mechatronics</title>
+    <title>Engineering WebAR Labs | Chemical, Mechanical, Mechatronics & Civil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -24,6 +24,7 @@
             --haber-color: #38bdf8;   /* Cyan for Haber-Bosch */
             --engine-color: #ff6b35;  /* Orange for Engine Lab */
             --robotics-color: #8b5cf6; /* Purple for Robotics Lab */
+            --structural-color: #10b981; /* Emerald Green for Structural Lab */
         }
 
         * {
@@ -283,6 +284,7 @@
         .lab-card.haber { border-top: 6px solid var(--haber-color); }
         .lab-card.engine { border-top: 6px solid var(--engine-color); }
         .lab-card.robotics { border-top: 6px solid var(--robotics-color); }
+        .lab-card.structural { border-top: 6px solid var(--structural-color); }
 
         .lab-card h3 {
             font-size: 26px;
@@ -446,6 +448,14 @@
         .feature-card.robotics-feature .feature-icon {
             color: var(--robotics-color);
             background: rgba(139, 92, 246, 0.1);
+        }
+
+        .feature-card.structural-feature::before {
+            background: linear-gradient(90deg, var(--structural-color), #34d399);
+        }
+        .feature-card.structural-feature .feature-icon {
+            color: var(--structural-color);
+            background: rgba(16, 185, 129, 0.1);
         }
 
         .feature-card.gamified { border: 1px solid #ef4444; }
@@ -637,6 +647,7 @@
         
         .cta-button.engine-btn { background: linear-gradient(135deg, #d35400 0%, var(--engine-color) 100%); }
         .cta-button.robotics-btn { background: linear-gradient(135deg, #6d28d9 0%, var(--robotics-color) 100%); }
+        .cta-button.structural-btn { background: linear-gradient(135deg, #059669 0%, var(--structural-color) 100%); }
 
         .cta-button:hover {
             transform: translateY(-3px);
@@ -822,6 +833,31 @@
                         <span class="lang-ar">تشغيل المختبر</span>
                     </button>
                 </div>
+
+                <!-- Lab 4: Structural Mechanics -->
+                <div class="lab-card structural">
+                    <h3 class="lang-en">Structural Mechanics <span>Civil Engineering</span></h3>
+                    <h3 class="lang-ar">ميكانيكا الإنشاءات <span>الهندسة المدنية</span></h3>
+                    
+                    <div class="app-logo-container">
+                        <div class="app-logo-frame">
+                            <img src="images/Civil-marker.png" onerror="this.src='https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png'" alt="Structural AR Marker" class="app-logo-img">
+                        </div>
+                    </div>
+
+                    <p class="lang-en">
+                        Advanced WebAR simulation of a Truss Bridge. Analyze 3D truss stress, moving loads, and structural safety in real-time.
+                    </p>
+                    <p class="lang-ar">
+                        محاكاة واقع معزز متقدمة لجسر الجمالون. قم بتحليل إجهاد الجمالون ثلاثي الأبعاد، والأحمال المتحركة، والسلامة الهيكلية في الوقت الفعلي.
+                    </p>
+
+                    <button class="cta-button structural-btn" onclick="window.location.href='app4.html'">
+                        <i class="fas fa-bridge"></i> 
+                        <span class="lang-en">Launch Lab</span>
+                        <span class="lang-ar">تشغيل المختبر</span>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -885,6 +921,19 @@
                     </p>
                     <p class="lang-ar">
                         اضبط معاملات التناسب والتكامل والتفاضل (PID) في الوقت الفعلي. اعرض الرسوم البيانية للاستجابة الديناميكية وأدر القصور الذاتي للحمولة.
+                    </p>
+                </div>
+
+                <!-- Structural Feature -->
+                <div class="feature-card structural-feature">
+                    <div class="feature-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <h3 class="lang-en">Statics & Mechanics (Civil)</h3>
+                    <h3 class="lang-ar">الاستاتيكا والميكانيكا (مدنية)</h3>
+                    <p class="lang-en">
+                        Real-time calculation of tension, compression, and deflection. Visualize the Factor of Safety (FS) under moving dynamic loads.
+                    </p>
+                    <p class="lang-ar">
+                        حساب فوري للشد والضغط والانحناء. تصور عامل السلامة (FS) تحت تأثير الأحمال الديناميكية المتحركة.
                     </p>
                 </div>
                 
