@@ -674,6 +674,7 @@
             };
             reactorGroup.add(createCap(3.225), createCap(-0.025));
             engineGroup.add(reactorGroup);
+            interactiveObjects.push(reactorGroup); // <-- Add this to make the Reactor clickable!
 
             // Feed Tanks
             const createTank = (color, xPos, name) => {
@@ -1080,7 +1081,7 @@
             
             // Speak the name AND its function
             if (state.audioEnabled && !state.isEmergency) {
-                speak(`${info.title}. ${info.info}`);
+                speak(`${info.title}. ${info.desc}. ${info.info}`);
             }
             
             // Log to Data Stream
@@ -1144,7 +1145,10 @@
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.rate = 0.9;
                 utterance.pitch = 1.1;
-                utterance.voice = speechSynthesis.getVoices().find(v => v.lang.includes('en'));
+                const voices = window.speechSynthesis.getVoices();
+                const engVoice = voices.find(v => v.lang.includes('en'));
+                if (engVoice) utterance.voice = engVoice; 
+                
                 window.speechSynthesis.speak(utterance);
             }
         }
