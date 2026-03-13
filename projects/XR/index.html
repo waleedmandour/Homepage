@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering WebAR Labs | Mechanical & Chemical Engineering</title>
+    <title>Engineering WebAR Labs | Chemical, Mechanical & Mechatronics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -23,6 +23,7 @@
             /* Lab Specific Colors for accents */
             --haber-color: #38bdf8;   /* Cyan for Haber-Bosch */
             --engine-color: #ff6b35;  /* Orange for Engine Lab */
+            --robotics-color: #8b5cf6; /* Purple for Robotics Lab */
         }
 
         * {
@@ -254,7 +255,7 @@
         /* ===== LAB SELECTION GRID ===== */
         .lab-selection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 32px;
             margin: 64px 0;
         }
@@ -269,6 +270,8 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
         }
 
         .lab-card:hover {
@@ -279,6 +282,7 @@
         /* Lab Specific Border Accents */
         .lab-card.haber { border-top: 6px solid var(--haber-color); }
         .lab-card.engine { border-top: 6px solid var(--engine-color); }
+        .lab-card.robotics { border-top: 6px solid var(--robotics-color); }
 
         .lab-card h3 {
             font-size: 26px;
@@ -300,15 +304,16 @@
         .lab-card p {
             color: var(--gray);
             margin-bottom: 25px;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.6;
+            flex-grow: 1;
         }
 
         /* ===== ENHANCED APP LOGO SECTION ===== */
         .app-logo-container {
             position: relative;
-            max-width: 300px; 
-            width: 90%;
+            max-width: 250px; 
+            width: 100%;
             margin: 0 auto 25px;
             display: flex;
             align-items: center;
@@ -400,7 +405,7 @@
         /* ===== FEATURES GRID ===== */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 32px;
             margin: 64px 0;
         }
@@ -426,15 +431,26 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
         
-        /* Engine Feature Card Override */
+        /* Specific Feature Card Overrides */
         .feature-card.engine-feature::before {
             background: linear-gradient(90deg, var(--engine-color), #ff8c00);
         }
-        
         .feature-card.engine-feature .feature-icon {
             color: var(--engine-color);
             background: rgba(255, 107, 53, 0.1);
         }
+
+        .feature-card.robotics-feature::before {
+            background: linear-gradient(90deg, var(--robotics-color), #d946ef);
+        }
+        .feature-card.robotics-feature .feature-icon {
+            color: var(--robotics-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .feature-card.gamified { border: 1px solid #ef4444; }
+        .feature-card.gamified::before { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+        .feature-card.gamified .feature-icon { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 
         .feature-card:hover {
             transform: translateY(-8px);
@@ -462,18 +478,6 @@
         .feature-card p {
             color: var(--dark);
             line-height: 1.7;
-        }
-        
-        /* Highlight specific for gamification card */
-        .feature-card.gamified {
-            border: 1px solid #ef4444;
-        }
-        .feature-card.gamified::before {
-            background: linear-gradient(90deg, #ef4444, #f59e0b);
-        }
-        .feature-card.gamified .feature-icon {
-            color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
         }
 
         /* ===== BENEFITS SECTION ===== */
@@ -611,34 +615,11 @@
             color: #000;
         }
 
-        /* ===== CTA SECTION ===== */
-        .cta-section {
-            text-align: center;
-            padding: 64px 0;
-            background: linear-gradient(135deg, var(--light) 0%, rgba(56, 189, 248, 0.1) 100%);
-            border-radius: 12px;
-            margin: 64px 0;
-            box-shadow: var(--shadow);
-        }
-
-        .cta-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .cta-subtitle {
-            color: var(--gray);
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 32px;
-            line-height: 1.7;
-        }
-
+        /* ===== BUTTONS ===== */
         .cta-button {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -651,11 +632,11 @@
             box-shadow: 0 4px 15px rgba(13, 27, 42, 0.3);
             border: none;
             cursor: pointer;
+            width: 100%;
         }
         
-        .cta-button.engine-btn {
-             background: linear-gradient(135deg, #d35400 0%, var(--engine-color) 100%);
-        }
+        .cta-button.engine-btn { background: linear-gradient(135deg, #d35400 0%, var(--engine-color) 100%); }
+        .cta-button.robotics-btn { background: linear-gradient(135deg, #6d28d9 0%, var(--robotics-color) 100%); }
 
         .cta-button:hover {
             transform: translateY(-3px);
@@ -690,46 +671,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== PRINT STYLES ===== */
-        @media print {
-            /* Hide everything except the marker */
-            body * {
-                visibility: hidden;
-            }
-            
-            /* Show the marker container and its children */
-            .app-logo-container, .app-logo-container * {
-                visibility: visible;
-            }
-            
-            /* Position the marker at the top left of the page */
-            .app-logo-container {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%; 
-                max-width: none;
-                margin: 0;
-                padding: 0;
-                border: none;
-                background: none;
-                box-shadow: none;
-                animation: none;
-            }
-            
-            .app-logo-container::before, 
-            .app-logo-container::after {
-                display: none;
-            }
-            
-            .app-logo-frame {
-                border: none;
-                background: none;
-                box-shadow: none;
-                padding: 0;
-            }
         }
 
         /* Mobile Responsive */
@@ -792,11 +733,11 @@
                 
                 <p class="hero-description lang-en">
                     Access next-generation Augmented Reality simulations. 
-                    Visualize complex engineering concepts, from chemical thermodynamics to internal combustion kinematics.
+                    Visualize complex engineering concepts, from chemical thermodynamics and internal combustion kinematics to robotic control systems.
                 </p>
                 <p class="hero-description lang-ar">
                     الوصول إلى محاكانات الواقع المعزز من الجيل التالي.
-                    تصور المفاهيم الهندسية المعقدة، من الديناميكا الحرارية الكيميائية إلى حركيات الاحتراق الداخلي.
+                    تصور المفاهيم الهندسية المعقدة، من الديناميكا الحرارية الكيميائية والاحتراق الداخلي إلى أنظمة التحكم الروبوتية.
                 </p>
             </div>
         </section>
@@ -812,7 +753,6 @@
                     <h3 class="lang-en">Haber-Bosch Process <span>Chemical Engineering</span></h3>
                     <h3 class="lang-ar">عملية هابر-بوش <span>الهندسة الكيميائية</span></h3>
                     
-                    <!-- Marker Image -->
                     <div class="app-logo-container">
                         <div class="app-logo-frame">
                             <img src="images/Haber-Bosch-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Haber-Bosch AR Marker" class="app-logo-img">
@@ -820,12 +760,10 @@
                     </div>
 
                     <p class="lang-en">
-                        Visualize ammonia synthesis. Manipulate Temperature & Pressure to optimize yield. 
-                        Features "System Decomposition" challenges.
+                        Visualize ammonia synthesis. Manipulate Temperature & Pressure to optimize yield. Features "System Decomposition" challenges.
                     </p>
                     <p class="lang-ar">
-                        تصور تخليق الأمونيا. تحكم في الحرارة والضغط لتحسين الناتج.
-                        يتضمن تحديات "تحلل النظام".
+                        تصور تخليق الأمونيا. تحكم في الحرارة والضغط لتحسين الناتج. يتضمن تحديات "تحلل النظام".
                     </p>
 
                     <button class="cta-button" onclick="window.location.href='https://waleedmandour.org/projects/XR/app.html'">
@@ -840,10 +778,8 @@
                     <h3 class="lang-en">Twin-Cylinder Engine <span>Mechanical Engineering</span></h3>
                     <h3 class="lang-ar">محرك ثنائي الأسطوانات <span>الهندسة الميكانيكية</span></h3>
                     
-                    <!-- Marker Image -->
                     <div class="app-logo-container">
                         <div class="app-logo-frame">
-                            <!-- Placeholder for Engine Marker - User should replace src -->
                             <img src="images/Engine-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Engine AR Marker" class="app-logo-img">
                         </div>
                     </div>
@@ -857,6 +793,31 @@
 
                     <button class="cta-button engine-btn" onclick="window.location.href='app1.html'">
                         <i class="fas fa-cogs"></i> 
+                        <span class="lang-en">Launch Lab</span>
+                        <span class="lang-ar">تشغيل المختبر</span>
+                    </button>
+                </div>
+
+                <!-- Lab 3: Robotic Kinematics -->
+                <div class="lab-card robotics">
+                    <h3 class="lang-en">6-DOF Robotic Arm <span>Mechatronics Engineering</span></h3>
+                    <h3 class="lang-ar">ذراع آلي بـ 6 درجات حرية <span>هندسة الميكاترونكس</span></h3>
+                    
+                    <div class="app-logo-container">
+                        <div class="app-logo-frame">
+                            <img src="images/Robotics-marker.png" onerror="this.src='https://waleedmandour.org/projects/XR/images/Haber-Bosch-marker.png'" alt="Robotics AR Marker" class="app-logo-img">
+                        </div>
+                    </div>
+
+                    <p class="lang-en">
+                        Master closed-loop PID control on an industrial 6-axis robotic arm. Analyze live step-response graphs and prevent actuator overloads.
+                    </p>
+                    <p class="lang-ar">
+                        أتقن نظام التحكم المغلق (PID) على ذراع آلي صناعي بـ 6 محاور. قم بتحليل الرسوم البيانية للاستجابة المباشرة وامنع التحميل الزائد على المحركات.
+                    </p>
+
+                    <button class="cta-button robotics-btn" onclick="window.location.href='app3.html'">
+                        <i class="fas fa-robot"></i> 
                         <span class="lang-en">Launch Lab</span>
                         <span class="lang-ar">تشغيل المختبر</span>
                     </button>
@@ -891,28 +852,39 @@
                 <!-- Haber-Bosch Feature -->
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-temperature-high"></i></div>
-                    <h3 class="lang-en">Thermodynamics (Haber-Bosch)</h3>
-                    <h3 class="lang-ar">الديناميكا الحرارية (هابر-بوش)</h3>
+                    <h3 class="lang-en">Thermodynamics (Chemical)</h3>
+                    <h3 class="lang-ar">الديناميكا الحرارية (كيميائية)</h3>
                     <p class="lang-en">
-                        Real-time ammonia yield calculations based on Le Chatelier’s principle. 
-                        Visualizes the trade-off between reaction rate and equilibrium.
+                        Real-time ammonia yield calculations based on Le Chatelier’s principle. Visualizes the trade-off between reaction rate and equilibrium.
                     </p>
                     <p class="lang-ar">
-                        حساب فوري لناتج الأمونيا بناءً على مبدأ لوشاتلييه.
-                        يصور التوازن بين معدل التفاعل والاتزان.
+                        حساب فوري لناتج الأمونيا بناءً على مبدأ لوشاتلييه. يصور التوازن بين معدل التفاعل والاتزان.
                     </p>
                 </div>
                 
                 <!-- Engine Feature -->
                 <div class="feature-card engine-feature">
                     <div class="feature-icon"><i class="fas fa-car"></i></div>
-                    <h3 class="lang-en">Kinematics (Twin-Cylinder)</h3>
-                    <h3 class="lang-ar">الكينماتيك (ثنائي الأسطوانات)</h3>
+                    <h3 class="lang-en">Kinematics (Mechanical)</h3>
+                    <h3 class="lang-ar">الكينماتيك (ميكانيكية)</h3>
                     <p class="lang-en">
                         Animated twin-cylinder 4-stroke cycle with Dual Overhead Camshafts (DOHC). Visualize complex 180-degree offset Piston-Crankshaft motion.
                     </p>
                     <p class="lang-ar">
                         رسوم متحركة لمحرك ثنائي الأسطوانات بعمود كامات علوي مزدوج. تصور حركة المكبس-المرفق المعقدة والمتزامنة.
+                    </p>
+                </div>
+
+                <!-- Robotics Feature -->
+                <div class="feature-card robotics-feature">
+                    <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3 class="lang-en">Control Theory (Mechatronics)</h3>
+                    <h3 class="lang-ar">نظرية التحكم (ميكاترونكس)</h3>
+                    <p class="lang-en">
+                        Tune Proportional, Integral, and Derivative (PID) gains in real-time. View dynamic step-response graphs and manage payload inertia.
+                    </p>
+                    <p class="lang-ar">
+                        اضبط معاملات التناسب والتكامل والتفاضل (PID) في الوقت الفعلي. اعرض الرسوم البيانية للاستجابة الديناميكية وأدر القصور الذاتي للحمولة.
                     </p>
                 </div>
                 
@@ -923,11 +895,11 @@
                     <h3 class="lang-ar">تحديات تفاعلية</h3>
                     <p class="lang-en">
                         <strong>Emergency Scenarios:</strong> 
-                        Respond to "System Alerts" (Overheating, Engine Knock) by adjusting parameters under time pressure.
+                        Respond to "System Alerts" (Overheating, Engine Knock, Actuator Overload) by adjusting parameters under time pressure.
                     </p>
                     <p class="lang-ar">
                         <strong>سيناريوهات الطوارئ:</strong>
-                        الاستجابة لـ "تنبيهات النظام" (الارتفاع الحراري، خبط المحرك) عن طريق ضبط المعاملات تحت ضغط الوقت.
+                        الاستجابة لـ "تنبيهات النظام" (الارتفاع الحراري، خبط المحرك، تحميل المحركات) عن طريق ضبط المعاملات تحت ضغط الوقت.
                     </p>
                 </div>
 
@@ -961,9 +933,9 @@
                             <div class="check-icon">✓</div>
                             <div class="benefit-content">
                                 <strong class="lang-en">Technical Vocabulary</strong>
-                                <span class="lang-en">Learn terms like "Catalyst," "Equilibrium," "Piston," and "Stoichiometric" in a rich 3D context.</span>
+                                <span class="lang-en">Learn terms like "Catalyst," "Kinematics," "Actuator," and "Stoichiometric" in a rich 3D context.</span>
                                 <strong class="lang-ar">المفردات التقنية</strong>
-                                <span class="lang-ar">تعلم مصطلحات مثل "محفز"، "توازن"، "مكبس"، و"ستويكيومتري" في سياق ثلاثي الأبعاد غني.</span>
+                                <span class="lang-ar">تعلم مصطلحات مثل "محفز"، "كينماتيكا"، "مشغل ميكانيكي"، و"ستويكيومتري" في سياق ثلاثي الأبعاد غني.</span>
                             </div>
                         </li>
                         <li>
@@ -987,18 +959,18 @@
                             <div class="check-icon">✓</div>
                             <div class="benefit-content">
                                 <strong class="lang-en">Concept Visualization</strong>
-                                <span class="lang-en">Makes abstract concepts like bond breaking, phase changes, and slider-crank mechanisms visible.</span>
+                                <span class="lang-en">Makes abstract concepts like phase changes, PID math, and slider-crank mechanisms visible.</span>
                                 <strong class="lang-ar">تصور المفاهيم</strong>
-                                <span class="lang-ar">يجعل المفاهيم المجردة مثل تكسير الروابط وتغيرات الطور وآليات المرفق مرئية.</span>
+                                <span class="lang-ar">يجعل المفاهيم المجردة مثل تغيرات الطور، ورياضيات PID، وآليات المرفق مرئية.</span>
                             </div>
                         </li>
                         <li>
                             <div class="check-icon">✓</div>
                             <div class="benefit-content">
                                 <strong class="lang-en">Safe Experimentation</strong>
-                                <span class="lang-en">Simulate dangerous high-pressure or high-temperature environments safely within the classroom.</span>
+                                <span class="lang-en">Simulate dangerous high-pressure environments or expensive robotic collisions safely within the classroom.</span>
                                 <strong class="lang-ar">تجريب آمن</strong>
-                                <span class="lang-ar">محاكاة بيئات الضغط العالي أو الحرارة العالية الخطرة بأمان داخل الفصل.</span>
+                                <span class="lang-ar">محاكاة بيئات الضغط العالي الخطرة أو تصادمات الروبوتات المكلفة بأمان داخل الفصل.</span>
                             </div>
                         </li>
                     </ul>
