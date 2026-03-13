@@ -35,7 +35,7 @@
             --accent-cyan: #38bdf8;
             --accent-green: #10b981;
             --accent-orange: #f59e0b;
-            --accent-blue: #3b82f6; /* Primary Civil Engineering Accent */
+            --accent-blue: #3b82f6; 
             --accent-danger: #ef4444;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
@@ -83,12 +83,12 @@
         .slider-value { font-family: var(--font-code); font-size: 1rem; color: var(--accent-blue); font-weight: 600; transition: color 0.3s;}
 
         input[type="range"] { width: 100%; height: 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); outline: none; -webkit-appearance: none; background: linear-gradient(90deg, var(--text-muted) 0%, var(--accent-blue) 100%); }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: white; border-radius: 50%; cursor: pointer; box-shadow: var(--glow-blue); border: 2px solid var(--accent-blue); }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: white; border-radius: 50%; cursor: pointer; box-shadow: var(--glow-blue); border: 2px solid var(--accent-blue); }
 
         .parameter-display { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .param-box { background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 12px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); }
         .param-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-        .param-value { font-size: 1.2rem; font-weight: 700; font-family: var(--font-code); }
+        .param-value { font-size: 1.2rem; font-weight: 700; font-family: var(--font-code); transition: color 0.3s; }
         
         .val-tension { color: #3b82f6; } .val-comp { color: #ef4444; } .val-deflect { color: #f59e0b; } .val-fs { color: #10b981; }
 
@@ -124,8 +124,9 @@
 
         .mode-toggles { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; background: var(--glass-panel); padding: 12px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: auto; backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
         .icon-btn { width: 48px; height: 48px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; position: relative; }
-        .icon-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); color:white;}
+        .icon-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); color:white;}
         .icon-btn.active { background: var(--accent-blue); color: #fff; box-shadow: var(--glow-blue); }
+        .icon-btn.active-explode { background: var(--accent-orange); color: #fff; box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
 
         /* Screens */
         #loadingScreen, #startScreen, #targetModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -392,12 +393,12 @@
 
         // ==================== STATE & PHYSICS ====================
         const state = {
-            load: 150, height: 2.0, thickness: 15, yieldStrength: 500, // Base steel yield
+            load: 150, height: 2.0, thickness: 15, yieldStrength: 500,
             maxTension: 0, maxComp: 0, deflection: 0, factorOfSafety: 2.5,
             truckPos: 0, truckDir: 1, 
             graphData: new Array(100).fill({t:0, a:0}),
             
-            isStressMap: true, isExploded: false, animationActive: true, audioEnabled: true, mode: 'AR',
+            isStressMap: false, isExploded: false, animationActive: true, audioEnabled: true, mode: 'AR',
             lastEmergency: Date.now(), isEmergency: false, emergencyType: '', emergencyStars: 0,
             currentLevel: 0, currentQ: 0, score: 0, achievements:[], totalStars: 0, carbonUnlocked: false
         };
@@ -412,7 +413,7 @@
             }
             document.getElementById('startScreenStars').innerText = state.totalStars;
             document.getElementById('uiStars').innerText = state.totalStars;
-            if (state.carbonUnlocked) state.yieldStrength = 1000; // Double strength
+            if (state.carbonUnlocked) state.yieldStrength = 1000;
         }
 
         // ==================== 3D GLOBALS ====================
@@ -420,7 +421,6 @@
         let audioCtx = null, groanOscillator = null, groanGain = null, ambientSound = null;
         let sirenInterval = null, toastTimer = null;
         let interactiveObjects =[];
-        
         let nodes = [], members =[];
 
         // Auto-hide UI
@@ -442,7 +442,8 @@
             if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
             if ('speechSynthesis' in window) { const msg = new SpeechSynthesisUtterance(''); msg.volume = 0; window.speechSynthesis.speak(msg); }
             audioUnlocked = true;
-            document.removeEventListener('click', unlockAudioContext); document.removeEventListener('touchstart', unlockAudioContext);
+            document.removeEventListener('click', unlockAudioContext); 
+            document.removeEventListener('touchstart', unlockAudioContext);
         }
 
         function initAudioContext() {
@@ -460,7 +461,7 @@
                 groanOscillator = audioCtx.createOscillator();
                 groanGain = audioCtx.createGain();
                 groanOscillator.type = 'sawtooth'; 
-                groanOscillator.frequency.value = 40; // Deep low rumble
+                groanOscillator.frequency.value = 40;
                 groanGain.gain.value = 0; 
                 
                 const filter = audioCtx.createBiquadFilter();
@@ -474,11 +475,10 @@
 
         function updateBridgeGroan() {
             if (!audioCtx || !groanOscillator) return;
-            // If Factor of Safety approaches 1.0, it gets loud and groans
             if (state.audioEnabled && state.animationActive && state.factorOfSafety < 3.0) {
-                const danger = Math.max(0, 3.0 - state.factorOfSafety) / 2.0; // 0 to 1
+                const danger = Math.max(0, 3.0 - state.factorOfSafety) / 2.0; 
                 const vol = danger * 0.15;
-                const freq = 40 + (Math.random() * 10 * danger); // Shuddering frequency
+                const freq = 40 + (Math.random() * 10 * danger); 
                 
                 groanOscillator.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
                 groanGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
@@ -492,7 +492,8 @@
             loadProgress(); simulateLoading();
             ['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
             resetHideTimer(); initAudioContext();
-            document.addEventListener('click', unlockAudioContext); document.addEventListener('touchstart', unlockAudioContext);
+            document.addEventListener('click', unlockAudioContext); 
+            document.addEventListener('touchstart', unlockAudioContext);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -565,6 +566,7 @@
         }
 
         function init3DMode() {
+            document.body.classList.remove('ar-active'); // Ensure background is solid dark
             document.getElementById('modeIndicator').innerText = 'SIMULATION MODE';
             scene = new THREE.Scene(); scene.background = new THREE.Color(0x0f172a); scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
             setupLighting();
@@ -625,27 +627,23 @@
         function getMat(col, opts={}) { return new THREE.MeshStandardMaterial({color:col, roughness:0.4, metalness:0.6, ...opts}); }
         
         function buildBridge() {
-            bridgeGroup.clear(); interactiveObjects = []; nodes = []; members =[];
+            bridgeGroup.clear(); interactiveObjects =[]; nodes = []; members =[];
 
-            // A Simple Warren Truss. Length = 8 units. Span from -4 to 4.
             const L = 8; const segs = 4; const segL = L/segs;
-            const Z_W = 1.0; // Half-width
+            const Z_W = 1.0; 
 
-            // 1. Define Base Nodes (Logical positions)
-            // Bottom Nodes (0 to 4) on Front and Back
+            // Define Nodes
             for(let i=0; i<=segs; i++) {
                 const x = -4 + (i * segL);
                 nodes.push({ id: `B_F_${i}`, orig: new THREE.Vector3(x, 0, Z_W), current: new THREE.Vector3(), mesh: null });
                 nodes.push({ id: `B_B_${i}`, orig: new THREE.Vector3(x, 0, -Z_W), current: new THREE.Vector3(), mesh: null });
             }
-            // Top Nodes (0 to 3) on Front and Back
             for(let i=0; i<segs; i++) {
                 const x = -4 + (i * segL) + (segL/2);
                 nodes.push({ id: `T_F_${i}`, orig: new THREE.Vector3(x, state.height, Z_W), current: new THREE.Vector3(), mesh: null });
                 nodes.push({ id: `T_B_${i}`, orig: new THREE.Vector3(x, state.height, -Z_W), current: new THREE.Vector3(), mesh: null });
             }
 
-            // Create Visual Nodes (Gusset plates)
             const nodeGeo = new THREE.SphereGeometry(0.12, 16, 16);
             nodes.forEach(n => {
                 const m = new THREE.Mesh(nodeGeo, getMat(COLORS.node));
@@ -653,40 +651,32 @@
                 bridgeGroup.add(m); n.mesh = m; interactiveObjects.push(m);
             });
 
-            // 2. Define Members (Connections)
+            // Define Members
             const addMem = (id1, id2, type, name) => {
                 const n1 = nodes.find(n => n.id === id1); const n2 = nodes.find(n => n.id === id2);
                 if(!n1 || !n2) return;
-                // Cylinder oriented along Y. We will rotate it in updateBridgeGeometry
                 const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 1, 16), getMat(COLORS.steel));
                 cyl.name = name; cyl.userData = { type: type };
                 bridgeGroup.add(cyl); interactiveObjects.push(cyl);
                 members.push({ n1, n2, mesh: cyl, type, name, force: 0 });
             };
 
-            // Bottom Chords
             for(let i=0; i<segs; i++) { addMem(`B_F_${i}`, `B_F_${i+1}`, 'bottom', "Bottom Chord"); addMem(`B_B_${i}`, `B_B_${i+1}`, 'bottom', "Bottom Chord"); }
-            // Top Chords
             for(let i=0; i<segs-1; i++) { addMem(`T_F_${i}`, `T_F_${i+1}`, 'top', "Top Chord"); addMem(`T_B_${i}`, `T_B_${i+1}`, 'top', "Top Chord"); }
-            // Diagonals (Warren style: / \ / \)
             for(let i=0; i<segs; i++) {
                 addMem(`B_F_${i}`, `T_F_${i}`, 'diag', "Diagonal Web"); addMem(`B_B_${i}`, `T_B_${i}`, 'diag', "Diagonal Web");
                 addMem(`T_F_${i}`, `B_F_${i+1}`, 'diag', "Diagonal Web"); addMem(`T_B_${i}`, `B_B_${i+1}`, 'diag', "Diagonal Web");
             }
-            // Cross Beams (Deck & Roof)
             for(let i=0; i<=segs; i++) addMem(`B_F_${i}`, `B_B_${i}`, 'cross', "Deck Cross Beam");
             for(let i=0; i<segs; i++) addMem(`T_F_${i}`, `T_B_${i}`, 'cross', "Roof Cross Beam");
 
-            // Road Deck
             const deck = new THREE.Mesh(new THREE.BoxGeometry(8.4, 0.05, 2.0), getMat(0x333333));
             deck.position.y = -0.025; bridgeGroup.add(deck);
 
-            // Concrete Piers (Supports)
             const pierGeo = new THREE.BoxGeometry(1.0, 3.0, 3.0);
             const pierL = new THREE.Mesh(pierGeo, getMat(0x94a3b8)); pierL.position.set(-4.2, -1.5, 0); bridgeGroup.add(pierL);
             const pierR = new THREE.Mesh(pierGeo, getMat(0x94a3b8)); pierR.position.set(4.2, -1.5, 0); bridgeGroup.add(pierR);
 
-            // Build Moving Truck
             truckGroup = new THREE.Group(); truckGroup.position.set(-4, 0.4, 0);
             const cab = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.6, 0.8), getMat(COLORS.truck)); cab.position.x = 0.6;
             const trailer = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.8, 0.8), getMat(0xcbd5e1)); trailer.position.x = -0.6;
@@ -697,40 +687,35 @@
 
         function updateBridgeGeometry() {
             const H = state.height;
-            const T = state.thickness / 100.0; // cm to units
-            const d = state.isExploded ? 0.8 : 1.0; // Shrink for exploded view
+            const T = state.thickness / 100.0; 
+            const d = state.isExploded ? 0.8 : 1.0; 
 
-            // Update Nodes
             nodes.forEach(n => {
                 n.current.copy(n.orig);
                 if (n.id.startsWith('T_')) n.current.y = H;
-                
-                // Exploded View offset (pull away from center slightly)
                 if (state.isExploded) {
                     if (n.id.startsWith('T_')) n.current.y += 0.5;
                     if (n.id.startsWith('B_')) n.current.y -= 0.5;
                 }
-
                 n.mesh.position.copy(n.current);
                 n.mesh.scale.setScalar(state.isExploded ? 0.5 : 1.0);
             });
 
-            // Update Members
             members.forEach(m => {
                 const p1 = m.n1.current; const p2 = m.n2.current;
                 const dist = p1.distanceTo(p2);
                 const center = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
                 
                 m.mesh.position.copy(center);
-                m.mesh.scale.set(T * 2, dist * d, T * 2); // Cylinder length is Y axis
+                m.mesh.scale.set(T * 2, dist * d, T * 2); 
                 
-                // Orient cylinder from p1 to p2
-                m.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), p2.clone().sub(p1).normalize());
+                if (dist > 0.01) {
+                    m.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), p2.clone().sub(p1).normalize());
+                }
 
-                // Color Map based on Force
                 if (state.isStressMap && !state.isExploded) {
-                    if (m.force > 5) m.mesh.material.color.setHex(COLORS.tension); // Tension
-                    else if (m.force < -5) m.mesh.material.color.setHex(COLORS.compression); // Compression
+                    if (m.force > 5) m.mesh.material.color.setHex(COLORS.tension); 
+                    else if (m.force < -5) m.mesh.material.color.setHex(COLORS.compression); 
                     else m.mesh.material.color.setHex(COLORS.neutral);
                 } else {
                     m.mesh.material.color.setHex(COLORS.steel);
@@ -749,42 +734,33 @@
             truckGroup.position.x = state.truckPos;
             truckGroup.rotation.y = state.truckDir === 1 ? 0 : Math.PI;
 
-            // Simple Statics Approximation
-            // W = load. L = 8. x = position from left (0 to 8).
-            const W = parseFloat(document.getElementById('sliderLoad').value);
-            state.height = parseFloat(document.getElementById('sliderHeight').value);
-            state.thickness = parseFloat(document.getElementById('sliderThick').value);
+            // Slider Inputs
+            const W = parseFloat(document.getElementById('sliderLoad').value) || 150;
+            state.height = parseFloat(document.getElementById('sliderHeight').value) || 2.0;
+            state.thickness = parseFloat(document.getElementById('sliderThick').value) || 15;
 
-            const x = state.truckPos + 4; // Map -4->4 to 0->8
-            
-            // Deflection approximation: max at center. Proportional to W, 1/(H^2), 1/(T^2)
+            const x = state.truckPos + 4; 
             const T_m = Math.max(0.01, state.thickness / 100);
             const baseDeflection = (W * 0.01) / (state.height * T_m * T_m);
-            // Shape of deflection curve (sine wave approximation)
             state.deflection = baseDeflection * Math.sin((x / 8) * Math.PI);
             
-            // Forces
             let maxT = 0, maxC = 0;
-            
             members.forEach(m => {
-                // Heuristic mapping of forces to demonstrate Tension/Compression visually
-                // Top chords = Compression. Bottom = Tension. Diagonals = Shear transfer.
                 let f = 0;
-                const mX = m.mesh.position.x + 4; // Center x of member
+                const mX = m.mesh.position.x + 4; 
                 const distToLoad = Math.abs(mX - x);
-                const loadFactor = Math.max(0, 1 - (distToLoad / 4)); // Higher force when load is near
+                const loadFactor = Math.max(0, 1 - (distToLoad / 4)); 
 
-                const globalMoment = (W * x * (8-x)) / 8; // Simplified global bending moment
+                const globalMoment = (W * x * (8-x)) / 8; 
 
                 if (m.type === 'top') {
-                    f = -(globalMoment / state.height) * loadFactor; // Compression (-)
+                    f = -(globalMoment / state.height) * loadFactor; 
                 } else if (m.type === 'bottom') {
-                    f = (globalMoment / state.height) * loadFactor; // Tension (+)
+                    f = (globalMoment / state.height) * loadFactor; 
                 } else if (m.type === 'diag') {
-                    // Shear reverses as load passes
                     f = (mX > x ? 1 : -1) * (W / state.height) * loadFactor;
-                    // Fix sign based on geometry angle (/) vs (\) to be accurate-ish
-                    if (m.n1.orig.y === 0 && m.n2.orig.y > 0) f *= (m.n2.orig.x > m.n1.orig.x) ? 1 : -1;
+                    const isForwardSlash = (m.n2.orig.y - m.n1.orig.y) * (m.n2.orig.x - m.n1.orig.x) > 0;
+                    f *= isForwardSlash ? 1 : -1;
                 }
                 
                 m.force = f;
@@ -796,28 +772,31 @@
             state.maxComp = Math.abs(maxC);
             const maxStressForce = Math.max(state.maxTension, state.maxComp);
             
-            // Stress = Force / Area. Area ~ Thickness^2
             const area = T_m * T_m;
-            const maxStress = maxStressForce / (area * 1000); // Abstract unit conversion
+            const maxStress = maxStressForce / (area * 1000); 
             
             state.factorOfSafety = Math.max(0.1, state.yieldStrength / (maxStress || 1));
 
-            // Update UI
-            document.getElementById('outTension').innerText = `${Math.round(state.maxTension)} kN`;
-            document.getElementById('outComp').innerText = `${Math.round(state.maxComp)} kN`;
-            document.getElementById('outDeflect').innerText = `${state.deflection.toFixed(1)} mm`;
-            document.getElementById('outFS').innerText = `${state.factorOfSafety.toFixed(2)}`;
-            
-            document.getElementById('outFS').style.color = state.factorOfSafety < 1.0 ? 'var(--accent-danger)' : (state.factorOfSafety < 2.0 ? 'var(--accent-orange)' : 'var(--accent-green)');
+            // Update UI displays safely
+            const outTension = document.getElementById('outTension');
+            const outComp = document.getElementById('outComp');
+            const outDeflect = document.getElementById('outDeflect');
+            const outFS = document.getElementById('outFS');
 
-            // Graph Data
-            state.graphData.push({ t: 50, a: state.deflection }); // 50mm is arbitrary yield limit for graph
+            if(outTension) outTension.innerText = `${Math.round(state.maxTension)} kN`;
+            if(outComp) outComp.innerText = `${Math.round(state.maxComp)} kN`;
+            if(outDeflect) outDeflect.innerText = `${state.deflection.toFixed(1)} mm`;
+            if(outFS) {
+                outFS.innerText = `${state.factorOfSafety.toFixed(2)}`;
+                outFS.style.color = state.factorOfSafety < 1.0 ? 'var(--accent-danger)' : (state.factorOfSafety < 2.0 ? 'var(--accent-orange)' : 'var(--accent-green)');
+            }
+
+            state.graphData.push({ t: 50, a: state.deflection }); 
             if (state.graphData.length > 100) state.graphData.shift();
 
             updateBridgeGeometry();
             updateBridgeGroan();
 
-            // Emergency Check
             if (state.factorOfSafety <= 1.0) {
                 if(!state.isEmergency) { state.emergencyType = "Structural Failure Imminent!"; triggerEmergency(); }
             } else if (state.deflection > 100) {
@@ -828,6 +807,7 @@
         // ==================== GRAPH CANVAS & DATA ====================
         function startStepResponseGraph() {
             const canvas = document.getElementById('defGraph');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             
             setInterval(() => {
@@ -840,13 +820,11 @@
                 
                 if (state.graphData.length < 2) return;
                 
-                // Yield Limit (Red)
                 ctx.beginPath(); ctx.strokeStyle = 'rgba(239, 68, 68, 0.8)'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
                 ctx.moveTo(0, 20 + (state.graphData[0].t));
                 for(let i=1; i<state.graphData.length; i++) ctx.lineTo(i * (w/state.graphData.length), 20 + (state.graphData[i].t));
                 ctx.stroke(); ctx.setLineDash([]);
 
-                // Actual Deflection (Cyan)
                 ctx.beginPath(); ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3;
                 ctx.moveTo(0, 20 + (state.graphData[0].a));
                 for(let i=1; i<state.graphData.length; i++) ctx.lineTo(i * (w/state.graphData.length), 20 + (state.graphData[i].a));
@@ -858,7 +836,8 @@
             setInterval(() => {
                 if (!document.getElementById('dataPanel').classList.contains('active')) return;
                 const t = new Date().toLocaleTimeString();
-                addDataStreamEntry("DATA", `[${t}] Load: ${document.getElementById('sliderLoad').value}kN | FS: ${state.factorOfSafety.toFixed(2)}`);
+                const loadInput = document.getElementById('sliderLoad');
+                if(loadInput) addDataStreamEntry("DATA", `[${t}] Load: ${loadInput.value}kN | FS: ${state.factorOfSafety.toFixed(2)}`);
             }, 3000);
         }
         
@@ -876,47 +855,70 @@
 
         // ==================== UI & INTERACTION ====================
         function updateSliderUI() {
-            document.getElementById('valLoad').innerText = document.getElementById('sliderLoad').value + ' kN';
-            document.getElementById('valHeight').innerText = parseFloat(document.getElementById('sliderHeight').value).toFixed(1) + ' m';
-            document.getElementById('valThick').innerText = document.getElementById('sliderThick').value + ' cm';
+            const valLoad = document.getElementById('valLoad');
+            const sliderLoad = document.getElementById('sliderLoad');
+            if(valLoad && sliderLoad) valLoad.innerText = sliderLoad.value + ' kN';
+
+            const valHeight = document.getElementById('valHeight');
+            const sliderHeight = document.getElementById('sliderHeight');
+            if(valHeight && sliderHeight) valHeight.innerText = parseFloat(sliderHeight.value).toFixed(1) + ' m';
+
+            const valThick = document.getElementById('valThick');
+            const sliderThick = document.getElementById('sliderThick');
+            if(valThick && sliderThick) valThick.innerText = sliderThick.value + ' cm';
         }
 
         function initUI() {
             function togglePanel(id) {
-                const p = document.getElementById(id); const active = p.classList.contains('active');
+                const p = document.getElementById(id); if(!p) return;
+                const active = p.classList.contains('active');
                 document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active'));
                 if (!active) setTimeout(() => p.classList.add('active'), 10);
             }
 
-            document.getElementById('btnSettings').onclick = () => togglePanel('controlPanel');
-            document.getElementById('btnQuiz').onclick = () => togglePanel('quizPanel');
-            document.getElementById('btnData').onclick = () => togglePanel('dataPanel');
-            document.getElementById('btnAI').onclick = () => togglePanel('aiPanel');['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'].forEach(id => {
-                document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
+            const btnSettings = document.getElementById('btnSettings'); if(btnSettings) btnSettings.onclick = () => togglePanel('controlPanel');
+            const btnQuiz = document.getElementById('btnQuiz'); if(btnQuiz) btnQuiz.onclick = () => togglePanel('quizPanel');
+            const btnData = document.getElementById('btnData'); if(btnData) btnData.onclick = () => togglePanel('dataPanel');
+            const btnAI = document.getElementById('btnAI'); if(btnAI) btnAI.onclick = () => togglePanel('aiPanel');
+
+            const closeButtons =['btnCloseControls', 'btnCloseQuiz', 'btnCloseData', 'btnCloseAI'];
+            closeButtons.forEach(id => {
+                const btn = document.getElementById(id);
+                if(btn) {
+                    btn.onclick = (e) => { 
+                        e.stopPropagation(); 
+                        e.currentTarget.parentElement.parentElement.classList.remove('active'); 
+                    }
+                }
             });
 
             ['sliderLoad', 'sliderHeight', 'sliderThick'].forEach(id => {
-                document.getElementById(id).addEventListener('input', updateSliderUI);
+                const slider = document.getElementById(id);
+                if(slider) slider.addEventListener('input', updateSliderUI);
             });
 
-            document.getElementById('btnXray').onclick = (e) => {
+            const btnXray = document.getElementById('btnXray');
+            if(btnXray) btnXray.onclick = (e) => {
                 state.isStressMap = !state.isStressMap; e.currentTarget.classList.toggle('active');
                 updateBridgeGeometry();
                 showToast(state.isStressMap ? "Stress Map ON" : "Stress Map OFF", state.isStressMap ? "Blue=Tension, Red=Compression" : "Standard Materials");
             };
 
-            document.getElementById('btnExplode').onclick = (e) => {
+            const btnExplode = document.getElementById('btnExplode');
+            if(btnExplode) btnExplode.onclick = (e) => {
                 state.isExploded = !state.isExploded; e.currentTarget.classList.toggle('active-explode');
                 updateBridgeGeometry();
             };
 
-            document.getElementById('btnAnimation').onclick = (e) => {
+            const btnAnimation = document.getElementById('btnAnimation');
+            if(btnAnimation) btnAnimation.onclick = (e) => {
                 state.animationActive = !state.animationActive; e.currentTarget.classList.toggle('active');
                 e.currentTarget.innerHTML = state.animationActive ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
                 updateBridgeGroan();
             };
 
-            document.getElementById('btnAudio').onclick = (e) => {
+            const btnAudio = document.getElementById('btnAudio');
+            if(btnAudio) btnAudio.onclick = (e) => {
                 state.audioEnabled = !state.audioEnabled; e.currentTarget.classList.toggle('active');
                 e.currentTarget.innerHTML = state.audioEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
                 if(ambientSound) state.audioEnabled?ambientSound.play():ambientSound.pause();
@@ -924,45 +926,64 @@
                 updateBridgeGroan();
             };
             
-            document.getElementById('btnReset').onclick = () => {
+            const btnReset = document.getElementById('btnReset');
+            if(btnReset) btnReset.onclick = () => {
                 gsap.to(bridgeGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
                 gsap.to(bridgeGroup.scale, { x: 0.4, y: 0.4, z: 0.4, duration: 1 });
                 if(state.mode !== 'AR') gsap.to(camera.position, { x: 0, y: 3, z: 10, duration: 1 });
             };
-            document.getElementById('btnExit').onclick = () => confirm("Exit Lab?") && location.reload();
+            
+            const btnExit = document.getElementById('btnExit');
+            if(btnExit) btnExit.onclick = () => {
+                if(confirm("Exit Lab?")) location.reload();
+            };
+            
+            // Initial UI population
+            updateSliderUI();
         }
 
         // ==================== GAMIFICATION ====================
         function triggerEmergency() {
             state.isEmergency = true; document.body.classList.add('critical-state');
-            document.getElementById('statusText').innerText = state.emergencyType;
+            const statusText = document.getElementById('statusText');
+            if(statusText) statusText.innerText = state.emergencyType;
             if (state.audioEnabled) { window.speechSynthesis.cancel(); speak(state.emergencyType); setTimeout(()=>startSiren(), 1500);}
             const p = document.getElementById('controlPanel');
-            if (!p.classList.contains('active')) { document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active')); p.classList.add('active'); }
+            if (p && !p.classList.contains('active')) { document.querySelectorAll('.side-panel').forEach(el => el.classList.remove('active')); p.classList.add('active'); }
             addDataStreamEntry("EMERGENCY", state.emergencyType);
         }
 
         function resolveEmergency() {
             state.isEmergency = false; state.lastEmergency = Date.now();
-            document.body.classList.remove('critical-state'); document.getElementById('statusText').innerText = "Bridge Stable";
+            document.body.classList.remove('critical-state'); 
+            const statusText = document.getElementById('statusText');
+            if(statusText) statusText.innerText = "Bridge Stable";
             stopSiren(); if (state.audioEnabled) speak("Structure stabilized.");
             if (state.emergencyStars < 3) { awardStar("Stabilized!", "Disaster Prevented"); state.emergencyStars++; }
-            setTimeout(() => document.getElementById('controlPanel').classList.remove('active'), 3500);
+            setTimeout(() => {
+                const p = document.getElementById('controlPanel');
+                if(p) p.classList.remove('active');
+            }, 3500);
         }
 
         function awardStar(title, subtitle) {
-            state.totalStars++; document.getElementById('startScreenStars').innerText = state.totalStars; document.getElementById('uiStars').innerText = state.totalStars;
+            state.totalStars++; 
+            const sss = document.getElementById('startScreenStars'); if(sss) sss.innerText = state.totalStars; 
+            const uis = document.getElementById('uiStars'); if(uis) uis.innerText = state.totalStars;
             saveProgress();
-            const r = document.getElementById('starReward'); document.getElementById('achievementText').innerText = subtitle;
-            r.style.display = 'block'; r.style.opacity = '0';
-            gsap.to(r, { opacity: 1, duration: 0.5, onComplete: () => setTimeout(() => gsap.to(r, { opacity: 0, duration: 0.5, onComplete:()=>r.style.display='none'}), 1500) });
+            const r = document.getElementById('starReward'); 
+            const achTxt = document.getElementById('achievementText'); if(achTxt) achTxt.innerText = subtitle;
+            if(r) {
+                r.style.display = 'block'; r.style.opacity = '0';
+                gsap.to(r, { opacity: 1, duration: 0.5, onComplete: () => setTimeout(() => gsap.to(r, { opacity: 0, duration: 0.5, onComplete:()=>r.style.display='none'}), 1500) });
+            }
 
             if (state.totalStars === 5 && !state.carbonUnlocked) {
                 state.carbonUnlocked = true; state.yieldStrength = 1000; saveProgress();
                 setTimeout(() => {
-                    const t = document.getElementById('unlockToast'); t.style.display = 'block';
+                    const t = document.getElementById('unlockToast'); if(t) t.style.display = 'block';
                     if(state.audioEnabled) speak("Carbon Fiber Materials Unlocked. Yield strength doubled.");
-                    setTimeout(() => t.style.display = 'none', 4000);
+                    setTimeout(() => { if(t) t.style.display = 'none'; }, 4000);
                 }, 2500);
             }
         }
@@ -970,10 +991,11 @@
         function initQuiz() {
             const render = () => {
                 const qList = quizLevels[state.currentLevel]; const q = qList[state.currentQ];
-                document.getElementById('txtQuizLevel').innerText = `Level ${state.currentLevel + 1}`;
-                document.getElementById('qText').innerHTML = `<strong>Q${state.currentQ + 1}/${qList.length}:</strong> ${q.q}`;
-                const optsDiv = document.getElementById('qOptions'); optsDiv.innerHTML = '';
-                document.getElementById('btnNextQ').style.display = 'none';
+                const txtLvl = document.getElementById('txtQuizLevel'); if(txtLvl) txtLvl.innerText = `Level ${state.currentLevel + 1}`;
+                const qTxt = document.getElementById('qText'); if(qTxt) qTxt.innerHTML = `<strong>Q${state.currentQ + 1}/${qList.length}:</strong> ${q.q}`;
+                const optsDiv = document.getElementById('qOptions'); if(!optsDiv) return;
+                optsDiv.innerHTML = '';
+                const btnNextQ = document.getElementById('btnNextQ'); if(btnNextQ) btnNextQ.style.display = 'none';
                 
                 q.options.forEach((opt, i) => {
                     const btn = document.createElement('div'); btn.className = 'quiz-btn'; btn.innerHTML = `${opt}`;
@@ -981,22 +1003,25 @@
                         Array.from(optsDiv.children).forEach(b => b.style.pointerEvents = 'none');
                         if(i === q.correct) { 
                             btn.classList.add('correct'); awardStar("Correct!", "Knowledge Check"); showQuizStarParticles(btn);
-                            if(audioCtx && state.audioEnabled) { const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.connect(g).connect(audioCtx.destination);osc.frequency.value=600;g.gain.value=0.1;g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.5);osc.start();osc.stop(audioCtx.currentTime+0.5); }
+                            if(audioCtx && state.audioEnabled) { try{ const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.connect(g).connect(audioCtx.destination);osc.frequency.value=600;g.gain.value=0.1;g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.5);osc.start();osc.stop(audioCtx.currentTime+0.5); }catch(e){} }
                         } else { 
                             btn.classList.add('wrong'); optsDiv.children[q.correct].classList.add('correct'); 
-                            if(audioCtx && state.audioEnabled) { const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.connect(g).connect(audioCtx.destination);osc.frequency.value=200;g.gain.value=0.1;g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.3);osc.start();osc.stop(audioCtx.currentTime+0.3); }
+                            if(audioCtx && state.audioEnabled) { try{ const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.connect(g).connect(audioCtx.destination);osc.frequency.value=200;g.gain.value=0.1;g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.3);osc.start();osc.stop(audioCtx.currentTime+0.3); }catch(e){} }
                         }
-                        document.getElementById('btnNextQ').style.display = 'block';
+                        if(btnNextQ) btnNextQ.style.display = 'block';
                     };
                     optsDiv.appendChild(btn);
                 });
             };
             render();
-            document.getElementById('btnNextQ').onclick = () => {
-                state.currentQ++;
-                if(state.currentQ >= quizLevels[state.currentLevel].length) { state.currentQ = 0; if (state.currentLevel < quizLevels.length - 1) state.currentLevel++; else state.currentLevel = 0; }
-                render();
-            };
+            const btnNextQ = document.getElementById('btnNextQ');
+            if(btnNextQ) {
+                btnNextQ.onclick = () => {
+                    state.currentQ++;
+                    if(state.currentQ >= quizLevels[state.currentLevel].length) { state.currentQ = 0; if (state.currentLevel < quizLevels.length - 1) state.currentLevel++; else state.currentLevel = 0; }
+                    render();
+                };
+            }
         }
 
         function showQuizStarParticles(btn) {
@@ -1033,6 +1058,7 @@
             if (e.target !== renderer.domElement && e.target.tagName !== 'CANVAS') return;
             const rect = renderer.domElement.getBoundingClientRect();
             const cX = e.clientX || (e.touches && e.touches[0].clientX); const cY = e.clientY || (e.touches && e.touches[0].clientY);
+            if(cX === undefined || cY === undefined) return;
             const mouse = new THREE.Vector2(((cX - rect.left) / rect.width) * 2 - 1, -((cY - rect.top) / rect.height) * 2 + 1);
             const rc = new THREE.Raycaster(); rc.setFromCamera(mouse, camera);
             const hits = rc.intersectObjects(interactiveObjects, true);
@@ -1047,12 +1073,11 @@
                     }
                     const info = compDict[obj.name] || { info: "Structural Component." };
                     
-                    // Add real-time force dictation for members
                     let forceTxt = "";
                     const memberData = members.find(m => m.mesh === obj);
                     if (memberData) {
                         const f = memberData.force;
-                        forceTxt = f > 5 ? ` Experiencing ${Math.round(f)} kN of Tension.` : (f < -5 ? ` Experiencing ${Math.round(Math.abs(f))} kN of Compression.` : " Currently neutral.");
+                        forceTxt = f > 5 ? ` Experiencing ${Math.round(f)} kilo-Newtons of Tension.` : (f < -5 ? ` Experiencing ${Math.round(Math.abs(f))} kilo-Newtons of Compression.` : " Currently neutral.");
                     }
 
                     showToast(obj.name.toUpperCase(), info.info);
@@ -1063,7 +1088,9 @@
         }
 
         function showToast(title, msg) {
-            const t = document.getElementById('infoToast'); document.getElementById('toastText').innerText = title; document.getElementById('toastSubtext').innerText = msg;
+            const t = document.getElementById('infoToast'); if(!t) return;
+            const tt = document.getElementById('toastText'); if(tt) tt.innerText = title; 
+            const ts = document.getElementById('toastSubtext'); if(ts) ts.innerText = msg;
             t.style.display = 'block'; gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
             if (toastTimer) clearTimeout(toastTimer); toastTimer = setTimeout(() => gsap.to(t, { opacity: 0, y: 20, duration: 0.3, onComplete: () => t.style.display = 'none' }), 3000);
         }
@@ -1091,7 +1118,9 @@
         };
 
         function processAIQuery() {
-            const inputEl = document.getElementById('aiInput'), chatBox = document.getElementById('aiChatBox'), query = inputEl.value.trim().toLowerCase();
+            const inputEl = document.getElementById('aiInput'), chatBox = document.getElementById('aiChatBox');
+            if(!inputEl || !chatBox) return;
+            const query = inputEl.value.trim().toLowerCase();
             if (!query) return;
             chatBox.innerHTML += `<div class="chat-msg user">${inputEl.value}</div>`; inputEl.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
             let response = aiKnowledgeBase["default"];
@@ -1102,8 +1131,11 @@
                 if (state.audioEnabled) speak(response); 
             }, 600);
         }
-        document.getElementById('btnSendAI').addEventListener('click', processAIQuery);
-        document.getElementById('aiInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') processAIQuery(); });
+        
+        const btnSendAI = document.getElementById('btnSendAI');
+        if(btnSendAI) btnSendAI.addEventListener('click', processAIQuery);
+        const aiInput = document.getElementById('aiInput');
+        if(aiInput) aiInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processAIQuery(); });
 
         // ==================== LOOP ====================
         function animate() {
@@ -1113,14 +1145,18 @@
             // Gamification: Specific Failures
             if (!state.isEmergency && !document.getElementById('quizPanel').classList.contains('active') && Date.now() - state.lastEmergency > 60000) {
                 const failType = Math.random();
-                if (failType < 0.33) {
-                    document.getElementById('sliderLoad').value = 500; document.getElementById('sliderThick').value = 5;
+                const loadSlider = document.getElementById('sliderLoad');
+                const thickSlider = document.getElementById('sliderThick');
+                const heightSlider = document.getElementById('sliderHeight');
+
+                if (failType < 0.33 && loadSlider && thickSlider) {
+                    loadSlider.value = 500; thickSlider.value = 5;
                     state.emergencyType = "Heavy Convoy Alert!";
-                } else if (failType < 0.66) {
-                    document.getElementById('sliderLoad').value = 400; document.getElementById('sliderHeight').value = 1.0;
+                } else if (failType < 0.66 && loadSlider && heightSlider) {
+                    loadSlider.value = 400; heightSlider.value = 1.0;
                     state.emergencyType = "Hurricane Crosswind!";
-                } else {
-                    document.getElementById('sliderLoad').value = 300; state.yieldStrength = 200; // Drop yield strength to cause failure
+                } else if (loadSlider) {
+                    loadSlider.value = 300; state.yieldStrength = 200; 
                     state.emergencyType = "Material Fatigue Detected!";
                 }
                 updateSliderUI();
