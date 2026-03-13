@@ -447,8 +447,7 @@
             if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
             if ('speechSynthesis' in window) { const msg = new SpeechSynthesisUtterance(''); msg.volume = 0; window.speechSynthesis.speak(msg); }
             audioUnlocked = true;
-            document.removeEventListener('click', unlockAudioContext); 
-            document.removeEventListener('touchstart', unlockAudioContext);
+            document.removeEventListener('click', unlockAudioContext); document.removeEventListener('touchstart', unlockAudioContext);
         }
 
         function initAudioContext() {
@@ -496,15 +495,9 @@
 
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
-            loadProgress(); 
-            simulateLoading();
-            
-            ['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
-            resetHideTimer(); 
-            initAudioContext();
-            
-            document.addEventListener('click', unlockAudioContext); 
-            document.addEventListener('touchstart', unlockAudioContext);
+            loadProgress(); simulateLoading();['mousemove', 'touchstart', 'click', 'wheel'].forEach(evt => window.addEventListener(evt, resetHideTimer));
+            resetHideTimer(); initAudioContext();
+            document.addEventListener('click', unlockAudioContext); document.addEventListener('touchstart', unlockAudioContext);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -581,6 +574,11 @@
             scene = new THREE.Scene(); scene.background = new THREE.Color(0x0f172a); scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
             setupLighting();
 
+            // Floor grid for visual grounding
+            const grid = new THREE.GridHelper(10, 20, 0x8b5cf6, 0x1e293b);
+            grid.position.y = -0.01;
+            scene.add(grid);
+
             robotGroup = new THREE.Group(); scene.add(robotGroup);
             buildRoboticArm();
 
@@ -610,9 +608,23 @@
             };
             dom.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY)); window.addEventListener('mouseup', () => isDragging = false);
             dom.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-            dom.addEventListener('wheel', (e) => { e.preventDefault(); zoom = Math.min(Math.max(0.2, zoom - e.deltaY*0.001), 2); if(state.mode==='AR') robotGroup.scale.set(zoom,zoom,zoom); else camera.position.z = 8*(1/zoom); });
+            dom.addEventListener('wheel', (e) => { 
+                e.preventDefault(); 
+                zoom = Math.min(Math.max(0.2, zoom - e.deltaY*0.001), 2); 
+                // Scale in both AR and 3D to maintain perfectly centered lookAt point
+                robotGroup.scale.set(zoom,zoom,zoom); 
+            });
             dom.addEventListener('touchstart', (e) => { if(e.touches.length===1) onStart(e.touches[0].clientX, e.touches[0].clientY); else if(e.touches.length===2){ isDragging=false; initialPinch = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);}}, {passive:false});
-            dom.addEventListener('touchmove', (e) => { e.preventDefault(); if(isDragging && e.touches.length===1) onMove(e.touches[0].clientX, e.touches[0].clientY); else if(e.touches.length===2 && initialPinch){ const dist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY); zoom = Math.min(Math.max(0.2, zoom+(dist-initialPinch)*0.005), 2); if(state.mode==='AR') robotGroup.scale.set(zoom,zoom,zoom); else camera.position.z = 8*(1/zoom); initialPinch=dist; }}, {passive:false});
+            dom.addEventListener('touchmove', (e) => { 
+                e.preventDefault(); 
+                if(isDragging && e.touches.length===1) onMove(e.touches[0].clientX, e.touches[0].clientY); 
+                else if(e.touches.length===2 && initialPinch){ 
+                    const dist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY); 
+                    zoom = Math.min(Math.max(0.2, zoom+(dist-initialPinch)*0.005), 2); 
+                    robotGroup.scale.set(zoom,zoom,zoom); 
+                    initialPinch=dist; 
+                }
+            }, {passive:false});
             dom.addEventListener('click', onEnhancedMouseClick);
         }
 
@@ -801,6 +813,7 @@
                 addDataStreamEntry("DATA", `[${t}] Kp:${state.Kp} | Error: ${state.steadyStateError.toFixed(1)}°`);
             }, 3000);
         }
+        
         function addDataStreamEntry(type, msg) {
             const div = document.getElementById('dataStreamContent');
             if (!div) return;
@@ -835,7 +848,8 @@
                 document.getElementById(id).onclick = (e) => { e.stopPropagation(); e.currentTarget.parentElement.parentElement.classList.remove('active'); }
             });
 
-            // Bind slider UX numbers['sliderKp', 'sliderKd', 'sliderKi', 'sliderPayload'].forEach(id => {
+            // Bind slider UX numbers securely
+            ['sliderKp', 'sliderKd', 'sliderKi', 'sliderPayload'].forEach(id => {
                 document.getElementById(id).addEventListener('input', updateSliderUI);
             });
 
@@ -849,8 +863,12 @@
 
             document.getElementById('btnExplode').onclick = (e) => {
                 state.isExploded = !state.isExploded; e.currentTarget.classList.toggle('active-explode');
+                
+                // Hide ghost arm during explode so it doesn't overlap messily
+                if (ghostGroup) ghostGroup.visible = !state.isExploded;
+                
                 const d = state.isExploded ? 1 : 0;
-                gsap.to(upperArm.position, { y: 1.0 + (d*0.5), duration: 1});
+                gsap.to(upperArm.position, { y: 0.4 + (d*0.5), duration: 1}); // Returns perfectly to 0.4
                 gsap.to(elbow.position, { y: 2.0 + (d*1.0), duration: 1});
                 gsap.to(wrist.position, { y: 1.5 + (d*0.5), duration: 1});
             };
@@ -872,7 +890,6 @@
             document.getElementById('btnReset').onclick = () => {
                 gsap.to(robotGroup.rotation, { x: 0, y: 0, z: 0, duration: 1 });
                 gsap.to(robotGroup.scale, { x: 0.5, y: 0.5, z: 0.5, duration: 1 });
-                if(state.mode !== 'AR') gsap.to(camera.position, { x: 5, y: 4, z: 5, duration: 1 });
             };
             document.getElementById('btnExit').onclick = () => confirm("Exit Lab?") && location.reload();
         }
