@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AWE System: Automated Writing Evaluation - AI-powered essay assessment for Foundation and Post-Foundation students at Sultan Qaboos University.">
+    <title>AWE System - Automated Writing Evaluation | Sultan Qaboos University</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #1a5f2a;
+            --secondary: #c9a227;
+            --accent: #2a7f3a;
+            --accent-light: #c9a227;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic div,
+        body.arabic .hero-content,
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .courses-grid {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(26, 95, 42, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* ===== HEADER STYLES ===== */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(26, 95, 42, 0.9) 0%, rgba(42, 127, 58, 0.85) 50%, rgba(201, 162, 39, 0.7) 100%),
+                url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(201, 162, 39, 0.6);
+            transition: var(--transition);
+            background: white;
+            padding: 10px;
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(201, 162, 39, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: rgba(26, 95, 42, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+
+        /* ===== APP LOGO SECTION ===== */
+        .app-logo-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .app-logo-frame {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+                0 0 30px rgba(201, 162, 39, 0.3);
+            padding: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 0 40px rgba(201, 162, 39, 0.4);
+        }
+
+        .app-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            transition: filter 0.3s ease;
+        }
+
+        .app-logo-frame:hover .app-logo-img {
+            filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
+        }
+
+        .app-logo-container::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.2) 0%, rgba(26, 95, 42, 0.2) 100%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .app-logo-container::after {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            animation: rotate 25s linear infinite reverse;
+            z-index: -2;
+        }
+
+        .app-logo-frame::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 60%);
+            background-size: 300% 300%;
+            animation: shine 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { background-position: -100% -100%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--dark);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        /* ===== DATA NOTICE ===== */
+        .data-notice {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 4px solid var(--primary);
+            padding: 24px;
+            margin: 40px auto;
+            border-radius: 12px;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        body.arabic .data-notice {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+
+        .data-notice h4 {
+            color: #1b5e20;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-notice h4 i {
+            font-size: 20px;
+        }
+
+        .data-notice p {
+            color: #2e7d32;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .data-notice a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .data-notice a:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        body.arabic .section-title::after {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        /* ===== WORKFLOW SECTION ===== */
+        .workflow-container {
+            position: relative;
+            margin: 64px 0;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .workflow-step {
+            background: var(--white);
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .workflow-step:hover::before {
+            opacity: 1;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .workflow-step h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .workflow-step p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== COURSES GRID ===== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .course-card {
+            background: var(--white);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        body.arabic .course-card {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .course-card.post-foundation .course-badge {
+            background: var(--secondary);
+        }
+
+        .course-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .course-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .criteria-list {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--light);
+        }
+
+        .criteria-list span {
+            display: inline-block;
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 3px;
+            color: var(--dark);
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--secondary);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 16px;
+            background: rgba(26, 95, 42, 0.1);
+            border-radius: 12px;
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 64px 0;
+            background: linear-gradient(135deg, var(--light) 0%, rgba(26, 95, 42, 0.1) 100%);
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .cta-subtitle {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(26, 95, 42, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 95, 42, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #d9b237 100%);
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+            margin-left: 12px;
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(201, 162, 39, 0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid var(--light);
+            margin-top: 64px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-email {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .footer-email:hover {
+            color: var(--secondary);
+        }
+        
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -5px;
+            color: var(--gray);
+        }
+
+        body.arabic .footer-links a:not(:last-child)::after {
+            right: auto;
+            left: -5px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* ===== LANGUAGE LOGIC ===== */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        
+        .data-notice h4.lang-en { display: flex; }
+        .data-notice h4.lang-ar { display: none; }
+        
+        .footer-content > div > .lang-en { display: inline; }
+        .footer-content > div > .lang-ar { display: none; }
+        
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+        
+        body.arabic .data-notice h4.lang-en { display: none; }
+        body.arabic .data-notice h4.lang-ar { display: flex; }
+        
+        body.arabic .footer-content > div > .lang-en { display: none; }
+        body.arabic .footer-content > div > .lang-ar { display: inline; }
+
+        body.arabic .hero h1.lang-ar,
+        body.arabic .hero .hero-subtitle.lang-ar {
+            text-align: center;
+        }
+
+        body.arabic .footer,
+        body.arabic .footer-content,
+        body.arabic .footer-content > div {
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text {
+                text-align: center;
+            }
+            
+            body.arabic .header-text {
+                text-align: center;
+            }
+
+            .cta-button.secondary {
+                margin-left: 0;
+                margin-top: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.1em;
+            }
+            
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 20px; }
+            .section-title { font-size: 28px; }
+            
+            .features-grid,
+            .workflow-steps,
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-toggle {
+                top: 16px;
+                right: 16px;
+            }
+            
+            .app-logo-container {
+                width: 140px;
+                height: 140px;
+                margin-bottom: 30px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .footer-links a:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .hero h1 { font-size: 28px; }
+            .hero-description { font-size: 16px; }
+            
+            .feature-card {
+                padding: 24px;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .app-logo-container {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">AWE System</h1>
+                <h1 class="lang-ar">نظام تقييم الكتابة الآلي</h1>
+                
+                <p class="tagline lang-en">Automated Writing Evaluation System</p>
+                <p class="tagline lang-ar">نظام التقييم الآلي للكتابة</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/squ_logo.png" alt="Sultan Qaboos University Logo" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <img src="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/squ_logo.png" alt="AWE System Logo" class="app-logo-img">
+                    </div>
+                </div>
+                
+                <h1 class="lang-en">AWE System: AI-Powered Essay Assessment</h1>
+                <h1 class="lang-ar">نظام تقييم الكتابة: تقييم المقالات بالذكاء الاصطناعي</h1>
+                
+                <div class="hero-subtitle lang-en">For Foundation & Post-Foundation Students at Sultan Qaboos University</div>
+                <div class="hero-subtitle lang-ar">لطلاب السنة التأسيسية وما بعد التأسيس بجامعة السلطان قابوس</div>
+
+                <p class="hero-description lang-en">
+                    A Progressive Web App (PWA) that enables students to upload photos of handwritten essays, 
+                    extract text using OCR technology, and receive AI-powered assessment based on IELTS criteria 
+                    with constructive feedback to improve their writing skills.
+                </p>
+                
+                <p class="hero-description lang-ar">
+                    تطبيق ويب تقدمي يمكّن الطلاب من تحميل صور المقالات المكتوبة بخط اليد، 
+                    واستخراج النص باستخدام تقنية التعرف الضوئي على الحروف، 
+                    والحصول على تقييم مدعوم بالذكاء الاصطناعي بناءً على معايير الآيلتس مع تغذية راجعة بناءة.
+                </p>
+            </div>
+        </section>
+
+        <!-- Info Notice -->
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-university"></i> Sultan Qaboos University</h4>
+            <h4 class="lang-ar"><i class="fas fa-university"></i> جامعة السلطان قابوس</h4>
+
+            <p class="lang-en">
+                This system is designed for <strong>Foundation Year</strong> and <strong>Post-Foundation</strong> 
+                students at Sultan Qaboos University to practice and improve their academic writing skills 
+                through AI-powered formative assessment.
+            </p>
+
+            <p class="lang-ar">
+                صُمم هذا النظام لطلاب <strong>السنة التأسيسية</strong> و<strong>ما بعد التأسيس</strong> 
+                بجامعة السلطان قابوس لممارسة وتحسين مهارات الكتابة الأكاديمية من خلال التقييم التكويني المدعوم بالذكاء الاصطناعي.
+            </p>
+
+            <p class="lang-en" style="font-weight: 600;">
+                <i class="fas fa-user-edit"></i> Developed by: <strong>Dr. Waleed Mandour</strong> (2025-2026)
+            </p>
+            <p class="lang-ar" style="font-weight: 600;">
+                <i class="fas fa-user-edit"></i> تطوير: <strong>د. وليد مندور</strong> (2025-2026)
+            </p>
+        </div>
+
+        <!-- How It Works Section -->
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">How It Works</h2>
+            <h2 class="section-title lang-ar">آلية عمل النظام</h2>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4 class="lang-en">Capture Essay</h4>
+                    <h4 class="lang-ar">تصوير المقال</h4>
+                    <p class="lang-en">
+                        Take a photo of your handwritten essay using your phone's camera or upload from gallery.
+                    </p>
+                    <p class="lang-ar">
+                        التقط صورة لمقالك المكتوب بخط اليد باستخدام كاميرا هاتفك أو قم بتحميلها من المعرض.
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4 class="lang-en">Text Extraction</h4>
+                    <h4 class="lang-ar">استخراج النص</h4>
+                    <p class="lang-en">
+                        OCR technology extracts and digitizes your handwritten text for analysis.
+                    </p>
+                    <p class="lang-ar">
+                        تقنية التعرف الضوئي على الحروف تستخرج وتُرقمن النص المكتوب بخط اليد للتحليل.
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4 class="lang-en">AI Assessment</h4>
+                    <h4 class="lang-ar">التقييم الذكي</h4>
+                    <p class="lang-en">
+                        AI evaluates your essay based on IELTS criteria and provides detailed feedback.
+                    </p>
+                    <p class="lang-ar">
+                        يقوم الذكاء الاصطناعي بتقييم مقالك بناءً على معايير الآيلتس ويقدم تغذية راجعة مفصلة.
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4 class="lang-en">Get Feedback</h4>
+                    <h4 class="lang-ar">الحصول على التغذية الراجعة</h4>
+                    <p class="lang-en">
+                        Review your scores, read detailed feedback, and improve your writing skills.
+                    </p>
+                    <p class="lang-ar">
+                        راجع درجاتك، واقرأ التغذية الراجعة المفصلة، وحسّن مهارات الكتابة لديك.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supported Courses Section -->
+        <section>
+            <h2 class="section-title lang-en">Supported Courses</h2>
+            <h2 class="section-title lang-ar">المواد المدعومة</h2>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <span class="course-badge lang-en">Foundation</span>
+                    <span class="course-badge lang-ar">تأسيسي</span>
+                    <h4 class="lang-en">0230 - English Language Foundation I</h4>
+                    <h4 class="lang-ar">0230 - اللغة الإنجليزية التأسيسية I</h4>
+                    <p class="lang-en">Basic writing skills development for foundation year students.</p>
+                    <p class="lang-ar">تطوير مهارات الكتابة الأساسية لطلاب السنة التأسيسية.</p>
+                    <div class="criteria-list">
+                        <span class="lang-en">Task Response (0-6)</span>
+                        <span class="lang-en">Coherence & Cohesion (0-6)</span>
+                        <span class="lang-en">Lexical Resource (0-6)</span>
+                        <span class="lang-en">Grammar (0-6)</span>
+                        <span class="lang-ar">الاستجابة للمهمة (0-6)</span>
+                        <span class="lang-ar">التماسك والترابط (0-6)</span>
+                        <span class="lang-ar">المورد المعجمي (0-6)</span>
+                        <span class="lang-ar">القواعد (0-6)</span>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <span class="course-badge lang-en">Foundation</span>
+                    <span class="course-badge lang-ar">تأسيسي</span>
+                    <h4 class="lang-en">0340 - English Language Foundation II</h4>
+                    <h4 class="lang-ar">0340 - اللغة الإنجليزية التأسيسية II</h4>
+                    <p class="lang-en">Intermediate writing skills for foundation year students.</p>
+                    <p class="lang-ar">مهارات الكتابة المتوسطة لطلاب السنة التأسيسية.</p>
+                    <div class="criteria-list">
+                        <span class="lang-en">Task Response (0-6)</span>
+                        <span class="lang-en">Coherence & Cohesion (0-6)</span>
+                        <span class="lang-en">Lexical Resource (0-6)</span>
+                        <span class="lang-en">Grammar (0-6)</span>
+                        <span class="lang-ar">الاستجابة للمهمة (0-6)</span>
+                        <span class="lang-ar">التماسك والترابط (0-6)</span>
+                        <span class="lang-ar">المورد المعجمي (0-6)</span>
+                        <span class="lang-ar">القواعد (0-6)</span>
+                    </div>
+                </div>
+                
+                <div class="course-card post-foundation">
+                    <span class="course-badge lang-en">Post-Foundation</span>
+                    <span class="course-badge lang-ar">ما بعد التأسيس</span>
+                    <h4 class="lang-en">LANC2160 - Academic English: Summary Writing</h4>
+                    <h4 class="lang-ar">LANC2160 - الإنجليزية الأكاديمية: كتابة الملخص</h4>
+                    <p class="lang-en">Academic summary writing for post-foundation students.</p>
+                    <p class="lang-ar">كتابة الملخص الأكاديمي لطلاب ما بعد التأسيس.</p>
+                    <div class="criteria-list">
+                        <span class="lang-en">Task Achievement (0-5)</span>
+                        <span class="lang-en">Coherence & Cohesion (0-5)</span>
+                        <span class="lang-en">Lexical Resource (0-5)</span>
+                        <span class="lang-en">Grammar (0-5)</span>
+                        <span class="lang-ar">تحقيق المهمة (0-5)</span>
+                        <span class="lang-ar">التماسك والترابط (0-5)</span>
+                        <span class="lang-ar">المورد المعجمي (0-5)</span>
+                        <span class="lang-ar">القواعد (0-5)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section>
+            <h2 class="section-title lang-en">Key Features</h2>
+            <h2 class="section-title lang-ar">الميزات الرئيسية</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3 class="lang-en">Handwriting Recognition</h3>
+                    <h3 class="lang-ar">التعرف على الخط اليدوي</h3>
+                    <p class="lang-en">
+                        Advanced OCR technology accurately extracts text from photos of handwritten essays, 
+                        supporting various handwriting styles and formats.
+                    </p>
+                    <p class="lang-ar">
+                        تقنية متقدمة للتعرف الضوئي على الحروف تستخرج النص بدقة من صور المقالات المكتوبة بخط اليد، 
+                        وتدعم أنماط خطوط مختلفة.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="lang-en">AI-Powered Assessment</h3>
+                    <h3 class="lang-ar">تقييم مدعوم بالذكاء الاصطناعي</h3>
+                    <p class="lang-en">
+                        Powered by Google Gemini AI, the system evaluates essays based on IELTS criteria 
+                        with consistent and reliable feedback.
+                    </p>
+                    <p class="lang-ar">
+                        مدعوم بذكاء Google Gemini الاصطناعي، يقيّم النظام المقالات بناءً على معايير الآيلتس 
+                        مع تغذية راجعة متسقة وموثوقة.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="lang-en">Progressive Web App</h3>
+                    <h3 class="lang-ar">تطبيق ويب تقدمي</h3>
+                    <p class="lang-en">
+                        Install on your phone or tablet for quick access. Works on iOS and Android 
+                        with offline capabilities and native-like experience.
+                    </p>
+                    <p class="lang-ar">
+                        ثبّته على هاتفك أو جهازك اللوحي للوصول السريع. يعمل على iOS و Android 
+                        مع إمكانيات العمل بدون اتصال وتجربة شبيهة بالتطبيقات الأصلية.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">Start Using AWE System</h2>
+            <h2 class="cta-title lang-ar">ابدأ استخدام نظام تقييم الكتابة</h2>
+            
+            <p class="cta-subtitle lang-en">
+                Access the AWE System now to practice your writing skills and receive instant AI-powered feedback.
+            </p>
+            <p class="cta-subtitle lang-ar">
+                ادخل إلى نظام تقييم الكتابة الآن لممارسة مهارات الكتابة والحصول على تغذية راجعة فورية بالذكاء الاصطناعي.
+            </p>
+            
+            <div>
+                <a href="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/" class="cta-button" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span class="lang-en">Open AWE System</span>
+                    <span class="lang-ar">افتح النظام</span>
+                </a>
+                <a href="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/" class="cta-button secondary" target="_blank">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span class="lang-en">Install on Device</span>
+                    <span class="lang-ar">التثبيت على الجهاز</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <span class="lang-en">© 2026 Dr. Waleed Mandour • </span>
+                    <span class="lang-ar">© 2026 د. وليد مندور • </span>
+                    <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                </div>
+                
+                <div class="footer-links">
+                    <span class="lang-en">
+                        <a href="https://waleedmandour.org/">Home</a>
+                        <a href="https://waleedmandour.org/projects/">Projects</a>
+                        <a href="https://waleedmandour.org/contact/">Contact</a>
+                    </span>
+                    <span class="lang-ar">
+                        <a href="https://waleedmandour.org/">الرئيسية</a>
+                        <a href="https://waleedmandour.org/projects/">المشاريع</a>
+                        <a href="https://waleedmandour.org/contact/">اتصل بي</a>
+                    </span>
+                </div>
+
+                <div style="margin-top: 8px;">
+                    <span class="lang-en">Part of the <strong>waleedmandour.org/projects/</strong> portfolio</span>
+                    <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+
+        // Add scroll animation for elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.feature-card, .workflow-step, .course-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
