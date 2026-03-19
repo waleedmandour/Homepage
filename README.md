@@ -1,1 +1,1 @@
-# Lexicography - Discourse Analysis - Corpus Linguistics
+# Lexicography - Discourse Analysis - Educational Technology
