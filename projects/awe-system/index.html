@@ -20,6 +20,8 @@
             --gray: #777;
             --shadow: 0 4px 15px rgba(0,0,0,0.08);
             --transition: all 0.3s ease;
+            --track1-color: #1a5f2a;
+            --track2-color: #2c5aa0;
         }
 
         * {
@@ -135,8 +137,15 @@
         
         .tagline {
             font-size: 1.3em;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             opacity: 0.9;
+        }
+
+        .institution-name {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            font-weight: 500;
         }
         
         .header-photo-container {
@@ -449,6 +458,175 @@
             transform: translateX(50%);
         }
 
+        /* ===== TRACK SELECTOR ===== */
+        .track-selector {
+            margin: 60px 0;
+        }
+
+        .track-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .track-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .track-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .track-card.track1 {
+            border-color: var(--track1-color);
+        }
+
+        .track-card.track2 {
+            border-color: var(--track2-color);
+        }
+
+        .track-header {
+            padding: 30px;
+            color: white;
+            position: relative;
+        }
+
+        .track1 .track-header {
+            background: linear-gradient(135deg, var(--track1-color) 0%, #2a7f3a 100%);
+        }
+
+        .track2 .track-header {
+            background: linear-gradient(135deg, var(--track2-color) 0%, #3d7ab8 100%);
+        }
+
+        .track-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .track-header h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .track-header p {
+            opacity: 0.9;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .track-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            opacity: 0.3;
+        }
+
+        body.arabic .track-icon {
+            right: auto;
+            left: 25px;
+        }
+
+        .track-body {
+            padding: 30px;
+        }
+
+        .track-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .track-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .track-features li:last-child {
+            border-bottom: none;
+        }
+
+        .track-features li i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+
+        .track2 .track-features li i {
+            color: var(--track2-color);
+        }
+
+        .track-cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .track-button {
+            flex: 1;
+            min-width: 140px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .track1 .track-button.primary {
+            background: var(--track1-color);
+            color: white;
+        }
+
+        .track1 .track-button.primary:hover {
+            background: #145223;
+            transform: translateY(-2px);
+        }
+
+        .track2 .track-button.primary {
+            background: var(--track2-color);
+            color: white;
+        }
+
+        .track2 .track-button.primary:hover {
+            background: #234a8a;
+            transform: translateY(-2px);
+        }
+
+        .track-button.secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .track-button.secondary:hover {
+            background: #e0e4e8;
+            transform: translateY(-2px);
+        }
+
         /* ===== WORKFLOW SECTION ===== */
         .workflow-container {
             position: relative;
@@ -649,6 +827,30 @@
             line-height: 1.7;
         }
 
+        /* ===== TECHNOLOGY BADGES ===== */
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .tech-badge i {
+            font-size: 14px;
+        }
+
         /* ===== CTA SECTION ===== */
         .cta-section {
             text-align: center;
@@ -828,6 +1030,10 @@
                 margin-left: 0;
                 margin-top: 12px;
             }
+
+            .track-cards {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -876,6 +1082,18 @@
             
             .footer-links a:not(:last-child)::after {
                 display: none;
+            }
+
+            .track-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .track-cta {
+                flex-direction: column;
+            }
+
+            .track-button {
+                min-width: 100%;
             }
         }
 
@@ -930,6 +1148,15 @@
                 
                 <p class="tagline lang-en">Automated Writing Evaluation System</p>
                 <p class="tagline lang-ar">نظام التقييم الآلي للكتابة</p>
+
+                <p class="institution-name lang-en">
+                    <i class="fas fa-university"></i> Center for Preparatory Studies<br>
+                    Sultan Qaboos University
+                </p>
+                <p class="institution-name lang-ar">
+                    <i class="fas fa-university"></i> مركز الدراسات التأسيسية<br>
+                    جامعة السلطان قابوس
+                </p>
             </div>
             
             <div class="header-photo-container">
@@ -965,37 +1192,35 @@
                 <h1 class="lang-en">AWE System: AI-Powered Essay Assessment</h1>
                 <h1 class="lang-ar">نظام تقييم الكتابة: تقييم المقالات بالذكاء الاصطناعي</h1>
                 
-                <div class="hero-subtitle lang-en">For Foundation & Post-Foundation Students at Sultan Qaboos University</div>
-                <div class="hero-subtitle lang-ar">لطلاب السنة التأسيسية وما بعد التأسيس بجامعة السلطان قابوس</div>
+                <div class="hero-subtitle lang-en">For Foundation & Post-Foundation Students</div>
+                <div class="hero-subtitle lang-ar">لطلاب السنة التأسيسية وما بعد التأسيس</div>
 
                 <p class="hero-description lang-en">
-                    A Progressive Web App (PWA) that enables students to upload photos of handwritten essays, 
-                    extract text using OCR technology, and receive AI-powered assessment based on IELTS criteria 
-                    with constructive feedback to improve their writing skills.
+                    Choose your preferred platform: access the web app instantly from any device, 
+                    or download the desktop application for offline use with local AI processing.
                 </p>
                 
                 <p class="hero-description lang-ar">
-                    تطبيق ويب تقدمي يمكّن الطلاب من تحميل صور المقالات المكتوبة بخط اليد، 
-                    واستخراج النص باستخدام تقنية التعرف الضوئي على الحروف، 
-                    والحصول على تقييم مدعوم بالذكاء الاصطناعي بناءً على معايير الآيلتس مع تغذية راجعة بناءة.
+                    اختر منصتك المفضلة: ادخل إلى تطبيق الويب فوراً من أي جهاز، 
+                    أو حمّل تطبيق الحاسوب للاستخدام دون اتصال مع معالجة ذكاء اصطناعي محلية.
                 </p>
             </div>
         </section>
 
         <!-- Info Notice -->
         <div class="data-notice">
-            <h4 class="lang-en"><i class="fas fa-university"></i> Sultan Qaboos University</h4>
-            <h4 class="lang-ar"><i class="fas fa-university"></i> جامعة السلطان قابوس</h4>
+            <h4 class="lang-en"><i class="fas fa-university"></i> Center for Preparatory Studies, Sultan Qaboos University</h4>
+            <h4 class="lang-ar"><i class="fas fa-university"></i> مركز الدراسات التأسيسية، جامعة السلطان قابوس</h4>
 
             <p class="lang-en">
                 This system is designed for <strong>Foundation Year</strong> and <strong>Post-Foundation</strong> 
-                students at Sultan Qaboos University to practice and improve their academic writing skills 
+                students to practice and improve their academic writing skills 
                 through AI-powered formative assessment.
             </p>
 
             <p class="lang-ar">
                 صُمم هذا النظام لطلاب <strong>السنة التأسيسية</strong> و<strong>ما بعد التأسيس</strong> 
-                بجامعة السلطان قابوس لممارسة وتحسين مهارات الكتابة الأكاديمية من خلال التقييم التكويني المدعوم بالذكاء الاصطناعي.
+                لممارسة وتحسين مهارات الكتابة الأكاديمية من خلال التقييم التكويني المدعوم بالذكاء الاصطناعي.
             </p>
 
             <p class="lang-en" style="font-weight: 600;">
@@ -1005,6 +1230,148 @@
                 <i class="fas fa-user-edit"></i> تطوير: <strong>د. وليد مندور</strong> (2025-2026)
             </p>
         </div>
+
+        <!-- Track Selector Section -->
+        <section class="track-selector">
+            <h2 class="section-title lang-en">Choose Your Platform</h2>
+            <h2 class="section-title lang-ar">اختر منصتك</h2>
+            
+            <div class="track-cards">
+                <!-- Track 1: PWA -->
+                <div class="track-card track1">
+                    <div class="track-header">
+                        <span class="track-badge lang-en">Track 1: Web App</span>
+                        <span class="track-badge lang-ar">المسار الأول: تطبيق الويب</span>
+                        <h3 class="lang-en">Progressive Web App</h3>
+                        <h3 class="lang-ar">تطبيق ويب تقدمي</h3>
+                        <p class="lang-en">Access instantly from any device with a web browser. No installation required.</p>
+                        <p class="lang-ar">ادخل فوراً من أي جهاز فيه متصفح. لا يحتاج تثبيت.</p>
+                        <i class="fas fa-globe track-icon"></i>
+                    </div>
+                    <div class="track-body">
+                        <ul class="track-features">
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Works on any device (phone, tablet, computer)</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>يعمل على أي جهاز (هاتف، جهاز لوحي، حاسوب)</span>
+                            </li>
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Cloud-based AI processing with Google Gemini</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>معالجة ذكاء اصطناعي سحابية بـ Google Gemini</span>
+                            </li>
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Install on mobile home screen for quick access</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>ثبّت على شاشة الهاتف للوصول السريع</span>
+                            </li>
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real-time OCR with Tesseract.js</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>تعرف ضوئي فوري بـ Tesseract.js</span>
+                            </li>
+                        </ul>
+                        <div class="tech-badges">
+                            <span class="tech-badge"><i class="fab fa-react"></i> React</span>
+                            <span class="tech-badge"><i class="fas fa-robot"></i> Gemini AI</span>
+                            <span class="tech-badge"><i class="fas fa-cloud"></i> Vercel</span>
+                            <span class="tech-badge"><i class="fas fa-mobile-alt"></i> PWA</span>
+                        </div>
+                        <div class="track-cta">
+                            <a href="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/" class="track-button primary" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span class="lang-en">Open Web App</span>
+                                <span class="lang-ar">افتح التطبيق</span>
+                            </a>
+                            <a href="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/" class="track-button secondary" target="_blank">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="lang-en">Learn More</span>
+                                <span class="lang-ar">اعرف المزيد</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 2: Desktop App -->
+                <div class="track-card track2">
+                    <div class="track-header">
+                        <span class="track-badge lang-en">Track 2: Desktop App</span>
+                        <span class="track-badge lang-ar">المسار الثاني: تطبيق الحاسوب</span>
+                        <h3 class="lang-en">Windows Desktop App</h3>
+                        <h3 class="lang-ar">تطبيق ويندوز للحاسوب</h3>
+                        <p class="lang-en">Download for offline use with local AI models. Enhanced privacy and no internet required.</p>
+                        <p class="lang-ar">حمّل للاستخدام دون اتصال مع نماذج ذكاء اصطناعي محلية. خصوصية محسّنة ولا يحتاج إنترنت.</p>
+                        <i class="fas fa-desktop track-icon"></i>
+                    </div>
+                    <div class="track-body">
+                        <ul class="track-features">
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Windows 10/11 native application</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>تطبيق أصلي لويندوز 10/11</span>
+                            </li>
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Dual AI: Vision LLM for OCR + Text LLM for assessment</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>ذكاء مزدوج: LLM بصري للتعرف وLLM نصي للتقييم</span>
+                            </li>
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Works offline with Ollama local models</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>يعمل دون اتصال مع نماذج Ollama المحلية</span>
+                            </li>
+                            <li class="lang-en">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Custom LLM/VLM endpoint support</span>
+                            </li>
+                            <li class="lang-ar">
+                                <i class="fas fa-check-circle"></i>
+                                <span>دعم نقاط نهاية LLM/VLM مخصصة</span>
+                            </li>
+                        </ul>
+                        <div class="tech-badges">
+                            <span class="tech-badge"><i class="fas fa-atom"></i> Electron</span>
+                            <span class="tech-badge"><i class="fab fa-react"></i> React</span>
+                            <span class="tech-badge"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-badge"><i class="fas fa-brain"></i> Ollama</span>
+                        </div>
+                        <div class="track-cta">
+                            <a href="https://github.com/waleedmandour/awe-desktop/releases/latest" class="track-button primary" target="_blank">
+                                <i class="fas fa-download"></i>
+                                <span class="lang-en">Download for Windows</span>
+                                <span class="lang-ar">حمّل لويندوز</span>
+                            </a>
+                            <a href="https://github.com/waleedmandour/awe-desktop" class="track-button secondary" target="_blank">
+                                <i class="fab fa-github"></i>
+                                <span class="lang-en">View on GitHub</span>
+                                <span class="lang-ar">شاهد على GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- How It Works Section -->
         <section class="workflow-container">
@@ -1017,10 +1384,10 @@
                     <h4 class="lang-en">Capture Essay</h4>
                     <h4 class="lang-ar">تصوير المقال</h4>
                     <p class="lang-en">
-                        Take a photo of your handwritten essay using your phone's camera or upload from gallery.
+                        Take a photo of your handwritten essay using your phone's camera or upload from gallery. Desktop app also supports scanned images.
                     </p>
                     <p class="lang-ar">
-                        التقط صورة لمقالك المكتوب بخط اليد باستخدام كاميرا هاتفك أو قم بتحميلها من المعرض.
+                        التقط صورة لمقالك المكتوب بخط اليد باستخدام كاميرا هاتفك أو قم بتحميلها من المعرض. يدعم تطبيق الحاسوب أيضاً الصور الممسوحة.
                     </p>
                 </div>
                 <div class="workflow-step">
@@ -1028,10 +1395,10 @@
                     <h4 class="lang-en">Text Extraction</h4>
                     <h4 class="lang-ar">استخراج النص</h4>
                     <p class="lang-en">
-                        OCR technology extracts and digitizes your handwritten text for analysis.
+                        OCR technology extracts and digitizes your handwritten text. Desktop app uses Vision LLM for enhanced handwriting recognition.
                     </p>
                     <p class="lang-ar">
-                        تقنية التعرف الضوئي على الحروف تستخرج وتُرقمن النص المكتوب بخط اليد للتحليل.
+                        تقنية التعرف الضوئي على الحروف تستخرج وتُرقمن النص المكتوب بخط اليد. يستخدم تطبيق الحاسوب LLM بصري لتحسين التعرف على الخط.
                     </p>
                 </div>
                 <div class="workflow-step">
@@ -1039,10 +1406,10 @@
                     <h4 class="lang-en">AI Assessment</h4>
                     <h4 class="lang-ar">التقييم الذكي</h4>
                     <p class="lang-en">
-                        AI evaluates your essay based on IELTS criteria and provides detailed feedback.
+                        AI evaluates your essay based on IELTS criteria and provides detailed feedback. Web uses Gemini; Desktop uses local LLMs.
                     </p>
                     <p class="lang-ar">
-                        يقوم الذكاء الاصطناعي بتقييم مقالك بناءً على معايير الآيلتس ويقدم تغذية راجعة مفصلة.
+                        يقوم الذكاء الاصطناعي بتقييم مقالك بناءً على معايير الآيلتس ويقدم تغذية راجعة مفصلة. الويب يستخدم Gemini؛ والحاسوب يستخدم LLMs محلية.
                     </p>
                 </div>
                 <div class="workflow-step">
@@ -1050,10 +1417,10 @@
                     <h4 class="lang-en">Get Feedback</h4>
                     <h4 class="lang-ar">الحصول على التغذية الراجعة</h4>
                     <p class="lang-en">
-                        Review your scores, read detailed feedback, and improve your writing skills.
+                        Review your scores, read detailed feedback, and improve your writing skills with actionable suggestions.
                     </p>
                     <p class="lang-ar">
-                        راجع درجاتك، واقرأ التغذية الراجعة المفصلة، وحسّن مهارات الكتابة لديك.
+                        راجع درجاتك، واقرأ التغذية الراجعة المفصلة، وحسّن مهارات الكتابة لديك مع اقتراحات قابلة للتطبيق.
                     </p>
                 </div>
             </div>
@@ -1135,12 +1502,12 @@
                     <h3 class="lang-en">Handwriting Recognition</h3>
                     <h3 class="lang-ar">التعرف على الخط اليدوي</h3>
                     <p class="lang-en">
-                        Advanced OCR technology accurately extracts text from photos of handwritten essays, 
-                        supporting various handwriting styles and formats.
+                        Advanced OCR technology accurately extracts text from photos of handwritten essays. 
+                        Desktop app features Vision LLM (LLaVA, MiniCPM-V) for superior recognition of various handwriting styles.
                     </p>
                     <p class="lang-ar">
-                        تقنية متقدمة للتعرف الضوئي على الحروف تستخرج النص بدقة من صور المقالات المكتوبة بخط اليد، 
-                        وتدعم أنماط خطوط مختلفة.
+                        تقنية متقدمة للتعرف الضوئي على الحروف تستخرج النص بدقة من صور المقالات المكتوبة بخط اليد.
+                        يتميز تطبيق الحاسوب بـ LLM بصري (LLaVA, MiniCPM-V) للتعرف الفائق على أنماط خطوط مختلفة.
                     </p>
                 </div>
                 <div class="feature-card">
@@ -1148,25 +1515,25 @@
                     <h3 class="lang-en">AI-Powered Assessment</h3>
                     <h3 class="lang-ar">تقييم مدعوم بالذكاء الاصطناعي</h3>
                     <p class="lang-en">
-                        Powered by Google Gemini AI, the system evaluates essays based on IELTS criteria 
-                        with consistent and reliable feedback.
+                        Web app uses Google Gemini for cloud-based assessment. Desktop app runs local LLMs (Llama, Mistral) 
+                        for offline evaluation with full privacy. Both follow IELTS criteria for consistent feedback.
                     </p>
                     <p class="lang-ar">
-                        مدعوم بذكاء Google Gemini الاصطناعي، يقيّم النظام المقالات بناءً على معايير الآيلتس 
-                        مع تغذية راجعة متسقة وموثوقة.
+                        يستخدم تطبيق الويب Google Gemini للتقييم السحابي. يُشغّل تطبيق الحاسوب LLMs محلية (Llama, Mistral)
+                        للتقييم دون اتصال مع خصوصية كاملة. كلاهما يتبع معايير الآيلتس لتغذية راجعة متسقة.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3 class="lang-en">Progressive Web App</h3>
-                    <h3 class="lang-ar">تطبيق ويب تقدمي</h3>
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="lang-en">Privacy & Offline Access</h3>
+                    <h3 class="lang-ar">الخصوصية والوصول دون اتصال</h3>
                     <p class="lang-en">
-                        Install on your phone or tablet for quick access. Works on iOS and Android 
-                        with offline capabilities and native-like experience.
+                        Desktop app stores all data locally on your computer. No internet required for full functionality.
+                        Perfect for institutions with data privacy requirements or limited connectivity.
                     </p>
                     <p class="lang-ar">
-                        ثبّته على هاتفك أو جهازك اللوحي للوصول السريع. يعمل على iOS و Android 
-                        مع إمكانيات العمل بدون اتصال وتجربة شبيهة بالتطبيقات الأصلية.
+                        يُخزّن تطبيق الحاسوب جميع البيانات محلياً على جهازك. لا يحتاج إنترنت للعمل الكامل.
+                        مثالي للمؤسسات ذات متطلبات خصوصية البيانات أو الاتصال المحدود.
                     </p>
                 </div>
             </div>
@@ -1174,26 +1541,26 @@
 
         <!-- Call to Action Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Start Using AWE System</h2>
-            <h2 class="cta-title lang-ar">ابدأ استخدام نظام تقييم الكتابة</h2>
+            <h2 class="cta-title lang-en">Start Using AWE System Today</h2>
+            <h2 class="cta-title lang-ar">ابدأ استخدام نظام تقييم الكتابة اليوم</h2>
             
             <p class="cta-subtitle lang-en">
-                Access the AWE System now to practice your writing skills and receive instant AI-powered feedback.
+                Choose the platform that fits your needs. Web app for instant access, or desktop app for offline privacy.
             </p>
             <p class="cta-subtitle lang-ar">
-                ادخل إلى نظام تقييم الكتابة الآن لممارسة مهارات الكتابة والحصول على تغذية راجعة فورية بالذكاء الاصطناعي.
+                اختر المنصة التي تناسب احتياجاتك. تطبيق الويب للوصول الفوري، أو تطبيق الحاسوب للخصوصية دون اتصال.
             </p>
             
             <div>
                 <a href="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/" class="cta-button" target="_blank">
-                    <i class="fas fa-external-link-alt"></i>
-                    <span class="lang-en">Open AWE System</span>
-                    <span class="lang-ar">افتح النظام</span>
+                    <i class="fas fa-globe"></i>
+                    <span class="lang-en">Open Web App</span>
+                    <span class="lang-ar">افتح تطبيق الويب</span>
                 </a>
-                <a href="https://awe-system-xhwc-git-main-waleedmandours-projects.vercel.app/" class="cta-button secondary" target="_blank">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span class="lang-en">Install on Device</span>
-                    <span class="lang-ar">التثبيت على الجهاز</span>
+                <a href="https://github.com/waleedmandour/awe-desktop/releases/latest" class="cta-button secondary" target="_blank">
+                    <i class="fas fa-download"></i>
+                    <span class="lang-en">Download Desktop App</span>
+                    <span class="lang-ar">حمّل تطبيق الحاسوب</span>
                 </a>
             </div>
         </section>
@@ -1201,8 +1568,8 @@
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">© 2026 Dr. Waleed Mandour • </span>
-                    <span class="lang-ar">© 2026 د. وليد مندور • </span>
+                    <span class="lang-en">© 2026 Dr. Waleed Mandour • Center for Preparatory Studies, Sultan Qaboos University • </span>
+                    <span class="lang-ar">© 2026 د. وليد مندور • مركز الدراسات التأسيسية، جامعة السلطان قابوس • </span>
                     <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
                 </div>
                 
@@ -1211,11 +1578,13 @@
                         <a href="https://waleedmandour.org/">Home</a>
                         <a href="https://waleedmandour.org/projects/">Projects</a>
                         <a href="https://waleedmandour.org/contact/">Contact</a>
+                        <a href="https://github.com/waleedmandour/awe-desktop">GitHub</a>
                     </span>
                     <span class="lang-ar">
                         <a href="https://waleedmandour.org/">الرئيسية</a>
                         <a href="https://waleedmandour.org/projects/">المشاريع</a>
                         <a href="https://waleedmandour.org/contact/">اتصل بي</a>
+                        <a href="https://github.com/waleedmandour/awe-desktop">GitHub</a>
                     </span>
                 </div>
 
@@ -1256,7 +1625,7 @@
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.feature-card, .workflow-step, .course-card').forEach(el => {
+            document.querySelectorAll('.feature-card, .workflow-step, .course-card, .track-card').forEach(el => {
                 observer.observe(el);
             });
         });
