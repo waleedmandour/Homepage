@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Updated for iAWE -->
-    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant - AI-assisted deterministic feedback system for EAP writing analysis and evaluation.">
+    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant - AI-assisted deterministic feedback system for EAP writing analysis, coming soon as a Google Sheets Add-on.">
     <title>iAWE: Intelligent Academic Writing Evaluation Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -94,7 +93,7 @@
             background: var(--secondary);
         }
         
-        /* ===== HEADER STYLES (Matching other pages) ===== */
+        /* ===== HEADER STYLES ===== */
         header {
             background: 
                 linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
@@ -268,7 +267,6 @@
             filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
         }
 
-        /* Decorative elements around logo */
         .app-logo-container::before {
             content: '';
             position: absolute;
@@ -291,7 +289,6 @@
             z-index: -2;
         }
 
-        /* Add a subtle shine effect */
         .app-logo-frame::after {
             content: '';
             position: absolute;
@@ -352,7 +349,7 @@
         }
 
         .hero-subtitle {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 600;
             color: var(--accent);
             margin-bottom: 24px;
@@ -364,6 +361,21 @@
             max-width: 700px;
             margin: 0 auto 32px;
             line-height: 1.7;
+        }
+        
+        /* New Coming Soon Badge */
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59f00 0%, #e67700 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(245, 159, 0, 0.3);
+            text-transform: uppercase;
         }
 
         /* ===== MAIN CONTENT STYLES ===== */
@@ -655,7 +667,6 @@
             color: var(--secondary);
         }
         
-        /* Legal links style */
         .footer a {
             color: var(--primary);
             text-decoration: none;
@@ -701,60 +712,30 @@
         .feature-card:nth-child(2) { animation-delay: 0.2s; }
         .feature-card:nth-child(3) { animation-delay: 0.3s; }
 
-        /* ===== LANGUAGE LOGIC (CORRECTED) ===== */
-        /* Base state: English visible, Arabic hidden */
-        .lang-en { 
-            display: block; 
-        }
-        .lang-ar { 
-            display: none; 
-        }
+        /* ===== LANGUAGE LOGIC ===== */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
         
-        /* For flex containers in data-notice */
-        .data-notice h4.lang-en { 
-            display: flex; 
-        }
-        .data-notice h4.lang-ar { 
-            display: none; 
-        }
+        .data-notice h4.lang-en { display: flex; }
+        .data-notice h4.lang-ar { display: none; }
         
-        /* For inline elements in footer */
-        .footer-content > div > .lang-en {
-            display: inline;
-        }
-        .footer-content > div > .lang-ar {
-            display: none;
-        }
+        .footer-content > div > .lang-en { display: inline; }
+        .footer-content > div > .lang-ar { display: none; }
         
-        /* Arabic state: Arabic visible, English hidden */
-        body.arabic .lang-en { 
-            display: none; 
-        }
-        body.arabic .lang-ar { 
-            display: block; 
-        }
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
         
-        body.arabic .data-notice h4.lang-en { 
-            display: none; 
-        }
-        body.arabic .data-notice h4.lang-ar { 
-            display: flex; 
-        }
+        body.arabic .data-notice h4.lang-en { display: none; }
+        body.arabic .data-notice h4.lang-ar { display: flex; }
         
-        body.arabic .footer-content > div > .lang-en {
-            display: none;
-        }
-        body.arabic .footer-content > div > .lang-ar {
-            display: inline;
-        }
+        body.arabic .footer-content > div > .lang-en { display: none; }
+        body.arabic .footer-content > div > .lang-ar { display: inline; }
 
-        /* Center the Arabic hero title and subtitle */
         body.arabic .hero h1.lang-ar,
         body.arabic .hero .hero-subtitle.lang-ar {
             text-align: center;
         }
 
-        /* Center the Arabic text in the footer */
         body.arabic .footer,
         body.arabic .footer-content,
         body.arabic .footer-content > div {
@@ -763,143 +744,40 @@
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .header-text {
-                text-align: center;
-            }
-            
-            body.arabic .header-text {
-                text-align: center;
-            }
+            .header-content { flex-direction: column; text-align: center; }
+            .header-text, body.arabic .header-text { text-align: center; }
         }
 
         @media (max-width: 768px) {
-            nav ul {
-                gap: 15px;
-            }
-            
-            h1 {
-                font-size: 2.2em;
-            }
-            
-            .tagline {
-                font-size: 1.1em;
-            }
-            
-            .header-photo {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .hero h1 { 
-                font-size: 36px; 
-            }
-            
-            .hero-subtitle { 
-                font-size: 20px; 
-            }
-            
-            .section-title { 
-                font-size: 28px; 
-            }
-            
-            .features-grid,
-            .workflow-steps {
-                grid-template-columns: 1fr;
-            }
-            
-            .language-toggle {
-                top: 16px;
-                right: 16px;
-            }
-            
-            .app-logo-container {
-                width: 140px;
-                height: 140px;
-                margin-bottom: 30px;
-            }
-            
-            .app-logo-container::before {
-                width: 160px;
-                height: 160px;
-            }
-            
-            .app-logo-container::after {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .app-logo-frame {
-                border-radius: 25px;
-                padding: 12px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .footer-links a:not(:last-child)::after {
-                display: none;
-            }
+            nav ul { gap: 15px; }
+            h1 { font-size: 2.2em; }
+            .tagline { font-size: 1.1em; }
+            .header-photo { width: 150px; height: 150px; }
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 20px; }
+            .section-title { font-size: 28px; }
+            .features-grid, .workflow-steps { grid-template-columns: 1fr; }
+            .language-toggle { top: 16px; right: 16px; }
+            .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; }
+            .app-logo-container::before { width: 160px; height: 160px; }
+            .app-logo-container::after { width: 180px; height: 180px; }
+            .app-logo-frame { border-radius: 25px; padding: 12px; }
+            .footer-links { flex-direction: column; gap: 8px; }
+            .footer-links a:not(:last-child)::after { display: none; }
         }
 
         @media (max-width: 480px) {
-            nav ul {
-                flex-direction: column;
-                gap: 10px;
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .header-photo {
-                width: 130px;
-                height: 130px;
-            }
-            
-            .hero h1 { 
-                font-size: 28px; 
-            }
-            
-            .hero-description { 
-                font-size: 16px; 
-            }
-            
-            .feature-card {
-                padding: 24px;
-            }
-            
-            .container {
-                padding: 0 16px;
-            }
-            
-            .app-logo-container {
-                width: 120px;
-                height: 120px;
-                margin-bottom: 25px;
-            }
-            
-            .app-logo-container::before {
-                width: 140px;
-                height: 140px;
-            }
-            
-            .app-logo-container::after {
-                width: 160px;
-                height: 160px;
-            }
-            
-            .app-logo-frame {
-                border-radius: 20px;
-                padding: 10px;
-            }
+            nav ul { flex-direction: column; gap: 10px; padding: 20px; }
+            h1 { font-size: 1.8em; }
+            .header-photo { width: 130px; height: 130px; }
+            .hero h1 { font-size: 28px; }
+            .hero-description { font-size: 16px; }
+            .feature-card { padding: 24px; }
+            .container { padding: 0 16px; }
+            .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; }
+            .app-logo-container::before { width: 140px; height: 140px; }
+            .app-logo-container::after { width: 160px; height: 160px; }
+            .app-logo-frame { border-radius: 20px; padding: 10px; }
         }
     </style>
 </head>
@@ -910,10 +788,9 @@
         <button id="lang-ar">العربية</button>
     </div>
     
-    <!-- Header Section (Matching other pages) -->
+    <!-- Header Section -->
     <header>
         <div class="container header-content">
-            <!-- App Branding (Replaced Personal Branding) -->
             <div class="header-text">
                 <h1 class="lang-en">iAWE</h1>
                 <h1 class="lang-ar">نظام iAWE</h1>
@@ -922,8 +799,6 @@
                 <p class="tagline lang-ar">مساعد تقييم الكتابة الأكاديمية الذكي</p>
             </div>
             
-            <!-- App Logo (Replaced Profile Picture) -->
-            <!-- Style adjusted inline for professional app-icon appearance (rounded square) -->
             <div class="header-photo-container">
                 <img src="images/iAWE.png" alt="iAWE System Logo" class="header-photo" style="border-radius: 20px;">
             </div>
@@ -948,30 +823,31 @@
         <!-- iAWE Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <!-- Enhanced App Logo -->
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
                         <img src="images/iAWE.png" alt="iAWE System Logo" class="app-logo-img">
                     </div>
                 </div>
                 
+                <!-- New Badge -->
+                <div class="coming-soon-badge lang-en">Coming Soon to Google Workspace</div>
+                <div class="coming-soon-badge lang-ar">قريباً في متجر إضافات جوجل</div>
+
                 <h1 class="lang-en">iAWE: Intelligent Academic Writing Evaluator</h1>
                 <h1 class="lang-ar">نظام iAWE لتقييم الكتابة الأكاديمية الذكي</h1>
                 
-                <div class="hero-subtitle lang-en">AI-Assisted, Deterministic Feedback for EAP Writing</div>
-                <div class="hero-subtitle lang-ar">تغذية راجعة ذكية ومنضبطة لكتابة اللغة الإنجليزية للأغراض الأكاديمية</div>
+                <div class="hero-subtitle lang-en">AI-Assisted, Deterministic Feedback directly inside Google Sheets</div>
+                <div class="hero-subtitle lang-ar">تغذية راجعة ذكية ومنضبطة مباشرة داخل جداول بيانات جوجل</div>
 
                 <div>
                 <p class="hero-description lang-en">
                     iAWE is an AI-assisted academic writing evaluation system designed for English for Academic Purposes (EAP).
-                    It delivers deterministic, schema-enforced feedback on student essays by combining corpus-informed metrics,
-                    rule-based validation, and controlled large-language-model outputs.
+                    Launching soon as a <strong>Google Sheets Add-on</strong>, it delivers deterministic, schema-enforced feedback on student essays by combining corpus-informed metrics, rule-based validation, and controlled LLM outputs.
                 </p>
                 
                 <p class="hero-description lang-ar">
-                    iAWE هو نظام ذكي لتقييم الكتابة الأكاديمية في سياق اللغة الإنجليزية للأغراض الأكاديمية.
-                    يجمع بين التحليل المعتمد على المدونات اللغوية، والتحقق القاعدي، والتوليد المقيد بالذكاء الاصطناعي
-                    لتقديم تغذية راجعة دقيقة، متسقة، وقابلة للتفسير.
+                    نظام iAWE هو أداة ذكية لتقييم الكتابة في سياق اللغة الإنجليزية للأغراض الأكاديمية.
+                    يُطلق قريباً كـ <strong>إضافة لجداول بيانات جوجل (Google Sheets Add-on)</strong>، ليقدم تغذية راجعة منضبطة ومقيدة بنماذج صارمة، تجمع بين مقاييس المدونات اللغوية والتحقق القاعدي والتوليد الآلي المنضبط.
                 </p>
                 </div>
             </div>
@@ -983,13 +859,13 @@
             <h4 class="lang-ar"><i class="fas fa-flask"></i> ملاحظة الشفافية البحثية</h4>
 
             <p class="lang-en">
-                The current public release of iAWE is based on an evaluative study of
+                The current architecture of iAWE is based on an evaluative study of
                 <strong>20 student essays (300–400 words)</strong> analysed by the system
                 and benchmarked against expert human feedback.
             </p>
 
             <p class="lang-ar">
-                تعتمد النسخة الحالية من نظام iAWE على دراسة تقييمية شملت
+                تعتمد بنية نظام iAWE الحالية على دراسة تقييمية شملت
                 <strong>20 مقالة طلابية (300–400 كلمة)</strong>،
                 حيث تمت مقارنة مخرجات النظام بتغذية راجعة بشرية متخصصة.
             </p>
@@ -1006,15 +882,13 @@
                 وهو ما يُعد قيداً منهجياً سيتم معالجته مستقبلاً.
             </p>
             
-            <!-- Added Authorship Details -->
             <p class="lang-en" style="font-weight: 600;">
-                <i class="fas fa-user-edit"></i> This research project is authored by: <strong>Dr. Waleed Mandour</strong> and <strong>Prof. Anwar Mourssi</strong>, based on conference paper on February 15, 2026 (4th MEC TESOL Conference - Muscat- Oman).
+                <i class="fas fa-user-edit"></i> This research project is authored by: <strong>Dr. Waleed Mandour</strong> and <strong>Prof. Anwar Mourssi</strong>, based on a conference paper on February 15, 2026 (4th MEC TESOL Conference - Muscat, Oman).
             </p>
             <p class="lang-ar" style="font-weight: 600;">
-                <i class="fas fa-user-edit"></i> هذا المشروع البحثي من إعداد: <strong>د. وليد مندور</strong> وأ.د. <strong>أنور مرسي</strong>، ويستند إلى ورقة بحثية قدمت في 15 فبراير 2026 (المؤتمر الرابع لجمعية TESOL بالكلية الحديثة - مسقط، عمان).
+                <i class="fas fa-user-edit"></i> هذا المشروع البحثي من إعداد: <strong>د. وليد مندور</strong> وأ.د. <strong>أنور مرسي</strong>، ويستند إلى ورقة بحثية قدمت في 15 فبراير 2026 (المؤتمر الرابع لجمعية TESOL بالكلية الحديثة - مسقط، عُمان).
             </p>
             
-            <!-- Academic Positioning Statement -->
             <p class="lang-en" style="font-weight: 700; color: #b45309; margin-top: 15px;">
                 <i class="fas fa-info-circle"></i> iAWE is presented as a research-grade evaluative prototype, 
                 not a replacement for human assessment. It serves pedagogical experimentation and academic transparency.
@@ -1033,13 +907,13 @@
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <h4 class="lang-en">Text Ingestion</h4>
-                    <h4 class="lang-ar">إدخال النص</h4>
+                    <h4 class="lang-en">Batch Import</h4>
+                    <h4 class="lang-ar">الاستيراد والمعالجة</h4>
                     <p class="lang-en">
-                        Student essays are tokenised and structurally analysed according to academic writing criteria.
+                        Import student essays directly into Google Sheets columns. Texts are automatically tokenised and structurally analysed based on strict academic criteria.
                     </p>
                     <p class="lang-ar">
-                        تتم معالجة المقالات الطلابية وتحليل بنيتها وفق معايير الكتابة الأكاديمية.
+                        استيراد مقالات الطلاب مباشرة إلى أعمدة جداول بيانات جوجل، حيث تتم معالجتها وتحليل بنيتها تلقائياً وفق معايير أكاديمية دقيقة.
                     </p>
                 </div>
                 <div class="workflow-step">
@@ -1047,24 +921,21 @@
                     <h4 class="lang-en">Schema-Enforced Analysis</h4>
                     <h4 class="lang-ar">التحليل المنضبط بنموذج صارم</h4>
                     <p class="lang-en">
-                        Feedback generation is constrained by a deterministic schema to ensure consistency,
-                        reproducibility, and auditability.
+                        Feedback generation is constrained by a deterministic AI schema directly within your sheet, ensuring high consistency and reproducibility.
                     </p>
                     <p class="lang-ar">
-                        يتم توليد التغذية الراجعة ضمن نموذج صارم يضمن الاتساق وقابلية التتبع والمراجعة.
+                        يتم توليد التغذية الراجعة ضمن نموذج ذكاء اصطناعي صارم داخل جدول البيانات، مما يضمن الاتساق التام وقابلية التتبع.
                     </p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
-                    <h4 class="lang-en">Validated Feedback Output</h4>
-                    <h4 class="lang-ar">مخرجات تغذية راجعة موثوقة</h4>
+                    <h4 class="lang-en">Export & Reporting</h4>
+                    <h4 class="lang-ar">التقارير والمخرجات</h4>
                     <p class="lang-en">
-                        The final output includes structured comments, diagnostic indicators,
-                        and an audit log explaining every evaluative decision.
+                        The final output populates structured spreadsheet columns with CEFR-aligned diagnostic indicators, alongside a beautifully formatted, bilingual PDF report generator.
                     </p>
                     <p class="lang-ar">
-                        تشمل المخرجات تعليقات منظمة، ومؤشرات تشخيصية،
-                        وسجل تدقيق يوضح منطق كل قرار تقويمي.
+                        تُدرج المخرجات النهائية في أعمدة منظمة مع مؤشرات متوافقة مع الإطار الأوروبي (CEFR)، إلى جانب مولد تقارير ثنائية اللغة بصيغة PDF.
                     </p>
                 </div>
             </div>
@@ -1081,25 +952,25 @@
                     <h3 class="lang-en">Deterministic Architecture</h3>
                     <h3 class="lang-ar">بنية حتمية منضبطة</h3>
                     <p class="lang-en">
-                        Unlike open-ended AI feedback tools, iAWE enforces fixed analytical pathways,
-                        ensuring stable and replicable evaluative outcomes.
+                        Unlike open-ended chatbot tools, the iAWE Add-on enforces fixed analytical pathways,
+                        ensuring stable and replicable evaluative outcomes for large classes.
                     </p>
                     <p class="lang-ar">
                         بخلاف أدوات الذكاء الاصطناعي المفتوحة،
-                        يعتمد iAWE مسارات تحليل ثابتة تضمن نتائج متسقة وقابلة للتكرار.
+                        تعتمد الإضافة مسارات تحليل ثابتة تضمن نتائج متسقة وقابلة للتكرار عند تقييم مجموعات كبيرة.
                     </p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🧾</div>
-                    <h3 class="lang-en">Audit-Ready Feedback</h3>
-                    <h3 class="lang-ar">تغذية راجعة قابلة للتدقيق</h3>
+                    <h3 class="lang-en">Workspace Integration & Auditing</h3>
+                    <h3 class="lang-ar">التكامل والتدقيق الآمن</h3>
                     <p class="lang-en">
-                        Each feedback instance is accompanied by an audit log
-                        documenting rules triggered and criteria applied.
+                        Operating entirely within Google Workspace, each feedback instance logs an audit trail
+                        documenting rules triggered and criteria applied—without sending student data to third-party servers.
                     </p>
                     <p class="lang-ar">
-                        تُرفق كل تغذية راجعة بسجل تدقيق
-                        يوضح القواعد والمعايير التي تم تفعيلها.
+                        يعمل النظام بأمان تام داخل بيئة جوجل، وتُرفق كل تغذية راجعة بسجل تدقيق
+                        يوضح القواعد التي تم تفعيلها، دون إرسال بيانات الطلاب لخوادم خارجية.
                     </p>
                 </div>
                 <div class="feature-card">
@@ -1107,12 +978,12 @@
                     <h3 class="lang-en">EAP-Specific Design</h3>
                     <h3 class="lang-ar">تصميم مخصص للكتابة الأكاديمية</h3>
                     <p class="lang-en">
-                        The system is tailored for academic discourse conventions,
-                        not generic grammar correction.
+                        The rubric and prompts are strictly tailored for higher-education academic discourse conventions,
+                        moving beyond generic ESL grammar correction.
                     </p>
                     <p class="lang-ar">
-                        صُمم النظام خصيصاً لخطاب الكتابة الأكاديمية،
-                        وليس للتصحيح اللغوي العام.
+                        صُمم النظام ومعاييره خصيصاً ليتناسب مع خطاب الكتابة الأكاديمية في التعليم العالي،
+                        متجاوزاً التصحيح اللغوي العام للمبتدئين.
                     </p>
                 </div>
             </div>
@@ -1120,30 +991,28 @@
 
         <!-- iAWE Call to Action Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Explore iAWE</h2>
-            <h2 class="cta-title lang-ar">استكشف نظام iAWE</h2>
+            <h2 class="cta-title lang-en">Coming Soon to Google Workspace</h2>
+            <h2 class="cta-title lang-ar">قريباً في متجر تطبيقات جوجل</h2>
             
             <p class="cta-subtitle lang-en">
-                iAWE is provided for research dissemination, academic transparency,
-                and pedagogical experimentation.
+                iAWE is currently undergoing final reviews and will soon be published as a Google Sheets Add-on for EAP educators and researchers globally.
             </p>
             <p class="cta-subtitle lang-ar">
-                يُتاح نظام iAWE لأغراض البحث العلمي،
-                والشفافية الأكاديمية، والتجريب التربوي.
+                يخضع نظام iAWE حالياً للمراجعات النهائية، وسيتم نشره قريباً كإضافة لجداول بيانات جوجل للمعلمين والباحثين حول العالم.
             </p>
             
-            <a href="#" class="cta-button">
-                <i class="fas fa-file-alt"></i>
-                <span class="lang-en">View Sample Analysis</span>
-                <span class="lang-ar">عرض تحليل نموذجي</span>
+            <a href="https://github.com/waleedmandour" target="_blank" class="cta-button">
+                <i class="fab fa-github"></i>
+                <span class="lang-en">Follow Updates on GitHub</span>
+                <span class="lang-ar">تابع التحديثات على جيت هاب</span>
             </a>
         </section>
 
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">© 2025 Waleed Mandour • </span>
-                    <span class="lang-ar">© 2025 وليد مندور • </span>
+                    <span class="lang-en">© 2026 Waleed Mandour • </span>
+                    <span class="lang-ar">© 2026 وليد مندور • </span>
                     <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
                 </div>
                 
