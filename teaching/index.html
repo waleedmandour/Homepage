@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching & Training | Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        body.arabic .language-toggle {
+            right: auto;
+            left: 20px;
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* Main Content Styles */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+        
+        /* Section Styles */
+        .teaching-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .teaching-section h3 {
+            color: var(--primary);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        body.arabic .teaching-section h3 {
+            flex-direction: row-reverse;
+        }
+        
+        .teaching-section h3 i {
+            color: var(--secondary);
+            font-size: 1.3em;
+        }
+        
+        /* Timeline / Position Items */
+        .position-item {
+            padding: 25px;
+            background-color: var(--light);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic .position-item {
+            border-left: none;
+            border-right: 4px solid var(--secondary);
+        }
+        
+        .position-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        body.arabic .position-item:hover {
+            transform: translateX(-5px);
+        }
+        
+        .position-item.current {
+            border-left-color: var(--accent);
+            background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.08) 100%);
+        }
+        
+        body.arabic .position-item.current {
+            border-left-color: transparent;
+            border-right-color: var(--accent);
+        }
+        
+        .position-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .position-institution {
+            font-size: 1.05em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .position-date {
+            font-size: 0.9em;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        body.arabic .position-date {
+            flex-direction: row-reverse;
+        }
+        
+        .position-date i {
+            color: var(--secondary);
+        }
+        
+        /* Education Items */
+        .education-item {
+            padding: 20px 25px;
+            background-color: var(--light);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+            transition: var(--transition);
+        }
+        
+        body.arabic .education-item {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+        }
+        
+        .education-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        body.arabic .education-item:hover {
+            transform: translateX(-5px);
+        }
+        
+        .education-degree {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .education-institution {
+            font-size: 1em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .education-date {
+            font-size: 0.9em;
+            color: var(--gray);
+        }
+        
+        /* Certification Items */
+        .cert-item {
+            padding: 20px 25px;
+            background: linear-gradient(135deg, var(--light) 0%, rgba(26, 95, 122, 0.05) 100%);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+        }
+        
+        body.arabic .cert-item {
+            flex-direction: row-reverse;
+        }
+        
+        .cert-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .cert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+        
+        .cert-content h4 {
+            color: var(--primary);
+            font-size: 1.05em;
+            margin-bottom: 3px;
+        }
+        
+        .cert-content p {
+            font-size: 0.9em;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        /* Service Items */
+        .service-item {
+            padding: 20px 25px;
+            background-color: var(--white);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e8e8e8;
+            transition: var(--transition);
+        }
+        
+        .service-item:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .service-role {
+            font-size: 1.05em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .service-org {
+            font-size: 1em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .service-date {
+            font-size: 0.9em;
+            color: var(--gray);
+        }
+        
+        /* Teaching Interests */
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .interest-tag {
+            background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.1) 100%);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .interest-tag:hover {
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .interest-tag i {
+            display: block;
+            font-size: 1.5em;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            font-size: 0.95em;
+        }
+        
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        footer a:hover {
+            color: var(--white);
+        }
+        
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text {
+                text-align: center;
+            }
+            
+            body.arabic .header-text {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.1em;
+            }
+            
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .page-title {
+                font-size: 2em;
+            }
+            
+            .teaching-section {
+                padding: 25px;
+            }
+            
+            .interests-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .position-item, .education-item, .cert-item, .service-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">Lexicography & Discourse Analysis Researcher</p>
+                <p class="tagline lang-ar">باحث في علم المعاجم وتحليل الخطاب</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الصفحة الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="active lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="active lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="page-title lang-en">Teaching & Training</h2>
+        <h2 class="page-title lang-ar">التدريس والتدريب</h2>
+
+        <!-- Current Position -->
+        <section class="teaching-section">
+            <h3>
+                <i class="fas fa-briefcase"></i>
+                <span class="lang-en">Academic Positions</span>
+                <span class="lang-ar">المناصب الأكاديمية</span>
+            </h3>
+            
+            <div class="position-item current">
+                <div class="position-title lang-en">Senior Instructor</div>
+                <div class="position-title lang-ar">محاضر أول</div>
+                <div class="position-institution lang-en">Center for Preparatory Studies, Sultan Qaboos University, Oman</div>
+                <div class="position-institution lang-ar">مركز الدراسات التمهيدية، جامعة السلطان قابوس، عُمان</div>
+                <div class="position-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="lang-en">October 2020 - Present</span>
+                    <span class="lang-ar">أكتوبر 2020 - الحاضر</span>
+                </div>
+            </div>
+            
+            <div class="position-item">
+                <div class="position-title lang-en">Lecturer of English</div>
+                <div class="position-title lang-ar">محاضر لغة إنجليزية</div>
+                <div class="position-institution lang-en">Shinas College of Technology, Oman</div>
+                <div class="position-institution lang-ar">كلية الشناص التقنية، عُمان</div>
+                <div class="position-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="lang-en">September 2007 - August 2017</span>
+                    <span class="lang-ar">سبتمبر 2007 - أغسطس 2017</span>
+                </div>
+            </div>
+            
+            <div class="position-item">
+                <div class="position-title lang-en">Instructor of English</div>
+                <div class="position-title lang-ar">معلم لغة إنجليزية</div>
+                <div class="position-institution lang-en">Al-Jazeera International Academy, Riyadh, Saudi Arabia</div>
+                <div class="position-institution lang-ar">أكاديمية الجزيرة الدولية، الرياض، المملكة العربية السعودية</div>
+                <div class="position-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="lang-en">October 2001 - March 2003</span>
+                    <span class="lang-ar">أكتوبر 2001 - مارس 2003</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="teaching-section">
+            <h3>
+                <i class="fas fa-graduation-cap"></i>
+                <span class="lang-en">Education</span>
+                <span class="lang-ar">التعليم</span>
+            </h3>
+            
+            <div class="education-item">
+                <div class="education-degree lang-en">MA in Applied Linguistics</div>
+                <div class="education-degree lang-ar">ماجستير في اللسانيات التطبيقية</div>
+                <div class="education-institution lang-en">Mansoura University, Egypt</div>
+                <div class="education-institution lang-ar">جامعة المنصورة، مصر</div>
+                <div class="education-date lang-en">November 2017 - February 2020</div>
+                <div class="education-date lang-ar">نوفمبر 2017 - فبراير 2020</div>
+            </div>
+            
+            <div class="education-item">
+                <div class="education-degree lang-en">CELTA - Teaching English for Adults</div>
+                <div class="education-degree lang-ar">سيلتا - تدريس اللغة الإنجليزية للبالغين</div>
+                <div class="education-institution lang-en">Cambridge University, Alexandria</div>
+                <div class="education-institution lang-ar">جامعة كامبريدج، الإسكندرية</div>
+                <div class="education-date lang-en">July - August 2017</div>
+                <div class="education-date lang-ar">يوليو - أغسطس 2017</div>
+            </div>
+            
+            <div class="education-item">
+                <div class="education-degree lang-en">Diploma of Translation</div>
+                <div class="education-degree lang-ar">دبلوم الترجمة</div>
+                <div class="education-institution lang-en">Cairo University</div>
+                <div class="education-institution lang-ar">جامعة القاهرة</div>
+                <div class="education-date lang-en">2003</div>
+                <div class="education-date lang-ar">٢٠٠٣</div>
+            </div>
+            
+            <div class="education-item">
+                <div class="education-degree lang-en">BA in English Language</div>
+                <div class="education-degree lang-ar">بكالوريوس اللغة الإنجليزية</div>
+                <div class="education-institution lang-en">Menoufia University</div>
+                <div class="education-institution lang-ar">جامعة المنوفية</div>
+                <div class="education-date lang-en">1995 - 2000</div>
+                <div class="education-date lang-ar">١٩٩٥ - ٢٠٠٠</div>
+            </div>
+        </section>
+
+        <!-- Professional Certifications -->
+        <section class="teaching-section">
+            <h3>
+                <i class="fas fa-certificate"></i>
+                <span class="lang-en">Professional Certifications</span>
+                <span class="lang-ar">الشهادات المهنية</span>
+            </h3>
+            
+            <div class="cert-item">
+                <div class="cert-icon">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="cert-content">
+                    <h4 class="lang-en">Google for Education Certified Teacher Trainer</h4>
+                    <h4 class="lang-ar">مدرب معلمين معتمد من جوجل للتعليم</h4>
+                    <p class="lang-en">March 2017</p>
+                    <p class="lang-ar">مارس ٢٠١٧</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Service -->
+        <section class="teaching-section">
+            <h3>
+                <i class="fas fa-handshake"></i>
+                <span class="lang-en">Professional Service</span>
+                <span class="lang-ar">الخدمة المهنية</span>
+            </h3>
+            
+            <div class="service-item">
+                <div class="service-role lang-en">Board Member</div>
+                <div class="service-role lang-ar">عضو مجلس إدارة</div>
+                <div class="service-org lang-en">TESOL Oman</div>
+                <div class="service-org lang-ar">جمعية تدريس اللغة الإنجليزية كلغة ثانية في عُمان</div>
+                <div class="service-date lang-en">December 2020 - Present</div>
+                <div class="service-date lang-ar">ديسمبر 2020 - الحاضر</div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-role lang-en">Steering Committee Member</div>
+                <div class="service-role lang-ar">عضو اللجنة التوجيهية</div>
+                <div class="service-org lang-en">NileTESOL</div>
+                <div class="service-org lang-ar">جمعية نايل لتيسول (نيل تيسول)</div>
+                <div class="service-date lang-en">May 2018</div>
+                <div class="service-date lang-ar">مايو 2018</div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-role lang-en">Member</div>
+                <div class="service-role lang-ar">عضو</div>
+                <div class="service-org lang-en">TESOL International Association</div>
+                <div class="service-org lang-ar">جمعية تيسول الدولية</div>
+                <div class="service-date lang-en">November 2018</div>
+                <div class="service-date lang-ar">نوفمبر 2018</div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-role lang-en">Standing Member, E-Learning Committee</div>
+                <div class="service-role lang-ar">عضو دائم، لجنة التعلم الإلكتروني</div>
+                <div class="service-org lang-en">Sultan Qaboos University (SQU)</div>
+                <div class="service-org lang-ar">جامعة السلطان قابوس</div>
+                <div class="service-date lang-en">January 2022 - Present</div>
+                <div class="service-date lang-ar">يناير 2022 - الحاضر</div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-role lang-en">Member, Translation Committee</div>
+                <div class="service-role lang-ar">عضو، لجنة الترجمة</div>
+                <div class="service-org lang-en">Sultan Qaboos University (SQU)</div>
+                <div class="service-org lang-ar">جامعة السلطان قابوس</div>
+            </div>
+        </section>
+
+        <!-- Teaching Interests -->
+        <section class="teaching-section">
+            <h3>
+                <i class="fas fa-lightbulb"></i>
+                <span class="lang-en">Teaching Interests</span>
+                <span class="lang-ar">اهتمامات التدريس</span>
+            </h3>
+            
+            <div class="interests-grid">
+                <div class="interest-tag">
+                    <i class="fas fa-book-open"></i>
+                    <span class="lang-en">EAP</span>
+                    <span class="lang-ar">اللغة الإنجليزية للأغراض الأكاديمية</span>
+                </div>
+                <div class="interest-tag">
+                    <i class="fas fa-database"></i>
+                    <span class="lang-en">Corpus-Informed Pedagogy</span>
+                    <span class="lang-ar">التعليم القائم على المدونات النصية</span>
+                </div>
+                <div class="interest-tag">
+                    <i class="fas fa-robot"></i>
+                    <span class="lang-en">AI in Education</span>
+                    <span class="lang-ar">الذكاء الاصطناعي في التعليم</span>
+                </div>
+                <div class="interest-tag">
+                    <i class="fas fa-laptop"></i>
+                    <span class="lang-en">Technology-Enhanced Language Learning</span>
+                    <span class="lang-ar">تعلم اللغة المعزز بالتكنولوجيا</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dr. Waleed Mandour. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://waleedmandour.org/"><i class="fas fa-home"></i></a>
+            <a href="https://github.com/waleedmandour"><i class="fab fa-github"></i></a>
+            <a href="https://scholar.google.com/citations?user=waleedmandour"><i class="fas fa-graduation-cap"></i></a>
+            <a href="mailto:waleed@waleedmandour.org"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WW4M0NCF1V');
+    </script>
+
+    <script>
+        // Language toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langEnBtn = document.getElementById('lang-en');
+            const langArBtn = document.getElementById('lang-ar');
+            const body = document.body;
+            
+            function setLanguage(lang) {
+                if (lang === 'ar') {
+                    body.classList.add('arabic');
+                    langArBtn.classList.add('active');
+                    langEnBtn.classList.remove('active');
+                    localStorage.setItem('lang', 'ar');
+                } else {
+                    body.classList.remove('arabic');
+                    langEnBtn.classList.add('active');
+                    langArBtn.classList.remove('active');
+                    localStorage.setItem('lang', 'en');
+                }
+            }
+            
+            const savedLang = localStorage.getItem('lang') || 'en';
+            setLanguage(savedLang);
+            
+            langEnBtn.addEventListener('click', () => setLanguage('en'));
+            langArBtn.addEventListener('click', () => setLanguage('ar'));
+        });
+    </script>
+</body>
+</html>

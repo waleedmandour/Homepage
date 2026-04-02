@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis for Language Learners | Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        body.arabic .language-toggle {
+            right: auto;
+            left: 20px;
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* Main Content Styles */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        
+        /* Language-specific content */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+        
+        /* Placeholder Section */
+        .placeholder-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .placeholder-icon {
+            font-size: 4em;
+            color: var(--accent);
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .placeholder-section h2 {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .placeholder-section p {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        body.arabic .placeholder-section p {
+            text-align: center;
+        }
+        
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(26, 95, 122, 0.3);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: var(--light);
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        body.arabic .back-link i {
+            margin-right: 0;
+            margin-left: 8px;
+            transform: scaleX(-1);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            font-size: 0.95em;
+        }
+        
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        footer a:hover {
+            color: var(--white);
+        }
+        
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text {
+                text-align: center;
+            }
+            
+            body.arabic .header-text {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.1em;
+            }
+            
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .page-title {
+                font-size: 2em;
+            }
+            
+            .placeholder-section {
+                padding: 35px 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">Lexicography & Discourse Analysis Researcher</p>
+                <p class="tagline lang-ar">باحث في علم المعاجم وتحليل الخطاب</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الصفحة الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="active lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="active lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="page-title lang-en">Sentiment Analysis for Language Learners</h2>
+        <h2 class="page-title lang-ar">تحليل المشاعر لمتعلمي اللغة</h2>
+
+        <section class="placeholder-section">
+            <div class="placeholder-icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            
+            <h2 class="lang-en">Sentiment Analysis for Language Learners (English and Arabic)</h2>
+            <h2 class="lang-ar">تحليل المشاعر لمتعلمي اللغة (الإنجليزية والعربية)</h2>
+            
+            <p class="lang-en">
+                This is an ongoing research project exploring sentiment analysis tools and methodologies designed specifically for language learners in both English and Arabic. The project aims to develop computational approaches that can help educators and learners understand emotional tone, opinion patterns, and attitudinal expressions in written texts, with applications in reading comprehension, writing development, and critical literacy.
+            </p>
+            <p class="lang-ar">
+                هذا مشروع بحثي مستمر يستكشف أدوات ومنهجيات تحليل المشاعر المصممة خصيصًا لمتعلمي اللغة في كل من الإنجليزية والعربية. يهدف المشروع إلى تطوير أساليب حسابية يمكن أن تساعد المعلمين والمتعلمين على فهم النبرة العاطفية وأنماط الرأي والتعبيرات الموقفية في النصوص المكتوبة، مع تطبيقات في الفهم القرائي وتطوير الكتابة والمعرفة النقدية.
+            </p>
+            
+            <span class="coming-soon-badge lang-en"><i class="fas fa-tools"></i> &nbsp;Under Development</span>
+            <span class="coming-soon-badge lang-ar"><i class="fas fa-tools"></i> &nbsp;قيد التطوير</span>
+            
+            <br>
+            
+            <a href="https://waleedmandour.org/projects/" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span class="lang-en">Back to Projects</span>
+                <span class="lang-ar">العودة للمشاريع</span>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dr. Waleed Mandour. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://waleedmandour.org/"><i class="fas fa-home"></i></a>
+            <a href="https://github.com/waleedmandour"><i class="fab fa-github"></i></a>
+            <a href="https://scholar.google.com/citations?user=waleedmandour"><i class="fas fa-graduation-cap"></i></a>
+            <a href="mailto:waleed@waleedmandour.org"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WW4M0NCF1V');
+    </script>
+
+    <script>
+        // Language toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langEnBtn = document.getElementById('lang-en');
+            const langArBtn = document.getElementById('lang-ar');
+            const body = document.body;
+            
+            function setLanguage(lang) {
+                if (lang === 'ar') {
+                    body.classList.add('arabic');
+                    langArBtn.classList.add('active');
+                    langEnBtn.classList.remove('active');
+                    localStorage.setItem('lang', 'ar');
+                } else {
+                    body.classList.remove('arabic');
+                    langEnBtn.classList.add('active');
+                    langArBtn.classList.remove('active');
+                    localStorage.setItem('lang', 'en');
+                }
+            }
+            
+            const savedLang = localStorage.getItem('lang') || 'en';
+            setLanguage(savedLang);
+            
+            langEnBtn.addEventListener('click', () => setLanguage('en'));
+            langArBtn.addEventListener('click', () => setLanguage('ar'));
+        });
+    </script>
+</body>
+</html>
