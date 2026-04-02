@@ -31,7 +31,7 @@ Welcome to the official academic homepage of **Dr. Waleed Mandour** — a dedica
 
 ## About
 
-Dr. Waleed Mandour is a **Senior Instructor** at the **Center for Preparatory Studies, Sultan Qaboos University (SQU), Oman**, and a standing member of both the **E-Learning Committee** and the **Translation Committee** at SQU. He holds an **MA in Applied Linguistics** from Mansoura University, Egypt, and is a **Google for Education Certified Teacher Trainer**.
+Dr. Waleed Mandour is a **Senior Instructor** at the **Center for Preparatory Studies, Sultan Qaboos University (SQU), Oman**, and a standing member of both the **E-Learning Committee** and the **Translation Committee** at SQU. He holds a **PhD in Applied Linguistics** from Mansoura University, Egypt (February 2025), an **MA in Applied Linguistics** from the same institution, and is a **Google for Education Certified Teacher Trainer**.
 
 His research explores the dynamic intersections of Lexicography, Corpus Studies, Discourse Analysis, and their innovative applications in Educational Technology and AI-powered linguistic tools. He is particularly interested in developing data-driven methodologies and open-source tools that enhance our understanding of language, facilitate effective language learning, and revolutionize dictionary design.
 
@@ -60,7 +60,9 @@ Homepage/
 │   │   └── index.html
 │   ├── PA/                     # Peer-Assess Google Workspace Add-on
 │   │   └── index.html
-│   ├── awe-system/             # AWE System
+│   ├── awe-system/             # AWE System: AI Co-Marker (Cloud PWA)
+│   │   └── index.html
+│   ├── awe-desktop/            # AWE Desktop: AI Co-Marker (Offline Windows App)
 │   │   └── index.html
 │   ├── ReferralSIS/            # Referral Student Information System
 │   │   └── index.html
@@ -116,6 +118,8 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 | **AMTA** | AI-Model Triangulation Approach for bilingual dictionary compilation using corpus-driven term selection and RAG-enhanced AI generation | Active Development | [Projects/AMTA](projects/AMTA/) |
 | **iAWE** | Intelligent Academic Writing Evaluator — deterministic, schema-enforced feedback system for EAP writing assessment | Active Research | [Projects/iAWE](projects/iAWE/) |
 | **Binti2** | Egyptian Arabic Voice Assistant for BYD electric vehicles with natural dialect interaction and EV features | Active Development | [Projects/Binti2](projects/binti2/) |
+| **AWE System** | Multimodal, LLM-based Automated Writing Evaluation (PWA) for Foundation & Post-Foundation students at SQU — AI Co-Marker | Active Development | [Projects/awe-system](projects/awe-system/) |
+| **AWE Desktop** | Dual-track AWE system with fully offline Windows desktop app — local LLM (Ollama), offline OCR (Tesseract, PaddleOCR), full privacy | Active Development | [Projects/awe-desktop](projects/awe-desktop/) |
 | **WebAR Labs** | Engineering WebAR simulations spanning Chemical, Mechanical, Mechatronics, and Civil engineering education | Active Research | [Projects/XR](projects/XR/) |
 | **Peer-Assess** | Google Workspace Add-on for structured peer assessment workflows in educational settings | Active Tool | [Projects/PA](projects/PA/) |
 
@@ -205,6 +209,7 @@ Developing and sharing open-source tools for the research and education communit
 
 | Degree | Institution | Period |
 |--------|-------------|--------|
+| **PhD in Applied Linguistics** | Mansoura University, Egypt | Awarded February 2025 |
 | **MA in Applied Linguistics** | Mansoura University, Egypt | November 2017 – February 2020 |
 | **CELTA** (Teaching English for Adults) | Cambridge University, Alexandria, Egypt | July – August 2017 |
 | **Diploma of Translation** | Cairo University, Egypt | 2003 |
