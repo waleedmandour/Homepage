@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TESOL Oman Board Member | Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        body.arabic .language-toggle {
+            right: auto;
+            left: 20px;
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        /* Page Title */
+        .page-title {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+        
+        /* Intro Section */
+        .intro-section {
+            background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.08) 100%);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .intro-section h3 {
+            color: var(--primary);
+            font-size: 1.6em;
+            margin-bottom: 20px;
+        }
+        
+        .intro-section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        body.arabic .intro-section p {
+            text-align: right;
+        }
+        
+        /* Activities Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+        }
+        
+        body.arabic .timeline::before {
+            left: 50%;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            width: 45%;
+            padding: 25px 30px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            margin-left: auto;
+            margin-right: 5%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-right: auto;
+            margin-left: 5%;
+        }
+        
+        body.arabic .timeline-item:nth-child(odd) {
+            margin-left: 5%;
+            margin-right: auto;
+        }
+        
+        body.arabic .timeline-item:nth-child(even) {
+            margin-right: 5%;
+            margin-left: auto;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 10px rgba(32, 178, 170, 0.5);
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            left: -8%;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            right: -8%;
+        }
+        
+        .timeline-date {
+            font-size: 0.9em;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .timeline-item h3 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-item p {
+            font-size: 0.95em;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        body.arabic .timeline-item p,
+        body.arabic .timeline-item h3 {
+            text-align: right;
+        }
+        
+        /* Coming Soon Placeholder */
+        .coming-soon {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--light) 0%, rgba(26, 95, 122, 0.05) 100%);
+            border-radius: 12px;
+            border: 2px dashed var(--secondary);
+            margin-bottom: 50px;
+        }
+        
+        .coming-soon i {
+            font-size: 3em;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .coming-soon h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .coming-soon p {
+            color: var(--gray);
+            font-size: 1.1em;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+        
+        footer a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Language-specific content */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-text {
+                text-align: center;
+                max-width: 100%;
+            }
+            body.arabic .header-text {
+                text-align: center;
+            }
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .timeline::before {
+                left: 20px;
+            }
+            .timeline-item {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+                margin-right: 0 !important;
+            }
+            .timeline-item::after {
+                left: -28px !important;
+                right: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">PhD in Applied Linguistics | Senior Instructor | SQU</p>
+                <p class="tagline lang-ar">دكتوراه في اللغويات التطبيقية | محاضر أول | جامعة السلطان قابوس</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="page-title lang-en">TESOL Oman — Board Member</h2>
+        <h2 class="page-title lang-ar">تيسول عُمان — عضو مجلس الإدارة</h2>
+
+        <!-- Introduction -->
+        <section class="intro-section">
+            <h3 class="lang-en">
+                <i class="fas fa-users"></i> Serving the English Language Teaching Community in Oman
+            </h3>
+            <h3 class="lang-ar">
+                <i class="fas fa-users"></i> خدمة مجتمع تدريس اللغة الإنجليزية في عُمان
+            </h3>
+            
+            <p class="lang-en">
+                Dr. Waleed Mandour has been serving as a Board Member of TESOL Oman since December 2020, actively contributing to the advancement of English language teaching in the Sultanate of Oman. Through this role, he helps organize professional development events, workshops, and conferences that support English language teachers across the country.
+            </p>
+            <p class="lang-ar">
+                يخدم الدكتور وليد مندور كعضو في مجلس إدارة جمعية تيسول عُمان منذ ديسمبر ٢٠٢٠، مساهماً بنشاط في تطوير تدريس اللغة الإنجليزية في سلطنة عُمان. من خلال هذا الدور، يساعد في تنظيم فعاليات التطوير المهني وورش العمل والمؤتمرات التي تدعم معلمي اللغة الإنجليزية في جميع أنحاء البلاد.
+            </p>
+        </section>
+
+        <!-- Role Overview -->
+        <section class="intro-section" style="background: linear-gradient(135deg, rgba(10, 28, 60, 0.05) 0%, rgba(32, 178, 170, 0.08) 100%); border: 2px solid var(--accent);">
+            <h3 class="lang-en">
+                <i class="fas fa-id-badge"></i> Board Member Details
+            </h3>
+            <h3 class="lang-ar">
+                <i class="fas fa-id-badge"></i> تفاصيل عضوية مجلس الإدارة
+            </h3>
+            
+            <p class="lang-en">
+                <strong>Organization:</strong> TESOL Oman<br>
+                <strong>Role:</strong> Board Member<br>
+                <strong>Term:</strong> December 2020 – Present<br>
+                <strong>Focus:</strong> Professional development for English language teachers in Oman
+            </p>
+            <p class="lang-ar">
+                <strong>المنظمة:</strong> جمعية تيسول عُمان<br>
+                <strong>الدور:</strong> عضو مجلس الإدارة<br>
+                <strong>الفترة:</strong> ديسمبر ٢٠٢٠ – الحاضر<br>
+                <strong>التركيز:</strong> التطوير المهني لمعلمي اللغة الإنجليزية في عُمان
+            </p>
+        </section>
+
+        <!-- Activities Timeline -->
+        <h2 class="page-title lang-en" style="margin-top: 50px;">Activities & Contributions</h2>
+        <h2 class="page-title lang-ar" style="margin-top: 50px;">الأنشطة والمساهمات</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date lang-en"><i class="fas fa-calendar-alt"></i> December 2020 – Present</div>
+                <div class="timeline-date lang-ar"><i class="fas fa-calendar-alt"></i> ديسمبر ٢٠٢٠ – الحاضر</div>
+                <h3 class="lang-en">Board Member, TESOL Oman</h3>
+                <h3 class="lang-ar">عضو مجلس الإدارة، تيسول عُمان</h3>
+                <p class="lang-en">
+                    Serving on the Board of TESOL Oman, contributing to strategic decisions and initiatives that advance the quality of English language teaching in the Sultanate.
+                </p>
+                <p class="lang-ar">
+                    خدمة في مجلس إدارة جمعية تيسول عُمان، المساهمة في القرارات الاستراتيجية والمبادرات التي تعزز جودة تدريس اللغة الإنجليزية في السلطنة.
+                </p>
+            </div>
+        </div>
+
+        <!-- Coming Soon Placeholder -->
+        <section class="coming-soon">
+            <i class="fas fa-hands-helping"></i>
+            <h3 class="lang-en">More Activities Coming Soon</h3>
+            <h3 class="lang-ar">المزيد من الأنشطة قريباً</h3>
+            <p class="lang-en">This page will be updated with detailed activities, events, and contributions.</p>
+            <p class="lang-ar">سيتم تحديث هذه الصفحة بأنشطة وفعاليات ومساهمات مفصلة.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div>
+                <a href="https://orcid.org/0000-0002-9262-5993" target="_blank"><i class="fab fa-orcid"></i> ORCID</a>
+                <a href="https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+                <a href="https://www.researchgate.net/profile/Waleed-Mandour" target="_blank"><i class="fab fa-researchgate"></i> ResearchGate</a>
+                <a href="https://github.com/waleedmandour" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/waleedmandour" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </div>
+            <p class="copyright">&copy; 2025 Dr. Waleed Mandour. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Language Toggle Script -->
+    <script>
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            this.classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            this.classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+    </script>
+</body>
+</html>

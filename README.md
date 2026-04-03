@@ -72,6 +72,8 @@ Homepage/
 │       └── index.html
 ├── teaching/                   # Teaching experience, education, and training
 │   └── index.html
+├── tesol-oman/                # TESOL Oman Board Member page
+│   └── index.html
 ├── community/                  # Community service and outreach activities
 │   └── index.html
 ├── news/                       # News and announcements
@@ -193,7 +195,7 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 
 ### Professional Association Leadership
 - **Board Member**, TESOL Oman (December 2020 – Present) — Organizing professional development events and conferences for English language teachers in Oman
-- **Steering Committee Member**, NileTESOL, Cairo, Egypt (May 2018 – Present) — Contributing to the largest TESOL association in Egypt and North Africa
+- **Steering Committee Member**, NileTESOL, Cairo, Egypt (May 2018 – December 2020) — Contributing to the largest TESOL association in Egypt and North Africa
 - **Member**, TESOL International Association (November 2018 – Present)
 
 ### Institutional Service

@@ -114,18 +114,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 50px;
+            flex-direction: column;
             margin-bottom: 40px;
         }
         
         .header-text {
-            text-align: left;
-            max-width: 600px;
+            text-align: center;
+            max-width: 800px;
         }
         
         body.arabic .header-text {
-            text-align: right;
+            text-align: center;
         }
         
         h1 {
@@ -148,26 +147,7 @@
             font-weight: 500;
         }
         
-        .header-photo-container {
-            position: relative;
-        }
-        
-        .header-photo {
-            width: 180px;
-            height: 180px;
-            border-radius: 20px;
-            object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 25px rgba(201, 162, 39, 0.6);
-            transition: var(--transition);
-            background: white;
-            padding: 10px;
-        }
-        
-        .header-photo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px rgba(201, 162, 39, 0.8);
-        }
+
         
         nav {
             position: relative;
@@ -179,13 +159,13 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 20px;
             background: rgba(26, 95, 42, 0.7);
             padding: 15px 30px;
             border-radius: 50px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
@@ -1038,7 +1018,7 @@
 
         @media (max-width: 768px) {
             nav ul {
-                gap: 15px;
+                gap: 20px;
             }
             
             h1 {
@@ -1100,7 +1080,7 @@
         @media (max-width: 480px) {
             nav ul {
                 flex-direction: column;
-                gap: 10px;
+                gap: 20px;
                 padding: 20px;
             }
             
@@ -1159,9 +1139,6 @@
                 </p>
             </div>
             
-            <div class="header-photo-container">
-                <img src="iAWE-header-logo.png" alt="iAWE System Logo" class="header-photo">
-            </div>
         </div>
         
         <nav>
