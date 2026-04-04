@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RDAT Copilot — Repository-Driven Adaptive Translation: A Progressive Web App providing a full-featured, AI-powered co-writing environment for English-Arabic translation — running entirely in the browser.">
+    <title>RDAT Copilot — Repository-Driven Adaptive Translation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #4A148C;
+            --accent-light: #7B1FA2;
+            --accent-teal: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        /* Ensure RTL inheritance for all containers */
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic div,
+        body.arabic .hero-content,
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .audience-grid {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* ===== HEADER STYLES ===== */
+        header {
+            background: linear-gradient(135deg, #4A148C 0%, #1A5F7A 100%);
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(74, 20, 140, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(74, 20, 140, 0.8);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--secondary);
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--dark);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 24px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+        
+        /* Live Demo Badge */
+        .live-demo-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(74, 20, 140, 0.3);
+            text-transform: uppercase;
+        }
+
+        /* ===== CTA BUTTON ===== */
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4);
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        /* ===== WORKFLOW SECTION ===== */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        body.arabic .section-title::after {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        .workflow-container {
+            position: relative;
+            margin: 64px 0;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .workflow-step {
+            background: var(--white);
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .workflow-step:hover::before {
+            opacity: 1;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .workflow-step h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .workflow-step p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-teal));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--accent-light);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 16px;
+            background: rgba(74, 20, 140, 0.1);
+            border-radius: 12px;
+            color: var(--accent);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* ===== ARCHITECTURE TABLE ===== */
+        .architecture-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .architecture-table thead th {
+            background: linear-gradient(135deg, #4A148C 0%, #1A5F7A 100%);
+            color: white;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        body.arabic .architecture-table thead th {
+            text-align: right;
+        }
+
+        .architecture-table tbody td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .architecture-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .architecture-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .architecture-table tbody tr:hover {
+            background-color: #f5f0ff;
+        }
+
+        /* ===== TECH STACK SECTION ===== */
+        .tech-stack-section {
+            background: linear-gradient(135deg, var(--light) 0%, rgba(74, 20, 140, 0.05) 100%);
+            padding: 48px 32px;
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .tech-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .tech-tag-pill {
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .tech-tag-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 20, 140, 0.3);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 64px 0;
+            background: linear-gradient(135deg, var(--light) 0%, rgba(74, 20, 140, 0.1) 100%);
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .cta-subtitle {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4);
+        }
+
+        .cta-buttons-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            box-shadow: none;
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid var(--light);
+            margin-top: 64px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-email {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .footer-email:hover {
+            color: var(--accent);
+        }
+        
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -5px;
+            color: var(--gray);
+        }
+
+        body.arabic .footer-links a:not(:last-child)::after {
+            right: auto;
+            left: -5px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* ===== LANGUAGE LOGIC ===== */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+
+        body.arabic .hero h1.lang-ar,
+        body.arabic .hero .hero-subtitle.lang-ar {
+            text-align: center;
+        }
+
+        body.arabic .footer,
+        body.arabic .footer-content,
+        body.arabic .footer-content > div {
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .header-text, body.arabic .header-text { text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            nav ul { gap: 20px; }
+            h1 { font-size: 2.2em; }
+            .tagline { font-size: 1.1em; }
+            .header-photo { width: 150px; height: 150px; }
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 20px; }
+            .section-title { font-size: 28px; }
+            .features-grid, .workflow-steps { grid-template-columns: 1fr; }
+            .language-toggle { top: 16px; right: 16px; }
+            .footer-links { flex-direction: column; gap: 8px; }
+            .footer-links a:not(:last-child)::after { display: none; }
+            .architecture-table { font-size: 13px; }
+            .architecture-table thead th, .architecture-table tbody td { padding: 10px 12px; }
+        }
+
+        @media (max-width: 480px) {
+            nav ul { flex-direction: column; gap: 20px; padding: 20px; }
+            h1 { font-size: 1.8em; }
+            .header-photo { width: 130px; height: 130px; }
+            .hero h1 { font-size: 28px; }
+            .hero-description { font-size: 16px; }
+            .feature-card { padding: 24px; }
+            .container { padding: 0 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">RDAT Copilot</h1>
+                <h1 class="lang-ar">مساعد الترجمة الذكي</h1>
+                
+                <p class="tagline lang-en">Repository-Driven Adaptive Translation</p>
+                <p class="tagline lang-ar">نظام الترجمة التكيفي القائم على المستودعات</p>
+            </div>
+            
+            <div class="header-photo-container">
+                <i class="fas fa-language" style="font-size: 80px; color: rgba(255,255,255,0.9); filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));"></i>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+<li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <!-- Status Badge -->
+                <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Active Development</div>
+                <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; تطوير نشط</div>
+
+                <h1 class="lang-en">RDAT Copilot</h1>
+                <h1 class="lang-ar">مساعد الترجمة الذكي — RDAT Copilot</h1>
+                
+                <div class="hero-subtitle lang-en">Repository-Driven Adaptive Translation</div>
+                <div class="hero-subtitle lang-ar">نظام الترجمة التكيفي القائم على المستودعات</div>
+
+                <p class="hero-description lang-en">
+                    A Progressive Web App providing a <strong>full-featured, AI-powered co-writing environment</strong> for English-Arabic translation — running <strong>entirely in the browser</strong>. Built on a dual-track AI architecture combining a Sovereign Track (local WebGPU inference via Gemma 2B) and a Reasoning Track (cloud Gemini API). All translation decisions are guided by an in-browser RAG vector database and an AMTA terminology linter.
+                </p>
+                
+                <p class="hero-description lang-ar">
+                    تطبيق ويب تقدمي يوفر <strong>بيئة تحرير ذكية كاملة مدعومة بالذكاء الاصطناعي</strong> لترجمة النصوص بين الإنجليزية والعربية — يعمل <strong>بالكامل داخل المتصفح</strong>. مبني على بنية ذكاء اصطناعي مزدوجة المسار تجمع بين المسار السيادي (استدلال محلي عبر WebGPU باستخدام Gemma 2B) ومسار الاستدلال السحابي (Gemini API). تُوجَّه جميع قرارات الترجمة بقاعدة بيانات متجهة RAG داخل المتصفح وفاحص مصطلحات AMTA.
+                </p>
+
+                <a href="https://rdat-pwa.vercel.app/" target="_blank" class="hero-cta">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span class="lang-en">Launch Live Demo</span>
+                    <span class="lang-ar">تشغيل النسخة التجريبية</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">How It Works</h2>
+            <h2 class="section-title lang-ar">آلية العمل</h2>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4 class="lang-en">Source-Driven Event Loop</h4>
+                    <h4 class="lang-ar">حلقة الأحداث المدفوعة بالمصدر</h4>
+                    <p class="lang-en">
+                        Every keystroke triggers a source-driven pipeline: the current segment is extracted, chunked, and embedded in real-time to build contextual awareness across the entire document.
+                    </p>
+                    <p class="lang-ar">
+                        كل ضغطة مفتاح تُفعّل مساراً مدفوعاً بالمصدر: يتم استخراج المقطع الحالي وتقسيمه وتضمينه في الوقت الفعلي لبناء وعي سياقي عبر الوثيقة بأكملها.
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4 class="lang-en">RAG Pipeline</h4>
+                    <h4 class="lang-ar">خط أنابيب البحث الدلالي</h4>
+                    <p class="lang-en">
+                        Transformers.js embeddings are compared against the Orama vector database to retrieve translation memory matches, ensuring terminology consistency and contextual accuracy.
+                    </p>
+                    <p class="lang-ar">
+                        تتم مقارنة التضمينات المنتجة بـ Transformers.js بقاعدة البيانات المتجهة Orama لاسترداد تطابقات ذاكرة الترجمة، مما يضمن اتساق المصطلحات والدقة السياقية.
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4 class="lang-en">Sovereign Track Ghost Text</h4>
+                    <h4 class="lang-ar">نص الشبح — المسار السيادي</h4>
+                    <p class="lang-en">
+                        A local Gemma 2B model runs via WebGPU to generate real-time ghost text suggestions inline — entirely private, zero-latency, no server round-trips required.
+                    </p>
+                    <p class="lang-ar">
+                        نموذج Gemma 2B المحلي يعمل عبر WebGPU لتوليد اقتراحات نص الشبح في الوقت الفعلي داخل المحرر — خاصية كاملة، بدون تأخير، بدون اتصال بالخادم.
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4 class="lang-en">AMTA Terminology Linter</h4>
+                    <h4 class="lang-ar">فاحص مصطلحات AMTA</h4>
+                    <p class="lang-en">
+                        An automated terminology checker highlights untranslated or inconsistent terms with yellow squiggles, offering quick-fix suggestions aligned with AMTA dictionary standards.
+                    </p>
+                    <p class="lang-ar">
+                        فاحص مصطلحات آلي يُبرز المصطلحات غير المترجمة أو غير المتسقة بخطوط متموجة صفراء، ويقدم اقتراحات إصلاح سريعة متوافقة مع معايير قاموس AMTA.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Design Principles / Key Features Section -->
+        <section>
+            <h2 class="section-title lang-en">Core Design Principles</h2>
+            <h2 class="section-title lang-ar">مرتكزات التصميم الأساسية</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="lang-en">Dual-Track AI System</h3>
+                    <h3 class="lang-ar">نظام ذكاء اصطناعي مزدوج المسار</h3>
+                    <p class="lang-en">
+                        Sovereign Track (local Gemma 2B via WebGPU) delivers real-time ghost text for inline suggestions. Reasoning Track (Gemini cloud API) handles complex rewriting tasks. Both tracks run in parallel, giving the translator the best of both worlds.
+                    </p>
+                    <p class="lang-ar">
+                        المسار السيادي (Gemma 2B المحلي عبر WebGPU) يقدم نص الشبح في الوقت الفعلي للاقتراحات داخل المحرر. مسار الاستدلال (Gemini السحابي) يتولى مهام إعادة الصياغة المعقدة. كلا المسارين يعملان بالتوازي، ليمنح المترجم أفضل ما في العالمين.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="lang-en">Source-Driven RAG</h3>
+                    <h3 class="lang-ar">محرك البحث الدلالي</h3>
+                    <p class="lang-en">
+                        Orama vector database with Transformers.js embeddings powers translation memory matching. As you type, the system retrieves relevant past translations to maintain document-wide terminology and style consistency.
+                    </p>
+                    <p class="lang-ar">
+                        قاعدة بيانات Orama المتجهة مع تضمينات Transformers.js تُشغّل مطابقة ذاكرة الترجمة. أثناء الكتابة، يسترد النظام الترجمات السابقة ذات الصلة للحفاظ على اتساق المصطلحات والأسلوب عبر الوثيقة.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="lang-en">AMTA Terminology Linter</h3>
+                    <h3 class="lang-ar">فحص جودة الترجمة</h3>
+                    <p class="lang-en">
+                        Real-time terminology checking detects untranslated terms, shows yellow squiggles, and offers quick fixes. Ensures AMTA dictionary standards are met across the entire translation project.
+                    </p>
+                    <p class="lang-ar">
+                        فحص المصطلحات في الوقت الفعلي يكتشف المصطلحات غير المترجمة، ويعرض خطوطاً متموجة صفراء، ويقدم إصلاحات سريعة. يضمن الالتزام بمعايير قاموس AMTA عبر مشروع الترجمة بأكمله.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="lang-en">Non-Destructive Editing</h3>
+                    <h3 class="lang-ar">تحرير غير تدميري</h3>
+                    <p class="lang-en">
+                        The AI never overwrites the translator's text. All suggestions appear as ghost text, inline completions, or separate panels — the translator always retains full control and final authority over every word.
+                    </p>
+                    <p class="lang-ar">
+                        الذكاء الاصطناعي لا يمحو أبداً نص المترجم. جميع الاقتراحات تظهر كنص شبح أو إكمالات داخلية أو لوحات منفصلة — المترجم يحتفظ دائماً بالتحكم الكامل والسلطة النهائية على كل كلمة.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="lang-en">Bilingual Arabic-English Interface</h3>
+                    <h3 class="lang-ar">واجهة ثنائية اللغة</h3>
+                    <p class="lang-en">
+                        Full RTL support with a Gemma-inspired design language. The interface seamlessly switches between English and Arabic, providing a native-quality experience for both languages.
+                    </p>
+                    <p class="lang-ar">
+                        دعم كامل للكتابة من اليمين لليسار بلغة تصميم مستوحاة من Gemma. واجهة المستخدم تنتقل بسلاسة بين الإنجليزية والعربية، لتوفر تجربة ذات جودة أصلية للغتين.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="lang-en">PWA Offline-Ready</h3>
+                    <h3 class="lang-ar">تطبيق ويب تقدمي</h3>
+                    <p class="lang-en">
+                        Installable as a native app on any device. Service worker caching enables offline operation after the initial model download. Your translation workspace is always available, even without internet.
+                    </p>
+                    <p class="lang-ar">
+                        قابل للتثبيت كتطبيق أصلي على أي جهاز. تخزين عامل الخدمة يُمكّن العمل بدون اتصال بعد التحميل الأولي للنموذج. مساحة عمل الترجمة متاحة دائماً، حتى بدون إنترنت.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Comparison Table -->
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">Dual-Track Architecture</h2>
+            <h2 class="section-title lang-ar">بنية المسار المزدوج</h2>
+
+            <table class="architecture-table">
+                <thead>
+                    <tr>
+                        <th class="lang-en">Aspect</th>
+                        <th class="lang-en">Sovereign Track (Local)</th>
+                        <th class="lang-en">Reasoning Track (Cloud)</th>
+                        <th class="lang-ar">الجانب</th>
+                        <th class="lang-ar">المسار السيادي (محلي)</th>
+                        <th class="lang-ar">مسار الاستدلال (سحابي)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong class="lang-en">Model</strong><strong class="lang-ar">النموذج</strong></td>
+                        <td class="lang-en">Gemma 2B via WebLLM</td>
+                        <td class="lang-en">Google Gemini API</td>
+                        <td><strong class="lang-en">Model</strong><strong class="lang-ar">النموذج</strong></td>
+                        <td class="lang-ar">Gemma 2B عبر WebLLM</td>
+                        <td class="lang-ar">Google Gemini API</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Runtime</strong><strong class="lang-ar">بيئة التشغيل</strong></td>
+                        <td class="lang-en">Browser (WebGPU)</td>
+                        <td class="lang-en">Cloud API</td>
+                        <td><strong class="lang-en">Runtime</strong><strong class="lang-ar">بيئة التشغيل</strong></td>
+                        <td class="lang-ar">المتصفح (WebGPU)</td>
+                        <td class="lang-ar">واجهة برمجة سحابية</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Purpose</strong><strong class="lang-ar">الغرض</strong></td>
+                        <td class="lang-en">Real-time ghost text</td>
+                        <td class="lang-en">Complex rewriting</td>
+                        <td><strong class="lang-en">Purpose</strong><strong class="lang-ar">الغرض</strong></td>
+                        <td class="lang-ar">نص الشبح في الوقت الفعلي</td>
+                        <td class="lang-ar">إعادة الصياغة المعقدة</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Privacy</strong><strong class="lang-ar">الخصوصية</strong></td>
+                        <td class="lang-en">Fully local (no data leaves device)</td>
+                        <td class="lang-en">BYOK (user's own API key)</td>
+                        <td><strong class="lang-en">Privacy</strong><strong class="lang-ar">الخصوصية</strong></td>
+                        <td class="lang-ar">محلي بالكامل (لا تخرج بيانات)</td>
+                        <td class="lang-ar">BYOK (مفتاح API المستخدم)</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Latency</strong><strong class="lang-ar">زمن الاستجابة</strong></td>
+                        <td class="lang-en">Ultra-low (local inference)</td>
+                        <td class="lang-en">Network-dependent</td>
+                        <td><strong class="lang-en">Latency</strong><strong class="lang-ar">زمن الاستجابة</strong></td>
+                        <td class="lang-ar">منخفض جداً (استدلال محلي)</td>
+                        <td class="lang-ar">يعتمد على الشبكة</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section class="tech-stack-section">
+            <h2 class="section-title lang-en">Technology Stack</h2>
+            <h2 class="section-title lang-ar">المكدس التقني</h2>
+            
+            <div class="tech-tags-container">
+                <span class="tech-tag-pill">Next.js 16</span>
+                <span class="tech-tag-pill">TypeScript</span>
+                <span class="tech-tag-pill">Tailwind CSS 4</span>
+                <span class="tech-tag-pill">Monaco Editor</span>
+                <span class="tech-tag-pill">WebLLM (Gemma 2B)</span>
+                <span class="tech-tag-pill">Google Gemini</span>
+                <span class="tech-tag-pill">Transformers.js</span>
+                <span class="tech-tag-pill">Orama Vector DB</span>
+                <span class="tech-tag-pill">PWA (next-pwa + Workbox)</span>
+                <span class="tech-tag-pill">MIT License</span>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">Try RDAT Copilot Now</h2>
+            <h2 class="cta-title lang-ar">جرّب مساعد الترجمة الذكي الآن</h2>
+            
+            <p class="cta-subtitle lang-en">
+                A research project by Dr. Waleed Mandour at Sultan Qaboos University, pushing the boundaries of AI-assisted translation technology.
+            </p>
+            <p class="cta-subtitle lang-ar">
+                مشروع بحثي لـ د. وليد مندور في جامعة السلطان قابوس، يدفع حدود تقنية الترجمة المدعومة بالذكاء الاصطناعي.
+            </p>
+            
+            <div class="cta-buttons-group">
+                <a href="https://rdat-pwa.vercel.app/" target="_blank" class="cta-button">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span class="lang-en">Launch Live Demo</span>
+                    <span class="lang-ar">تشغيل النسخة التجريبية</span>
+                </a>
+                <a href="https://github.com/waleedmandour/rdat-pwa" target="_blank" class="cta-button secondary">
+                    <i class="fab fa-github"></i>
+                    <span class="lang-en">View on GitHub</span>
+                    <span class="lang-ar">عرض على GitHub</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <div>
+                <span class="lang-en">Author: </span><span class="lang-ar">الباحث: </span>
+                <a href="https://waleedmandour.org/" class="footer-email">Dr. Waleed Mandour</a>
+                <span class="lang-en"> — Sultan Qaboos University</span>
+                <span class="lang-ar"> — جامعة السلطان قابوس</span>
+            </div>
+            <div>
+                <span class="lang-en">Contact: </span><span class="lang-ar">تواصل: </span>
+                <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://waleedmandour.org/" class="lang-en">Home</a>
+                <a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a>
+                <a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a>
+                <a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a>
+                <a href="https://waleedmandour.org/research/" class="lang-en">Research</a>
+                <a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a>
+                <a href="https://github.com/waleedmandour/rdat-pwa" target="_blank" class="lang-en">GitHub</a>
+                <a href="https://github.com/waleedmandour/rdat-pwa" target="_blank" class="lang-ar">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Toggle Script -->
+    <script>
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            this.classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            this.classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
