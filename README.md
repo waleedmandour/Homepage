@@ -2,7 +2,7 @@
 
 [![Live Site](https://img.shields.io/badge/Live_Site-waleedmandour.org-20B2AA?style=flat-square&logo=firefox&logoColor=white)](https://waleedmandour.org/)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--9262--5993-A6CE39?style=flat-square&logo=orcid&logoColor=white)](https://orcid.org/0000-0002-9262-5993)
-[![Google Scholar](https://img.shields.io/badge/Google_Scholar-13_citations-4285F4?style=flat-square&logo=google-scholar&logoColor=white)](https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en)
+[![Google Scholar](https://img.shields.io/badge/Google_Scholar-12_citations-4285F4?style=flat-square&logo=google-scholar&logoColor=white)](https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en)
 [![ResearchGate](https://img.shields.io/badge/ResearchGate-Profile-00CCBB?style=flat-square&logo=researchgate&logoColor=white)](https://www.researchgate.net/profile/Waleed-Mandour)
 [![Scopus](https://img.shields.io/badge/Scopus-58211012400-E9711C?style=flat-square&logo=scopus&logoColor=white)](https://www.scopus.com/authid/detail.uri?authorId=58211012400)
 
@@ -66,6 +66,10 @@ Homepage/
 │   │   └── index.html
 │   ├── ReferralSIS/            # Referral Student Information System
 │   │   └── index.html
+│   ├── rdat-pwa/               # RDAT Copilot: AI-Powered Translation Assistant
+│   │   └── index.html
+│   ├── evd/                     # EV Connect: BYD OBD-II Monitor
+│   │   └── index.html
 │   ├── sentiment-analysis/     # Sentiment Analysis for Language Learners (EN/AR)
 │   │   └── index.html
 │   └── translation-rtl/        # Translation RTL Software
@@ -124,6 +128,8 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 | **AWE Desktop** | Dual-track AWE system with fully offline Windows desktop app — local LLM (Ollama), offline OCR (Tesseract, PaddleOCR), full privacy | Active Development | [Projects/awe-desktop](projects/awe-desktop/) |
 | **WebAR Labs** | Engineering WebAR simulations spanning Chemical, Mechanical, Mechatronics, and Civil engineering education | Active Research | [Projects/XR](projects/XR/) |
 | **Peer-Assess** | Google Workspace Add-on for structured peer assessment workflows in educational settings | Active Tool | [Projects/PA](projects/PA/) |
+| **RDAT Copilot** | AI-powered Progressive Web App for English-Arabic translation with dual-track AI (local WebGPU + cloud Gemini), in-browser RAG, and AMTA terminology linting | Active Development | [Projects/rdat-pwa](projects/rdat-pwa/) |
+| **EV Connect** | Real-time OBD-II diagnostics and monitoring PWA for BYD electric vehicles with dashboard, battery monitor, diagnostics, and voice guide | Active Development | [Projects/evd](projects/evd/) |
 
 ### Research Tools & Datasets
 
@@ -155,15 +161,15 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 
 5. **Using AI Tools in Text Analysis, Simplification, Classification and Synthesis** — Research Article, ResearchGate, February 2025.
 
-6. **Literacy in Two of Arthur Miller's Plays: A Corpus-Based Study** — Research Article, ResearchGate, July 2022.
+6. **Orality vs. Literacy in Two of Arthur Miller's Plays: A Corpus-Based Study** — Research Article, ResearchGate, July 2022.
 
 7. **Academic Collocations in Egyptian Medical Abstracts: A Corpus-Based Study** — Research Article, DAAD Journal.
 
-8. **Words of Peace in the Speeches of the Egyptian President Abdulfattah El-Sisi: A Corpus-Based Study** — Research Article, ResearchGate.
+8. **Words of Peace in the Speeches of the Egyptian President Abdulfattah El-Sisi: A Corpus-Based Study** — Conference Paper, ICHSS 2020. DOI: 10.5281/zenodo.3607882
 
-9. **The Use of an Open Access Corpus Web Tool in a DDL Writing Model** — Conference Presentation, NileTESOL, November 2019.
+9. **The Use of an Open Access Corpus Web Tool in a DDL Writing Model** — Journal Article, CDELT, 2020.
 
-10. **A Corpus-Based Study of Collocations in the Medical Discourse of Egyptian and Native English-Speaking Researchers** — Research Article, ResearchGate.
+10. **A Corpus-Based Study of Collocations in the Medical Discourse of Egyptian and Native English-Speaking Researchers** — MA Thesis, Egyptian Universities Libraries, 2020.
 
 ---
 
