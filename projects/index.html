@@ -199,10 +199,9 @@
         
         /* Main Content Styles */
         main {
-            display: block !important;
-            width: 100% !important;
+            max-width: 1200px;
             margin: 40px auto;
-            padding: 0 25px;
+            padding: 0 20px;
         }
         
         .page-title {
@@ -357,6 +356,7 @@
         }
         
         .tech-tag {
+            display: inline-block;
             background-color: var(--secondary);
             color: var(--white);
             padding: 5px 12px;
@@ -519,21 +519,39 @@
             transform: translateY(-3px);
         }
         
-        /* Language-specific content */
-        .lang-en {
-            display: block;
-        }
-        
+        /* ========== Language-specific content display ========== */
+        /* FIX: Only hide the inactive language; do NOT force display:block
+           on the active one, because that breaks inline elements like
+           <a>, <span>, etc. Elements are visible by default — we only
+           need to hide the ones that shouldn't show. */
         .lang-ar {
             display: none;
         }
-        
+
         body.arabic .lang-en {
             display: none;
         }
-        
+
         body.arabic .lang-ar {
-            display: block;
+            display: revert;   /* restores each element's natural display type */
+        }
+
+        /* Fallback for browsers that don't support `revert` (very old only):
+           We explicitly restore common inline elements so they don't
+           accidentally stay hidden when Arabic is active. */
+        @supports not (display: revert) {
+            body.arabic .lang-ar {
+                display: block;
+            }
+            body.arabic .lang-ar.tech-tag,
+            body.arabic .lang-ar.project-status,
+            body.arabic .lang-ar.small-project-status,
+            body.arabic .lang-ar.small-project-link {
+                display: inline-block;
+            }
+            body.arabic nav .lang-ar {
+                display: inline;
+            }
         }
         
         /* Responsive Design */
@@ -655,15 +673,15 @@
         <nav>
             <div class="container">
                 <ul>
-<li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
                     <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
                     <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
-                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en active">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar active">المشاريع</a></li>
                     <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
                     <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
                     <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
                     <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
-                                </ul>
+                </ul>
             </div>
         </nav>
     </header>
@@ -891,7 +909,7 @@
                         <div class="detail-item">
                             <div class="detail-title lang-en">Target Audience</div>
                             <div class="detail-title lang-ar">الجمهور المستهدف</div>
-                            <div class="detail-content lang-en">Engineering Undergraduates & ESP Language Learners</div>
+                            <div class="detail-content lang-en">Engineering Undergraduates &amp; ESP Language Learners</div>
                             <div class="detail-content lang-ar">طلاب الهندسة الجامعيون ومتعلمو لغة التخصصات</div>
                         </div>
                     </div>
@@ -951,7 +969,7 @@
                         <div class="detail-item">
                             <div class="detail-title lang-en">Primary Application</div>
                             <div class="detail-title lang-ar">التطبيق الأساسي</div>
-                            <div class="detail-content lang-en">Higher Education & K-12 Classrooms</div>
+                            <div class="detail-content lang-en">Higher Education &amp; K-12 Classrooms</div>
                             <div class="detail-content lang-ar">التعليم العالي والتعليم الأساسي (K-12)</div>
                         </div>
                         
@@ -1141,6 +1159,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Project 7: EV Connect (EVD) -->
             <div class="project-card">
                 <div class="project-header" style="background: linear-gradient(135deg, #00897B 0%, #00695C 100%);">
@@ -1251,11 +1270,11 @@
                             تطبيق ويب تقدمي يوفر بيئة تحرير ذكية مدعومة بالذكاء الاصطناعي لترجمة النصوص بين الإنجليزية والعربية — يعمل بالكامل داخل المتصفح مع استدلال محلي عبر WebGPU وGemini السحابي.
                         </p>
                         
-                        <a href="https://rdat-pwa.vercel.app/" target="_blank" class="small-project-link lang-en">Live Demo →</a>
-                        <a href="https://rdat-pwa.vercel.app/" target="_blank" class="small-project-link lang-ar">← النسخة التجريبية</a>
+                        <a href="https://rdat-pwa.vercel.app/" target="_blank" class="small-project-link lang-en">Live Demo &rarr;</a>
+                        <a href="https://rdat-pwa.vercel.app/" target="_blank" class="small-project-link lang-ar">&larr; النسخة التجريبية</a>
                         <br>
-                        <a href="rdat-pwa/index.html" class="small-project-link lang-en">Project Page →</a>
-                        <a href="rdat-pwa/index.html" class="small-project-link lang-ar">← صفحة المشروع</a>
+                        <a href="rdat-pwa/index.html" class="small-project-link lang-en">Project Page &rarr;</a>
+                        <a href="rdat-pwa/index.html" class="small-project-link lang-ar">&larr; صفحة المشروع</a>
                     </div>
                 </div>
 
@@ -1344,8 +1363,8 @@
                             مجموعة أدوات Python بنماذج مدربة مسبقًا لتحليل مشاعر النصوص العربية الفصحى واللهجية، مع نماذج متخصصة لمجالات مختلفة.
                         </p>
                         
-                        <a href="projects/sentiment-toolkit.html" class="small-project-link lang-en">View Details →</a>
-                        <a href="projects/sentiment-toolkit.html" class="small-project-link lang-ar">← عرض التفاصيل</a>
+                        <a href="projects/sentiment-toolkit.html" class="small-project-link lang-en">View Details &rarr;</a>
+                        <a href="projects/sentiment-toolkit.html" class="small-project-link lang-ar">&larr; عرض التفاصيل</a>
                     </div>
                 </div>
                 
@@ -1369,8 +1388,8 @@
                             تحليل كمي ونوعي لنصوص المفاوضات لتحديد المؤشرات اللغوية للتنازل والمواجهة والحل في حوارات السلام.
                         </p>
                         
-                        <a href="publications.html#peace-discourse" class="small-project-link lang-en">View Publication →</a>
-                        <a href="publications.html#peace-discourse" class="small-project-link lang-ar">← عرض المنشور</a>
+                        <a href="publications.html#peace-discourse" class="small-project-link lang-en">View Publication &rarr;</a>
+                        <a href="publications.html#peace-discourse" class="small-project-link lang-ar">&larr; عرض المنشور</a>
                     </div>
                 </div>
                 
@@ -1394,8 +1413,8 @@
                             أداة تعلم قائمة على الدردشة توفر ملاحظات مخصصة حول القواعد والمفردات والنطق لمتعلمي اللغة الإنجليزية.
                         </p>
                         
-                        <a href="projects/ai-assistant.html" class="small-project-link lang-en">Learn More →</a>
-                        <a href="projects/ai-assistant.html" class="small-project-link lang-ar">← معرفة المزيد</a>
+                        <a href="projects/ai-assistant.html" class="small-project-link lang-en">Learn More &rarr;</a>
+                        <a href="projects/ai-assistant.html" class="small-project-link lang-ar">&larr; معرفة المزيد</a>
                     </div>
                 </div>
 
@@ -1404,17 +1423,17 @@
                     <div class="small-project-header" style="background: linear-gradient(135deg, #00897B 0%, #00695C 100%);">
                         <h3 class="small-project-title lang-en">EV Connect</h3>
                         <h3 class="small-project-title lang-ar">EV Connect — مراقب OBD-II</h3>
-                        <p class="small-project-subtitle lang-en">BYD OBD-II Monitor & Diagnostics PWA</p>
+                        <p class="small-project-subtitle lang-en">BYD OBD-II Monitor &amp; Diagnostics PWA</p>
                         <p class="small-project-subtitle lang-ar">مراقب تشخيصي OBD-II لسيارات BYD الكهربائية</p>
                     </div>
                     <div class="small-project-content">
-                        <p class="small-project-description lang-en">Real-time OBD-II diagnostics for BYD EVs with dashboard, battery & charging monitor, DTC scanning, eco driving score, and voice guide. Optimized for vGate iCar Pro BLE 4.0.</p>
+                        <p class="small-project-description lang-en">Real-time OBD-II diagnostics for BYD EVs with dashboard, battery &amp; charging monitor, DTC scanning, eco driving score, and voice guide. Optimized for vGate iCar Pro BLE 4.0.</p>
                         <p class="small-project-description lang-ar">مراقبة تشخيصية حقيقية الوقت لسيارات BYD الكهربائية مع لوحة معلومات، ورصد البطارية والشحن، وفحص الأعطال، وتقييم القيادة الاقتصادي، ودليل صوتي. محسّن لجهاز vGate iCar Pro BLE 4.0.</p>
                         <span class="small-project-status lang-en">Active Development</span>
                         <span class="small-project-status lang-ar">تطوير نشط</span>
                         <br>
-                        <a href="evd/index.html" class="small-project-link lang-en">View Project →</a>
-                        <a href="evd/index.html" class="small-project-link lang-ar">عرض المشروع ←</a>
+                        <a href="evd/index.html" class="small-project-link lang-en">View Project &rarr;</a>
+                        <a href="evd/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
                     </div>
                 </div>
 
@@ -1432,8 +1451,8 @@
                         <span class="small-project-status lang-en">Active Development</span>
                         <span class="small-project-status lang-ar">تطوير نشط</span>
                         <br>
-                        <a href="binti2/index.html" class="small-project-link lang-en">View Project →</a>
-                        <a href="binti2/index.html" class="small-project-link lang-ar">عرض المشروع ←</a>
+                        <a href="binti2/index.html" class="small-project-link lang-en">View Project &rarr;</a>
+                        <a href="binti2/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
                     </div>
                 </div>
 
@@ -1451,8 +1470,8 @@
                         <span class="small-project-status lang-en">Under Development</span>
                         <span class="small-project-status lang-ar">قيد التطوير</span>
                         <br>
-                        <a href="sentiment-analysis/index.html" class="small-project-link lang-en">View Project →</a>
-                        <a href="sentiment-analysis/index.html" class="small-project-link lang-ar">عرض المشروع ←</a>
+                        <a href="sentiment-analysis/index.html" class="small-project-link lang-en">View Project &rarr;</a>
+                        <a href="sentiment-analysis/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
                     </div>
                 </div>
 
@@ -1470,11 +1489,12 @@
                         <span class="small-project-status lang-en">Coming Soon</span>
                         <span class="small-project-status lang-ar">قريباً</span>
                         <br>
-                        <a href="translation-rtl/index.html" class="small-project-link lang-en">View Project →</a>
-                        <a href="translation-rtl/index.html" class="small-project-link lang-ar">عرض المشروع ←</a>
+                        <a href="translation-rtl/index.html" class="small-project-link lang-en">View Project &rarr;</a>
+                        <a href="translation-rtl/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
                     </div>
                 </div>
 
+                <!-- Project: iAWE System -->
                 <div class="small-project-card">
                     <div class="small-project-header" style="background: linear-gradient(135deg, #1a5f2a 0%, #2a7f3a 100%);">
                         <h3 class="small-project-title lang-en">iAWE System (AI Co-Marker)</h3>
@@ -1487,11 +1507,12 @@
                         <p class="small-project-description lang-ar">نظام تقييم كتابة آلي متعدد الوسائط مدعوم بنماذج لغوية كبيرة لطلاب السنة التأسيسية وما بعد التأسيس. يستخدم ذكاء جوجل جيميني والتعرف البصري لتقييم المقالات وفق معايير الآيلتس.</p>
                         <span class="small-project-status lang-en">Active (2025-2026)</span>
                         <span class="small-project-status lang-ar">نشط (2025-2026)</span>
-                        <a href="awe-system/index.html" class="small-project-link lang-en">View Project →</a>
-                        <a href="awe-system/index.html" class="small-project-link lang-ar">عرض المشروع ←</a>
+                        <a href="awe-system/index.html" class="small-project-link lang-en">View Project &rarr;</a>
+                        <a href="awe-system/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
                     </div>
                 </div>
 
+                <!-- Project: AWE Desktop -->
                 <div class="small-project-card">
                     <div class="small-project-header" style="background: linear-gradient(135deg, #2c5aa0 0%, #3d7ab8 100%);">
                         <h3 class="small-project-title lang-en">AWE Desktop (AI Co-Marker)</h3>
@@ -1504,13 +1525,12 @@
                         <p class="small-project-description lang-ar">تطبيق حاسوب أصلي لنظام ويندوز لتقييم المقالات بدون اتصال بدعم نماذج لغوية محلية وتعرف بصري غير متصل وخصوصية كاملة وجاهزية متجر مايكروسوفت.</p>
                         <span class="small-project-status lang-en">Active (2025-2026)</span>
                         <span class="small-project-status lang-ar">نشط (2025-2026)</span>
-                        <a href="awe-desktop/index.html" class="small-project-link lang-en">View Project →</a>
-                        <a href="awe-desktop/index.html" class="small-project-link lang-ar">عرض المشروع ←</a>
+                        <a href="awe-desktop/index.html" class="small-project-link lang-en">View Project &rarr;</a>
+                        <a href="awe-desktop/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
                     </div>
                 </div>
-                    </div>
-                </div>
-            </div>
+
+            </div><!-- end .all-projects-grid -->
         </section>
 
         <!-- Collaboration Section -->
