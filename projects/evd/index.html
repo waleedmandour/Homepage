@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EVDx — Universal EV Diagnostics Pro: Professional-grade electric vehicle diagnostics companion with real-time telemetry, battery health analytics, AI-powered insights, bilingual voice assistant, and PDF report generation. Privacy-first, 17+ EV brands supported.">
+    <meta name="description" content="EVDx — Universal EV Diagnostics Pro: Professional-grade electric vehicle diagnostics companion with real-time telemetry, battery health analytics, AI-powered insights, bilingual voice assistant, and PDF report generation. Privacy-first, 17+ EV brands supported, 13 BLE adapter profiles.">
     <title>EVDx — Universal EV Diagnostics Pro</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230D1117'/%3E%3Cpath d='M236,145 L266,145 L251,185 L276,185 L241,245 L256,205 L231,205 Z' fill='%2300D2FF'/%3E%3Ctext x='256' y='430' text-anchor='middle' font-family='sans-serif' font-size='52' font-weight='800' fill='%2300D2FF'%3EEVDx%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -194,19 +195,20 @@
             width: 140px;
             height: 140px;
             border-radius: 32px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #0D1117 0%, #1A2332 100%);
+            border: 2px solid rgba(0, 210, 255, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(10px);
             box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            overflow: hidden;
         }
 
-        .header-icon-container i {
-            font-size: 64px;
-            color: rgba(255,255,255,0.95);
-            filter: drop-shadow(0 4px 15px rgba(0,210,255,0.5));
+        .header-icon-container svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
         
         nav {
@@ -1142,7 +1144,50 @@
             </div>
             
             <div class="header-icon-container">
-                <i class="fas fa-car-battery"></i>
+                <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#0D1117"/>
+                            <stop offset="100%" style="stop-color:#1A2332"/>
+                        </linearGradient>
+                        <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00D2FF"/>
+                            <stop offset="100%" style="stop-color:#0099CC"/>
+                        </linearGradient>
+                        <linearGradient id="carGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#E8EAF6"/>
+                            <stop offset="100%" style="stop-color:#B0BEC5"/>
+                        </linearGradient>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <rect width="512" height="512" rx="112" ry="112" fill="url(#bgGrad)"/>
+                    <rect x="4" y="4" width="504" height="504" rx="108" ry="108" fill="none" stroke="#00D2FF" stroke-width="2" opacity="0.3"/>
+                    <g transform="translate(256, 280)">
+                        <path d="M -90,-50 Q -90,-65 -75,-65 L 75,-65 Q 90,-65 90,-50 L 90,40 Q 90,55 75,55 L -75,55 Q -90,55 -90,40 Z" fill="url(#carGrad)" opacity="0.15"/>
+                        <path d="M -60,-50 L -40,-30 L 40,-30 L 60,-50 Z" fill="#00D2FF" opacity="0.2"/>
+                        <path d="M -60,40 L -40,20 L 40,20 L 60,40 Z" fill="#00D2FF" opacity="0.15"/>
+                        <rect x="-40" y="-30" width="80" height="50" rx="5" fill="#00D2FF" opacity="0.1"/>
+                        <ellipse cx="-65" cy="-35" rx="12" ry="18" fill="#1A2332" stroke="#78909C" stroke-width="2"/>
+                        <ellipse cx="65" cy="-35" rx="12" ry="18" fill="#1A2332" stroke="#78909C" stroke-width="2"/>
+                        <ellipse cx="-65" cy="35" rx="12" ry="18" fill="#1A2332" stroke="#78909C" stroke-width="2"/>
+                        <ellipse cx="65" cy="35" rx="12" ry="18" fill="#1A2332" stroke="#78909C" stroke-width="2"/>
+                    </g>
+                    <g transform="translate(256, 200)" filter="url(#glow)">
+                        <path d="M -20,-55 L 10,-55 L -5,-15 L 20,-15 L -15,45 L 0,5 L -25,5 Z" fill="url(#boltGrad)" stroke="#00D2FF" stroke-width="1.5" stroke-linejoin="round"/>
+                    </g>
+                    <text x="256" y="430" text-anchor="middle" font-family="'Inter', sans-serif" font-size="52" font-weight="800" fill="#00D2FF" letter-spacing="2">EVDx</text>
+                    <text x="256" y="465" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="400" fill="#78909C" letter-spacing="3">EV DIAGNOSTICS</text>
+                    <g opacity="0.4" stroke="#00E676" stroke-width="2" fill="none" stroke-linecap="round">
+                        <polyline points="40,120 60,120 65,110 75,130 85,120 110,120"/>
+                        <polyline points="402,120 422,120 427,110 437,130 447,120 472,120"/>
+                    </g>
+                </svg>
             </div>
         </div>
         
@@ -1168,8 +1213,8 @@
         <section class="hero">
             <div class="hero-content">
                 <!-- Status Badge -->
-                <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; v1.5.1 Latest Release</div>
-                <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; الإصدار v1.5.1 متاح</div>
+                <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; v1.5.3 Latest Release</div>
+                <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; الإصدار v1.5.3 متاح</div>
 
                 <h1 class="lang-en">EVDx — Universal EV Diagnostics Pro</h1>
                 <h1 class="lang-ar">EVDx — التشخيصات الشاملة الاحترافية للسيارات الكهربائية</h1>
@@ -1185,7 +1230,7 @@
                     حوّل هاتفك الأندرويد إلى أداة تشخيص احترافية للسيارات الكهربائية. اتصل عبر محولات OBD-II بالبلوتوث أو واي فاي للوصول إلى بيانات حقيقية الوقت وتحليلات صحة البطارية وفحص الأعطال ورؤى الذكاء الاصطناعي والمساعد الصوتي ثنائي اللغة وإنشاء تقارير PDF — كل ذلك <strong>بدون اعتماد على السحابة وبدون تتبع</strong>.
                 </p>
 
-                <a href="https://github.com/waleedmandour/EVD/releases/tag/v1.5.1" target="_blank" class="hero-cta">
+                <a href="https://github.com/waleedmandour/EVD/releases/latest" target="_blank" class="hero-cta">
                     <i class="fab fa-android"></i>
                     <span class="lang-en">Download APK</span>
                     <span class="lang-ar">تحميل التطبيق</span>
@@ -1308,10 +1353,10 @@
                     <h3 class="lang-en">Charging Monitor</h3>
                     <h3 class="lang-ar">مراقب الشحن</h3>
                     <p class="lang-en">
-                        Real-time charging session tracking with DC Fast Charge and AC Level 1/2 support, charge curve visualization, cost calculator in OMR and USD, and cell voltage balance chart during charging.
+                        Real-time charging session tracking with DC Fast Charge and AC Level 1/2 support, charge curve visualization, cost calculator with 15+ Arab currencies (OMR, SAR, AED, EGP, and more) plus USD, and cell voltage balance chart during charging.
                     </p>
                     <p class="lang-ar">
-                        تتبع جلسات الشحن حقيقي الوقت مع دعم الشحن السريع تيار مستمر والمستوى 1/2 تيار متناوب، ورسم منحنى الشحن، وحاسبة التكلفة بالريال العماني والدولار، ورسم توازن جهد الخلايا أثناء الشحن.
+                        تتبع جلسات الشحن حقيقي الوقت مع دعم الشحن السريع تيار مستمر والمستوى 1/2 تيار متناوب، ورسم منحنى الشحن، وحاسبة التكلفة بأكثر من 15 عملة عربية (ر.ع، ر.س، د.إ، ج.م، والمزيد) بالإضافة للدولار، ورسم توازن جهد الخلايا أثناء الشحن.
                     </p>
                 </div>
                 <div class="feature-card">
@@ -1678,7 +1723,7 @@
             </p>
             
             <div class="cta-buttons-group">
-                <a href="https://github.com/waleedmandour/EVD/releases/tag/v1.5.1" target="_blank" class="cta-button download">
+                <a href="https://github.com/waleedmandour/EVD/releases/latest" target="_blank" class="cta-button download">
                     <i class="fab fa-android"></i>
                     <span class="lang-en">Download APK</span>
                     <span class="lang-ar">تحميل التطبيق</span>
@@ -1688,7 +1733,7 @@
                     <span class="lang-en">View on GitHub</span>
                     <span class="lang-ar">عرض على GitHub</span>
                 </a>
-                <a href="https://github.com/waleedmandour/EVD/releases/download/v1.3.0-pre-release/EVDx-UserGuide-EN-v1.3.0.pdf" target="_blank" class="cta-button secondary">
+                <a href="https://github.com/waleedmandour/EVD/releases/latest" target="_blank" class="cta-button secondary">
                     <i class="fas fa-book"></i>
                     <span class="lang-en">User Guide</span>
                     <span class="lang-ar">دليل المستخدم</span>
@@ -1723,6 +1768,10 @@
             <div style="margin-top: 12px; font-size: 13px; color: #999;">
                 <span class="lang-en">&copy; 2026 Dr. Waleed Mandour. All rights reserved.</span>
                 <span class="lang-ar">&copy; 2026 د. وليد مندور. جميع الحقوق محفوظة.</span>
+            </div>
+            <div style="margin-top: 8px; font-size: 12px; color: #00D2FF;">
+                <span class="lang-en">Made with &#10084; to Egypt, Oman, and all Arab and Muslim Communities</span>
+                <span class="lang-ar">إهداء إلي أهلنا في مصر وعمان وكل العرب والمسلمين</span>
             </div>
         </div>
     </div>
