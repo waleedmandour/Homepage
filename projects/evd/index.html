@@ -192,31 +192,112 @@
             box-shadow: 0 0 35px rgba(0, 137, 123, 0.8);
         }
 
-        .header-icon-container {
+        /* ===== ANIMATED EVDx LOGO (adapted from iAWE project) ===== */
+        .app-logo-container {
+            position: relative;
             width: 140px;
             height: 140px;
-            border-radius: 32px;
-            background: linear-gradient(135deg, #0D1117 0%, #1A2332 100%);
-            border: 2px solid rgba(0, 210, 255, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: evdx-float 6s ease-in-out infinite;
+        }
+
+        .app-logo-frame {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #0A1C3C 0%, #0D1117 100%);
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            border: 2px solid rgba(0, 210, 255, 0.4);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(0, 210, 255, 0.1) inset,
+                0 0 30px rgba(0, 210, 255, 0.3);
+            padding: 8px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
 
-        .header-icon-container svg {
-            width: 100%;
-            height: 100%;
-            display: block;
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(0, 210, 255, 0.7);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(0, 210, 255, 0.2) inset,
+                0 0 45px rgba(0, 210, 255, 0.5);
         }
 
-        .header-icon-container img {
+        .app-logo-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            border-radius: 22px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+            transition: filter 0.3s ease;
+        }
+
+        .app-logo-frame:hover img {
+            filter: drop-shadow(0 8px 25px rgba(0, 210, 255, 0.3));
+        }
+
+        /* Rotating glow ring 1 */
+        .app-logo-container::before {
+            content: '';
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 35px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.25) 0%, rgba(123, 47, 190, 0.2) 100%);
+            animation: evdx-rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        /* Rotating glow ring 2 (reverse) */
+        .app-logo-container::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1) 0%, rgba(123, 47, 190, 0.08) 100%);
+            animation: evdx-rotate 25s linear infinite reverse;
+            z-index: -2;
+        }
+
+        /* Shine sweep effect */
+        .app-logo-frame::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(0, 210, 255, 0.3) 50%, 
+                transparent 60%);
+            background-size: 300% 300%;
+            animation: evdx-shine 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes evdx-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+
+        @keyframes evdx-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes evdx-shine {
+            0% { background-position: -100% -100%; }
+            100% { background-position: 200% 200%; }
         }
         
         nav {
@@ -1096,8 +1177,10 @@
             h1 { font-size: 2.2em; }
             .tagline { font-size: 1.1em; }
             .header-photo { width: 150px; height: 150px; }
-            .header-icon-container { width: 110px; height: 110px; border-radius: 24px; }
-            .header-icon-container i { font-size: 48px; }
+            .app-logo-container { width: 110px; height: 110px; }
+            .app-logo-container::before { width: 100px; height: 100px; }
+            .app-logo-container::after { width: 120px; height: 120px; }
+            .app-logo-frame { border-radius: 25px; padding: 6px; }
             .hero h1 { font-size: 36px; }
             .hero-subtitle { font-size: 20px; }
             .section-title { font-size: 28px; }
@@ -1117,8 +1200,10 @@
         @media (max-width: 480px) {
             nav ul { flex-direction: column; gap: 20px; padding: 20px; }
             h1 { font-size: 1.8em; }
-            .header-icon-container { width: 90px; height: 90px; border-radius: 20px; }
-            .header-icon-container i { font-size: 40px; }
+            .app-logo-container { width: 90px; height: 90px; }
+            .app-logo-container::before { width: 80px; height: 80px; }
+            .app-logo-container::after { width: 100px; height: 100px; }
+            .app-logo-frame { border-radius: 20px; padding: 5px; }
             .hero h1 { font-size: 28px; }
             .hero-description { font-size: 16px; }
             .feature-card { padding: 24px; }
@@ -1151,8 +1236,10 @@
                 </div>
             </div>
             
-            <div class="header-icon-container">
-                <img src="https://raw.githubusercontent.com/waleedmandour/EVD/main/public/icons/evd-icon-1024.png" alt="EVDx App Icon" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\'0 0 512 512\' xmlns=\'http://www.w3.org/2000/svg\'><rect width=\'512\' height=\'512\' rx=\'112\' fill=\'#0D1117\'/><path d=\'M236,145 L266,145 L251,185 L276,185 L241,245 L256,205 L231,205 Z\' fill=\'#00D2FF\'/><text x=\'256\' y=\'430\' text-anchor=\'middle\' font-family=\'sans-serif\' font-size=\'52\' font-weight=\'800\' fill=\'#00D2FF\'>EVDx</text></svg>'">
+            <div class="app-logo-container">
+                <div class="app-logo-frame">
+                    <img src="https://raw.githubusercontent.com/waleedmandour/EVD/main/public/icons/evd-icon-1024.png" alt="EVDx App Icon">
+                </div>
             </div>
         </div>
         
