@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant - AI-assisted deterministic feedback system for EAP writing analysis, coming soon as a Google Sheets Add-on.">
-    <title>iAWE: Intelligent Academic Writing Evaluation Assistant</title>
+    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant - Built on the EASE Framework 1.0. An AI-assisted, zero-trust, RAG-infused system for EAP writing analysis, coming soon as a Google Sheets Add-on.">
+    <title>iAWE: Intelligent Academic Writing Evaluation Assistant | EASE Framework 1.0</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -22,15 +22,8 @@
             --transition: all 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,747 +34,157 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        body.arabic {
-            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
-            direction: rtl;
-        }
+        body.arabic { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; direction: rtl; }
+        body.arabic .container, body.arabic main, body.arabic section, body.arabic div, body.arabic .hero-content, body.arabic .features-grid, body.arabic .workflow-steps, body.arabic .ui-showcase-grid { direction: rtl; text-align: right; }
 
-        /* Ensure RTL inheritance for all containers */
-        body.arabic .container,
-        body.arabic main,
-        body.arabic section,
-        body.arabic div,
-        body.arabic .hero-content,
-        body.arabic .features-grid,
-        body.arabic .workflow-steps,
-        body.arabic .audience-grid {
-            direction: rtl;
-            text-align: right;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         /* ===== LANGUAGE TOGGLE ===== */
-        .language-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(10, 28, 60, 0.9);
-            border-radius: 30px;
-            padding: 8px 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .language-toggle button {
-            background: transparent;
-            border: none;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 20px;
-            transition: var(--transition);
-        }
-        
-        .language-toggle button.active {
-            background: var(--secondary);
-        }
+        .language-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; background: rgba(10, 28, 60, 0.9); border-radius: 30px; padding: 8px 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .language-toggle button { background: transparent; border: none; color: white; font-weight: 600; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: var(--transition); }
+        .language-toggle button.active { background: var(--secondary); }
         
         /* ===== HEADER STYLES ===== */
         header {
-            background: 
-                linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%),
-                url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
-            padding: 60px 0 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, rgba(10, 28, 60, 0.9) 0%, rgba(26, 95, 122, 0.85) 50%, rgba(32, 178, 170, 0.8) 100%), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover; background-position: center; color: var(--white); padding: 60px 0 40px; text-align: center; position: relative; overflow: hidden;
         }
+        .header-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 50px; margin-bottom: 40px; }
+        .header-text { text-align: left; max-width: 600px; }
+        body.arabic .header-text { text-align: right; }
+        h1 { font-size: 2.8em; margin-bottom: 10px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .tagline { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
+        .header-photo-container { position: relative; }
+        .header-photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255, 255, 255, 0.8); box-shadow: 0 0 25px rgba(32, 178, 170, 0.6); transition: var(--transition); }
+        .header-photo:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(32, 178, 170, 0.8); }
         
-        .header-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 50px;
-            margin-bottom: 40px;
-        }
-        
-        .header-text {
-            text-align: left;
-            max-width: 600px;
-        }
-        
-        body.arabic .header-text {
-            text-align: right;
-        }
-        
-        h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        .tagline {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .header-photo-container {
-            position: relative;
-        }
-        
-        .header-photo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 25px rgba(32, 178, 170, 0.6);
-            transition: var(--transition);
-        }
-        
-        .header-photo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px rgba(32, 178, 170, 0.8);
-        }
-        
-        nav {
-            position: relative;
-            z-index: 2;
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            background: rgba(10, 28, 60, 0.7);
-            padding: 15px 30px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        nav a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: var(--transition);
-            padding: 5px 0;
-            position: relative;
-        }
-        
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--secondary);
-            transition: var(--transition);
-        }
-        
-        body.arabic nav a:after {
-            left: auto;
-            right: 0;
-        }
-        
-        nav a:hover:after {
-            width: 100%;
-        }
-        
-        nav a.active {
-            color: var(--secondary);
-        }
-        
-        nav a.active:after {
-            width: 100%;
-        }
+        nav { position: relative; z-index: 2; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; background: rgba(10, 28, 60, 0.7); padding: 15px 30px; border-radius: 50px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 1200px; margin: 0 auto; }
+        nav a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 1.1em; transition: var(--transition); padding: 5px 0; position: relative; }
+        nav a:after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--secondary); transition: var(--transition); }
+        body.arabic nav a:after { left: auto; right: 0; }
+        nav a:hover:after { width: 100%; }
+        nav a.active { color: var(--secondary); }
+        nav a.active:after { width: 100%; }
 
         /* ===== ENHANCED APP LOGO SECTION ===== */
-        .app-logo-container {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            margin: 0 auto 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: float 6s ease-in-out infinite;
-        }
+        .app-logo-container { position: relative; width: 220px; height: 220px; margin: 0 auto 40px; display: flex; align-items: center; justify-content: center; animation: float 6s ease-in-out infinite; }
+        .app-logo-frame { width: 100%; height: 100%; position: relative; border-radius: 30px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%); backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 30px rgba(32, 178, 170, 0.3); padding: 15px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .app-logo-frame:hover { transform: scale(1.05) rotate(3deg); border-color: rgba(255, 255, 255, 0.6); box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 40px rgba(32, 178, 170, 0.4); }
+        .app-logo-img { width: 100%; height: 100%; object-fit: contain; border-radius: 20px; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); transition: filter 0.3s ease; }
+        .app-logo-frame:hover .app-logo-img { filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4)); }
+        .app-logo-container::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 40px; background: linear-gradient(135deg, rgba(32, 178, 170, 0.2) 0%, rgba(26, 95, 122, 0.2) 100%); animation: rotate 20s linear infinite; z-index: -1; }
+        .app-logo-container::after { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); animation: rotate 25s linear infinite reverse; z-index: -2; }
+        .app-logo-frame::after { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: 32px; background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%); background-size: 300% 300%; animation: shine 8s ease-in-out infinite; pointer-events: none; z-index: 1; }
 
-        .app-logo-frame {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            border-radius: 30px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-                0 0 30px rgba(32, 178, 170, 0.3);
-            padding: 15px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .app-logo-frame:hover {
-            transform: scale(1.05) rotate(3deg);
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 
-                0 20px 45px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-                0 0 40px rgba(32, 178, 170, 0.4);
-        }
-
-        .app-logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
-            transition: filter 0.3s ease;
-        }
-
-        .app-logo-frame:hover .app-logo-img {
-            filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
-        }
-
-        .app-logo-container::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 40px;
-            background: linear-gradient(135deg, rgba(32, 178, 170, 0.2) 0%, rgba(26, 95, 122, 0.2) 100%);
-            animation: rotate 20s linear infinite;
-            z-index: -1;
-        }
-
-        .app-logo-container::after {
-            content: '';
-            position: absolute;
-            width: 220px;
-            height: 220px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            animation: rotate 25s linear infinite reverse;
-            z-index: -2;
-        }
-
-        .app-logo-frame::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 32px;
-            background: linear-gradient(45deg, 
-                transparent 40%, 
-                rgba(255, 255, 255, 0.3) 50%, 
-                transparent 60%);
-            background-size: 300% 300%;
-            animation: shine 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(0.5deg); }
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes shine {
-            0% { background-position: -100% -100%; }
-            100% { background-position: 200% 200%; }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(0.5deg); } }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shine { 0% { background-position: -100% -100%; } 100% { background-position: 200% 200%; } }
 
         /* ===== HERO SECTION ===== */
-        .hero {
-            position: relative;
-            padding: 40px 0;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            color: var(--dark);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-            color: var(--primary);
-        }
-
-        .hero-subtitle {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 24px;
-        }
-
-        .hero-description {
-            font-size: 18px;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 32px;
-            line-height: 1.7;
-        }
-        
-        /* New Coming Soon Badge */
-        .coming-soon-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #f59f00 0%, #e67700 100%);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(245, 159, 0, 0.3);
-            text-transform: uppercase;
-        }
+        .hero { position: relative; padding: 40px 0; text-align: center; margin-bottom: 40px; }
+        .hero-content { position: relative; z-index: 1; text-align: center; color: var(--dark); max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.2; color: var(--primary); }
+        .hero-subtitle { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 24px; }
+        .hero-description { font-size: 18px; color: var(--gray); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+        .coming-soon-badge { display: inline-block; background: linear-gradient(135deg, #f59f00 0%, #e67700 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(245, 159, 0, 0.3); text-transform: uppercase; }
 
         /* ===== MAIN CONTENT STYLES ===== */
-        main {
-            display: block !important;
-            width: 100% !important;
-            margin: 40px auto;
-            padding: 0 25px;
-        }
+        main { display: block !important; width: 100% !important; margin: 40px auto; padding: 0 25px; }
+
+        /* ===== EASE FRAMEWORK DIAGRAM ===== */
+        .framework-diagram-container { background: var(--white); padding: 30px; border-radius: 16px; box-shadow: var(--shadow); margin: 40px auto; max-width: 900px; text-align: center; border: 1px solid var(--light); }
+        .framework-diagram-container img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
+        .framework-caption { font-size: 14px; color: var(--gray); font-style: italic; }
 
         /* ===== DATA NOTICE ===== */
-        .data-notice {
-            background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
-            border-left: 4px solid #f59f00;
-            padding: 24px;
-            margin: 40px auto;
-            border-radius: 12px;
-            max-width: 800px;
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.6s ease-out;
-        }
+        .data-notice { background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%); border-left: 4px solid #f59f00; padding: 24px; margin: 40px auto; border-radius: 12px; max-width: 800px; box-shadow: var(--shadow); animation: fadeIn 0.6s ease-out; }
+        body.arabic .data-notice { border-left: none; border-right: 4px solid #f59f00; }
+        .data-notice h4 { color: #5c4400; margin-bottom: 12px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .data-notice h4 i { font-size: 20px; }
+        .data-notice p { color: #8a6d00; margin-bottom: 12px; line-height: 1.6; }
+        .data-notice a { color: var(--primary); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: var(--transition); }
+        .data-notice a:hover { border-bottom-color: var(--primary); }
 
-        body.arabic .data-notice {
-            border-left: none;
-            border-right: 4px solid #f59f00;
-        }
+        /* ===== SECTION TITLES ===== */
+        .section-title { text-align: center; font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 48px; position: relative; }
+        .section-title::after { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--secondary); border-radius: 2px; }
+        body.arabic .section-title::after { left: auto; right: 50%; transform: translateX(50%); }
 
-        .data-notice h4 {
-            color: #5c4400;
-            margin-bottom: 12px;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        /* ===== WORKFLOW, FEATURES & UI GRID LAYOUTS ===== */
+        .workflow-container { position: relative; margin: 64px 0; }
+        .workflow-steps, .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
+        .features-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin: 64px 0; }
 
-        .data-notice h4 i {
-            font-size: 20px;
-        }
+        /* New UI Showcase Grid */
+        .ui-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 64px auto; max-width: 1000px; }
+        .ui-screenshot-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--light); transition: var(--transition); }
+        .ui-screenshot-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .ui-screenshot-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--light); background: #f8f9fa; }
+        .ui-screenshot-caption { padding: 16px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; }
 
-        .data-notice p {
-            color: #8a6d00;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .data-notice a {
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .data-notice a:hover {
-            border-bottom-color: var(--primary);
-        }
-
-        /* ===== WORKFLOW SECTION ===== */
-        .section-title {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 48px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--secondary);
-            border-radius: 2px;
-        }
-
-        body.arabic .section-title::after {
-            left: auto;
-            right: 50%;
-            transform: translateX(50%);
-        }
-
-        .workflow-container {
-            position: relative;
-            margin: 64px 0;
-        }
-
-        .workflow-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        .workflow-step {
-            background: var(--white);
-            padding: 32px 24px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border-top: 4px solid var(--secondary);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .workflow-step::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary), var(--accent-light));
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .workflow-step:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .workflow-step:hover::before {
-            opacity: 1;
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            font-weight: 700;
-            margin-bottom: 16px;
-            font-size: 18px;
-        }
-
-        .workflow-step h4 {
-            color: var(--primary);
-            margin-bottom: 12px;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .workflow-step p {
-            color: var(--gray);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        /* ===== FEATURES GRID ===== */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-            margin: 64px 0;
-        }
-
-        .feature-card {
-            background: var(--white);
-            padding: 32px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border-color: var(--secondary);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 24px;
-            display: inline-block;
-            padding: 16px;
-            background: rgba(10, 28, 60, 0.1);
-            border-radius: 12px;
-            color: var(--primary);
-        }
-
-        .feature-card h3 {
-            color: var(--primary);
-            margin-bottom: 16px;
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .feature-card p {
-            color: var(--dark);
-            line-height: 1.7;
-        }
-
-        /* ===== CTA SECTION ===== */
-        .cta-section {
-            text-align: center;
-            padding: 64px 0;
-            background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.1) 100%);
-            border-radius: 12px;
-            margin: 64px 0;
-            box-shadow: var(--shadow);
-        }
-
-        .cta-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .cta-subtitle {
-            color: var(--gray);
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 32px;
-            line-height: 1.7;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            padding: 16px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(10, 28, 60, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--gray);
-            font-size: 14px;
-            border-top: 1px solid var(--light);
-            margin-top: 64px;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .footer-email {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .footer-email:hover {
-            color: var(--secondary);
-        }
+        .workflow-step, .feature-card { background: var(--white); padding: 32px 24px; border-radius: 12px; text-align: center; box-shadow: var(--shadow); transition: var(--transition); position: relative; overflow: hidden; }
         
-        .footer a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        .footer a:hover {
-            color: var(--secondary);
-            text-decoration: underline;
-        }
+        .workflow-step { border-top: 4px solid var(--secondary); }
+        .workflow-step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--accent-light)); opacity: 0; transition: var(--transition); }
+        .workflow-step:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .workflow-step:hover::before { opacity: 1; }
 
-        .footer-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 10px;
-        }
+        .feature-card { text-align: left; border: 1px solid var(--light); }
+        body.arabic .feature-card { text-align: right; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-color: var(--secondary); }
 
-        .footer-links a {
-            padding: 0 10px;
-            position: relative;
-        }
+        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; font-weight: 700; margin-bottom: 16px; font-size: 18px; }
+        .workflow-step h4, .feature-card h3 { color: var(--primary); margin-bottom: 12px; font-size: 20px; font-weight: 700; }
+        .workflow-step p, .feature-card p { color: var(--gray); font-size: 15px; line-height: 1.6; }
+        .feature-icon { font-size: 40px; margin-bottom: 24px; display: inline-block; padding: 16px; background: rgba(10, 28, 60, 0.1); border-radius: 12px; color: var(--primary); }
 
-        .footer-links a:not(:last-child)::after {
-            content: '|';
-            position: absolute;
-            right: -5px;
-            color: var(--gray);
-        }
+        /* ===== CTA & FOOTER ===== */
+        .cta-section { text-align: center; padding: 64px 0; background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.1) 100%); border-radius: 12px; margin: 64px 0; box-shadow: var(--shadow); }
+        .cta-title { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
+        .cta-subtitle { color: var(--gray); font-size: 18px; max-width: 600px; margin: 0 auto 32px; line-height: 1.7; }
+        .cta-button { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 18px; transition: var(--transition); box-shadow: 0 4px 15px rgba(10, 28, 60, 0.3); border: none; cursor: pointer; }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4); }
 
-        body.arabic .footer-links a:not(:last-child)::after {
-            right: auto;
-            left: -5px;
-        }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .feature-card:nth-child(1) { animation-delay: 0.1s; }
-        .feature-card:nth-child(2) { animation-delay: 0.2s; }
-        .feature-card:nth-child(3) { animation-delay: 0.3s; }
-        .feature-card:nth-child(4) { animation-delay: 0.4s; }
-        .feature-card:nth-child(5) { animation-delay: 0.5s; }
-        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
+        .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .footer-email { color: var(--primary); text-decoration: none; font-weight: 600; transition: var(--transition); }
+        .footer-email:hover { color: var(--secondary); }
+        .footer a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+        .footer a:hover { color: var(--secondary); text-decoration: underline; }
+        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .footer-links a { padding: 0 10px; position: relative; }
+        .footer-links a:not(:last-child)::after { content: '|'; position: absolute; right: -5px; color: var(--gray); }
+        body.arabic .footer-links a:not(:last-child)::after { right: auto; left: -5px; }
 
         /* ===== LANGUAGE LOGIC ===== */
         .lang-en { display: block; }
         .lang-ar { display: none; }
-        
         .data-notice h4.lang-en { display: flex; }
         .data-notice h4.lang-ar { display: none; }
-        
         .footer-content > div > .lang-en { display: inline; }
         .footer-content > div > .lang-ar { display: none; }
         
         body.arabic .lang-en { display: none; }
         body.arabic .lang-ar { display: block; }
-        
         body.arabic .data-notice h4.lang-en { display: none; }
         body.arabic .data-notice h4.lang-ar { display: flex; }
-        
         body.arabic .footer-content > div > .lang-en { display: none; }
         body.arabic .footer-content > div > .lang-ar { display: inline; }
+        body.arabic .hero h1.lang-ar, body.arabic .hero .hero-subtitle.lang-ar { text-align: center; }
+        body.arabic .footer, body.arabic .footer-content, body.arabic .footer-content > div { text-align: center; }
 
-        body.arabic .hero h1.lang-ar,
-        body.arabic .hero .hero-subtitle.lang-ar {
-            text-align: center;
-        }
-
-        body.arabic .footer,
-        body.arabic .footer-content,
-        body.arabic .footer-content > div {
-            text-align: center;
-        }
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
 
         /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1024px) {
-            .header-content { flex-direction: column; text-align: center; }
-            .header-text, body.arabic .header-text { text-align: center; }
-        }
-
-        @media (max-width: 768px) {
-            nav ul { gap: 20px; }
-            h1 { font-size: 2.2em; }
-            .tagline { font-size: 1.1em; }
-            .header-photo { width: 150px; height: 150px; }
-            .hero h1 { font-size: 36px; }
-            .hero-subtitle { font-size: 20px; }
-            .section-title { font-size: 28px; }
-            .features-grid, .workflow-steps { grid-template-columns: 1fr; }
-            .language-toggle { top: 16px; right: 16px; }
-            .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; }
-            .app-logo-container::before { width: 160px; height: 160px; }
-            .app-logo-container::after { width: 180px; height: 180px; }
-            .app-logo-frame { border-radius: 25px; padding: 12px; }
-            .footer-links { flex-direction: column; gap: 8px; }
-            .footer-links a:not(:last-child)::after { display: none; }
-        }
-
-        @media (max-width: 480px) {
-            nav ul { flex-direction: column; gap: 20px; padding: 20px; }
-            h1 { font-size: 1.8em; }
-            .header-photo { width: 130px; height: 130px; }
-            .hero h1 { font-size: 28px; }
-            .hero-description { font-size: 16px; }
-            .feature-card { padding: 24px; }
-            .container { padding: 0 16px; }
-            .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; }
-            .app-logo-container::before { width: 140px; height: 140px; }
-            .app-logo-container::after { width: 160px; height: 160px; }
-            .app-logo-frame { border-radius: 20px; padding: 10px; }
-        }
+        @media (max-width: 1024px) { .header-content { flex-direction: column; text-align: center; } .header-text, body.arabic .header-text { text-align: center; } }
+        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid, .workflow-steps, .ui-showcase-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; } .app-logo-container::before { width: 160px; height: 160px; } .app-logo-container::after { width: 180px; height: 180px; } .app-logo-frame { border-radius: 25px; padding: 12px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } }
+        @media (max-width: 480px) { nav ul { flex-direction: column; gap: 20px; padding: 20px; } h1 { font-size: 1.8em; } .header-photo { width: 130px; height: 130px; } .hero h1 { font-size: 28px; } .hero-description { font-size: 16px; } .feature-card { padding: 24px; } .container { padding: 0 16px; } .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; } .app-logo-container::before { width: 140px; height: 140px; } .app-logo-container::after { width: 160px; height: 160px; } .app-logo-frame { border-radius: 20px; padding: 10px; } }
     </style>
 </head>
 <body>
@@ -797,20 +200,17 @@
             <div class="header-text">
                 <h1 class="lang-en">iAWE</h1>
                 <h1 class="lang-ar">نظام iAWE</h1>
-                
                 <p class="tagline lang-en">Intelligent Academic Writing Evaluation Assistant</p>
                 <p class="tagline lang-ar">مساعد تقييم الكتابة الأكاديمية الذكي</p>
             </div>
-            
             <div class="header-photo-container">
                 <img src="images/iAWE.png" alt="iAWE System Logo" class="header-photo" style="border-radius: 20px;">
             </div>
         </div>
-        
         <nav>
             <div class="container">
                 <ul>
-<li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
                     <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
                     <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
                     <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
@@ -818,14 +218,14 @@
                     <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
                     <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
                     <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
-                                </ul>
+                </ul>
             </div>
         </nav>
     </header>
 
     <!-- Main Content Area -->
     <main class="container">
-        <!-- iAWE Hero Section -->
+        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
                 <div class="app-logo-container">
@@ -834,217 +234,180 @@
                     </div>
                 </div>
                 
-                <!-- New Badge -->
                 <div class="coming-soon-badge lang-en">Coming Soon to Google Workspace</div>
                 <div class="coming-soon-badge lang-ar">قريباً في متجر إضافات جوجل</div>
 
-                <h1 class="lang-en">iAWE: Intelligent Academic Writing Evaluator</h1>
-                <h1 class="lang-ar">نظام iAWE لتقييم الكتابة الأكاديمية الذكي</h1>
+                <h1 class="lang-en">iAWE: Powered by the EASE Framework 1.0</h1>
+                <h1 class="lang-ar">نظام iAWE: مدعوم بإطار EASE 1.0</h1>
                 
-                <div class="hero-subtitle lang-en">AI-Assisted, Deterministic Feedback directly inside Google Sheets</div>
-                <div class="hero-subtitle lang-ar">تغذية راجعة ذكية ومنضبطة مباشرة داخل جداول بيانات جوجل</div>
+                <div class="hero-subtitle lang-en">A Zero-Trust, RAG-Infused Architecture for Data-Driven L2 Writing Evaluation</div>
+                <div class="hero-subtitle lang-ar">بنية "عدم الثقة" المدمجة بتقنية RAG لتقييم الكتابة الأكاديمية القائمة على البيانات</div>
 
                 <div>
-                <p class="hero-description lang-en">
-                    iAWE is an AI-assisted academic writing evaluation system designed for English for Academic Purposes (EAP).
-                    Launching soon as a <strong>Google Sheets Add-on</strong>, it delivers deterministic, schema-enforced feedback on student essays by combining corpus-informed metrics, rule-based validation, and controlled LLM outputs.
-                </p>
-                
-                <p class="hero-description lang-ar">
-                    نظام iAWE هو أداة ذكية لتقييم الكتابة في سياق اللغة الإنجليزية للأغراض الأكاديمية.
-                    يُطلق قريباً كـ <strong>إضافة لجداول بيانات جوجل (Google Sheets Add-on)</strong>، ليقدم تغذية راجعة منضبطة ومقيدة بنماذج صارمة، تجمع بين مقاييس المدونات اللغوية والتحقق القاعدي والتوليد الآلي المنضبط.
-                </p>
+                    <p class="hero-description lang-en">
+                        iAWE is an AI-assisted academic writing evaluation system built strictly upon the <strong>EASE Framework 1.0 (Evidence-Anchored Scaffolding Evaluation)</strong>. Launching soon as a Google Sheets Add-on, it utilizes Retrieval-Augmented Generation (RAG) to secure computational trust, and Data-Driven Learning (DDL) principles to ensure AI serves as a pedagogical scaffold rather than a black-box oracle.
+                    </p>
+                    <p class="hero-description lang-ar">
+                        نظام iAWE هو أداة تقييم أكاديمي مدعوم بالذكاء الاصطناعي، ومبني بشكل صارم على <strong>إطار EASE 1.0 (تقييم السقالات الم ancor بالأدلة)</strong>. يُطلق قريباً كإضافة لجداول جوجل، ويستخدم تقنية RAG لضمان الثقة الحسابية، ومبادئ DDL لضمان أن يكون الذكاء الاصطناعي بمثابة سقالة تربوية بدلاً من كونه حكماً مبهماً.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- iAWE System Evidence Notice -->
+        <!-- EASE Framework Diagram Section -->
+        <div class="framework-diagram-container">
+            <img src="https://raw.githubusercontent.com/waleedmandour/Homepage/main/projects/iAWE/images/EASE%20Framework%201.0.png" alt="EASE Framework 1.0 Architecture Diagram">
+            <p class="framework-caption lang-en">Figure 1: The EASE 1.0 System Architecture — Triangulating DBR, DDL, and RAG.</p>
+            <p class="framework-caption lang-ar">الشكل 1: بنية نظام EASE 1.0 — التثلث بين البحث القائم على التصميم (DBR) والتعلم القائم على البيانات (DDL) وتوليد مستند للاسترجاع (RAG).</p>
+        </div>
+
+        <!-- Research Transparency Notice -->
         <div class="data-notice">
             <h4 class="lang-en"><i class="fas fa-flask"></i> Research Transparency Notice</h4>
             <h4 class="lang-ar"><i class="fas fa-flask"></i> ملاحظة الشفافية البحثية</h4>
 
-            <p class="lang-en">
-                The current architecture of iAWE is based on an evaluative study of
-                <strong>20 student essays (300–400 words)</strong> analysed by the system
-                and benchmarked against expert human feedback.
-            </p>
-
-            <p class="lang-ar">
-                تعتمد بنية نظام iAWE الحالية على دراسة تقييمية شملت
-                <strong>20 مقالة طلابية (300–400 كلمة)</strong>،
-                حيث تمت مقارنة مخرجات النظام بتغذية راجعة بشرية متخصصة.
-            </p>
-
-            <p class="lang-en">
-                While the analytical accuracy was found to be closely aligned with human judgment,
-                learners did not directly interact with the system during the evaluation phase.
-                This constitutes a documented limitation addressed in future iterations.
-            </p>
-
-            <p class="lang-ar">
-                وعلى الرغم من تقارب نتائج النظام مع التقييم البشري،
-                إلا أن الطلاب لم يتفاعلوا مباشرة مع النظام خلال مرحلة التقييم،
-                وهو ما يُعد قيداً منهجياً سيتم معالجته مستقبلاً.
-            </p>
+            <p class="lang-en">The EASE Framework and iAWE architecture are based on an evaluative study of <strong>20 student essays (300–400 words)</strong> analysed by the system and benchmarked against expert human feedback.</p>
+            <p class="lang-ar">يعتمد إطار EASE وبنية iAWE على دراسة تقييمية شملت <strong>20 مقالة طلابية (300–400 كلمة)</strong>، حيث تمت مقارنة مخرجات النظام بتغذية راجعة بشرية متخصصة.</p>
             
-            <p class="lang-en" style="font-weight: 600;">
-                <i class="fas fa-user-edit"></i> This research project is authored by: <strong>Dr. Waleed Mandour</strong> and <strong>Prof. Anwar Mourssi</strong>, based on a conference paper on February 15, 2026 (4th MEC TESOL Conference - Muscat, Oman).
-            </p>
-            <p class="lang-ar" style="font-weight: 600;">
-                <i class="fas fa-user-edit"></i> هذا المشروع البحثي من إعداد: <strong>د. وليد مندور</strong> وأ.د. <strong>أنور مرسي</strong>، ويستند إلى ورقة بحثية قدمت في 15 فبراير 2026 (المؤتمر الرابع لجمعية TESOL بالكلية الحديثة - مسقط، عُمان).
-            </p>
+            <p class="lang-en">While analytical accuracy was closely aligned with human judgment, learners did not directly interact with the system during this evaluation phase. This constitutes a documented methodological limitation addressed in future Design-Based Research (DBR) iterations.</p>
+            <p class="lang-ar">وعلى الرغم من تقارب نتائج النظام مع التقييم البشري، إلا أن الطلاب لم يتفاعلوا مباشرة مع النظام خلال مرحلة التقييم، وهو ما يُعد قيداً منهجياً سيتم معالجته في التكرارات المستقبلية للبحث القائم على التصميم (DBR).</p>
             
-            <p class="lang-en" style="font-weight: 700; color: #b45309; margin-top: 15px;">
-                <i class="fas fa-info-circle"></i> iAWE is presented as a research-grade evaluative prototype, 
-                not a replacement for human assessment. It serves pedagogical experimentation and academic transparency.
-            </p>
-            <p class="lang-ar" style="font-weight: 700; color: #b45309; margin-top: 15px;">
-                <i class="fas fa-info-circle"></i> يُعرض نظام iAWE كنموذج تقويمي لأغراض البحث العلمي، 
-                وليس بديلاً عن التقييم البشري. إنه مخصص للتجريب التربوي والشفافية الأكاديمية.
-            </p>
+            <p class="lang-en" style="font-weight: 600;"><i class="fas fa-user-edit"></i> Authored by: <strong>Dr. Waleed Mandour</strong> and <strong>Prof. Anwar Mourssi</strong>. Presented at the 4th MEC TESOL Conference, Muscat, Oman (Feb 2026).</p>
+            <p class="lang-ar" style="font-weight: 600;"><i class="fas fa-user-edit"></i> إعداد: <strong>د. وليد مندور</strong> وأ.د. <strong>أنور مرسي</strong>. قدم في المؤتمر الرابع لجمعية TESOL بالكلية الحديثة، مسقط (فبراير 2026).</p>
+            
+            <p class="lang-en" style="font-weight: 700; color: #b45309; margin-top: 15px;"><i class="fas fa-info-circle"></i> iAWE is a research-grade evaluative prototype designed for pedagogical experimentation and academic transparency, not a commercial replacement for human assessment.</p>
+            <p class="lang-ar" style="font-weight: 700; color: #b45309; margin-top: 15px;"><i class="fas fa-info-circle"></i> يُعرض نظام iAWE كنموذج تقويمي لأغراض البحث العلمي والتجريب التربوي، وليس بديلاً تجارياً عن التقييم البشري.</p>
         </div>
 
-        <!-- iAWE How It Works Section -->
-        <section class="workflow-container">
-            <h2 class="section-title lang-en">How iAWE Works</h2>
-            <h2 class="section-title lang-ar">آلية عمل نظام iAWE</h2>
-            
-            <div class="workflow-steps">
-                <div class="workflow-step">
-                    <div class="step-number">1</div>
-                    <h4 class="lang-en">1-Click Setup & Import</h4>
-                    <h4 class="lang-ar">الإعداد السريع والاستيراد</h4>
-                    <p class="lang-en">
-                        Instantly initialize your spreadsheet workspace, load sample EAP essays, or import student texts directly into columns for batch processing.
-                    </p>
-                    <p class="lang-ar">
-                        تهيئة مساحة العمل بنقرة واحدة، وتحميل مقالات نموذجية، أو استيراد نصوص الطلاب مباشرة في الأعمدة للمعالجة المجمعة.
-                    </p>
+        <!-- Theoretical Foundations -->
+        <section>
+            <h2 class="section-title lang-en">Theoretical Foundations</h2>
+            <h2 class="section-title lang-ar">الأسس النظرية</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="lang-en">RAG: Computational Trust</h3>
+                    <h3 class="lang-ar">تقنية RAG: الثقة الحسابية</h3>
+                    <p class="lang-en">By utilizing Retrieval-Augmented Generation, iAWE subverts the "black box" paradigm. The LLM is restricted to a "JSON generation engine" and is strictly fed empirical grounding (e.g., NAWL metrics, Semantic Scholar data). It cannot hallucinate linguistic rules, ensuring all feedback is epistemologically anchored.</p>
+                    <p class="lang-ar">من خلال استخدام تقنية RAG، يتجاوز النظام نموذج "الصندوق الأسود". يتم تقييد الذكاء الاصطناعي بوظيفة "توليد JSON"، ويُزود حصرياً ببيانات تجريبية (مثل مقاييس NAWL وبيانات Semantic Scholar)، مما يمنعه من اختلاق القواعد اللغوية ويضمن أن تكون جميع التغذية الراجعة موثوقة حسابياً.</p>
                 </div>
-                <div class="workflow-step">
-                    <div class="step-number">2</div>
-                    <h4 class="lang-en">Schema-Enforced Analysis</h4>
-                    <h4 class="lang-ar">التحليل المنضبط بنموذج صارم</h4>
-                    <p class="lang-en">
-                        Feedback generation is constrained by a deterministic AI schema directly within your sheet, ensuring high consistency and reproducibility.
-                    </p>
-                    <p class="lang-ar">
-                        يتم توليد التغذية الراجعة ضمن نموذج ذكاء اصطناعي صارم داخل جدول البيانات، مما يضمن الاتساق التام وقابلية التتبع.
-                    </p>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="lang-en">DDL: Learner Agency</h3>
+                    <h3 class="lang-ar">مبادئ DDL: فاعلية المتعلم</h3>
+                    <p class="lang-en">Rooted in Data-Driven Learning, iAWE forces the AI to output <em>extractive evidence</em> (e.g., specific NAWL lemmas found) <strong>before</strong> providing synthesized feedback. This transforms the student from a passive consumer of AI corrections into an active "language detective," observing raw data to infer academic writing rules.</p>
+                    <p class="lang-ar">انطلاقاً من التعلم القائم على البيانات (DDL)، يجبر النظام الذكاء الاصطناعي على إخراج <em>الأدلة المستخرجة</em> (مثل جذور الكلمات الأكاديمية) <strong>قبل</strong> تقديم التغذية الراجعة. هذا يحول الطالب من متلقٍ سلبي لتصحيحات الذكاء الاصطناعي إلى "محقق لغوي" نشط يلاحظ البيانات الخام لاستنتاج قواعد الكتابة الأكاديمية.</p>
                 </div>
-                <div class="workflow-step">
-                    <div class="step-number">3</div>
-                    <h4 class="lang-en">Export & Analytics</h4>
-                    <h4 class="lang-ar">التقارير والتحليلات</h4>
-                    <p class="lang-en">
-                        Generate editable Google Docs, beautifully formatted bilingual PDFs, and class-level visual analytics dashboards directly from your data.
-                    </p>
-                    <p class="lang-ar">
-                        إصدار تقارير بصيغة PDF ومستندات جوجل قابلة للتعديل، مع لوحة معلومات مرئية لتحليل أداء الفصل بأكمله.
-                    </p>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="lang-en">DBR: Methodological Rigor</h3>
+                    <h3 class="lang-ar">منهجية DBR: الصرامة المنهجية</h3>
+                    <p class="lang-en">Guided by Design-Based Research, iAWE natively logs quantitative telemetry with every interaction (JSON compliance, API latency, NAWL shifts). This provides continuous, high-resolution data allowing researchers to iteratively refine the system in authentic EAP classrooms over a semester.</p>
+                    <p class="lang-ar">بتوجيه من البحث القائم على التصميم (DBR)، يسجل النظام تلقائياً مقاييس كمية مع كل تفاعل (التزام JSON، ووقت استجابة API، وتغيرات كثافة الكلمات الأكاديمية). يوفر هذا بيانات عالية الدقة تسمح للباحثين بتحسين النظام بشكل تكراري في بيئات الكتابة الأكاديمية الحقيقية.</p>
                 </div>
             </div>
         </section>
 
-        <!-- iAWE Key Features Section -->
+        <!-- How iAWE Works -->
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">The EASE Evaluation Pipeline</h2>
+            <h2 class="section-title lang-ar">مسار التقييم ضمن إطار EASE</h2>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4 class="lang-en">Deterministic & RAG Layers</h4>
+                    <h4 class="lang-ar">الطبقات الحتمية وتقنية RAG</h4>
+                    <p class="lang-en">Before the AI reads the text, the system calculates objective metrics (NAWL lemma density, Type-Token Ratio) and retrieves scholarly context via Semantic Scholar. The AI is forced to use this pre-computed data.</p>
+                    <p class="lang-ar">قبل أن يقرأ الذكاء الاصطناعي النص، يحسب النظام مقاييس موضوعية (كثافة الجذور الأكاديمية، نسبة التنوع المعجمي) ويسترجع السياق العلمي عبر Semantic Scholar. يُجبر الذكاء الاصطناعي على استخدام هذه البيانات المحسوبة مسبقاً.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4 class="lang-en">Zero-Trust LLM Processing</h4>
+                    <h4 class="lang-ar">معالجة الذكاء الاصطناعي "بدون ثقة"</h4>
+                    <p class="lang-en">Gemini 2.5 is restricted to a strict JSON schema. It cannot act as an authoritative judge. It merely maps the pre-gathered evidence against the EAP Knowledge Base, outputting structured scores without generating unverified pedagogical claims.</p>
+                    <p class="lang-ar">يتم تقييد Gemini 2.5 بمخطط JSON صارم. لا يمكنه العمل كحكم مطلق، بل يقوم فقط بمطابقة الأدلة المجمعة مسبقاً مع قاعدة المعرفة الأكاديمية، ومخرجات الدرجات الهيكلية دون توليد ادعاءات تربوية غير موثقة.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4 class="lang-en">DDL Output & DBR Loop</h4>
+                    <h4 class="lang-ar">مخرجات DDL وحلقة DBR</h4>
+                    <p class="lang-en">The student receives a bilingual report showing raw data <em>first</em>, then the AI synthesis. Quantitative telemetry is logged for researchers to analyze longitudinal writing improvements over time via the Class Analytics Dashboard.</p>
+                    <p class="lang-ar">يتلقى الطالب تقريراً ثنائي اللغة يعرض البيانات الخام <em>أولاً</em>، ثم تحليل الذكاء الاصطناعي. يتم تسجيل المقاييس الكمية للباحثين لتحليل التحسينات في الكتابة على المدى الطويل عبر لوحة تحليلات الفصل.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Addon UI Showcase Section -->
         <section>
-            <h2 class="section-title lang-en">Core Design Principles</h2>
-            <h2 class="section-title lang-ar">مرتكزات التصميم الأساسية</h2>
+            <h2 class="section-title lang-en">The Add-on Interface</h2>
+            <h2 class="section-title lang-ar">واجهة الإضافة</h2>
             
+            <div class="ui-showcase-grid">
+                <div class="ui-screenshot-card">
+                    <img src="images/sidebar-analyze.png" alt="iAWE Analysis Dashboard Tab">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Analysis & Workflow</span>
+                        <span class="lang-ar">التحليل وسير العمل</span>
+                    </div>
+                </div>
+                <div class="ui-screenshot-card">
+                    <img src="images/sidebar-settings.png" alt="iAWE Settings & Rubric Tab">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Rubric & API Configuration</span>
+                        <span class="lang-ar">إعدادات المعايير وواجهة برمجة التطبيقات</span>
+                    </div>
+                </div>
+                <div class="ui-screenshot-card">
+                    <img src="images/sidebar-support.png" alt="iAWE Research & Support Tab">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Research Context & FAQ</span>
+                        <span class="lang-ar">السياق البحثي والأسئلة الشائعة</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Features -->
+        <section>
+            <h2 class="section-title lang-en">System Features</h2>
+            <h2 class="section-title lang-ar">ميزات النظام</h2>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📐</div>
-                    <h3 class="lang-en">Deterministic Architecture</h3>
-                    <h3 class="lang-ar">بنية حتمية منضبطة</h3>
-                    <p class="lang-en">
-                        Unlike open-ended chatbot tools, the iAWE Add-on enforces fixed analytical pathways,
-                        ensuring stable and replicable evaluative outcomes for large classes.
-                    </p>
-                    <p class="lang-ar">
-                        بخلاف أدوات الذكاء الاصطناعي المفتوحة،
-                        تعتمد الإضافة مسارات تحليل ثابتة تضمن نتائج متسقة وقابلة للتكرار عند تقييم مجموعات كبيرة.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧾</div>
-                    <h3 class="lang-en">Workspace Integration</h3>
-                    <h3 class="lang-ar">التكامل والتدقيق الآمن</h3>
-                    <p class="lang-en">
-                        Operating entirely within Google Workspace, each feedback instance logs an audit trail
-                        documenting rules triggered and criteria applied securely.
-                    </p>
-                    <p class="lang-ar">
-                        يعمل النظام بأمان تام داخل بيئة جوجل، وتُرفق كل تغذية راجعة بسجل تدقيق
-                        يوضح القواعد التي تم تفعيلها بأعلى درجات الأمان.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎓</div>
-                    <h3 class="lang-en">EAP-Specific Design</h3>
-                    <h3 class="lang-ar">تصميم مخصص للكتابة الأكاديمية</h3>
-                    <p class="lang-en">
-                        The rubric and prompts are strictly tailored for higher-education academic discourse conventions,
-                        moving beyond generic ESL grammar correction.
-                    </p>
-                    <p class="lang-ar">
-                        صُمم النظام ومعاييره خصيصاً ليتناسب مع خطاب الكتابة الأكاديمية في التعليم العالي،
-                        متجاوزاً التصحيح اللغوي العام للمبتدئين.
-                    </p>
-                </div>
-                
-                <!-- NEW FEATURE CARDS -->
                 <div class="feature-card">
                     <div class="feature-icon">⚙️</div>
                     <h3 class="lang-en">Customizable Rubrics</h3>
                     <h3 class="lang-ar">معايير تقييم قابلة للتخصيص</h3>
-                    <p class="lang-en">
-                        Empowering teacher agency with selective toggles. Enable or disable any of the 13 analytical dimensions to align the AI strictly with your specific syllabus.
-                    </p>
-                    <p class="lang-ar">
-                        تعزيز استقلالية المعلم من خلال خيارات التحكم. يمكنك تفعيل أو تعطيل أي من الأبعاد التحليلية الثلاثة عشر لتتطابق بدقة مع أهدافك التدريسية.
-                    </p>
+                    <p class="lang-en">Empowering teacher agency. Enable or disable any of the 13 analytical dimensions to align the AI strictly with your specific syllabus objectives.</p>
+                    <p class="lang-ar">تعزيز استقلالية المعلم. تفعيل أو تعطيل أي من الأبعاد التحليلية الثلاثة عشر لمطابقة النظام بدقة مع أهداف مناهجك الدراسية.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3 class="lang-en">Class Analytics Dashboard</h3>
                     <h3 class="lang-ar">لوحة تحليلات الفصل</h3>
-                    <p class="lang-en">
-                        Transform row-by-row grading into formative curriculum planning. Instantly generate visual charts showing your class's average performance across all EAP dimensions.
-                    </p>
-                    <p class="lang-ar">
-                        تحويل التقييم الفردي إلى تخطيط منهجي. إنشاء رسوم بيانية فورية توضح متوسط أداء الفصل بأكمله عبر جميع أبعاد الكتابة الأكاديمية.
-                    </p>
+                    <p class="lang-en">Transform row-by-row grading into formative curriculum planning. Instantly generate visual charts showing class performance and variance across EAP dimensions.</p>
+                    <p class="lang-ar">تحويل التقييم الفردي إلى تخطيط منهجي. إنشاء رسوم بيانية فورية توضح أداء الفصل والتباين عبر أبعاد الكتابة الأكاديمية.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📄</div>
                     <h3 class="lang-en">Multi-Format Exporting</h3>
                     <h3 class="lang-ar">تصدير متعدد الصيغ</h3>
-                    <p class="lang-en">
-                        Generate beautiful, bilingual PDF transcripts for final records, or create editable Google Docs to seamlessly add your own teacher comments and notes.
-                    </p>
-                    <p class="lang-ar">
-                        إصدار تقارير نهائية ثنائية اللغة بصيغة PDF، أو إنشاء مستندات جوجل قابلة للتعديل لإضافة تعليقاتك وملاحظاتك الخاصة كمعلم.
-                    </p>
+                    <p class="lang-en">Generate beautifully formatted, bilingual PDF transcripts for final records, or create editable Google Docs to seamlessly add your own teacher comments.</p>
+                    <p class="lang-ar">إصدار تقارير ثنائية اللغة بصيغة PDF، أو إنشاء مستندات جوجل قابلة للتعديل لإضافة تعليقاتك وملاحظاتك كمعلم.</p>
                 </div>
             </div>
         </section>
 
-        <!-- iAWE Call to Action Section -->
+        <!-- CTA Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Coming Soon to Google Workspace</h2>
-            <h2 class="cta-title lang-ar">قريباً في متجر تطبيقات جوجل</h2>
+            <h2 class="cta-title lang-en">Available Now for Educators & Researchers</h2>
+            <h2 class="cta-title lang-ar">متاح الآن للمعلمين والباحثين</h2>
+            <p class="cta-subtitle lang-en">Experience the EASE Framework firsthand. Download the iAWE Google Sheets Add-on to bring deterministic, RAG-infused writing evaluation directly into your classroom workflow.</p>
+            <p class="cta-subtitle lang-ar">اختبر إطار EASE بنفسك. قم بتحميل إضافة iAWE لجداول بيانات جوجل لجلب تقييم الكتابة المنضبط والمدمج بتقنية RAG مباشرة إلى بيئة الفصل الدراسي.</p>
             
-            <p class="cta-subtitle lang-en">
-                iAWE is currently undergoing final reviews and will soon be published as a Google Sheets Add-on for EAP educators and researchers globally.
-            </p>
-            <p class="cta-subtitle lang-ar">
-                يخضع نظام iAWE حالياً للمراجعات النهائية، وسيتم نشره قريباً كإضافة لجداول بيانات جوجل للمعلمين والباحثين حول العالم.
-            </p>
-            
-            <a href="https://github.com/waleedmandour" target="_blank" class="cta-button">
-                <i class="fab fa-github"></i>
-                <span class="lang-en">Follow Updates on GitHub</span>
-                <span class="lang-ar">تابع التحديثات على جيت هاب</span>
+            <!-- UPDATED CTA BUTTON -->
+            <a href="https://workspace.google.com/marketplace" target="_blank" class="cta-button">
+                <i class="fas fa-cloud-download-alt"></i>
+                <span class="lang-en">Download iAWE Addon</span>
+                <span class="lang-ar">تحميل إضافة iAWE</span>
             </a>
         </section>
 
@@ -1055,7 +418,6 @@
                     <span class="lang-ar">© 2026 وليد مندور • </span>
                     <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
                 </div>
-                
                 <div class="footer-links">
                     <span class="lang-en">
                         <a href="privacy.html">Privacy Policy</a>
@@ -1068,7 +430,6 @@
                         <a href="support.html">الدعم</a>
                     </span>
                 </div>
-
                 <div style="margin-top: 8px;">
                     <span class="lang-en">Part of the <strong>waleedmandour.org/projects/</strong> portfolio</span>
                     <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
@@ -1093,11 +454,7 @@
 
         // Add scroll animation for elements
         document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
+            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
             const observer = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1105,11 +462,7 @@
                     }
                 });
             }, observerOptions);
-
-            // Observe all cards and steps
-            document.querySelectorAll('.feature-card, .workflow-step').forEach(el => {
-                observer.observe(el);
-            });
+            document.querySelectorAll('.feature-card, .workflow-step, .framework-diagram-container, .ui-screenshot-card').forEach(el => { observer.observe(el); });
         });
     </script>
 </body>
