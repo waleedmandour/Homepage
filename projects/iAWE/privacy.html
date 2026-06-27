@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Privacy Policy for iAWE (Intelligent Academic Writing Evaluation Assistant) - A Google Sheets Add-on built on the EASE Framework 1.0 for EAP writing evaluation.">
     <title>iAWE - Privacy Policy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- CSS VARIABLES & BASE STYLE --- */
@@ -130,6 +131,67 @@
             background-color: var(--accent);
         }
 
+        /* Marketplace Administration Info Box */
+        .marketplace-info {
+            background: linear-gradient(135deg, #f0f4f7 0%, #e8eaf6 100%);
+            border: 1px solid #c5cae9;
+            border-left: 4px solid var(--primary);
+            padding: 18px 22px;
+            margin: 25px 0 30px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        body[lang="ar"] .marketplace-info {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+        .marketplace-info h4 {
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .marketplace-info p {
+            margin: 0 0 10px 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .marketplace-info p:last-child { margin-bottom: 0; }
+        .marketplace-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #b0bec5;
+        }
+        .marketplace-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92em;
+            border-bottom: 1px dotted var(--accent);
+            transition: all 0.2s;
+        }
+        .marketplace-links a:hover {
+            color: var(--primary);
+            border-bottom-style: solid;
+        }
+        .marketplace-links .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
         /* Hide content based on language */
         .lang-en { display: block; }
         .lang-ar { display: none; }
@@ -157,21 +219,41 @@
 
             <p><strong>iAWE (Intelligent Academic Writing Evaluation Assistant)</strong> is an AI-assisted academic writing evaluation system built strictly upon the <strong>EASE Framework 1.0 (Evidence-Anchored Scaffolding Evaluation)</strong>. Distributed as a Google Sheets Add-on via the Google Workspace Marketplace, iAWE is designed to prioritize user data privacy and adhere strictly to Google's User Data Policy. This policy explains what data the Add-on accesses, how it is used, and confirms what data is <strong>not</strong> collected.</p>
 
+            <div class="marketplace-info">
+                <h4><i class="fas fa-store-alt" style="font-size:16px;"></i> Marketplace Administration</h4>
+                <p>This Add-on is <strong>administered and distributed by the Google Workspace Marketplace</strong>. Installation, authentication, scope consent, version updates, and uninstallation are all handled through Google's infrastructure under your Google account's authority. The developer does not operate a separate installation server or distribution channel.</p>
+                <p><strong>Verification status:</strong> <span class="badge">Google Workspace Marketplace Listing</span> &mdash; pending publication.</p>
+                <div class="marketplace-links">
+                    <a href="terms.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="support.html"><i class="fas fa-headset"></i> Support &amp; Contact</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Project Homepage</a>
+                    <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> Google Workspace Marketplace</a>
+                </div>
+            </div>
+
             <div class="compliance-note">
                 <p style="font-weight: bold; color: var(--primary);">DATA MINIMIZATION AND CORE PRINCIPLE</p>
                 <p>The Add-on is designed to process data <strong>ephemerally</strong> to run its core function: AI-augmented evaluation of L2 academic writing using Retrieval-Augmented Generation (RAG) and Data-Driven Learning (DDL) principles. We <strong>DO NOT</strong> collect, store, share, or sell any Personal Identifiable Information (PII), sensitive user data, or your email address for any secondary purpose.</p>
             </div>
 
             <h3>1. Google Workspace Data Access (Scopes Used)</h3>
-            <p>iAWE requests access to the following scopes to perform its core function: the automated evaluation of academic writing within the Google Sheets environment. Access is strictly limited to the necessary functions described below:</p>
+            <p>iAWE requests access to the following four OAuth scopes to perform its core function: the automated evaluation of academic writing within the Google Sheets environment. Access is strictly limited to the necessary functions described below, in accordance with Google's <strong>Least Privilege</strong> principle:</p>
             <ul>
                 <li>
-                    <strong>Google Drive Access:</strong> <code>https://www.googleapis.com/auth/drive.file</code>
-                    <p style="margin-top: 5px;"><strong>Justification:</strong> This is a restricted scope. It is used <strong>solely</strong> to read the specific student essay file that you explicitly upload via the Add-on sidebar, and to save the final evaluation reports (JSON/CSV) generated by the EASE pipeline directly into your Drive.</p>
+                    <strong>Google Sheets Access (current spreadsheet only):</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> The application reads and writes data <strong>strictly within the active spreadsheet</strong> where the Add-on is invoked. This is necessary to retrieve the student's writing sample from Column A and to write the final processed EASE evaluation metrics (D1&ndash;D13 scores, NAWL lemma density, Type-Token Ratio, structured feedback) back to columns B&ndash;Q of the same sheet. The Add-on cannot access any other spreadsheet in your account.</p>
                 </li>
                 <li>
-                    <strong>Google Sheets Access:</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
-                    <p style="margin-top: 5px;"><strong>Justification:</strong> The application reads and writes data <strong>strictly within the active spreadsheet</strong> where the Add-on is invoked. This is necessary to retrieve the student's writing sample and to write the final processed EASE evaluation metrics (NAWL lemma density, Type-Token Ratio, structured feedback scores) back to the sheet.</p>
+                    <strong>Google Drive Access (file-level, user-initiated):</strong> <code>https://www.googleapis.com/auth/drive.file</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> This is a <strong>restricted scope</strong> governed by Google's Limited Use requirements. It is used <strong>solely</strong> to read the specific student essay file that you explicitly select via the Add-on sidebar file picker, and to save the final evaluation reports (JSON/CSV) generated by the EASE pipeline directly into your Drive. The Add-on cannot browse your Drive or access files you did not explicitly choose.</p>
+                </li>
+                <li>
+                    <strong>External Network Requests:</strong> <code>https://www.googleapis.com/auth/script.external_request</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> Required by Apps Script to permit outbound HTTPS calls via <code>UrlFetchApp</code>. This scope is used <strong>exclusively</strong> to send the student's writing sample (along with pre-computed linguistic metrics) to the Google Gemini 2.5 API for evidence-anchored feedback generation, and to query the Semantic Scholar API for scholarly context retrieval (RAG). No other external endpoints are contacted. The full list of permitted destinations is documented in Section 2.</p>
+                </li>
+                <li>
+                    <strong>Container UI Rendering:</strong> <code>https://www.googleapis.com/auth/script.container.ui</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> Required by Apps Script to display the iAWE user interface elements inside the Google Sheets container &mdash; specifically: the <code>"✍️ iAWE 1.0"</code> custom menu, the sidebar Control Panel (HTML service), the User Guide modal dialog, and the Contact form modal. This scope grants <strong>no data access</strong>; it only authorizes the rendering of UI elements within the host spreadsheet. It does not allow the Add-on to read or modify any spreadsheet content beyond what the <code>spreadsheets.currentonly</code> scope already permits.</p>
                 </li>
             </ul>
 
@@ -231,21 +313,41 @@
 
             <p><strong>iAWE (مساعد تقييم الكتابة الأكاديمية الذكي)</strong> هو نظام تقييم أكاديمي مدعوم بالذكاء الاصطناعي، مبني بشكل صارم على <strong>إطار EASE 1.0 (تقييم السقالات المُعتمد على الأدلة)</strong>. يُوزَّع كإضافة لجداول جوجل عبر متجر Google Workspace، وهو مصمم لإعطاء الأولوية لخصوصية بيانات المستخدم والالتزام الصارم بسياسة بيانات المستخدم من Google. توضح هذه السياسة البيانات التي يصل إليها النظام، وكيفية استخدامها، وتؤكد البيانات التي <strong>لا</strong> يتم جمعها.</p>
 
+            <div class="marketplace-info">
+                <h4><i class="fas fa-store-alt" style="font-size:16px;"></i> إدارة متجر جوجل</h4>
+                <p>تُدار هذه الإضافة وتُوزَّع <strong>بواسطة متجر Google Workspace</strong>. تتم عمليات التثبيت والمصادقة والموافقة على النطاقات وتحديثات الإصدار وإلغاء التثبيت بالكامل عبر بنية Google التحتية تحت سلطة حسابك في جوجل. لا يُشغّل المطور خادم تثبيت منفصل أو قناة توزيع مستقلة.</p>
+                <p><strong>حالة التحقق:</strong> <span class="badge">إدراج في متجر Google Workspace</span> &mdash; قيد النشر.</p>
+                <div class="marketplace-links">
+                    <a href="terms.html"><i class="fas fa-file-contract"></i> شروط الخدمة</a>
+                    <a href="support.html"><i class="fas fa-headset"></i> الدعم والاتصال</a>
+                    <a href="index.html"><i class="fas fa-home"></i> الصفحة الرئيسية للمشروع</a>
+                    <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> متجر Google Workspace</a>
+                </div>
+            </div>
+
             <div class="compliance-note">
                 <p style="font-weight: bold; color: var(--primary);">تقليل البيانات والمبدأ الأساسي</p>
                 <p>تم تصميم النظام لمعالجة البيانات <strong>بشكل عابر</strong> لتشغيل وظيفته الأساسية: التقييم المعزز بالذكاء الاصطناعي للكتابة الأكاديمية بلغة أجنبية باستخدام تقنية توليد مستند للاسترجاع (RAG) ومبادئ التعلم القائم على البيانات (DDL). نحن <strong>لا</strong> نجمع أو نخزن أو نشارك أو نبيع أي معلومات تعريف شخصية (PII)، أو بيانات مستخدم حساسة، أو عنوان بريدك الإلكتروني لأي غرض ثانوي.</p>
             </div>
 
             <h3>1. الوصول إلى بيانات Google Workspace (النطاقات المستخدمة)</h3>
-            <p>يطلب نظام iAWE الوصول إلى النطاقات التالية لأداء وظيفته الأساسية: التقييم الآلي للكتابة الأكاديمية ضمن بيئة جداول جوجل. يقتصر الوصول بدقة على الوظائف الضرورية الموضحة أدناه:</p>
+            <p>يطلب نظام iAWE الوصول إلى النطاقات الأربعة التالية لأداء وظيفته الأساسية: التقييم الآلي للكتابة الأكاديمية ضمن بيئة جداول جوجل. يقتصر الوصول بدقة على الوظائف الضرورية الموضحة أدناه، وفقاً لمبدأ <strong>الحد الأدنى من الصلاحيات</strong> من Google:</p>
             <ul>
                 <li>
-                    <strong>الوصول إلى Google Drive:</strong> <code>https://www.googleapis.com/auth/drive.file</code>
-                    <p style="margin-top: 5px;"><strong>التبرير:</strong> هذا نطاق مقيد (Drive File). يُستخدم <strong>فقط</strong> لقراءة ملف مقالة الطالب الذي تقوم بتحميله بنفسك عبر الشريط الجانبي، ولحفظ تقارير التقييم النهائية (JSON/CSV) التي ينشئها مسار EASE مباشرة في حسابك على Drive.</p>
+                    <strong>الوصول إلى Google Sheets (الجدول النشط فقط):</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> يقرأ النظام ويكتب البيانات <strong>بدقة داخل جدول البيانات النشط</strong> حيث يتم استدعاء الإضافة. هذا ضروري لاسترداد عينة الكتابة الخاصة بالطالب من العمود A وكتابة مقاييس تقييم EASE النهائية (درجات D1&ndash;D13، كثافة جذور NAWL، نسبة التنوع المعجمي TTR، التغذية الراجعة المنظمة) مرة أخرى إلى الأعمدة B&ndash;Q من نفس الورقة. لا يمكن للإضافة الوصول إلى أي جدول بيانات آخر في حسابك.</p>
                 </li>
                 <li>
-                    <strong>الوصول إلى Google Sheets:</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
-                    <p style="margin-top: 5px;"><strong>التبرير:</strong> يقرأ النظام ويكتب البيانات <strong>بدقة داخل جدول البيانات النشط</strong> حيث يتم استدعاء الإضافة. هذا ضروري لاسترداد عينة الكتابة الخاصة بالطالب وكتابة مقاييس تقييم EASE النهائية (كثافة جذور NAWL، نسبة التنوع المعجمي TTR، درجات التغذية الراجعة المنظمة) مرة أخرى إلى الورقة.</p>
+                    <strong>الوصول إلى Google Drive (على مستوى الملف، يبدأه المستخدم):</strong> <code>https://www.googleapis.com/auth/drive.file</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> هذا <strong>نطاق مقيد</strong> تخضع لمتطلبات الاستخدام المحدود من Google. يُستخدم <strong>فقط</strong> لقراءة ملف مقالة الطالب الذي تحدده بنفسك عبر منتقي الملفات في الشريط الجانبي، ولحفظ تقارير التقييم النهائية (JSON/CSV) التي ينشئها مسار EASE مباشرة في حسابك على Drive. لا يمكن للإضافة تصفح Drive الخاص بك أو الوصول إلى ملفات لم تخترها صراحةً.</p>
+                </li>
+                <li>
+                    <strong>طلبات الشبكة الخارجية:</strong> <code>https://www.googleapis.com/auth/script.external_request</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> مطلوب من Apps Script للسماح بمكالمات HTTPS الصادرة عبر <code>UrlFetchApp</code>. يُستخدم هذا النطاق <strong>حصرياً</strong> لإرسال عينة الكتابة الخاصة بالطالب (مع المقاييس اللغوية المحسوبة مسبقاً) إلى واجهة Google Gemini 2.5 API لتوليد التغذية الراجعة المعتمدة على الأدلة، ولاستعلام واجهة Semantic Scholar API لاسترجاع السياق العلمي (RAG). لا يتم الاتصال بأي نقاط نهاية خارجية أخرى. القائمة الكاملة للوجهات المسموح بها موثقة في القسم 2.</p>
+                </li>
+                <li>
+                    <strong>عرض واجهة المستخدم داخل الحاوية:</strong> <code>https://www.googleapis.com/auth/script.container.ui</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> مطلوب من Apps Script لعرض عناصر واجهة مستخدم iAWE داخل حاوية جداول جوجل &mdash; تحديداً: القائمة المخصصة <code>"✍️ iAWE 1.0"</code>، ولوحة التحكم الجانبية (خدمة HTML)، ونافذة دليل المستخدم، ونافذة نموذج الاتصال. هذا النطاق <strong>لا يمنح أي وصول للبيانات</strong>؛ فهو يُصرِّح فقط بعرض عناصر واجهة المستخدم داخل جدول البيانات المضيف. لا يسمح للإضافة بقراءة أو تعديل أي محتوى في الجدول بما يتجاوز ما يسمح به نطاق <code>spreadsheets.currentonly</code>.</p>
                 </li>
             </ul>
 

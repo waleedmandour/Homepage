@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Terms of Service for iAWE - Intelligent Academic Writing Evaluation Assistant, a Google Sheets Add-on built on the EASE Framework 1.0.">
     <title>iAWE - Terms of Use</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- CSS VARIABLES & BASE STYLE (Consistent with Privacy & Index) --- */
@@ -92,6 +93,67 @@
             background-color: var(--accent);
         }
 
+        /* Marketplace Administration Info Box */
+        .marketplace-info {
+            background: linear-gradient(135deg, #f0f4f7 0%, #e8eaf6 100%);
+            border: 1px solid #c5cae9;
+            border-left: 4px solid var(--primary);
+            padding: 18px 22px;
+            margin: 25px 0 30px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        body[lang="ar"] .marketplace-info {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+        .marketplace-info h4 {
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .marketplace-info p {
+            margin: 0 0 10px 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .marketplace-info p:last-child { margin-bottom: 0; }
+        .marketplace-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #b0bec5;
+        }
+        .marketplace-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92em;
+            border-bottom: 1px dotted var(--accent);
+            transition: all 0.2s;
+        }
+        .marketplace-links a:hover {
+            color: var(--primary);
+            border-bottom-style: solid;
+        }
+        .marketplace-links .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
         /* Hide content based on language */
         .lang-en { display: block; }
         .lang-ar { display: none; }
@@ -114,6 +176,18 @@
         <div class="lang-en">
             <h1>Terms of Service for iAWE</h1>
             <p class="meta">Effective Date: June 2026</p>
+
+            <div class="marketplace-info">
+                <h4><i class="fas fa-store-alt" style="font-size:16px;"></i> Marketplace Administration</h4>
+                <p>This Add-on is <strong>administered and distributed by the Google Workspace Marketplace</strong>. Installation, authentication, scope consent, version updates, and uninstallation are all handled through Google's infrastructure under your Google account's authority. The developer does not operate a separate installation server or distribution channel.</p>
+                <p><strong>Verification status:</strong> <span class="badge">Google Workspace Marketplace Listing</span> &mdash; pending publication.</p>
+                <div class="marketplace-links">
+                    <a href="privacy.html"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+                    <a href="support.html"><i class="fas fa-headset"></i> Support &amp; Contact</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Project Homepage</a>
+                    <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> Google Workspace Marketplace</a>
+                </div>
+            </div>
 
             <h3>1. Academic Use and Scope of Service</h3>
             <p><strong>iAWE (Intelligent Academic Writing Evaluation Assistant)</strong> is provided primarily for <strong>academic, educational, and non-commercial research purposes</strong>, in accordance with the EASE Framework 1.0 methodology. It is designed to assist EAP (English for Academic Purposes) educators, researchers, and learners in evaluating L2 academic writing through a zero-trust, RAG-infused, DDL-anchored pedagogical scaffold, within the Google Workspace environment.</p>
@@ -150,6 +224,18 @@
         <div class="lang-ar">
             <h1>شروط خدمة نظام iAWE</h1>
             <p class="meta">تاريخ السريان: يونيو 2026</p>
+
+            <div class="marketplace-info">
+                <h4><i class="fas fa-store-alt" style="font-size:16px;"></i> إدارة متجر جوجل</h4>
+                <p>تُدار هذه الإضافة وتُوزَّع <strong>بواسطة متجر Google Workspace</strong>. تتم عمليات التثبيت والمصادقة والموافقة على النطاقات وتحديثات الإصدار وإلغاء التثبيت بالكامل عبر بنية Google التحتية تحت سلطة حسابك في جوجل. لا يُشغّل المطور خادم تثبيت منفصل أو قناة توزيع مستقلة.</p>
+                <p><strong>حالة التحقق:</strong> <span class="badge">إدراج في متجر Google Workspace</span> &mdash; قيد النشر.</p>
+                <div class="marketplace-links">
+                    <a href="privacy.html"><i class="fas fa-user-shield"></i> سياسة الخصوصية</a>
+                    <a href="support.html"><i class="fas fa-headset"></i> الدعم والاتصال</a>
+                    <a href="index.html"><i class="fas fa-home"></i> الصفحة الرئيسية للمشروع</a>
+                    <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> متجر Google Workspace</a>
+                </div>
+            </div>
 
             <h3>1. الاستخدام الأكاديمي ونطاق الخدمة</h3>
             <p>يُقدَّم <strong>iAWE (مساعد تقييم الكتابة الأكاديمية الذكي)</strong> في المقام الأول <strong>للأغراض الأكاديمية والتعليمية والبحثية غير التجارية</strong>، وفقاً لمنهجية إطار EASE 1.0. تم تصميمه لمساعدة معلمي EAP (الإنجليزية للأغراض الأكاديمية) والباحثين والمتعلمين في تقييم الكتابة الأكاديمية بلغة أجنبية من خلال سقالة تربوية مبنية على مبدأ "عدم الثقة" وتقنية RAG ومبادئ DDL، ضمن بيئة Google Workspace.</p>

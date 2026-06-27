@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Support and Contact information for iAWE - Intelligent Academic Writing Evaluation Assistant, a Google Sheets Add-on built on the EASE Framework 1.0.">
 <title>iAWE - Support & Contact</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 10px; background-color: #fff; }
     .container { max-width: 800px; margin: 0 auto; }
@@ -19,6 +20,14 @@
     ul { margin: 10px 0 15px 0; padding-left: 22px; }
     li { margin-bottom: 6px; }
     code { background: #f0f4f7; padding: 2px 5px; border-radius: 3px; font-family: monospace; color: #20B2AA; font-weight: bold; font-size: 0.85em; }
+    .marketplace-info { background: linear-gradient(135deg, #f0f4f7 0%, #e8eaf6 100%); border: 1px solid #c5cae9; border-left: 4px solid #0A1C3C; padding: 16px 20px; margin: 20px 0; border-radius: 8px; font-size: 0.95em; }
+    .marketplace-info h4 { color: #0A1C3C; font-size: 15px; font-weight: 700; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px; }
+    .marketplace-info p { margin: 0 0 10px 0; line-height: 1.6; }
+    .marketplace-info p:last-child { margin-bottom: 0; }
+    .marketplace-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #b0bec5; }
+    .marketplace-links a { color: #1A5F7A; text-decoration: none; font-weight: 600; font-size: 0.92em; border-bottom: 1px dotted #1A5F7A; }
+    .marketplace-links a:hover { color: #0A1C3C; border-bottom-style: solid; }
+    .marketplace-links .badge { display: inline-flex; align-items: center; gap: 5px; background: #0A1C3C; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
 </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -35,9 +44,21 @@
     <h1>iAWE - Support &amp; Contact</h1>
     <p><strong>iAWE (Intelligent Academic Writing Evaluation Assistant)</strong> is an AI-assisted academic writing evaluation system built on the <strong>EASE Framework 1.0</strong> and distributed as a Google Sheets Add-on. If you encounter technical issues with the Add-on, require assistance with API configuration (Gemini 2.5, Semantic Scholar), or have academic suggestions for the tool, please review the troubleshooting notes below and contact the developer.</p>
 
+    <div class="marketplace-info">
+        <h4><i class="fas fa-store-alt"></i> Marketplace Administration</h4>
+        <p>This Add-on is <strong>administered and distributed by the Google Workspace Marketplace</strong>. Installation, scope consent, version updates, and uninstallation are all handled through your Google account. The developer does not operate a separate installation server or distribution channel.</p>
+        <p><strong>Verification status:</strong> <span class="badge">Google Workspace Marketplace Listing</span> &mdash; pending publication.</p>
+        <div class="marketplace-links">
+            <a href="privacy.html"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+            <a href="terms.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+            <a href="index.html"><i class="fas fa-home"></i> Project Homepage</a>
+            <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> Google Workspace Marketplace</a>
+        </div>
+    </div>
+
     <h2>Common Support Topics</h2>
     <ul>
-        <li><strong>Installation issues:</strong> Ensure you are installing iAWE from the official Google Workspace Marketplace listing, and that your domain administrator permits third-party Add-ons with the <code>drive.file</code> and <code>spreadsheets.currentonly</code> scopes.</li>
+        <li><strong>Installation issues:</strong> Ensure you are installing iAWE from the official Google Workspace Marketplace listing, and that your domain administrator permits third-party Add-ons with the four required scopes: <code>spreadsheets.currentonly</code>, <code>drive.file</code>, <code>script.external_request</code>, and <code>script.container.ui</code>.</li>
         <li><strong>API configuration:</strong> Users must supply their own API keys for Gemini 2.5 (Google AI Studio) and Semantic Scholar where required. See the README section of the project page for setup instructions.</li>
         <li><strong>Evaluation results interpretation:</strong> iAWE outputs structured EASE metrics including NAWL lemma density, Type-Token Ratio, and JSON-anchored feedback scores. Refer to the Research Transparency Notice on the project page for methodological context.</li>
         <li><strong>RAG / DDL methodology questions:</strong> The EASE Framework triangulates DBR, DDL, and RAG principles. Academic inquiries about the underlying methodology are welcome.</li>
