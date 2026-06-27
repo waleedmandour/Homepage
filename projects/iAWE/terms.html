@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terms of Service for iAWE - Intelligent Academic Writing Evaluation Assistant, a Google Sheets Add-on built on the EASE Framework 1.0.">
     <title>iAWE - Terms of Use</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- CSS VARIABLES & BASE STYLE (Consistent with Privacy & Index) --- */
         :root {
-            --primary: #1a237e;       /* Academic Navy */
-            --accent: #059669;       /* Success Teal */
+            --primary: #0A1C3C;       /* Academic Navy (matches iAWE index) */
+            --accent: #20B2AA;        /* Teal (matches iAWE index) */
             --text-dark: #2c3e50;
             --text-light: #546e7a;
         }
-        
+
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
@@ -22,19 +23,19 @@
             padding: 10px;
             background-color: #fff;
         }
-        
+
         /* Arabic language styling */
         body[lang="ar"] {
             font-family: 'Cairo', 'Segoe UI', sans-serif;
             direction: rtl;
             text-align: right;
         }
-        
+
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
         h1 {
             color: var(--primary);
             font-size: 26px;
@@ -42,7 +43,7 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        
+
         h3 {
             color: var(--primary);
             font-size: 18px;
@@ -51,7 +52,7 @@
             border-left: 4px solid var(--text-light);
             padding-left: 10px;
         }
-        
+
         /* Adjust border for RTL layout */
         body[lang="ar"] h3 {
             border-left: none;
@@ -59,7 +60,7 @@
             padding-left: 0;
             padding-right: 10px;
         }
-        
+
         p {
             margin-bottom: 15px;
         }
@@ -70,7 +71,7 @@
             font-style: italic;
             margin-bottom: 20px;
         }
-        
+
         /* Language toggle button styling */
         .lang-toggle {
             position: fixed;
@@ -86,11 +87,11 @@
             z-index: 1000;
             transition: background-color 0.3s;
         }
-        
+
         .lang-toggle:hover {
             background-color: var(--accent);
         }
-        
+
         /* Hide content based on language */
         .lang-en { display: block; }
         .lang-ar { display: none; }
@@ -108,60 +109,78 @@
 </script>
 <body lang="en">
     <button class="lang-toggle" onclick="toggleLanguage()">العربية</button>
-    
+
     <div class="container">
         <div class="lang-en">
             <h1>Terms of Service for iAWE</h1>
             <p class="meta">Effective Date: June 2026</p>
-            
+
             <h3>1. Academic Use and Scope of Service</h3>
-            <p>The AMTA Lexicography Assistant is provided primarily for **academic, educational, and non-commercial research purposes**. It is designed to assist lexicographers and researchers in automating data collection, analysis, and formatting within the Google Workspace environment.</p>
+            <p><strong>iAWE (Intelligent Academic Writing Evaluation Assistant)</strong> is provided primarily for <strong>academic, educational, and non-commercial research purposes</strong>, in accordance with the EASE Framework 1.0 methodology. It is designed to assist EAP (English for Academic Purposes) educators, researchers, and learners in evaluating L2 academic writing through a zero-trust, RAG-infused, DDL-anchored pedagogical scaffold, within the Google Workspace environment.</p>
+            <p>iAWE is a research-grade evaluative prototype designed for pedagogical experimentation and academic transparency, <strong>not a commercial replacement for human assessment</strong>.</p>
 
             <h3>2. Disclaimer of Warranty and Accuracy</h3>
-            <p>The software is provided **"as is," without warranty of any kind, express or implied**. While the developer strives to maintain the functionality and reliability of the Add-on, no guarantees are made regarding the correctness, completeness, or suitability of the AI-generated definitions, translations, or statistical calculations. **Users must verify all outputs against primary sources and bear full responsibility for the data used in their final work.**</p>
+            <p>The software is provided <strong>"as is," without warranty of any kind, express or implied</strong>. While the developer strives to maintain the functionality and reliability of the Add-on in line with the EASE Framework's zero-trust principle, no guarantees are made regarding the absolute correctness, completeness, or suitability of the AI-generated writing evaluations, NAWL metrics, Type-Token Ratio calculations, or JSON-anchored feedback scores. <strong>Users must verify all outputs against primary sources and bear full responsibility for the data used in their final work.</strong></p>
+            <p>While analytical accuracy was closely aligned with human judgment in the evaluative study (20 student essays of 300-400 words benchmarked against expert human feedback), learners did not directly interact with the system during that evaluation phase. This constitutes a documented methodological limitation addressed in future Design-Based Research (DBR) iterations.</p>
 
             <h3>3. API Usage and External Services</h3>
-            <p>The Add-on relies on external third-party APIs (e.g., Google Gemini, SerpApi, Semantic Scholar, CORE). Users acknowledge and agree that:</p>
+            <p>The Add-on relies on external third-party APIs to maintain the EASE Framework's computational trust. Users acknowledge and agree that:</p>
             <ul>
-                <li>They are responsible for providing their own API keys and ensuring compliance with the terms of service of those respective providers.</li>
+                <li>They are responsible for providing their own API keys for <strong>Google Gemini 2.5</strong> (used as the JSON-generation engine) and <strong>Semantic Scholar API</strong> (used for retrieving scholarly context) and ensuring compliance with the terms of service of those respective providers.</li>
                 <li>The developer is not responsible for any costs incurred, service interruptions, or rate limits imposed by these third-party API providers.</li>
+                <li>The zero-trust architecture relies on the LLM being restricted to a strict JSON schema and fed only pre-computed empirical evidence. Any modification to this schema by the user may compromise the pedagogical validity of the evaluation.</li>
             </ul>
-            
+
             <h3>4. User Conduct and Restrictions</h3>
-            <p>Users agree not to use the Add-on for any purpose that is unlawful, fraudulent, or prohibited by these Terms. Prohibited uses include, but are not limited to, commercial resale of the tool's features, unauthorized data scraping, or any attempt to bypass rate limits.</p>
+            <p>Users agree not to use the Add-on for any purpose that is unlawful, fraudulent, or prohibited by these Terms. Prohibited uses include, but are not limited to:</p>
+            <ul>
+                <li>Commercial resale of the tool's features or the EASE Framework methodology without explicit written consent from the developer.</li>
+                <li>Unauthorized data scraping, batch processing, or any attempt to bypass rate limits imposed by the Add-on or its underlying APIs.</li>
+                <li>Using the evaluation outputs as a definitive replacement for human pedagogical assessment in high-stakes contexts (e.g., formal grading, admissions decisions) without expert verification.</li>
+            </ul>
 
             <h3>5. Intellectual Property and Data Ownership</h3>
-            <p>The core software, code, and methodology of the AMTA Lexicography Assistant are the exclusive intellectual property of the developer, Dr. Waleed Mandour. **The dictionaries, data sets, and corpus generated by the user using this tool remain the property of the user.**</p>
+            <p>The core software, code, EASE Framework 1.0 methodology, and iAWE architecture are the exclusive intellectual property of the developer, Dr. Waleed Mandour, and co-author Prof. Anwar Mourssi. <strong>The student essays, evaluation reports, DBR telemetry, and any pedagogical artifacts generated by the user using this tool remain the property of the user.</strong></p>
+            <p>The EASE Framework and iAWE architecture are based on an evaluative study presented at the 4th MEC TESOL Conference, Muscat, Oman (February 2026). Academic citation is required when referencing this work.</p>
 
             <h3>6. Modification of Terms</h3>
-            <p>The developer reserves the right to modify these Terms of Service at any time. Continued use of the Add-on after any such modification constitutes acceptance of the new Terms.</p>
+            <p>The developer reserves the right to modify these Terms of Service at any time, particularly as the EASE Framework evolves through future Design-Based Research (DBR) iterations. Continued use of the Add-on after any such modification constitutes acceptance of the new Terms.</p>
         </div>
-        
+
         <div class="lang-ar">
-            <h1>شروط خدمة مساعد AMTA المعجمي</h1>
-            <p class="meta">تاريخ السريان: ديسمبر 2025</p>
-            
+            <h1>شروط خدمة نظام iAWE</h1>
+            <p class="meta">تاريخ السريان: يونيو 2026</p>
+
             <h3>1. الاستخدام الأكاديمي ونطاق الخدمة</h3>
-            <p>يُقدَّم مساعد AMTA المعجمي في المقام الأول **للأغراض الأكاديمية والتعليمية والبحثية غير التجارية**. تم تصميمه لمساعدة المعجمين والباحثين في أتمتة جمع البيانات وتحليلها وتنسيقها ضمن بيئة Google Workspace.</p>
+            <p>يُقدَّم <strong>iAWE (مساعد تقييم الكتابة الأكاديمية الذكي)</strong> في المقام الأول <strong>للأغراض الأكاديمية والتعليمية والبحثية غير التجارية</strong>، وفقاً لمنهجية إطار EASE 1.0. تم تصميمه لمساعدة معلمي EAP (الإنجليزية للأغراض الأكاديمية) والباحثين والمتعلمين في تقييم الكتابة الأكاديمية بلغة أجنبية من خلال سقالة تربوية مبنية على مبدأ "عدم الثقة" وتقنية RAG ومبادئ DDL، ضمن بيئة Google Workspace.</p>
+            <p>يُعرض نظام iAWE كنموذج تقويمي لأغراض البحث العلمي والتجريب التربوي والشفافية الأكاديمية، <strong>وليس بديلاً تجارياً عن التقييم البشري</strong>.</p>
 
             <h3>2. إخلاء مسؤولية الضمان والدقة</h3>
-            <p>يُقدَّم البرنامج **"كما هو"، دون أي ضمان من أي نوع، صريح أو ضمني**. بينما يسعى المطور جاهداً للحفاظ على وظائف الإضافة وموثوقيتها، لا تُقدَّم أي ضمانات فيما يتعلق بصحة أو اكتمال أو ملاءمة التعريفات التي تم إنشاؤها بواسطة الذكاء الاصطناعي، أو الترجمات، أو الحسابات الإحصائية. **يجب على المستخدمين التحقق من جميع المخرجات مقابل المصادر الأولية ويتحملون المسؤولية الكاملة عن البيانات المستخدمة في عملهم النهائي.**</p>
+            <p>يُقدَّم البرنامج <strong>"كما هو"، دون أي ضمان من أي نوع، صريح أو ضمني</strong>. بينما يسعى المطور جاهداً للحفاظ على وظائف الإضافة وموثوقيتها بما يتوافق مع مبدأ "عدم الثقة" لإطار EASE، لا تُقدَّم أي ضمانات فيما يتعلق بالصحة المطلقة أو اكتمال أو ملاءمة تقييمات الكتابة المُنشأة بواسطة الذكاء الاصطناعي، أو مقاييس NAWL، أو نسبة التنوع المعجمي TTR، أو درجات التغذية الراجعة المعتمدة على JSON. <strong>يجب على المستخدمين التحقق من جميع المخرجات مقابل المصادر الأولية ويتحملون المسؤولية الكاملة عن البيانات المستخدمة في عملهم النهائي.</strong></p>
+            <p>على الرغم من تقارب النتائج التحليلية مع الحكم البشري في الدراسة التقييمية (20 مقالة طلابية بكلمات 300-400 مقارنة بتغذية راجعة بشرية متخصصة)، إلا أن الطلاب لم يتفاعلوا مباشرة مع النظام خلال مرحلة التقييم، وهو ما يُعد قيداً منهجياً موثقاً سيتم معالجته في التكرارات المستقبلية للبحث القائم على التصميم (DBR).</p>
 
             <h3>3. استخدام واجهة برمجة التطبيقات والخدمات الخارجية</h3>
-            <p>تعتمد الإضافة على واجهات برمجة تطبيقات خارجية من طرف ثالث (مثل Google Gemini وSerpApi وSemantic Scholar وCORE). يقر المستخدمون ويوافقون على ما يلي:</p>
+            <p>تعتمد الإضافة على واجهات برمجة تطبيقات خارجية من طرف ثالث للحفاظ على الثقة الحسابية لإطار EASE. يقر المستخدمون ويوافقون على ما يلي:</p>
             <ul>
-                <li>أنهم مسؤولون عن توفير مفاتيح واجهة برمجة التطبيقات الخاصة بهم وضمان الامتثال لشروط الخدمة للمزودين المعنيين.</li>
+                <li>أنهم مسؤولون عن توفير مفاتيح واجهة برمجة التطبيقات الخاصة بهم لـ <strong>Google Gemini 2.5</strong> (المستخدم كمحرك لتوليد JSON) و<strong>Semantic Scholar API</strong> (المستخدم لاسترداد السياق العلمي) وضمان الامتثال لشروط الخدمة للمزودين المعنيين.</li>
                 <li>المطور غير مسؤول عن أي تكاليف متكبدة، أو انقطاعات في الخدمة، أو حدود للمعدل يفرضها مزودو واجهة برمجة التطبيقات من طرف ثالث.</li>
+                <li>تعتمد بنية "عدم الثقة" على تقييد النموذج اللغوي بمخطط JSON صارم وتزويده فقط بالأدلة التجريبية المحسوبة مسبقاً. أي تعديل على هذا المخطط من قبل المستخدم قد يعرض الصلاحية التربوية للتقييم للخطر.</li>
             </ul>
-            
+
             <h3>4. سلوك المستخدم والقيود</h3>
-            <p>يوافق المستخدمون على عدم استخدام الإضافة لأي غرض غير قانوني أو احتيالي أو محظور بموجب هذه الشروط. تشمل الاستخدامات المحظورة، على سبيل المثال لا الحصر، إعادة البيع التجاري لميزات الأداة، أو كشط البيانات غير المصرح به، أو أي محاولة لتجاوز حدود المعدل.</p>
+            <p>يوافق المستخدمون على عدم استخدام الإضافة لأي غرض غير قانوني أو احتيالي أو محظور بموجب هذه الشروط. تشمل الاستخدامات المحظورة، على سبيل المثال لا الحصر:</p>
+            <ul>
+                <li>إعادة البيع التجاري لميزات الأداة أو منهجية إطار EASE دون موافقة كتابية صريحة من المطور.</li>
+                <li>كشط البيانات غير المصرح به، أو المعالجة الدفعية، أو أي محاولة لتجاوز حدود المعدل التي تفرضها الإضافة أو واجهات برمجة التطبيقات الأساسية.</li>
+                <li>استخدام مخرجات التقييم كبديل نهائي للتقييم التربوي البشري في سياقات عالية المخاطر (مثل التصنيف الرسمي، أو قرارات القبول) دون تحقيق متخصص.</li>
+            </ul>
 
             <h3>5. الملكية الفكرية وملكية البيانات</h3>
-            <p>البرنامج الأساسي والكود والمنهجية الخاصة بمساعد AMTA المعجمي هي ملكية فكرية حصرية للمطور، الدكتور وليد مندور. **تظل القواميس ومجموعات البيانات والمجموعات النصية التي ينشئها المستخدم باستخدام هذه الأداة ملكًا للمستخدم.**</p>
+            <p>البرنامج الأساسي والكود ومنهجية إطار EASE 1.0 وبنية نظام iAWE هي ملكية فكرية حصرية للمطور، الدكتور وليد مندور، والمؤلف المشارك الأستاذ الدكتور أنور مرسي. <strong>تظل مقالات الطلاب وتقارير التقييم وبيانات DBR وأي مخرجات تربوية ينشئها المستخدم باستخدام هذه الأداة ملكًا للمستخدم.</strong></p>
+            <p>يعتمد إطار EASE وبنية iAWE على دراسة تقييمية قُدمت في المؤتمر الرابع لجمعية TESOL بالكلية الحديثة، مسقط، عمان (فبراير 2026). يُلزم الاستشهاد الأكاديمي عند الإشارة إلى هذا العمل.</p>
 
             <h3>6. تعديل الشروط</h3>
-            <p>يحتفظ المطور بالحق في تعديل شروط الخدمة هذه في أي وقت. استمرار استخدام الإضافة بعد أي تعديل من هذا القبيل يشكل قبولاً للشروط الجديدة.</p>
+            <p>يحتفظ المطور بالحق في تعديل شروط الخدمة هذه في أي وقت، خاصة مع تطور إطار EASE من خلال التكرارات المستقبلية للبحث القائم على التصميم (DBR). استمرار استخدام الإضافة بعد أي تعديل من هذا القبيل يشكل قبولاً للشروط الجديدة.</p>
         </div>
     </div>
 
@@ -169,7 +188,7 @@
         function toggleLanguage() {
             const body = document.body;
             const button = document.querySelector('.lang-toggle');
-            
+
             if (body.getAttribute('lang') === 'en') {
                 body.setAttribute('lang', 'ar');
                 button.textContent = 'English';
