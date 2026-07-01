@@ -7,6 +7,12 @@
     <title>ScholarScribe: Privacy-First Local-LLM Writing Companion | Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="images/scholarscribe-logo.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="images/apple-touch-icon.png">
+    <link rel="icon" href="images/favicon-32.png">
+    <meta name="theme-color" content="#0A1C3C">
+    <meta name="apple-mobile-web-app-title" content="ScholarScribe">
     <style>
         /* ===== CSS VARIABLES & RESET ===== */
         :root {
@@ -187,6 +193,29 @@
         .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4); }
         .cta-button.secondary { background: linear-gradient(135deg, var(--scribe-warm) 0%, #6d3410 100%); }
 
+        /* ===== Release badge (v0.2.0 stable) ===== */
+        .release-badge { display: inline-block; background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(32, 178, 170, 0.3); text-transform: uppercase; }
+
+        /* ===== Platform download cards ===== */
+        .download-platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; max-width: 920px; margin: 0 auto 28px; }
+        .download-card { display: flex; flex-direction: column; align-items: center; gap: 6px; background: var(--white); border: 1px solid var(--light); border-radius: 16px; padding: 22px 16px; transition: var(--transition); text-decoration: none; color: var(--primary); box-shadow: var(--shadow); }
+        .download-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(10, 28, 60, 0.18); border-color: var(--accent-light); }
+        .download-card i { font-size: 34px; color: var(--accent); }
+        .download-card .dl-name { font-weight: 700; font-size: 16px; }
+        .download-card .dl-os { font-size: 12px; color: var(--accent); font-weight: 600; }
+        .download-card .dl-file { font-size: 11px; color: var(--gray); font-family: 'Consolas', 'Courier New', monospace; word-break: break-all; text-align: center; }
+
+        /* ===== Citation reference ===== */
+        .citation-label { font-weight: 700; color: var(--scribe-warm); font-size: 13px; margin: 18px 0 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .citation-apa { background: var(--scribe-paper); border-left: 4px solid var(--scribe-warm); border-radius: 8px; padding: 18px 22px; margin: 8px 0; font-size: 15px; line-height: 1.8; color: var(--dark); position: relative; }
+        .citation-apa em { font-style: italic; }
+        .citation-bibtex { background: #f7f3ea; border-left: 4px solid var(--accent); border-radius: 8px; padding: 18px 22px; margin: 8px 0; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; line-height: 1.6; color: var(--dark); white-space: pre; overflow-x: auto; position: relative; }
+        .citation-copy-btn { position: absolute; top: 10px; right: 10px; background: var(--primary); color: #fff; border: none; border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; transition: var(--transition); font-family: 'Segoe UI', sans-serif; }
+        .citation-copy-btn:hover { background: var(--accent); }
+        body.arabic .citation-apa { border-left: none; border-right: 4px solid var(--scribe-warm); }
+        body.arabic .citation-bibtex { border-left: none; border-right: 4px solid var(--accent); }
+        body.arabic .citation-copy-btn { right: auto; left: 10px; }
+
         .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
         .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .footer-email { color: var(--primary); text-decoration: none; font-weight: 600; transition: var(--transition); }
@@ -274,8 +303,8 @@
                     </div>
                 </div>
 
-                <div class="coming-soon-badge lang-en">Pre-release &middot; v0.1.7</div>
-                <div class="coming-soon-badge lang-ar">إصدار أولي &middot; v0.1.7</div>
+                <div class="release-badge lang-en">Latest Release &middot; v0.2.0</div>
+                <div class="release-badge lang-ar">أحدث إصدار &middot; v0.2.0</div>
 
                 <h1 class="lang-en">ScholarScribe: Write with AI, On Your Own Machine</h1>
                 <h1 class="lang-ar">سكولار سكرايب: اكتب بالذكاء الاصطناعي على جهازك الخاص</h1>
@@ -285,7 +314,9 @@
 
                 <div class="hero-badges">
                     <span class="hero-badge"><i class="fas fa-shield-alt"></i> No Telemetry</span>
-                    <span class="hero-badge"><i class="fab fa-windows"></i> Windows Desktop</span>
+                    <span class="hero-badge"><i class="fab fa-windows"></i> Windows</span>
+                    <span class="hero-badge"><i class="fab fa-apple"></i> macOS</span>
+                    <span class="hero-badge"><i class="fab fa-linux"></i> Linux</span>
                     <span class="hero-badge"><i class="fas fa-microchip"></i> Local LLMs (Ollama)</span>
                     <span class="hero-badge"><i class="fab fa-github"></i> Open Source (MIT)</span>
                 </div>
@@ -651,18 +682,70 @@
             <p class="lang-ar"><strong>المُعرّف الدائم:</strong> <a href="https://doi.org/10.5281/zenodo.20781043" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.20781043</a></p>
         </div>
 
+        <!-- Citation Reference -->
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-quote-right"></i> Cite ScholarScribe</h4>
+            <h4 class="lang-ar"><i class="fas fa-quote-right"></i> اقتبس سكولار سكرايب</h4>
+            <p class="lang-en">If you use ScholarScribe in your research, teaching, or writing, please cite it. Below are ready-to-use references in APA 7th edition and BibTeX &mdash; the latter drops straight into your <code>.bib</code> file and is fully validated by ScholarScribe's own Citation Manager.</p>
+            <p class="lang-ar">إذا استخدمت سكولار سكرايب في بحثك أو تدريسك أو كتاباتك، يرجى اقتباسه. فيما يلي مراجع جاهزة بنمط APA الإصدار السابع وBibTeX &mdash; والأخير يُدرج مباشرة في ملف <code>.bib</code> الخاص بك ويتحقق منه مدير الاستشهادات في سكولار سكرايب نفسه.</p>
+            <div class="citation-label lang-en">APA 7th edition</div>
+            <div class="citation-label lang-ar">نمط APA الإصدار السابع</div>
+            <div class="citation-apa"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>Mandour, W. (2026). <em>ScholarScribe</em> (Version 0.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.20781043</div>
+            <div class="citation-label lang-en">BibTeX</div>
+            <div class="citation-label lang-ar">BibTeX</div><div class="citation-bibtex"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>@software{Mandour_ScholarScribe_2026,
+  author       = {Mandour, Waleed},
+  title        = {{ScholarScribe}},
+  version      = {0.2.0},
+  year         = {2026},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.20781043},
+  url          = {https://github.com/waleedmandour/scholarscribe}
+}</div>
+        </div>
+
         <!-- CTA Section -->
         <section class="cta-section">
             <h2 class="cta-title lang-en">Available Now for Researchers</h2>
             <h2 class="cta-title lang-ar">متاح الآن للباحثين</h2>
-            <p class="cta-subtitle lang-en">Download ScholarScribe to bring privacy-first, local-LLM writing assistance directly to your research workflow. No telemetry, no cloud, no paid APIs &mdash; just your device, your text, your model.</p>
-            <p class="cta-subtitle lang-ar">نزّل سكولار سكرايب لجلب مساعدة كتابة بحثية تحترم الخصوصية وتعتمد النماذج المحلية مباشرة إلى سير عملك. بلا قياسات، بلا سحابة، بلا واجهات مدفوعة &mdash; جهازك، نصك، نموذجك.</p>
+            <p class="cta-subtitle lang-en">Download ScholarScribe v0.2.0 to bring privacy-first, local-LLM writing assistance directly to your research workflow. No telemetry, no cloud, no paid APIs &mdash; just your device, your text, your model.</p>
+            <p class="cta-subtitle lang-ar">نزّل سكولار سكرايب v0.2.0 لجلب مساعدة كتابة بحثية تحترم الخصوصية وتعتمد النماذج المحلية مباشرة إلى سير عملك. بلا قياسات، بلا سحابة، بلا واجهات مدفوعة &mdash; جهازك، نصك، نموذجك.</p>
+
+            <div class="download-platforms">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v0.2.0/ScholarScribe_0.2.0_x64_en-US.msi" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-windows"></i>
+                    <span class="dl-name lang-en">Windows</span>
+                    <span class="dl-name lang-ar">ويندوز</span>
+                    <span class="dl-os">x64 &middot; MSI installer</span>
+                    <span class="dl-file">ScholarScribe_0.2.0_x64_en-US.msi</span>
+                </a>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v0.2.0/ScholarScribe_0.2.0_aarch64.dmg" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-apple"></i>
+                    <span class="dl-name lang-en">macOS</span>
+                    <span class="dl-name lang-ar">ماك</span>
+                    <span class="dl-os">Apple Silicon &middot; DMG</span>
+                    <span class="dl-file">ScholarScribe_0.2.0_aarch64.dmg</span>
+                </a>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v0.2.0/ScholarScribe_0.2.0_amd64.deb" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-ubuntu"></i>
+                    <span class="dl-name lang-en">Linux (Debian/Ubuntu)</span>
+                    <span class="dl-name lang-ar">لينكس (ديبيان/أوبونتو)</span>
+                    <span class="dl-os">amd64 &middot; DEB package</span>
+                    <span class="dl-file">ScholarScribe_0.2.0_amd64.deb</span>
+                </a>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v0.2.0/ScholarScribe-0.2.0-1.x86_64.rpm" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-redhat"></i>
+                    <span class="dl-name lang-en">Linux (Fedora/RHEL)</span>
+                    <span class="dl-name lang-ar">لينكس (فيدورا/RHEL)</span>
+                    <span class="dl-os">x86_64 &middot; RPM package</span>
+                    <span class="dl-file">ScholarScribe-0.2.0-1.x86_64.rpm</span>
+                </a>
+            </div>
 
             <div class="cta-buttons">
-                <a href="https://github.com/waleedmandour/scholarscribe/releases" target="_blank" rel="noopener" class="cta-button">
-                    <i class="fas fa-cloud-download-alt"></i>
-                    <span class="lang-en">Download Installer</span>
-                    <span class="lang-ar">نزّل المثبّت</span>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v0.2.0/ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
+                    <i class="fas fa-book-open"></i>
+                    <span class="lang-en">User Guide (PDF)</span>
+                    <span class="lang-ar">دليل المستخدم (PDF)</span>
                 </a>
                 <a href="https://github.com/waleedmandour/scholarscribe" target="_blank" rel="noopener" class="cta-button secondary">
                     <i class="fab fa-github"></i>
@@ -670,6 +753,9 @@
                     <span class="lang-ar">الكود المصدري على GitHub</span>
                 </a>
             </div>
+
+            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Requires <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> installed locally. Version 0.2.0 &middot; MIT License &middot; See the <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v0.2.0" target="_blank" rel="noopener">release notes</a>.</p>
+            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">يتطلب تثبيت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> محلياً. الإصدار 0.2.0 &middot; رخصة MIT &middot; اطّلع على <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v0.2.0" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
         </section>
 
         <!-- Footer -->
@@ -727,6 +813,21 @@
 
         langEnBtn.addEventListener('click', () => setLanguage('en'));
         langArBtn.addEventListener('click', () => setLanguage('ar'));
+
+        // Copy citation to clipboard
+        function copyCitation(btn) {
+            const box = btn.parentElement.cloneNode(true);
+            box.querySelectorAll('button').forEach(b => b.remove());
+            const text = box.textContent.replace(/^\s+|\s+$/g, '');
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = orig; }, 1500);
+            }).catch(() => {
+                btn.textContent = 'Press Ctrl+C';
+                setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+            });
+        }
     </script>
 </body>
 </html>
