@@ -43,8 +43,29 @@
         }
 
         body.arabic { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; direction: rtl; }
-        body.arabic .container, body.arabic main, body.arabic section, body.arabic div, body.arabic .hero-content, body.arabic .features-grid, body.arabic .workflow-steps, body.arabic .ui-showcase-grid { direction: rtl; text-align: right; }
+/* 1. Set general layout to RTL but keep text alignment centered for the main containers */
+body.arabic .container, 
+body.arabic main, 
+body.arabic section, 
+body.arabic .hero-content { 
+    direction: rtl; 
+    text-align: center; 
+}
 
+/* 2. Ensure the navigation list specifically stays centered */
+body.arabic nav ul {
+    justify-content: center; /* This centers the flex items */
+    text-align: center;
+}
+
+/* 3. Keep specific grid content right-aligned for better readability inside cards */
+body.arabic .features-grid, 
+body.arabic .workflow-steps, 
+body.arabic .ui-showcase-grid, 
+body.arabic .feature-card,
+body.arabic .ethics-card { 
+    text-align: right; 
+}
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         /* ===== LANGUAGE TOGGLE ===== */
