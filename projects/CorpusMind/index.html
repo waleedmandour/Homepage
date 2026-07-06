@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CorpusMind: A local-first, AI-native research environment for corpus linguistics and multimodal discourse analysis. Developed at Sultan Qaboos University. Released under AGPL-3.0-only.">
+    <title>CorpusMind: Local-First Research Environment for Corpus Linguistics and Multimodal Discourse Analysis | Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="images/corpusmind-logo.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/apple-touch-icon.png">
+    <link rel="icon" href="images/favicon-32.png">
+    <meta name="theme-color" content="#0A1C3C">
+    <meta name="apple-mobile-web-app-title" content="CorpusMind">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #0b6e4f;
+            --accent: #1A5F7A;
+            --accent-light: #0b6e4f;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --cm-warm: #8B4513;
+            --cm-paper: #FFF8E7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.arabic { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; direction: rtl; }
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic .hero-content {
+            direction: rtl;
+            text-align: center;
+        }
+        body.arabic nav ul { justify-content: center; text-align: center; }
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .ui-showcase-grid,
+        body.arabic .feature-card,
+        body.arabic .ethics-card {
+            text-align: right;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; background: rgba(10, 28, 60, 0.9); border-radius: 30px; padding: 8px 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .language-toggle button { background: transparent; border: none; color: white; font-weight: 600; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: var(--transition); }
+        .language-toggle button.active { background: var(--secondary); }
+
+        /* ===== HEADER STYLES ===== */
+        header {
+            background: linear-gradient(135deg, rgba(10, 28, 60, 0.92) 0%, rgba(11, 110, 79, 0.7) 50%, rgba(26, 95, 122, 0.85) 100%), url('https://images.unsplash.com/photo-1532153955177-f59af40d6472?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover; background-position: center; color: var(--white); padding: 60px 0 40px; text-align: center; position: relative; overflow: hidden;
+        }
+        .header-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 50px; margin-bottom: 40px; }
+        .header-text { text-align: left; max-width: 600px; }
+        body.arabic .header-text { text-align: right; }
+        h1 { font-size: 2.8em; margin-bottom: 10px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .tagline { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
+        .header-photo-container { position: relative; }
+        .header-photo { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; border: 4px solid rgba(255, 255, 255, 0.8); box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); transition: var(--transition); background: var(--white); padding: 12px; }
+        .header-photo:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(0, 0, 0, 0.4); }
+
+        nav { position: relative; z-index: 2; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; background: rgba(10, 28, 60, 0.7); padding: 15px 30px; border-radius: 50px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 1200px; margin: 0 auto; }
+        nav a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 1.1em; transition: var(--transition); padding: 5px 0; position: relative; }
+        nav a:after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--secondary); transition: var(--transition); }
+        body.arabic nav a:after { left: auto; right: 0; }
+        nav a:hover:after { width: 100%; }
+        nav a.active { color: var(--secondary); }
+        nav a.active:after { width: 100%; }
+
+        /* ===== APP LOGO SECTION (green frame removed — neutral border only) ===== */
+        .app-logo-container { position: relative; width: 220px; height: 220px; margin: 0 auto 40px; display: flex; align-items: center; justify-content: center; animation: float 6s ease-in-out infinite; }
+        .app-logo-frame { width: 100%; height: 100%; position: relative; border-radius: 30px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%); backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1) inset; padding: 15px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .app-logo-frame:hover { transform: scale(1.05) rotate(3deg); border-color: rgba(255, 255, 255, 0.6); box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset; }
+        .app-logo-img { width: 100%; height: 100%; object-fit: contain; border-radius: 20px; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); transition: filter 0.3s ease; background: var(--white); }
+        .app-logo-frame:hover .app-logo-img { filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4)); }
+        .app-logo-container::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 40px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%); animation: rotate 20s linear infinite; z-index: -1; }
+        .app-logo-container::after { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); animation: rotate 25s linear infinite reverse; z-index: -2; }
+        .app-logo-frame::after { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: 32px; background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%); background-size: 300% 300%; animation: shine 8s ease-in-out infinite; pointer-events: none; z-index: 1; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(0.5deg); } }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shine { 0% { background-position: -100% -100%; } 100% { background-position: 200% 200%; } }
+
+        /* ===== HERO SECTION ===== */
+        .hero { position: relative; padding: 40px 0; text-align: center; margin-bottom: 40px; }
+        .hero-content { position: relative; z-index: 1; text-align: center; color: var(--dark); max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.2; color: var(--primary); }
+        .hero-subtitle { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 24px; }
+        .hero-description { font-size: 18px; color: var(--gray); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+        .release-badge { display: inline-block; background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(11, 110, 79, 0.3); text-transform: uppercase; }
+        .hero-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(10, 28, 60, 0.08); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(10, 28, 60, 0.15); }
+        .hero-badge i { color: var(--accent); }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        main { display: block !important; width: 100% !important; margin: 40px auto; padding: 0 25px; }
+
+        /* ===== NOTICE BLOCKS ===== */
+        .data-notice { background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%); border-left: 4px solid #f59f00; padding: 24px; margin: 40px auto; border-radius: 12px; max-width: 900px; box-shadow: var(--shadow); animation: fadeIn 0.6s ease-out; }
+        body.arabic .data-notice { border-left: none; border-right: 4px solid #f59f00; }
+        .data-notice h4 { color: #5c4400; margin-bottom: 12px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .data-notice h4 i { font-size: 20px; }
+        .data-notice p { color: #8a6d00; margin-bottom: 12px; line-height: 1.6; }
+        .data-notice a { color: var(--primary); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: var(--transition); }
+        .data-notice a:hover { border-bottom-color: var(--primary); }
+
+        .ethics-notice { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-left: 4px solid var(--primary); padding: 24px; margin: 40px auto; border-radius: 12px; max-width: 900px; box-shadow: var(--shadow); }
+        body.arabic .ethics-notice { border-left: none; border-right: 4px solid var(--primary); }
+        .ethics-notice h4 { color: var(--primary); margin-bottom: 12px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .ethics-notice p { color: #263238; margin-bottom: 10px; line-height: 1.6; }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title { text-align: center; font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 48px; position: relative; }
+        .section-title::after { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--secondary); border-radius: 2px; }
+        body.arabic .section-title::after { left: auto; right: 50%; transform: translateX(50%); }
+
+        /* ===== WORKFLOW, FEATURES & UI GRID LAYOUTS ===== */
+        .workflow-container { position: relative; margin: 64px 0; }
+        .workflow-steps, .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
+        .features-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin: 64px 0; }
+
+        .ui-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 64px auto; max-width: 1000px; }
+        .ui-screenshot-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--light); transition: var(--transition); }
+        .ui-screenshot-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .ui-screenshot-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--light); background: #f8f9fa; }
+        .ui-screenshot-caption { padding: 16px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; }
+
+        .workflow-step, .feature-card { background: var(--white); padding: 32px 24px; border-radius: 12px; text-align: center; box-shadow: var(--shadow); transition: var(--transition); position: relative; overflow: hidden; }
+
+        .workflow-step { border-top: 4px solid var(--secondary); }
+        .workflow-step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--accent-light)); opacity: 0; transition: var(--transition); }
+        .workflow-step:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .workflow-step:hover::before { opacity: 1; }
+
+        .feature-card { text-align: left; border: 1px solid var(--light); }
+        body.arabic .feature-card { text-align: right; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-color: var(--secondary); }
+
+        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; font-weight: 700; margin-bottom: 16px; font-size: 18px; }
+        .workflow-step h4, .feature-card h3 { color: var(--primary); margin-bottom: 12px; font-size: 20px; font-weight: 700; }
+        .workflow-step p, .feature-card p { color: var(--gray); font-size: 15px; line-height: 1.6; }
+        .feature-icon { font-size: 40px; margin-bottom: 24px; display: inline-block; padding: 16px; background: rgba(10, 28, 60, 0.1); border-radius: 12px; color: var(--primary); }
+
+        /* ===== PRIVACY TABLE ===== */
+        .privacy-table-wrap { overflow-x: auto; max-width: 900px; margin: 32px auto; border-radius: 12px; box-shadow: var(--shadow); }
+        .privacy-table { width: 100%; border-collapse: collapse; background: var(--white); font-size: 15px; }
+        .privacy-table th { background: var(--primary); color: var(--white); padding: 14px 18px; text-align: left; font-weight: 700; }
+        body.arabic .privacy-table th { text-align: right; }
+        .privacy-table td { padding: 12px 18px; border-bottom: 1px solid var(--light); color: var(--dark); }
+        .privacy-table tr:last-child td { border-bottom: none; }
+        .privacy-table tr:nth-child(even) { background: #fafbfc; }
+        .privacy-table strong { color: var(--primary); }
+
+        /* ===== ETHICS GRID ===== */
+        .ethics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1000px; margin: 32px auto; }
+        .ethics-card { background: var(--white); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border-top: 4px solid; }
+        .ethics-card.does { border-top-color: #2e7d32; }
+        .ethics-card.does-not { border-top-color: #c62828; }
+        .ethics-card h4 { color: var(--primary); margin-bottom: 14px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .ethics-card.does h4 i { color: #2e7d32; }
+        .ethics-card.does-not h4 i { color: #c62828; }
+        .ethics-card ul { list-style: none; padding: 0; }
+        .ethics-card li { padding: 8px 0 8px 28px; position: relative; color: var(--gray); font-size: 14px; line-height: 1.6; }
+        body.arabic .ethics-card li { padding: 8px 28px 8px 0; }
+        .ethics-card.does li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: #2e7d32; position: absolute; left: 0; top: 8px; }
+        body.arabic .ethics-card.does li::before { left: auto; right: 0; }
+        .ethics-card.does-not li::before { content: '\f00d'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: #c62828; position: absolute; left: 0; top: 8px; }
+        body.arabic .ethics-card.does-not li::before { left: auto; right: 0; }
+
+        /* ===== FRAMEWORK LIST ===== */
+        .model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; max-width: 1000px; margin: 32px auto; }
+        .model-card { background: var(--white); padding: 18px; border-radius: 10px; box-shadow: var(--shadow); border-left: 4px solid var(--accent); transition: var(--transition); }
+        body.arabic .model-card { border-left: none; border-right: 4px solid var(--accent); }
+        .model-card:hover { transform: translateY(-4px); }
+        .model-card h5 { color: var(--primary); font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .model-card p { color: var(--gray); font-size: 13px; line-height: 1.5; margin: 0; }
+
+        /* ===== CTA & FOOTER ===== */
+        .cta-section { text-align: center; padding: 64px 0; background: linear-gradient(135deg, var(--light) 0%, rgba(11, 110, 79, 0.1) 100%); border-radius: 12px; margin: 64px 0; box-shadow: var(--shadow); }
+        .cta-title { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
+        .cta-subtitle { color: var(--gray); font-size: 18px; max-width: 600px; margin: 0 auto 32px; line-height: 1.7; }
+        .cta-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; }
+        .cta-button { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 18px; transition: var(--transition); box-shadow: 0 4px 15px rgba(10, 28, 60, 0.3); border: none; cursor: pointer; }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4); }
+        .cta-button.secondary { background: linear-gradient(135deg, var(--cm-warm) 0%, #6d3410 100%); }
+
+        /* ===== Platform download cards ===== */
+        .download-platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; max-width: 920px; margin: 0 auto 28px; }
+        .download-card { display: flex; flex-direction: column; align-items: center; gap: 6px; background: var(--white); border: 1px solid var(--light); border-radius: 16px; padding: 22px 16px; transition: var(--transition); text-decoration: none; color: var(--primary); box-shadow: var(--shadow); }
+        .download-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(10, 28, 60, 0.18); border-color: var(--accent-light); }
+        .download-card i { font-size: 34px; color: var(--accent); }
+        .download-card .dl-name { font-weight: 700; font-size: 16px; }
+        .download-card .dl-os { font-size: 12px; color: var(--accent); font-weight: 600; }
+        .download-card .dl-file { font-size: 11px; color: var(--gray); font-family: 'Consolas', 'Courier New', monospace; word-break: break-all; text-align: center; }
+
+        /* ===== Citation reference ===== */
+        .citation-label { font-weight: 700; color: var(--cm-warm); font-size: 13px; margin: 18px 0 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .citation-apa { background: var(--cm-paper); border-left: 4px solid var(--cm-warm); border-radius: 8px; padding: 18px 22px; margin: 8px 0; font-size: 15px; line-height: 1.8; color: var(--dark); position: relative; }
+        .citation-apa em { font-style: italic; }
+        .citation-bibtex { background: #f7f3ea; border-left: 4px solid var(--accent); border-radius: 8px; padding: 18px 22px; margin: 8px 0; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; line-height: 1.6; color: var(--dark); white-space: pre; overflow-x: auto; position: relative; }
+        .citation-copy-btn { position: absolute; top: 10px; right: 10px; background: var(--primary); color: #fff; border: none; border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; transition: var(--transition); font-family: 'Segoe UI', sans-serif; }
+        .citation-copy-btn:hover { background: var(--accent); }
+        body.arabic .citation-apa { border-left: none; border-right: 4px solid var(--cm-warm); }
+        body.arabic .citation-bibtex { border-left: none; border-right: 4px solid var(--accent); }
+        body.arabic .citation-copy-btn { right: auto; left: 10px; }
+
+        .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
+        .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .footer-email { color: var(--primary); text-decoration: none; font-weight: 600; transition: var(--transition); }
+        .footer-email:hover { color: var(--secondary); }
+        .footer a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+        .footer a:hover { color: var(--secondary); text-decoration: underline; }
+        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .footer-links a { padding: 0 10px; position: relative; }
+        .footer-links a:not(:last-child)::after { content: '|'; position: absolute; right: -5px; color: var(--gray); }
+        body.arabic .footer-links a:not(:last-child)::after { right: auto; left: -5px; }
+
+        /* ===== LANGUAGE LOGIC ===== */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        .data-notice h4.lang-en, .ethics-notice h4.lang-en { display: flex; }
+        .data-notice h4.lang-ar, .ethics-notice h4.lang-ar { display: none; }
+        .footer-content > div > .lang-en { display: inline; }
+        .footer-content > div > .lang-ar { display: none; }
+
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+        body.arabic .data-notice h4.lang-en, body.arabic .ethics-notice h4.lang-en { display: none; }
+        body.arabic .data-notice h4.lang-ar, body.arabic .ethics-notice h4.lang-ar { display: flex; }
+        body.arabic .footer-content > div > .lang-en { display: none; }
+        body.arabic .footer-content > div > .lang-ar { display: inline; }
+        body.arabic .hero h1.lang-ar, body.arabic .hero .hero-subtitle.lang-ar { text-align: center; }
+        body.arabic .footer, body.arabic .footer-content, body.arabic .footer-content > div { text-align: center; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) { .header-content { flex-direction: column; text-align: center; } .header-text, body.arabic .header-text { text-align: center; } }
+        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid, .workflow-steps, .ui-showcase-grid, .ethics-grid, .model-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; } .app-logo-container::before { width: 160px; height: 160px; } .app-logo-container::after { width: 180px; height: 180px; } .app-logo-frame { border-radius: 25px; padding: 12px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } }
+        @media (max-width: 480px) { nav ul { flex-direction: column; gap: 20px; padding: 20px; } h1 { font-size: 1.8em; } .header-photo { width: 130px; height: 130px; } .hero h1 { font-size: 28px; } .hero-description { font-size: 16px; } .feature-card { padding: 24px; } .container { padding: 0 16px; } .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; } .app-logo-container::before { width: 140px; height: 140px; } .app-logo-container::after { width: 160px; height: 160px; } .app-logo-frame { border-radius: 20px; padding: 10px; } .privacy-table th, .privacy-table td { padding: 10px 12px; font-size: 13px; } }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">CorpusMind</h1>
+                <h1 class="lang-ar">كوربَس مايند</h1>
+                <p class="tagline lang-en">A Local-First, AI-Native Research Environment for Corpus Linguistics and Multimodal Discourse Analysis</p>
+                <p class="tagline lang-ar">بيئة بحثية محلية أولاً ومدعومة بالذكاء الاصطناعي لتحليل اللغة والخطاب متعدد الوسائط</p>
+            </div>
+            <div class="header-photo-container">
+                <img src="images/corpusmind-logo.png" alt="CorpusMind Application Logo" class="header-photo" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%220%200%20180%20180%22%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20fill%3D%22%230A1C3C%22%20rx%3D%2220%22/%3E%3Ctext%20x%3D%2290%22%20y%3D%22110%22%20font-family%3D%22Segoe%20UI%2C%20sans-serif%22%20font-size%3D%2270%22%20font-weight%3D%22bold%22%20fill%3D%22%230b6e4f%22%20text-anchor%3D%22middle%22%3ECM%3C/text%3E%3C/svg%3E';">
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <img src="images/corpusmind-logo.png" alt="CorpusMind Application Logo" class="app-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%230A1C3C%22%20rx%3D%2224%22/%3E%3Ctext%20x%3D%22100%22%20y%3D%22120%22%20font-family%3D%22Segoe%20UI%2C%20sans-serif%22%20font-size%3D%2280%22%20font-weight%3D%22bold%22%20fill%3D%22%230b6e4f%22%20text-anchor%3D%22middle%22%3ECM%3C/text%3E%3C/svg%3E';">
+                    </div>
+                </div>
+
+                <div class="release-badge lang-en">Initial Release &middot; v0.1.0</div>
+                <div class="release-badge lang-ar">الإصدار الأول &middot; v0.1.0</div>
+
+                <h1 class="lang-en">CorpusMind: From Raw Texts and Images to Publication-Ready Analysis</h1>
+                <h1 class="lang-ar">كوربَس مايند: من النصوص والصور الخام إلى تحليل جاهز للنشر</h1>
+
+                <div class="hero-subtitle lang-en">A local-first, AI-native research environment that enables linguists to conduct reproducible corpus and multimodal discourse analysis without writing code, without transmitting unpublished data to third-party servers, and without compromising methodological transparency.</div>
+                <div class="hero-subtitle lang-ar">بيئة بحثية محلية أولاً ومدعومة بالذكاء الاصطناعي تُمكّن اللغويين من إجراء تحليلات لغوية وخطابية متعددة الوسائط قابلة للتكرار دون كتابة سطر برمجي واحد، ودون إرسال البيانات غير المنشورة إلى خوادم خارجية، ودون التضحية بالشفافية المنهجية التي يفرضها التحكيم العلمي.</div>
+
+                <div class="hero-badges">
+                    <span class="hero-badge"><i class="fas fa-shield-alt"></i> Local-First</span>
+                    <span class="hero-badge"><i class="fab fa-windows"></i> Windows</span>
+                    <span class="hero-badge"><i class="fab fa-apple"></i> macOS</span>
+                    <span class="hero-badge"><i class="fab fa-linux"></i> Linux</span>
+                    <span class="hero-badge"><i class="fas fa-microchip"></i> Ollama / LM Studio</span>
+                    <span class="hero-badge"><i class="fab fa-github"></i> AGPL-3.0-only</span>
+                </div>
+
+                <div>
+                    <p class="hero-description lang-en">
+                        CorpusMind is an integrated research environment that unifies corpus linguistics, multimodal discourse analysis, and AI-assisted interpretation within a single desktop application. The platform comprises three coordinated components: a FastAPI engine (Python 3.12) that performs natural language processing, statistical analysis, and computer vision inference; a Tauri 2 shell (Rust) that supervises the engine lifecycle and enforces a hardened security boundary between the webview and the host system; and an installable Progressive Web App (React 18, Vite, TypeScript) that provides the analyst interface. The system supports English and Arabic text analysis through spaCy and CAMeL Tools, offers twelve discourse-analysis frameworks grounded in the peer-reviewed literature, and integrates a pluggable AI assistant capable of connecting to local model providers (Ollama, LM Studio) or, at the user's explicit election, remote providers (OpenAI, Anthropic). All analytical operations produce YAML provenance records, ensuring that every result is traceable, reproducible, and amenable to peer-review scrutiny.
+                    </p>
+                    <p class="hero-description lang-ar">
+                        كوربَس مايند بيئة بحثية متكاملة توحّد تحليل اللغة والخطاب متعدد الوسائط والتفسير المدعوم بالذكاء الاصطناعي ضمن تطبيق مكتبي واحد. تتكوّن المنصة من ثلاثة مكونات متناسقة: محرك FastAPI (Python 3.12) ينفّذ معالجة اللغة الطبيعية والتحليل الإحصائي والاستدلال البصري؛ وقشرة Tauri 2 (Rust) تشرف على دورة حياة المحرك وتفرض حدوداً أمنية صارمة بين واجهة الويب والنظام المضيف؛ وتطبيق ويب تقدمي قابل للتثبيت (React 18، Vite، TypeScript) يوفّر واجهة المحلل. يدعم النظام تحليل النصوص الإنجليزية والعربية عبر spaCy وCAMeL Tools، ويقدّم اثني عشر إطاراً لتحليل الخطاب مستندة إلى الأدبيات المحكّمة، ويدمج مساعداً ذكياً اصطناعياً قابلاً للتوصيل يدعم مزوّدي النماذج المحليين (Ollama، LM Studio) أو، باختيار صريح من المستخدم، المزوّدين البعيدين (OpenAI، Anthropic). تُنتج جميع العمليات التحليلية سجلات إثبات بصيغة YAML، مما يضمن إمكانية تتبع كل نتيجة وإعادة إنتاجها وخضوعها للتدقيق العلمي.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ethics Notice -->
+        <div class="ethics-notice">
+            <h4 class="lang-en"><i class="fas fa-balance-scale"></i> Research Integrity Statement</h4>
+            <h4 class="lang-ar"><i class="fas fa-balance-scale"></i> إقرار نزاهة البحث</h4>
+            <p class="lang-en">CorpusMind is designed for researchers who require <strong>methodologically transparent</strong> computational analysis of linguistic and multimodal data. The platform enforces a strict provenance contract: every analytical output is accompanied by a YAML record specifying the corpus, the pipeline configuration, the statistical measure, the software version, and the timestamp. The AI assistant operates under a citation-enforced contract — it must either cite the corpus evidence supporting its claim or explicitly flag the claim as unsupported. The system <strong>does not</strong> fabricate evidence, <strong>does not</strong> permit the suppression of analytical steps, and <strong>does not</strong> transmit user data to any remote server unless the user explicitly configures a remote model provider.</p>
+            <p class="lang-ar">صُمِّم كوربَس مايند للباحثين الذين يتطلبون <strong>شفافية منهجية</strong> في التحليل الحسابي للبيانات اللغوية ومتعددة الوسائط. تفرض المنصة عقد إثبات صارم: كل مُخرج تحليلي يصحبه سجل YAML يحدّد المجموعة اللغوية وإعداد خط المعالجة والمقياس الإحصائي وإصدار البرنامج والطابع الزمني. يعمل المساعد الذكي بموجب عقد إلزامي بالاستشهاد — عليه إما الاستشهاد بأدلة المجموعة اللغوية الداعمة لادعائه أو الإشارة الصريحة إلى أن الادعاء غير مدعوم. لا يختلق النظام <strong>أدلة</strong>، ولا يسمح <strong>بإخفاء الخطوات التحليلية</strong>، ولا ينقل <strong>بيانات المستخدم</strong> إلى أي خادم بعيد ما لم يُعدّ المستخدم صراحةً مزوّداً بعيداً للنماذج.</p>
+        </div>
+
+        <!-- Theoretical Foundations: Three Pillars -->
+        <section>
+            <h2 class="section-title lang-en">Design Pillars</h2>
+            <h2 class="section-title lang-ar">ركائز التصميم</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <h3 class="lang-en">Local-First Architecture</h3>
+                    <h3 class="lang-ar">معمارية محلية أولاً</h3>
+                    <p class="lang-en">All computational operations — natural language processing, statistical analysis, vision inference, and AI-assisted interpretation — execute on the researcher's own hardware. The default configuration permits no outbound network traffic. The Content Security Policy in <code>tauri.conf.json</code> restricts the webview to <code>127.0.0.1:8765</code> (the local engine), <code>127.0.0.1:11434</code> (Ollama), and <code>127.0.0.1:1234</code> (LM Studio). A remote model provider (OpenAI, Anthropic) may be configured only through an explicit opt-in action by the user, and the system discloses the data-transmission implications of that choice before the configuration is saved.</p>
+                    <p class="lang-ar">جميع العمليات الحسابية — معالجة اللغة الطبيعية والتحليل الإحصائي والاستدلال البصري والتفسير المدعوم بالذكاء الاصطناعي — تُنفَّذ على عتاد الباحث نفسه. الإعداد الافتراضي لا يسمح بأي اتصال شبكي خارجي. تقيّد سياسة أمان المحتوى في <code>tauri.conf.json</code> واجهة الويب بـ <code>127.0.0.1:8765</code> (المحرك المحلي)، و<code>127.0.0.1:11434</code> (Ollama)، و<code>127.0.0.1:1234</code> (LM Studio). يمكن إعداد مزوّد نماذج بعيد (OpenAI، Anthropic) فقط من خلال إجراء اشتراك صريح من المستخدم، ويكشف النظام عن تبعات نقل البيانات لهذا الخيار قبل حفظ الإعداد.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                    <h3 class="lang-en">Methodological Transparency</h3>
+                    <h3 class="lang-ar">الشفافية المنهجية</h3>
+                    <p class="lang-en">Every analytical operation emits a YAML provenance record specifying the corpus identifier, the document selection criteria, the pipeline recipe (tokenizer, tagger, parser, NER model), the statistical measure with its parameters (window size, significance threshold, smoothing), the software version, and the timestamp. These records are exportable alongside the analytical results and are designed to satisfy the reproducibility requirements of peer-reviewed venues in linguistics, discourse analysis, and computational social science. The methodology reference manual documents the formal definition of every implemented measure, with citations to the primary literature.</p>
+                    <p class="lang-ar">كل عملية تحليلية تُصدر سجل إثبات بصيغة YAML يحدّد معرّف المجموعة اللغوية ومعايير اختيار الوثائق ووصفة خط المعالجة (المُرمِّز، والوسم، والمحلل، ونموذج التعرف على الكيانات) والمقياس الإحصائي مع معاملاته (حجم النافذة، عتبة الدلالة، التنعيم) وإصدار البرنامج والطابع الزمني. هذه السجلات قابلة للتصدير مع النتائج التحليلية، وهي مصممة لتلبية متطلبات إعادة الإنتاج في المجلات المحكّمة في اللسانيات وتحليل الخطاب والعلوم الاجتماعية الحسابية. يوثّق دليل المنهجية التعريف الرسمي لكل مقياس مُنفَّذ، مع الاستشهاد بالأدبيات الأولية.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3 class="lang-en">Framework-Grounded Analysis</h3>
+                    <h3 class="lang-ar">تحليل قائم على الأطر النظرية</h3>
+                    <p class="lang-en">CorpusMind operationalizes twelve established frameworks from the discourse-analysis and multimodal-analysis literature: Halliday's Systemic Functional Linguistics; Kress and van Leeuwen's Visual Grammar; Barthesian semiotics; Peircean semiotics; Fairclough's Critical Discourse Analysis; Wodak's Discourse-Historical Approach; van Dijk's Socio-Cognitive Approach; Machin and Mayr's Multimodal Critical Discourse Analysis; Martin and White's Appraisal Theory; Lakoff and Johnson's Conceptual Metaphor Theory; Toulmin's argumentation model; and Aristotle's rhetorical framework. Each framework is implemented as a structured annotation template with a YAML schema, ensuring that the analyst's interpretive decisions are recorded in a machine-readable form amenable to inter-coder reliability testing.</p>
+                    <p class="lang-ar">يُفعّل كوربَس مايند اثني عشر إطاراً راسخاً من أدبيات تحليل الخطاب والتحليل متعدد الوسائط: اللسانيات الوظيفية النظامية لهاليداي؛ وقواعد الصورة المرئية لكريس وفان ليوفان؛ وسيميائية بارت؛ وسيميائية بيرس؛ والتحليل النقدي للخطاب لفيركلو؛ والمنهج التاريخي للخطاب لفوداك؛ والمنهج الاجتماعي المعرفي لفان دايك؛ والتحليل النقدي متعدد الوسائط لماتشين وماير؛ ونظرية التقييم لمارتن ووايت؛ ونظرية الاستعارة المفاهيمية للاكوف وجونسون؛ ونموذج تولمين للحجاج؛ والإطار البلاغي لأرسطو. كل إطار مُنفَّذ كقالب شرح مهيكل بمخطط YAML، مما يضمن تسجيل قرارات المحلل التفسيرية بصيغة قابلة للقراءة آلياً وقابلة لاختبار موثوقية المُرمِّزين.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Showcase -->
+        <section>
+            <h2 class="section-title lang-en">Core Capabilities</h2>
+            <h2 class="section-title lang-ar">القدرات الأساسية</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-search"></i></div>
+                    <h3 class="lang-en">Concordancer with Stable Line Identifiers</h3>
+                    <h3 class="lang-ar">الكشف السياقي بمعرّفات أسطر ثابتة</h3>
+                    <p class="lang-en">Key-Word-In-Context (KWIC) search with stable line identifiers that the AI assistant cites when grounding its claims. Supports lemma, word, and POS levels; wildcard queries; regex patterns; and filterable context windows. Every concordance line is addressable by a permanent identifier, enabling the analyst and the AI assistant to refer to the same evidence unambiguously across the research lifecycle.</p>
+                    <p class="lang-ar">بحث الكلمة السياقية (KWIC) بمعرّفات أسطر ثابتة يستشهد بها المساعد الذكي عند تأسيس ادعاءاته. يدعم مستويات اللفظ والكلمة والفئة النحوية؛ والاستعلامات بالبدل؛ وأنماط التعبيرات النمطية؛ والنوافذ السياقية القابلة للتصفية. كل سطر سياقي قابل للإشارة بمعرّف دائم، مما يُمكّن المحلل والمساعد الذكي من الإشارة إلى الدليل نفسه دون لبس عبر دورة حياة البحث.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="lang-en">Collocation and Keyness Statistics</h3>
+                    <h3 class="lang-ar">إحصاءات التضايق والتمييز</h3>
+                    <p class="lang-en">Implements all seven collocation measures documented in the methodology literature: Mutual Information, T-score, Log-Likelihood, Dice, Log-Dice, Chi-Square, and ΔP. Keyness analysis supports Log-Likelihood Ratio and Burrows's Zeta. Every measure is parameterized (window size, frequency threshold, reference corpus) and emits a provenance record. The implementation has been validated against the published formulas and tested with 20 unit tests covering edge cases.</p>
+                    <p class="lang-ar">ينفّذ جميع مقاييس التضايق السبعة الموثقة في أدبيات المنهجية: المعلومات المتبادلة، وT-score، والاحتمالية اللوغاريتمية، وDice، وLog-Dice، ومربع كاي، وΔP. يدعم تحليل التمييز نسبة الاحتمالية اللوغاريتمية وZeta لباروز. كل مقياس مُعامل (حجم النافذة، عتبة التردد، المجموعة المرجعية) ويُصدر سجل إثبات. تم التحقق من التنفيذ مقابل الصيغ المنشورة واختباره بـ 20 اختبار وحدة يغطي الحالات الحرجة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3 class="lang-en">English and Arabic NLP Pipelines</h3>
+                    <h3 class="lang-ar">خطوط معالجة اللغة الإنجليزية والعربية</h3>
+                    <p class="lang-en">The English pipeline uses spaCy (<code>en_core_web_sm</code>) for tokenization, lemmatization, POS tagging, dependency parsing, and named-entity recognition. The Arabic pipeline integrates CAMeL Tools for morphology, dialect identification, named-entity recognition, and sentiment analysis; SinaTools for tokenization and lemmatization; and Farasa for segmenting Arabic text. Bilingual alignment is supported for parallel-corpus analysis. The system documents which pipeline was applied to which document, ensuring that English and Arabic results are not confounded in cross-lingual comparisons.</p>
+                    <p class="lang-ar">يستخدم خط المعالجة الإنجليزي spaCy (<code>en_core_web_sm</code>) للترميز والتأصيل الصرفي والوسم النحوي والتحليل التبعي والتعرف على الكيانات المسماة. يدمج خط المعالجة العربي CAMeL Tools للصرف وتحديد اللهجة والتعرف على الكيانات وتحليل المشاعر؛ وSinaTools للترميز والتأصيل؛ وFarasa لتجزئة النص العربي. يُدعم المحاذاة ثنائية اللغة لتحليل المجموعات المتوازية. يوثّق النظام أي خط طُبّق على أي وثيقة، مما يضمن عدم خلط النتائج الإنجليزية والعربية في المقارنات بين اللغات.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-image"></i></div>
+                    <h3 class="lang-en">Multimodal Vision Pipeline</h3>
+                    <h3 class="lang-ar">خط المعالجة البصرية متعدد الوسائط</h3>
+                    <p class="lang-en">Computer-vision analysis of still images using OpenCV and Pillow: object detection, facial analysis (age, gender, emotion estimates with confidence intervals), OCR via Tesseract (with Arabic language pack support), color palette extraction, composition analysis (rule of thirds, symmetry, salience), and metadata extraction. Visual-Grammar annotation operationalizes Kress and van Leeuwen's representational, interactive, and compositional metafunctions. Multimodal alignment links visual elements to co-occurring textual segments for integrated discourse analysis.</p>
+                    <p class="lang-ar">تحليل رؤية حاسوبية للصور الثابتة باستخدام OpenCV وPillow: كشف الكائنات، وتحليل الوجوه (تقديرات العمر والجنس والعاطفة بفترات ثقة)، والتعرف الضوئي على الحروف عبر Tesseract (مع دعم حزمة اللغة العربية)، واستخراج لوحة الألوان، وتحليل التكوين (قاعدة الأثلاث، التناظر، البروز)، واستخراج البيانات الوصفية. شرح قواعد الصورة المرئية يُفعّل الوظائف التمثيلية والتفاعلية والتركيبية لكريس وفان ليوفان. المحاذاة متعددة الوسائط تربط العناصر البصرية بالأجزاء النصية المتزامنة لتحليل خطابي متكامل.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3 class="lang-en">Grounded AI Assistant</h3>
+                    <h3 class="lang-ar">المساعد الذكي المؤسَّس</h3>
+                    <p class="lang-en">A tool-calling agent with twenty-five registered tools that query the corpus, the statistical results, and the vision pipeline. The assistant operates under a citation-enforced contract: every factual claim must be supported by an explicit reference to a concordance line, a collocation result, or a vision annotation. Claims lacking supporting evidence are flagged as <code>unsupported</code> rather than suppressed. The assistant can connect to local model providers (Ollama, LM Studio) for fully offline operation, or to remote providers (OpenAI, Anthropic, Google) when configured by the user. The system discloses which provider processed each query in the provenance record.</p>
+                    <p class="lang-ar">عميل استدعاء أدوات بخمسة وعشرين أداة مسجّلة تستعلم المجموعة اللغوية والنتائج الإحصائية وخط المعالجة البصرية. يعمل المساعد بموجب عقد إلزامي بالاستشهاد: كل ادعاء وقائعي يجب أن يدعمه إشارة صريحة إلى سطر سياقي أو نتيجة تضايق أو شرح بصري. الادعاءات التي تفتقر إلى الأدلة الداعمة تُعلَّم كـ <code>غير مدعومة</code> بدلاً من إخفائها. يمكن للمساعد الاتصال بمزوّدي النماذج المحليين (Ollama، LM Studio) لعمل غير متصل بالكامل، أو بالمزوّدين البعيدين (OpenAI، Anthropic، Google) عند إعدادهم من قبل المستخدم. يكشف النظام أي مزوّد عالج كل استعلم في سجل الإثبات.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-export"></i></div>
+                    <h3 class="lang-en">Publication-Ready Export</h3>
+                    <h3 class="lang-ar">تصدير جاهز للنشر</h3>
+                    <p class="lang-en">Export analytical results to Excel (.xlsx) for tabular data, Word (.docx) for narrative reports, PDF for distribution, and LaTeX for manuscript integration. Every export includes the provenance YAML inline, enabling reviewers to verify the analytical chain. The Word and LaTeX exports follow the formatting conventions of linguistic journals (e.g., table captions, KWIC line numbering, statistical notation). A methods.pdf export generates a human-readable methods section documenting every analytical step applied to the corpus, suitable for inclusion in a manuscript's methodology section.</p>
+                    <p class="lang-ar">صدّر النتائج التحليلية إلى Excel (.xlsx) للبيانات الجدولية، وWord (.docx) للتقارير السردية، وPDF للتوزيع، وLaTeX للدمج في المخطوطات. كل تصدير يتضمن سجل إثبات YAML مُضمَّناً، مما يُمكّن المحكّمين من التحقق من السلسلة التحليلية. تصديرات Word وLaTeX تتبع اصطلاحات تنسيق المجلات اللسانية (مثل تعليقات الجداول، ترقيم أسطر KWIC، التدوين الإحصائي). تصدير methods.pdf يُنشئ قسماً منهجياً مقروءاً بشرياً يوثّق كل خطوة تحليلية طُبقت على المجموعة اللغوية، مناسب للإدراج في قسم المنهجية في المخطوطة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="lang-en">At-Rest Encryption for Sensitive Corpora</h3>
+                    <h3 class="lang-ar">تشفير البيانات الساكنة للمجموعات الحساسة</h3>
+                    <p class="lang-en">Optional at-rest encryption for corpora containing sensitive or unpublished data. When enabled, document contents are encrypted using AES-256 with a user-supplied passphrase; the passphrase is never persisted to disk and is required on each session. The encryption key is derived using PBKDF2 with 600,000 iterations. The SQLite metadata database, the search index, and the cached analytical results are all encrypted. This feature supports compliance with institutional data-governance policies and funder mandates (e.g., GDPR Article 32, NSF Data Management Plans).</p>
+                    <p class="lang-ar">تشفير اختياري للبيانات الساكنة للمجموعات التي تحتوي على بيانات حساسة أو غير منشورة. عند التفعيل، تُشفَّر محتويات الوثائق باستخدام AES-256 بعبارة مرور يزوّدها المستخدم؛ لا تُحفظ عبارة المرور على القرص أبداً وتُطلب في كل جلسة. يُشتق مفتاح التشفير باستخدام PBKDF2 بـ 600,000 تكرار. تُشفَّر قاعدة بيانات SQLite للبيانات الوصفية وفهرس البحث والنتائج التحليلية المُخزَّنة. تدعم هذه الميزة الامتثال لسياسات حوكمة البيانات المؤسسية ومتطلبات المموّلين (مثل المادة 32 من GDPR، وخطط إدارة بيانات NSF).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-vial"></i></div>
+                    <h3 class="lang-en">Reproducibility and Provenance</h3>
+                    <h3 class="lang-ar">إعادة الإنتاج وسجل الإثبات</h3>
+                    <p class="lang-en">Every analytical operation — from corpus ingestion through export — is recorded in a YAML provenance file that captures the operation type, the input corpus, the pipeline configuration, the parameters, the software version, the timestamp, and the model provider (if applicable). These records are exportable, machine-readable, and designed to satisfy the reproducibility requirements of peer-reviewed venues. A methods.pdf export compiles all provenance records for a given corpus into a single narrative methods section, suitable for inclusion in a manuscript.</p>
+                    <p class="lang-ar">كل عملية تحليلية — من استيعاب المجموعة اللغوية إلى التصدير — مُسجَّلة في ملف إثبات YAML يلتقط نوع العملية والمجموعة الداخلة وإعداد الخط والمعاملات وإصدار البرنامج والطابع الزمني ومزوّد النموذج (إن وُجد). هذه السجلات قابلة للتصدير ومقروءة آلياً ومصممة لتلبية متطلبات إعادة الإنتاج في المجلات المحكّمة. تصدير methods.pdf يجمع جميع سجلات الإثبات لمجموعة لغوية معينة في قسم منهجي سردي واحد، مناسب للإدراج في مخطوطة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Theoretical Frameworks Catalog -->
+        <section>
+            <h2 class="section-title lang-en">Implemented Theoretical Frameworks</h2>
+            <h2 class="section-title lang-ar">الأطر النظرية المُنفَّذة</h2>
+            <div class="model-grid">
+                <div class="model-card">
+                    <h5>Systemic Functional Linguistics</h5>
+                    <p>Halliday &amp; Matthiessen (2014). Three metafunctions: ideational, interpersonal, textual.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Visual Grammar</h5>
+                    <p>Kress &amp; van Leeuwen (2006). Reading Images: representational, interactive, compositional.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Barthesian Semiotics</h5>
+                    <p>Barthes (1964/1977). Denotation, connotation, myth, anchorage, relay.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Peircean Semiotics</h5>
+                    <p>Peirce (1931-1958). Sign, object, interpretant; icon, index, symbol.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Critical Discourse Analysis</h5>
+                    <p>Fairclough (1995). Three-dimensional framework: text, discursive practice, social practice.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Discourse-Historical Approach</h5>
+                    <p>Wodak &amp; Meyer (2009). Four levels of context: co-text, intertextual, interdiscursive, broad socio-political.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Socio-Cognitive Approach</h5>
+                    <p>van Dijk (2008). Cognitive, social, and discursive dimensions of ideology reproduction.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Multimodal Critical Discourse Analysis</h5>
+                    <p>Machin &amp; Mayr (2012). Combines CDA with visual-grammar analysis of ideological content.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Appraisal Theory</h5>
+                    <p>Martin &amp; White (2005). Attitude, engagement, graduation in evaluative language.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Conceptual Metaphor Theory</h5>
+                    <p>Lakoff &amp; Johnson (1980). Source-target domain mappings and entailments.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Toulmin Argumentation</h5>
+                    <p>Toulmin (1958). Claim, data, warrant, backing, qualifier, rebuttal.</p>
+                </div>
+                <div class="model-card">
+                    <h5>Aristotelian Rhetoric</h5>
+                    <p>Aristotle (c. 350 BCE). Ethos, pathos, logos; the rhetorical situation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Table -->
+        <section>
+            <h2 class="section-title lang-en">Privacy and Data Governance</h2>
+            <h2 class="section-title lang-ar">الخصوصية وحوكمة البيانات</h2>
+            <div class="privacy-table-wrap">
+                <table class="privacy-table">
+                    <thead>
+                        <tr>
+                            <th class="lang-en">Property</th>
+                            <th class="lang-en">Status</th>
+                            <th class="lang-ar" style="display:none;">الخاصية</th>
+                            <th class="lang-ar" style="display:none;">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="lang-en">Telemetry</td>
+                            <td class="lang-en"><strong>None.</strong> No analytics, no crash reporting, no usage tracking, no update checking.</td>
+                            <td class="lang-ar" style="display:none;">قياسات الاستخدام</td>
+                            <td class="lang-ar" style="display:none;"><strong>لا شيء.</strong> بلا تحليلات، بلا تقارير أعطال، بلا تتبع، بلا فحص تحديثات.</td>
+                        </tr>
+                        <tr>
+                            <td class="lang-en">Outbound network calls</td>
+                            <td class="lang-en">None by default. The engine binds to <code>127.0.0.1:8765</code>; the AI assistant binds to <code>127.0.0.1:11434</code> (Ollama) or <code>127.0.0.1:1234</code> (LM Studio). A remote provider is contacted only when the user explicitly configures one.</td>
+                            <td class="lang-ar" style="display:none;">الاتصالات الشبكية الخارجية</td>
+                            <td class="lang-ar" style="display:none;">لا شيء افتراضياً. يرتبط المحرك بـ <code>127.0.0.1:8765</code>؛ ويرتبط المساعد الذكي بـ <code>127.0.0.1:11434</code> (Ollama) أو <code>127.0.0.1:1234</code> (LM Studio). يُتصل بمزوّد بعيد فقط عندما يُعدّه المستخدم صراحةً.</td>
+                        </tr>
+                        <tr>
+                            <td class="lang-en">Corpus contents</td>
+                            <td class="lang-en"><strong>Never leave the device</strong> unless a remote model provider is explicitly configured. Even then, only the prompts sent to that provider are transmitted; the corpus itself remains on the device.</td>
+                            <td class="lang-ar" style="display:none;">محتويات المجموعة اللغوية</td>
+                            <td class="lang-ar" style="display:none;"><strong>لا تغادر الجهاز</strong> ما لم يُعدَّ مزوّد نماذج بعيد صراحةً. وحتى ذلك الحين، تُنقل فقط الاستفسارات المُرسلة إلى ذلك المزوّد؛ تبقى المجموعة اللغوية نفسها على الجهاز.</td>
+                        </tr>
+                        <tr>
+                            <td class="lang-en">At-rest encryption</td>
+                            <td class="lang-en">Optional AES-256 with PBKDF2 key derivation (600,000 iterations). Passphrase never persisted. Covers SQLite metadata, search index, cached results.</td>
+                            <td class="lang-ar" style="display:none;">تشفير البيانات الساكنة</td>
+                            <td class="lang-ar" style="display:none;">اختياري AES-256 مع اشتقاق مفتاح PBKDF2 (600,000 تكرار). عبارة المرور لا تُحفظ أبداً. يغطي بيانات SQLite الوصفية وفهرس البحث والنتائج المُخزَّنة.</td>
+                        </tr>
+                        <tr>
+                            <td class="lang-en">Provenance records</td>
+                            <td class="lang-en">YAML files stored locally alongside the corpus. Machine-readable, exportable, designed for peer-review scrutiny.</td>
+                            <td class="lang-ar" style="display:none;">سجلات الإثبات</td>
+                            <td class="lang-ar" style="display:none;">ملفات YAML محفوظة محلياً مع المجموعة اللغوية. مقروءة آلياً، قابلة للتصدير، مصممة للتدقيق العلمي.</td>
+                        </tr>
+                        <tr>
+                            <td class="lang-en">AI assistant disclosures</td>
+                            <td class="lang-en">Each AI-assisted output records which provider processed the query (local or remote), which model was used, and whether the response was grounded in corpus evidence or flagged as unsupported.</td>
+                            <td class="lang-ar" style="display:none;">إفصاحات المساعد الذكي</td>
+                            <td class="lang-ar" style="display:none;">كل مُخرج مدعوم بالذكاء الاصطناعي يسجل أي مزوّد عالج الاستعلام (محلي أو بعيد)، وأي نموذج استُخدم، وما إذا كانت الاستجابة مؤسَّسة على أدلة المجموعة أو مُعلَّمة كغير مدعومة.</td>
+                        </tr>
+                        <tr>
+                            <td class="lang-en">Third-party APIs</td>
+                            <td class="lang-en"><strong>None by default.</strong> OpenAI, Anthropic, and Google APIs are contacted only when the user explicitly configures an API key in Settings.</td>
+                            <td class="lang-ar" style="display:none;">واجهات الطرف الثالث</td>
+                            <td class="lang-ar" style="display:none;"><strong>لا شيء افتراضياً.</strong> يتم الاتصال بواجهات OpenAI وAnthropic وGoogle فقط عندما يُعدّ المستخدم مفتاح API صراحةً في الإعدادات.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Ethics: Does / Does Not -->
+        <section>
+            <h2 class="section-title lang-en">What CorpusMind Does &mdash; and Does NOT Do</h2>
+            <h2 class="section-title lang-ar">ما يفعله كوربَس مايند &mdash; وما لا يفعله</h2>
+            <div class="ethics-grid">
+                <div class="ethics-card does">
+                    <h4 class="lang-en"><i class="fas fa-check-circle"></i> What it DOES</h4>
+                    <h4 class="lang-ar"><i class="fas fa-check-circle"></i> ما يفعله</h4>
+                    <ul>
+                        <li class="lang-en">Provides reproducible, framework-grounded analysis of linguistic and multimodal data.</li>
+                        <li class="lang-ar" style="display:none;">يوفّر تحليلاً قابلاً لإعادة الإنتاج ومؤسَّساً على الأطر النظرية للبيانات اللغوية ومتعددة الوسائط.</li>
+                        <li class="lang-en">Records every analytical operation in a machine-readable YAML provenance file.</li>
+                        <li class="lang-ar" style="display:none;">يسجل كل عملية تحليلية في ملف إثبات YAML مقروء آلياً.</li>
+                        <li class="lang-en">Enforces a citation contract on the AI assistant: every claim must cite corpus evidence or be flagged as unsupported.</li>
+                        <li class="lang-ar" style="display:none;">يفرض عقد استشهاد على المساعد الذكي: كل ادعاء يجب أن يستشهد بأدلة المجموعة أو يُعلَّم كغير مدعوم.</li>
+                        <li class="lang-en">Operates entirely on the researcher's own hardware when used with a local model provider.</li>
+                        <li class="lang-ar" style="display:none;">يعمل بالكامل على عتاد الباحث عند استخدامه مع مزوّد نماذج محلي.</li>
+                        <li class="lang-en">Supports at-rest encryption for corpora containing sensitive or unpublished data.</li>
+                        <li class="lang-ar" style="display:none;">يدعم تشفير البيانات الساكنة للمجموعات التي تحتوي على بيانات حساسة أو غير منشورة.</li>
+                        <li class="lang-en">Generates publication-ready exports with provenance metadata suitable for peer-review submission.</li>
+                        <li class="lang-ar" style="display:none;">يُنشئ تصديرات جاهزة للنشر ببيانات إثبات وصفية مناسبة للتقديم للتحكيم.</li>
+                        <li class="lang-en">Documents the formal definition and primary-literature citation for every implemented statistical measure.</li>
+                        <li class="lang-ar" style="display:none;">يوثّق التعريف الرسمي والاستشهاد بالأدبيات الأولية لكل مقياس إحصائي مُنفَّذ.</li>
+                    </ul>
+                </div>
+                <div class="ethics-card does-not">
+                    <h4 class="lang-en"><i class="fas fa-times-circle"></i> What it explicitly does NOT do</h4>
+                    <h4 class="lang-ar"><i class="fas fa-times-circle"></i> ما لا يفعله صراحةً</h4>
+                    <ul>
+                        <li class="lang-en"><strong>Does not transmit corpus data to any remote server by default.</strong> The default configuration permits no outbound network traffic.</li>
+                        <li class="lang-ar" style="display:none;"><strong>لا ينقل بيانات المجموعة إلى أي خادم بعيد افتراضياً.</strong> الإعداد الافتراضي لا يسمح بأي اتصال شبكي خارجي.</li>
+                        <li class="lang-en"><strong>Does not fabricate evidence.</strong> The AI assistant must cite a concordance line, a collocation result, or a vision annotation, or explicitly flag the claim as unsupported.</li>
+                        <li class="lang-ar" style="display:none;"><strong>لا يختلق أدلة.</strong> يجب على المساعد الذكي الاستشهاد بسطر سياقي أو نتيجة تضايق أو شرح بصري، أو الإشارة الصريحة إلى أن الادعاء غير مدعوم.</li>
+                        <li class="lang-en"><strong>Does not suppress analytical steps.</strong> Every operation is recorded in the provenance file; no operation can be retroactively removed.</li>
+                        <li class="lang-ar" style="display:none;"><strong>لا يخفي الخطوات التحليلية.</strong> كل عملية مُسجَّلة في ملف الإثبات؛ لا يمكن إزالة أي عملية بأثر رجعي.</li>
+                        <li class="lang-en"><strong>Does not collect telemetry, analytics, or crash reports.</strong></li>
+                        <li class="lang-ar" style="display:none;"><strong>لا يجمع بيانات استخدام أو تحليلات أو تقارير أعطال.</strong></li>
+                        <li class="lang-en"><strong>Does not access any file the user has not explicitly imported through the file dialog.</strong></li>
+                        <li class="lang-ar" style="display:none;"><strong>لا يصل إلى أي ملف لم يُستورد صراحةً من خلال حوار الملفات.</strong></li>
+                        <li class="lang-en"><strong>Does not circumvent institutional data-governance policies.</strong> At-rest encryption and the local-only default configuration are designed to support compliance, not evade it.</li>
+                        <li class="lang-ar" style="display:none;"><strong>لا يتهرب من سياسات حوكمة البيانات المؤسسية.</strong> تشفير البيانات الساكنة والإعداد المحلي الافتراضي مصممان لدعم الامتثال، لا التهرب منه.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Workflow -->
+        <section class="workflow-container">
+            <h2 class="section-title lang-en">Getting Started</h2>
+            <h2 class="section-title lang-ar">البدء</h2>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4 class="lang-en">Install CorpusMind</h4>
+                    <h4 class="lang-ar">ثبّت كوربَس مايند</h4>
+                    <p class="lang-en">Download the latest installer for your platform from the GitHub Releases page: <code>.dmg</code> for macOS (Apple Silicon and Intel), <code>.exe</code> (NSIS) or <code>.msi</code> for Windows, <code>.AppImage</code> or <code>.deb</code> for Linux. Alternatively, build from source using the provided <code>scripts/build-macos-arm64.sh</code> script (macOS) or the GitHub Actions release workflow (all platforms).</p>
+                    <p class="lang-ar">نزّل أحدث مثبّت لمنصتك من صفحة الإصدارات على GitHub: <code>.dmg</code> لـ macOS (Apple Silicon وIntel)، <code>.exe</code> (NSIS) أو <code>.msi</code> لـ Windows، <code>.AppImage</code> أو <code>.deb</code> لـ Linux. بدلاً من ذلك، ابنِ من المصدر باستخدام السكربت المُقدَّم <code>scripts/build-macos-arm64.sh</code> (macOS) أو سير عمل إصدار GitHub Actions (كل المنصات).</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4 class="lang-en">(Optional) Install a Local Model Provider</h4>
+                    <h4 class="lang-ar">(اختياري) ثبّت مزوّد نماذج محلي</h4>
+                    <p class="lang-en">To enable the AI assistant with full offline operation, install <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> or <a href="https://lmstudio.ai/" target="_blank" rel="noopener">LM Studio</a>. With Ollama, pull a model suited to your hardware (e.g., <code>ollama pull llama3.2:3b</code> for 8 GB RAM, <code>ollama pull qwen3:14b</code> for 16 GB RAM). The AI assistant works with any OpenAI-compatible local endpoint.</p>
+                    <p class="lang-ar">لتفعيل المساعد الذكي بعمل غير متصل بالكامل، ثبّت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> أو <a href="https://lmstudio.ai/" target="_blank" rel="noopener">LM Studio</a>. مع Ollama، اسحب نموذجاً يناسب عتادك (مثل <code>ollama pull llama3.2:3b</code> لـ 8 جيجا رام، <code>ollama pull qwen3:14b</code> لـ 16 جيجا رام). يعمل المساعد الذكي مع أي نقطة نهاية محلية متوافقة مع OpenAI.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4 class="lang-en">Create a Project and Import a Corpus</h4>
+                    <h4 class="lang-ar">أنشئ مشروعاً واستورد مجموعة لغوية</h4>
+                    <p class="lang-en">Launch CorpusMind, create a project, and import documents in any of the supported formats: TXT, DOCX, PDF, HTML, XML, CSV, or Markdown. The ingestion pipeline performs charset detection, language identification, and full NLP processing (tokenization, lemmatization, POS tagging, dependency parsing, NER). The pipeline recipe is recorded in the provenance file for every document.</p>
+                    <p class="lang-ar">شغّل كوربَس مايند، أنشئ مشروعاً، واستورد الوثائق بأي من الصيغ المدعومة: TXT، DOCX، PDF، HTML، XML، CSV، أو Markdown. ينفّذ خط الاستيعاب كشف الترميز وتحديد اللغة ومعالجة اللغة الطبيعية الكاملة (الترميز، التأصيل الصرفي، الوسم النحوي، التحليل التبعي، التعرف على الكيانات). تُسجَّل وصفة الخط في ملف الإثبات لكل وثيقة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Transparency Notice -->
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-flask"></i> Research Transparency Notice</h4>
+            <h4 class="lang-ar"><i class="fas fa-flask"></i> إشعار الشفافية البحثية</h4>
+            <p class="lang-en">CorpusMind v0.1.0 &mdash; &copy; 2026 <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wessam Ibrahim</strong>. Released under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">GNU Affero General Public License v3.0</a> (AGPL-3.0-only). The software was designed and directed by Dr. Mandour, with engineering support from <strong>Super Z</strong> (GLM model, Z.ai) serving as a full-stack engineering collaborator under his supervision across all six development phases. Dr. Mandour reviewed all code, verified all analytical claims against the published methodology literature, and retained final editorial authority.</p>
+            <p class="lang-ar">كوربَس مايند v0.1.0 &mdash; &copy; 2026 <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong>. صدر تحت <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">رخصة جنو أفيرو العامة الإصدار 3.0</a> (AGPL-3.0-only). صُمِّم وأُخرج بإشراف د. مندور، بدعم هندسي من <strong>Super Z</strong> (نموذج GLM، Z.ai) كتعاون هندسي شامل تحت إشرافه عبر مراحل التطوير الست. راجع د. مندور كل الكود وتحقق من كل الادعاءات التحليلية مقابل أدبيات المنهجية المنشورة واحتفظ بالسلطة التحريرية النهائية.</p>
+            <p class="lang-en"><strong>Persistent identifier:</strong> <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21226650</a> (Zenodo concept DOI).</p>
+            <p class="lang-ar"><strong>المُعرّف الدائم:</strong> <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21226650</a> (مُعرّف Zenodo المفاهيمي).</p>
+        </div>
+
+        <!-- Citation Reference -->
+        <div class="data-notice">
+            <h4 class="lang-en"><i class="fas fa-quote-right"></i> Cite CorpusMind</h4>
+            <h4 class="lang-ar"><i class="fas fa-quote-right"></i> اقتبس كوربَس مايند</h4>
+            <p class="lang-en">If you use CorpusMind in your research, teaching, or published work, please cite it using the references below. The BibTeX entry drops directly into your <code>.bib</code> file.</p>
+            <p class="lang-ar">إذا استخدمت كوربَس مايند في بحثك أو تدريسك أو عملك المنشور، يرجى اقتباسه باستخدام المراجع أدناه. إدخال BibTeX يُدرج مباشرة في ملف <code>.bib</code> الخاص بك.</p>
+            <div class="citation-label lang-en">APA 7th edition</div>
+            <div class="citation-label lang-ar">نمط APA الإصدار السابع</div>
+            <div class="citation-apa"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>Mandour, W., &amp; Ibrahim, W. (2026). <em>CorpusMind: A local-first, AI-native research environment for corpus linguistics and multimodal discourse analysis</em> (Version 0.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21226650</div>
+            <div class="citation-label lang-en">BibTeX</div>
+            <div class="citation-label lang-ar">BibTeX</div><div class="citation-bibtex"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>@software{Mandour_CorpusMind_2026,
+  author       = {Mandour, Waleed and Ibrahim, Wessam},
+  title        = {{CorpusMind: Local-first, AI-native research environment
+                   for corpus linguistics and multimodal discourse analysis}},
+  version      = {0.1.0},
+  year         = {2026},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.21226650},
+  url          = {https://doi.org/10.5281/zenodo.21226650}
+}</div>
+        </div>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">Available Now for Researchers</h2>
+            <h2 class="cta-title lang-ar">متاح الآن للباحثين</h2>
+            <p class="cta-subtitle lang-en">Download CorpusMind v0.1.0 to conduct reproducible, framework-grounded corpus and multimodal discourse analysis on your own hardware. Local-first by default, AGPL-3.0-only licensed, with full provenance records for peer-review transparency.</p>
+            <p class="cta-subtitle lang-ar">نزّل كوربَس مايند v0.1.0 لإجراء تحليل لغوي وخطابي متعدد الوسائط قابل لإعادة الإنتاج ومؤسَّس على الأطر النظرية على عتادك الخاص. محلي أولاً افتراضياً، بترخيص AGPL-3.0-only، مع سجلات إثبات كاملة لشفافية التحكيم.</p>
+
+            <div class="download-platforms">
+                <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-apple"></i>
+                    <span class="dl-name lang-en">macOS (Apple Silicon)</span>
+                    <span class="dl-name lang-ar">macOS (Apple Silicon)</span>
+                    <span class="dl-os">arm64 &middot; DMG</span>
+                    <span class="dl-file">CorpusMind_0.1.0_aarch64.dmg</span>
+                </a>
+                <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-apple"></i>
+                    <span class="dl-name lang-en">macOS (Intel)</span>
+                    <span class="dl-name lang-ar">macOS (Intel)</span>
+                    <span class="dl-os">x86_64 &middot; DMG</span>
+                    <span class="dl-file">CorpusMind_0.1.0_x64.dmg</span>
+                </a>
+                <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-windows"></i>
+                    <span class="dl-name lang-en">Windows</span>
+                    <span class="dl-name lang-ar">ويندوز</span>
+                    <span class="dl-os">x64 &middot; NSIS / MSI</span>
+                    <span class="dl-file">CorpusMind_0.1.0_x64-setup.exe</span>
+                </a>
+                <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-linux"></i>
+                    <span class="dl-name lang-en">Linux</span>
+                    <span class="dl-name lang-ar">لينكس</span>
+                    <span class="dl-os">x64 &middot; AppImage / DEB</span>
+                    <span class="dl-file">CorpusMind_0.1.0_amd64.AppImage</span>
+                </a>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="https://github.com/waleedmandour/CorpusMind" target="_blank" rel="noopener" class="cta-button">
+                    <i class="fab fa-github"></i>
+                    <span class="lang-en">View Source on GitHub</span>
+                    <span class="lang-ar">الكود المصدري على GitHub</span>
+                </a>
+                <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener" class="cta-button secondary">
+                    <i class="fas fa-flask"></i>
+                    <span class="lang-en">Zenodo DOI</span>
+                    <span class="lang-ar">معرّف Zenodo</span>
+                </a>
+                <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener" class="cta-button secondary">
+                    <i class="fas fa-globe"></i>
+                    <span class="lang-en">Live PWA</span>
+                    <span class="lang-ar">تطبيق الويب</span>
+                </a>
+            </div>
+
+            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Version 0.1.0 &middot; AGPL-3.0-only &middot; Built with Tauri 2, FastAPI, React 18, and spaCy &middot; See the <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v0.1.0" target="_blank" rel="noopener">release notes</a>.</p>
+            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">الإصدار 0.1.0 &middot; AGPL-3.0-only &middot; مبني بـ Tauri 2 وFastAPI وReact 18 وspaCy &middot; اطّلع على <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v0.1.0" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <span class="lang-en">CorpusMind &mdash; <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wessam Ibrahim</strong></span>
+                    <span class="lang-ar">كوربَس مايند &mdash; <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong></span>
+                </div>
+                <div>
+                    <span class="lang-en">ORCID: <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener">0000-0002-9262-5993</a> (Dr. Mandour) &middot; <a href="https://orcid.org/0000-0003-0710-6038" target="_blank" rel="noopener">0000-0003-0710-6038</a> (Prof. Ibrahim)</span>
+                    <span class="lang-ar">ORCID: <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener">0000-0002-9262-5993</a> (د. مندور) &middot; <a href="https://orcid.org/0000-0003-0710-6038" target="_blank" rel="noopener">0000-0003-0710-6038</a> (أ.د. إبراهيم)</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/waleedmandour/CorpusMind" target="_blank" rel="noopener" class="lang-en">GitHub Repository</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind" target="_blank" rel="noopener" class="lang-ar">مستودع GitHub</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="lang-en">Releases</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="lang-ar">الإصدارات</a>
+                    <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener" class="lang-en">Zenodo DOI</a>
+                    <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener" class="lang-ar">معرّف Zenodo</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/USER_GUIDE.md" target="_blank" rel="noopener" class="lang-en">User Guide</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/USER_GUIDE.md" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener" class="lang-en">Methodology</a>
+                    <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener" class="lang-ar">المنهجية</a>
+                    <a href="https://waleedmandour.org/projects/" class="lang-en">&larr; Back to Projects</a>
+                    <a href="https://waleedmandour.org/projects/" class="lang-ar">&larr; العودة إلى المشاريع</a>
+                </div>
+                <div>
+                    <span class="lang-en">AGPL-3.0-only &middot; Built with Tauri 2, FastAPI, React 18, spaCy, and CAMeL Tools</span>
+                    <span class="lang-ar">AGPL-3.0-only &middot; مبني بـ Tauri 2 وFastAPI وReact 18 وspaCy وCAMeL Tools</span>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Language toggle logic
+        const langEnBtn = document.getElementById('lang-en');
+        const langArBtn = document.getElementById('lang-ar');
+        const body = document.body;
+
+        function setLanguage(lang) {
+            if (lang === 'ar') {
+                body.classList.add('arabic');
+                langEnBtn.classList.remove('active');
+                langArBtn.classList.add('active');
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+            } else {
+                body.classList.remove('arabic');
+                langEnBtn.classList.add('active');
+                langArBtn.classList.remove('active');
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+            }
+        }
+
+        langEnBtn.addEventListener('click', () => setLanguage('en'));
+        langArBtn.addEventListener('click', () => setLanguage('ar'));
+
+        // Copy citation to clipboard
+        function copyCitation(btn) {
+            const box = btn.parentElement.cloneNode(true);
+            box.querySelectorAll('button').forEach(b => b.remove());
+            const text = box.textContent.replace(/^\s+|\s+$/g, '');
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = orig; }, 1500);
+            }).catch(() => {
+                btn.textContent = 'Press Ctrl+C';
+                setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
