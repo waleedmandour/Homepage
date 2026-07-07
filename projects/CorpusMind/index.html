@@ -316,322 +316,199 @@
                 <div class="release-badge lang-en">Initial Release &middot; v0.1.0</div>
                 <div class="release-badge lang-ar">الإصدار الأول &middot; v0.1.0</div>
 
-                <h1 class="lang-en">CorpusMind: From Raw Texts and Images to Publication-Ready Analysis</h1>
-                <h1 class="lang-ar">كوربَس مايند: من النصوص والصور الخام إلى تحليل جاهز للنشر</h1>
+                <h1 class="lang-en">CorpusMind: The All-in-One Research Environment for Linguists</h1>
+                <h1 class="lang-ar">كوربَس مايند: بيئة بحثية متكاملة للغويين</h1>
 
-                <div class="hero-subtitle lang-en">A local-first, AI-native research environment that enables linguists to conduct reproducible corpus and multimodal discourse analysis without writing code, without transmitting unpublished data to third-party servers, and without compromising methodological transparency.</div>
-                <div class="hero-subtitle lang-ar">بيئة بحثية محلية أولاً ومدعومة بالذكاء الاصطناعي تُمكّن اللغويين من إجراء تحليلات لغوية وخطابية متعددة الوسائط قابلة للتكرار دون كتابة سطر برمجي واحد، ودون إرسال البيانات غير المنشورة إلى خوادم خارجية، ودون التضحية بالشفافية المنهجية التي يفرضها التحكيم العلمي.</div>
+                <div class="hero-subtitle lang-en">From raw texts and images to publication-ready analysis in minutes — corpus linguistics, multimodal discourse analysis, and a grounded AI assistant, unified in a single free and open-source desktop application.</div>
+                <div class="hero-subtitle lang-ar">من النصوص والصور الخام إلى تحليل جاهز للنشر في دقائق — تحليل اللغة والخطاب متعدد الوسائط ومساعد ذكاء اصطناعي مؤسَّس، موحَّدة في تطبيق مكتبي مجاني ومفتوح المصدر.</div>
 
                 <div class="hero-badges">
-                    <span class="hero-badge"><i class="fas fa-shield-alt"></i> Local-First</span>
-                    <span class="hero-badge"><i class="fab fa-windows"></i> Windows</span>
-                    <span class="hero-badge"><i class="fab fa-apple"></i> macOS</span>
-                    <span class="hero-badge"><i class="fab fa-linux"></i> Linux</span>
-                    <span class="hero-badge"><i class="fas fa-microchip"></i> Ollama / LM Studio</span>
-                    <span class="hero-badge"><i class="fab fa-github"></i> AGPL-3.0-only</span>
+                    <span class="hero-badge"><i class="fas fa-search"></i> Concordance</span>
+                    <span class="hero-badge"><i class="fas fa-chart-bar"></i> 7 Collocation Measures</span>
+                    <span class="hero-badge"><i class="fas fa-language"></i> English + Arabic</span>
+                    <span class="hero-badge"><i class="fas fa-image"></i> Multimodal Vision</span>
+                    <span class="hero-badge"><i class="fas fa-robot"></i> Grounded AI</span>
+                    <span class="hero-badge"><i class="fas fa-book"></i> 12 Frameworks</span>
+                    <span class="hero-badge"><i class="fas fa-file-export"></i> Excel / Word / PDF / LaTeX</span>
+                    <span class="hero-badge"><i class="fab fa-github"></i> Free &amp; Open Source</span>
                 </div>
 
                 <div>
                     <p class="hero-description lang-en">
-                        CorpusMind is an integrated research environment that unifies corpus linguistics, multimodal discourse analysis, and AI-assisted interpretation within a single desktop application. The platform comprises three coordinated components: a FastAPI engine (Python 3.12) that performs natural language processing, statistical analysis, and computer vision inference; a Tauri 2 shell (Rust) that supervises the engine lifecycle and enforces a hardened security boundary between the webview and the host system; and an installable Progressive Web App (React 18, Vite, TypeScript) that provides the analyst interface. The system supports English and Arabic text analysis through spaCy and CAMeL Tools, offers twelve discourse-analysis frameworks grounded in the peer-reviewed literature, and integrates a pluggable AI assistant capable of connecting to local model providers (Ollama, LM Studio) or, at the user's explicit election, remote providers (OpenAI, Anthropic). All analytical operations produce YAML provenance records, ensuring that every result is traceable, reproducible, and amenable to peer-review scrutiny.
+                        CorpusMind is an integrated research environment that unifies corpus linguistics, multimodal discourse analysis, and AI-assisted interpretation within a single desktop application. It enables a linguist to go from raw texts and images to publication-ready quantitative and qualitative analysis without writing a line of code, without losing methodological transparency, and without the subscription fees of commercial corpus platforms. The platform bundles a FastAPI engine, a Tauri 2 shell, and an installable PWA, supporting English and Arabic text analysis through spaCy and CAMeL Tools, twelve discourse-analysis frameworks grounded in the peer-reviewed literature, a multimodal vision pipeline operationalising Kress and van Leeuwen's Visual Grammar, and a pluggable AI assistant that grounds every claim in corpus evidence. All analytical operations produce YAML provenance records, ensuring that every result is traceable, reproducible, and ready for peer review.
                     </p>
                     <p class="hero-description lang-ar">
-                        كوربَس مايند بيئة بحثية متكاملة توحّد تحليل اللغة والخطاب متعدد الوسائط والتفسير المدعوم بالذكاء الاصطناعي ضمن تطبيق مكتبي واحد. تتكوّن المنصة من ثلاثة مكونات متناسقة: محرك FastAPI (Python 3.12) ينفّذ معالجة اللغة الطبيعية والتحليل الإحصائي والاستدلال البصري؛ وقشرة Tauri 2 (Rust) تشرف على دورة حياة المحرك وتفرض حدوداً أمنية صارمة بين واجهة الويب والنظام المضيف؛ وتطبيق ويب تقدمي قابل للتثبيت (React 18، Vite، TypeScript) يوفّر واجهة المحلل. يدعم النظام تحليل النصوص الإنجليزية والعربية عبر spaCy وCAMeL Tools، ويقدّم اثني عشر إطاراً لتحليل الخطاب مستندة إلى الأدبيات المحكّمة، ويدمج مساعداً ذكياً اصطناعياً قابلاً للتوصيل يدعم مزوّدي النماذج المحليين (Ollama، LM Studio) أو، باختيار صريح من المستخدم، المزوّدين البعيدين (OpenAI، Anthropic). تُنتج جميع العمليات التحليلية سجلات إثبات بصيغة YAML، مما يضمن إمكانية تتبع كل نتيجة وإعادة إنتاجها وخضوعها للتدقيق العلمي.
+                        كوربَس مايند بيئة بحثية متكاملة توحّد تحليل اللغة والخطاب متعدد الوسائط والتفسير المدعوم بالذكاء الاصطناعي ضمن تطبيق مكتبي واحد. تُمكّن اللغوي من الانتقال من النصوص والصور الخام إلى تحليل كمي ونوعي جاهز للنشر دون كتابة سطر برمجي واحد، ودون التضحية بالشفافية المنهجية، ودون رسوم اشتراك المنصات التجارية. تجمع المنصة محرك FastAPI وقشرة Tauri 2 وتطبيق ويب تقدمي قابل للتثبيت، وتدعم تحليل النصوص الإنجليزية والعربية عبر spaCy وCAMeL Tools، واثني عشر إطاراً لتحليل الخطاب مستندة إلى الأدبيات المحكّمة، وخط معالجة بصري متعدد الوسائط يُفعّل قواعد الصورة المرئية لكريس وفان ليوفان، ومساعداً ذكياً اصطناعياً قابلاً للتوصيل يؤسّس كل ادعاء بأدلة المجموعة اللغوية. تُنتج جميع العمليات التحليلية سجلات إثبات بصيغة YAML، مما يضمن إمكانية تتبع كل نتيجة وإعادة إنتاجها وجاهزيتها للتحكيم العلمي.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Ethics Notice -->
-        <div class="ethics-notice">
-            <h4 class="lang-en"><i class="fas fa-balance-scale"></i> Research Integrity Statement</h4>
-            <h4 class="lang-ar"><i class="fas fa-balance-scale"></i> إقرار نزاهة البحث</h4>
-            <p class="lang-en">CorpusMind is designed for researchers who require <strong>methodologically transparent</strong> computational analysis of linguistic and multimodal data. The platform enforces a strict provenance contract: every analytical output is accompanied by a YAML record specifying the corpus, the pipeline configuration, the statistical measure, the software version, and the timestamp. The AI assistant operates under a citation-enforced contract — it must either cite the corpus evidence supporting its claim or explicitly flag the claim as unsupported. The system <strong>does not</strong> fabricate evidence, <strong>does not</strong> permit the suppression of analytical steps, and <strong>does not</strong> transmit user data to any remote server unless the user explicitly configures a remote model provider.</p>
-            <p class="lang-ar">صُمِّم كوربَس مايند للباحثين الذين يتطلبون <strong>شفافية منهجية</strong> في التحليل الحسابي للبيانات اللغوية ومتعددة الوسائط. تفرض المنصة عقد إثبات صارم: كل مُخرج تحليلي يصحبه سجل YAML يحدّد المجموعة اللغوية وإعداد خط المعالجة والمقياس الإحصائي وإصدار البرنامج والطابع الزمني. يعمل المساعد الذكي بموجب عقد إلزامي بالاستشهاد — عليه إما الاستشهاد بأدلة المجموعة اللغوية الداعمة لادعائه أو الإشارة الصريحة إلى أن الادعاء غير مدعوم. لا يختلق النظام <strong>أدلة</strong>، ولا يسمح <strong>بإخفاء الخطوات التحليلية</strong>، ولا ينقل <strong>بيانات المستخدم</strong> إلى أي خادم بعيد ما لم يُعدّ المستخدم صراحةً مزوّداً بعيداً للنماذج.</p>
-        </div>
-
-        <!-- Theoretical Foundations: Three Pillars -->
+        <!-- Screenshot Showcase -->
         <section>
-            <h2 class="section-title lang-en">Design Pillars</h2>
-            <h2 class="section-title lang-ar">ركائز التصميم</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
-                    <h3 class="lang-en">Local-First Architecture</h3>
-                    <h3 class="lang-ar">معمارية محلية أولاً</h3>
-                    <p class="lang-en">All computational operations — natural language processing, statistical analysis, vision inference, and AI-assisted interpretation — execute on the researcher's own hardware. The default configuration permits no outbound network traffic. The Content Security Policy in <code>tauri.conf.json</code> restricts the webview to <code>127.0.0.1:8765</code> (the local engine), <code>127.0.0.1:11434</code> (Ollama), and <code>127.0.0.1:1234</code> (LM Studio). A remote model provider (OpenAI, Anthropic) may be configured only through an explicit opt-in action by the user, and the system discloses the data-transmission implications of that choice before the configuration is saved.</p>
-                    <p class="lang-ar">جميع العمليات الحسابية — معالجة اللغة الطبيعية والتحليل الإحصائي والاستدلال البصري والتفسير المدعوم بالذكاء الاصطناعي — تُنفَّذ على عتاد الباحث نفسه. الإعداد الافتراضي لا يسمح بأي اتصال شبكي خارجي. تقيّد سياسة أمان المحتوى في <code>tauri.conf.json</code> واجهة الويب بـ <code>127.0.0.1:8765</code> (المحرك المحلي)، و<code>127.0.0.1:11434</code> (Ollama)، و<code>127.0.0.1:1234</code> (LM Studio). يمكن إعداد مزوّد نماذج بعيد (OpenAI، Anthropic) فقط من خلال إجراء اشتراك صريح من المستخدم، ويكشف النظام عن تبعات نقل البيانات لهذا الخيار قبل حفظ الإعداد.</p>
+            <h2 class="section-title lang-en">Application Interface</h2>
+            <h2 class="section-title lang-ar">واجهة التطبيق</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: var(--gray); font-size: 16px;">
+                <span class="lang-en">A ribbon-style workspace with eight analytical suites, a command palette, full RTL support for Arabic, and dark / light themes.</span>
+                <span class="lang-ar">مساحة عمل بشريط تنقل، ثماني مجموعات تحليلية، لوحة أوامر، دعم كامل للعربية RTL، ووضعين داكن وفاتح.</span>
+            </p>
+            <div class="ui-showcase-grid">
+                <div class="ui-screenshot-card">
+                    <img src="images/screenshot-home.png" alt="CorpusMind Home dashboard" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Home Dashboard &mdash; Quick Actions</span>
+                        <span class="lang-ar">لوحة الرئيسية &mdash; إجراءات سريعة</span>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-book-open"></i></div>
-                    <h3 class="lang-en">Methodological Transparency</h3>
-                    <h3 class="lang-ar">الشفافية المنهجية</h3>
-                    <p class="lang-en">Every analytical operation emits a YAML provenance record specifying the corpus identifier, the document selection criteria, the pipeline recipe (tokenizer, tagger, parser, NER model), the statistical measure with its parameters (window size, significance threshold, smoothing), the software version, and the timestamp. These records are exportable alongside the analytical results and are designed to satisfy the reproducibility requirements of peer-reviewed venues in linguistics, discourse analysis, and computational social science. The methodology reference manual documents the formal definition of every implemented measure, with citations to the primary literature.</p>
-                    <p class="lang-ar">كل عملية تحليلية تُصدر سجل إثبات بصيغة YAML يحدّد معرّف المجموعة اللغوية ومعايير اختيار الوثائق ووصفة خط المعالجة (المُرمِّز، والوسم، والمحلل، ونموذج التعرف على الكيانات) والمقياس الإحصائي مع معاملاته (حجم النافذة، عتبة الدلالة، التنعيم) وإصدار البرنامج والطابع الزمني. هذه السجلات قابلة للتصدير مع النتائج التحليلية، وهي مصممة لتلبية متطلبات إعادة الإنتاج في المجلات المحكّمة في اللسانيات وتحليل الخطاب والعلوم الاجتماعية الحسابية. يوثّق دليل المنهجية التعريف الرسمي لكل مقياس مُنفَّذ، مع الاستشهاد بالأدبيات الأولية.</p>
+                <div class="ui-screenshot-card">
+                    <img src="images/screenshot-concordance.png" alt="CorpusMind Concordance KWIC view" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Concordance &mdash; KWIC with Stable Line IDs</span>
+                        <span class="lang-ar">الكشف السياقي &mdash; KWIC بمعرّفات ثابتة</span>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
-                    <h3 class="lang-en">Framework-Grounded Analysis</h3>
-                    <h3 class="lang-ar">تحليل قائم على الأطر النظرية</h3>
-                    <p class="lang-en">CorpusMind operationalizes twelve established frameworks from the discourse-analysis and multimodal-analysis literature: Halliday's Systemic Functional Linguistics; Kress and van Leeuwen's Visual Grammar; Barthesian semiotics; Peircean semiotics; Fairclough's Critical Discourse Analysis; Wodak's Discourse-Historical Approach; van Dijk's Socio-Cognitive Approach; Machin and Mayr's Multimodal Critical Discourse Analysis; Martin and White's Appraisal Theory; Lakoff and Johnson's Conceptual Metaphor Theory; Toulmin's argumentation model; and Aristotle's rhetorical framework. Each framework is implemented as a structured annotation template with a YAML schema, ensuring that the analyst's interpretive decisions are recorded in a machine-readable form amenable to inter-coder reliability testing.</p>
-                    <p class="lang-ar">يُفعّل كوربَس مايند اثني عشر إطاراً راسخاً من أدبيات تحليل الخطاب والتحليل متعدد الوسائط: اللسانيات الوظيفية النظامية لهاليداي؛ وقواعد الصورة المرئية لكريس وفان ليوفان؛ وسيميائية بارت؛ وسيميائية بيرس؛ والتحليل النقدي للخطاب لفيركلو؛ والمنهج التاريخي للخطاب لفوداك؛ والمنهج الاجتماعي المعرفي لفان دايك؛ والتحليل النقدي متعدد الوسائط لماتشين وماير؛ ونظرية التقييم لمارتن ووايت؛ ونظرية الاستعارة المفاهيمية للاكوف وجونسون؛ ونموذج تولمين للحجاج؛ والإطار البلاغي لأرسطو. كل إطار مُنفَّذ كقالب شرح مهيكل بمخطط YAML، مما يضمن تسجيل قرارات المحلل التفسيرية بصيغة قابلة للقراءة آلياً وقابلة لاختبار موثوقية المُرمِّزين.</p>
+                <div class="ui-screenshot-card">
+                    <img src="images/screenshot-collocation.png" alt="CorpusMind Collocation analysis" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Collocation &mdash; All 7 Statistical Measures</span>
+                        <span class="lang-ar">التضايق &mdash; جميع المقاييس السبعة</span>
+                    </div>
+                </div>
+                <div class="ui-screenshot-card">
+                    <img src="images/screenshot-vision.png" alt="CorpusMind Vision Suite" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Vision Suite &mdash; Visual Grammar Analysis</span>
+                        <span class="lang-ar">مجموعة الرؤية &mdash; تحليل قواعد الصورة</span>
+                    </div>
+                </div>
+                <div class="ui-screenshot-card">
+                    <img src="images/screenshot-arabic.png" alt="CorpusMind Arabic Tools" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">Arabic Tools &mdash; CAMeL Morphology</span>
+                        <span class="lang-ar">الأدوات العربية &mdash; صرف CAMeL</span>
+                    </div>
+                </div>
+                <div class="ui-screenshot-card">
+                    <img src="images/screenshot-assistant.png" alt="CorpusMind AI Assistant" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                    <div class="ui-screenshot-caption">
+                        <span class="lang-en">AI Assistant &mdash; Grounded, Citation-Enforced</span>
+                        <span class="lang-ar">المساعد الذكي &mdash; مؤسَّس وإلزامي بالاستشهاد</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Feature Showcase -->
+        <!-- Why CorpusMind -->
         <section>
-            <h2 class="section-title lang-en">Core Capabilities</h2>
-            <h2 class="section-title lang-ar">القدرات الأساسية</h2>
+            <h2 class="section-title lang-en">Why CorpusMind?</h2>
+            <h2 class="section-title lang-ar">لماذا كوربَس مايند؟</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-search"></i></div>
-                    <h3 class="lang-en">Concordancer with Stable Line Identifiers</h3>
-                    <h3 class="lang-ar">الكشف السياقي بمعرّفات أسطر ثابتة</h3>
-                    <p class="lang-en">Key-Word-In-Context (KWIC) search with stable line identifiers that the AI assistant cites when grounding its claims. Supports lemma, word, and POS levels; wildcard queries; regex patterns; and filterable context windows. Every concordance line is addressable by a permanent identifier, enabling the analyst and the AI assistant to refer to the same evidence unambiguously across the research lifecycle.</p>
-                    <p class="lang-ar">بحث الكلمة السياقية (KWIC) بمعرّفات أسطر ثابتة يستشهد بها المساعد الذكي عند تأسيس ادعاءاته. يدعم مستويات اللفظ والكلمة والفئة النحوية؛ والاستعلامات بالبدل؛ وأنماط التعبيرات النمطية؛ والنوافذ السياقية القابلة للتصفية. كل سطر سياقي قابل للإشارة بمعرّف دائم، مما يُمكّن المحلل والمساعد الذكي من الإشارة إلى الدليل نفسه دون لبس عبر دورة حياة البحث.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
-                    <h3 class="lang-en">Collocation and Keyness Statistics</h3>
-                    <h3 class="lang-ar">إحصاءات التضايق والتمييز</h3>
-                    <p class="lang-en">Implements all seven collocation measures documented in the methodology literature: Mutual Information, T-score, Log-Likelihood, Dice, Log-Dice, Chi-Square, and ΔP. Keyness analysis supports Log-Likelihood Ratio and Burrows's Zeta. Every measure is parameterized (window size, frequency threshold, reference corpus) and emits a provenance record. The implementation has been validated against the published formulas and tested with 20 unit tests covering edge cases.</p>
-                    <p class="lang-ar">ينفّذ جميع مقاييس التضايق السبعة الموثقة في أدبيات المنهجية: المعلومات المتبادلة، وT-score، والاحتمالية اللوغاريتمية، وDice، وLog-Dice، ومربع كاي، وΔP. يدعم تحليل التمييز نسبة الاحتمالية اللوغاريتمية وZeta لباروز. كل مقياس مُعامل (حجم النافذة، عتبة التردد، المجموعة المرجعية) ويُصدر سجل إثبات. تم التحقق من التنفيذ مقابل الصيغ المنشورة واختباره بـ 20 اختبار وحدة يغطي الحالات الحرجة.</p>
+                    <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="lang-en">All-in-One Workbench</h3>
+                    <h3 class="lang-ar">ورشة عمل متكاملة</h3>
+                    <p class="lang-en">Concordance, frequency, collocation (7 measures), keyness (6 measures), dispersion (4 measures), n-grams, POS, grammar, dependency, vocabulary profiling, sentiment, metaphor, metadiscourse, and a full multimodal vision suite — all in one application, all sharing one project system. No more switching between AntConc for concordance, a separate tagger for POS, a Python script for statistics, and a manual coder for discourse frameworks.</p>
+                    <p class="lang-ar">كشف سياقي، وتردد، وتضايق (7 مقاييس)، وتمييز (6 مقاييس)، وتشتت (4 مقاييس)، وn-grams، وفئة نحوية، وقواعد، وتحليل تبعي، وتصنيف معجمي، ومشاعر، واستعارة، وما وراء الخطاب، ومجموعة رؤية متعددة الوسائط كاملة — كلها في تطبيق واحد، كلها تشترك في نظام مشروع واحد. لا مزيد من التنقل بين AntConc للكشف السياقي، ووسم منفصل للفئة النحوية، وسكربت بايثون للإحصاء، ومُرمِّز يدوي لأطر الخطاب.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-language"></i></div>
-                    <h3 class="lang-en">English and Arabic NLP Pipelines</h3>
-                    <h3 class="lang-ar">خطوط معالجة اللغة الإنجليزية والعربية</h3>
-                    <p class="lang-en">The English pipeline uses spaCy (<code>en_core_web_sm</code>) for tokenization, lemmatization, POS tagging, dependency parsing, and named-entity recognition. The Arabic pipeline integrates CAMeL Tools for morphology, dialect identification, named-entity recognition, and sentiment analysis; SinaTools for tokenization and lemmatization; and Farasa for segmenting Arabic text. Bilingual alignment is supported for parallel-corpus analysis. The system documents which pipeline was applied to which document, ensuring that English and Arabic results are not confounded in cross-lingual comparisons.</p>
-                    <p class="lang-ar">يستخدم خط المعالجة الإنجليزي spaCy (<code>en_core_web_sm</code>) للترميز والتأصيل الصرفي والوسم النحوي والتحليل التبعي والتعرف على الكيانات المسماة. يدمج خط المعالجة العربي CAMeL Tools للصرف وتحديد اللهجة والتعرف على الكيانات وتحليل المشاعر؛ وSinaTools للترميز والتأصيل؛ وFarasa لتجزئة النص العربي. يُدعم المحاذاة ثنائية اللغة لتحليل المجموعات المتوازية. يوثّق النظام أي خط طُبّق على أي وثيقة، مما يضمن عدم خلط النتائج الإنجليزية والعربية في المقارنات بين اللغات.</p>
+                    <h3 class="lang-en">First-Class Arabic Support</h3>
+                    <h3 class="lang-ar">دعم عربي من الدرجة الأولى</h3>
+                    <p class="lang-en">Built-in CAMeL Tools integration delivers Arabic morphology (root, pattern, lemma, stem, Buckwalter transliteration), dialect identification (MSA, Egyptian, Gulf, Levantine), named-entity recognition, sentiment analysis, and full RTL interface mirroring. No other free corpus tool offers this depth of Arabic NLP out of the box — AntConc and #LancsBox treat Arabic as plain text, and Sketch Engine requires a paid subscription for its Arabic sketch grammar.</p>
+                    <p class="lang-ar">تكامل مدمج مع CAMeL Tools يوفّر الصرف العربي (جذر، وزن، تصريف، stem، تحويل باكوالتر)، وتحديد اللهجة (الفصحى، المصرية، الخليجية، الشامية)، والتعرف على الكيانات، وتحليل المشاعر، وعكس كامل لواجهة RTL. لا تقدّم أي أداة تحليل لغوي مجانية أخرى هذا العمق من معالجة اللغة العربية جاهزة — AntConc و#LancsBox يعاملان العربية كنص عادي، وSketch Engine يتطلب اشتراكاً مدفوعاً لقواعد الرسم العربية.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-image"></i></div>
-                    <h3 class="lang-en">Multimodal Vision Pipeline</h3>
-                    <h3 class="lang-ar">خط المعالجة البصرية متعدد الوسائط</h3>
-                    <p class="lang-en">Computer-vision analysis of still images using OpenCV and Pillow: object detection, facial analysis (age, gender, emotion estimates with confidence intervals), OCR via Tesseract (with Arabic language pack support), color palette extraction, composition analysis (rule of thirds, symmetry, salience), and metadata extraction. Visual-Grammar annotation operationalizes Kress and van Leeuwen's representational, interactive, and compositional metafunctions. Multimodal alignment links visual elements to co-occurring textual segments for integrated discourse analysis.</p>
-                    <p class="lang-ar">تحليل رؤية حاسوبية للصور الثابتة باستخدام OpenCV وPillow: كشف الكائنات، وتحليل الوجوه (تقديرات العمر والجنس والعاطفة بفترات ثقة)، والتعرف الضوئي على الحروف عبر Tesseract (مع دعم حزمة اللغة العربية)، واستخراج لوحة الألوان، وتحليل التكوين (قاعدة الأثلاث، التناظر، البروز)، واستخراج البيانات الوصفية. شرح قواعد الصورة المرئية يُفعّل الوظائف التمثيلية والتفاعلية والتركيبية لكريس وفان ليوفان. المحاذاة متعددة الوسائط تربط العناصر البصرية بالأجزاء النصية المتزامنة لتحليل خطابي متكامل.</p>
+                    <h3 class="lang-en">Multimodal Discourse Analysis</h3>
+                    <h3 class="lang-ar">تحليل الخطاب متعدد الوسائط</h3>
+                    <p class="lang-en">A vision pipeline that no other corpus tool offers: object detection, facial analysis, OCR, colour and composition analysis, and a full operationalisation of Kress and van Leeuwen's Visual Grammar (representational, interactive, compositional metafunctions). Pair images with co-occurring text for multimodal alignment, and run eight discourse frameworks (CDA, persuasion, framing, narrative, metaphor, emotion, cultural) on the image-text ensemble.</p>
+                    <p class="lang-ar">خط معالجة بصري لا تقدّمه أي أداة تحليل لغوي أخرى: كشف الكائنات، وتحليل الوجوه، وOCR، وتحليل الألوان والتكوين، وتفعيل كامل لقواعد الصورة المرئية لكريس وفان ليوفان (الوظائف التمثيلية والتفاعلية والتركيبية). اقرن الصور بالنصوص المتزامنة للمحاذاة متعددة الوسائط، وطبّق ثمانية أطر خطابية (CDA، إقناع، تأطير، سرد، استعارة، عاطفة، ثقافي) على مجموعة الصورة والنص.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-robot"></i></div>
                     <h3 class="lang-en">Grounded AI Assistant</h3>
-                    <h3 class="lang-ar">المساعد الذكي المؤسَّس</h3>
-                    <p class="lang-en">A tool-calling agent with twenty-five registered tools that query the corpus, the statistical results, and the vision pipeline. The assistant operates under a citation-enforced contract: every factual claim must be supported by an explicit reference to a concordance line, a collocation result, or a vision annotation. Claims lacking supporting evidence are flagged as <code>unsupported</code> rather than suppressed. The assistant can connect to local model providers (Ollama, LM Studio) for fully offline operation, or to remote providers (OpenAI, Anthropic, Google) when configured by the user. The system discloses which provider processed each query in the provenance record.</p>
-                    <p class="lang-ar">عميل استدعاء أدوات بخمسة وعشرين أداة مسجّلة تستعلم المجموعة اللغوية والنتائج الإحصائية وخط المعالجة البصرية. يعمل المساعد بموجب عقد إلزامي بالاستشهاد: كل ادعاء وقائعي يجب أن يدعمه إشارة صريحة إلى سطر سياقي أو نتيجة تضايق أو شرح بصري. الادعاءات التي تفتقر إلى الأدلة الداعمة تُعلَّم كـ <code>غير مدعومة</code> بدلاً من إخفائها. يمكن للمساعد الاتصال بمزوّدي النماذج المحليين (Ollama، LM Studio) لعمل غير متصل بالكامل، أو بالمزوّدين البعيدين (OpenAI، Anthropic، Google) عند إعدادهم من قبل المستخدم. يكشف النظام أي مزوّد عالج كل استعلم في سجل الإثبات.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-file-export"></i></div>
-                    <h3 class="lang-en">Publication-Ready Export</h3>
-                    <h3 class="lang-ar">تصدير جاهز للنشر</h3>
-                    <p class="lang-en">Export analytical results to Excel (.xlsx) for tabular data, Word (.docx) for narrative reports, PDF for distribution, and LaTeX for manuscript integration. Every export includes the provenance YAML inline, enabling reviewers to verify the analytical chain. The Word and LaTeX exports follow the formatting conventions of linguistic journals (e.g., table captions, KWIC line numbering, statistical notation). A methods.pdf export generates a human-readable methods section documenting every analytical step applied to the corpus, suitable for inclusion in a manuscript's methodology section.</p>
-                    <p class="lang-ar">صدّر النتائج التحليلية إلى Excel (.xlsx) للبيانات الجدولية، وWord (.docx) للتقارير السردية، وPDF للتوزيع، وLaTeX للدمج في المخطوطات. كل تصدير يتضمن سجل إثبات YAML مُضمَّناً، مما يُمكّن المحكّمين من التحقق من السلسلة التحليلية. تصديرات Word وLaTeX تتبع اصطلاحات تنسيق المجلات اللسانية (مثل تعليقات الجداول، ترقيم أسطر KWIC، التدوين الإحصائي). تصدير methods.pdf يُنشئ قسماً منهجياً مقروءاً بشرياً يوثّق كل خطوة تحليلية طُبقت على المجموعة اللغوية، مناسب للإدراج في قسم المنهجية في المخطوطة.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3 class="lang-en">At-Rest Encryption for Sensitive Corpora</h3>
-                    <h3 class="lang-ar">تشفير البيانات الساكنة للمجموعات الحساسة</h3>
-                    <p class="lang-en">Optional at-rest encryption for corpora containing sensitive or unpublished data. When enabled, document contents are encrypted using AES-256 with a user-supplied passphrase; the passphrase is never persisted to disk and is required on each session. The encryption key is derived using PBKDF2 with 600,000 iterations. The SQLite metadata database, the search index, and the cached analytical results are all encrypted. This feature supports compliance with institutional data-governance policies and funder mandates (e.g., GDPR Article 32, NSF Data Management Plans).</p>
-                    <p class="lang-ar">تشفير اختياري للبيانات الساكنة للمجموعات التي تحتوي على بيانات حساسة أو غير منشورة. عند التفعيل، تُشفَّر محتويات الوثائق باستخدام AES-256 بعبارة مرور يزوّدها المستخدم؛ لا تُحفظ عبارة المرور على القرص أبداً وتُطلب في كل جلسة. يُشتق مفتاح التشفير باستخدام PBKDF2 بـ 600,000 تكرار. تُشفَّر قاعدة بيانات SQLite للبيانات الوصفية وفهرس البحث والنتائج التحليلية المُخزَّنة. تدعم هذه الميزة الامتثال لسياسات حوكمة البيانات المؤسسية ومتطلبات المموّلين (مثل المادة 32 من GDPR، وخطط إدارة بيانات NSF).</p>
+                    <h3 class="lang-ar">مساعد ذكي اصطناعي مؤسَّس</h3>
+                    <p class="lang-en">A tool-calling agent with 25 registered tools that queries the corpus, the statistics, and the vision pipeline. Every answer is either <strong>grounded</strong> (backed by a cited concordance line, collocation result, or vision annotation) or explicitly flagged as <strong>unsupported</strong>. Connect it to a local LLM via Ollama for fully offline operation, or to a remote provider (OpenAI, Anthropic) when you choose. No other corpus tool integrates an AI assistant with a citation-enforced contract.</p>
+                    <p class="lang-ar">عميل استدعاء أدوات بـ 25 أداة مسجّلة يستعلم المجموعة اللغوية والإحصائيات وخط المعالجة البصري. كل إجابة إما <strong>مؤسَّسة</strong> (مدعومة بسطر سياقي مُستشهَد به أو نتيجة تضايق أو شرح بصري) أو مُعلَّمة صراحةً كـ <strong>غير مدعومة</strong>. اربطه بنموذج لغوي محلي عبر Ollama لعمل غير متصل بالكامل، أو بمزوّد بعيد (OpenAI، Anthropic) عندما تختار. لا تدمج أي أداة تحليل لغوي أخرى مساعداً ذكياً اصطناعياً بعقد إلزامي بالاستشهاد.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-vial"></i></div>
-                    <h3 class="lang-en">Reproducibility and Provenance</h3>
-                    <h3 class="lang-ar">إعادة الإنتاج وسجل الإثبات</h3>
-                    <p class="lang-en">Every analytical operation — from corpus ingestion through export — is recorded in a YAML provenance file that captures the operation type, the input corpus, the pipeline configuration, the parameters, the software version, the timestamp, and the model provider (if applicable). These records are exportable, machine-readable, and designed to satisfy the reproducibility requirements of peer-reviewed venues. A methods.pdf export compiles all provenance records for a given corpus into a single narrative methods section, suitable for inclusion in a manuscript.</p>
-                    <p class="lang-ar">كل عملية تحليلية — من استيعاب المجموعة اللغوية إلى التصدير — مُسجَّلة في ملف إثبات YAML يلتقط نوع العملية والمجموعة الداخلة وإعداد الخط والمعاملات وإصدار البرنامج والطابع الزمني ومزوّد النموذج (إن وُجد). هذه السجلات قابلة للتصدير ومقروءة آلياً ومصممة لتلبية متطلبات إعادة الإنتاج في المجلات المحكّمة. تصدير methods.pdf يجمع جميع سجلات الإثبات لمجموعة لغوية معينة في قسم منهجي سردي واحد، مناسب للإدراج في مخطوطة.</p>
+                    <h3 class="lang-en">Reproducible by Design</h3>
+                    <h3 class="lang-ar">قابل لإعادة الإنتاج بالتصميم</h3>
+                    <p class="lang-en">Every analytical operation emits a YAML provenance record: corpus ID, pipeline recipe, statistical measure with parameters, software version, timestamp, and (if used) which AI provider processed the query. Export a <code>methods.pdf</code> that drafts your manuscript's methodology section for you, with formal definitions and primary-literature citations for every measure. Peer reviewers can verify the entire analytical chain — something no other free corpus tool offers.</p>
+                    <p class="lang-ar">كل عملية تحليلية تُصدر سجل إثبات بصيغة YAML: معرّف المجموعة، وصفة الخط، والمقياس الإحصائي مع المعاملات، وإصدار البرنامج، والطابع الزمني، و(إن استُخدم) أي مزوّد ذكاء اصطناعي عالج الاستعلام. صدّر <code>methods.pdf</code> يصيغ قسم المنهجية في مخطوطتك لك، بتعريفات رسمية واستشهادات بالأدبيات الأولية لكل مقياس. يمكن للمحكّمين التحقق من السلسلة التحليلية كاملة — شيء لا تقدّمه أي أداة تحليل لغوي مجانية أخرى.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-gift"></i></div>
+                    <h3 class="lang-en">Free and Open Source, Forever</h3>
+                    <h3 class="lang-ar">مجاني ومفتوح المصدر، للأبد</h3>
+                    <p class="lang-en">Released under AGPL-3.0-only with no subscription fees, no feature tiers, no telemetry, and no vendor lock-in. Compare with Sketch Engine at &euro;7.09/month (academic) or &euro;428+/year (institutional). The project is <strong>not funded by any institution</strong>; it was built by the authors out of responsibility to the linguist community. Anyone can read, modify, and redistribute the source code.</p>
+                    <p class="lang-ar">صدر تحت AGPL-3.0-only بلا رسوم اشتراك، بلا طبقات ميزات، بلا قياسات استخدام، وبلا قفل للمزوّد. قارن بـ Sketch Engine بـ 7.09 يورو/شهر (أكاديمي) أو 428+ يورو/سنة (مؤسسي). المشروع <strong>غير مموّل من أي مؤسسة</strong>؛ بناه المؤلفان من مسؤولية تجاه مجتمع اللغويين. يمكن لأي شخص قراءة الكود المصدري وتعديله وإعادة توزيعه.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Theoretical Frameworks Catalog -->
+        <!-- How CorpusMind Compares -->
         <section>
-            <h2 class="section-title lang-en">Implemented Theoretical Frameworks</h2>
-            <h2 class="section-title lang-ar">الأطر النظرية المُنفَّذة</h2>
-            <div class="model-grid">
-                <div class="model-card">
-                    <h5>Systemic Functional Linguistics</h5>
-                    <p>Halliday &amp; Matthiessen (2014). Three metafunctions: ideational, interpersonal, textual.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Visual Grammar</h5>
-                    <p>Kress &amp; van Leeuwen (2006). Reading Images: representational, interactive, compositional.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Barthesian Semiotics</h5>
-                    <p>Barthes (1964/1977). Denotation, connotation, myth, anchorage, relay.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Peircean Semiotics</h5>
-                    <p>Peirce (1931-1958). Sign, object, interpretant; icon, index, symbol.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Critical Discourse Analysis</h5>
-                    <p>Fairclough (1995). Three-dimensional framework: text, discursive practice, social practice.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Discourse-Historical Approach</h5>
-                    <p>Wodak &amp; Meyer (2009). Four levels of context: co-text, intertextual, interdiscursive, broad socio-political.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Socio-Cognitive Approach</h5>
-                    <p>van Dijk (2008). Cognitive, social, and discursive dimensions of ideology reproduction.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Multimodal Critical Discourse Analysis</h5>
-                    <p>Machin &amp; Mayr (2012). Combines CDA with visual-grammar analysis of ideological content.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Appraisal Theory</h5>
-                    <p>Martin &amp; White (2005). Attitude, engagement, graduation in evaluative language.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Conceptual Metaphor Theory</h5>
-                    <p>Lakoff &amp; Johnson (1980). Source-target domain mappings and entailments.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Toulmin Argumentation</h5>
-                    <p>Toulmin (1958). Claim, data, warrant, backing, qualifier, rebuttal.</p>
-                </div>
-                <div class="model-card">
-                    <h5>Aristotelian Rhetoric</h5>
-                    <p>Aristotle (c. 350 BCE). Ethos, pathos, logos; the rhetorical situation.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Privacy Table -->
-        <section>
-            <h2 class="section-title lang-en">Privacy and Data Governance</h2>
-            <h2 class="section-title lang-ar">الخصوصية وحوكمة البيانات</h2>
+            <h2 class="section-title lang-en">How CorpusMind Compares</h2>
+            <h2 class="section-title lang-ar">كيف يقارن كوربَس مايند</h2>
             <div class="privacy-table-wrap">
                 <table class="privacy-table">
                     <thead>
                         <tr>
-                            <th class="lang-en">Property</th>
-                            <th class="lang-en">Status</th>
-                            <th class="lang-ar" style="display:none;">الخاصية</th>
-                            <th class="lang-ar" style="display:none;">الحالة</th>
+                            <th class="lang-en">Feature</th>
+                            <th class="lang-en">CorpusMind</th>
+                            <th class="lang-en">AntConc</th>
+                            <th class="lang-en">Sketch Engine</th>
+                            <th class="lang-en">#LancsBox</th>
+                            <th class="lang-en">Voyant</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="lang-en">Telemetry</td>
-                            <td class="lang-en"><strong>None.</strong> No analytics, no crash reporting, no usage tracking, no update checking.</td>
-                            <td class="lang-ar" style="display:none;">قياسات الاستخدام</td>
-                            <td class="lang-ar" style="display:none;"><strong>لا شيء.</strong> بلا تحليلات، بلا تقارير أعطال، بلا تتبع، بلا فحص تحديثات.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Outbound network calls</td>
-                            <td class="lang-en">None by default. The engine binds to <code>127.0.0.1:8765</code>; the AI assistant binds to <code>127.0.0.1:11434</code> (Ollama) or <code>127.0.0.1:1234</code> (LM Studio). A remote provider is contacted only when the user explicitly configures one.</td>
-                            <td class="lang-ar" style="display:none;">الاتصالات الشبكية الخارجية</td>
-                            <td class="lang-ar" style="display:none;">لا شيء افتراضياً. يرتبط المحرك بـ <code>127.0.0.1:8765</code>؛ ويرتبط المساعد الذكي بـ <code>127.0.0.1:11434</code> (Ollama) أو <code>127.0.0.1:1234</code> (LM Studio). يُتصل بمزوّد بعيد فقط عندما يُعدّه المستخدم صراحةً.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Corpus contents</td>
-                            <td class="lang-en"><strong>Never leave the device</strong> unless a remote model provider is explicitly configured. Even then, only the prompts sent to that provider are transmitted; the corpus itself remains on the device.</td>
-                            <td class="lang-ar" style="display:none;">محتويات المجموعة اللغوية</td>
-                            <td class="lang-ar" style="display:none;"><strong>لا تغادر الجهاز</strong> ما لم يُعدَّ مزوّد نماذج بعيد صراحةً. وحتى ذلك الحين، تُنقل فقط الاستفسارات المُرسلة إلى ذلك المزوّد؛ تبقى المجموعة اللغوية نفسها على الجهاز.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">At-rest encryption</td>
-                            <td class="lang-en">Optional AES-256 with PBKDF2 key derivation (600,000 iterations). Passphrase never persisted. Covers SQLite metadata, search index, cached results.</td>
-                            <td class="lang-ar" style="display:none;">تشفير البيانات الساكنة</td>
-                            <td class="lang-ar" style="display:none;">اختياري AES-256 مع اشتقاق مفتاح PBKDF2 (600,000 تكرار). عبارة المرور لا تُحفظ أبداً. يغطي بيانات SQLite الوصفية وفهرس البحث والنتائج المُخزَّنة.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Provenance records</td>
-                            <td class="lang-en">YAML files stored locally alongside the corpus. Machine-readable, exportable, designed for peer-review scrutiny.</td>
-                            <td class="lang-ar" style="display:none;">سجلات الإثبات</td>
-                            <td class="lang-ar" style="display:none;">ملفات YAML محفوظة محلياً مع المجموعة اللغوية. مقروءة آلياً، قابلة للتصدير، مصممة للتدقيق العلمي.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">AI assistant disclosures</td>
-                            <td class="lang-en">Each AI-assisted output records which provider processed the query (local or remote), which model was used, and whether the response was grounded in corpus evidence or flagged as unsupported.</td>
-                            <td class="lang-ar" style="display:none;">إفصاحات المساعد الذكي</td>
-                            <td class="lang-ar" style="display:none;">كل مُخرج مدعوم بالذكاء الاصطناعي يسجل أي مزوّد عالج الاستعلام (محلي أو بعيد)، وأي نموذج استُخدم، وما إذا كانت الاستجابة مؤسَّسة على أدلة المجموعة أو مُعلَّمة كغير مدعومة.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Third-party APIs</td>
-                            <td class="lang-en"><strong>None by default.</strong> OpenAI, Anthropic, and Google APIs are contacted only when the user explicitly configures an API key in Settings.</td>
-                            <td class="lang-ar" style="display:none;">واجهات الطرف الثالث</td>
-                            <td class="lang-ar" style="display:none;"><strong>لا شيء افتراضياً.</strong> يتم الاتصال بواجهات OpenAI وAnthropic وGoogle فقط عندما يُعدّ المستخدم مفتاح API صراحةً في الإعدادات.</td>
-                        </tr>
+                        <tr><td><strong>Price</strong></td><td><strong>Free (AGPL)</strong></td><td>Free</td><td>&euro;7.09+/mo</td><td>Free</td><td>Free</td></tr>
+                        <tr><td><strong>Collocation measures</strong></td><td><strong>7</strong></td><td>1</td><td>Multiple</td><td>Several</td><td>1</td></tr>
+                        <tr><td><strong>Arabic morphology</strong></td><td><strong>Yes (CAMeL)</strong></td><td>No</td><td>Yes (paid)</td><td>No</td><td>No</td></tr>
+                        <tr><td><strong>Multimodal / Vision</strong></td><td><strong>Yes</strong></td><td>No</td><td>No</td><td>No</td><td>No</td></tr>
+                        <tr><td><strong>AI assistant (grounded)</strong></td><td><strong>Yes</strong></td><td>No</td><td>No</td><td>No</td><td>No</td></tr>
+                        <tr><td><strong>Provenance records</strong></td><td><strong>YAML</strong></td><td>No</td><td>No</td><td>No</td><td>No</td></tr>
+                        <tr><td><strong>POS / Lemma / Dependency</strong></td><td><strong>Yes (spaCy)</strong></td><td>No</td><td>Yes</td><td>Limited</td><td>No</td></tr>
+                        <tr><td><strong>Discourse frameworks</strong></td><td><strong>12</strong></td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td><strong>Word Sketch</strong></td><td>Roadmap</td><td>No</td><td><strong>Yes</strong></td><td>No</td><td>No</td></tr>
+                        <tr><td><strong>Ready-made corpora</strong></td><td>Bring your own</td><td>No</td><td><strong>Yes</strong></td><td>Yes (BNC)</td><td>No</td></tr>
                     </tbody>
                 </table>
             </div>
+            <p style="text-align: center; margin-top: 20px; color: var(--gray); font-size: 14px;">
+                <span class="lang-en">These tools are <strong>complementary</strong>, not mutually exclusive. Many researchers use Voyant for a quick visual overview, CorpusMind for rigorous analysis, and Sketch Engine for Word Sketches.</span>
+                <span class="lang-ar">هذه الأدوات <strong>متكاملة</strong>، لا متنافية. كثير من الباحثين يستخدمون Voyant لنظرة عامة بصرية، وكوربَس مايند للتحليل الصارم، وSketch Engine لـ Word Sketch.</span>
+            </p>
         </section>
 
-        <!-- Ethics: Does / Does Not -->
-        <section>
-            <h2 class="section-title lang-en">What CorpusMind Does &mdash; and Does NOT Do</h2>
-            <h2 class="section-title lang-ar">ما يفعله كوربَس مايند &mdash; وما لا يفعله</h2>
-            <div class="ethics-grid">
-                <div class="ethics-card does">
-                    <h4 class="lang-en"><i class="fas fa-check-circle"></i> What it DOES</h4>
-                    <h4 class="lang-ar"><i class="fas fa-check-circle"></i> ما يفعله</h4>
-                    <ul>
-                        <li class="lang-en">Provides reproducible, framework-grounded analysis of linguistic and multimodal data.</li>
-                        <li class="lang-ar" style="display:none;">يوفّر تحليلاً قابلاً لإعادة الإنتاج ومؤسَّساً على الأطر النظرية للبيانات اللغوية ومتعددة الوسائط.</li>
-                        <li class="lang-en">Records every analytical operation in a machine-readable YAML provenance file.</li>
-                        <li class="lang-ar" style="display:none;">يسجل كل عملية تحليلية في ملف إثبات YAML مقروء آلياً.</li>
-                        <li class="lang-en">Enforces a citation contract on the AI assistant: every claim must cite corpus evidence or be flagged as unsupported.</li>
-                        <li class="lang-ar" style="display:none;">يفرض عقد استشهاد على المساعد الذكي: كل ادعاء يجب أن يستشهد بأدلة المجموعة أو يُعلَّم كغير مدعوم.</li>
-                        <li class="lang-en">Operates entirely on the researcher's own hardware when used with a local model provider.</li>
-                        <li class="lang-ar" style="display:none;">يعمل بالكامل على عتاد الباحث عند استخدامه مع مزوّد نماذج محلي.</li>
-                        <li class="lang-en">Supports at-rest encryption for corpora containing sensitive or unpublished data.</li>
-                        <li class="lang-ar" style="display:none;">يدعم تشفير البيانات الساكنة للمجموعات التي تحتوي على بيانات حساسة أو غير منشورة.</li>
-                        <li class="lang-en">Generates publication-ready exports with provenance metadata suitable for peer-review submission.</li>
-                        <li class="lang-ar" style="display:none;">يُنشئ تصديرات جاهزة للنشر ببيانات إثبات وصفية مناسبة للتقديم للتحكيم.</li>
-                        <li class="lang-en">Documents the formal definition and primary-literature citation for every implemented statistical measure.</li>
-                        <li class="lang-ar" style="display:none;">يوثّق التعريف الرسمي والاستشهاد بالأدبيات الأولية لكل مقياس إحصائي مُنفَّذ.</li>
-                    </ul>
-                </div>
-                <div class="ethics-card does-not">
-                    <h4 class="lang-en"><i class="fas fa-times-circle"></i> What it explicitly does NOT do</h4>
-                    <h4 class="lang-ar"><i class="fas fa-times-circle"></i> ما لا يفعله صراحةً</h4>
-                    <ul>
-                        <li class="lang-en"><strong>Does not transmit corpus data to any remote server by default.</strong> The default configuration permits no outbound network traffic.</li>
-                        <li class="lang-ar" style="display:none;"><strong>لا ينقل بيانات المجموعة إلى أي خادم بعيد افتراضياً.</strong> الإعداد الافتراضي لا يسمح بأي اتصال شبكي خارجي.</li>
-                        <li class="lang-en"><strong>Does not fabricate evidence.</strong> The AI assistant must cite a concordance line, a collocation result, or a vision annotation, or explicitly flag the claim as unsupported.</li>
-                        <li class="lang-ar" style="display:none;"><strong>لا يختلق أدلة.</strong> يجب على المساعد الذكي الاستشهاد بسطر سياقي أو نتيجة تضايق أو شرح بصري، أو الإشارة الصريحة إلى أن الادعاء غير مدعوم.</li>
-                        <li class="lang-en"><strong>Does not suppress analytical steps.</strong> Every operation is recorded in the provenance file; no operation can be retroactively removed.</li>
-                        <li class="lang-ar" style="display:none;"><strong>لا يخفي الخطوات التحليلية.</strong> كل عملية مُسجَّلة في ملف الإثبات؛ لا يمكن إزالة أي عملية بأثر رجعي.</li>
-                        <li class="lang-en"><strong>Does not collect telemetry, analytics, or crash reports.</strong></li>
-                        <li class="lang-ar" style="display:none;"><strong>لا يجمع بيانات استخدام أو تحليلات أو تقارير أعطال.</strong></li>
-                        <li class="lang-en"><strong>Does not access any file the user has not explicitly imported through the file dialog.</strong></li>
-                        <li class="lang-ar" style="display:none;"><strong>لا يصل إلى أي ملف لم يُستورد صراحةً من خلال حوار الملفات.</strong></li>
-                        <li class="lang-en"><strong>Does not circumvent institutional data-governance policies.</strong> At-rest encryption and the local-only default configuration are designed to support compliance, not evade it.</li>
-                        <li class="lang-ar" style="display:none;"><strong>لا يتهرب من سياسات حوكمة البيانات المؤسسية.</strong> تشفير البيانات الساكنة والإعداد المحلي الافتراضي مصممان لدعم الامتثال، لا التهرب منه.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Installation Workflow -->
+        <!-- Getting Started -->
         <section class="workflow-container">
             <h2 class="section-title lang-en">Getting Started</h2>
             <h2 class="section-title lang-ar">البدء</h2>
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <h4 class="lang-en">Install CorpusMind</h4>
-                    <h4 class="lang-ar">ثبّت كوربَس مايند</h4>
-                    <p class="lang-en">Download the latest installer for your platform from the GitHub Releases page: <code>.dmg</code> for macOS (Apple Silicon and Intel), <code>.exe</code> (NSIS) or <code>.msi</code> for Windows, <code>.AppImage</code> or <code>.deb</code> for Linux. Alternatively, build from source using the provided <code>scripts/build-macos-arm64.sh</code> script (macOS) or the GitHub Actions release workflow (all platforms).</p>
-                    <p class="lang-ar">نزّل أحدث مثبّت لمنصتك من صفحة الإصدارات على GitHub: <code>.dmg</code> لـ macOS (Apple Silicon وIntel)، <code>.exe</code> (NSIS) أو <code>.msi</code> لـ Windows، <code>.AppImage</code> أو <code>.deb</code> لـ Linux. بدلاً من ذلك، ابنِ من المصدر باستخدام السكربت المُقدَّم <code>scripts/build-macos-arm64.sh</code> (macOS) أو سير عمل إصدار GitHub Actions (كل المنصات).</p>
+                    <h4 class="lang-en">Download and Install</h4>
+                    <h4 class="lang-ar">نزّل وثبّت</h4>
+                    <p class="lang-en">Grab the installer for your platform: <code>.dmg</code> for macOS, <code>.exe</code> or <code>.msi</code> for Windows, <code>.AppImage</code> or <code>.deb</code> for Linux. Or try the live PWA in your browser with no installation.</p>
+                    <p class="lang-ar">احصل على المثبّت لمنصتك: <code>.dmg</code> لـ macOS، <code>.exe</code> أو <code>.msi</code> لـ Windows، <code>.AppImage</code> أو <code>.deb</code> لـ Linux. أو جرّب PWA مباشرة في متصفحك دون تثبيت.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
-                    <h4 class="lang-en">(Optional) Install a Local Model Provider</h4>
-                    <h4 class="lang-ar">(اختياري) ثبّت مزوّد نماذج محلي</h4>
-                    <p class="lang-en">To enable the AI assistant with full offline operation, install <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> or <a href="https://lmstudio.ai/" target="_blank" rel="noopener">LM Studio</a>. With Ollama, pull a model suited to your hardware (e.g., <code>ollama pull llama3.2:3b</code> for 8 GB RAM, <code>ollama pull qwen3:14b</code> for 16 GB RAM). The AI assistant works with any OpenAI-compatible local endpoint.</p>
-                    <p class="lang-ar">لتفعيل المساعد الذكي بعمل غير متصل بالكامل، ثبّت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> أو <a href="https://lmstudio.ai/" target="_blank" rel="noopener">LM Studio</a>. مع Ollama، اسحب نموذجاً يناسب عتادك (مثل <code>ollama pull llama3.2:3b</code> لـ 8 جيجا رام، <code>ollama pull qwen3:14b</code> لـ 16 جيجا رام). يعمل المساعد الذكي مع أي نقطة نهاية محلية متوافقة مع OpenAI.</p>
+                    <h4 class="lang-en">(Optional) Install a Local Model</h4>
+                    <h4 class="lang-ar">(اختياري) ثبّت نموذجاً محلياً</h4>
+                    <p class="lang-en">For the AI assistant with full offline operation, install <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> and pull a model suited to your RAM (e.g. <code>ollama pull llama3.2:3b</code> for 8 GB). Works with any OpenAI-compatible local endpoint.</p>
+                    <p class="lang-ar">للمساعد الذكي بعمل غير متصل بالكامل، ثبّت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> واسحب نموذجاً يناسب رامك (مثل <code>ollama pull llama3.2:3b</code> لـ 8 جيجا). يعمل مع أي نقطة نهاية محلية متوافقة مع OpenAI.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
-                    <h4 class="lang-en">Create a Project and Import a Corpus</h4>
-                    <h4 class="lang-ar">أنشئ مشروعاً واستورد مجموعة لغوية</h4>
-                    <p class="lang-en">Launch CorpusMind, create a project, and import documents in any of the supported formats: TXT, DOCX, PDF, HTML, XML, CSV, or Markdown. The ingestion pipeline performs charset detection, language identification, and full NLP processing (tokenization, lemmatization, POS tagging, dependency parsing, NER). The pipeline recipe is recorded in the provenance file for every document.</p>
-                    <p class="lang-ar">شغّل كوربَس مايند، أنشئ مشروعاً، واستورد الوثائق بأي من الصيغ المدعومة: TXT، DOCX، PDF، HTML، XML، CSV، أو Markdown. ينفّذ خط الاستيعاب كشف الترميز وتحديد اللغة ومعالجة اللغة الطبيعية الكاملة (الترميز، التأصيل الصرفي، الوسم النحوي، التحليل التبعي، التعرف على الكيانات). تُسجَّل وصفة الخط في ملف الإثبات لكل وثيقة.</p>
+                    <h4 class="lang-en">Import a Corpus and Analyse</h4>
+                    <h4 class="lang-ar">استورد مجموعة لغوية وحلّل</h4>
+                    <p class="lang-en">Create a project, import documents (TXT, DOCX, PDF, HTML, XML, CSV, Markdown), and start analysing. The pipeline recipe is recorded for every document. Export results to Excel, Word, PDF, or LaTeX with provenance metadata for peer review.</p>
+                    <p class="lang-ar">أنشئ مشروعاً، استورد وثائق (TXT، DOCX، PDF، HTML، XML، CSV، Markdown)، وابدأ التحليل. تُسجَّل وصفة الخط لكل وثيقة. صدّر النتائج إلى Excel أو Word أو PDF أو LaTeX ببيانات إثبات للتحكيم.</p>
                 </div>
             </div>
         </section>
@@ -640,18 +517,18 @@
         <div class="data-notice">
             <h4 class="lang-en"><i class="fas fa-flask"></i> Research Transparency Notice</h4>
             <h4 class="lang-ar"><i class="fas fa-flask"></i> إشعار الشفافية البحثية</h4>
-            <p class="lang-en">CorpusMind v0.1.0 &mdash; &copy; 2026 <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wessam Ibrahim</strong>. Released under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">GNU Affero General Public License v3.0</a> (AGPL-3.0-only). The software was designed and directed by Dr. Mandour, with engineering support from <strong>Super Z</strong> (GLM model, Z.ai) serving as a full-stack engineering collaborator under his supervision across all six development phases. Dr. Mandour reviewed all code, verified all analytical claims against the published methodology literature, and retained final editorial authority.</p>
-            <p class="lang-ar">كوربَس مايند v0.1.0 &mdash; &copy; 2026 <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong>. صدر تحت <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">رخصة جنو أفيرو العامة الإصدار 3.0</a> (AGPL-3.0-only). صُمِّم وأُخرج بإشراف د. مندور، بدعم هندسي من <strong>Super Z</strong> (نموذج GLM، Z.ai) كتعاون هندسي شامل تحت إشرافه عبر مراحل التطوير الست. راجع د. مندور كل الكود وتحقق من كل الادعاءات التحليلية مقابل أدبيات المنهجية المنشورة واحتفظ بالسلطة التحريرية النهائية.</p>
-            <p class="lang-en"><strong>Persistent identifier:</strong> <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21226650</a> (Zenodo concept DOI).</p>
-            <p class="lang-ar"><strong>المُعرّف الدائم:</strong> <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21226650</a> (مُعرّف Zenodo المفاهيمي).</p>
+            <p class="lang-en">CorpusMind v0.1.0 &mdash; &copy; 2026 <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wessam Ibrahim</strong> (Princess Nourah Bint Abdulrahman University). Released under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">GNU Affero General Public License v3.0</a> (AGPL-3.0-only). This project is <strong>not funded by any institution</strong>; it was developed independently by the authors out of responsibility to the linguist community. Engineering support from <strong>Super Z</strong> (GLM model, Z.ai) under Dr. Mandour's supervision; all code was reviewed and committed by the human authors.</p>
+            <p class="lang-ar">كوربَس مايند v0.1.0 &mdash; &copy; 2026 <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong> (جامعة الأميرة نورة بنت عبدالرحمن). صدر تحت <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">رخصة جنو أفيرو العامة الإصدار 3.0</a> (AGPL-3.0-only). هذا المشروع <strong>غير مموّل من أي مؤسسة</strong>؛ طوّره المؤلفان بشكل مستقل من مسؤولية تجاه مجتمع اللغويين. دعم هندسي من <strong>Super Z</strong> (نموذج GLM، Z.ai) تحت إشراف د. مندور؛ راجع المؤلفون البشريون كل الكود وأرسلوه.</p>
+            <p class="lang-en"><strong>Persistent identifier:</strong> <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21226650</a></p>
+            <p class="lang-ar"><strong>المُعرّف الدائم:</strong> <a href="https://doi.org/10.5281/zenodo.21226650" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21226650</a></p>
         </div>
 
         <!-- Citation Reference -->
         <div class="data-notice">
             <h4 class="lang-en"><i class="fas fa-quote-right"></i> Cite CorpusMind</h4>
             <h4 class="lang-ar"><i class="fas fa-quote-right"></i> اقتبس كوربَس مايند</h4>
-            <p class="lang-en">If you use CorpusMind in your research, teaching, or published work, please cite it using the references below. The BibTeX entry drops directly into your <code>.bib</code> file.</p>
-            <p class="lang-ar">إذا استخدمت كوربَس مايند في بحثك أو تدريسك أو عملك المنشور، يرجى اقتباسه باستخدام المراجع أدناه. إدخال BibTeX يُدرج مباشرة في ملف <code>.bib</code> الخاص بك.</p>
+            <p class="lang-en">If you use CorpusMind in your research, teaching, or published work, please cite it using the references below.</p>
+            <p class="lang-ar">إذا استخدمت كوربَس مايند في بحثك أو تدريسك أو عملك المنشور، يرجى اقتباسه باستخدام المراجع أدناه.</p>
             <div class="citation-label lang-en">APA 7th edition</div>
             <div class="citation-label lang-ar">نمط APA الإصدار السابع</div>
             <div class="citation-apa"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>Mandour, W., &amp; Ibrahim, W. (2026). <em>CorpusMind: A local-first, AI-native research environment for corpus linguistics and multimodal discourse analysis</em> (Version 0.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21226650</div>
@@ -672,37 +549,33 @@
         <section class="cta-section">
             <h2 class="cta-title lang-en">Available Now for Researchers</h2>
             <h2 class="cta-title lang-ar">متاح الآن للباحثين</h2>
-            <p class="cta-subtitle lang-en">Download CorpusMind v0.1.0 to conduct reproducible, framework-grounded corpus and multimodal discourse analysis on your own hardware. Local-first by default, AGPL-3.0-only licensed, with full provenance records for peer-review transparency.</p>
-            <p class="cta-subtitle lang-ar">نزّل كوربَس مايند v0.1.0 لإجراء تحليل لغوي وخطابي متعدد الوسائط قابل لإعادة الإنتاج ومؤسَّس على الأطر النظرية على عتادك الخاص. محلي أولاً افتراضياً، بترخيص AGPL-3.0-only، مع سجلات إثبات كاملة لشفافية التحكيم.</p>
+            <p class="cta-subtitle lang-en">Download CorpusMind v0.1.0 — free, open-source, with all features unlocked. No subscription, no telemetry, no vendor lock-in.</p>
+            <p class="cta-subtitle lang-ar">نزّل كوربَس مايند v0.1.0 — مجاني، مفتوح المصدر، بكل الميزات مفتوحة. بلا اشتراك، بلا قياسات استخدام، بلا قفل للمزوّد.</p>
 
             <div class="download-platforms">
                 <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-apple"></i>
-                    <span class="dl-name lang-en">macOS (Apple Silicon)</span>
-                    <span class="dl-name lang-ar">macOS (Apple Silicon)</span>
+                    <span class="dl-name">macOS (Apple Silicon)</span>
                     <span class="dl-os">arm64 &middot; DMG</span>
                     <span class="dl-file">CorpusMind_0.1.0_aarch64.dmg</span>
                 </a>
                 <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
-                    <i class="fab fa-apple"></i>
-                    <span class="dl-name lang-en">macOS (Intel)</span>
-                    <span class="dl-name lang-ar">macOS (Intel)</span>
-                    <span class="dl-os">x86_64 &middot; DMG</span>
-                    <span class="dl-file">CorpusMind_0.1.0_x64.dmg</span>
-                </a>
-                <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-windows"></i>
-                    <span class="dl-name lang-en">Windows</span>
-                    <span class="dl-name lang-ar">ويندوز</span>
-                    <span class="dl-os">x64 &middot; NSIS / MSI</span>
+                    <span class="dl-name">Windows</span>
+                    <span class="dl-os">x64 &middot; MSI / NSIS</span>
                     <span class="dl-file">CorpusMind_0.1.0_x64-setup.exe</span>
                 </a>
                 <a href="https://github.com/waleedmandour/CorpusMind/releases" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-linux"></i>
-                    <span class="dl-name lang-en">Linux</span>
-                    <span class="dl-name lang-ar">لينكس</span>
+                    <span class="dl-name">Linux</span>
                     <span class="dl-os">x64 &middot; AppImage / DEB</span>
                     <span class="dl-file">CorpusMind_0.1.0_amd64.AppImage</span>
+                </a>
+                <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener" class="download-card">
+                    <i class="fas fa-globe"></i>
+                    <span class="dl-name">Web PWA</span>
+                    <span class="dl-os">No install &middot; Browser</span>
+                    <span class="dl-file">corpus-mind-web.vercel.app</span>
                 </a>
             </div>
 
@@ -717,23 +590,19 @@
                     <span class="lang-en">Zenodo DOI</span>
                     <span class="lang-ar">معرّف Zenodo</span>
                 </a>
-                <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener" class="cta-button secondary">
-                    <i class="fas fa-globe"></i>
-                    <span class="lang-en">Live PWA</span>
-                    <span class="lang-ar">تطبيق الويب</span>
-                </a>
             </div>
 
-            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Version 0.1.0 &middot; AGPL-3.0-only &middot; Built with Tauri 2, FastAPI, React 18, and spaCy &middot; See the <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v0.1.0" target="_blank" rel="noopener">release notes</a>.</p>
-            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">الإصدار 0.1.0 &middot; AGPL-3.0-only &middot; مبني بـ Tauri 2 وFastAPI وReact 18 وspaCy &middot; اطّلع على <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v0.1.0" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
+            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Version 0.1.0 &middot; AGPL-3.0-only &middot; Not funded by any institution &middot; <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v0.1.0" target="_blank" rel="noopener">Release notes</a></p>
+            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">الإصدار 0.1.0 &middot; AGPL-3.0-only &middot; غير مموّل من أي مؤسسة &middot; <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v0.1.0" target="_blank" rel="noopener">ملاحظات الإصدار</a></p>
         </section>
+
 
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">CorpusMind &mdash; <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wessam Ibrahim</strong></span>
-                    <span class="lang-ar">كوربَس مايند &mdash; <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong></span>
+                    <span class="lang-en">CorpusMind &mdash; <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wessam Ibrahim</strong> (Princess Nourah Bint Abdulrahman University)</span>
+                    <span class="lang-ar">كوربَس مايند &mdash; <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong> (جامعة الأميرة نورة بنت عبدالرحمن)</span>
                 </div>
                 <div>
                     <span class="lang-en">ORCID: <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener">0000-0002-9262-5993</a> (Dr. Mandour) &middot; <a href="https://orcid.org/0000-0003-0710-6038" target="_blank" rel="noopener">0000-0003-0710-6038</a> (Prof. Ibrahim)</span>
