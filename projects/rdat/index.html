@@ -7,6 +7,9 @@
     <title>RDAT: Translation Copilot - Professional English-Arabic CAT Environment | Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="screenshot.png">
+    <link rel="shortcut icon" type="image/png" href="screenshot.png">
+    <link rel="apple-touch-icon" href="screenshot.png">
     <style>
         /* ===== CSS VARIABLES & RESET ===== */
         :root {
@@ -885,6 +888,161 @@
             .container { padding: 0 16px; }
             .hero-badge { font-size: 12px; padding: 6px 14px; }
         }
+
+        /* ===== FLOATING APP LOGO (HERO) ===== */
+        .app-logo-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 28px;
+            perspective: 1000px;
+        }
+
+        .app-logo-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 28px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f7 100%);
+            border: 3px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 50px rgba(74, 20, 140, 0.35),
+                        0 8px 20px rgba(26, 95, 122, 0.25);
+            animation: appLogoFloat 4s ease-in-out infinite;
+        }
+
+        .app-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .app-logo-frame::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -75%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                115deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.55) 50%,
+                transparent 100%
+            );
+            transform: skewX(-18deg);
+            animation: appLogoShine 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes appLogoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes appLogoShine {
+            0%, 60% { left: -75%; }
+            100% { left: 125%; }
+        }
+
+        /* ===== PRIVACY / COMPARISON TABLE ===== */
+        .privacy-table-wrap {
+            overflow-x: auto;
+            margin: 32px 0;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .privacy-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            min-width: 780px;
+        }
+
+        .privacy-table thead th {
+            background: linear-gradient(135deg, #4A148C 0%, #1A5F7A 100%);
+            color: white;
+            padding: 16px 18px;
+            font-size: 15px;
+            font-weight: 700;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        body.arabic .privacy-table thead th {
+            text-align: right;
+        }
+
+        .privacy-table tbody td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            line-height: 1.5;
+            vertical-align: top;
+        }
+
+        .privacy-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .privacy-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .privacy-table tbody tr:hover {
+            background-color: #f5f0ff;
+        }
+
+        .privacy-table .row-feature {
+            font-weight: 600;
+            color: var(--primary);
+            background-color: rgba(74, 20, 140, 0.04);
+            min-width: 180px;
+        }
+
+        .privacy-table .cell-yes {
+            color: #1b8a3a;
+            font-weight: 600;
+        }
+
+        .privacy-table .cell-no {
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        .privacy-table .cell-partial {
+            color: #b7800b;
+            font-weight: 600;
+        }
+
+        .privacy-table-note {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(74, 20, 140, 0.05);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        body.arabic .privacy-table-note {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .app-logo-container { width: 110px; height: 110px; margin-bottom: 20px; }
+            .privacy-table thead th, .privacy-table tbody td { padding: 10px 12px; font-size: 13px; }
+        }
+
+        @media (max-width: 480px) {
+            .app-logo-container { width: 96px; height: 96px; margin-bottom: 16px; }
+        }
     </style>
 </head>
 <body>
@@ -922,9 +1080,9 @@
             </div>
 
             <div class="header-photo-container">
-                <img src="https://waleedmandour.org/photo.png" alt="Dr. Waleed Mandour" class="header-photo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="screenshot.png" alt="RDAT: Translation Copilot application icon" class="header-photo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div style="display:none; width:180px; height:180px; border-radius:50%; align-items:center; justify-content:center; background:rgba(255,255,255,0.15); border:4px solid rgba(255,255,255,0.8); box-shadow:0 0 25px rgba(74,20,140,0.6);">
-                    <i class="fas fa-user" style="font-size:80px; color:rgba(255,255,255,0.9);"></i>
+                    <i class="fas fa-language" style="font-size:80px; color:rgba(255,255,255,0.9);"></i>
                 </div>
             </div>
         </div>
@@ -947,6 +1105,12 @@
         <!-- Hero / Overview Section -->
         <section class="hero" id="overview">
             <div class="hero-content">
+                <!-- Floating App Logo -->
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <img src="screenshot.png" alt="RDAT: Translation Copilot app icon" class="app-logo-img" loading="lazy" onerror="this.parentElement.parentElement.style.display='none';">
+                    </div>
+                </div>
                 <!-- Release Badge -->
                 <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; v0.2.0 - Active Development</div>
                 <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; الإصدار 0.2.0 - تطوير نشط</div>
@@ -1151,6 +1315,137 @@
                     </tr>
                 </tbody>
             </table>
+        </section>
+
+        <!-- CAT Tools Comparison Section -->
+        <section id="comparison" class="workflow-container">
+            <h2 class="section-title lang-en">Comparison with Other CAT Tools</h2>
+            <h2 class="section-title lang-ar">مقارنة مع أدوات الترجمة بمساعدة الحاسوب الأخرى</h2>
+
+            <p class="hero-description lang-en" style="margin-bottom: 24px;">
+                How RDAT: Translation Copilot stacks up against established CAT tools across the features that matter most for AI-assisted translation workflows.
+            </p>
+            <p class="hero-description lang-ar" style="margin-bottom: 24px;">
+                كيف يُقارَن RDAT: مساعد الترجمة بأدوات الترجمة بمساعدة الحاسوب المعروفة في الميزات الأكثر أهمية لسير عمل الترجمة المدعومة بالذكاء الاصطناعي.
+            </p>
+
+            <div class="privacy-table-wrap">
+                <table class="privacy-table">
+                    <thead>
+                        <tr>
+                            <th><span class="lang-en">Feature</span><span class="lang-ar">الميزة</span></th>
+                            <th>RDAT</th>
+                            <th>memoQ</th>
+                            <th>Trados Studio</th>
+                            <th>OmegaT</th>
+                            <th>MateCat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Local LLM (Ollama)</span><span class="lang-ar">نموذج لغوي محلي (Ollama)</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes (Gemma 4)</span><span class="lang-ar">نعم (Gemma 4)</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Ghost-text predictive completion</span><span class="lang-ar">الإكمال التنبؤي بالنص المخفي</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes (continuous)</span><span class="lang-ar">نعم (مستمر)</span></td>
+                            <td class="cell-partial"><span class="lang-en">Limited</span><span class="lang-ar">محدود</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">RAG-augmented suggestions</span><span class="lang-ar">اقتراحات معززة بـ RAG</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Price</span><span class="lang-ar">السعر</span></td>
+                            <td class="cell-yes"><span class="lang-en">Free (MIT)</span><span class="lang-ar">مجاني (MIT)</span></td>
+                            <td><span class="lang-en">Paid</span><span class="lang-ar">مدفوع</span></td>
+                            <td><span class="lang-en">Paid</span><span class="lang-ar">مدفوع</span></td>
+                            <td class="cell-yes"><span class="lang-en">Free</span><span class="lang-ar">مجاني</span></td>
+                            <td class="cell-yes"><span class="lang-en">Free</span><span class="lang-ar">مجاني</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Platform</span><span class="lang-ar">المنصة</span></td>
+                            <td><span class="lang-en">Desktop (Win/Mac/Linux) + PWA</span><span class="lang-ar">سطح مكتب (Win/Mac/Linux) + PWA</span></td>
+                            <td><span class="lang-en">Desktop (Win/Mac)</span><span class="lang-ar">سطح مكتب (Win/Mac)</span></td>
+                            <td><span class="lang-en">Desktop (Win)</span><span class="lang-ar">سطح مكتب (Win)</span></td>
+                            <td><span class="lang-en">Desktop (Java)</span><span class="lang-ar">سطح مكتب (Java)</span></td>
+                            <td><span class="lang-en">Web</span><span class="lang-ar">ويب</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Offline operation</span><span class="lang-ar">العمل دون اتصال</span></td>
+                            <td class="cell-yes"><span class="lang-en">Full</span><span class="lang-ar">كامل</span></td>
+                            <td class="cell-yes"><span class="lang-en">Full</span><span class="lang-ar">كامل</span></td>
+                            <td class="cell-yes"><span class="lang-en">Full</span><span class="lang-ar">كامل</span></td>
+                            <td class="cell-yes"><span class="lang-en">Full</span><span class="lang-ar">كامل</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">.docx import</span><span class="lang-ar">استيراد .docx</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Glossary management</span><span class="lang-ar">إدارة المسرد</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes (IndexedDB)</span><span class="lang-ar">نعم (IndexedDB)</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Translation memory</span><span class="lang-ar">ذاكرة الترجمة</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes (local)</span><span class="lang-ar">نعم (محلي)</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">AI Translation Tutor</span><span class="lang-ar">معلّم الترجمة بالذكاء الاصطناعي</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes (Gemini)</span><span class="lang-ar">نعم (Gemini)</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Arabic RTL support</span><span class="lang-ar">دعم العربية من اليمين لليسار</span></td>
+                            <td class="cell-yes"><span class="lang-en">Full</span><span class="lang-ar">كامل</span></td>
+                            <td class="cell-partial"><span class="lang-en">Partial</span><span class="lang-ar">جزئي</span></td>
+                            <td class="cell-partial"><span class="lang-en">Partial</span><span class="lang-ar">جزئي</span></td>
+                            <td class="cell-partial"><span class="lang-en">Partial</span><span class="lang-ar">جزئي</span></td>
+                            <td class="cell-partial"><span class="lang-en">Partial</span><span class="lang-ar">جزئي</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-feature"><span class="lang-en">Open source</span><span class="lang-ar">مفتوح المصدر</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                            <td class="cell-yes"><span class="lang-en">Yes</span><span class="lang-ar">نعم</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="privacy-table-note">
+                <span class="lang-en">RDAT is complementary to traditional CAT tools. Professional translators may use memoQ or Trados for enterprise projects and RDAT for AI-assisted rapid translation.</span>
+                <span class="lang-ar">RDAT يكمّل أدوات الترجمة بمساعدة الحاسوب التقليدية. قد يستخدم المترجمون المحترفون memoQ أو Trados لمشاريع المؤسسات، وRDAT للترجمة السريعة المدعومة بالذكاء الاصطناعي.</span>
+            </p>
         </section>
 
         <!-- Download Section -->
