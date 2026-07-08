@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="RDAT Copilot — Repository-Driven Adaptive Translation: A Progressive Web App providing a full-featured, AI-powered co-writing environment for English-Arabic translation — running entirely in the browser.">
-    <title>RDAT Copilot — Repository-Driven Adaptive Translation</title>
+    <meta name="description" content="RDAT: Translation Copilot - Repository-Driven Adaptive Translation: a bilingual EN-AR computer-assisted translation environment with a dual-path architecture (Tauri desktop and PWA), powered by Ollama and Gemma 4 as the primary local engine.">
+    <title>RDAT: Translation Copilot - Repository-Driven Adaptive Translation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -78,7 +78,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .language-toggle button {
             background: transparent;
             border: none;
@@ -89,11 +89,11 @@
             border-radius: 20px;
             transition: var(--transition);
         }
-        
+
         .language-toggle button.active {
             background: var(--secondary);
         }
-        
+
         /* ===== HEADER STYLES ===== */
         header {
             background: linear-gradient(135deg, #4A148C 0%, #1A5F7A 100%);
@@ -103,7 +103,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .header-content {
             position: relative;
             z-index: 2;
@@ -114,33 +114,33 @@
             gap: 50px;
             margin-bottom: 40px;
         }
-        
+
         .header-text {
             text-align: left;
             max-width: 600px;
         }
-        
+
         body.arabic .header-text {
             text-align: right;
         }
-        
+
         h1 {
             font-size: 2.8em;
             margin-bottom: 10px;
             font-weight: 700;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        
+
         .tagline {
             font-size: 1.3em;
             margin-bottom: 30px;
             opacity: 0.9;
         }
-        
+
         .header-photo-container {
             position: relative;
         }
-        
+
         .header-photo {
             width: 180px;
             height: 180px;
@@ -150,17 +150,17 @@
             box-shadow: 0 0 25px rgba(74, 20, 140, 0.6);
             transition: var(--transition);
         }
-        
+
         .header-photo:hover {
             transform: scale(1.05);
             box-shadow: 0 0 35px rgba(74, 20, 140, 0.8);
         }
-        
+
         nav {
             position: relative;
             z-index: 2;
         }
-        
+
         nav ul {
             list-style: none;
             display: flex;
@@ -175,7 +175,7 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         nav a {
             color: var(--white);
             text-decoration: none;
@@ -185,7 +185,7 @@
             padding: 5px 0;
             position: relative;
         }
-        
+
         nav a:after {
             content: '';
             position: absolute;
@@ -196,20 +196,20 @@
             background-color: var(--secondary);
             transition: var(--transition);
         }
-        
+
         body.arabic nav a:after {
             left: auto;
             right: 0;
         }
-        
+
         nav a:hover:after {
             width: 100%;
         }
-        
+
         nav a.active {
             color: var(--secondary);
         }
-        
+
         nav a.active:after {
             width: 100%;
         }
@@ -250,11 +250,11 @@
         .hero-description {
             font-size: 18px;
             color: var(--gray);
-            max-width: 700px;
+            max-width: 720px;
             margin: 0 auto 32px;
             line-height: 1.7;
         }
-        
+
         /* Live Demo Badge */
         .live-demo-badge {
             display: inline-block;
@@ -268,6 +268,29 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(74, 20, 140, 0.3);
             text-transform: uppercase;
+        }
+
+        /* ===== SCREENSHOT SECTION ===== */
+        .screenshot-container {
+            margin: 56px auto 16px;
+            max-width: 1100px;
+            text-align: center;
+        }
+
+        .screenshot-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(10, 28, 60, 0.25);
+            border: 1px solid var(--light);
+            display: block;
+        }
+
+        .screenshot-caption {
+            margin-top: 14px;
+            color: var(--gray);
+            font-size: 14px;
+            font-style: italic;
         }
 
         /* ===== CTA BUTTON ===== */
@@ -536,6 +559,46 @@
             box-shadow: 0 4px 12px rgba(74, 20, 140, 0.3);
         }
 
+        /* ===== CITATION SECTION ===== */
+        .citation-section {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+        }
+
+        .citation-section h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .citation-text {
+            font-family: 'Courier New', monospace;
+            color: var(--dark);
+            line-height: 1.8;
+            background: var(--light);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-top: 16px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .citation-text a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .citation-text a:hover {
+            text-decoration: underline;
+        }
+
         /* ===== CTA SECTION ===== */
         .cta-section {
             text-align: center;
@@ -556,7 +619,7 @@
         .cta-subtitle {
             color: var(--gray);
             font-size: 18px;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto 32px;
             line-height: 1.7;
         }
@@ -603,6 +666,19 @@
             box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
         }
 
+        .cta-button.tertiary {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+            box-shadow: none;
+        }
+
+        .cta-button.tertiary:hover {
+            background: var(--accent-teal);
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 95, 122, 0.3);
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             text-align: center;
@@ -630,7 +706,7 @@
         .footer-email:hover {
             color: var(--accent);
         }
-        
+
         .footer a {
             color: var(--primary);
             text-decoration: none;
@@ -682,7 +758,7 @@
         /* ===== LANGUAGE LOGIC ===== */
         .lang-en { display: block; }
         .lang-ar { display: none; }
-        
+
         body.arabic .lang-en { display: none; }
         body.arabic .lang-ar { display: block; }
 
@@ -736,27 +812,27 @@
         <button id="lang-en" class="active">English</button>
         <button id="lang-ar">العربية</button>
     </div>
-    
+
     <!-- Header Section -->
     <header>
         <div class="container header-content">
             <div class="header-text">
-                <h1 class="lang-en">RDAT Copilot</h1>
-                <h1 class="lang-ar">مساعد الترجمة الذكي</h1>
-                
+                <h1 class="lang-en">RDAT: Translation Copilot</h1>
+                <h1 class="lang-ar">RDAT: مساعد الترجمة</h1>
+
                 <p class="tagline lang-en">Repository-Driven Adaptive Translation</p>
                 <p class="tagline lang-ar">نظام الترجمة التكيفي القائم على المستودعات</p>
             </div>
-            
+
             <div class="header-photo-container">
                 <i class="fas fa-language" style="font-size: 80px; color: rgba(255,255,255,0.9); filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));"></i>
             </div>
         </div>
-        
+
         <nav>
             <div class="container">
                 <ul>
-<li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
                     <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
                     <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
                     <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
@@ -764,7 +840,7 @@
                     <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
                     <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
                     <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
-                                </ul>
+                </ul>
             </div>
         </nav>
     </header>
@@ -775,24 +851,24 @@
         <section class="hero">
             <div class="hero-content">
                 <!-- Status Badge -->
-                <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Active Development</div>
-                <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; تطوير نشط</div>
+                <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Version 0.2.0 - Active Development</div>
+                <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; الإصدار 0.2.0 - تطوير نشط</div>
 
-                <h1 class="lang-en">RDAT Copilot</h1>
-                <h1 class="lang-ar">مساعد الترجمة الذكي — RDAT Copilot</h1>
-                
+                <h1 class="lang-en">RDAT: Translation Copilot</h1>
+                <h1 class="lang-ar">RDAT: مساعد الترجمة</h1>
+
                 <div class="hero-subtitle lang-en">Repository-Driven Adaptive Translation</div>
                 <div class="hero-subtitle lang-ar">نظام الترجمة التكيفي القائم على المستودعات</div>
 
                 <p class="hero-description lang-en">
-                    A Progressive Web App providing a <strong>full-featured, AI-powered co-writing environment</strong> for English-Arabic translation — running <strong>entirely in the browser</strong>. Built on a dual-track AI architecture combining a Sovereign Track (local WebGPU inference via Gemma 2B) and a Reasoning Track (cloud Gemini API). All translation decisions are guided by an in-browser RAG vector database and an AMTA terminology linter.
-                </p>
-                
-                <p class="hero-description lang-ar">
-                    تطبيق ويب تقدمي يوفر <strong>بيئة تحرير ذكية كاملة مدعومة بالذكاء الاصطناعي</strong> لترجمة النصوص بين الإنجليزية والعربية — يعمل <strong>بالكامل داخل المتصفح</strong>. مبني على بنية ذكاء اصطناعي مزدوجة المسار تجمع بين المسار المتحكم (استدلال محلي عبر WebGPU باستخدام Gemma 2B) ومسار الاستدلال السحابي (Gemini API). تُوجَّه جميع قرارات الترجمة بقاعدة بيانات متجهة RAG داخل المتصفح وفاحص مصطلحات AMTA.
+                    A professional English-to-Arabic computer-assisted translation environment that ships in <strong>two complementary forms</strong> sharing a single React/Vite frontend: a <strong>Tauri 2 desktop app</strong> (Windows, macOS, Linux) and an installable <strong>PWA</strong> running in the browser. The primary engine is the <strong>local LLM</strong>: Ollama running Gemma 4 in desktop mode, or WebLLM via WebGPU in browser mode. Google Gemini acts as a secondary fallback for low-confidence or complex passages. A three-tier ghost-text pipeline (Local Translation Engine, local LLM, cloud Gemini) keeps translators in full control of every word.
                 </p>
 
-                <a href="https://rdat-pwa.vercel.app/" target="_blank" class="hero-cta">
+                <p class="hero-description lang-ar">
+                    بيئة احترافية للترجمة من الإنجليزية إلى العربية تأتي في <strong>شكلين متكاملين</strong> يشاركان واجهة React/Vite واحدة: <strong>تطبيق سطح المكتب Tauri 2</strong> (Windows وmacOS وLinux) و<strong>تطبيق ويب تقدمي PWA</strong> يعمل داخل المتصفح. المحرك الأساسي هو <strong>النموذج اللغوي المحلي</strong>: Ollama يشغّل Gemma 4 في وضع سطح المكتب، أو WebLLM عبر WebGPU في وضع المتصفح. يُستخدم Google Gemini كمسار احتياطي ثانوي للمقاطع منخفضة الثقة أو المعقدة. خط أنابيب ثلاثي المراحل للنص المخفي (محرر الترجمة المحلي، النموذج المحلي، Gemini السحابي) يُبقي المترجم متحكماً بكلمة في النص.
+                </p>
+
+                <a href="https://rdat-pwa.vercel.app/" target="_blank" rel="noopener" class="hero-cta">
                     <i class="fas fa-external-link-alt"></i>
                     <span class="lang-en">Launch Live Demo</span>
                     <span class="lang-ar">تشغيل النسخة التجريبية</span>
@@ -800,54 +876,61 @@
             </div>
         </section>
 
+        <!-- Screenshot Section -->
+        <section class="screenshot-container">
+            <img src="homepage_screenshot.png" alt="RDAT: Translation Copilot screenshot showing the segmented translation editor with ghost-text suggestions and status bar" class="screenshot-image" loading="lazy">
+            <p class="screenshot-caption lang-en">RDAT: Translation Copilot v0.2.0 - segmented translation editor with three-tier ghost-text suggestions, tier-source badges, and live status indicators.</p>
+            <p class="screenshot-caption lang-ar">RDAT: مساعد الترجمة الإصدار 0.2.0 - محرر الترجمة المُقسّم مع اقتراحات النص المخفي ثلاثية المراحل وشارات مصدر المرحلة ومؤشرات الحالة المباشرة.</p>
+        </section>
+
         <!-- How It Works Section -->
         <section class="workflow-container">
             <h2 class="section-title lang-en">How It Works</h2>
             <h2 class="section-title lang-ar">آلية العمل</h2>
-            
+
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
-                    <h4 class="lang-en">Source-Driven Event Loop</h4>
-                    <h4 class="lang-ar">حلقة الأحداث المدفوعة بالمصدر</h4>
+                    <h4 class="lang-en">Type or Import Your Source</h4>
+                    <h4 class="lang-ar">اكتب أو استورد النص المصدر</h4>
                     <p class="lang-en">
-                        Every keystroke triggers a source-driven pipeline: the current segment is extracted, chunked, and embedded in real-time to build contextual awareness across the entire document.
+                        Paste text directly, or import a <code>.txt</code> or <code>.docx</code> file. The source editor segments the document into logical sentences and pairs each segment with a dedicated RTL translation field.
                     </p>
                     <p class="lang-ar">
-                        كل ضغطة مفتاح تُفعّل مساراً مدفوعاً بالمصدر: يتم استخراج المقطع الحالي وتقسيمه وتضمينه في الوقت الفعلي لبناء وعي سياقي عبر الوثيقة بأكملها.
+                        الصق النص مباشرةً، أو استورد ملف <code>.txt</code> أو <code>.docx</code>. يقوم محرر المصدر بتقسيم الوثيقة إلى جمل منطقية ويقرن كل مقطع بحقل ترجمة مخصص بن اتجاه من اليمين إلى اليسار.
                     </p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
-                    <h4 class="lang-en">RAG Pipeline</h4>
-                    <h4 class="lang-ar">خط أنابيب البحث الدلالي</h4>
+                    <h4 class="lang-en">Three-Tier Ghost-Text Pipeline</h4>
+                    <h4 class="lang-ar">خط أنابيب النص المخفي ثلاثي المراحل</h4>
                     <p class="lang-en">
-                        Transformers.js embeddings are compared against the Orama vector database to retrieve translation memory matches, ensuring terminology consistency and contextual accuracy.
+                        Suggestions cascade through three tiers: Tier 0 (Local Translation Engine, under 5 ms), Tier 1 (RAG-augmented local LLM via Ollama or WebLLM), and Tier 2 (cloud Gemini fallback). The first confident tier wins; later tiers progressively refine the suggestion.
                     </p>
                     <p class="lang-ar">
-                        تتم مقارنة التضمينات المنتجة بـ Transformers.js بقاعدة البيانات المتجهة Orama لاسترداد تطابقات ذاكرة الترجمة، مما يضمن اتساق المصطلحات والدقة السياقية.
+                        تتتالى الاقتراحات عبر ثلاث مراحل: المرحلة 0 (محرر الترجمة المحلي، أقل من 5 مللي ثانية)، المرحلة 1 (نموذج لغوي محلي معزز بـ RAG عبر Ollama أو WebLLM)، والمرحلة 2 (Gemini السحابي كاحتياطي). أول مرحلة واثقة تفوز؛ والمراحل اللاحقة تحسّن الاقتراح تدريجياً.
                     </p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">3</div>
-                    <h4 class="lang-en">Sovereign Track Ghost Text</h4>
-                    <h4 class="lang-ar">نص المخفي — المسار المتحكم</h4>
+                    <h4 class="lang-en">Idle-Pause Re-Engagement</h4>
+                    <h4 class="lang-ar">إعادة التنشيط عند التوقف</h4>
                     <p class="lang-en">
-                        A local Gemma 2B model runs via WebGPU to generate real-time ghost text suggestions inline — entirely private, zero-latency, no server round-trips required.
+                        Two seconds after typing stops, the pipeline re-triggers automatically, so suggestions keep refreshing during thinking pauses. The translator never has to manually re-prompt for an updated completion.
                     </p>
                     <p class="lang-ar">
-                        نموذج Gemma 2B المحلي يعمل عبر WebGPU لتوليد اقتراحات نص المخفي في الوقت الفعلي داخل المحرر — خاصية كاملة، بدون تأخير، بدون اتصال بالخادم.
+                        بعد ثانيتين من توقف الكتابة، يُعاد تشغيل خط الأنابيب تلقائياً، بحيث تظل الاقتراحات متجددة أثناء فترات التفكير. لا يحتاج المترجم إلى إعادة طلب الاقتراح يدوياً للحصول على تحديث.
                     </p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">4</div>
-                    <h4 class="lang-en">AMTA Terminology Linter</h4>
-                    <h4 class="lang-ar">فاحص مصطلحات AMTA</h4>
+                    <h4 class="lang-en">Accept, Cycle, or Ignore</h4>
+                    <h4 class="lang-ar">اقبل، بدّل، أو تجاهل</h4>
                     <p class="lang-en">
-                        An automated terminology checker highlights untranslated or inconsistent terms with yellow squiggles, offering quick-fix suggestions aligned with AMTA dictionary standards.
+                        Accept the full ghost-text with <code>Tab</code>, accept word-by-word with <code>Ctrl+Right</code>, cycle alternatives with <code>Alt+]</code>, dismiss with <code>Esc</code>, and confirm the segment with <code>Ctrl+Enter</code>. The translator always retains final authority.
                     </p>
                     <p class="lang-ar">
-                        فاحص مصطلحات آلي يُبرز المصطلحات غير المترجمة أو غير المتسقة بخطوط متموجة صفراء، ويقدم اقتراحات إصلاح سريعة متوافقة مع معايير قاموس AMTA.
+                        اقبل النص المخفي كاملاً بـ <code>Tab</code>، اقبل كلمة بكلمة بـ <code>Ctrl+Right</code>، بدّل بين البدائل بـ <code>Alt+]</code>، أغلق بـ <code>Esc</code>، وأكّد المقطع بـ <code>Ctrl+Enter</code>. يبقى المترجم صاحب القرار النهائي دائماً.
                     </p>
                 </div>
             </div>
@@ -855,74 +938,74 @@
 
         <!-- Core Design Principles / Key Features Section -->
         <section>
-            <h2 class="section-title lang-en">Core Design Principles</h2>
-            <h2 class="section-title lang-ar">مرتكزات التصميم الأساسية</h2>
-            
+            <h2 class="section-title lang-en">Key Features</h2>
+            <h2 class="section-title lang-ar">الميزات الرئيسية</h2>
+
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3 class="lang-en">Dual-Track AI System</h3>
-                    <h3 class="lang-ar">نظام ذكاء اصطناعي مزدوج المسار</h3>
+                    <div class="feature-icon">⌨️</div>
+                    <h3 class="lang-en">Continuous Assistance with Idle-Pause Re-Engagement</h3>
+                    <h3 class="lang-ar">مساعدة مستمرة مع إعادة التنشيط عند التوقف</h3>
                     <p class="lang-en">
-                        Sovereign Track (local Gemma 2B via WebGPU) delivers real-time ghost text for inline suggestions. Reasoning Track (Gemini cloud API) handles complex rewriting tasks. Both tracks run in parallel, giving the translator the best of both worlds.
+                        The ghost-text pipeline never gives up after a single suggestion. Segment focus triggers immediate prefetch, a 400 ms typing debounce produces fresh completions, and a 2-second idle-pause re-engagement keeps suggestions current during thinking pauses, similar to how search autocomplete refines results as you think.
                     </p>
                     <p class="lang-ar">
-                        المسار المتحكم (Gemma 2B المحلي عبر WebGPU) يقدم نص المخفي في الوقت الفعلي للاقتراحات داخل المحرر. مسار الاستدلال (Gemini السحابي) يتولى مهام إعادة الصياغة المعقدة. كلا المسارين يعملان بالتوازي، ليمنح المترجم أفضل ما في العالمين.
+                        لا يتوقف خط أنابيب النص المخفي عند اقتراح واحد. يُفعّل التركيز على المقطع جلباً مسبقاً فورياً، ويُنتج تأخير 400 مللي ثانية للكتابة إكمالات جديدة، وتُعيد تنشيط التوقف لمدة ثانيتين تحديث الاقتراحات أثناء فترات التفكير، على غرار كيفية تحسين البحث التلقائي للنتائج أثناء تفكيرك.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="lang-en">Source-Driven RAG</h3>
-                    <h3 class="lang-ar">محرك البحث الدلالي</h3>
+                    <div class="feature-icon">🏷️</div>
+                    <h3 class="lang-en">Tier-Source Badges on Every Suggestion</h3>
+                    <h3 class="lang-ar">شارات مصدر المرحلة لكل اقتراح</h3>
                     <p class="lang-en">
-                        Orama vector database with Transformers.js embeddings powers translation memory matching. As you type, the system retrieves relevant past translations to maintain document-wide terminology and style consistency.
+                        Each ghost-text suggestion carries a colored badge showing exactly which tier produced it: green <code>LTE</code>, blue <code>local-llm</code> (with the loaded model name such as <code>GEMMA4:E2B</code>), or amber <code>GEMINI</code>. You always know whether a suggestion came from your corpus, your local model, or the cloud.
                     </p>
                     <p class="lang-ar">
-                        قاعدة بيانات Orama المتجهة مع تضمينات Transformers.js تُشغّل مطابقة ذاكرة الترجمة. أثناء الكتابة، يسترد النظام الترجمات السابقة ذات الصلة للحفاظ على اتساق المصطلحات والأسلوب عبر الوثيقة.
+                        يحمل كل اقتراح نص مخفي شارة ملوّنة توضّح المرحلة التي أنتجته: <code>LTE</code> أخضر، <code>local-llm</code> أزرق (مع اسم النموذج المُحمّل مثل <code>GEMMA4:E2B</code>)، أو <code>GEMINI</code> كهرماني. تعرف دائماً ما إذا كان الاقتراح صادراً من قاموسك أو نموذجك المحلي أو السحابة.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3 class="lang-en">AMTA Terminology Linter</h3>
-                    <h3 class="lang-ar">فحص جودة الترجمة</h3>
+                    <div class="feature-icon">📄</div>
+                    <h3 class="lang-en">.docx and .txt Document Import</h3>
+                    <h3 class="lang-ar">استيراد وثائق .docx و .txt</h3>
                     <p class="lang-en">
-                        Real-time terminology checking detects untranslated terms, shows yellow squiggles, and offers quick fixes. Ensures AMTA dictionary standards are met across the entire translation project.
+                        Import Microsoft Word <code>.docx</code> files (text extracted via the <code>mammoth</code> library, dynamically imported to keep the main bundle lean) or plain <code>.txt</code> files. Documents are segmented automatically and paired with dedicated translation fields for a clean segment-by-segment workflow.
                     </p>
                     <p class="lang-ar">
-                        فحص المصطلحات في الوقت الفعلي يكتشف المصطلحات غير المترجمة، ويعرض خطوطاً متموجة صفراء، ويقدم إصلاحات سريعة. يضمن الالتزام بمعايير قاموس AMTA عبر مشروع الترجمة بأكمله.
+                        استورد ملفات <code>.docx</code> من Microsoft Word (يُستخرج النص عبر مكتبة <code>mammoth</code>، المستوردة ديناميكياً للحفاظ على حجم الحزمة الرئيسية) أو ملفات <code>.txt</code> العادية. تُقسَّم الوثائق تلقائياً وتُقرن بحقول ترجمة مخصصة لتدفق عمل نظيف مقطعاً بمقطع.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="lang-en">Non-Destructive Editing</h3>
-                    <h3 class="lang-ar">تحرير غير تدميري</h3>
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="lang-en">AR-EN Direction Toggle</h3>
+                    <h3 class="lang-ar">مبدّل اتجاه الترجمة AR-EN</h3>
                     <p class="lang-en">
-                        The AI never overwrites the translator's text. All suggestions appear as ghost text, inline completions, or separate panels — the translator always retains full control and final authority over every word.
+                        A direction toggle at the top of the editor switches between <strong>EN to AR</strong> (default) and <strong>AR to EN</strong>. The selected direction is stored in workspace state and persists across sessions, so the layout, prompts, and editor fields adapt instantly to whichever language pair you are working on.
                     </p>
                     <p class="lang-ar">
-                        الذكاء الاصطناعي لا يمحو أبداً نص المترجم. جميع الاقتراحات تظهر كنص مخفي أو إكمالات داخلية أو لوحات منفصلة — المترجم يحتفظ دائماً بالتحكم الكامل والسلطة النهائية على كل كلمة.
+                        مبدّل اتجاه في أعلى المحرر يبدّل بين <strong>الإنجليزية إلى العربية</strong> (افتراضي) و<strong>العربية إلى الإنجليزية</strong>. يُخزَّن الاتجاه المحدد في حالة مساحة العمل ويستمر عبر الجلسات، بحيث تتكيّف التخطيطات والمطالبات وحقول المحرر فوراً مع أي زوج لغوي تعمل عليه.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="lang-en">Bilingual Arabic-English Interface</h3>
-                    <h3 class="lang-ar">واجهة ثنائية اللغة</h3>
+                    <div class="feature-icon">📊</div>
+                    <h3 class="lang-en">Status Bar with Typing / Suggesting Indicators</h3>
+                    <h3 class="lang-ar">شريط الحالة مع مؤشرات الكتابة والاقتراح</h3>
                     <p class="lang-en">
-                        Full RTL support with a Gemma-inspired design language. The interface seamlessly switches between English and Arabic, providing a native-quality experience for both languages.
+                        The status bar surfaces live editor activity: <strong>"Typing..."</strong> (blue) while you type, <strong>"Suggesting..."</strong> (indigo with spinner) while fetching suggestions, and <strong>"Ready"</strong> (muted) when idle. The engine status line shows <code>Ollama: gemma4:e2b</code> (green) when a model is loaded, or an amber hint guiding you to the Models panel when guidance is needed.
                     </p>
                     <p class="lang-ar">
-                        دعم كامل للكتابة من اليمين لليسار بلغة تصميم مستوحاة من Gemma. واجهة المستخدم تنتقل بسلاسة بين الإنجليزية والعربية، لتوفر تجربة ذات جودة أصلية للغتين.
+                        يعرض شريط الحالة نشاط المحرر المباشر: <strong>"Typing..."</strong> (أزرق) أثناء الكتابة، <strong>"Suggesting..."</strong> (نيلي مع مؤشر دوران) أثناء جلب الاقتراحات، و<strong>"Ready"</strong> (خافت) عند الخمول. يُظهر سطر حالة المحرك <code>Ollama: gemma4:e2b</code> (أخضر) عند تحميل نموذج، أو تلميحاً كهرمانياً يوجّهك إلى لوحة النماذج عند الحاجة.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3 class="lang-en">PWA Offline-Ready</h3>
-                    <h3 class="lang-ar">تطبيق ويب تقدمي</h3>
+                    <div class="feature-icon">🩺</div>
+                    <h3 class="lang-en">Health Diagnostics and Tier Error Surfacing</h3>
+                    <h3 class="lang-ar">تشخيص الصحة وإظهار أخطاء المراحل</h3>
                     <p class="lang-en">
-                        Installable as a native app on any device. Service worker caching enables offline operation after the initial model download. Your translation workspace is always available, even without internet.
+                        When a tier fails, the editor surfaces a precise, actionable diagnostic instead of silently swallowing the error: amber "Load Local Model" hint for Tier 1 failures, gray "Set Gemini API Key" hint for Tier 2 failures, and structured Ollama diagnostics showing exactly which URLs were tried and which errors occurred, making remote diagnosis possible from a single screenshot.
                     </p>
                     <p class="lang-ar">
-                        قابل للتثبيت كتطبيق أصلي على أي جهاز. تخزين عامل الخدمة يُمكّن العمل بدون اتصال بعد التحميل الأولي للنموذج. مساحة عمل الترجمة متاحة دائماً، حتى بدون إنترنت.
+                        عند فشل إحدى المراحل، يُظهر المحرر تشخيصاً دقيقاً وقابلاً للتنفيذ بدلاً من تجاهل الخطأ بصمت: تلميح كهرماني "Load Local Model" لإخفاقات المرحلة 1، تلميح رمادي "Set Gemini API Key" لإخفاقات المرحلة 2، وتشخيصات Ollama منظمة توضّح بالضبط عناوين URL التي تمت تجربتها والأخطاء التي حدثت، مما يجعل التشخيص عن بُعد ممكناً من لقطة شاشة واحدة.
                     </p>
                 </div>
             </div>
@@ -930,60 +1013,73 @@
 
         <!-- Architecture Comparison Table -->
         <section class="workflow-container">
-            <h2 class="section-title lang-en">Dual-Track Architecture</h2>
+            <h2 class="section-title lang-en">Dual-Path Architecture</h2>
             <h2 class="section-title lang-ar">بنية المسار المزدوج</h2>
+
+            <p class="hero-description lang-en" style="margin-bottom: 24px;">
+                As of v0.2.0, RDAT ships in two complementary forms sharing a single React/Vite frontend. The Tauri desktop app is the recommended path for daily professional use with Ollama as the primary engine; the PWA on Vercel is the try-before-install path for browsers and locked-down machines.
+            </p>
+            <p class="hero-description lang-ar" style="margin-bottom: 24px;">
+                اعتباراً من الإصدار 0.2.0، يأتي RDAT في شكلين متكاملين يشاركان واجهة React/Vite واحدة. تطبيق سطح المكتب Tauri هو المسار الموصى به للاستخدام المهني اليومي مع Ollama كمحرك أساسي؛ وتطبيق الويب التقدمي PWA على Vercel هو مسار التجربة قبل التثبيت للمتصفحات والأجهزة المقيدة.
+            </p>
 
             <table class="architecture-table">
                 <thead>
                     <tr>
                         <th class="lang-en">Aspect</th>
-                        <th class="lang-en">Sovereign Track (Local)</th>
-                        <th class="lang-en">Reasoning Track (Cloud)</th>
+                        <th class="lang-en">Tauri Desktop App</th>
+                        <th class="lang-en">PWA on Vercel</th>
                         <th class="lang-ar">الجانب</th>
-                        <th class="lang-ar">المسار المتحكم (محلي)</th>
-                        <th class="lang-ar">مسار الاستدلال (سحابي)</th>
+                        <th class="lang-ar">تطبيق سطح المكتب Tauri</th>
+                        <th class="lang-ar">تطبيق الويب التقدمي على Vercel</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong class="lang-en">Model</strong><strong class="lang-ar">النموذج</strong></td>
-                        <td class="lang-en">Gemma 2B via WebLLM</td>
-                        <td class="lang-en">Gemini 3.1 Flash Lite</td>
-                        <td><strong class="lang-en">Model</strong><strong class="lang-ar">النموذج</strong></td>
-                        <td class="lang-ar">Gemma 2B عبر WebLLM</td>
-                        <td class="lang-ar">Gemini 3.1 Flash Lite</td>
+                        <td><strong class="lang-en">Primary Local LLM</strong><strong class="lang-ar">النموذج المحلي الأساسي</strong></td>
+                        <td class="lang-en">Ollama (Gemma 4 E2B default; Qwen 3, Llama 4 supported)</td>
+                        <td class="lang-en">WebLLM via WebGPU (Gemma 2, Qwen 2.5, Llama 3.1)</td>
+                        <td><strong class="lang-en">Primary Local LLM</strong><strong class="lang-ar">النموذج المحلي الأساسي</strong></td>
+                        <td class="lang-ar">Ollama (Gemma 4 E2B افتراضياً؛ يدعم Qwen 3 وLlama 4)</td>
+                        <td class="lang-ar">WebLLM عبر WebGPU (Gemma 2 وQwen 2.5 وLlama 3.1)</td>
                     </tr>
                     <tr>
-                        <td><strong class="lang-en">Runtime</strong><strong class="lang-ar">بيئة التشغيل</strong></td>
-                        <td class="lang-en">Browser (WebGPU)</td>
-                        <td class="lang-en">Cloud API</td>
-                        <td><strong class="lang-en">Runtime</strong><strong class="lang-ar">بيئة التشغيل</strong></td>
-                        <td class="lang-ar">المتصفح (WebGPU)</td>
-                        <td class="lang-ar">واجهة برمجة سحابية</td>
+                        <td><strong class="lang-en">Cloud Fallback</strong><strong class="lang-ar">الاحتياطي السحابي</strong></td>
+                        <td class="lang-en">Gemini via Rust reqwest proxy</td>
+                        <td class="lang-en">Gemini via Vercel serverless functions</td>
+                        <td><strong class="lang-en">Cloud Fallback</strong><strong class="lang-ar">الاحتياطي السحابي</strong></td>
+                        <td class="lang-ar">Gemini عبر وكيل Rust reqwest</td>
+                        <td class="lang-ar">Gemini عبر دوال Vercel اللاخادمية</td>
                     </tr>
                     <tr>
-                        <td><strong class="lang-en">Purpose</strong><strong class="lang-ar">الغرض</strong></td>
-                        <td class="lang-en">Real-time ghost text</td>
-                        <td class="lang-en">Complex rewriting</td>
-                        <td><strong class="lang-en">Purpose</strong><strong class="lang-ar">الغرض</strong></td>
-                        <td class="lang-ar">نص المخفي في الوقت الفعلي</td>
-                        <td class="lang-ar">إعادة الصياغة المعقدة</td>
+                        <td><strong class="lang-en">Install Size</strong><strong class="lang-ar">حجم التثبيت</strong></td>
+                        <td class="lang-en">~15 MB app + ~1.5 GB model</td>
+                        <td class="lang-en">Zero install (browser only)</td>
+                        <td><strong class="lang-en">Install Size</strong><strong class="lang-ar">حجم التثبيت</strong></td>
+                        <td class="lang-ar">~15 ميجابايت للتطبيق + ~1.5 جيجابايت للنموذج</td>
+                        <td class="lang-ar">بدون تثبيت (المتصفح فقط)</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Best For</strong><strong class="lang-ar">الأنسب لـ</strong></td>
+                        <td class="lang-en">Daily professional use; fastest inference; full offline</td>
+                        <td class="lang-en">Try-before-install; mobile; locked-down machines</td>
+                        <td><strong class="lang-en">Best For</strong><strong class="lang-ar">الأنسب لـ</strong></td>
+                        <td class="lang-ar">الاستخدام المهني اليومي؛ أسرع استدلال؛ عمل كامل دون اتصال</td>
+                        <td class="lang-ar">التجربة قبل التثبيت؛ الأجهزة المحمولة؛ الأجهزة المقيدة</td>
                     </tr>
                     <tr>
                         <td><strong class="lang-en">Privacy</strong><strong class="lang-ar">الخصوصية</strong></td>
                         <td class="lang-en">Fully local (no data leaves device)</td>
-                        <td class="lang-en">BYOK (user's own API key)</td>
+                        <td class="lang-en">BYOK (user-owned Gemini API key)</td>
                         <td><strong class="lang-en">Privacy</strong><strong class="lang-ar">الخصوصية</strong></td>
-                        <td class="lang-ar">محلي بالكامل (لا تخرج بيانات)</td>
-                        <td class="lang-ar">BYOK (مفتاح API المستخدم)</td>
+                        <td class="lang-ar">محلي بالكامل (لا تخرج بيانات من الجهاز)</td>
+                        <td class="lang-ar">BYOK (مفتاح Gemini API يملكه المستخدم)</td>
                     </tr>
                     <tr>
-                        <td><strong class="lang-en">Latency</strong><strong class="lang-ar">زمن الاستجابة</strong></td>
-                        <td class="lang-en">Ultra-low (local inference)</td>
-                        <td class="lang-en">Network-dependent</td>
-                        <td><strong class="lang-en">Latency</strong><strong class="lang-ar">زمن الاستجابة</strong></td>
-                        <td class="lang-ar">منخفض جداً (استدلال محلي)</td>
-                        <td class="lang-ar">يعتمد على الشبكة</td>
+                        <td><strong class="lang-en">Engine Modes</strong><strong class="lang-ar">أوضاع المحرك</strong></td>
+                        <td class="lang-en" colspan="2">Hybrid (LTE + Local LLM + Gemini), Local (LTE + Local LLM only), Cloud (Gemini only)</td>
+                        <td><strong class="lang-en">Engine Modes</strong><strong class="lang-ar">أوضاع المحرك</strong></td>
+                        <td class="lang-ar" colspan="2">هجين (LTE + النموذج المحلي + Gemini)، محلي (LTE + النموذج المحلي فقط)، سحابي (Gemini فقط)</td>
                     </tr>
                 </tbody>
             </table>
@@ -993,43 +1089,71 @@
         <section class="tech-stack-section">
             <h2 class="section-title lang-en">Technology Stack</h2>
             <h2 class="section-title lang-ar">المكدس التقني</h2>
-            
+
             <div class="tech-tags-container">
-                <span class="tech-tag-pill">Next.js 16</span>
-                <span class="tech-tag-pill">TypeScript</span>
+                <span class="tech-tag-pill">Tauri 2</span>
+                <span class="tech-tag-pill">React 19</span>
+                <span class="tech-tag-pill">Vite 6</span>
+                <span class="tech-tag-pill">Ollama</span>
+                <span class="tech-tag-pill">Gemma 4</span>
                 <span class="tech-tag-pill">Tailwind CSS 4</span>
-                <span class="tech-tag-pill">Monaco Editor</span>
-                <span class="tech-tag-pill">WebLLM (Gemma 2B)</span>
-                <span class="tech-tag-pill">Google Gemini 3.1 Flash Lite</span>
-                <span class="tech-tag-pill">Transformers.js</span>
-                <span class="tech-tag-pill">Orama Vector DB</span>
-                <span class="tech-tag-pill">PWA (next-pwa + Workbox)</span>
+                <span class="tech-tag-pill">Zustand 5</span>
+                <span class="tech-tag-pill">TypeScript 5.8</span>
+                <span class="tech-tag-pill">WebLLM (WebGPU fallback)</span>
+                <span class="tech-tag-pill">Google Gemini 2.5 Flash</span>
+                <span class="tech-tag-pill">Motion (Framer Motion)</span>
+                <span class="tech-tag-pill">Lucide React</span>
+                <span class="tech-tag-pill">Mammoth (.docx import)</span>
+                <span class="tech-tag-pill">IndexedDB (dual-storage)</span>
+                <span class="tech-tag-pill">PWA (Service Worker + Manifest)</span>
                 <span class="tech-tag-pill">MIT License</span>
             </div>
         </section>
 
+        <!-- Citation Section -->
+        <section class="citation-section">
+            <h3 class="lang-en">Citation</h3>
+            <h3 class="lang-ar">الاستشهاد</h3>
+            <p class="lang-en">If you use RDAT: Translation Copilot in academic work, please cite it as follows:</p>
+            <p class="lang-ar">إذا استخدمت RDAT: مساعد الترجمة في عمل أكاديمي، يُرجى الاستشهاد به على النحو التالي:</p>
+            <div class="citation-text">Mandour, W. (2026). <em>RDAT: Translation Copilot</em> (Version 0.2.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21256765</a></div>
+        </section>
+
         <!-- CTA Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Try RDAT Copilot Now</h2>
-            <h2 class="cta-title lang-ar">جرّب مساعد الترجمة الذكي الآن</h2>
-            
+            <h2 class="cta-title lang-en">Get RDAT: Translation Copilot</h2>
+            <h2 class="cta-title lang-ar">احصل على RDAT: مساعد الترجمة</h2>
+
             <p class="cta-subtitle lang-en">
-                A research project by Dr. Waleed Mandour at Sultan Qaboos University, pushing the boundaries of AI-assisted translation technology.
+                A research project by Dr. Waleed Mandour, Assistant Lecturer at Sultan Qaboos University, pushing the boundaries of AI-assisted English-Arabic translation with a local-first, privacy-respecting architecture.
             </p>
             <p class="cta-subtitle lang-ar">
-                مشروع بحثي لـ د. وليد مندور في جامعة السلطان قابوس، يدفع حدود تقنية الترجمة المدعومة بالذكاء الاصطناعي.
+                مشروع بحثي لـ د. وليد مندور، مدرّس مساعد في جامعة السلطان قابوس، يدفع حدود الترجمة الإنجليزية-العربية المدعومة بالذكاء الاصطناعي عبر بنية محلية أولاً تحترم الخصوصية.
             </p>
-            
+
             <div class="cta-buttons-group">
-                <a href="https://rdat-pwa.vercel.app/" target="_blank" class="cta-button">
+                <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="cta-button">
+                    <i class="fas fa-download"></i>
+                    <span class="lang-en">Download v0.2.0</span>
+                    <span class="lang-ar">تنزيل الإصدار 0.2.0</span>
+                </a>
+                <a href="https://rdat-pwa.vercel.app/" target="_blank" rel="noopener" class="cta-button secondary">
                     <i class="fas fa-external-link-alt"></i>
                     <span class="lang-en">Launch Live Demo</span>
                     <span class="lang-ar">تشغيل النسخة التجريبية</span>
                 </a>
-                <a href="https://github.com/waleedmandour/rdat-pwa" target="_blank" class="cta-button secondary">
+                <a href="https://github.com/waleedmandour/rdat" target="_blank" rel="noopener" class="cta-button tertiary">
                     <i class="fab fa-github"></i>
                     <span class="lang-en">View on GitHub</span>
                     <span class="lang-ar">عرض على GitHub</span>
+                </a>
+            </div>
+
+            <div style="margin-top: 28px;">
+                <a href="https://github.com/waleedmandour/rdat/releases/download/v0.2.0/RDAT-Translation-Copilot-v0.2.0-User-Guide.pdf" target="_blank" rel="noopener" style="color: var(--accent-teal); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--accent-teal);">
+                    <i class="fas fa-file-pdf"></i>
+                    <span class="lang-en">&nbsp;Download the v0.2.0 User Guide (PDF)</span>
+                    <span class="lang-ar">&nbsp;تنزيل دليل المستخدم للإصدار 0.2.0 (PDF)</span>
                 </a>
             </div>
         </section>
@@ -1041,12 +1165,20 @@
             <div>
                 <span class="lang-en">Author: </span><span class="lang-ar">الباحث: </span>
                 <a href="https://waleedmandour.org/" class="footer-email">Dr. Waleed Mandour</a>
-                <span class="lang-en"> — Sultan Qaboos University</span>
-                <span class="lang-ar"> — جامعة السلطان قابوس</span>
+                <span class="lang-en">, Assistant Lecturer, Sultan Qaboos University</span>
+                <span class="lang-ar">، مدرّس مساعد، جامعة السلطان قابوس</span>
             </div>
             <div>
-                <span class="lang-en">Contact: </span><span class="lang-ar">تواصل: </span>
+                <span class="lang-en">Email: </span><span class="lang-ar">البريد: </span>
                 <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                <span class="lang-en"> &nbsp;|&nbsp; Website: </span><span class="lang-ar"> &nbsp;|&nbsp; الموقع: </span>
+                <a href="https://waleedmandour.org/" class="footer-email">waleedmandour.org</a>
+            </div>
+            <div>
+                <span class="lang-en">ORCID: </span><span class="lang-ar">معرف ORCID: </span>
+                <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener" class="footer-email">0000-0002-9262-5993</a>
+                <span class="lang-en"> &nbsp;|&nbsp; DOI: </span><span class="lang-ar"> &nbsp;|&nbsp; معرف DOI: </span>
+                <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener" class="footer-email">10.5281/zenodo.21256765</a>
             </div>
             <div class="footer-links">
                 <a href="https://waleedmandour.org/" class="lang-en">Home</a>
@@ -1055,8 +1187,16 @@
                 <a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a>
                 <a href="https://waleedmandour.org/research/" class="lang-en">Research</a>
                 <a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a>
-                <a href="https://github.com/waleedmandour/rdat-pwa" target="_blank" class="lang-en">GitHub</a>
-                <a href="https://github.com/waleedmandour/rdat-pwa" target="_blank" class="lang-ar">GitHub</a>
+                <a href="https://github.com/waleedmandour/rdat" target="_blank" rel="noopener" class="lang-en">GitHub</a>
+                <a href="https://github.com/waleedmandour/rdat" target="_blank" rel="noopener" class="lang-ar">GitHub</a>
+                <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="lang-en">Releases</a>
+                <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="lang-ar">الإصدارات</a>
+                <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener" class="lang-en">Zenodo DOI</a>
+                <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener" class="lang-ar">معرف Zenodo</a>
+            </div>
+            <div style="margin-top: 12px; font-size: 12px; color: var(--gray);">
+                <span class="lang-en">Version 0.2.0 &middot; MIT License &middot; Copyright &copy; 2026 Dr. Waleed Mandour</span>
+                <span class="lang-ar">الإصدار 0.2.0 &middot; رخصة MIT &middot; حقوق النشر &copy; 2026 د. وليد مندور</span>
             </div>
         </div>
     </div>
