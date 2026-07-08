@@ -7,9 +7,9 @@
     <title>RDAT: Translation Copilot - Professional English-Arabic CAT Environment | Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="screenshot.png">
-    <link rel="shortcut icon" type="image/png" href="screenshot.png">
-    <link rel="apple-touch-icon" href="screenshot.png">
+    <link rel="icon" type="image/png" href="app-icon.png">
+    <link rel="shortcut icon" type="image/png" href="app-icon.png">
+    <link rel="apple-touch-icon" href="app-icon.png">
     <style>
         /* ===== CSS VARIABLES & RESET ===== */
         :root {
@@ -1077,10 +1077,26 @@
 
                 <p class="tagline lang-en">Professional English-Arabic Computer-Assisted Translation</p>
                 <p class="tagline lang-ar">ترجمة احترافية من الإنجليزية إلى العربية بمساعدة الحاسوب</p>
+
+                <div style="margin-top: 12px; opacity: 0.85;">
+                    <p style="font-size: 0.95em; margin: 2px 0;">
+                        <span class="lang-en">Dr. Waleed Mandour</span>
+                        <span class="lang-ar">د. وليد مندور</span>
+                    </p>
+                    <p style="font-size: 0.85em; margin: 2px 0; opacity: 0.8;">
+                        <span class="lang-en">Assistant Lecturer, Sultan Qaboos University</span>
+                        <span class="lang-ar">مدرس مساعد، جامعة السلطان قابوس</span>
+                    </p>
+                    <p style="font-size: 0.8em; margin: 2px 0; opacity: 0.7;">
+                        <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.8); text-decoration: none;">
+                            ORCID: 0000-0002-9262-5993
+                        </a>
+                    </p>
+                </div>
             </div>
 
             <div class="header-photo-container">
-                <img src="screenshot.png" alt="RDAT: Translation Copilot application icon" class="header-photo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="app-icon.png" alt="RDAT: Translation Copilot application icon" class="header-photo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div style="display:none; width:180px; height:180px; border-radius:50%; align-items:center; justify-content:center; background:rgba(255,255,255,0.15); border:4px solid rgba(255,255,255,0.8); box-shadow:0 0 25px rgba(74,20,140,0.6);">
                     <i class="fas fa-language" style="font-size:80px; color:rgba(255,255,255,0.9);"></i>
                 </div>
@@ -1093,6 +1109,7 @@
                     <li><a href="#overview" class="lang-en">Overview</a><a href="#overview" class="lang-ar">نظرة عامة</a></li>
                     <li><a href="#features" class="lang-en">Features</a><a href="#features" class="lang-ar">الميزات</a></li>
                     <li><a href="#architecture" class="lang-en">Architecture</a><a href="#architecture" class="lang-ar">البنية</a></li>
+                    <li><a href="#comparison" class="lang-en">Comparison</a><a href="#comparison" class="lang-ar">المقارنة</a></li>
                     <li><a href="#download" class="lang-en">Download</a><a href="#download" class="lang-ar">التنزيل</a></li>
                     <li><a href="#contact" class="lang-en">Contact</a><a href="#contact" class="lang-ar">اتصل بي</a></li>
                 </ul>
@@ -1108,7 +1125,7 @@
                 <!-- Floating App Logo -->
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
-                        <img src="screenshot.png" alt="RDAT: Translation Copilot app icon" class="app-logo-img" loading="lazy" onerror="this.parentElement.parentElement.style.display='none';">
+                        <img src="app-icon.png" alt="RDAT: Translation Copilot app icon" class="app-logo-img" loading="lazy" onerror="this.parentElement.parentElement.style.display='none';">
                     </div>
                 </div>
                 <!-- Release Badge -->
@@ -1333,8 +1350,8 @@
                 <table class="privacy-table">
                     <thead>
                         <tr>
-                            <th><span class="lang-en">Feature</span><span class="lang-ar">الميزة</span></th>
-                            <th>RDAT</th>
+                            <th class="row-feature"><span class="lang-en">Feature</span><span class="lang-ar">الميزة</span></th>
+                            <th><strong>RDAT</strong></th>
                             <th>memoQ</th>
                             <th>Trados Studio</th>
                             <th>OmegaT</th>
