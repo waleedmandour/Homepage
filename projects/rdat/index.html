@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RDAT: Translation Copilot is an AI-powered, dual-path translation workspace for professional English-to-Arabic translation. Ships as Tauri 2 desktop app (Windows, macOS, Linux) with Ollama as primary engine, and as PWA on Vercel.">
+    <title>RDAT: Translation Copilot - Professional English-Arabic CAT Environment | Dr. Waleed Mandour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #4A148C;
+            --accent-light: #7B1FA2;
+            --accent-teal: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        /* Ensure RTL inheritance for all containers */
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic div,
+        body.arabic .hero-content,
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .audience-grid,
+        body.arabic .download-platforms,
+        body.arabic .ui-showcase-grid {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+
+        /* ===== HEADER STYLES ===== */
+        header {
+            background: linear-gradient(135deg, #4A148C 0%, #1A5F7A 100%);
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
+        }
+
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+
+        body.arabic .header-text {
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .header-photo-container {
+            position: relative;
+        }
+
+        .header-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(74, 20, 140, 0.6);
+            transition: var(--transition);
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(74, 20, 140, 0.8);
+        }
+
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--secondary);
+        }
+
+        nav a.active:after {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--dark);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 24px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 720px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        /* Release Badge */
+        .live-demo-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(74, 20, 140, 0.3);
+            text-transform: uppercase;
+        }
+
+        /* ===== HERO TECH BADGES ===== */
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 24px 0 32px;
+        }
+
+        .hero-badge {
+            background: linear-gradient(135deg, #1A5F7A 0%, #4A148C 100%);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(10, 28, 60, 0.15);
+            transition: var(--transition);
+        }
+
+        .hero-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 20, 140, 0.3);
+        }
+
+        .hero-badge i {
+            font-size: 12px;
+        }
+
+        /* ===== SCREENSHOT SECTION ===== */
+        .screenshot-container {
+            margin: 56px auto 16px;
+            max-width: 1100px;
+            text-align: center;
+        }
+
+        .screenshot-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(10, 28, 60, 0.25);
+            border: 1px solid var(--light);
+            display: block;
+        }
+
+        .screenshot-caption {
+            margin-top: 14px;
+            color: var(--gray);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* ===== UI SHOWCASE GRID ===== */
+        .ui-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .ui-showcase-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--light);
+        }
+
+        .ui-showcase-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(10, 28, 60, 0.18);
+        }
+
+        .ui-showcase-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .ui-showcase-caption {
+            padding: 16px 20px;
+            color: var(--gray);
+            font-size: 14px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ===== CTA BUTTON ===== */
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4);
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        main {
+            display: block !important;
+            width: 100% !important;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        body.arabic .section-title::after {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        .workflow-container {
+            position: relative;
+            margin: 64px 0;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-teal));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--accent-light);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 16px;
+            background: rgba(74, 20, 140, 0.1);
+            border-radius: 12px;
+            color: var(--accent);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .feature-card code {
+            background: var(--light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--accent);
+        }
+
+        /* ===== ARCHITECTURE / PRIVACY TABLE ===== */
+        .architecture-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .architecture-table thead th {
+            background: linear-gradient(135deg, #4A148C 0%, #1A5F7A 100%);
+            color: white;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        body.arabic .architecture-table thead th {
+            text-align: right;
+        }
+
+        .architecture-table tbody td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .architecture-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .architecture-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .architecture-table tbody tr:hover {
+            background-color: #f5f0ff;
+        }
+
+        /* ===== DOWNLOAD PLATFORMS ===== */
+        .download-platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .download-platform-card {
+            background: var(--white);
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-teal));
+        }
+
+        .download-platform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            border-color: var(--accent-light);
+        }
+
+        .platform-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--accent);
+            display: inline-block;
+        }
+
+        .download-platform-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .platform-format {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(74, 20, 140, 0.25);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(74, 20, 140, 0.35);
+        }
+
+        .download-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+            box-shadow: none;
+        }
+
+        .download-btn.secondary:hover {
+            background: var(--accent-teal);
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 95, 122, 0.3);
+        }
+
+        /* ===== CITATION SECTION ===== */
+        .citation-section {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+        }
+
+        body.arabic .citation-section {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+        }
+
+        .citation-section h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .citation-text {
+            font-family: 'Courier New', monospace;
+            color: var(--dark);
+            line-height: 1.8;
+            background: var(--light);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-top: 16px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .citation-text a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .citation-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            text-align: center;
+            padding: 48px 32px;
+            background: linear-gradient(135deg, var(--light) 0%, rgba(74, 20, 140, 0.05) 100%);
+            border-radius: 12px;
+            margin: 64px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-section h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .contact-section p {
+            color: var(--gray);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 24px;
+            line-height: 1.7;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light);
+        }
+
+        .contact-link:hover {
+            transform: translateY(-2px);
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 6px 18px rgba(74, 20, 140, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 0 24px;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid var(--light);
+            margin-top: 64px;
+            background: #fafafa;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-email {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .footer-email:hover {
+            color: var(--accent);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -5px;
+            color: var(--gray);
+        }
+
+        body.arabic .footer-links a:not(:last-child)::after {
+            right: auto;
+            left: -5px;
+        }
+
+        .footer-heart {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--light);
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .footer-heart i {
+            color: #e25555;
+            margin: 0 4px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-card:nth-child(1) { animation: fadeIn 0.6s ease 0.1s both; }
+        .feature-card:nth-child(2) { animation: fadeIn 0.6s ease 0.2s both; }
+        .feature-card:nth-child(3) { animation: fadeIn 0.6s ease 0.3s both; }
+        .feature-card:nth-child(4) { animation: fadeIn 0.6s ease 0.4s both; }
+        .feature-card:nth-child(5) { animation: fadeIn 0.6s ease 0.5s both; }
+        .feature-card:nth-child(6) { animation: fadeIn 0.6s ease 0.6s both; }
+
+        .download-platform-card:nth-child(1) { animation: fadeIn 0.6s ease 0.1s both; }
+        .download-platform-card:nth-child(2) { animation: fadeIn 0.6s ease 0.2s both; }
+        .download-platform-card:nth-child(3) { animation: fadeIn 0.6s ease 0.3s both; }
+        .download-platform-card:nth-child(4) { animation: fadeIn 0.6s ease 0.4s both; }
+
+        /* ===== LANGUAGE LOGIC ===== */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+
+        body.arabic .hero h1.lang-ar,
+        body.arabic .hero .hero-subtitle.lang-ar {
+            text-align: center;
+        }
+
+        body.arabic .footer,
+        body.arabic .footer-content,
+        body.arabic .footer-content > div {
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .header-text, body.arabic .header-text { text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            nav ul { gap: 20px; }
+            h1 { font-size: 2.2em; }
+            .tagline { font-size: 1.1em; }
+            .header-photo { width: 150px; height: 150px; }
+            .header-logo { width: 64px; height: 64px; }
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 20px; }
+            .section-title { font-size: 28px; }
+            .features-grid, .download-platforms { grid-template-columns: 1fr; }
+            .ui-showcase-grid { grid-template-columns: 1fr; }
+            .language-toggle { top: 16px; right: 16px; }
+            .footer-links { flex-direction: column; gap: 8px; }
+            .footer-links a:not(:last-child)::after { display: none; }
+            .architecture-table { font-size: 13px; }
+            .architecture-table thead th, .architecture-table tbody td { padding: 10px 12px; }
+        }
+
+        @media (max-width: 480px) {
+            nav ul { flex-direction: column; gap: 20px; padding: 20px; }
+            h1 { font-size: 1.8em; }
+            .header-photo { width: 130px; height: 130px; }
+            .hero h1 { font-size: 28px; }
+            .hero-description { font-size: 16px; }
+            .feature-card { padding: 24px; }
+            .container { padding: 0 16px; }
+            .hero-badge { font-size: 12px; padding: 6px 14px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <!-- Inline SVG Logo: bilingual EN / AR translation mark -->
+            <svg class="header-logo" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="RDAT logo">
+                <defs>
+                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                        <stop offset="100%" stop-color="#20B2AA" stop-opacity="0.9"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="40" cy="40" r="36" fill="rgba(255,255,255,0.12)" stroke="url(#logoGrad)" stroke-width="2.5"/>
+                <text x="40" y="30" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, sans-serif" font-size="15" font-weight="700">EN</text>
+                <line x1="18" y1="38" x2="62" y2="38" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                <path d="M 36 44 L 44 44 M 42 42 L 44 44 L 42 46" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 36 48 L 44 48 M 38 46 L 36 48 L 38 50" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="40" y="62" text-anchor="middle" fill="#ffffff" font-family="Cairo, Segoe UI, sans-serif" font-size="17" font-weight="700">ع</text>
+            </svg>
+
+            <div class="header-text">
+                <h1 class="lang-en">RDAT: Translation Copilot</h1>
+                <h1 class="lang-ar">RDAT: مساعد الترجمة</h1>
+
+                <p class="tagline lang-en">Professional English-Arabic Computer-Assisted Translation</p>
+                <p class="tagline lang-ar">ترجمة احترافية من الإنجليزية إلى العربية بمساعدة الحاسوب</p>
+            </div>
+
+            <div class="header-photo-container">
+                <img src="https://waleedmandour.org/photo.png" alt="Dr. Waleed Mandour" class="header-photo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display:none; width:180px; height:180px; border-radius:50%; align-items:center; justify-content:center; background:rgba(255,255,255,0.15); border:4px solid rgba(255,255,255,0.8); box-shadow:0 0 25px rgba(74,20,140,0.6);">
+                    <i class="fas fa-user" style="font-size:80px; color:rgba(255,255,255,0.9);"></i>
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="#overview" class="lang-en">Overview</a><a href="#overview" class="lang-ar">نظرة عامة</a></li>
+                    <li><a href="#features" class="lang-en">Features</a><a href="#features" class="lang-ar">الميزات</a></li>
+                    <li><a href="#architecture" class="lang-en">Architecture</a><a href="#architecture" class="lang-ar">البنية</a></li>
+                    <li><a href="#download" class="lang-en">Download</a><a href="#download" class="lang-ar">التنزيل</a></li>
+                    <li><a href="#contact" class="lang-en">Contact</a><a href="#contact" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <!-- Hero / Overview Section -->
+        <section class="hero" id="overview">
+            <div class="hero-content">
+                <!-- Release Badge -->
+                <div class="live-demo-badge lang-en"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; v0.2.0 - Active Development</div>
+                <div class="live-demo-badge lang-ar"><i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; الإصدار 0.2.0 - تطوير نشط</div>
+
+                <h1 class="lang-en">RDAT: Translation Copilot</h1>
+                <h1 class="lang-ar">RDAT: مساعد الترجمة</h1>
+
+                <div class="hero-subtitle lang-en">AI-Powered Translation with Local LLMs</div>
+                <div class="hero-subtitle lang-ar">ترجمة مدعومة بالذكاء الاصطناعي بالنماذج اللغوية المحلية</div>
+
+                <p class="hero-description lang-en">
+                    RDAT: Translation Copilot is an AI-powered, dual-path translation workspace for professional English-to-Arabic translation. It ships as a <strong>Tauri 2 desktop app</strong> (Windows, macOS, Linux) with <strong>Ollama</strong> running <strong>Gemma 4</strong> as the primary engine, and as an installable <strong>PWA on Vercel</strong> powered by <strong>WebLLM</strong> via WebGPU in the browser. A three-tier ghost-text pipeline keeps the translator in full control of every word.
+                </p>
+
+                <p class="hero-description lang-ar">
+                    RDAT: مساعد الترجمة هو فضاء عمل ثنائي المسار مدعوم بالذكاء الاصطناعي للترجمة الاحترافية من الإنجليزية إلى العربية. يأتي في شكل <strong>تطبيق سطح مكتب Tauri 2</strong> (Windows و macOS و Linux) يعمل بـ <strong>Ollama</strong> مشغّلاً <strong>Gemma 4</strong> كمحرك أساسي، وفي شكل <strong>تطبيق ويب تقدمي PWA على Vercel</strong> يعمل بـ <strong>WebLLM</strong> عبر WebGPU داخل المتصفح. يحافظ خط أنابيب النص المخفي ثلاثي المراحل على تحكم المترجم الكامل بكل كلمة.
+                </p>
+
+                <!-- Tech Badges -->
+                <div class="hero-badges">
+                    <span class="hero-badge"><i class="fas fa-desktop"></i> Tauri 2</span>
+                    <span class="hero-badge"><i class="fas fa-brain"></i> Ollama</span>
+                    <span class="hero-badge"><i class="fas fa-microchip"></i> Gemma 4</span>
+                    <span class="hero-badge"><i class="fab fa-react"></i> React 19</span>
+                    <span class="hero-badge"><i class="fas fa-scale-balanced"></i> MIT License</span>
+                </div>
+
+                <a href="https://rdat-pwa.vercel.app/" target="_blank" rel="noopener" class="hero-cta">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span class="lang-en">Launch Web PWA</span>
+                    <span class="lang-ar">تشغيل تطبيق الويب</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Screenshot Showcase Section -->
+        <section class="screenshot-container">
+            <img src="screenshot.png" alt="RDAT: Translation Copilot screenshot showing the segmented translation editor with ghost-text suggestions and status bar" class="screenshot-image" loading="lazy" onerror="this.style.display='none';">
+            <p class="screenshot-caption lang-en">RDAT: Translation Copilot v0.2.0 - segmented translation editor with three-tier ghost-text suggestions and live status indicators.</p>
+            <p class="screenshot-caption lang-ar">RDAT: مساعد الترجمة الإصدار 0.2.0 - محرر الترجمة المُقسّم مع اقتراحات النص المخفي ثلاثية المراحل ومؤشرات الحالة المباشرة.</p>
+        </section>
+
+        <!-- UI Showcase Grid -->
+        <section>
+            <h2 class="section-title lang-en">UI Showcase</h2>
+            <h2 class="section-title lang-ar">معرض الواجهة</h2>
+
+            <div class="ui-showcase-grid">
+                <div class="ui-showcase-item">
+                    <img src="screenshot.png" alt="RDAT main translation workspace" loading="lazy" onerror="this.parentElement.style.display='none';">
+                    <div class="ui-showcase-caption">
+                        <strong class="lang-en">Segmented Translation Editor</strong>
+                        <strong class="lang-ar">محرر الترجمة المُقسّم</strong>
+                        <br>
+                        <span class="lang-en">Source segments paired with RTL target fields and three-tier ghost-text suggestions.</span>
+                        <span class="lang-ar">مقاطع المصدر مقرونة بحقول هدف من اليمين لليسار واقتراحات نص مخفي ثلاثية المراحل.</span>
+                    </div>
+                </div>
+                <div class="ui-showcase-item">
+                    <img src="screenshot.png" alt="RDAT glossary and status bar" loading="lazy" onerror="this.parentElement.style.display='none';">
+                    <div class="ui-showcase-caption">
+                        <strong class="lang-en">Status Bar and Engine Indicators</strong>
+                        <strong class="lang-ar">شريط الحالة ومؤشرات المحرك</strong>
+                        <br>
+                        <span class="lang-en">Live typing, suggesting, and ready states with tier-source badges on every suggestion.</span>
+                        <span class="lang-ar">حالات الكتابة والاقتراح والجاهزية المباشرة مع شارات مصدر المرحلة لكل اقتراح.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section id="features">
+            <h2 class="section-title lang-en">Key Features</h2>
+            <h2 class="section-title lang-ar">الميزات الرئيسية</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-keyboard"></i></div>
+                    <h3 class="lang-en">Continuous Assistance with Idle-Pause Re-Engagement</h3>
+                    <h3 class="lang-ar">مساعدة مستمرة مع إعادة التنشيط عند التوقف</h3>
+                    <p class="lang-en">
+                        The ghost-text pipeline never gives up after a single suggestion. Segment focus triggers immediate prefetch, a 400 ms typing debounce produces fresh completions, and a <strong>2-second idle-pause timer</strong> re-engages the pipeline automatically during thinking pauses, so suggestions keep refreshing without manual re-prompting.
+                    </p>
+                    <p class="lang-ar">
+                        لا يتوقف خط أنابيب النص المخفي عند اقتراح واحد. يُفعّل التركيز على المقطع جلباً مسبقاً فورياً، ويُنتج تأخير 400 مللي ثانية للكتابة إكمالات جديدة، ويُعيد <strong>مؤقت التوقف لمدة ثانيتين</strong> تشغيل خط الأنابيب تلقائياً أثناء فترات التفكير، فتبقى الاقتراحات متجددة دون الحاجة إلى إعادة الطلب يدوياً.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="lang-en">Three-Tier Ghost-Text Pipeline</h3>
+                    <h3 class="lang-ar">خط أنابيب النص المخفي ثلاثي المراحل</h3>
+                    <p class="lang-en">
+                        Suggestions cascade through three tiers: <strong>Tier 0</strong> is the Local Translation Engine (under 5 ms), <strong>Tier 1</strong> is the RAG-augmented local LLM via <code>Ollama</code> (or <code>WebLLM</code> in the browser), and <strong>Tier 2</strong> is the <code>Gemini</code> cloud fallback. The first confident tier wins; later tiers progressively refine the suggestion.
+                    </p>
+                    <p class="lang-ar">
+                        تتتالى الاقتراحات عبر ثلاث مراحل: <strong>المرحلة 0</strong> محرك الترجمة المحلي (أقل من 5 مللي ثانية)، <strong>المرحلة 1</strong> النموذج اللغوي المحلي المعزز بـ RAG عبر <code>Ollama</code> (أو <code>WebLLM</code> في المتصفح)، و<strong>المرحلة 2</strong> احتياطي <code>Gemini</code> السحابي. أول مرحلة واثقة تفوز؛ والمراحل اللاحقة تحسّن الاقتراح تدريجياً.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                    <h3 class="lang-en">RAG-Augmented Translation</h3>
+                    <h3 class="lang-ar">ترجمة معززة بـ RAG</h3>
+                    <p class="lang-en">
+                        Local LLM suggestions are augmented with retrieval-augmented generation grounded in your personal glossary. Glossary terms are injected into the prompt context so the model respects preferred terminology, domain conventions, and previously confirmed translations, producing glossary-aware suggestions instead of generic outputs.
+                    </p>
+                    <p class="lang-ar">
+                        تُعزَّز اقتراحات النموذج المحلي بالتوليد المعزز بالاسترجاع (RAG) المُستند إلى مسردك الشخصي. تُحقن مصطلحات المسرد في سياق المطالبة فيحترم النموذج المصطلحات المفضلة واصطلاحات المجال والترجمات المؤكدة سابقاً، فيُنتج اقتراحات واعية بالمسرد بدلاً من مخرجات عامة.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-import"></i></div>
+                    <h3 class="lang-en">Document Import (.txt and .docx)</h3>
+                    <h3 class="lang-ar">استيراد الوثائق (.txt و .docx)</h3>
+                    <p class="lang-en">
+                        Import Microsoft Word <code>.docx</code> files (text extracted via the <code>mammoth</code> library, dynamically imported to keep the main bundle lean) or plain <code>.txt</code> files. Documents are segmented automatically into logical sentences and paired with dedicated translation fields for a clean segment-by-segment workflow.
+                    </p>
+                    <p class="lang-ar">
+                        استورد ملفات <code>.docx</code> من Microsoft Word (يُستخرج النص عبر مكتبة <code>mammoth</code> المستوردة ديناميكياً للحفاظ على حجم الحزمة) أو ملفات <code>.txt</code> العادية. تُقسَّم الوثائق تلقائياً إلى جمل منطقية وتُقرن بحقول ترجمة مخصصة لتدفق عمل نظيف مقطعاً بمقطع.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-arrows-rotate"></i></div>
+                    <h3 class="lang-en">Bidirectional Translation (EN-AR / AR-EN)</h3>
+                    <h3 class="lang-ar">ترجمة ثنائية الاتجاه (EN-AR / AR-EN)</h3>
+                    <p class="lang-en">
+                        A direction toggle at the top of the editor switches between <strong>EN to AR</strong> (default) and <strong>AR to EN</strong>. The selected direction is stored in workspace state and persists across sessions, so the layout, prompts, and editor fields adapt instantly to whichever language pair you are working on.
+                    </p>
+                    <p class="lang-ar">
+                        مبدّل اتجاه في أعلى المحرر يبدّل بين <strong>الإنجليزية إلى العربية</strong> (افتراضي) و<strong>العربية إلى الإنجليزية</strong>. يُخزَّن الاتجاه المحدد في حالة مساحة العمل ويستمر عبر الجلسات، فتتكيّف التخطيطات والمطالبات وحقول المحرر فوراً مع أي زوج لغوي تعمل عليه.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-book-bookmark"></i></div>
+                    <h3 class="lang-en">Glossary Management with IndexedDB Persistence</h3>
+                    <h3 class="lang-ar">إدارة المسرد مع التخزين في IndexedDB</h3>
+                    <p class="lang-en">
+                        Build your terminology database by adding terms manually through the glossary panel, or bulk-import an existing glossary from a <code>JSON</code> file. All entries persist in <code>IndexedDB</code> (dual-storage alongside workspace state), surviving page reloads and browser restarts, and feed directly into the RAG augmentation pipeline.
+                    </p>
+                    <p class="lang-ar">
+                        ابنِ قاعدة مصطلحاتك بإضافة المفردات يدوياً عبر لوحة المسرد، أو استورد مسرداً موجوداً دفعة واحدة من ملف <code>JSON</code>. تُحفظ جميع المدخلات في <code>IndexedDB</code> (تخزين مزدوج إلى جانب حالة مساحة العمل)، وتبقى عبر إعادة تحميل الصفحة وإعادة تشغيل المتصفح، وتُغذّي مباشرةً خط أنابيب تعزيز RAG.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Comparison Table -->
+        <section id="architecture" class="workflow-container">
+            <h2 class="section-title lang-en">Dual-Path Architecture</h2>
+            <h2 class="section-title lang-ar">بنية المسار المزدوج</h2>
+
+            <p class="hero-description lang-en" style="margin-bottom: 24px;">
+                As of v0.2.0, RDAT ships in two complementary forms sharing a single React/Vite frontend. The Tauri desktop app is the recommended path for daily professional use with Ollama as the primary engine; the PWA on Vercel is the try-before-install path for browsers and locked-down machines.
+            </p>
+            <p class="hero-description lang-ar" style="margin-bottom: 24px;">
+                اعتباراً من الإصدار 0.2.0، يأتي RDAT في شكلين متكاملين يشاركان واجهة React/Vite واحدة. تطبيق سطح المكتب Tauri هو المسار الموصى به للاستخدام المهني اليومي مع Ollama كمحرك أساسي؛ وتطبيق الويب التقدمي PWA على Vercel هو مسار التجربة قبل التثبيت للمتصفحات والأجهزة المقيدة.
+            </p>
+
+            <table class="architecture-table">
+                <thead>
+                    <tr>
+                        <th class="lang-en">Feature</th>
+                        <th class="lang-en">Tauri Desktop</th>
+                        <th class="lang-en">PWA Browser</th>
+                        <th class="lang-ar">الميزة</th>
+                        <th class="lang-ar">سطح المكتب Tauri</th>
+                        <th class="lang-ar">متصفح PWA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong class="lang-en">Local LLM</strong><strong class="lang-ar">النموذج المحلي</strong></td>
+                        <td class="lang-en">Ollama (primary)</td>
+                        <td class="lang-en">WebLLM (WebGPU)</td>
+                        <td><strong class="lang-en">Local LLM</strong><strong class="lang-ar">النموذج المحلي</strong></td>
+                        <td class="lang-ar">Ollama (أساسي)</td>
+                        <td class="lang-ar">WebLLM (WebGPU)</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Cloud Fallback</strong><strong class="lang-ar">الاحتياطي السحابي</strong></td>
+                        <td class="lang-en">Rust proxy to Gemini</td>
+                        <td class="lang-en">Vercel serverless</td>
+                        <td><strong class="lang-en">Cloud Fallback</strong><strong class="lang-ar">الاحتياطي السحابي</strong></td>
+                        <td class="lang-ar">وكيل Rust إلى Gemini</td>
+                        <td class="lang-ar">دوال Vercel اللاخادمية</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Install Size</strong><strong class="lang-ar">حجم التثبيت</strong></td>
+                        <td class="lang-en">~15 MB + model</td>
+                        <td class="lang-en">Zero install</td>
+                        <td><strong class="lang-en">Install Size</strong><strong class="lang-ar">حجم التثبيت</strong></td>
+                        <td class="lang-ar">~15 ميجابايت + النموذج</td>
+                        <td class="lang-ar">بدون تثبيت</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="lang-en">Offline</strong><strong class="lang-ar">دون اتصال</strong></td>
+                        <td class="lang-en">Full</td>
+                        <td class="lang-en">Partial</td>
+                        <td><strong class="lang-en">Offline</strong><strong class="lang-ar">دون اتصال</strong></td>
+                        <td class="lang-ar">كامل</td>
+                        <td class="lang-ar">جزئي</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Download Section -->
+        <section id="download" class="workflow-container">
+            <h2 class="section-title lang-en">Download RDAT: Translation Copilot</h2>
+            <h2 class="section-title lang-ar">تنزيل RDAT: مساعد الترجمة</h2>
+
+            <p class="hero-description lang-en" style="margin-bottom: 24px;">
+                Choose your platform. Desktop builds bundle the Tauri 2 runtime and connect to your local Ollama instance. The Web PWA runs in any modern browser with zero install and uses WebLLM via WebGPU.
+            </p>
+            <p class="hero-description lang-ar" style="margin-bottom: 24px;">
+                اختر منصتك. تجمع إصدارات سطح المكتب بيئة تشغيل Tauri 2 وتتصل بنسخة Ollama المحلية لديك. أما تطبيق الويب التقدمي فيعمل في أي متصفح حديث دون تثبيت ويستخدم WebLLM عبر WebGPU.
+            </p>
+
+            <div class="download-platforms">
+                <div class="download-platform-card">
+                    <div class="platform-icon"><i class="fab fa-apple"></i></div>
+                    <h4>macOS</h4>
+                    <div class="platform-format lang-en">DMG (Apple Silicon &amp; Intel)</div>
+                    <div class="platform-format lang-ar">DMG (Apple Silicon و Intel)</div>
+                    <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="download-btn">
+                        <i class="fas fa-download"></i>
+                        <span class="lang-en">Download DMG</span>
+                        <span class="lang-ar">تنزيل DMG</span>
+                    </a>
+                </div>
+                <div class="download-platform-card">
+                    <div class="platform-icon"><i class="fab fa-windows"></i></div>
+                    <h4>Windows</h4>
+                    <div class="platform-format lang-en">MSI / NSIS installer</div>
+                    <div class="platform-format lang-ar">مثبّت MSI / NSIS</div>
+                    <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="download-btn">
+                        <i class="fas fa-download"></i>
+                        <span class="lang-en">Download MSI</span>
+                        <span class="lang-ar">تنزيل MSI</span>
+                    </a>
+                </div>
+                <div class="download-platform-card">
+                    <div class="platform-icon"><i class="fab fa-linux"></i></div>
+                    <h4>Linux</h4>
+                    <div class="platform-format lang-en">AppImage / DEB package</div>
+                    <div class="platform-format lang-ar">حزمة AppImage / DEB</div>
+                    <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="download-btn">
+                        <i class="fas fa-download"></i>
+                        <span class="lang-en">Download AppImage</span>
+                        <span class="lang-ar">تنزيل AppImage</span>
+                    </a>
+                </div>
+                <div class="download-platform-card">
+                    <div class="platform-icon"><i class="fas fa-globe"></i></div>
+                    <h4 class="lang-en">Web PWA</h4>
+                    <h4 class="lang-ar">تطبيق ويب تقدمي</h4>
+                    <div class="platform-format lang-en">Zero install, runs in browser</div>
+                    <div class="platform-format lang-ar">بدون تثبيت، يعمل في المتصفح</div>
+                    <a href="https://rdat-pwa.vercel.app/" target="_blank" rel="noopener" class="download-btn secondary">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span class="lang-en">Launch PWA</span>
+                        <span class="lang-ar">فتح التطبيق</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Citation Section -->
+        <section class="citation-section">
+            <h3 class="lang-en">Citation</h3>
+            <h3 class="lang-ar">الاستشهاد</h3>
+            <p class="lang-en">If you use RDAT: Translation Copilot in academic work, please cite it as follows (APA):</p>
+            <p class="lang-ar">إذا استخدمت RDAT: مساعد الترجمة في عمل أكاديمي، يُرجى الاستشهاد به على النحو التالي (APA):</p>
+            <div class="citation-text">Mandour, W. (2026). <em>RDAT: Translation Copilot</em> (Version 0.2.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.21256765</a></div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <h3 class="lang-en">Get in Touch</h3>
+            <h3 class="lang-ar">تواصل معنا</h3>
+            <p class="lang-en">
+                Questions, feedback, or collaboration ideas on AI-assisted English-Arabic translation are welcome. RDAT: Translation Copilot is a research project by Dr. Waleed Mandour, Assistant Lecturer at Sultan Qaboos University.
+            </p>
+            <p class="lang-ar">
+                نرحّب بالأسئلة والملاحظات وأفكار التعاون حول الترجمة الإنجليزية-العربية المدعومة بالذكاء الاصطناعي. RDAT: مساعد الترجمة مشروع بحثي لـ د. وليد مندور، مدرّس مساعد في جامعة السلطان قابوس.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:w.abumandour@squ.edu.om" class="contact-link">
+                    <i class="fas fa-envelope"></i>
+                    <span class="lang-en">Email</span>
+                    <span class="lang-ar">البريد</span>
+                </a>
+                <a href="https://waleedmandour.org/" target="_blank" rel="noopener" class="contact-link">
+                    <i class="fas fa-globe"></i>
+                    <span class="lang-en">Website</span>
+                    <span class="lang-ar">الموقع</span>
+                </a>
+                <a href="https://github.com/waleedmandour/rdat" target="_blank" rel="noopener" class="contact-link">
+                    <i class="fab fa-github"></i>
+                    <span class="lang-en">GitHub</span>
+                    <span class="lang-ar">GitHub</span>
+                </a>
+                <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener" class="contact-link">
+                    <i class="fab fa-orcid"></i>
+                    <span class="lang-en">ORCID</span>
+                    <span class="lang-ar">ORCID</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container footer-content">
+            <div>
+                <span class="lang-en">Author: </span><span class="lang-ar">الباحث: </span>
+                <a href="https://waleedmandour.org/" class="footer-email">Dr. Waleed Mandour</a>
+                <span class="lang-en">, Assistant Lecturer, Sultan Qaboos University</span>
+                <span class="lang-ar">، مدرّس مساعد، جامعة السلطان قابوس</span>
+            </div>
+            <div>
+                <span class="lang-en">Email: </span><span class="lang-ar">البريد: </span>
+                <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                <span class="lang-en"> &nbsp;|&nbsp; Website: </span><span class="lang-ar"> &nbsp;|&nbsp; الموقع: </span>
+                <a href="https://waleedmandour.org/" class="footer-email">waleedmandour.org</a>
+            </div>
+            <div>
+                <span class="lang-en">ORCID: </span><span class="lang-ar">معرف ORCID: </span>
+                <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener" class="footer-email">0000-0002-9262-5993</a>
+                <span class="lang-en"> &nbsp;|&nbsp; DOI: </span><span class="lang-ar"> &nbsp;|&nbsp; معرف DOI: </span>
+                <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener" class="footer-email">10.5281/zenodo.21256765</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/waleedmandour/rdat" target="_blank" rel="noopener" class="lang-en">GitHub Repo</a>
+                <a href="https://github.com/waleedmandour/rdat" target="_blank" rel="noopener" class="lang-ar">مستودع GitHub</a>
+                <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="lang-en">Releases</a>
+                <a href="https://github.com/waleedmandour/rdat/releases/tag/v0.2.0" target="_blank" rel="noopener" class="lang-ar">الإصدارات</a>
+                <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener" class="lang-en">Zenodo DOI</a>
+                <a href="https://doi.org/10.5281/zenodo.21256765" target="_blank" rel="noopener" class="lang-ar">معرف Zenodo</a>
+                <a href="https://github.com/waleedmandour/rdat/releases/download/v0.2.0/RDAT-Translation-Copilot-v0.2.0-User-Guide.pdf" target="_blank" rel="noopener" class="lang-en">User Guide PDF</a>
+                <a href="https://github.com/waleedmandour/rdat/releases/download/v0.2.0/RDAT-Translation-Copilot-v0.2.0-User-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم PDF</a>
+                <a href="https://waleedmandour.org/projects/" class="lang-en">Back to Projects</a>
+                <a href="https://waleedmandour.org/projects/" class="lang-ar">العودة إلى المشاريع</a>
+            </div>
+            <div style="margin-top: 16px; font-size: 13px; color: var(--gray);">
+                <span class="lang-en">Version 0.2.0 &middot; MIT License &middot; Built with Tauri 2, React 19, Vite 6, Ollama, and Gemma 4</span>
+                <span class="lang-ar">الإصدار 0.2.0 &middot; رخصة MIT &middot; بُني بـ Tauri 2 و React 19 و Vite 6 و Ollama و Gemma 4</span>
+            </div>
+            <div style="margin-top: 4px; font-size: 12px; color: var(--gray);">
+                <span class="lang-en">Copyright &copy; 2026 Dr. Waleed Mandour</span>
+                <span class="lang-ar">حقوق النشر &copy; 2026 د. وليد مندور</span>
+            </div>
+            <div class="footer-heart">
+                <span class="lang-en">Built with <i class="fas fa-heart"></i> to the Academic Community</span>
+                <span class="lang-ar">بُني بـ <i class="fas fa-heart"></i> للمجتمع الأكاديمي</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Toggle Script -->
+    <script>
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            this.classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            this.classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
