@@ -1199,7 +1199,7 @@
                 </p>
 
                 <p class="hero-description lang-ar">
-                    RDAT: مساعد الترجمة هو فضاء عمل ثنائي المسار مدعوم بالذكاء الاصطناعي للترجمة الاحترافية من الإنجليزية إلى العربية. يأتي في شكل <strong>تطبيق سطح مكتب Tauri 2</strong> (Windows و macOS و Linux) يعمل بـ <strong>Ollama</strong> مشغّلاً <strong>Gemma 4</strong> كمحرك أساسي، وفي شكل <strong>تطبيق ويب تقدمي PWA على Vercel</strong> يعمل بـ <strong>WebLLM</strong> عبر WebGPU داخل المتصفح. يحافظ خط أنابيب النص المخفي ثلاثي المراحل على تحكم المترجم الكامل بكل كلمة.
+                    RDAT: مساعد الترجمة هو بيئة عمل ثنائية المسار مدعومة بالذكاء الاصطناعي للترجمة الاحترافية من الإنجليزية إلى العربية. يأتي في شكل <strong>تطبيق سطح مكتب Tauri 2</strong> (Windows و macOS و Linux) يعمل بـ <strong>Ollama</strong> مشغّلاً <strong>Gemma 4</strong> كمحرك أساسي، وفي شكل <strong>تطبيق ويب تقدمي PWA على Vercel</strong> يعمل بـ <strong>WebLLM</strong> عبر WebGPU داخل المتصفح. إذ يحافظ المسار البرمجي للنص المقترح ثلاثي المراحل على التحكم الكامل للمترجم بكل كلمة.
                 </p>
 
                 <!-- Tech Badges -->
@@ -1225,7 +1225,7 @@
                 <div class="screenshot-item">
                     <img src="screenshot.png" alt="RDAT: Translation Copilot screenshot showing the segmented translation editor with ghost-text suggestions and status bar" class="screenshot-image" loading="lazy" onerror="this.style.display='none';">
                     <p class="screenshot-caption lang-en">RDAT: Translation Copilot v0.2.0 - segmented translation editor with three-tier ghost-text suggestions and live status indicators.</p>
-                    <p class="screenshot-caption lang-ar">RDAT: مساعد الترجمة الإصدار 0.2.0 - محرر الترجمة المُقسّم مع اقتراحات النص المخفي ثلاثية المراحل ومؤشرات الحالة المباشرة.</p>
+                    <p class="screenshot-caption lang-ar">RDAT: مساعد الترجمة الإصدار 0.2.0 - محرر الترجمة المُقسّم مع اقتراحات النص المًقترَح ثلاثية المراحل ومؤشرات الحالة المباشرة.</p>
                 </div>
                 <div class="screenshot-item">
                     <img src="RDAT_Screenshot2.png" alt="RDAT: Translation Copilot second screenshot showing the translation workspace with glossary panel and engine status indicators" class="screenshot-image" loading="lazy" onerror="this.style.display='none';">
@@ -1278,18 +1278,18 @@
                         The ghost-text pipeline never gives up after a single suggestion. Segment focus triggers immediate prefetch, a 400 ms typing debounce produces fresh completions, and a <strong>2-second idle-pause timer</strong> re-engages the pipeline automatically during thinking pauses, so suggestions keep refreshing without manual re-prompting.
                     </p>
                     <p class="lang-ar">
-                        لا يتوقف خط أنابيب النص المخفي عند اقتراح واحد. يُفعّل التركيز على المقطع جلباً مسبقاً فورياً، ويُنتج تأخير 400 مللي ثانية للكتابة إكمالات جديدة، ويُعيد <strong>مؤقت التوقف لمدة ثانيتين</strong> تشغيل خط الأنابيب تلقائياً أثناء فترات التفكير، فتبقى الاقتراحات متجددة دون الحاجة إلى إعادة الطلب يدوياً.
+                        لا يتوقف المسار البرمجي النص المًقترَح عند اقتراح واحد. يُفعّل التركيز على المقطع جلباً مسبقاً فورياً، ويُنتج تأخير 400 مللي ثانية(أي ثانيتين فقط) للكتابة إكمالات جديدة، ويُعيد <strong>مؤقت التوقف لمدة ثانيتين</strong> تشغيل المسار البرمجي للنص تلقائياً أثناء فترات التفكير، فتبقى الاقتراحات متجددة دون الحاجة إلى إعادة الطلب يدوياً.
                     </p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
                     <h3 class="lang-en">Three-Tier Ghost-Text Pipeline</h3>
-                    <h3 class="lang-ar">خط أنابيب النص المخفي ثلاثي المراحل</h3>
+                    <h3 class="lang-ar">المسار البرمجي النص المًقترَح ثلاثي المراحل</h3>
                     <p class="lang-en">
                         Suggestions cascade through three tiers: <strong>Tier 0</strong> is the Local Translation Engine (under 5 ms), <strong>Tier 1</strong> is the RAG-augmented local LLM via <code>Ollama</code> (or <code>WebLLM</code> in the browser), and <strong>Tier 2</strong> is the <code>Gemini</code> cloud fallback. The first confident tier wins; later tiers progressively refine the suggestion.
                     </p>
                     <p class="lang-ar">
-                        تتتالى الاقتراحات عبر ثلاث مراحل: <strong>المرحلة 0</strong> محرك الترجمة المحلي (أقل من 5 مللي ثانية)، <strong>المرحلة 1</strong> النموذج اللغوي المحلي المعزز بـ RAG عبر <code>Ollama</code> (أو <code>WebLLM</code> في المتصفح)، و<strong>المرحلة 2</strong> احتياطي <code>Gemini</code> السحابي. أول مرحلة واثقة تفوز؛ والمراحل اللاحقة تحسّن الاقتراح تدريجياً.
+                        تتتالى الاقتراحات عبر ثلاث مراحل: <strong>مرحلة الإعداد</strong> محرك الترجمة المحلي (أقل من 5 مللي ثانية)، <strong>المرحلة 1</strong> النموذج اللغوي المحلي المعزز بـ RAG عبر <code>Ollama</code> (أو <code>WebLLM</code> في المتصفح)، و<strong>المرحلة 2</strong> احتياطي <code>Gemini</code> السحابي. أول مرحلة واثقة تفوز؛ والمراحل اللاحقة تحسّن الاقتراح تدريجياً.
                     </p>
                 </div>
                 <div class="feature-card">
@@ -1333,7 +1333,7 @@
                         Build your terminology database by adding terms manually through the glossary panel, or bulk-import an existing glossary from a <code>JSON</code> file. All entries persist in <code>IndexedDB</code> (dual-storage alongside workspace state), surviving page reloads and browser restarts, and feed directly into the RAG augmentation pipeline.
                     </p>
                     <p class="lang-ar">
-                        ابنِ قاعدة مصطلحاتك بإضافة المفردات يدوياً عبر لوحة المسرد، أو استورد مسرداً موجوداً دفعة واحدة من ملف <code>JSON</code>. تُحفظ جميع المدخلات في <code>IndexedDB</code> (تخزين مزدوج إلى جانب حالة مساحة العمل)، وتبقى عبر إعادة تحميل الصفحة وإعادة تشغيل المتصفح، وتُغذّي مباشرةً خط أنابيب تعزيز RAG.
+                        ابنِ قاعدة مصطلحاتك بإضافة المفردات يدوياً عبر لوحة المسرد، أو استورد مسرداً موجوداً دفعة واحدة من ملف <code>JSON</code>. تُحفظ جميع المدخلات في <code>IndexedDB</code> (تخزين مزدوج إلى جانب حالة مساحة العمل)، وتبقى عبر إعادة تحميل الصفحة وإعادة تشغيل المتصفح، وتُغذّي مباشرةً المسار البرمجي تعزيز RAG.
                     </p>
                 </div>
             </div>
@@ -1418,7 +1418,7 @@
                             <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
                         </tr>
                         <tr>
-                            <td class="row-feature"><span class="lang-en">Ghost-text predictive completion</span><span class="lang-ar">الإكمال التنبؤي بالنص المخفي</span></td>
+                            <td class="row-feature"><span class="lang-en">Ghost-text predictive completion</span><span class="lang-ar">الإكمال التنبؤي بالنص المًقترَح</span></td>
                             <td class="cell-yes"><span class="lang-en">Yes (continuous)</span><span class="lang-ar">نعم (مستمر)</span></td>
                             <td class="cell-partial"><span class="lang-en">Limited</span><span class="lang-ar">محدود</span></td>
                             <td class="cell-no"><span class="lang-en">No</span><span class="lang-ar">لا</span></td>
