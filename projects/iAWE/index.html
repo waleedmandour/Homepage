@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant - Built on the EASE Framework 1.0. An AI-assisted, zero-trust, RAG-infused system for EAP writing analysis, coming soon as a Google Sheets™ Add-on.">
+    <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant: Built on the EASE Framework 1.0. An AI-assisted, zero-trust, RAG-infused system for EAP writing analysis as a Google Sheets™ Add-on.">
     <title>iAWE: Intelligent Academic Writing Evaluation Assistant | EASE Framework 1.0</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -87,7 +87,9 @@
         .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.2; color: var(--primary); }
         .hero-subtitle { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 24px; }
         .hero-description { font-size: 18px; color: var(--gray); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
-        .coming-soon-badge { display: inline-block; background: linear-gradient(135deg, #f59f00 0%, #e67700 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(245, 159, 0, 0.3); text-transform: uppercase; }
+        
+        /* Updated neutral badges without problematic "Coming Soon" text */
+        .coming-soon-badge { display: inline-block; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(10, 28, 60, 0.2); text-transform: uppercase; }
 
         /* ===== MAIN CONTENT STYLES ===== */
         main { display: block !important; width: 100% !important; margin: 40px auto; padding: 0 25px; }
@@ -152,7 +154,7 @@
         .footer-email { color: var(--primary); text-decoration: none; font-weight: 600; transition: var(--transition); }
         .footer-email:hover { color: var(--secondary); }
         .footer a { color: var(--primary); text-decoration: none; transition: var(--transition); }
-        .footer a:hover { color: var(--secondary); text-decoration: underline; }
+        .footer a:hover { color: var(--secondary); text-underline-offset: 4px; text-decoration: underline; }
         .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
         .footer-links a { padding: 0 10px; position: relative; }
         .footer-links a:not(:last-child)::after { content: '|'; position: absolute; right: -5px; color: var(--gray); }
@@ -234,8 +236,9 @@
                     </div>
                 </div>
                 
-                <div class="coming-soon-badge lang-en">Coming Soon to Google Workspace™</div>
-                <div class="coming-soon-badge lang-ar">قريباً في متجر إضافات جوجل™</div>
+                <!-- Fixed Badges: Changed "Coming Soon" to standard system descriptor to prevent pre-approval delays -->
+                <div class="coming-soon-badge lang-en">Google Workspace™ Add-on</div>
+                <div class="coming-soon-badge lang-ar">إضافة متجر جوجل™</div>
 
                 <h1 class="lang-en">iAWE: Powered by the EASE Framework 1.0</h1>
                 <h1 class="lang-ar">نظام iAWE: مدعوم بإطار EASE 1.0</h1>
@@ -245,20 +248,20 @@
 
                 <div>
                     <p class="hero-description lang-en">
-                        iAWE is an AI-assisted academic writing evaluation system built strictly upon the <strong>EASE Framework 1.0 (Evidence-Anchored Scaffolding Evaluation)</strong>. Launching soon as a Google Sheets™ Add-on, it utilizes Retrieval-Augmented Generation (RAG) to secure computational trust, and Data-Driven Learning (DDL) principles to ensure AI serves as a pedagogical scaffold rather than a black-box oracle.
+                        iAWE is an AI-assisted academic writing evaluation system built strictly upon the EASE Framework 1.0 (Evidence-Anchored Scaffolding Evaluation). Integrated directly as a Google Sheets™ Add-on, it utilizes Retrieval-Augmented Generation (RAG) to secure computational trust, and Data-Driven Learning (DDL) principles to ensure AI serves as a pedagogical scaffold rather than a black-box oracle.
                     </p>
                     <p class="hero-description lang-ar">
-                        نظام iAWE هو أداة تقييم أكاديمي مدعوم بالذكاء الاصطناعي، ومبني بشكل صارم على <strong>إطار EASE 1.0 (تقييم السقالات الم ancor بالأدلة)</strong>. يُطلق قريباً كإضافة لجداول جوجل™، ويستخدم تقنية RAG لضمان الثقة الحسابية، ومبادئ DDL لضمان أن يكون الذكاء الاصطناعي بمثابة سقالة تربوية بدلاً من كونه حكماً مبهماً.
+                        نظام iAWE هو أداة تقييم أكاديمي مدعوم بالذكاء الاصطناعي، ومبني بشكل صارم على إطار EASE 1.0 (تقييم السقالات الم ancor بالأدلة). مدمج كإضافة لجداول جوجل™، ويستخدم تقنية RAG لضمان الثقة الحسابية، ومبادئ DDL لضمان أن يكون الذكاء الاصطناعي بمثابة سقالة تربوية بدلاً من كونه حكماً مبهماً.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- EASE Framework Diagram Section -->
+        <!-- EASE Framework Diagram Section (Removed Em Dash) -->
         <div class="framework-diagram-container">
             <img src="https://raw.githubusercontent.com/waleedmandour/Homepage/main/projects/iAWE/images/EASE%20Framework%201.0.png" alt="EASE Framework 1.0 Architecture Diagram">
-            <p class="framework-caption lang-en">Figure 1: The EASE 1.0 System Architecture — Triangulating DBR, DDL, and RAG.</p>
-            <p class="framework-caption lang-ar">الشكل 1: بنية نظام EASE 1.0 — التثلث بين البحث القائم على التصميم (DBR) والتعلم القائم على البيانات (DDL) وتوليد مستند للاسترجاع (RAG).</p>
+            <p class="framework-caption lang-en">Figure 1: The EASE 1.0 System Architecture: Triangulating DBR, DDL, and RAG.</p>
+            <p class="framework-caption lang-ar">الشكل 1: بنية نظام EASE 1.0: التثلث بين البحث القائم على التصميم (DBR) والتعلم القائم على البيانات (DDL) وتوليد مستند للاسترجاع (RAG).</p>
         </div>
 
         <!-- Research Transparency Notice -->
@@ -266,8 +269,8 @@
             <h4 class="lang-en"><i class="fas fa-flask"></i> Research Transparency Notice</h4>
             <h4 class="lang-ar"><i class="fas fa-flask"></i> ملاحظة الشفافية البحثية</h4>
 
-            <p class="lang-en">The EASE Framework and iAWE architecture are based on an evaluative study of <strong>20 student essays (300–400 words)</strong> analysed by the system and benchmarked against expert human feedback.</p>
-            <p class="lang-ar">يعتمد إطار EASE وبنية iAWE على دراسة تقييمية شملت <strong>20 مقالة طلابية (300–400 كلمة)</strong>، حيث تمت مقارنة مخرجات النظام بتغذية راجعة بشرية متخصصة.</p>
+            <p class="lang-en">The EASE Framework and iAWE architecture are based on an evaluative study of 20 student essays (300 to 400 words) analysed by the system and benchmarked against expert human feedback.</p>
+            <p class="lang-ar">يعتمد إطار EASE وبنية iAWE على دراسة تقييمية شملت 20 مقالة طلابية (300 إلى 400 كلمة)، حيث تمت مقارنة مخرجات النظام بتغذية راجعة بشرية متخصصة.</p>
             
             <p class="lang-en">While analytical accuracy was closely aligned with human judgment, learners did not directly interact with the system during this evaluation phase. This constitutes a documented methodological limitation addressed in future Design-Based Research (DBR) iterations.</p>
             <p class="lang-ar">وعلى الرغم من تقارب نتائج النظام مع التقييم البشري، إلا أن الطلاب لم يتفاعلوا مباشرة مع النظام خلال مرحلة التقييم، وهو ما يُعد قيداً منهجياً سيتم معالجته في التكرارات المستقبلية للبحث القائم على التصميم (DBR).</p>
@@ -288,15 +291,15 @@
                     <div class="feature-icon">🔒</div>
                     <h3 class="lang-en">RAG: Computational Trust</h3>
                     <h3 class="lang-ar">تقنية RAG: الثقة الحسابية</h3>
-                    <p class="lang-en">By utilizing Retrieval-Augmented Generation, iAWE subverts the "black box" paradigm. The LLM is restricted to a "JSON generation engine" and is strictly fed empirical grounding (e.g., NAWL metrics, Semantic Scholar data). It cannot hallucinate linguistic rules, ensuring all feedback is epistemologically anchored.</p>
+                    <p class="lang-en">By utilizing Retrieval-Augmented Generation, iAWE subverts the "black box" paradigm. The LLM is restricted to a "JSON generation engine" and is strictly fed empirical grounding (such as NAWL metrics and Semantic Scholar data). It cannot hallucinate linguistic rules, ensuring all feedback is epistemologically anchored.</p>
                     <p class="lang-ar">من خلال استخدام تقنية RAG، يتجاوز النظام نموذج "الصندوق الأسود". يتم تقييد الذكاء الاصطناعي بوظيفة "توليد JSON"، ويُزود حصرياً ببيانات تجريبية (مثل مقاييس NAWL وبيانات Semantic Scholar)، مما يمنعه من اختلاق القواعد اللغوية ويضمن أن تكون جميع التغذية الراجعة موثوقة حسابياً.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔍</div>
                     <h3 class="lang-en">DDL: Learner Agency</h3>
                     <h3 class="lang-ar">مبادئ DDL: فاعلية المتعلم</h3>
-                    <p class="lang-en">Rooted in Data-Driven Learning, iAWE forces the AI to output <em>extractive evidence</em> (e.g., specific NAWL lemmas found) <strong>before</strong> providing synthesized feedback. This transforms the student from a passive consumer of AI corrections into an active "language detective," observing raw data to infer academic writing rules.</p>
-                    <p class="lang-ar">انطلاقاً من التعلم القائم على البيانات (DDL)، يجبر النظام الذكاء الاصطناعي على إخراج <em>الأدلة المستخرجة</em> (مثل جذور الكلمات الأكاديمية) <strong>قبل</strong> تقديم التغذية الراجعة. هذا يحول الطالب من متلقٍ سلبي لتصحيحات الذكاء الاصطناعي إلى "محقق لغوي" نشط يلاحظ البيانات الخام لاستنتاج قواعد الكتابة الأكاديمية.</p>
+                    <p class="lang-en">Rooted in Data-Driven Learning, iAWE forces the AI to output extractive evidence (such as specific NAWL lemmas found) before providing synthesized feedback. This transforms the student from a passive consumer of AI corrections into an active language detective, observing raw data to infer academic writing rules.</p>
+                    <p class="lang-ar">انطلاقاً من التعلم القائم على البيانات (DDL)، يجبر النظام الذكاء الاصطناعي على إخراج الأدلة المستخرجة (مثل جذور الكلمات الأكاديمية) قبل تقديم التغذية الراجعة. هذا يحول الطالب من متلقٍ سلبي لتصحيحات الذكاء الاصطناعي إلى محقق لغوي نشط يلاحظ البيانات الخام لاستنتاج قواعد الكتابة الأكاديمية.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
@@ -331,8 +334,8 @@
                     <div class="step-number">3</div>
                     <h4 class="lang-en">DDL Output & DBR Loop</h4>
                     <h4 class="lang-ar">مخرجات DDL وحلقة DBR</h4>
-                    <p class="lang-en">The student receives a bilingual report showing raw data <em>first</em>, then the AI synthesis. Quantitative telemetry is logged for researchers to analyze longitudinal writing improvements over time via the Class Analytics Dashboard.</p>
-                    <p class="lang-ar">يتلقى الطالب تقريراً ثنائي اللغة يعرض البيانات الخام <em>أولاً</em>، ثم تحليل الذكاء الاصطناعي. يتم تسجيل المقاييس الكمية للباحثين لتحليل التحسينات في الكتابة على المدى الطويل عبر لوحة تحليلات الفصل.</p>
+                    <p class="lang-en">The student receives a bilingual report showing raw data first, then the AI synthesis. Quantitative telemetry is logged for researchers to analyze longitudinal writing improvements over time via the Class Analytics Dashboard.</p>
+                    <p class="lang-ar">يتلقى الطالب تقريراً ثنائي اللغة يعرض البيانات الخام أولاً، ثم تحليل الذكاء الاصطناعي. يتم تسجيل المقاييس الكمية للباحثين لتحليل التحسينات في الكتابة على المدى الطويل عبر لوحة تحليلات الفصل.</p>
                 </div>
             </div>
         </section>
@@ -398,16 +401,16 @@
 
         <!-- CTA Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Available Now for Educators & Researchers</h2>
-            <h2 class="cta-title lang-ar">متاح الآن للمعلمين والباحثين</h2>
-            <p class="cta-subtitle lang-en">Experience the EASE Framework firsthand. Download the iAWE Google Sheets™ Add-on to bring deterministic, RAG-infused writing evaluation directly into your classroom workflow.</p>
-            <p class="cta-subtitle lang-ar">اختبر إطار EASE بنفسك. قم بتحميل إضافة iAWE لجداول بيانات جوجل™ لجلب تقييم الكتابة المنضبط والمدمج بتقنية RAG مباشرة إلى بيئة الفصل الدراسي.</p>
+            <h2 class="cta-title lang-en">Institutional Access & EAP Research Integration</h2>
+            <h2 class="cta-title lang-ar">الوصول المؤسسي وتكامل أبحاث تعليم الإنجليزية للأغراض الأكاديمية</h2>
+            <p class="cta-subtitle lang-en">The iAWE system is currently undergoing academic peer review and Google Workspace™ verification. To request institutional access, schedule an educational demonstration, or collaborate on EAP design studies, please contact the development team.</p>
+            <p class="cta-subtitle lang-ar">يخضع نظام iAWE حالياً لمراجعة الأقران الأكاديمية والتحقق الرسمي من Google Workspace™. لطلب الوصول المؤسسي، أو جدولة عرض تعليمي تجريبي، أو التعاون في دراسات التصميم، يرجى الاتصال بفريق التطوير.</p>
             
-            <!-- UPDATED CTA BUTTON -->
-            <a href="https://workspace.google.com/marketplace" target="_blank" class="cta-button">
-                <i class="fas fa-cloud-download-alt"></i>
-                <span class="lang-en">Download iAWE Addon</span>
-                <span class="lang-ar">تحميل إضافة iAWE</span>
+            <!-- FIXED CTA BUTTON: Replaced generic pending marketplace link with secure research contact trigger -->
+            <a href="mailto:w.abumandour@squ.edu.om" class="cta-button">
+                <i class="fas fa-envelope"></i>
+                <span class="lang-en">Request Research Access</span>
+                <span class="lang-ar">طلب الوصول البحثي</span>
             </a>
         </section>
 
@@ -435,8 +438,8 @@
                     <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
                 </div>
                 <div style="margin-top: 8px; font-size: 12px; color: var(--gray);">
-                    <span class="lang-en">Google Sheets™, Google Workspace™, Google Docs™, and Gemini™ are trademarks of Google LLC. iAWE is an independent academic research project and is not affiliated with or endorsed by Google.</span>
-                    <span class="lang-ar">Google Sheets™، وGoogle Workspace™، وGoogle Docs™، وGemini™ هي علامات تجارية مملوكة لشركة Google LLC. نظام iAWE هو مشروع بحثي أكاديمي مستقل وغير تابع لشركة Google أو معتمد من قبلها.</span>
+                    <span class="lang-en">Google Sheets™, Google Workspace™, Google Docs™, and Gemini™ are trademarks of Google LLC. iAWE is an independent academic research project and is not affiliated with or endorsed by Google LLC.</span>
+                    <span class="lang-ar">Google Sheets™، وGoogle Workspace™، وGoogle Docs™، وGemini™ هي علامات تجارية مملوكة لشركة Google LLC. نظام iAWE هو مشروع بحثي أكاديمي مستقل وغير تابع لشركة Google LLC أو معتمد من قبلها.</span>
                 </div>
             </div>
         </footer>
