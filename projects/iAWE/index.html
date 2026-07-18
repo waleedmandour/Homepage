@@ -88,7 +88,7 @@
         .hero-subtitle { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 24px; }
         .hero-description { font-size: 18px; color: var(--gray); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
         
-        /* Updated neutral badges without problematic "Coming Soon" text */
+        /* Updated badges to reflect published status */
         .coming-soon-badge { display: inline-block; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(10, 28, 60, 0.2); text-transform: uppercase; }
 
         /* ===== MAIN CONTENT STYLES ===== */
@@ -142,12 +142,20 @@
         .workflow-step p, .feature-card p { color: var(--gray); font-size: 15px; line-height: 1.6; }
         .feature-icon { font-size: 40px; margin-bottom: 24px; display: inline-block; padding: 16px; background: rgba(10, 28, 60, 0.1); border-radius: 12px; color: var(--primary); }
 
+        /* ===== VIDEO SECTION ===== */
+        .video-container { max-width: 800px; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+        .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; }
+        .video-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
         /* ===== CTA & FOOTER ===== */
         .cta-section { text-align: center; padding: 64px 0; background: linear-gradient(135deg, var(--light) 0%, rgba(32, 178, 170, 0.1) 100%); border-radius: 12px; margin: 64px 0; box-shadow: var(--shadow); }
         .cta-title { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
         .cta-subtitle { color: var(--gray); font-size: 18px; max-width: 600px; margin: 0 auto 32px; line-height: 1.7; }
         .cta-button { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 18px; transition: var(--transition); box-shadow: 0 4px 15px rgba(10, 28, 60, 0.3); border: none; cursor: pointer; }
         .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4); }
+        .secondary-cta { display: block; margin-top: 20px; color: var(--gray); font-size: 16px; }
+        .secondary-cta a { color: var(--primary); font-weight: 600; text-decoration: none; transition: var(--transition); }
+        .secondary-cta a:hover { text-decoration: underline; }
 
         .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
         .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
@@ -236,9 +244,9 @@
                     </div>
                 </div>
                 
-                <!-- Fixed Badges: Changed "Coming Soon" to standard system descriptor to prevent pre-approval delays -->
-                <div class="coming-soon-badge lang-en">Google Workspace™ Add-on</div>
-                <div class="coming-soon-badge lang-ar">إضافة متجر جوجل™</div>
+                <!-- Updated Badges: Now showing as Available -->
+                <div class="coming-soon-badge lang-en">Available Now on Google Workspace™</div>
+                <div class="coming-soon-badge lang-ar">متاح الآن على متجر جوجل™</div>
 
                 <h1 class="lang-en">iAWE: Powered by the EASE Framework 1.0</h1>
                 <h1 class="lang-ar">نظام iAWE: مدعوم بإطار EASE 1.0</h1>
@@ -257,7 +265,7 @@
             </div>
         </section>
 
-        <!-- EASE Framework Diagram Section (Removed Em Dash) -->
+        <!-- EASE Framework Diagram Section -->
         <div class="framework-diagram-container">
             <img src="https://raw.githubusercontent.com/waleedmandour/Homepage/main/projects/iAWE/images/EASE%20Framework%201.0.png" alt="EASE Framework 1.0 Architecture Diagram">
             <p class="framework-caption lang-en">Figure 1: The EASE 1.0 System Architecture: Triangulating DBR, DDL, and RAG.</p>
@@ -370,6 +378,17 @@
             </div>
         </section>
 
+        <!-- Demo Video Section -->
+        <section>
+            <h2 class="section-title lang-en">Watch the Demo</h2>
+            <h2 class="section-title lang-ar">شاهد العرض التوضيحي</h2>
+            <div class="video-container">
+                <div class="video-responsive">
+                    <iframe src="https://www.youtube.com/embed/41X7KtRFXM8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
         <!-- System Features -->
         <section>
             <h2 class="section-title lang-en">System Features</h2>
@@ -401,17 +420,22 @@
 
         <!-- CTA Section -->
         <section class="cta-section">
-            <h2 class="cta-title lang-en">Institutional Access & EAP Research Integration</h2>
-            <h2 class="cta-title lang-ar">الوصول المؤسسي وتكامل أبحاث تعليم الإنجليزية للأغراض الأكاديمية</h2>
-            <p class="cta-subtitle lang-en">The iAWE system is currently undergoing academic peer review and Google Workspace™ verification. To request institutional access, schedule an educational demonstration, or collaborate on EAP design studies, please contact the development team.</p>
-            <p class="cta-subtitle lang-ar">يخضع نظام iAWE حالياً لمراجعة الأقران الأكاديمية والتحقق الرسمي من Google Workspace™. لطلب الوصول المؤسسي، أو جدولة عرض تعليمي تجريبي، أو التعاون في دراسات التصميم، يرجى الاتصال بفريق التطوير.</p>
+            <h2 class="cta-title lang-en">Install iAWE for Google Sheets™</h2>
+            <h2 class="cta-title lang-ar">تثبيت نظام iAWE لجداول جوجل™</h2>
+            <p class="cta-subtitle lang-en">iAWE is now publicly available on the Google Workspace™ Marketplace. Install it directly to start evaluating academic writing, or contact the team for institutional demonstrations and research collaborations.</p>
+            <p class="cta-subtitle lang-ar">أصبح نظام iAWE متاحاً الآن للجميع على متجر Google Workspace™. قم بتثبيته مباشرة لبدء تقييم الكتابة الأكاديمية، أو تواصل مع الفريق للعروض المؤسسية والتعاون البحثي.</p>
             
-            <!-- FIXED CTA BUTTON: Replaced generic pending marketplace link with secure research contact trigger -->
-            <a href="mailto:w.abumandour@squ.edu.om" class="cta-button">
-                <i class="fas fa-envelope"></i>
-                <span class="lang-en">Request Research Access</span>
-                <span class="lang-ar">طلب الوصول البحثي</span>
+            <!-- CTA BUTTON: Now links directly to the published Google Workspace Add-on -->
+            <a href="https://gsuite.google.com/marketplace/app/foo/416375433641" target="_blank" class="cta-button">
+                <i class="fab fa-google"></i>
+                <span class="lang-en">Install from Google Workspace</span>
+                <span class="lang-ar">تثبيت من متجر جوجل</span>
             </a>
+            
+            <div class="secondary-cta">
+                <span class="lang-en">For institutional inquiries: <a href="mailto:w.abumandour@squ.edu.om">w.abumandour@squ.edu.om</a></span>
+                <span class="lang-ar">للاستفسارات المؤسسية: <a href="mailto:w.abumandour@squ.edu.om">w.abumandour@squ.edu.om</a></span>
+            </div>
         </section>
 
         <footer class="footer">
@@ -426,11 +450,13 @@
                         <a href="privacy.html">Privacy Policy</a>
                         <a href="terms.html">Terms of Service</a>
                         <a href="support.html">Support</a>
+                        <a href="https://gsuite.google.com/marketplace/app/foo/416375433641" target="_blank">Get the Add-on</a>
                     </span>
                     <span class="lang-ar">
                         <a href="privacy.html">سياسة الخصوصية</a>
                         <a href="terms.html">شروط الخدمة</a>
                         <a href="support.html">الدعم</a>
+                        <a href="https://gsuite.google.com/marketplace/app/foo/416375433641" target="_blank">الحصول على الإضافة</a>
                     </span>
                 </div>
                 <div style="margin-top: 8px;">
