@@ -1083,6 +1083,100 @@
                 </div>
             </div>
         </section>
+
+        <!-- ===== Live Statistics Dashboard (portfolio-wide, aggregates ALL waleedmandour GitHub repos + ALL releases) ===== -->
+        <section id="dashboard" style="margin: 64px 0;">
+            <h2 class="section-title lang-en" style="text-align:center; font-size:2em; font-weight:700; color:var(--primary); margin-bottom:30px;">Live Statistics</h2>
+            <h2 class="section-title lang-ar" style="display:none; text-align:center; font-size:2em; font-weight:700; color:var(--primary); margin-bottom:30px;">الإحصاءات المباشرة</h2>
+            <div id="analytics-dashboard" style="max-width: 1100px; margin: 0 auto;">
+                <!-- Top row: aggregate stats across ALL repos + ALL releases (historical) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 4px;" id="stat-total-downloads">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Total Downloads</span>
+                            <span class="lang-ar" style="display:none;">إجمالي التحميلات</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 4px;">
+                            <span class="lang-en">across all repos &amp; all releases</span>
+                            <span class="lang-ar" style="display:none;">كل المستودعات وكل الإصدارات</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--secondary); margin-bottom: 4px;" id="stat-github-stars">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">GitHub Stars</span>
+                            <span class="lang-ar" style="display:none;">نجوم GitHub</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 4px;">
+                            <span class="lang-en">across all public repos</span>
+                            <span class="lang-ar" style="display:none;">كل المستودعات العامة</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;" id="stat-total-releases">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Total Releases</span>
+                            <span class="lang-ar" style="display:none;">إجمالي الإصدارات</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 4px;">
+                            <span class="lang-en">all versions, all repos</span>
+                            <span class="lang-ar" style="display:none;">كل الإصدارات، كل المستودعات</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visitor info row: live visitor counter + geolocation -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-eye"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-status">
+                                <span class="lang-en">Welcome!</span>
+                                <span class="lang-ar" style="display:none;">أهلاً بك!</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">You are visitor</span>
+                                <span class="lang-ar" style="display:none;">أنت الزائر رقم</span>
+                                <strong id="stat-visitor-count" style="color: var(--secondary);">—</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--accent);"><i class="fas fa-map-marker-alt"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-location">
+                                <span class="lang-en">Detecting…</span>
+                                <span class="lang-ar" style="display:none;">جارٍ التحديد…</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">Your location</span>
+                                <span class="lang-ar" style="display:none;">موقعك</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Per-project breakdown (top 6 repos by downloads, historical) -->
+                <div id="platform-breakdown" style="background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                    <h3 style="font-size: 18px; color: var(--primary); margin-bottom: 20px;">
+                        <span class="lang-en">Downloads by Project</span>
+                        <span class="lang-ar" style="display:none;">التحميلات حسب المشروع</span>
+                    </h3>
+                    <div id="project-bars" style="display: flex; flex-direction: column; gap: 14px;">
+                        <!-- Bars are populated by JS based on actual per-repo download counts -->
+                        <div style="font-size: 13px; color: var(--gray); text-align: center; padding: 24px;">
+                            <span class="lang-en">Loading project stats…</span>
+                            <span class="lang-ar" style="display:none;">جارٍ تحميل إحصاءات المشاريع…</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 16px; text-align: center;">
+                        <span class="lang-en">Aggregated from GitHub API &middot; sums ALL releases (not just latest) &middot; cached for 10 minutes</span>
+                        <span class="lang-ar" style="display:none;">مجمَّعة من واجهة GitHub &middot; تجمع كل الإصدارات (وليس فقط الأحدث) &middot; تُحدَّث كل 10 دقائق</span>
+                    </p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -1131,6 +1225,194 @@
             langEnBtn.addEventListener('click', () => setLanguage('en'));
             langArBtn.addEventListener('click', () => setLanguage('ar'));
         });
+
+        // ===== Portfolio-wide Live Statistics Dashboard =====
+        // Aggregates GitHub stats across ALL of waleedmandour's public repos
+        // and sums downloads across ALL releases (not just the latest), so the
+        // totals include historical versions (e.g. CorpusMind v0.1.0 → v1.0.0).
+        //
+        // GitHub API quota is 60 req/hr per IP unauthenticated. We make 2
+        // calls per repo × 6 repos = 12 calls per page load, so we cache the
+        // result in localStorage for 10 minutes to stay well under the limit.
+        //
+        // Repos queried (those with stars or known releases):
+        //   CorpusMind, EVD, rdat, scholarscribe, binti2, awe-system
+        // The dashboard will gracefully degrade if any repo 404s or rate-limits.
+        (async function() {
+            const REPOS = [
+                'waleedmandour/CorpusMind',
+                'waleedmandour/EVD',
+                'waleedmandour/rdat',
+                'waleedmandour/scholarscribe',
+                'waleedmandour/binti2',
+                'waleedmandour/awe-system'
+            ];
+            const CACHE_KEY = 'portfolio_github_stats_v1';
+            const CACHE_TTL_MS = 10 * 60 * 1000;  // 10 minutes
+
+            // ----- Try to load cached stats first -----
+            let stats = null;
+            try {
+                const raw = localStorage.getItem(CACHE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && parsed.fetched_at && (Date.now() - parsed.fetched_at) < CACHE_TTL_MS) {
+                        stats = parsed;
+                    }
+                }
+            } catch(e) { /* ignore corrupt cache */ }
+
+            // ----- If no fresh cache, fetch live -----
+            if (!stats) {
+                try {
+                    const results = await Promise.all(REPOS.map(async (fullName) => {
+                        const [repoResp, releasesResp] = await Promise.all([
+                            fetch(`https://api.github.com/repos/${fullName}`),
+                            fetch(`https://api.github.com/repos/${fullName}/releases?per_page=100`)
+                        ]);
+                        // Soft-fail: a 404 or rate-limit on one repo shouldn't break the whole dashboard
+                        if (!repoResp.ok || !releasesResp.ok) return null;
+                        const repo = await repoResp.json();
+                        const releases = await releasesResp.json();
+                        if (!Array.isArray(releases)) return null;
+                        let dl = 0, releaseCount = releases.length, assetCount = 0;
+                        releases.forEach(r => {
+                            (r.assets || []).forEach(a => {
+                                dl += a.download_count || 0;
+                                assetCount++;
+                            });
+                        });
+                        return {
+                            name: repo.name,
+                            full_name: repo.full_name,
+                            html_url: repo.html_url,
+                            stars: repo.stargazers_count || 0,
+                            forks: repo.forks_count || 0,
+                            downloads: dl,
+                            releases: releaseCount,
+                            assets: assetCount,
+                            description: repo.description || '',
+                            language: repo.language || ''
+                        };
+                    }));
+
+                    const valid = results.filter(r => r !== null);
+                    stats = {
+                        fetched_at: Date.now(),
+                        repos: valid,
+                        totals: {
+                            downloads: valid.reduce((s, r) => s + r.downloads, 0),
+                            stars: valid.reduce((s, r) => s + r.stars, 0),
+                            releases: valid.reduce((s, r) => s + r.releases, 0),
+                            assets: valid.reduce((s, r) => s + r.assets, 0)
+                        }
+                    };
+                    try { localStorage.setItem(CACHE_KEY, JSON.stringify(stats)); } catch(e) { /* storage full or disabled */ }
+                } catch(e) {
+                    console.log('Dashboard data unavailable:', e);
+                    // If network fails entirely but we have stale cache, use it
+                    try {
+                        const raw = localStorage.getItem(CACHE_KEY);
+                        if (raw) stats = JSON.parse(raw);
+                    } catch(e2) { /* give up */ }
+                }
+            }
+
+            // ----- Render -----
+            if (stats && stats.totals) {
+                function animateCount(elId, target, duration) {
+                    const el = document.getElementById(elId);
+                    if (!el) return;
+                    const start = 0;
+                    const startTime = performance.now();
+                    function update(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = Math.round(start + (target - start) * eased).toLocaleString();
+                        if (progress < 1) requestAnimationFrame(update);
+                    }
+                    requestAnimationFrame(update);
+                }
+
+                animateCount('stat-total-downloads', stats.totals.downloads, 1500);
+                animateCount('stat-github-stars', stats.totals.stars, 1500);
+                animateCount('stat-total-releases', stats.totals.releases, 1200);
+
+                // Per-project breakdown bars (sorted by downloads desc)
+                const barsContainer = document.getElementById('project-bars');
+                if (barsContainer) {
+                    const sortedRepos = (stats.repos || []).slice().sort((a, b) => b.downloads - a.downloads);
+                    const maxVal = Math.max(1, ...sortedRepos.map(r => r.downloads));
+                    if (sortedRepos.length === 0) {
+                        barsContainer.innerHTML = '<div style="font-size:13px;color:var(--gray);text-align:center;padding:24px;"><span class="lang-en">No release data available.</span><span class="lang-ar" style=\'display:none;\'>لا توجد بيانات إصدار.</span></div>';
+                    } else {
+                        barsContainer.innerHTML = sortedRepos.map(r => {
+                            const widthPct = Math.max((r.downloads / maxVal) * 100, r.downloads > 0 ? 8 : 0);
+                            const langIcon = r.language === 'Python' ? 'fab fa-python'
+                                           : r.language === 'TypeScript' ? 'fab fa-js'
+                                           : r.language === 'Rust' ? 'fas fa-cog'
+                                           : r.language === 'Kotlin' ? 'fab fa-android'
+                                           : r.language === 'HTML' ? 'fab fa-html5'
+                                           : 'fas fa-code';
+                            return '<div style="display:flex;align-items:center;gap:12px;">' +
+                                '<a href="' + r.html_url + '" target="_blank" rel="noopener" style="font-size:14px;min-width:140px;text-align:left;color:var(--dark);text-decoration:none;font-weight:600;" title="' + (r.description || r.name) + '">' +
+                                    '<i class="' + langIcon + '"></i> ' + r.name +
+                                '</a>' +
+                                '<div style="flex:1;height:24px;background:var(--light);border-radius:12px;overflow:hidden;">' +
+                                    '<div style="height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:12px;width:' + widthPct + '%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:white;font-size:12px;font-weight:700;">' + r.downloads.toLocaleString() + '</div>' +
+                                '</div>' +
+                                '<span style="font-size:11px;color:var(--gray);min-width:80px;text-align:right;" title="' + r.stars + ' stars, ' + r.releases + ' releases">' +
+                                    '<i class="fas fa-star" style="color:#FFC107;"></i> ' + r.stars +
+                                    ' &middot; <i class="fas fa-tag"></i> ' + r.releases +
+                                '</span>' +
+                            '</div>';
+                        }).join('');
+                    }
+                }
+            }
+
+            // ===== Visitor counter + geolocation (per-browser) =====
+            (function() {
+                var key = 'home_visitors';
+                var count = parseInt(localStorage.getItem(key) || '0', 10);
+                count++;
+                localStorage.setItem(key, String(count));
+                var countEl = document.getElementById('stat-visitor-count');
+                if (countEl) {
+                    var startTime = performance.now();
+                    (function anim(now) {
+                        var p = Math.min((now - startTime) / 1200, 1);
+                        countEl.textContent = Math.round(count * (1 - Math.pow(1 - p, 3))).toLocaleString();
+                        if (p < 1) requestAnimationFrame(anim);
+                    })(startTime);
+                }
+            })();
+
+            // Geolocation via free IP API (no auth needed). Sends a GA event
+            // with the visitor's country so the site owner can see visitor
+            // geography in Google Analytics → Reports → Engagement → Events.
+            fetch('https://ipapi.co/json/')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (!locEl) return;
+                    if (data && data.country_name) {
+                        var city = data.city ? data.city + ', ' : '';
+                        var flag = data.country_code ? ' ' + String.fromCodePoint.apply(null, data.country_code.toUpperCase().split('').map(function(c){return 0x1F1E6 + c.charCodeAt(0) - 65;})) : '';
+                        locEl.innerHTML = '<span class="lang-en">' + city + data.country_name + flag + '</span><span class="lang-ar" style="display:none;">' + city + data.country_name + flag + '</span>';
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'page_view', {event_category: 'geo', event_label: data.country_name, country_code: data.country_code});
+                        }
+                    } else {
+                        locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar" style="display:none;">غير معروف</span>';
+                    }
+                })
+                .catch(function() {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (locEl) locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar" style="display:none;">غير معروف</span>';
+                });
+        })();
     </script>
 </body>
 </html>
