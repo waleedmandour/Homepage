@@ -235,31 +235,44 @@ def main():
     credentials_json = os.environ.get('GA_CREDENTIALS_JSON')
     property_id = os.environ.get('GA_PROPERTY_ID', DEFAULT_PROPERTY_ID)
 
+    # When credentials aren't configured yet, exit SUCCESS (not failure).
+    # The dashboard UI gracefully degrades to a 'Configure GA' hint, so
+    # there's no reason to mark the workflow as failing — that just
+    # creates noise in the GitHub Actions tab. The user can configure
+    # GA at any time by following docs/ANALYTICS_SETUP.md, then manually
+    # trigger this workflow to verify the pipeline works.
     if not credentials_json or credentials_json.strip() == '':
         print(
-            'ERROR: GA_CREDENTIALS_JSON environment variable is not set.\n'
-            'This must contain the full JSON contents of a Google Cloud\n'
-            'service-account key file with Viewer access to the GA4 property.\n\n'
-            'See docs/ANALYTICS_SETUP.md for setup instructions.\n\n'
-            'Exiting without writing analytics.json (existing file, if any,\n'
-            'will be preserved so the dashboard can keep showing stale data).',
+            'NOTE: GA_CREDENTIALS_JSON is not set — the GA pipeline is not\n'
+            'configured yet. This is expected if you have not yet completed\n'
+            'the one-time setup in docs/ANALYTICS_SETUP.md.\n\n'
+            'No analytics.json was written (existing file, if any, is\n'
+            'preserved so the dashboard can keep showing stale data).\n\n'
+            'Exiting with success (exit 0) so this workflow does not show\n'
+            'as a failure in the Actions tab. Once you configure GA, this\n'
+            'workflow will start producing analytics.json automatically.',
             file=sys.stderr,
         )
-        sys.exit(1)
+        sys.exit(0)
 
     if property_id == 'YOUR_PROPERTY_ID_HERE' or not property_id:
         print(
-            'ERROR: GA_PROPERTY_ID environment variable is not set.\n'
-            'This must be the numeric GA4 property ID (found in GA Admin).\n\n'
-            'See docs/ANALYTICS_SETUP.md for setup instructions.',
+            'NOTE: GA_PROPERTY_ID is not set — the GA pipeline is not\n'
+            'configured yet. This is expected if you have not yet completed\n'
+            'the one-time setup in docs/ANALYTICS_SETUP.md.\n\n'
+            'Exiting with success (exit 0) so this workflow does not show\n'
+            'as a failure in the Actions tab.',
             file=sys.stderr,
         )
-        sys.exit(1)
+        sys.exit(0)
 
     print(f'Fetching GA4 metrics for property {property_id}...', file=sys.stderr)
     try:
         data = fetch_metrics(property_id, credentials_json)
     except Exception as e:
+        # Real fetch errors (auth failed, property not found, etc.) still
+        # fail the workflow — these only happen AFTER the user has
+        # configured credentials, so they indicate a real problem.
         print(f'ERROR: Failed to fetch GA4 metrics: {e}', file=sys.stderr)
         sys.exit(2)
 

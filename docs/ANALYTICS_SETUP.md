@@ -1,10 +1,34 @@
 # Setting up historical visitor stats on the dashboard
 
+> **STATUS (as of 2026-07-30): Currently disabled.**
+>
+> The dashboard widgets that displayed historical visitor counts and
+> visitors-by-country have been **removed** to keep the dashboard simple
+> while GA credentials are not yet configured. The backend infrastructure
+> (Python script + GitHub Actions workflow + this doc) is **preserved**
+> so the feature can be re-enabled at any time by following the steps
+> below.
+>
+> To re-enable:
+> 1. Complete the one-time Google Cloud setup in this guide (Steps 1–7).
+> 2. Uncomment the `schedule:` block in
+>    `.github/workflows/update-analytics.yml`.
+> 3. Re-add the dashboard widgets by reverting commit `<TBD>` (or by
+>    re-running `scripts/patch_dashboards_with_ga.py`).
+>
+> The current dashboard (without GA widgets) shows:
+> - Top row: Total Downloads / GitHub Stars / Total Releases (live from GitHub API)
+> - Visitor row: per-browser visitor counter + geolocation (the "Site
+>   Visitors" card)
+> - Per-project breakdown: Downloads by Project (top 6 repos)
+
+---
+
 This guide walks you through the one-time setup required to display
 **historical visitor counts** and **visitors-by-country** on the Live
 Statistics dashboard at `waleedmandour.org/` and `waleedmandour.org/projects/`.
 
-Once configured, the dashboard will show:
+Once configured AND the widgets are re-enabled, the dashboard will show:
 
 - All-time visitors (since the GA tag was first installed)
 - Visitors in the last 30 days
