@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="iAWE: Intelligent Academic Writing Evaluation Assistant: Built on the EASE Framework 1.0. An AI-assisted, zero-trust, RAG-infused system for EAP writing analysis as a Google Sheets™ Add-on.">
     <title>iAWE: Intelligent Academic Writing Evaluation Assistant | EASE Framework 1.0</title>
+    <!-- Google Analytics (G-WW4M0NCF1V — same measurement ID as the rest of waleedmandour.org) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WW4M0NCF1V');
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -441,6 +449,87 @@
             </div>
         </section>
 
+        <!-- Real-Time Analytics Dashboard (adapted for Google Sheets Add-on: no GitHub releases to count) -->
+        <section id="dashboard" style="margin: 64px 0;">
+            <h2 class="section-title lang-en">Live Statistics</h2>
+            <h2 class="section-title lang-ar" style="display:none;">الإحصاءات المباشرة</h2>
+            <div id="analytics-dashboard" style="max-width: 900px; margin: 0 auto;">
+                <!-- Top row: Marketplace availability cards (no GitHub releases, so we surface project status instead) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #4CAF50; box-shadow: 0 0 0 4px rgba(76,175,80,0.18); animation: iawe-pulse 2s infinite;"></span>
+                            <span class="lang-en">Live</span>
+                            <span class="lang-ar" style="display:none;">متاح</span>
+                        </div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Marketplace Status</span>
+                            <span class="lang-ar" style="display:none;">حالة الإضافة</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--secondary); margin-bottom: 4px;">
+                            <i class="fas fa-table" style="font-size: 36px;"></i>
+                        </div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Google Sheets&trade;</span>
+                            <span class="lang-ar" style="display:none;">جداول جوجل&trade;</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">1.0</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">EASE Framework</span>
+                            <span class="lang-ar" style="display:none;">إطار EASE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visitor info row: live visitor counter + geolocation -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-eye"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-status">
+                                <span class="lang-en">Welcome!</span>
+                                <span class="lang-ar" style="display:none;">أهلاً بك!</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">You are visitor</span>
+                                <span class="lang-ar" style="display:none;">أنت الزائر رقم</span>
+                                <strong id="stat-visitor-count" style="color: var(--secondary);">—</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--accent);"><i class="fas fa-map-marker-alt"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-location">
+                                <span class="lang-en">Detecting…</span>
+                                <span class="lang-ar" style="display:none;">جارٍ التحديد…</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">Your location</span>
+                                <span class="lang-ar" style="display:none;">موقعك</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); text-align: center;">
+                    <p style="font-size: 13px; color: var(--gray); margin: 0;">
+                        <span class="lang-en">iAWE is a Google Sheets&trade; Add-on &middot; <a href="https://gsuite.google.com/marketplace/app/foo/416375433641" target="_blank" rel="noopener" style="color: var(--secondary); font-weight: 600;">Install from Google Workspace Marketplace</a></span>
+                        <span class="lang-ar" style="display:none;">نظام iAWE إضافة لجداول جوجل&trade; &middot; <a href="https://gsuite.google.com/marketplace/app/foo/416375433641" target="_blank" rel="noopener" style="color: var(--secondary); font-weight: 600;">ثبّتها من متجر Google Workspace</a></span>
+                    </p>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 12px; opacity: 0.85;">
+                        <span class="lang-en">Visitor counter is per-browser &middot; geolocation detected via ipapi.co</span>
+                        <span class="lang-ar" style="display:none;">عدّاد الزوار لكل متصفح &middot; يُحدَّد الموقع عبر ipapi.co</span>
+                    </p>
+                </div>
+            </div>
+            <style>@keyframes iawe-pulse{0%,100%{box-shadow:0 0 0 4px rgba(76,175,80,0.18)}50%{box-shadow:0 0 0 8px rgba(76,175,80,0.08)}}</style>
+        </section>
+
         <footer class="footer">
             <div class="footer-content">
                 <div>
@@ -500,6 +589,51 @@
             }, observerOptions);
             document.querySelectorAll('.feature-card, .workflow-step, .framework-diagram-container, .ui-screenshot-card').forEach(el => { observer.observe(el); });
         });
+
+        // ===== Live Statistics: Visitor Counter + Geolocation =====
+        // iAWE is a Google Sheets Add-on (no GitHub releases), so the dashboard
+        // surfaces only the visitor counter + geolocation. The top stat cards
+        // (Marketplace Status / Platform / EASE Framework version) are static.
+        (function() {
+            // Visitor counter (localStorage-based, per-browser)
+            var key = 'iawe_visitors';
+            var count = parseInt(localStorage.getItem(key) || '0', 10);
+            count++;
+            localStorage.setItem(key, String(count));
+            var countEl = document.getElementById('stat-visitor-count');
+            if (countEl) {
+                var startTime = performance.now();
+                (function anim(now) {
+                    var p = Math.min((now - startTime) / 1200, 1);
+                    countEl.textContent = Math.round(count * (1 - Math.pow(1 - p, 3))).toLocaleString();
+                    if (p < 1) requestAnimationFrame(anim);
+                })(startTime);
+            }
+
+            // Geolocation via free IP API (no auth needed). Sends a GA event
+            // with the visitor's country so the site owner can see visitor
+            // geography in Google Analytics → Reports → Engagement → Events.
+            fetch('https://ipapi.co/json/')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (!locEl) return;
+                    if (data && data.country_name) {
+                        var city = data.city ? data.city + ', ' : '';
+                        var flag = data.country_code ? ' ' + String.fromCodePoint.apply(null, data.country_code.toUpperCase().split('').map(function(c){return 0x1F1E6 + c.charCodeAt(0) - 65;})) : '';
+                        locEl.innerHTML = '<span class="lang-en">' + city + data.country_name + flag + '</span><span class="lang-ar" style="display:none;">' + city + data.country_name + flag + '</span>';
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'page_view', {event_category: 'geo', event_label: data.country_name, country_code: data.country_code});
+                        }
+                    } else {
+                        locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar" style="display:none;">غير معروف</span>';
+                    }
+                })
+                .catch(function() {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (locEl) locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar" style="display:none;">غير معروف</span>';
+                });
+        })();
     </script>
 </body>
 </html>
