@@ -13,6 +13,16 @@
     <link rel="icon" href="images/favicon-32.png">
     <meta name="theme-color" content="#0A1C3C">
     <meta name="apple-mobile-web-app-title" content="CorpusMind">
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WW4M0NCF1V');
+    </script>
+
     <style>
         /* ===== CSS VARIABLES & RESET ===== */
         :root {
@@ -544,25 +554,25 @@
             <p class="cta-subtitle lang-ar">نزّل كوربَس مايند v1.0.0 — مجاني، مفتوح المصدر، بكل الميزات مفتوحة. بلا اشتراك، بلا قياسات استخدام، بلا قفل للمزوّد.</p>
 
             <div class="download-platforms">
-                <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0/CorpusMind_1.0.0_aarch64.dmg" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0/CorpusMind_1.0.0_aarch64.dmg" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cm_download', event_label: 'macos_arm64_dmg', value: 1});">
                     <i class="fab fa-apple"></i>
                     <span class="dl-name">macOS (Apple Silicon)</span>
                     <span class="dl-os">arm64 &middot; DMG</span>
                     <span class="dl-file">CorpusMind_1.0.0_aarch64.dmg</span>
                 </a>
-                <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0/CorpusMind_1.0.0_x64_en-US.msi" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0/CorpusMind_1.0.0_x64_en-US.msi" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cm_download', event_label: 'windows_msi_nsis', value: 1});">
                     <i class="fab fa-windows"></i>
                     <span class="dl-name">Windows</span>
                     <span class="dl-os">x64 &middot; MSI / NSIS</span>
                     <span class="dl-file">CorpusMind_1.0.0_x64-setup.exe</span>
                 </a>
-                <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cm_download', event_label: 'linux_appimage_deb', value: 1});">
                     <i class="fab fa-linux"></i>
                     <span class="dl-name">Linux</span>
                     <span class="dl-os">x64 &middot; AppImage / DEB</span>
                     <span class="dl-file">CorpusMind_1.0.0_amd64.AppImage</span>
                 </a>
-                <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener" class="download-card">
+                <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'click', {event_category: 'cm_download', event_label: 'web_pwa', value: 1});">
                     <i class="fas fa-globe"></i>
                     <span class="dl-name">Web PWA</span>
                     <span class="dl-os">No install &middot; Browser</span>
@@ -587,6 +597,73 @@
             <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">الإصدار 1.0.0 &middot; AGPL-3.0-only &middot; غير مموّل من أي مؤسسة &middot; <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0" target="_blank" rel="noopener">ملاحظات الإصدار</a></p>
         </section>
 
+        <!-- Real-Time Analytics Dashboard -->
+        <section id="dashboard" style="margin: 64px 0;">
+            <h2 class="section-title lang-en">Live Download Statistics</h2>
+            <h2 class="section-title lang-ar">إحصاءات التحميل المباشرة</h2>
+            <div id="analytics-dashboard" style="max-width: 900px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 4px;" id="stat-total-downloads">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Total Downloads</span>
+                            <span class="lang-ar" style="display:none;">إجمالي التحميلات</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--secondary); margin-bottom: 4px;" id="stat-github-stars">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">GitHub Stars</span>
+                            <span class="lang-ar" style="display:none;">نجوم GitHub</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;" id="stat-release-assets">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Release Assets</span>
+                            <span class="lang-ar" style="display:none;">ملفات الإصدار</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="platform-breakdown" style="background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                    <h3 style="font-size: 18px; color: var(--primary); margin-bottom: 20px;">
+                        <span class="lang-en">Downloads by Platform</span>
+                        <span class="lang-ar" style="display:none;">التحميلات حسب المنصة</span>
+                    </h3>
+                    <div id="platform-bars" style="display: flex; flex-direction: column; gap: 14px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 14px; min-width: 120px; text-align: left; color: var(--dark);"><i class="fab fa-apple"></i> macOS</span>
+                            <div style="flex: 1; height: 24px; background: var(--light); border-radius: 12px; overflow: hidden;">
+                                <div id="bar-macos" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px; transition: width 1.5s ease; width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 12px; font-weight: 700;">0</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 14px; min-width: 120px; text-align: left; color: var(--dark);"><i class="fab fa-windows"></i> Windows</span>
+                            <div style="flex: 1; height: 24px; background: var(--light); border-radius: 12px; overflow: hidden;">
+                                <div id="bar-windows" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px; transition: width 1.5s ease; width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 12px; font-weight: 700;">0</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 14px; min-width: 120px; text-align: left; color: var(--dark);"><i class="fab fa-linux"></i> Linux</span>
+                            <div style="flex: 1; height: 24px; background: var(--light); border-radius: 12px; overflow: hidden;">
+                                <div id="bar-linux" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px; transition: width 1.5s ease; width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 12px; font-weight: 700;">0</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 14px; min-width: 120px; text-align: left; color: var(--dark);"><i class="fas fa-globe"></i> Web PWA</span>
+                            <div style="flex: 1; height: 24px; background: var(--light); border-radius: 12px; overflow: hidden;">
+                                <div id="bar-web" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px; transition: width 1.5s ease; width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 12px; font-weight: 700;">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 16px; text-align: center;">
+                        <span class="lang-en">Data fetched from GitHub Releases API · updates in real time</span>
+                        <span class="lang-ar" style="display:none;">البيانات من واجهة GitHub Releases · تُحدّث في الوقت الفعلي</span>
+                    </p>
+                </div>
+            </div>
+        </section>
 
         <!-- Footer -->
         <footer class="footer">
@@ -662,6 +739,75 @@
                 setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
             });
         }
+
+        // ===== Real-Time Download Statistics Dashboard =====
+        (async function() {
+            const REPO = 'waleedmandour/CorpusMind';
+            const TAG = 'v1.0.0';
+
+            try {
+                // Fetch release data
+                const releaseResp = await fetch(`https://api.github.com/repos/${REPO}/releases/tags/${TAG}`);
+                const release = await releaseResp.json();
+
+                // Fetch repo data for stars
+                const repoResp = await fetch(`https://api.github.com/repos/${REPO}`);
+                const repo = await repoResp.json();
+
+                let totalDownloads = 0;
+                let macos = 0, windows = 0, linux = 0, web = 0;
+
+                (release.assets || []).forEach(asset => {
+                    totalDownloads += asset.download_count;
+                    const name = asset.name.toLowerCase();
+                    if (name.includes('.dmg') || name.includes('aarch64')) macos += asset.download_count;
+                    else if (name.includes('.exe') || name.includes('.msi')) windows += asset.download_count;
+                    else if (name.includes('.deb') || name.includes('.appimage')) linux += asset.download_count;
+                    else if (name.includes('web') || name.includes('.zip')) web += asset.download_count;
+                });
+
+                // Animate count-up
+                function animateCount(elId, target, duration) {
+                    const el = document.getElementById(elId);
+                    if (!el) return;
+                    const start = 0;
+                    const startTime = performance.now();
+                    function update(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = Math.round(start + (target - start) * eased).toLocaleString();
+                        if (progress < 1) requestAnimationFrame(update);
+                    }
+                    requestAnimationFrame(update);
+                }
+
+                animateCount('stat-total-downloads', totalDownloads, 1500);
+                animateCount('stat-github-stars', repo.stargazers_count || 0, 1500);
+                animateCount('stat-release-assets', (release.assets || []).length, 1200);
+
+                // Animate bars
+                const maxVal = Math.max(macos, windows, linux, web, 1);
+                function setBar(id, val) {
+                    const bar = document.getElementById(id);
+                    if (!bar) return;
+                    setTimeout(() => {
+                        bar.style.width = Math.max((val / maxVal) * 100, val > 0 ? 8 : 0) + '%';
+                        bar.textContent = val.toLocaleString();
+                    }, 300);
+                }
+                setBar('bar-macos', macos);
+                setBar('bar-windows', windows);
+                setBar('bar-linux', linux);
+                setBar('bar-web', web);
+
+            } catch(e) {
+                console.log('Dashboard data unavailable:', e);
+                document.getElementById('stat-total-downloads').textContent = '—';
+                document.getElementById('stat-github-stars').textContent = '—';
+                document.getElementById('stat-release-assets').textContent = '—';
+            }
+        })();
     </script>
 </body>
 </html>
