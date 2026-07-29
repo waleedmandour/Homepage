@@ -36,9 +36,19 @@
             -moz-osx-font-smoothing: grayscale;
         }
         body.arabic { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; direction: rtl; }
-        body.arabic .container, body.arabic main, body.arabic section, body.arabic .hero-content { direction: rtl; text-align: center; }
-        body.arabic nav ul { justify-content: center; text-align: center; }
-        body.arabic .features-grid, body.arabic .workflow-steps, body.arabic .feature-card { text-align: right; }
+        body.arabic .container, body.arabic main, body.arabic section { direction: rtl; }
+        body.arabic .header-text { text-align: right; }
+        body.arabic .header-photo { margin-inline-start: 0; }
+        body.arabic nav ul { justify-content: center; }
+        body.arabic .features-grid, body.arabic .feature-card { text-align: right; }
+        body.arabic .hero { text-align: center; }
+        body.arabic .hero > div { text-align: right; }
+        body.arabic .comparison-table th, body.arabic .comparison-table td { text-align: right; }
+        body.arabic .cross-link-box { text-align: center; }
+        body.arabic .cross-link-box p { text-align: right; }
+        body.arabic .cta-section { text-align: center; }
+        body.arabic .download-card { text-align: center; }
+        body.arabic .footer { text-align: center; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .language-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; background: rgba(10, 28, 60, 0.9); border-radius: 30px; padding: 8px 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
         .language-toggle button { background: transparent; border: none; color: white; font-weight: 600; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: var(--transition); }
@@ -49,29 +59,22 @@
         }
         .header-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 50px; margin-bottom: 40px; }
         .header-text { text-align: left; max-width: 600px; }
-        body.arabic .header-text { text-align: right; }
         h1 { font-size: 2.8em; margin-bottom: 10px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         .tagline { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
-        .header-photo-container { position: relative; }
         .header-photo { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; border: 4px solid rgba(255, 255, 255, 0.8); box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); transition: var(--transition); background: var(--white); padding: 12px; }
         .header-photo:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(0, 0, 0, 0.4); }
         nav { position: relative; z-index: 2; }
         nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; background: rgba(10, 28, 60, 0.7); padding: 15px 30px; border-radius: 50px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 1200px; margin: 0 auto; }
         nav a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 1.1em; transition: var(--transition); padding: 5px 0; position: relative; }
         nav a:after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--secondary); transition: var(--transition); }
+        body.arabic nav a:after { left: auto; right: 0; }
         nav a:hover:after { width: 100%; }
-        .app-logo-container { position: relative; width: 220px; height: 220px; margin: 0 auto 40px; display: flex; align-items: center; justify-content: center; animation: float 6s ease-in-out infinite; }
-        .app-logo-frame { width: 100%; height: 100%; position: relative; border-radius: 30px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%); backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); padding: 15px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .app-logo-frame:hover { transform: scale(1.05) rotate(3deg); border-color: rgba(255, 255, 255, 0.6); }
-        .app-logo-img { width: 100%; height: 100%; object-fit: contain; border-radius: 20px; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); background: var(--white); }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes shine { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         .hero { text-align: center; padding: 60px 0; }
         .hero h1 { font-size: 48px; margin-bottom: 16px; }
         .hero-subtitle { font-size: 22px; color: var(--gray); margin-bottom: 32px; }
         .section-title { text-align: center; font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 48px; position: relative; }
         .section-title::after { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--secondary); border-radius: 2px; }
+        body.arabic .section-title::after { left: auto; right: 50%; transform: translateX(50%); }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; margin-bottom: 48px; }
         .feature-card { background: var(--white); border-radius: 16px; padding: 32px 28px; box-shadow: var(--shadow); transition: var(--transition); border: 1px solid rgba(0,0,0,0.04); }
         .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 35px rgba(0,0,0,0.1); }
@@ -103,14 +106,29 @@
         .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
         .footer-links a { padding: 0 10px; position: relative; }
         .footer-links a:not(:last-child)::after { content: '|'; position: absolute; right: -5px; color: var(--gray); }
+        body.arabic .footer-links a:not(:last-child)::after { right: auto; left: -5px; }
         .lang-en { display: inline; } .lang-ar { display: none; }
         body.arabic .lang-en { display: none; } body.arabic .lang-ar { display: inline; }
-        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } }
         .cross-link-box { text-align: center; margin: 48px 0; padding: 32px; background: linear-gradient(135deg, var(--light) 0%, rgba(11, 110, 79, 0.05) 100%); border-radius: 16px; border: 1px solid rgba(11, 110, 79, 0.15); }
         .cross-link-box h3 { font-size: 22px; color: var(--primary); margin-bottom: 12px; }
         .cross-link-box p { font-size: 16px; color: var(--dark); margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
         .cross-link-button { display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: var(--white); padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: var(--transition); }
         .cross-link-button:hover { background: var(--secondary); transform: translateY(-2px); }
+        .comparison-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: 12px; box-shadow: var(--shadow); }
+        .comparison-table { width: 100%; border-collapse: collapse; background: var(--white); min-width: 800px; }
+        .comparison-table th { background: var(--primary); color: var(--white); padding: 14px 12px; text-align: center; font-size: 13px; font-weight: 600; }
+        .comparison-table th:first-child { text-align: left; }
+        body.arabic .comparison-table th:first-child { text-align: right; }
+        .comparison-table td { padding: 12px; text-align: center; font-size: 13px; border-bottom: 1px solid var(--light); color: var(--dark); }
+        .comparison-table td:first-child { text-align: left; font-weight: 600; color: var(--primary); }
+        body.arabic .comparison-table td:first-child { text-align: right; }
+        .comparison-table tr:hover { background: var(--light); }
+        .comparison-table .cm-row { background: rgba(11, 110, 79, 0.05); font-weight: 600; }
+        .yes { color: var(--secondary); font-weight: 700; }
+        .no { color: #c0392b; font-weight: 700; }
+        .partial { color: var(--accent); font-weight: 600; }
+        .na { color: var(--gray); }
+        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } .comparison-table { min-width: 600px; } }
     </style>
 </head>
 <body>
@@ -135,6 +153,7 @@
                 <ul>
                     <li><a href="#overview" class="lang-en">Overview</a><a href="#overview" class="lang-ar">نظرة عامة</a></li>
                     <li><a href="#features" class="lang-en">Features</a><a href="#features" class="lang-ar">الميزات</a></li>
+                    <li><a href="#comparison" class="lang-en">Comparison</a><a href="#comparison" class="lang-ar">المقارنة</a></li>
                     <li><a href="#models" class="lang-en">Vision Models</a><a href="#models" class="lang-ar">نماذج الرؤية</a></li>
                     <li><a href="#download" class="lang-en">Download</a><a href="#download" class="lang-ar">التحميل</a></li>
                 </ul>
@@ -150,11 +169,11 @@
             <h1 class="lang-ar">كوربَس مايند لِنز</h1>
             <p class="hero-subtitle lang-en">A standalone desktop application for vision-language-model-powered image understanding and multimodal discourse analysis</p>
             <p class="hero-subtitle lang-ar">تطبيق مكتبي مستقل لفهم الصور وتحليل الخطاب متعدد الأنماط باستخدام نماذج الرؤية اللغوية</p>
-            <div style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <p class="lang-en" style="font-size: 17px; line-height: 1.8; color: var(--dark);">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <p class="lang-en" style="font-size: 17px; line-height: 1.8; color: var(--dark); text-align: left;">
                     CorpusMind Lens is a companion application to <a href="../CorpusMind/" style="color: var(--secondary); font-weight: 600;">CorpusMind</a>, designed specifically for researchers working at the intersection of visual and linguistic discourse. It connects to the same CorpusMind engine but provides a focused interface for image-set management, vision-language-model image description, and multimodal discourse analysis across eight theoretical frameworks. The application operates entirely on local hardware using <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> or <a href="https://lmstudio.ai" target="_blank" rel="noopener">LM Studio</a> — no image data, model queries, or analytical output is transmitted to any external server.
                 </p>
-                <p class="lang-ar" style="font-size: 17px; line-height: 1.8; color: var(--dark); display: none;">
+                <p class="lang-ar" style="font-size: 17px; line-height: 1.8; color: var(--dark); display: none; text-align: right;">
                     كوربَس مايند لِنز هو تطبيق مرافق لـ<a href="../CorpusMind/" style="color: var(--secondary); font-weight: 600;">كوربَس مايند</a>، مصمم خصيصًا للباحثين العاملين في تقاطع الخطاب البصري واللغوي. يتصل بنفس محرك كوربَس مايند ولكنه يوفر واجهة مركزة لإدارة مجموعات الصور ووصف الصور بنماذج الرؤية اللغوية وتحليل الخطاب متعدد الأنماط عبر ثمانية أطر نظرية. يعمل التطبيق بالكامل على الأجهزة المحلية باستخدام <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> أو <a href="https://lmstudio.ai" target="_blank" rel="noopener">LM Studio</a> — دون إرسال أي بيانات صور أو استعلامات نماذج أو مخرجات تحليلية إلى أي خادم خارجي.
                 </p>
             </div>
@@ -171,15 +190,15 @@
                     <h3 class="lang-en">Image-Set Management</h3>
                     <h3 class="lang-ar" style="display: none;">إدارة مجموعات الصور</h3>
                     <p class="lang-en">Researchers organise images into sets within a corpus, upload via drag-and-drop with optional captions, and receive automatic cached analysis including Tesseract OCR text extraction, dominant colour palette computation, and composition geometry (rule-of-thirds, salience centre, visual balance).</p>
-                    <p class="lang-ar" style="display: none;">ينظّم الباحثون الصور في مجموعات ضمن المدونة، ويرفعونها بالسحب والإفلات مع تعليقات اختيارية، ويتلقون تحليلًا تلقائيًا مخزّنًا يشمل استخراج النص بـTesseract، وحساب لوحة الألوان السائدة، وهندسة التكوين (قاعدة الأثلاث، مركز البروز، التوازن البصري).</p>
+                    <p class="lang-ar" style="display: none;">ينظّم الباحثون الصور في مجموعات ضمن المدونة، ويرفعونها بالسحب والإفلات مع تعليقات اختيارية، ويتلقون تحليلًا تلقائيًا مخزّنًا يشمل استخراج النص عبر Tesseract، وحساب لوحة الألوان السائدة، وهندسة التكوين (قاعدة الأثلاث، مركز البروز، التوازن البصري).</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-eye"></i></div>
                     <h3 class="lang-en">Vision-Language-Model Description</h3>
-                    <h3 class="lang-ar" style="display: none;">الوصف بنموذج الرؤية اللغوية</h3>
+                    <h3 class="lang-ar" style="display: none;">الوصف عبر نموذج الرؤية اللغوية</h3>
                     <p class="lang-en">Image bytes are transmitted directly to a local vision-language model (e.g., moondream, llama3.2-vision) which produces a grounded description. The system records full provenance metadata — model name, provider, prompt hash, timestamp — for reproducibility. When the model's text reading diverges from the cached Tesseract OCR, both are presented side by side rather than silently overwriting either.</p>
-                    <p class="lang-ar" style="display: none;">تُرسل وحدات بايت الصورة مباشرة إلى نموذج رؤية لغوية محلي (مثل moondream أو llama3.2-vision) الذي ينتج وصفًا موثّقًا. يسجّل النظام بيانات المصدر الكاملة — اسم النموذج، المزوّد، تجزئة الاستفسار، الطابع الزمني — لإعادة الإنتاج. عندما يختلف قراءة النموذج عن نص Tesseract المخزّن، يُعرض كلاهما جنبًا إلى جنب بدلاً من الكتابة فوق أحدهما بصمت.</p>
+                    <p class="lang-ar" style="display: none;">تُرسل وحدات بايت الصورة مباشرة إلى نموذج رؤية لغوية محلي (مثل moondream أو llama3.2-vision) الذي ينتج وصفًا موثّقًا. يسجّل النظام بيانات المصدر الكاملة — اسم النموذج، المزوّد، تجزئة الاستفسار، الطابع الزمني — لضمان إعادة الإنتاج. عندما تختلف قراءة النموذج عن نص Tesseract المخزّن، يُعرض كلاهما جنبًا إلى جنب بدلاً من الكتابة فوق أحدهما بصمت.</p>
                 </div>
 
                 <div class="feature-card">
@@ -195,7 +214,7 @@
                     <h3 class="lang-en">Image-Text Alignment Inspector</h3>
                     <h3 class="lang-ar" style="display: none;">مفتش محاذاة الصورة والنص</h3>
                     <p class="lang-en">Aligns image regions with text spans using three modes: heuristic (colour-term and positional matching), vision-LM (the model identifies which text fragments refer to which image regions), or both displayed side by side. The user can compare which mode produced which alignment — maintaining analytical transparency.</p>
-                    <p class="lang-ar" style="display: none;">يحاذي مناطق الصورة مع مقاطع النص باستخدام ثلاثة أوضاع: استدلالي (مطابقة المصطلحات اللونية والموضعية)، نموذج الرؤية (يحدد النموذج أي مقاطع نصية تشير إلى أي مناطق صورة)، أو كلاهما معروضًا جنبًا إلى جنب. يمكن للمستخدم مقارنة أي وضع أنتج أي محاذاة — مما يحافظ على الشفافية التحليلية.</p>
+                    <p class="lang-ar" style="display: none;">يحاذي مناطق الصورة مع مقاطع النص باستخدام ثلاثة أوضاع: استدلالي (مطابقة المصطلحات اللونية والموضعية)، نموذج الرؤية (يحدد النموذج أي مقاطع نصية تشير إلى أي مناطق في الصورة)، أو كلاهما معروضًا جنبًا إلى جنب. يمكن للمستخدم مقارنة أي وضع أنتج أي محاذاة — مما يحافظ على الشفافية التحليلية.</p>
                 </div>
 
                 <div class="feature-card">
@@ -211,9 +230,172 @@
                     <h3 class="lang-en">Ethical Consent Gate</h3>
                     <h3 class="lang-ar" style="display: none;">بوابة الموافقة الأخلاقية</h3>
                     <p class="lang-en">All person-descriptive content generated by vision-language models — including age, gender, facial expression, physical appearance, ethnicity, religious attire, and socioeconomic indicators — is automatically redacted from responses unless the researcher explicitly enables facial analysis in Settings. The redaction operates at the sentence level and applies across all vision-LM routes, including cached results.</p>
-                    <p class="lang-ar" style="display: none;">يُحجب تلقائيًا جميع المحتوى الوصفي للأشخاص المُولّد بواسطة نماذج الرؤية اللغوية — بما في ذلك العمر والجنس وتعابير الوجه والمظهر الجسدي والعرق والملابس الدينية والمؤشرات الاجتماعية والاقتصادية — من الردود ما لم يُفعّل الباحث تحليل الوجه صراحةً في الإعدادات. يعمل الحجب على مستوى الجملة ويُطبّق عبر جميع مسارات نموذج الرؤية، بما في ذلك النتائج المخزّنة.</p>
+                    <p class="lang-ar" style="display: none;">يُحجب تلقائيًا جميع المحتوى الوصفي للأشخاص المُولّد بواسطة نماذج الرؤية اللغوية — بما في ذلك العمر، والجنس، وتعابير الوجه، والمظهر الجسدي، والعرق، والملابس الدينية، والمؤشرات الاجتماعية والاقتصادية — من الردود ما لم يُفعّل الباحث تحليل الوجه صراحةً في الإعدادات. يعمل الحجب على مستوى الجملة ويُطبّق عبر جميع مسارات نموذج الرؤية، بما في ذلك النتائج المخزّنة.</p>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section id="comparison">
+            <h2 class="section-title lang-en">How CorpusMind Lens Compares</h2>
+            <h2 class="section-title lang-ar">كيف يقارن كوربَس مايند لِنز</h2>
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <p class="lang-en" style="font-size: 16px; line-height: 1.7; color: var(--dark); margin-bottom: 24px; text-align: center;">
+                    The following table compares CorpusMind Lens with established tools in qualitative data analysis, multimodal annotation, and cloud-based computer vision. Each tool has its strengths; CorpusMind Lens is the only one that combines vision-language models with explicit discourse-theoretical frameworks, local-first deployment, first-class Arabic support, and a reproducible analytical pipeline — all in a single free, open-source application.
+                </p>
+                <p class="lang-ar" style="font-size: 16px; line-height: 1.7; color: var(--dark); margin-bottom: 24px; display: none; text-align: center;">
+                    يقارن الجدول التالي كوربَس مايند لِنز مع الأدوات المعتمدة في تحليل البيانات النوعية، والوسم متعدد الأنماط، والرؤية الحاسوبية السحابية. لكل أداة نقاط قوتها؛ لكن كوربَس مايند لِنز هو الأداة الوحيدة التي تجمع بين نماذج الرؤية اللغوية والأطر النظرية الصريحة لتحليل الخطاب، والتشغيل المحلي، والدعم المتقدم للغة العربية، ومسار تحليلي قابل لإعادة الإنتاج — في تطبيق واحد مجاني ومفتوح المصدر.
+                </p>
+
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="lang-en">Capability</th>
+                                <th class="lang-ar" style="display:none;">القدرة</th>
+                                <th>CorpusMind Lens</th>
+                                <th>NVivo</th>
+                                <th>ATLAS.ti</th>
+                                <th>MAXQDA</th>
+                                <th>ELAN</th>
+                                <th>Google / Azure CV</th>
+                                <th class="lang-en">Multimodal Analysis (O'Halloran)</th>
+                                <th class="lang-ar" style="display:none;">التحليل متعدد الأنماط (أوهالوران)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="cm-row">
+                                <td class="lang-en">Multimodal discourse analysis (image + text)</td>
+                                <td class="lang-ar" style="display:none;">تحليل الخطاب متعدد الأنماط (صورة + نص)</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="yes">✓</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Visual grammar (Kress &amp; van Leeuwen)</td>
+                                <td class="lang-ar" style="display:none;">القواعد البصرية (كريس وفان ليوين)</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="partial">~</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Critical discourse analysis (images)</td>
+                                <td class="lang-ar" style="display:none;">التحليل النقدي للخطاب (الصور)</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="yes">✓</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Image–text alignment</td>
+                                <td class="lang-ar" style="display:none;">محاذاة الصورة والنص</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="partial">~</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Vision-language model integration</td>
+                                <td class="lang-ar" style="display:none;">تكامل نموذج الرؤية اللغوية</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Reproducible / auditable pipeline</td>
+                                <td class="lang-ar" style="display:none;">مسار تحليلي قابل لإعادة الإنتاج والتدقيق</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Local / offline capable</td>
+                                <td class="lang-ar" style="display:none;">يعمل محليًا / دون اتصال</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="yes">✓</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Arabic support (NLP + vision)</td>
+                                <td class="lang-ar" style="display:none;">دعم اللغة العربية (معالجة + رؤية)</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="no">✗</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Free / open-source</td>
+                                <td class="lang-ar" style="display:none;">مجاني / مفتوح المصدر</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="no">✗</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Privacy: data stays on device</td>
+                                <td class="lang-ar" style="display:none;">الخصوصية: تبقى البيانات على الجهاز</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="partial">~</span></td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="yes">✓</span></td>
+                            </tr>
+                            <tr class="cm-row">
+                                <td class="lang-en">Ethical consent gate for person descriptions</td>
+                                <td class="lang-ar" style="display:none;">بوابة موافقة أخلاقية للأوصاف الشخصية</td>
+                                <td><span class="yes">✓</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                                <td><span class="no">✗</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="lang-en" style="font-size: 13px; color: var(--gray); margin-top: 16px; text-align: center;">
+                    <span class="yes">✓</span> Full support &nbsp;·&nbsp; <span class="partial">~</span> Partial / limited &nbsp;·&nbsp; <span class="no">✗</span> Not available &nbsp;·&nbsp; Cloud vision APIs (Google Cloud Vision, Azure Computer Vision) provide VLMs and Arabic OCR but lack discourse frameworks, visual grammar, image-text alignment, reproducible pipelines, and local deployment.
+                </p>
+                <p class="lang-ar" style="font-size: 13px; color: var(--gray); margin-top: 16px; display: none; text-align: center;">
+                    <span class="yes">✓</span> دعم كامل &nbsp;·&nbsp; <span class="partial">~</span> جزئي / محدود &nbsp;·&nbsp; <span class="no">✗</span> غير متاح &nbsp;·&nbsp; واجهات الرؤية السحابية (Google Cloud Vision، Azure Computer Vision) توفر نماذج رؤية لغوية وOCR عربي لكنها تفتقر إلى أطر تحليل الخطاب، والقواعد البصرية، ومحاذاة الصورة والنص، والمسارات القابلة لإعادة الإنتاج، والتشغيل المحلي.
+                </p>
             </div>
         </section>
 
@@ -222,29 +404,32 @@
             <h2 class="section-title lang-en">Vision-Language Models</h2>
             <h2 class="section-title lang-ar">نماذج الرؤية اللغوية</h2>
             <div style="max-width: 800px; margin: 0 auto;">
-                <p class="lang-en" style="font-size: 17px; line-height: 1.8; color: var(--dark); margin-bottom: 24px;">
+                <p class="lang-en" style="font-size: 17px; line-height: 1.8; color: var(--dark); margin-bottom: 24px; text-align: left;">
                     CorpusMind Lens supports any vision-capable model available through Ollama or LM Studio. The following models are listed in the in-app download catalogue (Settings → Model Providers) and can be installed directly from within the application:
                 </p>
-                <p class="lang-ar" style="font-size: 17px; line-height: 1.8; color: var(--dark); margin-bottom: 24px; display: none;">
-                    يدعم كوربَس مايند لِنز أي نموذج رؤية متاح من خلال Ollama أو LM Studio. النماذج التالية مدرجة في كتالوج التنزيل داخل التطبيق (الإعدادات ← مزوّدو النماذج) ويمكن تثبيتها مباشرة من داخل التطبيق:
+                <p class="lang-ar" style="font-size: 17px; line-height: 1.8; color: var(--dark); margin-bottom: 24px; display: none; text-align: right;">
+                    يدعم كوربَس مايند لِنز أي نموذج رؤية متاح عبر Ollama أو LM Studio. النماذج التالية مدرجة في كتالوج التنزيل داخل التطبيق (الإعدادات ← مزوّدو النماذج) ويمكن تثبيتها مباشرة من داخل التطبيق:
                 </p>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-microchip"></i></div>
                         <h3>moondream</h3>
-                        <p><strong>1.7 GB</strong> · 1.8B parameters · 4 GB RAM<br>Small vision-language model. Runs on any machine. Suitable for basic image description and alignment tasks.</p>
+                        <p class="lang-en"><strong>1.7 GB</strong> · 1.8B parameters · 4 GB RAM<br>Small vision-language model. Runs on any machine. Suitable for basic image description and alignment tasks.</p>
+                        <p class="lang-ar" style="display:none;"><strong>‏1.7 جيجابايت</strong> · ‏1.8 مليار معامل · ‏4 جيجابايت رام<br>نموذج رؤية لغوية صغير. يعمل على أي جهاز. مناسب لمهام وصف الصور والمحاذاة الأساسية.</p>
                         <p style="margin-top: 8px;"><a href="https://ollama.com/library/moondream" target="_blank" rel="noopener" style="color: var(--secondary);">Ollama Library →</a></p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-microchip"></i></div>
                         <h3>llama3.2-vision:11b</h3>
-                        <p><strong>7.9 GB</strong> · 11B parameters · 8 GB RAM<br>Higher-quality image understanding. Superior for complex visual discourse analysis. Requires 8 GB+ RAM.</p>
+                        <p class="lang-en"><strong>7.9 GB</strong> · 11B parameters · 8 GB RAM<br>Higher-quality image understanding. Superior for complex visual discourse analysis. Requires 8 GB+ RAM.</p>
+                        <p class="lang-ar" style="display:none;"><strong>‏7.9 جيجابايت</strong> · ‏11 مليار معامل · ‏8 جيجابايت رام<br>فهم صور عالي الجودة. متفوق في تحليل الخطاب البصري المعقد. يتطلب ‏8 جيجابايت رام أو أكثر.</p>
                         <p style="margin-top: 8px;"><a href="https://ollama.com/library/llama3.2-vision" target="_blank" rel="noopener" style="color: var(--secondary);">Ollama Library →</a></p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-microchip"></i></div>
                         <h3>gemma3:4b</h3>
-                        <p><strong>3.3 GB</strong> · 4B parameters · 4 GB RAM<br>Multilingual (including Arabic). Supports vision in addition to text. Good balance of size and capability.</p>
+                        <p class="lang-en"><strong>3.3 GB</strong> · 4B parameters · 4 GB RAM<br>Multilingual (including Arabic). Supports vision in addition to text. Good balance of size and capability.</p>
+                        <p class="lang-ar" style="display:none;"><strong>‏3.3 جيجابايت</strong> · ‏4 مليارات معامل · ‏4 جيجابايت رام<br>متعدد اللغات (بما في ذلك العربية). يدعم الرؤية بالإضافة إلى النص. توازن جيد بين الحجم والقدرة.</p>
                         <p style="margin-top: 8px;"><a href="https://ollama.com/library/gemma3" target="_blank" rel="noopener" style="color: var(--secondary);">Ollama Library →</a></p>
                     </div>
                 </div>
@@ -259,7 +444,7 @@
                 CorpusMind Lens connects to the same engine as <strong>CorpusMind</strong> — the full corpus linguistics research environment. CorpusMind provides concordance, frequency, collocation, keyness, dispersion, n-grams, POS analysis, grammar, dependency parsing, discourse analysis, vocabulary profiling, sentiment analysis, metaphor detection, Arabic NLP (CAMeL Tools), reference corpus management, and a grounded AI Assistant with 25 registered tools. Both applications can be installed side by side and share the same engine process.
             </p>
             <p class="lang-ar" style="display: none;">
-                يتصل كوربَس مايند لِنز بنفس محرك <strong>كوربَس مايند</strong> — بيئة البحث الكاملة في CorpusMind لغويات المدونة. يوفر كوربَس مايند الكونكوردانس، والتردد، والتجاور، والمفتاحية، والتشتت، والـn-grams، وتحليل أجزاء الكلام، والقواعد، وتحليل التبعية، وتحليل الخطاب، وتحليل المفردات، وتحليل المشاعر، واكتشاف الاستعارة، ومعالجة اللغة العربية (CAMeL Tools)، وإدارة المدونات المرجعية، ومساعد ذكي موثّق بـ25 أداة مسجلة. يمكن تثبيت التطبيقين جنبًا إلى جنب ومشاركة نفس عملية المحرك.
+                يتصل كوربَس مايند لِنز بنفس محرك <strong>كوربَس مايند</strong> — بيئة البحث الكاملة في لغويات المدونة. يوفر كوربَس مايند الكونكوردانس، والتردد، والتجاور، والمفتاحية، والتشتت، والـn-grams، وتحليل أجزاء الكلام، والقواعد، وتحليل التبعية، وتحليل الخطاب، وتحليل المفردات، وتحليل المشاعر، واكتشاف الاستعارة، ومعالجة اللغة العربية (CAMeL Tools)، وإدارة المدونات المرجعية، ومساعد ذكي موثّق بـ25 أداة مسجلة. يمكن تثبيت التطبيقين جنبًا إلى جنب ومشاركة نفس عملية المحرك.
             </p>
             <a href="../CorpusMind/" class="cross-link-button">
                 <i class="fas fa-arrow-left"></i>
@@ -296,7 +481,8 @@
                 </a>
                 <a href="https://github.com/waleedmandour/CorpusMind/releases/download/v1.0.0/CorpusMind_User_Guide.pdf" target="_blank" rel="noopener" class="download-card">
                     <i class="fas fa-book"></i>
-                    <span class="dl-name">User Guide</span>
+                    <span class="dl-name lang-en">User Guide</span>
+                    <span class="dl-name lang-ar" style="display:none;">دليل المستخدم</span>
                     <span class="dl-os">PDF · 15 pages</span>
                     <span class="dl-file">CorpusMind_User_Guide.pdf</span>
                 </a>
