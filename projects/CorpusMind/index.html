@@ -519,119 +519,22 @@
 }</div>
         </div>
 
-        <!-- ===== CorpusMind Lens Section ===== -->
-        <section id="lens" style="background: linear-gradient(135deg, #f0f4ff 0%, rgba(37, 99, 235, 0.05) 100%); border-radius: 12px; margin: 64px 0; padding: 64px 0; box-shadow: var(--shadow);">
-            <div class="container">
-                <!-- Lens logo + title -->
-                <div style="text-align: center; margin-bottom: 48px;">
-                    <div style="display: inline-flex; align-items: center; gap: 20px; margin-bottom: 16px;">
-                        <img src="images/CorpusMindLensIcon-256.png" alt="CorpusMind Lens" style="width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2); border: 2px solid rgba(37, 99, 235, 0.2); padding: 8px; background: white;">
-                        <div style="text-align: left;">
-                            <h2 class="lang-en" style="font-size: 32px; font-weight: 800; color: #1d4ed8; margin: 0;">CorpusMind Lens</h2>
-                            <h2 class="lang-ar" style="font-size: 32px; font-weight: 800; color: #1d4ed8; margin: 0; display: none;">كوربَس مايند لِنز</h2>
-                            <p class="lang-en" style="font-size: 18px; color: var(--gray); margin: 4px 0 0;">Vision-LM-Powered Multimodal Discourse Analysis</p>
-                            <p class="lang-ar" style="font-size: 18px; color: var(--gray); margin: 4px 0 0; display: none;">تحليل الخطاب متعدد الأنماط مدعوم بنماذج الرؤية اللغوية</p>
-                        </div>
-                    </div>
-                    <p class="lang-en" style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.7; color: var(--dark);">
-                        <strong>CorpusMind Lens</strong> is a separate installable desktop app that connects to the same CorpusMind engine and focuses on vision-LM-powered image understanding. It runs fully against a local <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> or <a href="https://lmstudio.ai" target="_blank" rel="noopener">LM Studio</a> instance with <strong>zero cloud calls</strong>. Lens features a <strong>blue theme</strong> to distinguish it from the main app's green, opens directly to the Vision Suite, and shows only vision-relevant navigation.
-                    </p>
-                    <p class="lang-ar" style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.7; color: var(--dark); display: none;">
-                        <strong>كوربَس مايند لِنز</strong> هو تطبيق مكتبي مستقل يتصل بنفس محرك كوربَس مايند ويركز على فهم الصور باستخدام نماذج الرؤية اللغوية. يعمل بالكامل على نسخة محلية من <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> أو <a href="https://lmstudio.ai" target="_blank" rel="noopener">LM Studio</a> <strong>بدون أي اتصال سحابي</strong>. يتميّز لِنز بـ<strong>لون أزرق</strong> يميّزه عن اللون الأخضر للتطبيق الرئيسي، ويفتح مباشرة على جناح التحليل البصري.
-                    </p>
-                </div>
-
-                <!-- Lens features grid -->
-                <div class="features-grid" style="margin-top: 40px;">
-                    <div class="feature-card">
-                        <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;"><i class="fas fa-image"></i></div>
-                        <h3 class="lang-en">Image-Set Management</h3>
-                        <h3 class="lang-ar" style="display: none;">إدارة مجموعات الصور</h3>
-                        <p class="lang-en">Create image sets within a corpus, drag-and-drop upload with captions, and get automatic cached analysis (OCR, colour palette, composition geometry).</p>
-                        <p class="lang-ar" style="display: none;">أنشئ مجموعات صور داخل المدونة، ارفع الصور بالسحب والإفلات مع تعليقات، واحصل على تحليل تلقائي مخزّن (OCR، لوحة الألوان، هندسة التكوين).</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;"><i class="fas fa-brain"></i></div>
-                        <h3 class="lang-en">Vision-LM Description</h3>
-                        <h3 class="lang-ar" style="display: none;">وصف بالنموذج اللغوي البصري</h3>
-                        <p class="lang-en">Send real image bytes to a local vision-LM (moondream, llama3.2-vision) for grounded descriptions with provenance metadata and OCR disagreement detection.</p>
-                        <p class="lang-ar" style="display: none;">أرسل وحدات بايت الصورة الفعلية إلى نموذج رؤية محلي (moondream، llama3.2-vision) للحصول على أوصاف موثّقة مع بيانات المصدر واكتشاف تعارض OCR.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;"><i class="fas fa-comments"></i></div>
-                        <h3 class="lang-en">8 Discourse Frameworks</h3>
-                        <h3 class="lang-ar" style="display: none;">٨ أطر تحليل الخطاب</h3>
-                        <p class="lang-en">Social Semiotic, CDA (Fairclough/van Dijk/Wodak/Machin & Mayr), Persuasion, Framing, Narrative, Visual Metaphor, Emotion, Cultural — all with <code>?mode=llm</code> support.</p>
-                        <p class="lang-ar" style="display: none;">التضمين الاجتماعي، التحليل النقدي للخطاب (فيركلوف/فان دايك/فوداك/ماشين وماير)، الإقناع، التأطير، السرد، الاستعارة البصرية، العاطفة، الثقافي — جميعها تدعم <code>?mode=llm</code>.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;"><i class="fas fa-link"></i></div>
-                        <h3 class="lang-en">Alignment Inspector</h3>
-                        <h3 class="lang-ar" style="display: none;">مفتش المحاذاة</h3>
-                        <p class="lang-en">Align image regions with text spans using heuristic, vision-LM, or both side-by-side. Compare which mode produced what — honest about the output source.</p>
-                        <p class="lang-ar" style="display: none;">حاذِ مناطق الصورة مع مقاطع النص باستخدام الاستدلال أو النموذج اللغوي أو كليهما جنبًا إلى جنب. قارن أي وضع أنتج أي نتيجة بشفافية.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;"><i class="fas fa-layer-group"></i></div>
-                        <h3 class="lang-en">Batch View</h3>
-                        <h3 class="lang-ar" style="display: none;">العرض الدفعي</h3>
-                        <p class="lang-en">Aggregate recurring framework themes and OCR word frequency across all images in a set. Spot patterns without manually checking each image.</p>
-                        <p class="lang-ar" style="display: none;">اجمع السمات المتكررة للأطر وتردد كلمات OCR عبر جميع الصور في المجموعة. اكتشف الأنماط دون فحص كل صورة يدويًا.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;"><i class="fas fa-shield-alt"></i></div>
-                        <h3 class="lang-en">Consent Gate</h3>
-                        <h3 class="lang-ar" style="display: none;">بوابة الموافقة</h3>
-                        <p class="lang-en">Person-descriptive content (age, gender, expression) from vision-LM output is automatically redacted unless the user explicitly enables facial analysis.</p>
-                        <p class="lang-ar" style="display: none;">يُحجب تلقائيًا المحتوى الوصفي للأشخاص (العمر، الجنس، التعابير) من مخرجات النموذج اللغوي ما لم يُفعّل المستخدم تحليل الوجه صراحةً.</p>
-                    </div>
-                </div>
-
-                <!-- Lens download cards -->
-                <div style="margin-top: 48px;">
-                    <h3 class="lang-en" style="text-align: center; font-size: 24px; font-weight: 700; color: #1d4ed8; margin-bottom: 28px;">Download CorpusMind Lens</h3>
-                    <h3 class="lang-ar" style="text-align: center; font-size: 24px; font-weight: 700; color: #1d4ed8; margin-bottom: 28px; display: none;">نزّل كوربَس مايند لِنز</h3>
-                    <div class="download-platforms">
-                        <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0/CorpusMind.Lens_1.0.0_universal.dmg" target="_blank" rel="noopener" class="download-card" style="border-color: rgba(37, 99, 235, 0.2);">
-                            <i class="fab fa-apple" style="color: #2563eb;"></i>
-                            <span class="dl-name">macOS (Universal)</span>
-                            <span class="dl-os">arm64 + x64 &middot; DMG</span>
-                            <span class="dl-file">CorpusMind.Lens_1.0.0_universal.dmg</span>
-                        </a>
-                        <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0/CorpusMind.Lens_1.0.0_x64-setup.exe" target="_blank" rel="noopener" class="download-card" style="border-color: rgba(37, 99, 235, 0.2);">
-                            <i class="fab fa-windows" style="color: #2563eb;"></i>
-                            <span class="dl-name">Windows</span>
-                            <span class="dl-os">x64 &middot; NSIS / MSI</span>
-                            <span class="dl-file">CorpusMind.Lens_1.0.0_x64-setup.exe</span>
-                        </a>
-                        <a href="https://github.com/waleedmandour/CorpusMind/releases/tag/v1.0.0" target="_blank" rel="noopener" class="download-card" style="border-color: rgba(37, 99, 235, 0.2);">
-                            <i class="fab fa-linux" style="color: #2563eb;"></i>
-                            <span class="dl-name">Linux</span>
-                            <span class="dl-os">x64 &middot; AppImage / DEB</span>
-                            <span class="dl-file">CorpusMind.Lens_1.0.0_amd64.AppImage</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Vision models note -->
-                <div style="text-align: center; margin-top: 32px; padding: 20px; background: rgba(37, 99, 235, 0.05); border-radius: 12px; border: 1px solid rgba(37, 99, 235, 0.15);">
-                    <p class="lang-en" style="margin: 0; font-size: 14px; color: var(--dark);">
-                        <i class="fas fa-download" style="color: #2563eb;"></i>&nbsp;
-                        <strong>Vision models available in-app:</strong>
-                        <a href="https://ollama.com/library/moondream" target="_blank" rel="noopener">moondream</a> (1.7 GB, 1.8B) &middot;
-                        <a href="https://ollama.com/library/llama3.2-vision" target="_blank" rel="noopener">llama3.2-vision</a> (7.9 GB, 11B) &middot;
-                        <a href="https://ollama.com/library/gemma3" target="_blank" rel="noopener">gemma3:4b</a> (3.3 GB, 4B, multilingual)
-                    </p>
-                    <p class="lang-ar" style="margin: 0; font-size: 14px; color: var(--dark); display: none;">
-                        <i class="fas fa-download" style="color: #2563eb;"></i>&nbsp;
-                        <strong>نماذج الرؤية متاحة داخل التطبيق:</strong>
-                        <a href="https://ollama.com/library/moondream" target="_blank" rel="noopener">moondream</a> (‏1.7 جيجابايت) &middot;
-                        <a href="https://ollama.com/library/llama3.2-vision" target="_blank" rel="noopener">llama3.2-vision</a> (‏7.9 جيجابايت) &middot;
-                        <a href="https://ollama.com/library/gemma3" target="_blank" rel="noopener">gemma3:4b</a> (‏3.3 جيجابايت، متعدد اللغات)
-                    </p>
-                </div>
-            </div>
-        </section>
+        <!-- Cross-link to CorpusMind Lens -->
+        <div style="text-align: center; margin: 64px 0; padding: 32px; background: linear-gradient(135deg, var(--light) 0%, rgba(11, 110, 79, 0.05) 100%); border-radius: 16px; border: 1px solid rgba(11, 110, 79, 0.15);">
+            <h3 class="lang-en" style="font-size: 22px; color: var(--primary); margin-bottom: 12px;">Companion Application: CorpusMind Lens</h3>
+            <h3 class="lang-ar" style="font-size: 22px; color: var(--primary); margin-bottom: 12px; display: none;">التطبيق المرافق: كوربَس مايند لِنز</h3>
+            <p class="lang-en" style="font-size: 16px; color: var(--dark); margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <strong>CorpusMind Lens</strong> is a separate installable desktop application for vision-LM-powered multimodal discourse analysis. It connects to the same CorpusMind engine and provides image-set management, vision-language-model image description, eight discourse-theoretical frameworks with <code>?mode=llm</code> support, image-text alignment, cross-image batch analysis, and an ethical consent gate for person-descriptive content.
+            </p>
+            <p class="lang-ar" style="font-size: 16px; color: var(--dark); margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; display: none;">
+                <strong>كوربَس مايند لِنز</strong> هو تطبيق مكتبي مستقل لتحليل الخطاب متعدد الأنماط المدعوم بنماذج الرؤية اللغوية. يتصل بنفس محرك كوربَس مايند ويوفر إدارة مجموعات الصور، ووصف الصور بنماذج الرؤية، وثمانية أطر نظرية مع دعم <code>?mode=llm</code>، ومحاذاة الصورة والنص، والتحليل الدفعي عبر الصور، وبوابة موافقة أخلاقية للمحتوى الوصفي للأشخاص.
+            </p>
+            <a href="../CorpusMindLens/" style="display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: var(--white); padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: var(--transition);">
+                <i class="fas fa-arrow-right"></i>
+                <span class="lang-en">Visit CorpusMind Lens</span>
+                <span class="lang-ar" style="display: none;">زيارة كوربَس مايند لِنز</span>
+            </a>
+        </div>
 
         <!-- CTA Section -->
         <section class="cta-section">
@@ -707,6 +610,8 @@
                     <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/USER_GUIDE.md" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم</a>
                     <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener" class="lang-en">Methodology</a>
                     <a href="https://github.com/waleedmandour/CorpusMind/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener" class="lang-ar">المنهجية</a>
+                    <a href="../CorpusMindLens/" class="lang-en">CorpusMind Lens</a>
+                    <a href="../CorpusMindLens/" class="lang-ar">كوربَس مايند لِنز</a>
                     <a href="https://waleedmandour.org/projects/" class="lang-en">&larr; Back to Projects</a>
                     <a href="https://waleedmandour.org/projects/" class="lang-ar">&larr; العودة إلى المشاريع</a>
                 </div>
