@@ -1,0 +1,162 @@
+{
+  "property_id": "514716245",
+  "totals": {
+    "all_time_visitors": 248,
+    "all_time_pageviews": 710,
+    "last_7_days_visitors": 5,
+    "last_30_days_visitors": 37
+  },
+  "top_countries_all_time": [
+    {
+      "country": "United States",
+      "country_code": "US",
+      "visitors": 74,
+      "flag_emoji": "🇺🇸"
+    },
+    {
+      "country": "China",
+      "country_code": "CN",
+      "visitors": 41,
+      "flag_emoji": "🇨🇳"
+    },
+    {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 39,
+      "flag_emoji": "🇴🇲"
+    },
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 11,
+      "flag_emoji": "🇪🇬"
+    },
+    {
+      "country": "India",
+      "country_code": "IN",
+      "visitors": 11,
+      "flag_emoji": "🇮🇳"
+    },
+    {
+      "country": "Germany",
+      "country_code": "DE",
+      "visitors": 9,
+      "flag_emoji": "🇩🇪"
+    },
+    {
+      "country": "France",
+      "country_code": "FR",
+      "visitors": 7,
+      "flag_emoji": "🇫🇷"
+    },
+    {
+      "country": "Canada",
+      "country_code": "CA",
+      "visitors": 6,
+      "flag_emoji": "🇨🇦"
+    },
+    {
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "visitors": 6,
+      "flag_emoji": "🇸🇦"
+    }
+  ],
+  "top_countries_last_30_days": [
+    {
+      "country": "China",
+      "country_code": "CN",
+      "visitors": 17,
+      "flag_emoji": "🇨🇳"
+    },
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 7,
+      "flag_emoji": "🇪🇬"
+    },
+    {
+      "country": "United States",
+      "country_code": "US",
+      "visitors": 6,
+      "flag_emoji": "🇺🇸"
+    },
+    {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 3,
+      "flag_emoji": "🇴🇲"
+    },
+    {
+      "country": "Argentina",
+      "country_code": "AR",
+      "visitors": 2,
+      "flag_emoji": "🇦🇷"
+    },
+    {
+      "country": "India",
+      "country_code": "IN",
+      "visitors": 1,
+      "flag_emoji": "🇮🇳"
+    },
+    {
+      "country": "Thailand",
+      "country_code": "TH",
+      "visitors": 1,
+      "flag_emoji": "🇹🇭"
+    }
+  ],
+  "top_pages_all_time": [
+    {
+      "url": "waleedmandour.org/",
+      "pageviews": 383,
+      "visitors": 224
+    },
+    {
+      "url": "waleedmandour.org/projects/AMTA/index.html",
+      "pageviews": 55,
+      "visitors": 7
+    },
+    {
+      "url": "waleedmandour.org/projects/AMTA/",
+      "pageviews": 30,
+      "visitors": 7
+    },
+    {
+      "url": "waleedmandour.org/index.html",
+      "pageviews": 22,
+      "visitors": 7
+    },
+    {
+      "url": "waleedmandour.org/projects/AMTA/privacy.html",
+      "pageviews": 22,
+      "visitors": 12
+    },
+    {
+      "url": "127.0.0.1/",
+      "pageviews": 19,
+      "visitors": 2
+    },
+    {
+      "url": "waleedmandour.org/projects/AMTA/setup.html",
+      "pageviews": 17,
+      "visitors": 2
+    },
+    {
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 16,
+      "visitors": 12
+    },
+    {
+      "url": "waleedmandour.org/terms.html",
+      "pageviews": 12,
+      "visitors": 3
+    },
+    {
+      "url": "waleedmandour.org/projects/CorpusMindLens/",
+      "pageviews": 11,
+      "visitors": 2
+    }
+  ],
+  "fetched_at": "2026-07-30T10:20:34Z"
+}
