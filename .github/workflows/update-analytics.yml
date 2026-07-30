@@ -3,26 +3,29 @@
 # real historical visitor counts + visitors-by-country (not just the
 # per-browser localStorage counter).
 #
-# STATUS: Currently DISABLED (cron schedule commented out below). The
-# dashboard UI for historical visitor counts was also removed in favor
-# of a simpler single visitor counter. This workflow + script are
-# preserved so they can be re-enabled later by following
-# docs/ANALYTICS_SETUP.md and uncommenting the `schedule:` block.
+# STATUS: ACTIVE. Runs hourly via cron, plus on push to its own files
+# (for self-test) and via manual trigger from the Actions tab.
+#
+# The script (scripts/fetch_analytics.py) exits 0 with a friendly note
+# when GA credentials aren't configured yet, so this workflow shows as
+# success (not failure) in the Actions tab during the pre-setup period.
+# Once the user follows docs/ANALYTICS_SETUP.md and adds the
+# GA_CREDENTIALS_JSON secret, the script will start producing
+# analytics.json automatically on the next hourly run.
 #
 # Setup: see docs/ANALYTICS_SETUP.md for the one-time Google Cloud setup
 # (create service account, grant Viewer on the GA4 property, add the
-# JSON key as the GA_CREDENTIALS_JSON repo secret, and set GA_PROPERTY_ID).
+# JSON key as the GA_CREDENTIALS_JSON repo secret). The GA_PROPERTY_ID
+# variable is optional — the script defaults to 514716245 (the
+# waleedmandour.org GA4 property).
 name: Update Analytics
 
 on:
-  # CRON SCHEDULE — currently disabled to avoid hourly workflow runs
-  # while GA credentials are not yet configured. To re-enable:
-  #   1. Complete the one-time setup in docs/ANALYTICS_SETUP.md
-  #   2. Uncomment the 2 lines below
-  #   3. Push this change
-  # The workflow will then run hourly and commit analytics.json.
-  # schedule:
-  #   - cron: '0 * * * *'
+  schedule:
+    # Run at minute 0 of every hour (UTC). GitHub Actions cron is best-effort
+    # and may be delayed during periods of high load, but this is fine — the
+    # dashboard degrades gracefully to the last committed analytics.json.
+    - cron: '0 * * * *'
   workflow_dispatch:
     # Allow manual triggering from the Actions tab (useful for testing
     # the pipeline after configuring GA credentials).

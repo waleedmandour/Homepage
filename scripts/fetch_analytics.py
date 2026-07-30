@@ -39,9 +39,10 @@ import datetime
 from pathlib import Path
 
 # ----- Configuration -----
-# Default GA4 property ID — override with GA_PROPERTY_ID env var if needed.
-# The user will need to set this to their actual GA4 property numeric ID.
-DEFAULT_PROPERTY_ID = os.environ.get('GA_PROPERTY_ID', 'YOUR_PROPERTY_ID_HERE')
+# The GA4 property ID for waleedmandour.org (extracted from the GA URL
+# the user shared: a60056981p514716245 → property ID = 514716245).
+# Can still be overridden via GA_PROPERTY_ID env var if needed.
+DEFAULT_PROPERTY_ID = os.environ.get('GA_PROPERTY_ID', '514716245')
 
 # Output path (repo root when run in GitHub Actions)
 OUTPUT_PATH = Path(__file__).resolve().parent.parent / 'analytics.json'
@@ -256,6 +257,9 @@ def main():
         sys.exit(0)
 
     if property_id == 'YOUR_PROPERTY_ID_HERE' or not property_id:
+        # This branch is now unreachable in practice (the default is set above),
+        # but kept as a defensive guard in case someone overrides the default
+        # to the placeholder string.
         print(
             'NOTE: GA_PROPERTY_ID is not set — the GA pipeline is not\n'
             'configured yet. This is expected if you have not yet completed\n'

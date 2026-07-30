@@ -414,6 +414,38 @@
                     </div>
                 </div>
 
+                <!-- GA-sourced visitor cards: Total Visitors (all-time) + Current Visitors (7d) -->
+                <div id="ga-visitors-row" style="display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--primary);"><i class="fas fa-users"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--primary); line-height: 1.1;" id="ga-total-visitors">—</div>
+                            <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                                <span class="lang-en">Total Visitors (all-time)</span>
+                                <span class="lang-ar">إجمالي الزوار (تراكمي)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                                <span class="lang-en">from Google Analytics</span>
+                                <span class="lang-ar">من Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-user-clock"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--secondary); line-height: 1.1;" id="ga-current-visitors">—</div>
+                            <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                                <span class="lang-en">Current Visitors (last 7 days)</span>
+                                <span class="lang-ar">الزوار الحاليون (آخر 7 أيام)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                                <span class="lang-en">from Google Analytics</span>
+                                <span class="lang-ar">من Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Visitor info row -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
                     <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
@@ -499,6 +531,64 @@
             // Visitor counter + geolocation
             (function(){var k='cm_lens_visitors';var c=parseInt(localStorage.getItem(k)||'0',10);c++;localStorage.setItem(k,String(c));var ce=document.getElementById('stat-visitor-count');if(ce){var s=performance.now();(function a(n){var p=Math.min((n-s)/1200,1);ce.textContent=Math.round(c*(1-Math.pow(1-p,3))).toLocaleString();if(p<1)requestAnimationFrame(a);})(s);}})();
             fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){var le=document.getElementById('stat-visitor-location');if(!le)return;if(d&&d.country_name){var ci=d.city?d.city+', ':'';var fl=d.country_code?' '+String.fromCodePoint.apply(null,d.country_code.toUpperCase().split('').map(function(c){return 0x1F1E6+c.charCodeAt(0)-65;})):'';le.innerHTML='<span class="lang-en">'+ci+d.country_name+fl+'</span><span class="lang-ar">'+ci+d.country_name+fl+'</span>';gtag('event','page_view',{event_category:'geo',event_label:d.country_name,country_code:d.country_code});}else{le.innerHTML='<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';}}).catch(function(){var le=document.getElementById('stat-visitor-location');if(le)le.innerHTML='<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';});
+        // ===== GA-sourced visitor stats (Total Visitors + Current Visitors 7d) =====
+        // Fetches /analytics.json (committed hourly by the
+        // .github/workflows/update-analytics.yml workflow). The file is
+        // only present after the site owner completes the one-time GA
+        // setup in docs/ANALYTICS_SETUP.md. Until then, this IIFE is a
+        // no-op — the GA cards stay hidden (display:none) and the
+        // per-browser 'Site Visitors' counter remains visible as a
+        // fallback. Once /analytics.json exists, this IIFE shows the GA
+        // cards with real numbers and hides the per-browser counter
+        // (since the GA numbers supersede it).
+        (async function() {
+            try {
+                // cache-busting query string so we always get the latest
+                // committed version (GitHub Pages serves with long max-age)
+                const resp = await fetch('/analytics.json?ts=' + Date.now());
+                if (!resp.ok) return;  // 404 — GA not configured yet, silently no-op
+                const data = await resp.json();
+                if (!data || !data.totals) return;
+
+                // Animate the count-up for both cards
+                function anim(id, target, dur) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const start = 0, t0 = performance.now();
+                    (function step(now) {
+                        const p = Math.min((now - t0) / dur, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.round(target * eased).toLocaleString();
+                        if (p < 1) requestAnimationFrame(step);
+                    })(t0);
+                }
+                anim('ga-total-visitors', data.totals.all_time_visitors || 0, 1500);
+                anim('ga-current-visitors', data.totals.last_7_days_visitors || 0, 1200);
+
+                // Show the GA row (switches from display:none to display:grid)
+                const gaRow = document.getElementById('ga-visitors-row');
+                if (gaRow) gaRow.style.display = 'grid';
+
+                // Hide the per-browser 'Site Visitors' counter card,
+                // since the GA numbers supersede it. The geolocation
+                // card (stat-visitor-location) stays visible.
+                const perBrowserCounter = document.getElementById('stat-visitor-status');
+                if (perBrowserCounter) {
+                    // Walk up to the card container (the parent of the
+                    // parent of stat-visitor-status is the card div).
+                    const card = perBrowserCounter.closest('div[style*="border-radius: 16px"]');
+                    if (card) card.style.display = 'none';
+                }
+            } catch(e) {
+                // Network error or JSON parse error — silently no-op.
+                // The GA cards stay hidden, the per-browser counter
+                // stays visible. Console-log for debugging only.
+                if (typeof console !== 'undefined' && console.log) {
+                    console.log('GA analytics fetch skipped:', e.message);
+                }
+            }
+        })();
+
         })();
     </script>
 </body>
