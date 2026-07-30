@@ -143,7 +143,7 @@ def fetch_metrics(property_id: str, credentials_json: str) -> dict:
     countries_all_time_report = client.run_report(RunReportRequest(
         property=f'properties/{property_id}',
         date_ranges=[DateRange(start_date='2020-01-01', end_date='today')],
-        dimensions=[Dimension(name='country'), Dimension(name='countryCode')],
+        dimensions=[Dimension(name='country'), Dimension(name='countryId')],
         metrics=[Metric(name='totalUsers')],
         order_bys=[{
             'metric': {'metric_name': 'totalUsers'},
@@ -170,7 +170,7 @@ def fetch_metrics(property_id: str, credentials_json: str) -> dict:
     countries_last_30_report = client.run_report(RunReportRequest(
         property=f'properties/{property_id}',
         date_ranges=[DateRange(start_date='30daysAgo', end_date='today')],
-        dimensions=[Dimension(name='country'), Dimension(name='countryCode')],
+        dimensions=[Dimension(name='country'), Dimension(name='countryId')],
         metrics=[Metric(name='totalUsers')],
         order_bys=[{
             'metric': {'metric_name': 'totalUsers'},
