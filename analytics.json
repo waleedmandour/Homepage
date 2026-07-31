@@ -10,56 +10,233 @@
     {
       "country": "United States",
       "country_code": "US",
+      "country_numeric": "840",
       "visitors": 74,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "China",
       "country_code": "CN",
+      "country_numeric": "156",
       "visitors": 41,
       "flag_emoji": "🇨🇳"
     },
     {
       "country": "Oman",
       "country_code": "OM",
+      "country_numeric": "512",
       "visitors": 39,
       "flag_emoji": "🇴🇲"
     },
     {
       "country": "Egypt",
       "country_code": "EG",
+      "country_numeric": "818",
       "visitors": 11,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "India",
       "country_code": "IN",
+      "country_numeric": "356",
       "visitors": 11,
       "flag_emoji": "🇮🇳"
     },
     {
       "country": "Germany",
       "country_code": "DE",
+      "country_numeric": "276",
       "visitors": 9,
       "flag_emoji": "🇩🇪"
     },
     {
       "country": "France",
       "country_code": "FR",
+      "country_numeric": "250",
       "visitors": 7,
       "flag_emoji": "🇫🇷"
     },
     {
       "country": "Canada",
       "country_code": "CA",
+      "country_numeric": "124",
       "visitors": 6,
       "flag_emoji": "🇨🇦"
     },
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
+      "country_numeric": "682",
       "visitors": 6,
       "flag_emoji": "🇸🇦"
+    },
+    {
+      "country": "Argentina",
+      "country_code": "AR",
+      "country_numeric": "032",
+      "visitors": 4,
+      "flag_emoji": "🇦🇷"
+    },
+    {
+      "country": "Ireland",
+      "country_code": "IE",
+      "country_numeric": "372",
+      "visitors": 4,
+      "flag_emoji": "🇮🇪"
+    },
+    {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "country_numeric": "344",
+      "visitors": 3,
+      "flag_emoji": "🇭🇰"
+    },
+    {
+      "country": "Jordan",
+      "country_code": "JO",
+      "country_numeric": "400",
+      "visitors": 3,
+      "flag_emoji": "🇯🇴"
+    },
+    {
+      "country": "Netherlands",
+      "country_code": "NL",
+      "country_numeric": "528",
+      "visitors": 3,
+      "flag_emoji": "🇳🇱"
+    },
+    {
+      "country": "Singapore",
+      "country_code": "SG",
+      "country_numeric": "702",
+      "visitors": 3,
+      "flag_emoji": "🇸🇬"
+    },
+    {
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "country_numeric": "826",
+      "visitors": 3,
+      "flag_emoji": "🇬🇧"
+    },
+    {
+      "country": "Malaysia",
+      "country_code": "MY",
+      "country_numeric": "458",
+      "visitors": 2,
+      "flag_emoji": "🇲🇾"
+    },
+    {
+      "country": "Russia",
+      "country_code": "RU",
+      "country_numeric": "643",
+      "visitors": 2,
+      "flag_emoji": "🇷🇺"
+    },
+    {
+      "country": "Thailand",
+      "country_code": "TH",
+      "country_numeric": "764",
+      "visitors": 2,
+      "flag_emoji": "🇹🇭"
+    },
+    {
+      "country": "Andorra",
+      "country_code": "AD",
+      "country_numeric": "020",
+      "visitors": 1,
+      "flag_emoji": "🇦🇩"
+    },
+    {
+      "country": "Belarus",
+      "country_code": "BY",
+      "country_numeric": "112",
+      "visitors": 1,
+      "flag_emoji": "🇧🇾"
+    },
+    {
+      "country": "Belgium",
+      "country_code": "BE",
+      "country_numeric": "056",
+      "visitors": 1,
+      "flag_emoji": "🇧🇪"
+    },
+    {
+      "country": "Brazil",
+      "country_code": "BR",
+      "country_numeric": "076",
+      "visitors": 1,
+      "flag_emoji": "🇧🇷"
+    },
+    {
+      "country": "Finland",
+      "country_code": "FI",
+      "country_numeric": "246",
+      "visitors": 1,
+      "flag_emoji": "🇫🇮"
+    },
+    {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "country_numeric": "368",
+      "visitors": 1,
+      "flag_emoji": "🇮🇶"
+    },
+    {
+      "country": "Mexico",
+      "country_code": "MX",
+      "country_numeric": "484",
+      "visitors": 1,
+      "flag_emoji": "🇲🇽"
+    },
+    {
+      "country": "Pakistan",
+      "country_code": "PK",
+      "country_numeric": "586",
+      "visitors": 1,
+      "flag_emoji": "🇵🇰"
+    },
+    {
+      "country": "Poland",
+      "country_code": "PL",
+      "country_numeric": "616",
+      "visitors": 1,
+      "flag_emoji": "🇵🇱"
+    },
+    {
+      "country": "Seychelles",
+      "country_code": "SC",
+      "country_numeric": "690",
+      "visitors": 1,
+      "flag_emoji": "🇸🇨"
+    },
+    {
+      "country": "Spain",
+      "country_code": "ES",
+      "country_numeric": "724",
+      "visitors": 1,
+      "flag_emoji": "🇪🇸"
+    },
+    {
+      "country": "Sweden",
+      "country_code": "SE",
+      "country_numeric": "752",
+      "visitors": 1,
+      "flag_emoji": "🇸🇪"
+    },
+    {
+      "country": "Türkiye",
+      "country_code": "TR",
+      "country_numeric": "792",
+      "visitors": 1,
+      "flag_emoji": "🇹🇷"
+    },
+    {
+      "country": "United Arab Emirates",
+      "country_code": "AE",
+      "country_numeric": "784",
+      "visitors": 1,
+      "flag_emoji": "🇦🇪"
     }
   ],
   "top_countries_last_30_days": [
@@ -164,5 +341,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-07-31T08:33:41Z"
+  "fetched_at": "2026-07-31T09:12:05Z"
 }
