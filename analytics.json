@@ -2,9 +2,9 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 251,
-    "all_time_pageviews": 735,
+    "all_time_pageviews": 737,
     "last_7_days_visitors": 7,
-    "last_30_days_visitors": 36
+    "last_30_days_visitors": 35
   },
   "top_countries_all_time": [
     {
@@ -243,7 +243,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 17,
+      "visitors": 16,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -335,5 +335,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-04T06:23:57Z"
+  "fetched_at": "2026-08-04T09:33:29Z"
 }
