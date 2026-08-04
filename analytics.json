@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 251,
-    "all_time_pageviews": 734,
+    "all_time_pageviews": 735,
     "last_7_days_visitors": 7,
     "last_30_days_visitors": 36
   },
@@ -326,7 +326,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 13,
+      "pageviews": 14,
       "visitors": 2
     },
     {
@@ -335,5 +335,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-04T00:05:45Z"
+  "fetched_at": "2026-08-04T03:57:38Z"
 }
