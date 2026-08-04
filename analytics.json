@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 253,
-    "all_time_pageviews": 744,
-    "last_7_days_visitors": 9,
-    "last_30_days_visitors": 37
+    "all_time_visitors": 254,
+    "all_time_pageviews": 747,
+    "last_7_days_visitors": 10,
+    "last_30_days_visitors": 38
   },
   "top_countries_all_time": [
     {
@@ -127,6 +127,13 @@
       "flag_emoji": "🇲🇾"
     },
     {
+      "country": "Poland",
+      "country_code": "PL",
+      "country_numeric": "616",
+      "visitors": 2,
+      "flag_emoji": "🇵🇱"
+    },
+    {
       "country": "Russia",
       "country_code": "RU",
       "country_numeric": "643",
@@ -195,13 +202,6 @@
       "country_numeric": "586",
       "visitors": 1,
       "flag_emoji": "🇵🇰"
-    },
-    {
-      "country": "Poland",
-      "country_code": "PL",
-      "country_numeric": "616",
-      "visitors": 1,
-      "flag_emoji": "🇵🇱"
     },
     {
       "country": "Seychelles",
@@ -281,13 +281,19 @@
       "country_code": "IN",
       "visitors": 1,
       "flag_emoji": "🇮🇳"
+    },
+    {
+      "country": "Poland",
+      "country_code": "PL",
+      "visitors": 1,
+      "flag_emoji": "🇵🇱"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 396,
-      "visitors": 228
+      "pageviews": 397,
+      "visitors": 229
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -321,8 +327,8 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 16,
-      "visitors": 12
+      "pageviews": 17,
+      "visitors": 13
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
@@ -335,5 +341,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-04T16:06:47Z"
+  "fetched_at": "2026-08-04T18:22:17Z"
 }
