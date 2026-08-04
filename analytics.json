@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 252,
-    "all_time_pageviews": 739,
-    "last_7_days_visitors": 8,
-    "last_30_days_visitors": 36
+    "all_time_visitors": 253,
+    "all_time_pageviews": 744,
+    "last_7_days_visitors": 9,
+    "last_30_days_visitors": 37
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 12,
+      "visitors": 13,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -249,7 +249,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 8,
+      "visitors": 9,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -286,8 +286,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 394,
-      "visitors": 227
+      "pageviews": 396,
+      "visitors": 228
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -335,5 +335,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-04T13:46:44Z"
+  "fetched_at": "2026-08-04T16:06:47Z"
 }
