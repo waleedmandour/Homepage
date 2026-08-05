@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 254,
-    "all_time_pageviews": 747,
-    "last_7_days_visitors": 10,
-    "last_30_days_visitors": 38
+    "all_time_visitors": 255,
+    "all_time_pageviews": 748,
+    "last_7_days_visitors": 11,
+    "last_30_days_visitors": 39
   },
   "top_countries_all_time": [
     {
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 74,
+      "visitors": 75,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -255,7 +255,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 5,
+      "visitors": 6,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -341,5 +341,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-05T19:13:34Z"
+  "fetched_at": "2026-08-05T20:57:04Z"
 }
