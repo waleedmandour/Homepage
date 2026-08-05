@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 255,
-    "all_time_pageviews": 748,
+    "all_time_pageviews": 751,
     "last_7_days_visitors": 11,
     "last_30_days_visitors": 39
   },
@@ -292,7 +292,7 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 397,
+      "pageviews": 398,
       "visitors": 229
     },
     {
@@ -341,5 +341,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-05T22:07:50Z"
+  "fetched_at": "2026-08-05T23:48:26Z"
 }
