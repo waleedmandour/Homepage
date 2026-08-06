@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 256,
-    "all_time_pageviews": 754,
+    "all_time_pageviews": 763,
     "last_7_days_visitors": 11,
     "last_30_days_visitors": 39
   },
@@ -303,23 +303,23 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 55,
+      "pageviews": 57,
       "visitors": 7
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
-      "pageviews": 30,
-      "visitors": 7
+      "pageviews": 34,
+      "visitors": 8
+    },
+    {
+      "url": "waleedmandour.org/projects/AMTA/privacy.html",
+      "pageviews": 23,
+      "visitors": 13
     },
     {
       "url": "waleedmandour.org/index.html",
       "pageviews": 22,
       "visitors": 7
-    },
-    {
-      "url": "waleedmandour.org/projects/AMTA/privacy.html",
-      "pageviews": 22,
-      "visitors": 12
     },
     {
       "url": "127.0.0.1/",
@@ -342,10 +342,10 @@
       "visitors": 2
     },
     {
-      "url": "waleedmandour.org/terms.html",
+      "url": "waleedmandour.org/projects/",
       "pageviews": 12,
-      "visitors": 3
+      "visitors": 2
     }
   ],
-  "fetched_at": "2026-08-06T12:50:12Z"
+  "fetched_at": "2026-08-06T15:06:21Z"
 }
