@@ -1,8 +1,8 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 255,
-    "all_time_pageviews": 751,
+    "all_time_visitors": 256,
+    "all_time_pageviews": 752,
     "last_7_days_visitors": 11,
     "last_30_days_visitors": 39
   },
@@ -78,18 +78,18 @@
       "flag_emoji": "🇦🇷"
     },
     {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "country_numeric": "344",
+      "visitors": 4,
+      "flag_emoji": "🇭🇰"
+    },
+    {
       "country": "Ireland",
       "country_code": "IE",
       "country_numeric": "372",
       "visitors": 4,
       "flag_emoji": "🇮🇪"
-    },
-    {
-      "country": "Hong Kong",
-      "country_code": "HK",
-      "country_numeric": "344",
-      "visitors": 3,
-      "flag_emoji": "🇭🇰"
     },
     {
       "country": "Jordan",
@@ -255,7 +255,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 6,
+      "visitors": 5,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -277,6 +277,12 @@
       "flag_emoji": "🇧🇾"
     },
     {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "visitors": 1,
+      "flag_emoji": "🇭🇰"
+    },
+    {
       "country": "India",
       "country_code": "IN",
       "visitors": 1,
@@ -292,8 +298,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 398,
-      "visitors": 229
+      "pageviews": 399,
+      "visitors": 230
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -341,5 +347,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-06T04:55:37Z"
+  "fetched_at": "2026-08-06T07:33:20Z"
 }
