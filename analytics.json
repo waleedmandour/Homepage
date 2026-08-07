@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 256,
     "all_time_pageviews": 765,
-    "last_7_days_visitors": 11,
-    "last_30_days_visitors": 39
+    "last_7_days_visitors": 10,
+    "last_30_days_visitors": 35
   },
   "top_countries_all_time": [
     {
@@ -243,13 +243,13 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 16,
+      "visitors": 15,
       "flag_emoji": "🇨🇳"
     },
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 9,
+      "visitors": 8,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -259,16 +259,16 @@
       "flag_emoji": "🇺🇸"
     },
     {
-      "country": "Oman",
-      "country_code": "OM",
-      "visitors": 3,
-      "flag_emoji": "🇴🇲"
-    },
-    {
       "country": "Argentina",
       "country_code": "AR",
       "visitors": 2,
       "flag_emoji": "🇦🇷"
+    },
+    {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 2,
+      "flag_emoji": "🇴🇲"
     },
     {
       "country": "Belarus",
@@ -281,12 +281,6 @@
       "country_code": "HK",
       "visitors": 1,
       "flag_emoji": "🇭🇰"
-    },
-    {
-      "country": "India",
-      "country_code": "IN",
-      "visitors": 1,
-      "flag_emoji": "🇮🇳"
     },
     {
       "country": "Poland",
@@ -347,5 +341,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-08-07T06:04:22Z"
+  "fetched_at": "2026-08-07T08:06:35Z"
 }
