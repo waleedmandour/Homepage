@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 256,
-    "all_time_pageviews": 765,
-    "last_7_days_visitors": 10,
-    "last_30_days_visitors": 35
+    "all_time_visitors": 257,
+    "all_time_pageviews": 766,
+    "last_7_days_visitors": 11,
+    "last_30_days_visitors": 36
   },
   "top_countries_all_time": [
     {
@@ -95,7 +95,7 @@
       "country": "Jordan",
       "country_code": "JO",
       "country_numeric": "400",
-      "visitors": 3,
+      "visitors": 4,
       "flag_emoji": "🇯🇴"
     },
     {
@@ -283,6 +283,12 @@
       "flag_emoji": "🇭🇰"
     },
     {
+      "country": "Jordan",
+      "country_code": "JO",
+      "visitors": 1,
+      "flag_emoji": "🇯🇴"
+    },
+    {
       "country": "Poland",
       "country_code": "PL",
       "visitors": 1,
@@ -336,10 +342,10 @@
       "visitors": 2
     },
     {
-      "url": "waleedmandour.org/projects/",
-      "pageviews": 12,
-      "visitors": 2
+      "url": "waleedmandour.org/projects/rdat/",
+      "pageviews": 13,
+      "visitors": 4
     }
   ],
-  "fetched_at": "2026-08-07T10:41:56Z"
+  "fetched_at": "2026-08-07T11:38:03Z"
 }
