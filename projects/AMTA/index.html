@@ -317,6 +317,27 @@
         .citation-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
         .citation-box a:hover { text-decoration: underline; }
 
+        /* ===== ATTRIBUTION ===== */
+        .attribution-box {
+            background: #f8fafc; border-left: 4px solid var(--accent);
+            padding: 25px 30px; border-radius: 12px; margin: 40px auto;
+            max-width: 800px; color: var(--dark); font-size: 0.95em; line-height: 1.7;
+        }
+        .attribution-box .attr-title {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; color: var(--primary); font-size: 1.05em;
+            margin-bottom: 12px; font-style: normal;
+        }
+        .attribution-box .attr-title i { color: var(--accent); }
+        .attribution-box .attr-note {
+            font-size: 0.85em; color: var(--gray); margin-top: 12px;
+            padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.1);
+            font-style: italic;
+        }
+        .attribution-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .attribution-box a:hover { text-decoration: underline; }
+        .attribution-box .attr-citation { font-style: normal; word-break: break-word; }
+
         /* ===== FOOTER ===== */
         .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
         .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
@@ -566,7 +587,7 @@
                 <div class="api-badge" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);"><i class="fas fa-book-open"></i><span>Scopus API</span></div>
                 <div class="api-badge"><i class="fas fa-globe"></i><span>OpenAlex</span></div>
                 <div class="api-badge"><i class="fas fa-dna"></i><span>Europe PMC</span></div>
-                <div class="api-badge"><i class="fas fa-graduation-cap"></i><span>Semantic Scholar</span></div>
+                <div class="api-badge"><i class="fas fa-graduation-cap"></i><a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span>Semantic Scholar</span></a></div>
                 <div class="api-badge"><i class="fas fa-database"></i><span>CORE API</span></div>
                 <div class="api-badge"><i class="fas fa-book"></i><span>arXiv API</span></div>
                 <div class="api-badge"><i class="fas fa-search"></i><span>SerpApi</span></div>
@@ -609,6 +630,24 @@
                 Mandour, W. (2025, December 23). <em>AI-augmented Method of Triangulation Approach for Specialised Lexicography.</em> OSF. <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank">https://doi.org/10.17605/OSF.IO/8QB9V</a></p>
                 <p class="lang-ar"><strong>الاستشهاد الأكاديمي:</strong> إذا استخدمت هذه الأداة أو المنهجية في بحثك، يرجى الاستشهاد بالإطار الأساسي:<br>
                 مندور، و. (2025، 23 ديسمبر). <em>منهجية التثليث المعززة بالذكاء الاصطناعي للمعجم المتخصص.</em> OSF. <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank">https://doi.org/10.17605/OSF.IO/8QB9V</a></p>
+            </div>
+        </section>
+
+        <!-- Data Attribution -->
+        <section>
+            <div class="attribution-box">
+                <div class="attr-title">
+                    <i class="fas fa-database"></i>
+                    <span class="lang-en">Data Attribution &mdash; Semantic Scholar Open Data Platform</span>
+                    <span class="lang-ar">إسناد البيانات &mdash; منصة Semantic Scholar المفتوحة للبيانات</span>
+                </div>
+                <p class="lang-en attr-citation">This tool relies on scholarly metadata retrieved from the <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">Semantic Scholar Open Data Platform</a>. In accordance with their attribution guidelines, we hereby cite the platform as follows:</p>
+                <p class="lang-ar attr-citation">تعتمد هذه الأداة على البيانات الوصفية الأكاديمية المسترجعة من <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">منصة Semantic Scholar المفتوحة للبيانات</a>. ووفقًا لإرشادات الإسناد الخاصة بهم، نستشهد بالمنصة على النحو التالي:</p>
+                <p class="attr-citation" style="margin-top:12px;">
+                    Kinney, R.M., Anastasiades, C., Authur, R., Beltagy, I., Bragg, J., Buraczynski, A., Cachola, I., Candra, S., Chandrasekhar, Y., Cohan, A., Crawford, M., Downey, D., Dunkelberger, J., Etzioni, O., Evans, R., Feldman, S., Gorney, J., Graham, D.W., Hu, F., Huff, R., King, D., Kohlmeier, S., Kuehl, B., Langan, M., Lin, D., Liu, H., Lo, K., Lochner, J., MacMillan, K., Murray, T.C., Newell, C., Rao, S., Rohatgi, S., Sayre, P., Shen, S., Singh, A., Soldaini, L., Subramanian, S., Tanaka, A., Wade, A.D., Wagner, L.M., Wang, L.L., Wilhelm, C., Wu, C., Yang, J., Zamarron, A., van Zuylen, M., &amp; Weld, D.S. (2023). <em>The Semantic Scholar Open Data Platform.</em> ArXiv, abs/2301.10140. <a href="https://arxiv.org/abs/2301.10140" target="_blank" rel="noopener">https://arxiv.org/abs/2301.10140</a>
+                </p>
+                <p class="attr-note lang-en">Scholarly paper metadata and abstracts retrieved via the Semantic Scholar Academic Graph are licensed under the terms specified by the Semantic Scholar Open Data Platform. All rights to the underlying content remain with their respective publishers and authors.</p>
+                <p class="attr-note lang-ar">البيانات الوصفية والملخصات الأكاديمية المسترجعة عبر Semantic Scholar Academic Graph مرخصة وفق الشروط المحددة بواسطة منصة Semantic Scholar المفتوحة للبيانات. وتظل جميع حقوق المحتوى الأصلي محفوظة للناشرين والمؤلفين المعنيين.</p>
             </div>
         </section>
 
