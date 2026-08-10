@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 258,
-    "all_time_pageviews": 771,
-    "last_7_days_visitors": 11,
-    "last_30_days_visitors": 32
+    "all_time_visitors": 259,
+    "all_time_pageviews": 774,
+    "last_7_days_visitors": 12,
+    "last_30_days_visitors": 33
   },
   "top_countries_all_time": [
     {
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 75,
+      "visitors": 76,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -255,7 +255,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 4,
+      "visitors": 5,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -298,8 +298,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 399,
-      "visitors": 230
+      "pageviews": 400,
+      "visitors": 231
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -312,14 +312,14 @@
       "visitors": 8
     },
     {
+      "url": "waleedmandour.org/index.html",
+      "pageviews": 24,
+      "visitors": 8
+    },
+    {
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
       "pageviews": 23,
       "visitors": 13
-    },
-    {
-      "url": "waleedmandour.org/index.html",
-      "pageviews": 22,
-      "visitors": 7
     },
     {
       "url": "127.0.0.1/",
@@ -347,5 +347,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-08-10T17:43:01Z"
+  "fetched_at": "2026-08-10T18:41:57Z"
 }
