@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 261,
     "all_time_pageviews": 786,
-    "last_7_days_visitors": 10,
-    "last_30_days_visitors": 34
+    "last_7_days_visitors": 8,
+    "last_30_days_visitors": 32
   },
   "top_countries_all_time": [
     {
@@ -243,7 +243,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 12,
+      "visitors": 11,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -261,7 +261,7 @@
     {
       "country": "Argentina",
       "country_code": "AR",
-      "visitors": 2,
+      "visitors": 1,
       "flag_emoji": "🇦🇷"
     },
     {
@@ -347,5 +347,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-08-13T05:41:41Z"
+  "fetched_at": "2026-08-13T07:11:28Z"
 }
