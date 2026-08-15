@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 263,
-    "all_time_pageviews": 794,
+    "all_time_pageviews": 795,
     "last_7_days_visitors": 7,
     "last_30_days_visitors": 32
   },
@@ -298,8 +298,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 403,
-      "visitors": 232
+      "pageviews": 404,
+      "visitors": 233
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -347,5 +347,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-15T19:14:20Z"
+  "fetched_at": "2026-08-15T20:10:52Z"
 }
