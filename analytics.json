@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 262,
-    "all_time_pageviews": 791,
-    "last_7_days_visitors": 6,
-    "last_30_days_visitors": 31
+    "all_time_visitors": 263,
+    "all_time_pageviews": 793,
+    "last_7_days_visitors": 7,
+    "last_30_days_visitors": 32
   },
   "top_countries_all_time": [
     {
@@ -120,6 +120,13 @@
       "flag_emoji": "🇬🇧"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "country_numeric": "368",
+      "visitors": 2,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Malaysia",
       "country_code": "MY",
       "country_numeric": "458",
@@ -181,13 +188,6 @@
       "country_numeric": "246",
       "visitors": 1,
       "flag_emoji": "🇫🇮"
-    },
-    {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "country_numeric": "368",
-      "visitors": 1,
-      "flag_emoji": "🇮🇶"
     },
     {
       "country": "Mexico",
@@ -271,6 +271,12 @@
       "flag_emoji": "🇭🇰"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "visitors": 1,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Jordan",
       "country_code": "JO",
       "visitors": 1,
@@ -336,10 +342,10 @@
       "visitors": 4
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMindLens/",
+      "url": "waleedmandour.org/projects/",
       "pageviews": 14,
-      "visitors": 2
+      "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-15T11:10:21Z"
+  "fetched_at": "2026-08-15T12:17:05Z"
 }
