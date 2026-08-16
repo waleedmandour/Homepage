@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 263,
-    "all_time_pageviews": 796,
-    "last_7_days_visitors": 7,
-    "last_30_days_visitors": 32
+    "all_time_visitors": 264,
+    "all_time_pageviews": 802,
+    "last_7_days_visitors": 8,
+    "last_30_days_visitors": 33
   },
   "top_countries_all_time": [
     {
@@ -190,6 +190,13 @@
       "flag_emoji": "🇫🇮"
     },
     {
+      "country": "Libya",
+      "country_code": "LY",
+      "country_numeric": "434",
+      "visitors": 1,
+      "flag_emoji": "🇱🇾"
+    },
+    {
       "country": "Mexico",
       "country_code": "MX",
       "country_numeric": "484",
@@ -283,6 +290,12 @@
       "flag_emoji": "🇯🇴"
     },
     {
+      "country": "Libya",
+      "country_code": "LY",
+      "visitors": 1,
+      "flag_emoji": "🇱🇾"
+    },
+    {
       "country": "Oman",
       "country_code": "OM",
       "visitors": 1,
@@ -298,8 +311,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 405,
-      "visitors": 233
+      "pageviews": 407,
+      "visitors": 234
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -327,6 +340,11 @@
       "visitors": 2
     },
     {
+      "url": "waleedmandour.org/projects/rdat/",
+      "pageviews": 19,
+      "visitors": 5
+    },
+    {
       "url": "waleedmandour.org/teaching/",
       "pageviews": 18,
       "visitors": 14
@@ -337,15 +355,10 @@
       "visitors": 2
     },
     {
-      "url": "waleedmandour.org/projects/rdat/",
-      "pageviews": 15,
-      "visitors": 4
-    },
-    {
       "url": "waleedmandour.org/projects/",
       "pageviews": 14,
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-16T04:25:21Z"
+  "fetched_at": "2026-08-16T05:19:05Z"
 }
