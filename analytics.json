@@ -3,7 +3,7 @@
   "totals": {
     "all_time_visitors": 269,
     "all_time_pageviews": 812,
-    "last_7_days_visitors": 10,
+    "last_7_days_visitors": 9,
     "last_30_days_visitors": 30
   },
   "top_countries_all_time": [
@@ -354,5 +354,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-19T06:24:59Z"
+  "fetched_at": "2026-08-19T07:29:58Z"
 }
