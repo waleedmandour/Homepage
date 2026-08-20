@@ -4,7 +4,7 @@
     "all_time_visitors": 270,
     "all_time_pageviews": 813,
     "last_7_days_visitors": 10,
-    "last_30_days_visitors": 31
+    "last_30_days_visitors": 30
   },
   "top_countries_all_time": [
     {
@@ -262,7 +262,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 5,
+      "visitors": 4,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -354,5 +354,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-20T06:26:21Z"
+  "fetched_at": "2026-08-20T07:33:05Z"
 }
