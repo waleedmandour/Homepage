@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 276,
-    "all_time_pageviews": 820,
-    "last_7_days_visitors": 8,
-    "last_30_days_visitors": 33
+    "all_time_visitors": 277,
+    "all_time_pageviews": 822,
+    "last_7_days_visitors": 9,
+    "last_30_days_visitors": 34
   },
   "top_countries_all_time": [
     {
@@ -71,6 +71,13 @@
       "flag_emoji": "🇸🇦"
     },
     {
+      "country": "Jordan",
+      "country_code": "JO",
+      "country_numeric": "400",
+      "visitors": 5,
+      "flag_emoji": "🇯🇴"
+    },
+    {
       "country": "Argentina",
       "country_code": "AR",
       "country_numeric": "032",
@@ -90,13 +97,6 @@
       "country_numeric": "372",
       "visitors": 4,
       "flag_emoji": "🇮🇪"
-    },
-    {
-      "country": "Jordan",
-      "country_code": "JO",
-      "country_numeric": "400",
-      "visitors": 4,
-      "flag_emoji": "🇯🇴"
     },
     {
       "country": "Netherlands",
@@ -266,6 +266,12 @@
       "flag_emoji": "🇺🇸"
     },
     {
+      "country": "Jordan",
+      "country_code": "JO",
+      "visitors": 2,
+      "flag_emoji": "🇯🇴"
+    },
+    {
       "country": "Belarus",
       "country_code": "BY",
       "visitors": 1,
@@ -288,12 +294,6 @@
       "country_code": "IQ",
       "visitors": 1,
       "flag_emoji": "🇮🇶"
-    },
-    {
-      "country": "Jordan",
-      "country_code": "JO",
-      "visitors": 1,
-      "flag_emoji": "🇯🇴"
     },
     {
       "country": "Libya",
@@ -360,5 +360,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-25T16:24:10Z"
+  "fetched_at": "2026-08-25T17:23:02Z"
 }
