@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 279,
-    "all_time_pageviews": 825,
-    "last_7_days_visitors": 8,
-    "last_30_days_visitors": 35
+    "all_time_visitors": 280,
+    "all_time_pageviews": 826,
+    "last_7_days_visitors": 9,
+    "last_30_days_visitors": 36
   },
   "top_countries_all_time": [
     {
@@ -232,6 +232,13 @@
       "flag_emoji": "🇸🇪"
     },
     {
+      "country": "Taiwan",
+      "country_code": "TW",
+      "country_numeric": "158",
+      "visitors": 1,
+      "flag_emoji": "🇹🇼"
+    },
+    {
       "country": "Türkiye",
       "country_code": "TR",
       "country_numeric": "792",
@@ -311,8 +318,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 428,
-      "visitors": 248
+      "pageviews": 429,
+      "visitors": 249
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -360,5 +367,5 @@
       "visitors": 3
     }
   ],
-  "fetched_at": "2026-08-28T07:49:41Z"
+  "fetched_at": "2026-08-28T19:45:48Z"
 }
