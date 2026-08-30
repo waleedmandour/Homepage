@@ -2,9 +2,9 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 282,
-    "all_time_pageviews": 833,
-    "last_7_days_visitors": 12,
-    "last_30_days_visitors": 38
+    "all_time_pageviews": 835,
+    "last_7_days_visitors": 13,
+    "last_30_days_visitors": 39
   },
   "top_countries_all_time": [
     {
@@ -279,6 +279,12 @@
       "flag_emoji": "🇯🇴"
     },
     {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 2,
+      "flag_emoji": "🇴🇲"
+    },
+    {
       "country": "Belarus",
       "country_code": "BY",
       "visitors": 1,
@@ -307,18 +313,12 @@
       "country_code": "LY",
       "visitors": 1,
       "flag_emoji": "🇱🇾"
-    },
-    {
-      "country": "Oman",
-      "country_code": "OM",
-      "visitors": 1,
-      "flag_emoji": "🇴🇲"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 432,
+      "pageviews": 433,
       "visitors": 250
     },
     {
@@ -363,9 +363,9 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 15,
-      "visitors": 4
+      "pageviews": 16,
+      "visitors": 5
     }
   ],
-  "fetched_at": "2026-08-30T00:54:05Z"
+  "fetched_at": "2026-08-30T06:04:30Z"
 }
