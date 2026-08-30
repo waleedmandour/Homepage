@@ -2,9 +2,9 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 282,
-    "all_time_pageviews": 835,
-    "last_7_days_visitors": 13,
-    "last_30_days_visitors": 39
+    "all_time_pageviews": 836,
+    "last_7_days_visitors": 12,
+    "last_30_days_visitors": 38
   },
   "top_countries_all_time": [
     {
@@ -285,12 +285,6 @@
       "flag_emoji": "🇴🇲"
     },
     {
-      "country": "Belarus",
-      "country_code": "BY",
-      "visitors": 1,
-      "flag_emoji": "🇧🇾"
-    },
-    {
       "country": "France",
       "country_code": "FR",
       "visitors": 1,
@@ -313,6 +307,12 @@
       "country_code": "LY",
       "visitors": 1,
       "flag_emoji": "🇱🇾"
+    },
+    {
+      "country": "Poland",
+      "country_code": "PL",
+      "visitors": 1,
+      "flag_emoji": "🇵🇱"
     }
   ],
   "top_pages_all_time": [
@@ -367,5 +367,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-08-30T06:04:30Z"
+  "fetched_at": "2026-08-30T12:25:49Z"
 }
