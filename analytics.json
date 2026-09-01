@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 285,
-    "all_time_pageviews": 842,
-    "last_7_days_visitors": 14,
-    "last_30_days_visitors": 40
+    "all_time_visitors": 286,
+    "all_time_pageviews": 843,
+    "last_7_days_visitors": 15,
+    "last_30_days_visitors": 41
   },
   "top_countries_all_time": [
     {
@@ -106,6 +106,13 @@
       "flag_emoji": "🇬🇧"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "country_numeric": "368",
+      "visitors": 3,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Netherlands",
       "country_code": "NL",
       "country_numeric": "528",
@@ -118,13 +125,6 @@
       "country_numeric": "702",
       "visitors": 3,
       "flag_emoji": "🇸🇬"
-    },
-    {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "country_numeric": "368",
-      "visitors": 2,
-      "flag_emoji": "🇮🇶"
     },
     {
       "country": "Malaysia",
@@ -279,6 +279,12 @@
       "flag_emoji": "🇴🇲"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "visitors": 2,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Jordan",
       "country_code": "JO",
       "visitors": 2,
@@ -295,12 +301,6 @@
       "country_code": "HK",
       "visitors": 1,
       "flag_emoji": "🇭🇰"
-    },
-    {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "visitors": 1,
-      "flag_emoji": "🇮🇶"
     },
     {
       "country": "Libya",
@@ -367,5 +367,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-01T17:03:17Z"
+  "fetched_at": "2026-09-01T20:17:17Z"
 }
