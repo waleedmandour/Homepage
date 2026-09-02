@@ -653,6 +653,78 @@
                 padding: 30px 20px;
             }
         }
+
+        /* ===== App Showcase (ScholarScribe) — themed like the rest of the page ===== */
+        .app-showcase {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            background: linear-gradient(135deg, var(--white) 0%, #e8f4f3 100%);
+            border: 1px solid rgba(32, 178, 170, 0.35);
+            border-left: 5px solid var(--secondary);
+            border-radius: 14px;
+            padding: 36px 32px;
+            margin: 0 auto 48px;
+            max-width: 1100px;
+            box-shadow: var(--shadow);
+        }
+        body.arabic .app-showcase { border-left: 1px solid rgba(32, 178, 170, 0.35); border-right: 5px solid var(--secondary); }
+        .app-content { flex: 1; min-width: 0; }
+        .app-content h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .app-content p { color: var(--dark); margin-bottom: 10px; font-size: 0.98em; }
+        .app-content .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92em;
+            margin: 14px 10px 0 0;
+            transition: var(--transition);
+            box-shadow: 0 3px 10px rgba(10, 28, 60, 0.25);
+        }
+        .app-content .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(10, 28, 60, 0.35); }
+        body.arabic .app-content .btn.lang-ar { display: inline-block; margin: 14px 0 0 10px; }
+        .app-icon {
+            flex-shrink: 0;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #fff;
+            border-radius: 28px;
+            box-shadow: 0 6px 20px rgba(10, 28, 60, 0.3);
+        }
+        .app-release-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.78em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        body.arabic .app-release-badge.lang-ar { display: inline-block; }
+        @media (max-width: 768px) {
+            .app-showcase { flex-direction: column; text-align: center; padding: 28px 20px; }
+            .app-content h3 { justify-content: center; }
+            .app-content .btn { margin: 14px 6px 0; }
+        }
     </style>
 </head>
 <body>
@@ -725,21 +797,23 @@
             <h3 class="section-title lang-ar">المشاريع البارزة</h3>
 
             <!-- ScholarScribe Showcase -->
-        <section class="app-showcase" style="border-color: #8B4513; background: linear-gradient(135deg, var(--white) 0%, #fdf6e3 100%);">
-            <div class="app-content">
-                <h3 class="lang-en"><i class="fas fa-feather-alt"></i> New Release: ScholarScribe</h3>
-                <h3 class="lang-ar"><i class="fas fa-feather-alt"></i> إصدار جديد: سكولار سكرايب</h3>
-                
-                <p class="lang-en">A privacy-first, local-LLM writing companion for researchers. Runs open LLMs (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline — no telemetry, no cloud calls, no paid APIs. Bundles a 24-rule AI Text Cleaner, BibTeX Citation Manager, Document Statistics, Style Analysis, Disclosure Assistant, and an in-app Privacy Audit log.</p>
-                <p class="lang-ar">رفيق كتابة بحثي يحترم الخصوصية أولاً. يشغّل النماذج اللغوية المفتوحة بالكامل دون اتصال — بلا قياسات، بلا اتصالات سحابية، بلا واجهات مدفوعة. يجمع منظّفاً ذكياً بقواعد التحول الـ 24، وإدارة استشهادات BibTeX، وإحصاءات الوثيقة، وتحليل الأسلوب، ومساعد الإفصاح، وسجل خصوصية داخلي.</p>
-                
-                <a href="projects/scholarscribe/index.html" class="btn" style="background-color: #8B4513;">View ScholarScribe Page →</a>
-                <a href="projects/scholarscribe/index.html" class="btn" style="background-color: #8B4513;">صفحة سكولار سكرايب ←</a>
-            </div>
-            <div class="app-icon" style="font-size: 4em; color: #8B4513;">
-                <i class="fas fa-feather-alt"></i>
-            </div>
-        </section>
+            <section class="app-showcase">
+                <div class="app-content">
+                    <span class="app-release-badge lang-en">v2.1.0 &middot; Latest Release</span>
+                    <span class="app-release-badge lang-ar">v2.1.0 &middot; أحدث إصدار</span>
+                    <h3 class="lang-en"><i class="fas fa-feather-alt"></i> New Release: ScholarScribe</h3>
+                    <h3 class="lang-ar"><i class="fas fa-feather-alt"></i> إصدار جديد: سكولار سكرايب</h3>
+
+                    <p class="lang-en">A privacy-first, local-LLM writing companion for researchers. Runs open LLMs (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline — no telemetry, no cloud calls, no paid APIs. Bundles a 24-rule AI Text Cleaner, BibTeX Citation Manager, Document Statistics, Style Analysis, Disclosure Assistant, and an in-app Privacy Audit log. New in v2.1.0: opt-in <strong>Writing Provenance</strong> — export your document's real Track Changes history as a signed, hash-chained evidence package (hashes and counts, never text) that anyone can verify offline.</p>
+                    <p class="lang-ar">رفيق كتابة بحثي يحترم الخصوصية أولاً. يشغّل النماذج اللغوية المفتوحة بالكامل دون اتصال — بلا قياسات، بلا اتصالات سحابية، بلا واجهات مدفوعة. يجمع منظّفاً ذكياً بقواعد التحول الـ 24، وإدارة استشهادات BibTeX، وإحصاءات الوثيقة، وتحليل الأسلوب، ومساعد الإفصاح، وسجل خصوصية داخلي. الجديد في v2.1.0: <strong>إثبات الكتابة</strong> الاختياري — صدّر تاريخ تتبع التغييرات الحقيقي لمستندك كحزمة أدلة موقّعة متشابكة البصمات (بصمات وأرقام، لا نص أبداً) يمكن لأي شخص التحقق منها دون اتصال.</p>
+
+                    <a href="projects/scholarscribe/index.html" class="btn lang-en">View ScholarScribe Page &rarr;</a>
+                    <a href="projects/scholarscribe/index.html" class="btn lang-ar">صفحة سكولار سكرايب &larr;</a>
+                </div>
+                <div class="app-icon">
+                    <i class="fas fa-feather-alt"></i>
+                </div>
+            </section>
 
             <!-- Project: CorpusMind -->
             <div class="project-card">
@@ -1373,23 +1447,23 @@
 
             <!-- Project 8: ScholarScribe -->
             <div class="project-card">
-                <div class="project-header" style="background: linear-gradient(135deg, #0A1C3C 0%, #8B4513 100%);">
+                <div class="project-header" style="background: linear-gradient(135deg, #0A1C3C 0%, #1A5F7A 100%);">
                     <h3 class="project-title lang-en">ScholarScribe: Privacy-First Local-LLM Writing Companion</h3>
                     <h3 class="project-title lang-ar">سكولار سكرايب: رفيق كتابة بحثي يحترم الخصوصية ويعتمد النماذج المحلية</h3>
 
                     <p class="project-subtitle lang-en">A desktop writing companion for researchers that runs open LLMs fully offline — no telemetry, no cloud calls, no paid APIs</p>
                     <p class="project-subtitle lang-ar">رفيق كتابة لسطح المكتب للباحثين يشغّل النماذج اللغوية المفتوحة بالكامل دون اتصال — بلا قياسات، بلا اتصالات سحابية، بلا واجهات مدفوعة</p>
 
-                    <span class="project-status active lang-en">Pre-release (v0.1.7)</span>
-                    <span class="project-status active lang-ar">إصدار أولي (v0.1.7)</span>
+                    <span class="project-status active lang-en">v2.1.0 Released</span>
+                    <span class="project-status active lang-ar">الإصدار 2.1.0 صادر</span>
                 </div>
 
                 <div class="project-content">
                     <p class="project-description lang-en">
-                        ScholarScribe is a privacy-first desktop application (built with Tauri 2, Svelte 4, and Ollama) that helps researchers write their own manuscripts with the assistance of open large language models (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3, SciGLM) running entirely on the user's device. The application bundles a 24-rule AI Text Cleaner for PDF/OCR/web artifacts, a Citation Manager that validates in-text citations against a user's <code>.bib</code> file (catching undefined citations, unused references, and token citations), Document Statistics and a Structure Analyzer with journal-target comparison, a Style Analysis module that compares a draft's profile against the user's own prior writing, an Abstract Generator, a Disclosure Assistant for venue-compliant AI-use statements (ICMJE, Nature, IEEE, Elsevier, ACL), an in-app Privacy Audit log of every file read and outbound HTTP call, and a timestamped Writing Journal that serves as verifiable evidence of authentic authorship. Crucially, ScholarScribe is explicitly <strong>not</strong> a tool for evading AI-detection systems — the chat module's system prompt refuses requests to evade detectors or fabricate citations.
+                        ScholarScribe is a privacy-first desktop application (built with Tauri 2, Svelte 4, and Ollama) that helps researchers write their own manuscripts with the assistance of open large language models (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3, SciGLM) running entirely on the user's device. The application bundles a 24-rule AI Text Cleaner for PDF/OCR/web artifacts, a Citation Manager that validates in-text citations against a user's <code>.bib</code> file (catching undefined citations, unused references, and token citations), Document Statistics and a Structure Analyzer with journal-target comparison, a Style Analysis module that compares a draft's profile against the user's own prior writing, an Abstract Generator, a Disclosure Assistant for venue-compliant AI-use statements (ICMJE, Nature, IEEE, Elsevier, ACL), an in-app Privacy Audit log of every file read and outbound HTTP call, and a timestamped Writing Journal that serves as verifiable evidence of authentic authorship. New in v2.1.0, the opt-in Writing Provenance module turns the document's own revision history (Word Track Changes or Google Docs version history) into a signed, SHA-256 hash-chained, Ed25519-signed evidence package — containing hashes and counts, never document text — that anyone can verify offline with a standalone HTML verifier; it is deliberately evidence of process, not an AI-detection verdict. Crucially, ScholarScribe is explicitly <strong>not</strong> a tool for evading AI-detection systems — the chat module's system prompt refuses requests to evade detectors or fabricate citations.
                     </p>
                     <p class="project-description lang-ar">
-                        سكولار سكرايب هو تطبيق سطح مكتب يحترم الخصوصية أولاً (مبني بـ Tauri 2 وSvelte 4 وOllama) يساعد الباحثين على كتابة مخطوطاتهم الخاصة بمساعدة نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3 وSciGLM) تعمل بالكامل على جهاز المستخدم. يجمع التطبيق منظّفاً ذكياً للنصوص بقواعد التحول الـ 24 لمعالجة تحولات PDF/OCR/الويب، وإدارة استشهادات تتحقق من الاستشهادات النصية مقابل ملف <code>.bib</code> الخاص بالمستخدم (لرصد الاستشهادات غير المعرفة والمراجع غير المستخدمة والاستشهادات الشكلية)، وإحصاءات الوثيقة ومحلل بنية مع مقارنة بأهداف المجلات، ووحدة تحليل أسلوب تقارن ملف المسودة بكتابات المستخدم السابقة، ومولّد ملخصات، ومساعد إفصاح لبيانات استخدام الذكاء الاصطناعي المتوافقة مع المعايير (ICMJE وNature وIEEE وElsevier وACL)، وسجل خصوصية داخلي لكل ملف يُقرأ وكل اتصال HTTP خارجي، ومذكرات كتابة مؤطرة زمنياً كدليل قابل للتحقق على الأصالة. والأهم أن سكولار سكرايب <strong>ليس</strong> صراحةً أداة للتهرب من كواشف الذكاء الاصطناعي — ترفض رسالة نظام المحادثة طلبات التهرب من الكواشف أو اختلاق الاستشهادات.
+                        سكولار سكرايب هو تطبيق سطح مكتب يحترم الخصوصية أولاً (مبني بـ Tauri 2 وSvelte 4 وOllama) يساعد الباحثين على كتابة مخطوطاتهم الخاصة بمساعدة نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3 وSciGLM) تعمل بالكامل على جهاز المستخدم. يجمع التطبيق منظّفاً ذكياً للنصوص بقواعد التحول الـ 24 لمعالجة تحولات PDF/OCR/الويب، وإدارة استشهادات تتحقق من الاستشهادات النصية مقابل ملف <code>.bib</code> الخاص بالمستخدم (لرصد الاستشهادات غير المعرفة والمراجع غير المستخدمة والاستشهادات الشكلية)، وإحصاءات الوثيقة ومحلل بنية مع مقارنة بأهداف المجلات، ووحدة تحليل أسلوب تقارن ملف المسودة بكتابات المستخدم السابقة، ومولّد ملخصات، ومساعد إفصاح لبيانات استخدام الذكاء الاصطناعي المتوافقة مع المعايير (ICMJE وNature وIEEE وElsevier وACL)، وسجل خصوصية داخلي لكل ملف يُقرأ وكل اتصال HTTP خارجي، ومذكرات كتابة مؤطرة زمنياً كدليل قابل للتحقق على الأصالة. والجديد في v2.1.0، وحدة إثبات الكتابة الاختيارية تحوّل تاريخ تعديلات المستند نفسه (تتبع التغييرات في Word أو سجل إصدارات Google Docs) إلى حزمة أدلة موقّعة بـ Ed25519 ومتشابكة البصمات بـ SHA-256 — تحتوي بصمات وأرقاماً ولا تتضمن نص المستند أبداً — يمكن لأي شخص التحقق منها دون اتصال عبر مدقق HTML مستقل؛ وهي عمداً دليل على العملية، لا حكم كشف ذكاء اصطناعي. والأهم أن سكولار سكرايب <strong>ليس</strong> صراحةً أداة للتهرب من كواشف الذكاء الاصطناعي — ترفض رسالة نظام المحادثة طلبات التهرب من الكواشف أو اختلاق الاستشهادات.
                     </p>
 
                     <div class="project-details">
@@ -1426,8 +1500,9 @@
                             <span class="tech-tag">Ollama</span>
                             <span class="tech-tag">Local LLMs (Gemma 3, Qwen 3, Phi-4)</span>
                             <span class="tech-tag">BibTeX Validation</span>
+                            <span class="tech-tag">Writing Provenance (SHA-256 + Ed25519)</span>
                             <span class="tech-tag">Zero-Telemetry Architecture</span>
-                            <span class="tech-tag">Windows Desktop</span>
+                            <span class="tech-tag">Windows &middot; macOS &middot; Linux</span>
                         </div>
                     </div>
 
@@ -1743,17 +1818,17 @@
 
                 <!-- Project: ScholarScribe -->
                 <div class="small-project-card">
-                    <div class="small-project-header" style="background: linear-gradient(135deg, #0A1C3C 0%, #8B4513 100%);">
+                    <div class="small-project-header" style="background: linear-gradient(135deg, #0A1C3C 0%, #1A5F7A 100%);">
                         <h3 class="small-project-title lang-en">ScholarScribe</h3>
                         <h3 class="small-project-title lang-ar">سكولار سكرايب</h3>
                         <p class="small-project-subtitle lang-en">Privacy-First Local-LLM Writing Companion</p>
                         <p class="small-project-subtitle lang-ar">رفيق كتابة بحثي يعتمد النماذج المحلية</p>
                     </div>
                     <div class="small-project-content">
-                        <p class="small-project-description lang-en">A privacy-first desktop writing companion for researchers. Runs open LLMs (Gemma 3, Qwen 3, Phi-4) fully offline via Ollama — no telemetry, no cloud calls, no paid APIs. Bundles a 24-rule AI Text Cleaner, BibTeX Citation Manager, Document Statistics, Style Analysis, Disclosure Assistant, and an in-app Privacy Audit log.</p>
-                        <p class="small-project-description lang-ar">رفيق كتابة بحثي يحترم الخصوصية أولاً. يشغّل النماذج اللغوية المفتوحة بالكامل دون اتصال عبر Ollama — بلا قياسات، بلا اتصالات سحابية، بلا واجهات مدفوعة. يجمع منظّفاً ذكياً بقواعد التحول الـ 24، وإدارة استشهادات BibTeX، وإحصاءات الوثيقة، وتحليل الأسلوب، ومساعد الإفصاح، وسجل خصوصية داخلي.</p>
-                        <span class="small-project-status lang-en">Pre-release (v0.1.7)</span>
-                        <span class="small-project-status lang-ar">إصدار أولي (v0.1.7)</span>
+                        <p class="small-project-description lang-en">A privacy-first desktop writing companion for researchers. Runs open LLMs (Gemma 3, Qwen 3, Phi-4) fully offline via Ollama — no telemetry, no cloud calls, no paid APIs. Bundles a 24-rule AI Text Cleaner, BibTeX Citation Manager, Document Statistics, Style Analysis, Disclosure Assistant, and an in-app Privacy Audit log. New in v2.1.0: opt-in Writing Provenance — signed, hash-chained evidence of your writing process.</p>
+                        <p class="small-project-description lang-ar">رفيق كتابة بحثي يحترم الخصوصية أولاً. يشغّل النماذج اللغوية المفتوحة بالكامل دون اتصال عبر Ollama — بلا قياسات، بلا اتصالات سحابية، بلا واجهات مدفوعة. يجمع منظّفاً ذكياً بقواعد التحول الـ 24، وإدارة استشهادات BibTeX، وإحصاءات الوثيقة، وتحليل الأسلوب، ومساعد الإفصاح، وسجل خصوصية داخلي. الجديد في v2.1.0: إثبات الكتابة الاختياري — أدلة موقّعة متشابكة البصمات على عملية كتابتك.</p>
+                        <span class="small-project-status lang-en">v2.1.0 Released</span>
+                        <span class="small-project-status lang-ar">الإصدار 2.1.0 صادر</span>
                         <br>
                         <a href="scholarscribe/index.html" class="small-project-link lang-en">View Project &rarr;</a>
                         <a href="scholarscribe/index.html" class="small-project-link lang-ar">عرض المشروع &larr;</a>
