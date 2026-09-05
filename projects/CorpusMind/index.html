@@ -156,6 +156,29 @@
         .ui-screenshot-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--light); background: #f8f9fa; }
         .ui-screenshot-caption { padding: 16px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; }
 
+        /* ===== INTERFACE CAROUSEL ===== */
+        .ui-carousel { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid var(--light); background: var(--white); outline: none; }
+        .ui-carousel:focus-visible { box-shadow: 0 0 0 3px rgba(11, 110, 79, 0.35); }
+        .ui-carousel-viewport { position: relative; aspect-ratio: 8 / 5; background: #f8f9fa; overflow: hidden; }
+        .ui-carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+        .ui-carousel-slide.active { opacity: 1; pointer-events: auto; }
+        .ui-carousel-slide a { display: block; width: 100%; height: 100%; }
+        .ui-carousel-slide img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        .ui-carousel-caption { min-height: 76px; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--light); }
+        .ui-carousel-caption > div { display: none; padding: 16px 48px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; }
+        .ui-carousel-caption > div.active { display: block; }
+        .ui-carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer; background: rgba(10, 28, 60, 0.55); color: #fff; font-size: 17px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: var(--transition); backdrop-filter: blur(4px); }
+        .ui-carousel-arrow:hover { background: var(--secondary); }
+        .ui-carousel-arrow.prev { left: 14px; }
+        .ui-carousel-arrow.next { right: 14px; }
+        body.arabic .ui-carousel-arrow.prev { left: auto; right: 14px; }
+        body.arabic .ui-carousel-arrow.next { right: auto; left: 14px; }
+        .ui-carousel-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 5; }
+        .ui-carousel-dot { width: 10px; height: 10px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255,255,255,0.55); padding: 0; transition: var(--transition); box-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+        .ui-carousel-dot.active { background: var(--secondary); transform: scale(1.25); }
+        @media (prefers-reduced-motion: reduce) { .ui-carousel-slide { transition: none; } }
+        @media (max-width: 640px) { .ui-carousel-arrow { width: 36px; height: 36px; font-size: 14px; } .ui-carousel-caption { min-height: 64px; } .ui-carousel-caption > div { padding: 12px 36px; font-size: 13px; } }
+
         .workflow-step, .feature-card { background: var(--white); padding: 32px 24px; border-radius: 12px; text-align: center; box-shadow: var(--shadow); transition: var(--transition); position: relative; overflow: hidden; }
 
         .workflow-step { border-top: 4px solid var(--secondary); }
@@ -368,16 +391,54 @@
                 <span class="lang-ar">مساحة عمل بشريط تنقل، ثماني مجموعات تحليلية، لوحة أوامر، دعم كامل للعربية RTL، ووضعين داكن وفاتح.</span>
             </p>
             <div style="max-width: 1000px; margin: 0 auto;">
-                <div class="ui-screenshot-card" style="border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid var(--light);">
-                    <img src="images/screenshot.png" alt="CorpusMind Application Interface Screenshot" style="width: 100%; height: auto; display: block;">
-                    <div class="ui-screenshot-caption" style="padding: 20px; text-align: center;">
-                        <span class="lang-en"><strong>CorpusMind v1.0.0</strong> &mdash; Home dashboard with quick actions, recent projects, and the ribbon navigation</span>
-                        <span class="lang-ar"><strong>كوربَس مايند v1.0.0</strong> &mdash; لوحة الرئيسية مع الإجراءات السريعة والمشاريع الحديثة وشريط التنقل</span>
+                <div class="ui-carousel" id="ui-carousel" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Application interface screenshots">
+                    <div class="ui-carousel-viewport">
+                        <div class="ui-carousel-slide active">
+                            <a href="images/shot-concordance.png" target="_blank" rel="noopener" aria-label="Open full-size concordance screenshot">
+                                <img src="images/shot-concordance.png" alt="CorpusMind concordance view: KWIC lines for the wildcard query pa* with colour-coded POS tags and lemma columns" loading="eager">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/shot-collocation.png" target="_blank" rel="noopener" aria-label="Open full-size collocation screenshot">
+                                <img src="images/shot-collocation.png" alt="CorpusMind collocation view: association measures including MI, t-score, log-likelihood, LogDice, chi-square, Fisher's exact, and Delta P" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/shot-frequency.png" target="_blank" rel="noopener" aria-label="Open full-size frequency screenshot">
+                                <img src="images/shot-frequency.png" alt="CorpusMind frequency view: per-million and range columns with STTR, MATTR, MTLD, and Guiraud diversity statistics" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/screenshot.png" target="_blank" rel="noopener" aria-label="Open full-size onboarding screenshot">
+                                <img src="images/screenshot.png" alt="CorpusMind first-run onboarding dialog over the home dashboard" loading="lazy">
+                            </a>
+                        </div>
+                        <button class="ui-carousel-arrow prev" type="button" aria-label="Previous slide">&#10094;</button>
+                        <button class="ui-carousel-arrow next" type="button" aria-label="Next slide">&#10095;</button>
+                        <div class="ui-carousel-dots"></div>
+                    </div>
+                    <div class="ui-carousel-caption ui-screenshot-caption">
+                        <div class="active">
+                            <span class="lang-en"><strong>Concordance</strong> &mdash; KWIC search with wildcard queries (<code>pa*</code>), colour-coded POS tags, and lemma columns</span>
+                            <span class="lang-ar"><strong>الكشف السياقي</strong> &mdash; بحث KWIC باستعلامات أحرف البدل (<code>pa*</code>) مع وسوم نحوية ملوّنة وأعمدة التصريف</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Collocation</strong> &mdash; twelve association measures (MI, t-score, LL, LogDice, &chi;&sup2;, Fisher's exact, &Delta;P) with a reproducibility notice</span>
+                            <span class="lang-ar"><strong>التضايق</strong> &mdash; اثنا عشر مقياس ارتباط (MI، t-score، LL، LogDice، &chi;&sup2;، اختبار فيشر، &Delta;P) مع إشعار قابلية إعادة الإنتاج</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Frequency</strong> &mdash; per-million and range columns plus the lexical-diversity battery: STTR, MATTR, MTLD, and Guiraud's index</span>
+                            <span class="lang-ar"><strong>التردد</strong> &mdash; أعمدة لكل مليون ونطاق الانتشار مع بطارية التنوع المعجمي: STTR وMATTR وMTLD ومؤشر Guiraud</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Guided onboarding</strong> &mdash; a first-run tour across corpus analysis, the vision suite, Arabic tools, and the grounded AI assistant</span>
+                            <span class="lang-ar"><strong>جولة ترحيبية</strong> &mdash; جولة افتتاحية عبر تحليل المجموعات اللغوية وأدوات الرؤية وأدوات العربية والمساعد الذكي المؤسَّس</span>
+                        </div>
                     </div>
                 </div>
                 <p style="text-align: center; margin-top: 16px; color: var(--gray); font-size: 14px;">
-                    <span class="lang-en"><a href="https://github.com/waleedmandour/CorpusMind/releases/download/v1.0.0-pre/Screenshot.png" target="_blank" rel="noopener">View full-size screenshot</a> &middot; <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener">Try the live PWA</a></span>
-                    <span class="lang-ar"><a href="https://github.com/waleedmandour/CorpusMind/releases/download/v1.0.0-pre/Screenshot.png" target="_blank" rel="noopener">عرض اللقطة بحجم كامل</a> &middot; <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener">جرّب PWA مباشرة</a></span>
+                    <span class="lang-en">Click any slide to view it full-size &middot; <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener">Try the live PWA</a></span>
+                    <span class="lang-ar">انقر على أي شريحة لعرضها بحجم كامل &middot; <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener">جرّب PWA مباشرة</a></span>
                 </p>
             </div>
         </section>
@@ -992,6 +1053,60 @@
             }
         })();
 
+        })();
+    </script>
+    <script>
+        // ===== Interface screenshot carousel =====
+        (function() {
+            var root = document.getElementById('ui-carousel');
+            if (!root) return;
+            var slides = Array.prototype.slice.call(root.querySelectorAll('.ui-carousel-slide'));
+            var capBox = root.querySelector('.ui-carousel-caption');
+            var caps = capBox ? Array.prototype.slice.call(capBox.children) : [];
+            var dotsBox = root.querySelector('.ui-carousel-dots');
+            var idx = 0, timer = null, DELAY = 6500;
+            var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var dots = slides.map(function(_, i) {
+                var d = document.createElement('button');
+                d.type = 'button';
+                d.className = 'ui-carousel-dot' + (i === 0 ? ' active' : '');
+                d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                d.addEventListener('click', function() { go(i); restart(); });
+                dotsBox.appendChild(d);
+                return d;
+            });
+
+            function go(i) {
+                idx = (i + slides.length) % slides.length;
+                slides.forEach(function(s, k) { s.classList.toggle('active', k === idx); });
+                caps.forEach(function(c, k) { c.classList.toggle('active', k === idx); });
+                dots.forEach(function(d, k) { d.classList.toggle('active', k === idx); });
+            }
+            function restart() {
+                if (reduceMotion) return;
+                clearInterval(timer);
+                timer = setInterval(function() { go(idx + 1); }, DELAY);
+            }
+            root.querySelector('.ui-carousel-arrow.prev').addEventListener('click', function() { go(idx - 1); restart(); });
+            root.querySelector('.ui-carousel-arrow.next').addEventListener('click', function() { go(idx + 1); restart(); });
+            root.addEventListener('mouseenter', function() { clearInterval(timer); });
+            root.addEventListener('mouseleave', restart);
+            root.addEventListener('focusin', function() { clearInterval(timer); });
+            root.addEventListener('focusout', restart);
+            root.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') { go(idx - 1); restart(); e.preventDefault(); }
+                if (e.key === 'ArrowRight') { go(idx + 1); restart(); e.preventDefault(); }
+            });
+            var x0 = null;
+            root.addEventListener('pointerdown', function(e) { x0 = e.clientX; }, { passive: true });
+            root.addEventListener('pointerup', function(e) {
+                if (x0 === null) return;
+                var dx = e.clientX - x0;
+                if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); restart(); }
+                x0 = null;
+            }, { passive: true });
+            restart();
         })();
     </script>
     <script src="/js/visitors-map.js"></script>
