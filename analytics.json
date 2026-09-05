@@ -2,8 +2,8 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 289,
-    "all_time_pageviews": 859,
-    "last_7_days_visitors": 13,
+    "all_time_pageviews": 862,
+    "last_7_days_visitors": 15,
     "last_30_days_visitors": 39
   },
   "top_countries_all_time": [
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 41,
+      "visitors": 42,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -261,16 +261,16 @@
       "flag_emoji": "🇨🇳"
     },
     {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 8,
+      "flag_emoji": "🇴🇲"
+    },
+    {
       "country": "Egypt",
       "country_code": "EG",
       "visitors": 6,
       "flag_emoji": "🇪🇬"
-    },
-    {
-      "country": "Oman",
-      "country_code": "OM",
-      "visitors": 6,
-      "flag_emoji": "🇴🇲"
     },
     {
       "country": "United States",
@@ -367,5 +367,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-05T18:53:39Z"
+  "fetched_at": "2026-09-05T20:48:57Z"
 }
