@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 289,
     "all_time_pageviews": 859,
-    "last_7_days_visitors": 14,
-    "last_30_days_visitors": 41
+    "last_7_days_visitors": 13,
+    "last_30_days_visitors": 39
   },
   "top_countries_all_time": [
     {
@@ -275,7 +275,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 5,
+      "visitors": 4,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -297,12 +297,6 @@
       "flag_emoji": "🇫🇷"
     },
     {
-      "country": "Hong Kong",
-      "country_code": "HK",
-      "visitors": 1,
-      "flag_emoji": "🇭🇰"
-    },
-    {
       "country": "Libya",
       "country_code": "LY",
       "visitors": 1,
@@ -313,6 +307,12 @@
       "country_code": "TW",
       "visitors": 1,
       "flag_emoji": "🇹🇼"
+    },
+    {
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "visitors": 1,
+      "flag_emoji": "🇬🇧"
     }
   ],
   "top_pages_all_time": [
@@ -367,5 +367,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-05T06:35:07Z"
+  "fetched_at": "2026-09-05T11:02:01Z"
 }
