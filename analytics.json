@@ -2,8 +2,8 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 289,
-    "all_time_pageviews": 864,
-    "last_7_days_visitors": 15,
+    "all_time_pageviews": 865,
+    "last_7_days_visitors": 13,
     "last_30_days_visitors": 39
   },
   "top_countries_all_time": [
@@ -367,5 +367,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-06T05:17:34Z"
+  "fetched_at": "2026-09-06T09:53:30Z"
 }
