@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 292,
-    "all_time_pageviews": 873,
+    "all_time_pageviews": 875,
     "last_7_days_visitors": 16,
     "last_30_days_visitors": 42
   },
@@ -71,6 +71,13 @@
       "flag_emoji": "🇸🇦"
     },
     {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "country_numeric": "344",
+      "visitors": 5,
+      "flag_emoji": "🇭🇰"
+    },
+    {
       "country": "Jordan",
       "country_code": "JO",
       "country_numeric": "400",
@@ -83,13 +90,6 @@
       "country_numeric": "032",
       "visitors": 4,
       "flag_emoji": "🇦🇷"
-    },
-    {
-      "country": "Hong Kong",
-      "country_code": "HK",
-      "country_numeric": "344",
-      "visitors": 4,
-      "flag_emoji": "🇭🇰"
     },
     {
       "country": "Ireland",
@@ -291,6 +291,12 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "visitors": 1,
+      "flag_emoji": "🇭🇰"
+    },
+    {
       "country": "Jordan",
       "country_code": "JO",
       "visitors": 1,
@@ -307,12 +313,6 @@
       "country_code": "TW",
       "visitors": 1,
       "flag_emoji": "🇹🇼"
-    },
-    {
-      "country": "United Kingdom",
-      "country_code": "GB",
-      "visitors": 1,
-      "flag_emoji": "🇬🇧"
     }
   ],
   "top_pages_all_time": [
@@ -362,10 +362,10 @@
       "visitors": 15
     },
     {
-      "url": "waleedmandour.org/projects/AMTA/setup.html",
-      "pageviews": 17,
-      "visitors": 2
+      "url": "waleedmandour.org/projects/CorpusMind/",
+      "pageviews": 18,
+      "visitors": 3
     }
   ],
-  "fetched_at": "2026-09-07T20:16:23Z"
+  "fetched_at": "2026-09-07T23:09:34Z"
 }
