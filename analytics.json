@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 292,
     "all_time_pageviews": 870,
-    "last_7_days_visitors": 16,
-    "last_30_days_visitors": 42
+    "last_7_days_visitors": 15,
+    "last_30_days_visitors": 41
   },
   "top_countries_all_time": [
     {
@@ -267,16 +267,16 @@
       "flag_emoji": "🇴🇲"
     },
     {
-      "country": "Egypt",
-      "country_code": "EG",
-      "visitors": 6,
-      "flag_emoji": "🇪🇬"
-    },
-    {
       "country": "United States",
       "country_code": "US",
       "visitors": 5,
       "flag_emoji": "🇺🇸"
+    },
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 4,
+      "flag_emoji": "🇪🇬"
     },
     {
       "country": "Iraq",
@@ -285,16 +285,16 @@
       "flag_emoji": "🇮🇶"
     },
     {
-      "country": "Jordan",
-      "country_code": "JO",
-      "visitors": 2,
-      "flag_emoji": "🇯🇴"
-    },
-    {
       "country": "France",
       "country_code": "FR",
       "visitors": 1,
       "flag_emoji": "🇫🇷"
+    },
+    {
+      "country": "Jordan",
+      "country_code": "JO",
+      "visitors": 1,
+      "flag_emoji": "🇯🇴"
     },
     {
       "country": "Libya",
@@ -367,5 +367,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-07T05:26:07Z"
+  "fetched_at": "2026-09-07T11:00:03Z"
 }
