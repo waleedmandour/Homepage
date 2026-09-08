@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 292,
-    "all_time_pageviews": 875,
-    "last_7_days_visitors": 16,
-    "last_30_days_visitors": 42
+    "all_time_visitors": 295,
+    "all_time_pageviews": 878,
+    "last_7_days_visitors": 18,
+    "last_30_days_visitors": 44
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 61,
+      "visitors": 63,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -57,18 +57,18 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "country_numeric": "682",
+      "visitors": 7,
+      "flag_emoji": "🇸🇦"
+    },
+    {
       "country": "Canada",
       "country_code": "CA",
       "country_numeric": "124",
       "visitors": 6,
       "flag_emoji": "🇨🇦"
-    },
-    {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "country_numeric": "682",
-      "visitors": 6,
-      "flag_emoji": "🇸🇦"
     },
     {
       "country": "Hong Kong",
@@ -257,7 +257,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 18,
+      "visitors": 20,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -275,7 +275,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 4,
+      "visitors": 3,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -309,17 +309,17 @@
       "flag_emoji": "🇱🇾"
     },
     {
-      "country": "Taiwan",
-      "country_code": "TW",
+      "country": "Saudi Arabia",
+      "country_code": "SA",
       "visitors": 1,
-      "flag_emoji": "🇹🇼"
+      "flag_emoji": "🇸🇦"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 438,
-      "visitors": 253
+      "pageviews": 439,
+      "visitors": 254
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -352,6 +352,11 @@
       "visitors": 5
     },
     {
+      "url": "waleedmandour.org/projects/CorpusMind/",
+      "pageviews": 19,
+      "visitors": 4
+    },
+    {
       "url": "waleedmandour.org/projects/rdat/",
       "pageviews": 19,
       "visitors": 5
@@ -360,12 +365,7 @@
       "url": "waleedmandour.org/teaching/",
       "pageviews": 19,
       "visitors": 15
-    },
-    {
-      "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 18,
-      "visitors": 3
     }
   ],
-  "fetched_at": "2026-09-08T01:59:48Z"
+  "fetched_at": "2026-09-08T07:00:33Z"
 }
