@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 295,
-    "all_time_pageviews": 879,
-    "last_7_days_visitors": 18,
-    "last_30_days_visitors": 44
+    "all_time_visitors": 298,
+    "all_time_pageviews": 881,
+    "last_7_days_visitors": 21,
+    "last_30_days_visitors": 47
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 63,
+      "visitors": 64,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -50,18 +50,18 @@
       "flag_emoji": "🇩🇪"
     },
     {
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "country_numeric": "682",
+      "visitors": 9,
+      "flag_emoji": "🇸🇦"
+    },
+    {
       "country": "France",
       "country_code": "FR",
       "country_numeric": "250",
       "visitors": 8,
       "flag_emoji": "🇫🇷"
-    },
-    {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "country_numeric": "682",
-      "visitors": 7,
-      "flag_emoji": "🇸🇦"
     },
     {
       "country": "Canada",
@@ -257,7 +257,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 20,
+      "visitors": 21,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -277,6 +277,12 @@
       "country_code": "EG",
       "visitors": 3,
       "flag_emoji": "🇪🇬"
+    },
+    {
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "visitors": 3,
+      "flag_emoji": "🇸🇦"
     },
     {
       "country": "Iraq",
@@ -307,12 +313,6 @@
       "country_code": "LY",
       "visitors": 1,
       "flag_emoji": "🇱🇾"
-    },
-    {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "visitors": 1,
-      "flag_emoji": "🇸🇦"
     }
   ],
   "top_pages_all_time": [
@@ -349,7 +349,7 @@
     {
       "url": "waleedmandour.org/projects/",
       "pageviews": 19,
-      "visitors": 5
+      "visitors": 6
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -367,5 +367,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-09-08T12:22:45Z"
+  "fetched_at": "2026-09-08T16:53:54Z"
 }
