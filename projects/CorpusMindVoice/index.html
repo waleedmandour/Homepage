@@ -7,7 +7,7 @@
     <title>CorpusMind Voice: Local-First Audio-to-Corpus Pipeline for Corpus Linguistics | Dr. Waleed Mandour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/CorpusMindVoiceIcon-64.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/CorpusMindVoiceIcon-64.png">
     <link rel="icon" type="image/png" sizes="512x512" href="images/CorpusMindVoiceIcon.png">
     <link rel="apple-touch-icon" sizes="192x192" href="images/apple-touch-icon.png">
     <meta name="theme-color" content="#0A1C3C">
@@ -265,7 +265,7 @@
             <div class="header-text">
                 <h1 class="lang-en">CorpusMind Voice</h1>
                 <h1 class="lang-ar">كوربَس مايند فويس</h1>
-                <p class="tagline lang-en">A Local-First Audio-to-Corpus Pipeline for Corpus Linguistics — from raw recordings to query-ready, phonetically annotated corpora</p>
+                <p class="tagline lang-en">A Local-First Audio-to-Corpus Pipeline for Corpus Linguistics: from raw recordings to query-ready, phonetically annotated corpora</p>
                 <p class="tagline lang-ar">خط معالجة محلي أولاً يحوّل التسجيلات الصوتية إلى مجموعات لغوية جاهزة للاستعلام ومشروحة صوتيًا</p>
             </div>
             <div class="header-photo-container">
@@ -299,8 +299,8 @@
                     </div>
                 </div>
 
-                <div class="release-badge lang-en">Current Release &middot; v1.1.0</div>
-                <div class="release-badge lang-ar">الإصدار الحالي &middot; v1.1.0</div>
+                <div class="release-badge lang-en">Current Release &middot; v1.2.0</div>
+                <div class="release-badge lang-ar">الإصدار الحالي &middot; v1.2.0</div>
 
                 <h1 class="lang-en">CorpusMind Voice: From Speech to Searchable Corpus, Entirely on Your Machine</h1>
                 <h1 class="lang-ar">كوربَس مايند فويس: من الكلام إلى مجموعة لغوية قابلة للبحث، بالكامل على جهازك</h1>
@@ -312,8 +312,8 @@
                     </p>
                 </div>
 
-                <div class="hero-subtitle lang-en">A companion application for CorpusMind that turns audio and video recordings — or live microphone input — into a structured, linguistically annotated corpus. Fully offline, bilingual, and available as a mobile PWA.</div>
-                <div class="hero-subtitle lang-ar">تطبيق مرافق لكوربَس مايند يحوّل التسجيلات الصوتية والمرئية — أو مدخل الميكروفون المباشر — إلى مجموعة لغوية منظّمة ومشروحة لغويًا. يعمل دون اتصال بالكامل، وبلغتين، ومتاح كتطبيق ويب تقدمي للأجهزة المحمولة.</div>
+                <div class="hero-subtitle lang-en">A companion application for CorpusMind that turns audio and video recordings, or live microphone input, into a structured, linguistically annotated corpus. Fully offline, bilingual, and available as a mobile PWA.</div>
+                <div class="hero-subtitle lang-ar">تطبيق مرافق لكوربَس مايند يحوّل التسجيلات الصوتية والمرئية، أو مدخل الميكروفون المباشر، إلى مجموعة لغوية منظّمة ومشروحة لغويًا. يعمل دون اتصال بالكامل، وبلغتين، ومتاح كتطبيق ويب تقدمي للأجهزة المحمولة.</div>
 
                 <div class="hero-badges">
                     <span class="lang-en">
@@ -338,10 +338,10 @@
 
                 <div>
                     <p class="hero-description lang-en">
-                        CorpusMind Voice is the speech companion to the CorpusMind research environment. It ingests MP3, MP4, M4A, AAC, OGG, OPUS and WAV recordings — or captures live microphone input on desktop and mobile — and runs a six-stage, fully local pipeline: audio ingestion, word-level speech recognition with faster-whisper (tiny &rarr; <em>large-v3</em>, INT8, downloadable in-app), word- and phoneme-level forced alignment with Montreal Forced Aligner, prosodic analysis of fundamental frequency, intensity, jitter, shimmer and harmonics-to-noise ratio with Praat via Parselmouth, and bilingual disfluency detection. A built-in <strong>Linguistic Analysis</strong> suite then computes frequency and dispersion, KWIC concordances, keyword detection (log-likelihood), collocations and n-grams, lexical diversity (MATTR/MTLD), readability and disfluency/prosody rates — all exportable to CSV. The corpus itself saves to SQLite, JSON, CSV and TEI P5. No audio, transcript, or metadata ever leaves the researcher's device: there are no cloud APIs, no telemetry, and no subscription. The result loads directly into CorpusMind with one click, closing the loop from spoken data to publication-ready corpus analysis.
+                        CorpusMind Voice is the speech companion to the CorpusMind research environment. It ingests MP3, MP4, M4A, AAC, OGG, OPUS and WAV recordings, or captures live microphone input on desktop and mobile, and runs a six-stage, fully local pipeline: audio ingestion, word-level speech recognition with faster-whisper (tiny &rarr; <em>large-v3</em>, INT8, downloadable in-app), word- and phoneme-level forced alignment with Montreal Forced Aligner, prosodic analysis of fundamental frequency, intensity, jitter, shimmer and harmonics-to-noise ratio with Praat via Parselmouth, and bilingual disfluency detection. A built-in <strong>Linguistic Analysis</strong> suite computes frequency lists with DP dispersion, KWIC concordances with normalized, whole-word and regex matching, keyword detection with log-likelihood G&sup2; and the %DIFF effect size, collocations with MI, t-score and logDice, n-grams, Zipf rank-frequency curves, lexical diversity (MATTR/MTLD), readability and disfluency/prosody rates, all exportable to CSV. A cross-session <strong>Corpus</strong> tab aggregates every processed session with corpus-wide dispersion and concordance. The corpus itself saves to SQLite, JSON, CSV, TEI P5, Praat TextGrid, ELAN EAF, SRT and WebVTT. No audio, transcript, or metadata ever leaves the researcher's device: there are no cloud APIs, no telemetry, and no subscription. The result loads directly into CorpusMind with one click, closing the loop from spoken data to publication-ready corpus analysis.
                     </p>
                     <p class="hero-description lang-ar">
-                        كوربَس مايند فويس هو الرفيق الصوتي لبيئة كوربَس مايند البحثية. يستقبل ملفات MP3 وMP4 وWAV — أو يلتقط مدخل الميكروفون مباشرة — ويشغّل خط معالجة محليًا كاملًا من ست مراحل: استيعاب الصوت، والتعرف على الكلام بطوابع زمنية لكلمة بكلمة عبر faster-whisper ‏<em>large-v3</em> (بترميز INT8)، والمحاذاة القسرية على مستوى الكلمة والصوتونة عبر Montreal Forced Aligner، والتحليل التنغيمي للتردد الأساسي والشدة والتذبذب والرقّة ونسبة التوافقيات إلى الضجيج عبر Praat وParselmouth، وكشف عيوب الطلاقة باللغتين، ثم التصدير المنظّم إلى SQLite وJSON وCSV وTEI P5. لا يغادر أي صوت أو نص أو بيانات وصفية جهاز الباحث إطلاقًا: لا واجهات سحابية، ولا قياسات استخدام، ولا رسوم اشتراك. وتُحمَّل النتيجة مباشرة في كوربَس مايند بنقرة واحدة، فيكتمل المسار من البيانات المنطوقة إلى التحليل اللغوي الجاهز للنشر.
+                        كوربَس مايند فويس هو الرفيق الصوتي لبيئة كوربَس مايند البحثية. يستقبل ملفات MP3 وMP4 وM4A وAAC وOGG وOPUS وWAV، أو يلتقط مدخل الميكروفون مباشرة على سطح المكتب والمحمول، ويشغّل خط معالجة محليًا كاملًا من ست مراحل: استيعاب الصوت، والتعرف على الكلام بطوابع زمنية لكلمة بكلمة عبر faster-whisper ‏<em>large-v3</em> (بترميز INT8)، والمحاذاة القسرية على مستوى الكلمة والصوتونة عبر Montreal Forced Aligner، والتحليل التنغيمي للتردد الأساسي والشدة والتذبذب والرقّة ونسبة التوافقيات إلى الضجيج عبر Praat وParselmouth، وكشف عيوب الطلاقة باللغتين. ثم تحسب حقيبة <strong>التحليل اللغوي</strong> المدمجة قوائم التكرار مع توزّع DP، والكونكوردانس KWIC بأنماط المطابقة الطبيعية والكلمة الكاملة والتعبيرات النمطية، والكلمات المفاتيح مع اللوغاريتم الاحتمالي G&sup2; ومقياس %DIFF، والتجمّعات بمعاملات MI وt-score وlogDice، والمتتاليات، ومنحنى Zipf للرتبة والتكرار، والثراء اللغوي (MATTR/MTLD)، وسهولة القراءة، ومعدلات عيوب الطلاقة والتنغيم، وكلها قابلة للتصدير إلى CSV، فيما يجمّع تبويب <strong>المجموعة</strong> كل الجلسات المعالَجة في عرض واحد. وتُحفَظ المجموعة بصيغ SQLite وJSON وCSV وTEI P5 وPraat TextGrid وELAN EAF وSRT وWebVTT. لا يغادر أي صوت أو نص أو بيانات وصفية جهاز الباحث إطلاقًا: لا واجهات سحابية، ولا قياسات استخدام، ولا رسوم اشتراك. وتُحمَّل النتيجة مباشرة في كوربَس مايند بنقرة واحدة، فيكتمل المسار من البيانات المنطوقة إلى التحليل اللغوي الجاهز للنشر.
                     </p>
                 </div>
 
@@ -361,10 +361,10 @@
         </section>
         <!-- Privacy Notice -->
         <div class="privacy-notice">
-            <h4 class="lang-en"><i class="fas fa-shield-halved"></i> Privacy by Design — Your Recordings Never Leave Your Device</h4>
-            <h4 class="lang-ar"><i class="fas fa-shield-halved"></i> الخصوصية بالتصميم — تسجيلاتك لا تغادر جهازك أبدًا</h4>
-            <p class="lang-en">CorpusMind Voice performs speech recognition, forced alignment, prosodic analysis and export as local processes on your own hardware. Zero network calls are made to third parties; the service worker caches only the application shell and never caches API responses; the optional assistant talks exclusively to a local LLM server &mdash; Ollama on <code>127.0.0.1:11434</code> or LM Studio on <code>127.0.0.1:1234</code>, detected automatically &mdash; and clearly reports when neither is running. Interview data involving human subjects therefore remains under the researcher's sole custody — an essential guarantee for ethics-board protocols.</p>
-            <p class="lang-ar">ينفّذ كوربَس مايند فويس التعرف على الكلام والمحاذاة القسرية والتحليل التنغيمي والتصدير كعمليات محلية على عتادك الخاص. لا تُجرى أي نداءات شبكية لأطراف خارجية؛ ويخزّن عامل الخدمة هيكل التطبيق فقط دون الاستجابات؛ ويتحدث المساعد الاختياري حصرًا مع خادم Ollama المحلي على العنوان <code>127.0.0.1:11434</code> وينبّه بوضوح عند تعطّله. وبذلك تبقى بيانات المقابلات المتعلقة بالمشاركين البشريين تحت حيازة الباحث وحده — ضمانة جوهرية لبروتوكولات لجان الأخلاقيات.</p>
+            <h4 class="lang-en"><i class="fas fa-shield-halved"></i> Privacy by Design: Your Recordings Never Leave Your Device</h4>
+            <h4 class="lang-ar"><i class="fas fa-shield-halved"></i> الخصوصية بالتصميم: تسجيلاتك لا تغادر جهازك أبدًا</h4>
+            <p class="lang-en">CorpusMind Voice performs speech recognition, forced alignment, prosodic analysis and export as local processes on your own hardware. Zero network calls are made to third parties; the service worker caches only the application shell and never caches API responses; the optional assistant talks exclusively to a local LLM server (Ollama on <code>127.0.0.1:11434</code> or LM Studio on <code>127.0.0.1:1234</code>, detected automatically) and clearly reports when neither is running. Interview data involving human subjects therefore remains under the researcher's sole custody, an essential guarantee for ethics-board protocols.</p>
+            <p class="lang-ar">ينفّذ كوربَس مايند فويس التعرف على الكلام والمحاذاة القسرية والتحليل التنغيمي والتصدير كعمليات محلية على عتادك الخاص. لا تُجرى أي نداءات شبكية لأطراف خارجية؛ ويخزّن عامل الخدمة هيكل التطبيق فقط دون الاستجابات؛ ويتحدث المساعد الاختياري حصرًا مع خادم نماذج لغوية محلي (Ollama على العنوان <code>127.0.0.1:11434</code> أو LM Studio على <code>127.0.0.1:1234</code>) يُكتشف تلقائيًا وينبّه بوضوح عند تعطّله. وبذلك تبقى بيانات المقابلات المتعلقة بالمشاركين البشريين تحت حيازة الباحث وحده، وهي ضمانة جوهرية لبروتوكولات لجان الأخلاقيات.</p>
         </div>
 
         <!-- Features Section -->
@@ -372,16 +372,16 @@
             <h2 class="section-title lang-en">Why CorpusMind Voice?</h2>
             <h2 class="section-title lang-ar">لماذا كوربَس مايند فويس؟</h2>
             <p class="section-intro">
-                <span class="lang-en">Everything a spoken-corpus researcher needs between the recorder and the analysis environment — in one free, open-source, offline application.</span>
-                <span class="lang-ar">كل ما يحتاجه باحث المجموعات المنطوقة بين مسجّل الصوت وبيئة التحليل — في تطبيق واحد مجاني ومفتوح المصدر يعمل دون اتصال.</span>
+                <span class="lang-en">Everything a spoken-corpus researcher needs between the recorder and the analysis environment, in one free, open-source, offline application.</span>
+                <span class="lang-ar">كل ما يحتاجه باحث المجموعات المنطوقة بين مسجّل الصوت وبيئة التحليل، في تطبيق واحد مجاني ومفتوح المصدر يعمل دون اتصال.</span>
             </p>
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-microphone-lines feature-icon"></i>
                     <h3 class="lang-en">Files or Live Microphone</h3>
                     <h3 class="lang-ar">ملفات جاهزة أو ميكروفون مباشر</h3>
-                    <p class="lang-en">Ingest MP3, MP4, M4A, AAC, OGG, OPUS, FLAC and more, or capture speech directly from the microphone — on Windows, macOS and Linux as well as in the mobile PWA; recording works in the lab, in the field, or in the interview room.</p>
-                    <p class="lang-ar">استقبل تسجيلات MP3 وMP4 وM4A وAAC وOGG وOPUS وFLAC وغيرها، أو التقط الكلام مباشرة من الميكروفون — على ويندوز وماك ولينكس وفي تطبيق المحمول؛ يعمل التسجيل في المختبر أو الميدان أو غرفة المقابلة.</p>
+                    <p class="lang-en">Ingest MP3, MP4, M4A, AAC, OGG, OPUS, FLAC and more, or capture speech directly from the microphone, on Windows, macOS and Linux as well as in the mobile PWA; recording works in the lab, in the field, or in the interview room.</p>
+                    <p class="lang-ar">استقبل تسجيلات MP3 وMP4 وM4A وAAC وOGG وOPUS وFLAC وغيرها، أو التقط الكلام مباشرة من الميكروفون على ويندوز وماك ولينكس وفي تطبيق المحمول؛ يعمل التسجيل في المختبر أو الميدان أو غرفة المقابلة.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-closed-captioning feature-icon"></i>
@@ -408,22 +408,29 @@
                     <i class="fas fa-comment-dots feature-icon"></i>
                     <h3 class="lang-en">Bilingual Disfluency Detection</h3>
                     <h3 class="lang-ar">كشف ثنائي اللغة لعيوب الطلاقة</h3>
-                    <p class="lang-en">A rule-based scanner annotates pauses longer than 200 ms, fillers (<em>um</em>/<em>uh</em> and <em>يعني</em>/<em>آه</em>/<em>إيه</em>), repeats, false starts, interruptions and lengthenings — the raw material of natural spoken discourse.</p>
-                    <p class="lang-ar">يشرِح ماسح قائم على القواعد التوقفات الأطول من 200 مللي ثانية، وحشوات التردد (<em>um</em>/<em>uh</em> و<em>يعني</em>/<em>آه</em>/<em>إيه</em>)، والتكرارات، والبدايات الفاشلة، والمقاطعات، والإطالات — وهي مواد الخطاب المنطوق الطبيعي الخام.</p>
+                    <p class="lang-en">A rule-based scanner annotates pauses longer than 200 ms, fillers (<em>um</em>/<em>uh</em> and <em>يعني</em>/<em>آه</em>/<em>إيه</em>), repeats, false starts, interruptions and lengthenings, the raw material of natural spoken discourse.</p>
+                    <p class="lang-ar">يشرِح ماسح قائم على القواعد التوقفات الأطول من 200 مللي ثانية، وحشوات التردد (<em>um</em>/<em>uh</em> و<em>يعني</em>/<em>آه</em>/<em>إيه</em>)، والتكرارات، والبدايات الفاشلة، والمقاطعات، والإطالات، وهي مواد الخطاب المنطوق الطبيعي الخام.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-chart-column feature-icon"></i>
                     <h3 class="lang-en">Academic Analysis Suite</h3>
                     <h3 class="lang-ar">حقيبة التحليل الأكاديمي</h3>
-                    <p class="lang-en">A dedicated <strong>Linguistic Analysis</strong> tab computes frequency lists with DP dispersion, KWIC concordances, keyword detection (log-likelihood G&sup2; and LogRatio), collocations (MI, t-score, logDice) and n-grams, lexical diversity (TTR, MATTR, MTLD), readability (Flesch, Flesch&ndash;Kincaid, LIX) and disfluency/prosody rates &mdash; every table exportable to CSV, wholly offline.</p>
-                    <p class="lang-ar">تبويب مخصص للتحليل اللغوي يحسب قوائم التكرار مع توزّع DP، والكونكوردانس KWIC، والكلمات المفاتيح (اللوغاريتم الاحتمالي G&sup2; وLogRatio)، والتجمّعات (MI وt-score وlogDice) والمتتاليات، والثراء اللغوي (TTR وMATTR وMTLD)، وسهولة القراءة (فليش وفليش–كينكايد وLIX)، ومعدلات الاضطراب والإيقاع — وكل جدول قابل للحفظ CSV، ودون اتصال كليًا.</p>
+                    <p class="lang-en">A dedicated <strong>Linguistic Analysis</strong> tab computes frequency lists with DP dispersion, KWIC concordances with normalized, whole-word and regex matching, keyword detection (log-likelihood G&sup2;, LogRatio and the %DIFF effect size), collocations (MI, t-score, logDice) and n-grams, Zipf rank-frequency curves, lexical diversity (TTR, MATTR, MTLD), readability (Flesch, Flesch&ndash;Kincaid, LIX) and disfluency/prosody rates, every table exportable to CSV, wholly offline.</p>
+                    <p class="lang-ar">تبويب مخصص للتحليل اللغوي يحسب قوائم التكرار مع توزّع DP، والكونكوردانس KWIC بأنماط المطابقة الطبيعية والكلمة الكاملة والتعبيرات النمطية، والكلمات المفاتيح (اللوغاريتم الاحتمالي G&sup2; وLogRatio ومقياس %DIFF)، والتجمّعات (MI وt-score وlogDice) والمتتاليات، ومنحنى Zipf للرتبة والتكرار، والثراء اللغوي (TTR وMATTR وMTLD)، وسهولة القراءة (فليش وفليش–كينكايد وLIX)، ومعدلات الاضطراب والإيقاع، وكل جدول قابل للحفظ بصيغة CSV، ودون اتصال كليًا.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-layer-group feature-icon"></i>
+                    <h3 class="lang-en">Cross-Session Corpus Tab</h3>
+                    <h3 class="lang-ar">تبويب المجموعة عبر الجلسات</h3>
+                    <p class="lang-en">A corpus-wide view aggregates everything processed so far: a sessions inventory with language, duration and token counts, corpus frequency with DP dispersion measured across sessions (0 = evenly spread, 1 = concentrated in one session), and cross-session KWIC concordance where every hit plays the audio around the match.</p>
+                    <p class="lang-ar">يعرض تبويب <strong>المجموعة</strong> كل ما عولج في مكان واحد: جرد جلسات باللغة والمدة وأعداد الكلمات، وتكرار على مستوى المجموعة مع توزّع DP مقيسًا عبر الجلسات (0 = توزّع متساوٍ، 1 = تركّز في جلسة واحدة)، وكونكوردانس KWIC عابر للجلسات يشغّل الصوت حول كل نتيجة.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-circle-half-stroke feature-icon"></i>
                     <h3 class="lang-en">Light &amp; Dark, On-Device Models</h3>
                     <h3 class="lang-ar">مظهر فاتح وداكن، ونماذج على جهازك</h3>
-                    <p class="lang-en">A Light/Dark/System theme follows your OS, and a three-page bilingual Welcome tour introduces the app on first launch. Whisper models from <em>tiny</em> to <em>large-v3</em> download once inside Settings, persist in the app's private folder and are reused offline — resumable, deletable, yours.</p>
-                    <p class="lang-ar">مظهر فاتح/داكن/حسب النظام يتبع إعداد جهازك، وجولة ترحيب ثنائية اللغة من ثلاث صفحات في أول تشغيل. ونماذج Whisper من <em>tiny</em> إلى <em>large-v3</em> تُنزَّل مرة واحدة من الإعدادات وتبقى في مجلد التطبيق الخاص وتُعاد الاستفادة منها دون اتصال — قابلة للاستئناف والحذف وملك لك.</p>
+                    <p class="lang-en">A Light/Dark/System theme follows your OS, and a three-page bilingual Welcome tour introduces the app on first launch. Whisper models from <em>tiny</em> to <em>large-v3</em> download once inside Settings, persist in the app's private folder and are reused offline: resumable, deletable, yours.</p>
+                    <p class="lang-ar">مظهر فاتح/داكن/حسب النظام يتبع إعداد جهازك، وجولة ترحيب ثنائية اللغة من ثلاث صفحات في أول تشغيل. ونماذج Whisper من <em>tiny</em> إلى <em>large-v3</em> تُنزَّل مرة واحدة من الإعدادات وتبقى في مجلد التطبيق الخاص وتُعاد الاستفادة منها دون اتصال، قابلة للاستئناف والحذف وملك لك.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-diagram-project feature-icon"></i>
@@ -436,15 +443,15 @@
                     <i class="fas fa-brain feature-icon"></i>
                     <h3 class="lang-en">Local LLM Assistant</h3>
                     <h3 class="lang-ar">مساعد ذكي محلي</h3>
-                    <p class="lang-en">Ollama and LM Studio are detected automatically (with one-click <code>ollama serve</code> startup on desktop). Chat about your corpus, summarise transcripts, preview them without fillers, or suggest topic tags — every call stays on your machine, never a cloud API.</p>
-                    <p class="lang-ar">يُكتشف Ollama وLM Studio تلقائيًا (مع تشغيل <code>ollama serve</code> بنقرة واحدة على سطح المكتب). حاور نموذجك عن المجموعة، ولخِّص التفريغات، وعاينها دون حشو، واقترح وسومًا موضوعية — كل الاستدعاءات تبقى على جهازك ولا تواجه سحابة أبدًا.</p>
+                    <p class="lang-en">Ollama and LM Studio are detected automatically (with one-click <code>ollama serve</code> startup on desktop). Chat about your corpus, summarise transcripts, preview them without fillers, or suggest topic tags: every call stays on your machine, never a cloud API.</p>
+                    <p class="lang-ar">يُكتشف Ollama وLM Studio تلقائيًا (مع تشغيل <code>ollama serve</code> بنقرة واحدة على سطح المكتب). حاور نموذجك عن المجموعة، ولخِّص التفريغات، وعاينها دون حشو، واقترح وسومًا موضوعية: كل الاستدعاءات تبقى على جهازك ولا تواجه سحابة أبدًا.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-mobile-screen feature-icon"></i>
                     <h3 class="lang-en">Installable Mobile PWA</h3>
                     <h3 class="lang-ar">تطبيق ويب تقدمي قابل للتثبيت</h3>
-                    <p class="lang-en">Install CorpusMind Voice on iOS or Android straight from the browser and carry the whole pipeline in your pocket — record and analyse on the phone, offline. See the mobile section below.</p>
-                    <p class="lang-ar">ثبّت كوربَس مايند فويس على آيفون أو أندرويد مباشرة من المتصفح واحمل خط المعالجة كله في جيبك — سجّل وحلّل على الهاتف ودون اتصال. انظر قسم الأجهزة المحمولة أدناه.</p>
+                    <p class="lang-en">Install CorpusMind Voice on iOS or Android straight from the browser and carry the whole pipeline in your pocket: record and analyse on the phone, offline. See the mobile section below.</p>
+                    <p class="lang-ar">ثبّت كوربَس مايند فويس على آيفون أو أندرويد مباشرة من المتصفح واحمل خط المعالجة كله في جيبك: سجّل وحلّل على الهاتف ودون اتصال. انظر قسم الأجهزة المحمولة أدناه.</p>
                 </div>
             </div>
         </section>
@@ -454,16 +461,16 @@
             <h2 class="section-title lang-en">The Six-Stage Pipeline</h2>
             <h2 class="section-title lang-ar">خط المعالجة من ست مراحل</h2>
             <p class="section-intro">
-                <span class="lang-en">Each stage is a local process with visible progress — and every stage writes structured records you can audit.</span>
-                <span class="lang-ar">كل مرحلة عملية محلية بتقدّم مرئي — وكل مرحلة تكتب سجلات منظّمة قابلة للتدقيق.</span>
+                <span class="lang-en">Each stage is a local process with visible progress, and every stage writes structured records you can audit.</span>
+                <span class="lang-ar">كل مرحلة عملية محلية بتقدّم مرئي، وكل مرحلة تكتب سجلات منظّمة قابلة للتدقيق.</span>
             </p>
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <div class="step-number">1</div>
                     <h4 class="lang-en">Ingest</h4>
                     <h4 class="lang-ar">الاستيعاب</h4>
-                    <p class="lang-en">Any container decoded to 16&nbsp;kHz mono PCM through PyAV, pydub and ffmpeg — no pre-conversion chores.</p>
-                    <p class="lang-ar">فك ترميز أي صيغة إلى PCM أحادي القناة بتردد 16&nbsp;kHz عبر PyAV وpydub وffmpeg — دون خطوات تحويل مسبقة.</p>
+                    <p class="lang-en">Any container decoded to 16&nbsp;kHz mono PCM through PyAV, pydub and ffmpeg, with no pre-conversion chores.</p>
+                    <p class="lang-ar">فك ترميز أي صيغة إلى PCM أحادي القناة بتردد 16&nbsp;kHz عبر PyAV وpydub وffmpeg دون خطوات تحويل مسبقة.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number">2</div>
@@ -497,8 +504,8 @@
                     <div class="step-number">6</div>
                     <h4 class="lang-en">Export</h4>
                     <h4 class="lang-ar">التصدير</h4>
-                    <p class="lang-en">Structured records land in SQLite, JSON, CSV and TEI P5 — ready for CorpusMind, R, Python or your archive.</p>
-                    <p class="lang-ar">تُودَع السجلات المنظّمة في SQLite وJSON وCSV وTEI P5 — جاهزة لكوربَس مايند أو R أو Python أو أرشيفك.</p>
+                    <p class="lang-en">Structured records land in SQLite, JSON, CSV, TEI P5, Praat TextGrid, ELAN EAF, SRT and WebVTT: ready for CorpusMind, ELAN, Praat, R, Python or your archive.</p>
+                    <p class="lang-ar">تُودَع السجلات المنظّمة في SQLite وJSON وCSV وTEI P5 وPraat TextGrid وELAN EAF وSRT وWebVTT: جاهزة لكوربَس مايند أو ELAN أو Praat أو R أو Python أو أرشيفك.</p>
                 </div>
             </div>
 
@@ -515,8 +522,8 @@
                     <tbody>
                         <tr>
                             <td><code>*.corpusmind.json</code></td>
-                            <td class="lang-en">Full records — loads directly with <code>pandas.json_normalize(..., record_path="tokens")</code></td>
-                            <td class="lang-ar">سجلات كاملة — تُحمَّل مباشرة عبر <code>pandas.json_normalize(..., record_path="tokens")</code></td>
+                            <td class="lang-en">Full records, loads directly with <code>pandas.json_normalize(..., record_path="tokens")</code></td>
+                            <td class="lang-ar">سجلات كاملة، تُحمَّل مباشرة عبر <code>pandas.json_normalize(..., record_path="tokens")</code></td>
                         </tr>
                         <tr>
                             <td><code>*.tokens.csv</code></td>
@@ -525,8 +532,23 @@
                         </tr>
                         <tr>
                             <td><code>*.tei.xml</code></td>
-                            <td class="lang-en">TEI P5 — <code>&lt;teiHeader&gt;</code> with your corpus metadata and time-aligned <code>&lt;w&gt;</code> elements</td>
-                            <td class="lang-ar">TEI P5 — وسم <code>&lt;teiHeader&gt;</code> مع بياناتك الوصفية وعناصر <code>&lt;w&gt;</code> مضبوطة زمنيًا</td>
+                            <td class="lang-en">TEI P5: <code>&lt;teiHeader&gt;</code> with your corpus metadata and time-aligned <code>&lt;w&gt;</code> elements</td>
+                            <td class="lang-ar">TEI P5: وسم <code>&lt;teiHeader&gt;</code> مع بياناتك الوصفية وعناصر <code>&lt;w&gt;</code> مضبوطة زمنيًا</td>
+                        </tr>
+                        <tr>
+                            <td><code>*.TextGrid</code></td>
+                            <td class="lang-en">Praat TextGrid: utterance and token interval tiers, opens directly in Praat</td>
+                            <td class="lang-ar">Praat TextGrid: طوابق فترات للعبارات والكلمات، يُفتح مباشرة في Praat</td>
+                        </tr>
+                        <tr>
+                            <td><code>*.eaf</code></td>
+                            <td class="lang-en">ELAN EAF 3.0: per-speaker utterance tiers with token sub-tiers, opens in ELAN</td>
+                            <td class="lang-ar">ELAN EAF 3.0: طوابق عبارات لكل متحدث مع طوابق فرعية للكلمات، يُفتح في ELAN</td>
+                        </tr>
+                        <tr>
+                            <td><code>*.srt / *.vtt</code></td>
+                            <td class="lang-en">SRT and WebVTT subtitles generated from utterance timings for media players and editors</td>
+                            <td class="lang-ar">ترجمات SRT وWebVTT مولّدة من توقيتات العبارات لمشغلات الوسائط والمحررات</td>
                         </tr>
                         <tr>
                             <td><code>*.sqlite</code></td>
@@ -542,8 +564,8 @@
             <h2 class="section-title lang-en">Research in the Field: CorpusMind Voice on Your Phone</h2>
             <h2 class="section-title lang-ar">البحث في الميدان: كوربَس مايند فويس على هاتفك</h2>
             <p class="section-intro">
-                <span class="lang-en">CorpusMind Voice ships as an installable Progressive Web App. On a phone, the researcher can <strong>record directly through the microphone and run the same six-stage analysis</strong> — recognition, alignment, prosody, disfluency and export — without moving files to a computer first. Once installed, the app shell works offline, so recording and analysis continue in the field, in archives, or anywhere connectivity fails. The recordings, transcripts and metadata stay on the device, which keeps sensitive fieldwork with human participants under the researcher's control at all times.</span>
-                <span class="lang-ar">يأتي كوربَس مايند فويس كتطبيق ويب تقدمي قابل للتثبيت. فعلى الهاتف يستطيع الباحث <strong>التسجيل مباشرة عبر الميكروفون وتشغيل خط المعالجة نفسه من ست مراحل</strong> — التعرف، والمحاذاة، والتنغيم، وعيوب الطلاقة، والتصدير — دون الحاجة إلى نقل الملفات إلى حاسوب أولًا. وبعد التثبيت يعمل هيكل التطبيق دون اتصال، فيستمر التسجيل والتحليل في الميدان أو في الأرشيفات أو في أي مكان تخفق فيه الشبكة. وتبقى التسجيلات والنصوص والبيانات الوصفية على الجهاز، فيبقى العمل الميداني الحساس بمشاركة البشر تحت سيطرة الباحث في كل لحظة.</span>
+                <span class="lang-en">CorpusMind Voice ships as an installable Progressive Web App. On a phone, the researcher can <strong>record directly through the microphone and run the same six-stage analysis</strong> (recognition, alignment, prosody, disfluency and export) without moving files to a computer first. Once installed, the app shell works offline, so recording and analysis continue in the field, in archives, or anywhere connectivity fails. The recordings, transcripts and metadata stay on the device, which keeps sensitive fieldwork with human participants under the researcher's control at all times.</span>
+                <span class="lang-ar">يأتي كوربَس مايند فويس كتطبيق ويب تقدمي قابل للتثبيت. فعلى الهاتف يستطيع الباحث <strong>التسجيل مباشرة عبر الميكروفون وتشغيل خط المعالجة نفسه من ست مراحل</strong> (التعرف، والمحاذاة، والتنغيم، وعيوب الطلاقة، والتصدير) دون الحاجة إلى نقل الملفات إلى حاسوب أولًا. وبعد التثبيت يعمل هيكل التطبيق دون اتصال، فيستمر التسجيل والتحليل في الميدان أو في الأرشيفات أو في أي مكان تخفق فيه الشبكة. وتبقى التسجيلات والنصوص والبيانات الوصفية على الجهاز، فيبقى العمل الميداني الحساس بمشاركة البشر تحت سيطرة الباحث في كل لحظة.</span>
             </p>
             <div class="install-steps">
                 <div class="workflow-step">
@@ -557,15 +579,15 @@
                     <div class="step-number"><i class="fas fa-microphone"></i></div>
                     <h4 class="lang-en">2 &middot; Record on the Device</h4>
                     <h4 class="lang-ar">2 &middot; التسجيل على الجهاز</h4>
-                    <p class="lang-en">Start a session from live microphone input — interviews, elicitation tasks, oral history, lecture excerpts — with no external recorder required.</p>
-                    <p class="lang-ar">ابدأ جلسة من مدخل الميكروفون المباشر — مقابلات، أو مهام استثارة لغوية، أو تاريخ شفهي، أو مقاطع محاضرات — دون الحاجة إلى مسجّل خارجي.</p>
+                    <p class="lang-en">Start a session from live microphone input (interviews, elicitation tasks, oral history, lecture excerpts) with no external recorder required.</p>
+                    <p class="lang-ar">ابدأ جلسة من مدخل الميكروفون المباشر (مقابلات، أو مهام استثارة لغوية، أو تاريخ شفهي، أو مقاطع محاضرات) دون الحاجة إلى مسجّل خارجي.</p>
                 </div>
                 <div class="workflow-step">
                     <div class="step-number"><i class="fas fa-chart-line"></i></div>
                     <h4 class="lang-en">3 &middot; Analyse &amp; Export</h4>
                     <h4 class="lang-ar">3 &middot; التحليل والتصدير</h4>
-                    <p class="lang-en">Run the full pipeline on the device, review tokens in the confidence-coded editor, then export JSON, CSV, TEI XML or SQLite — ready for CorpusMind on your desktop.</p>
-                    <p class="lang-ar">شغّل خط المعالجة كاملاً على الجهاز، وراجع الكلمات في المحرر المرمّز بالثقة، ثم صدّر JSON أو CSV أو TEI XML أو SQLite — جاهزة لكوربَس مايند على حاسوبك.</p>
+                    <p class="lang-en">Run the full pipeline on the device, review tokens in the confidence-coded editor, then export JSON, CSV, TEI XML, TextGrid, EAF, SRT, WebVTT or SQLite: ready for CorpusMind on your desktop.</p>
+                    <p class="lang-ar">شغّل خط المعالجة كاملاً على الجهاز، وراجع الكلمات في المحرر المرمّز بالثقة، ثم صدّر JSON أو CSV أو TEI XML أو TextGrid أو EAF أو SRT أو WebVTT أو SQLite: جاهزة لكوربَس مايند على حاسوبك.</p>
                 </div>
             </div>
             <div class="cta-buttons" style="margin-top: 40px;">
@@ -581,38 +603,53 @@
         <section class="cta-section" id="download">
             <h2 class="cta-title lang-en">Download CorpusMind Voice</h2>
             <h2 class="cta-title lang-ar">تنزيل كوربَس مايند فويس</h2>
-            <p class="cta-subtitle lang-en">Version 1.1.0 — free and open source under the MIT License. Desktop bundles run fully offline; the PWA brings the same pipeline to your browser and phone.</p>
-            <p class="cta-subtitle lang-ar">الإصدار 1.1.0 — مجاني ومفتوح المصدر تحت رخصة MIT. تعمل نسخ سطح المكتب دون اتصال بالكامل؛ ويجلب تطبيق الويب التقدمي خط المعالجة نفسه إلى متصفحك وهاتفك.</p>
+            <p class="cta-subtitle lang-en">Version 1.2.0: free and open source under the MIT License. Desktop bundles run fully offline; the PWA brings the same pipeline to your browser and phone.</p>
+            <p class="cta-subtitle lang-ar">الإصدار 1.2.0: مجاني ومفتوح المصدر تحت رخصة MIT. تعمل نسخ سطح المكتب دون اتصال بالكامل؛ ويجلب تطبيق الويب التقدمي خط المعالجة نفسه إلى متصفحك وهاتفك.</p>
 
             <div class="download-platforms">
-                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.1.0/CorpusMind.Voice_1.1.0_aarch64.dmg" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'macos_arm64_dmg', value: 1});">
+                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.2.0/CorpusMind.Voice_1.2.0_aarch64.dmg" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'macos_arm64_dmg', value: 1});">
                     <i class="fab fa-apple"></i>
                     <span class="dl-name lang-en">macOS (Apple Silicon)</span>
                     <span class="dl-name lang-ar">macOS (أبل سيليكون)</span>
                     <span class="dl-os">arm64 &middot; DMG</span>
-                    <span class="dl-file">CorpusMind.Voice_1.1.0_aarch64.dmg</span>
+                    <span class="dl-file">CorpusMind.Voice_1.2.0_aarch64.dmg</span>
                 </a>
-                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.1.0/CorpusMind.Voice_1.1.0_x64-setup.exe" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'windows_nsis', value: 1});">
+                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.2.0/CorpusMind.Voice_1.2.0_x64-setup.exe" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'windows_nsis', value: 1});">
                     <i class="fab fa-windows"></i>
                     <span class="dl-name lang-en">Windows</span>
                     <span class="dl-name lang-ar">ويندوز</span>
                     <span class="dl-os">x64 &middot; NSIS</span>
-                    <span class="dl-file">CorpusMind.Voice_1.1.0_x64-setup.exe</span>
+                    <span class="dl-file">CorpusMind.Voice_1.2.0_x64-setup.exe</span>
                 </a>
-                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.1.0/CorpusMind.Voice_1.1.0_amd64.deb" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'linux_deb', value: 1});">
+                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.2.0/CorpusMind.Voice_1.2.0_amd64.deb" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'linux_deb', value: 1});">
                     <i class="fab fa-linux"></i>
                     <span class="dl-name lang-en">Linux</span>
                     <span class="dl-name lang-ar">لينكس</span>
                     <span class="dl-os">amd64 &middot; DEB</span>
-                    <span class="dl-file">CorpusMind.Voice_1.1.0_amd64.deb</span>
+                    <span class="dl-file">CorpusMind.Voice_1.2.0_amd64.deb</span>
                 </a>
-                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.1.0/CorpusMind.Voice_1.1.0_x64.dmg" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'macos_intel_dmg', value: 1});">
+                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.2.0/CorpusMind.Voice_1.2.0_x64.dmg" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'macos_intel_dmg', value: 1});">
                     <i class="fab fa-apple"></i>
                     <span class="dl-name lang-en">macOS &middot; Intel</span>
                     <span class="dl-name lang-ar">ماك &middot; إنتل</span>
                     <span class="dl-os lang-en">macOS 10.15+ &middot; x86_64</span>
                     <span class="dl-os lang-ar">ماك أو إس ١٠٫١٥+ &middot; x86_64</span>
-                    <span class="dl-file">CorpusMind.Voice_1.1.0_x64.dmg</span>
+                    <span class="dl-file">CorpusMind.Voice_1.2.0_x64.dmg</span>
+                </a>
+                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.2.0/CorpusMind.Voice_1.2.0_x64_en-US.msi" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'windows_msi', value: 1});">
+                    <i class="fab fa-windows"></i>
+                    <span class="dl-name lang-en">Windows &middot; MSI</span>
+                    <span class="dl-name lang-ar">ويندوز &middot; MSI</span>
+                    <span class="dl-os">x64 &middot; MSI (enterprise deployment)</span>
+                    <span class="dl-file">CorpusMind.Voice_1.2.0_x64_en-US.msi</span>
+                </a>
+                <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/download/v1.2.0/CorpusMind-Voice-User-Guide-EN.pdf" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'download', {event_category: 'cmv_download', event_label: 'user_guide_pdf', value: 1});">
+                    <i class="fas fa-book-open"></i>
+                    <span class="dl-name lang-en">User Guide (PDF)</span>
+                    <span class="dl-name lang-ar">دليل المستخدم (PDF)</span>
+                    <span class="dl-os lang-en">Two pages &middot; English</span>
+                    <span class="dl-os lang-ar">صفحتان &middot; إنجليزي</span>
+                    <span class="dl-file">CorpusMind-Voice-User-Guide-EN.pdf</span>
                 </a>
                 <a href="https://corpus-mind-voice.vercel.app/" target="_blank" rel="noopener" class="download-card" onclick="gtag('event', 'click', {event_category: 'cmv_download', event_label: 'web_pwa', value: 1});">
                     <i class="fas fa-globe"></i>
@@ -637,8 +674,8 @@
                 </a>
             </div>
 
-            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Version 1.1.0 &middot; MIT License &middot; <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/tag/v1.1.0" target="_blank" rel="noopener">Release notes</a></p>
-            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">الإصدار 1.1.0 &middot; رخصة MIT &middot; <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/tag/v1.1.0" target="_blank" rel="noopener">ملاحظات الإصدار</a></p>
+            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Version 1.2.0 &middot; MIT License &middot; <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/tag/v1.2.0" target="_blank" rel="noopener">Release notes</a></p>
+            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">الإصدار 1.2.0 &middot; رخصة MIT &middot; <a href="https://github.com/waleedmandour/CorpusMind-Voice/releases/tag/v1.2.0" target="_blank" rel="noopener">ملاحظات الإصدار</a></p>
         </section>
 
         <!-- Citation Section -->
@@ -652,14 +689,14 @@
             <div class="citation-wrap">
                 <div class="citation-label lang-en">APA &middot; 7th Edition</div>
                 <div class="citation-label lang-ar">APA &middot; الإصدار السابع</div>
-                <div class="citation-apa" id="apa-text">Mandour, W., &amp; Ibrahim, W. (2026). <em>CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics</em> (Version 1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22649310 <button class="citation-copy-btn" data-copy="apa-text"><span class="lang-en">Copy</span><span class="lang-ar">نسخ</span></button></div>
+                <div class="citation-apa" id="apa-text">Mandour, W., &amp; Ibrahim, W. (2026). <em>CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics</em> (Version 1.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22649310 <button class="citation-copy-btn" data-copy="apa-text"><span class="lang-en">Copy</span><span class="lang-ar">نسخ</span></button></div>
 
                 <div class="citation-label lang-en">BibTeX</div>
                 <div class="citation-label lang-ar">BibTeX</div>
                 <div class="citation-bibtex" id="bibtex-text">@software{Mandour_CorpusMindVoice_2026,
   author  = {Mandour, Waleed and Ibrahim, Wesam},
   title   = {{CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics}},
-  version = {1.1.0},
+  version = {1.2.0},
   year    = {2026},
   publisher = {Zenodo},
   doi     = {10.5281/zenodo.22649310},
@@ -705,8 +742,8 @@
         <footer class="footer">
             <div class="footer-content">
                 <div>
-                    <span class="lang-en">CorpusMind Voice &mdash; <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wesam Ibrahim</strong> (Princess Nourah Bint Abdulrahman University)</span>
-                    <span class="lang-ar">كوربَس مايند فويس &mdash; <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong> (جامعة الأميرة نورة بنت عبدالرحمن)</span>
+                    <span class="lang-en">CorpusMind Voice &middot; <strong>Dr. Waleed Mandour</strong> (Sultan Qaboos University) and <strong>Prof. Wesam Ibrahim</strong> (Princess Nourah Bint Abdulrahman University)</span>
+                    <span class="lang-ar">كوربَس مايند فويس &middot; <strong>د. وليد مندور</strong> (جامعة السلطان قابوس) و<strong>أ.د. وسام إبراهيم</strong> (جامعة الأميرة نورة بنت عبدالرحمن)</span>
                 </div>
                 <div>
                     <span class="lang-en">ORCID: <a href="https://orcid.org/0000-0002-9262-5993" target="_blank" rel="noopener">0000-0002-9262-5993</a> (Dr. Mandour) &middot; <a href="https://orcid.org/0000-0003-0710-6038" target="_blank" rel="noopener">0000-0003-0710-6038</a> (Prof. Ibrahim)</span>
@@ -770,8 +807,8 @@
                 var target = document.getElementById(btn.getAttribute('data-copy'));
                 if (!target) return;
                 var text = btn.getAttribute('data-copy') === 'apa-text'
-                    ? "Mandour, W., & Ibrahim, W. (2026). CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics (Version 1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22649310"
-                    : "@software{Mandour_CorpusMindVoice_2026,\n  author  = {Mandour, Waleed and Ibrahim, Wesam},\n  title   = {{CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics}},\n  version = {1.1.0},\n  year    = {2026},\n  publisher = {Zenodo},\n  doi     = {10.5281/zenodo.22649310},\n  url     = {https://doi.org/10.5281/zenodo.22649310}\n}";
+                    ? "Mandour, W., & Ibrahim, W. (2026). CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics (Version 1.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22649310"
+                    : "@software{Mandour_CorpusMindVoice_2026,\n  author  = {Mandour, Waleed and Ibrahim, Wesam},\n  title   = {{CorpusMind Voice: A local-first audio-to-corpus pipeline for corpus linguistics}},\n  version = {1.2.0},\n  year    = {2026},\n  publisher = {Zenodo},\n  doi     = {10.5281/zenodo.22649310},\n  url     = {https://doi.org/10.5281/zenodo.22649310}\n}";
                 function done() {
                     var label = btn.querySelector('.lang-en');
                     var labelAr = btn.querySelector('.lang-ar');
