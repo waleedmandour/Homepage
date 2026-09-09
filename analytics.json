@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 298,
-    "all_time_pageviews": 885,
-    "last_7_days_visitors": 21,
-    "last_30_days_visitors": 47
+    "all_time_visitors": 300,
+    "all_time_pageviews": 888,
+    "last_7_days_visitors": 23,
+    "last_30_days_visitors": 49
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 64,
+      "visitors": 66,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -257,7 +257,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 21,
+      "visitors": 23,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -367,5 +367,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-09-08T22:09:02Z"
+  "fetched_at": "2026-09-09T00:50:50Z"
 }
