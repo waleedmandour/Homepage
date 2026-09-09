@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 301,
-    "all_time_pageviews": 891,
-    "last_7_days_visitors": 22,
-    "last_30_days_visitors": 50
+    "all_time_visitors": 302,
+    "all_time_pageviews": 896,
+    "last_7_days_visitors": 23,
+    "last_30_days_visitors": 51
   },
   "top_countries_all_time": [
     {
@@ -92,6 +92,13 @@
       "flag_emoji": "🇦🇷"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "country_numeric": "368",
+      "visitors": 4,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Ireland",
       "country_code": "IE",
       "country_numeric": "372",
@@ -104,13 +111,6 @@
       "country_numeric": "826",
       "visitors": 4,
       "flag_emoji": "🇬🇧"
-    },
-    {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "country_numeric": "368",
-      "visitors": 3,
-      "flag_emoji": "🇮🇶"
     },
     {
       "country": "Netherlands",
@@ -279,16 +279,16 @@
       "flag_emoji": "🇪🇬"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "visitors": 3,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Saudi Arabia",
       "country_code": "SA",
       "visitors": 3,
       "flag_emoji": "🇸🇦"
-    },
-    {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "visitors": 2,
-      "flag_emoji": "🇮🇶"
     },
     {
       "country": "France",
@@ -318,8 +318,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 440,
-      "visitors": 255
+      "pageviews": 442,
+      "visitors": 256
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -352,6 +352,11 @@
       "visitors": 6
     },
     {
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 20,
+      "visitors": 16
+    },
+    {
       "url": "127.0.0.1/",
       "pageviews": 19,
       "visitors": 2
@@ -360,12 +365,7 @@
       "url": "waleedmandour.org/projects/rdat/",
       "pageviews": 19,
       "visitors": 5
-    },
-    {
-      "url": "waleedmandour.org/teaching/",
-      "pageviews": 19,
-      "visitors": 15
     }
   ],
-  "fetched_at": "2026-09-09T21:21:57Z"
+  "fetched_at": "2026-09-09T23:39:24Z"
 }
