@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 306,
-    "all_time_pageviews": 907,
-    "last_7_days_visitors": 24,
-    "last_30_days_visitors": 52
+    "all_time_visitors": 307,
+    "all_time_pageviews": 909,
+    "last_7_days_visitors": 25,
+    "last_30_days_visitors": 53
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 42,
+      "visitors": 43,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -263,7 +263,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 9,
+      "visitors": 10,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -318,8 +318,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 445,
-      "visitors": 258
+      "pageviews": 447,
+      "visitors": 259
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -367,5 +367,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-11T10:11:33Z"
+  "fetched_at": "2026-09-11T14:41:29Z"
 }
