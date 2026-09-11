@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 307,
-    "all_time_pageviews": 909,
+    "all_time_pageviews": 911,
     "last_7_days_visitors": 25,
     "last_30_days_visitors": 53
   },
@@ -190,6 +190,13 @@
       "flag_emoji": "🇫🇮"
     },
     {
+      "country": "Iran",
+      "country_code": "IR",
+      "country_numeric": "364",
+      "visitors": 1,
+      "flag_emoji": "🇮🇷"
+    },
+    {
       "country": "Libya",
       "country_code": "LY",
       "country_numeric": "434",
@@ -303,16 +310,16 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Iran",
+      "country_code": "IR",
+      "visitors": 1,
+      "flag_emoji": "🇮🇷"
+    },
+    {
       "country": "Jordan",
       "country_code": "JO",
       "visitors": 1,
       "flag_emoji": "🇯🇴"
-    },
-    {
-      "country": "Libya",
-      "country_code": "LY",
-      "visitors": 1,
-      "flag_emoji": "🇱🇾"
     }
   ],
   "top_pages_all_time": [
@@ -367,5 +374,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-11T17:59:21Z"
+  "fetched_at": "2026-09-11T20:35:20Z"
 }
