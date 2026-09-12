@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 307,
-    "all_time_pageviews": 913,
+    "all_time_pageviews": 920,
     "last_7_days_visitors": 23,
     "last_30_days_visitors": 53
   },
@@ -344,14 +344,14 @@
       "visitors": 8
     },
     {
+      "url": "waleedmandour.org/projects/CorpusMind/",
+      "pageviews": 24,
+      "visitors": 5
+    },
+    {
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
       "pageviews": 23,
       "visitors": 13
-    },
-    {
-      "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 23,
-      "visitors": 5
     },
     {
       "url": "waleedmandour.org/projects/",
@@ -374,5 +374,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-12T16:37:03Z"
+  "fetched_at": "2026-09-12T18:51:43Z"
 }
