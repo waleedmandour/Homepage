@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 307,
-    "all_time_pageviews": 920,
+    "all_time_pageviews": 924,
     "last_7_days_visitors": 23,
     "last_30_days_visitors": 53
   },
@@ -325,7 +325,7 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 447,
+      "pageviews": 448,
       "visitors": 259
     },
     {
@@ -355,12 +355,12 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 20,
-      "visitors": 6
+      "pageviews": 21,
+      "visitors": 7
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 20,
+      "pageviews": 21,
       "visitors": 16
     },
     {
@@ -374,5 +374,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-12T18:51:43Z"
+  "fetched_at": "2026-09-12T21:05:38Z"
 }
