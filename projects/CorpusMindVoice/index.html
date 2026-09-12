@@ -243,6 +243,29 @@
         body.arabic .hero h1.lang-ar, body.arabic .hero .hero-subtitle.lang-ar { text-align: center; }
         body.arabic .footer, body.arabic .footer-content, body.arabic .footer-content > div { text-align: center; }
 
+        /* ===== INTERFACE SCREENSHOT CAROUSEL ===== */
+        .ui-carousel { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid var(--light); background: var(--white); outline: none; }
+        .ui-carousel:focus-visible { box-shadow: 0 0 0 3px rgba(11, 110, 79, 0.35); }
+        .ui-carousel-viewport { position: relative; aspect-ratio: 8 / 5; background: #f8f9fa; overflow: hidden; }
+        .ui-carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+        .ui-carousel-slide.active { opacity: 1; pointer-events: auto; }
+        .ui-carousel-slide a { display: block; width: 100%; height: 100%; }
+        .ui-carousel-slide img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        .ui-carousel-caption { min-height: 76px; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--light); }
+        .ui-carousel-caption > div { display: none; padding: 16px 48px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; }
+        .ui-carousel-caption > div.active { display: block; }
+        .ui-carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer; background: rgba(10, 28, 60, 0.55); color: #fff; font-size: 17px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: var(--transition); backdrop-filter: blur(4px); }
+        .ui-carousel-arrow:hover { background: var(--secondary); }
+        .ui-carousel-arrow.prev { left: 14px; }
+        .ui-carousel-arrow.next { right: 14px; }
+        body.arabic .ui-carousel-arrow.prev { left: auto; right: 14px; }
+        body.arabic .ui-carousel-arrow.next { right: auto; left: 14px; }
+        .ui-carousel-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 5; }
+        .ui-carousel-dot { width: 10px; height: 10px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255,255,255,0.55); padding: 0; transition: var(--transition); box-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+        .ui-carousel-dot.active { background: var(--secondary); transform: scale(1.25); }
+        @media (prefers-reduced-motion: reduce) { .ui-carousel-slide { transition: none; } }
+        @media (max-width: 640px) { .ui-carousel-arrow { width: 36px; height: 36px; font-size: 14px; } .ui-carousel-caption { min-height: 64px; } .ui-carousel-caption > div { padding: 12px 36px; font-size: 13px; } }
+
         /* ===== ANIMATIONS ===== */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -559,6 +582,99 @@
                 </table>
             </div>
         </section>
+        <!-- Screenshot Carousel -->
+        <section id="screenshots">
+            <h2 class="section-title lang-en">Application Interface</h2>
+            <h2 class="section-title lang-ar">واجهة التطبيق</h2>
+            <p class="section-intro">
+                <span class="lang-en">Eight views of the desktop workspace: record or upload audio, follow the six-stage pipeline, polish the transcript with confidence-coded tokens, describe your corpus, then analyse and export it &mdash; all computed locally; nothing leaves your machine. Click any slide to open it full-size.</span>
+                <span class="lang-ar">ثماني لقطات من مساحة عمل التطبيق: سجّل الصوت أو ارفعه، وتابع خط المعالجة من ست مراحل، وصقح النص بكلمات مرمّزة بمستوى الثقة، وصِف مدوّنتك، ثم حلّلها وصدّرها &mdash; كل ذلك محليًا دون أن يغادر شيء جهازك. انقر أي لقطة لعرضها بالحجم الكامل.</span>
+            </p>
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <div class="ui-carousel" id="ui-carousel" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Application interface screenshots">
+                    <div class="ui-carousel-viewport">
+                        <div class="ui-carousel-slide active">
+                            <a href="images/CorpusMindV_1.png" target="_blank" rel="noopener" aria-label="Open full-size studio and pipeline screenshot">
+                                <img src="images/CorpusMindV_1.png" alt="CorpusMind Voice home: language, compute device and Whisper model selectors above a drag-and-drop audio zone and microphone recording, with the six-stage pipeline progress" loading="eager">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_2.png" target="_blank" rel="noopener" aria-label="Open full-size transcript editor screenshot">
+                                <img src="images/CorpusMindV_2.png" alt="Transcript editor with colour-coded token confidence (high, medium, low), utterance timestamps, speaker labels and per-utterance playback" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_3.png" target="_blank" rel="noopener" aria-label="Open full-size metadata screenshot">
+                                <img src="images/CorpusMindV_3.png" alt="Corpus metadata form: session title, speaker pseudonym, dialect, gender, age, recording place, licence and notes" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_4.png" target="_blank" rel="noopener" aria-label="Open full-size corpus overview screenshot">
+                                <img src="images/CorpusMindV_4.png" alt="Corpus overview with sessions, tokens, types and total duration cards above a frequency bar chart with function-word exclusion" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_5.png" target="_blank" rel="noopener" aria-label="Open full-size concordance screenshot">
+                                <img src="images/CorpusMindV_5.png" alt="Concordance search for 'thank' showing left context, node and right context columns with position codes and per-hit playback" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_6.png" target="_blank" rel="noopener" aria-label="Open full-size linguistic analysis screenshot">
+                                <img src="images/CorpusMindV_6.png" alt="Linguistic analysis overview: tokens, types, type-token ratio, speech rate, hapax legomena and ASR confidence distribution, with eight export formats" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_7.png" target="_blank" rel="noopener" aria-label="Open full-size speech and prosody screenshot">
+                                <img src="images/CorpusMindV_7.png" alt="Speech and prosody panel: disfluency events per 1,000 tokens beside Praat aggregates for F0, intensity, jitter, shimmer and HNR" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="ui-carousel-slide">
+                            <a href="images/CorpusMindV_8.png" target="_blank" rel="noopener" aria-label="Open full-size research assistant screenshot">
+                                <img src="images/CorpusMindV_8.png" alt="Research assistant chat using a local LLM via Ollama or LM Studio, with tools to summarise the transcript, preview it without fillers and suggest topic tags" loading="lazy">
+                            </a>
+                        </div>
+                        <button class="ui-carousel-arrow prev" type="button" aria-label="Previous slide">&#10094;</button>
+                        <button class="ui-carousel-arrow next" type="button" aria-label="Next slide">&#10095;</button>
+                        <div class="ui-carousel-dots"></div>
+                    </div>
+                    <div class="ui-carousel-caption">
+                        <div class="active">
+                            <span class="lang-en"><strong>Studio &amp; six-stage pipeline</strong> &mdash; drop audio or record live; pick the dialect, compute device and Whisper model; watch ingest, transcription, alignment, prosody, disfluency and export run fully offline</span>
+                            <span class="lang-ar"><strong>الاستوديو وخط المعالجة الست</strong> &mdash; أفلِت ملفًا صوتيًا أو سجّل مباشرة؛ اختر اللهجة وجهاز الحوسبة ونموذج Whisper؛ وتابع الإدخال والتعرف والمحاذاة والتنغيم وعيوب الطلاقة والتصدير وهي تعمل دون اتصال</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Transcript Editor</strong> &mdash; confidence-coded tokens you can click to correct; edits trigger a single-utterance re-alignment; timestamps and speaker labels on every turn</span>
+                            <span class="lang-ar"><strong>محرر النص</strong> &mdash; كلمات مرمّزة بمستوى الثقة يمكن النقر عليها لتصحيحها؛ تستدعي التصحيحات إعادة محاذاة للنطقة وحدها؛ مع طوابع زمنية ووسم المتحدث لكل دور</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Metadata</strong> &mdash; session title, speaker pseudonym, dialect, gender, age, recording place and licence, embedded into the TEI <code>&lt;teiHeader&gt;</code> of every export</span>
+                            <span class="lang-ar"><strong>البيانات الوصفية</strong> &mdash; عنوان الجلسة واسم المتحدث المستعار واللهجة والجنس والعمر ومكان التسجيل والرخصة، تُضمَّن في TEI <code>&lt;teiHeader&gt;</code> مع كل تصدير</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Corpus Overview</strong> &mdash; everything processed on this machine aggregated across sessions: sessions, tokens, types and duration, with a local frequency list and concordance</span>
+                            <span class="lang-ar"><strong>نظرة عامة على المدوّنة</strong> &mdash; كل ما عولج على هذه الآلة مجمَّعًا عبر الجلسات: الجلسات والكلمات والأنواع والمدة، مع قائمة تردد وكشف سياقي محليين</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Concordance (KWIC)</strong> &mdash; search with normalisation, whole-word or regular-expression modes, tunable context width, per-hit playback and CSV export</span>
+                            <span class="lang-ar"><strong>الكشف السياقي (KWIC)</strong> &mdash; بحث بأوضاع التطبيع أو الكلمة الكاملة أو التعابير النمطية، بعرض سياق قابل للضبط وتشغيل لكل نتيجة وتصدير CSV</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Linguistic Analysis</strong> &mdash; tokens, types, TTR, speech rate and ASR confidence at a glance; export to JSON, CSV, TEI/XML, TextGrid, EAF, SRT, WebVTT or SQLite</span>
+                            <span class="lang-ar"><strong>التحليل اللغوي</strong> &mdash; الكلمات والأنواع ونسبة النوع-الرمز ومعدل الكلام وثقة التعرف في لمحة؛ تصدير إلى JSON وCSV وTEI/XML وTextGrid وEAF وSRT وWebVTT أو SQLite</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Speech &amp; Prosody</strong> &mdash; disfluency events per 1,000 tokens (fillers, repeats, false starts, pauses) beside Praat aggregates: F0 mean and range, intensity, jitter, shimmer and HNR</span>
+                            <span class="lang-ar"><strong>الكلام والتنغيم</strong> &mdash; أحداث عيوب الطلاقة لكل ١٠٠٠ كلمة (حشو وتكرار وبدايات فاشلة وتوقفات) بجانب مؤشرات Praat: متوسط F0 ومداه والشدة والاهتزاز والتردد وHNR</span>
+                        </div>
+                        <div>
+                            <span class="lang-en"><strong>Research Assistant</strong> &mdash; chat with a local LLM via Ollama or LM Studio: summarise, preview without fillers, suggest topic tags &mdash; nothing is sent online</span>
+                            <span class="lang-ar"><strong>المساعد البحثي</strong> &mdash; حاوِث نموذجًا لغويًا محليًا عبر Ollama أو LM Studio: تلخيص ومعاينة بلا حشو واقتراح وسوم موضوعية &mdash; لا يُرسل شيء عبر الإنترنت</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Mobile PWA Section -->
         <section id="mobile">
             <h2 class="section-title lang-en">Research in the Field: CorpusMind Voice on Your Phone</h2>
@@ -1165,6 +1281,60 @@
                     console.log('GA analytics fetch skipped:', e.message);
                 }
             }
+        })();
+    </script>
+    <script>
+        // ===== Interface screenshot carousel =====
+        (function() {
+            var root = document.getElementById('ui-carousel');
+            if (!root) return;
+            var slides = Array.prototype.slice.call(root.querySelectorAll('.ui-carousel-slide'));
+            var capBox = root.querySelector('.ui-carousel-caption');
+            var caps = capBox ? Array.prototype.slice.call(capBox.children) : [];
+            var dotsBox = root.querySelector('.ui-carousel-dots');
+            var idx = 0, timer = null, DELAY = 6500;
+            var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var dots = slides.map(function(_, i) {
+                var d = document.createElement('button');
+                d.type = 'button';
+                d.className = 'ui-carousel-dot' + (i === 0 ? ' active' : '');
+                d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                d.addEventListener('click', function() { go(i); restart(); });
+                dotsBox.appendChild(d);
+                return d;
+            });
+
+            function go(i) {
+                idx = (i + slides.length) % slides.length;
+                slides.forEach(function(s, k) { s.classList.toggle('active', k === idx); });
+                caps.forEach(function(c, k) { c.classList.toggle('active', k === idx); });
+                dots.forEach(function(d, k) { d.classList.toggle('active', k === idx); });
+            }
+            function restart() {
+                if (reduceMotion) return;
+                clearInterval(timer);
+                timer = setInterval(function() { go(idx + 1); }, DELAY);
+            }
+            root.querySelector('.ui-carousel-arrow.prev').addEventListener('click', function() { go(idx - 1); restart(); });
+            root.querySelector('.ui-carousel-arrow.next').addEventListener('click', function() { go(idx + 1); restart(); });
+            root.addEventListener('mouseenter', function() { clearInterval(timer); });
+            root.addEventListener('mouseleave', restart);
+            root.addEventListener('focusin', function() { clearInterval(timer); });
+            root.addEventListener('focusout', restart);
+            root.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') { go(idx - 1); restart(); e.preventDefault(); }
+                if (e.key === 'ArrowRight') { go(idx + 1); restart(); e.preventDefault(); }
+            });
+            var x0 = null;
+            root.addEventListener('pointerdown', function(e) { x0 = e.clientX; }, { passive: true });
+            root.addEventListener('pointerup', function(e) {
+                if (x0 === null) return;
+                var dx = e.clientX - x0;
+                if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); restart(); }
+                x0 = null;
+            }, { passive: true });
+            restart();
         })();
     </script>
     <script src="/js/visitors-map.js"></script>
