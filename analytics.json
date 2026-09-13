@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 307,
-    "all_time_pageviews": 932,
+    "all_time_pageviews": 936,
     "last_7_days_visitors": 25,
     "last_30_days_visitors": 53
   },
@@ -325,7 +325,7 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 449,
+      "pageviews": 450,
       "visitors": 259
     },
     {
@@ -340,7 +340,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 25,
+      "pageviews": 26,
       "visitors": 7
     },
     {
@@ -349,14 +349,19 @@
       "visitors": 8
     },
     {
+      "url": "waleedmandour.org/projects/",
+      "pageviews": 23,
+      "visitors": 7
+    },
+    {
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
       "pageviews": 23,
       "visitors": 13
     },
     {
-      "url": "waleedmandour.org/projects/",
-      "pageviews": 22,
-      "visitors": 7
+      "url": "waleedmandour.org/projects/CorpusMindLens/",
+      "pageviews": 21,
+      "visitors": 5
     },
     {
       "url": "waleedmandour.org/teaching/",
@@ -364,15 +369,10 @@
       "visitors": 16
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 20,
-      "visitors": 5
-    },
-    {
       "url": "127.0.0.1/",
       "pageviews": 19,
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-13T12:56:06Z"
+  "fetched_at": "2026-09-13T16:44:41Z"
 }
