@@ -2,8 +2,8 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 307,
-    "all_time_pageviews": 927,
-    "last_7_days_visitors": 23,
+    "all_time_pageviews": 931,
+    "last_7_days_visitors": 24,
     "last_30_days_visitors": 53
   },
   "top_countries_all_time": [
@@ -286,16 +286,16 @@
       "flag_emoji": "🇺🇸"
     },
     {
-      "country": "Egypt",
-      "country_code": "EG",
-      "visitors": 3,
-      "flag_emoji": "🇪🇬"
-    },
-    {
       "country": "Iraq",
       "country_code": "IQ",
       "visitors": 3,
       "flag_emoji": "🇮🇶"
+    },
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 2,
+      "flag_emoji": "🇪🇬"
     },
     {
       "country": "Hong Kong",
@@ -325,7 +325,7 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 448,
+      "pageviews": 449,
       "visitors": 259
     },
     {
@@ -339,14 +339,14 @@
       "visitors": 8
     },
     {
+      "url": "waleedmandour.org/projects/CorpusMind/",
+      "pageviews": 25,
+      "visitors": 6
+    },
+    {
       "url": "waleedmandour.org/index.html",
       "pageviews": 24,
       "visitors": 8
-    },
-    {
-      "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 24,
-      "visitors": 5
     },
     {
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
@@ -355,7 +355,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 21,
+      "pageviews": 22,
       "visitors": 7
     },
     {
@@ -369,10 +369,10 @@
       "visitors": 2
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMindVoice/",
+      "url": "waleedmandour.org/projects/CorpusMindLens/",
       "pageviews": 19,
-      "visitors": 4
+      "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-13T01:59:55Z"
+  "fetched_at": "2026-09-13T07:16:39Z"
 }
