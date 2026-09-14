@@ -139,7 +139,31 @@
         .comparison-table tr:hover { background: var(--light); }
         .comparison-table .cm-row { background: rgba(14, 107, 168, 0.05); font-weight: 600; }
         .yes { color: var(--secondary); font-weight: 700; } .no { color: #c0392b; font-weight: 700; } .partial { color: var(--accent); font-weight: 600; }
-        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 32px; } .hero-subtitle { font-size: 18px; } .section-title { font-size: 28px; } .features-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } .comparison-table { min-width: 600px; } .hero-badges { justify-content: center; } }
+        /* ===== Screenshots Carousel ===== */
+        .screenshots-intro { max-width: 820px; margin: 0 auto; text-align: center; font-size: 16px; line-height: 1.7; color: var(--dark); }
+        .carousel-card { background: var(--white); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); max-width: 1020px; margin: 28px auto 0; }
+        .carousel-viewport { position: relative; overflow: hidden; border-radius: 12px; direction: ltr; background: linear-gradient(140deg, #081430 0%, #0A1C3C 45%, #0E2A50 100%); outline: none; }
+        .carousel-viewport:focus-visible { box-shadow: 0 0 0 3px rgba(14, 107, 168, 0.55); }
+        .carousel-track { display: flex; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); }
+        .carousel-slide { flex: 0 0 100%; max-width: 100%; margin: 0; padding: 20px 20px 22px; }
+        .shot-frame { border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.10); box-shadow: 0 10px 34px rgba(0,0,0,0.4); }
+        .shot-frame a { display: block; line-height: 0; }
+        .shot-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+        .shot-caption { margin-top: 16px; text-align: center; padding: 0 8px; }
+        .shot-title { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+        .shot-title i { color: #6FB3E0; margin-right: 8px; font-size: 15px; }
+        body.arabic .shot-title i { margin-right: 0; margin-left: 8px; }
+        .shot-desc { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.78); max-width: 780px; margin: 0 auto; }
+        .carousel-arrow { position: absolute; top: 40%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); background: rgba(10, 28, 60, 0.82); color: var(--white); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); z-index: 5; backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+        .carousel-arrow:hover, .carousel-arrow:focus-visible { background: var(--secondary); border-color: var(--secondary); transform: translateY(-50%) scale(1.08); }
+        .carousel-arrow.prev { left: 14px; } .carousel-arrow.next { right: 14px; }
+        .carousel-counter { position: absolute; top: 14px; right: 14px; background: rgba(10, 28, 60, 0.85); color: var(--white); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 4px 12px; font-size: 12px; font-weight: 700; z-index: 5; backdrop-filter: blur(6px); letter-spacing: 0.4px; }
+        .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 16px; }
+        .carousel-dot { width: 9px; height: 9px; border-radius: 30px; border: none; background: #C7D3DF; cursor: pointer; padding: 0; transition: var(--transition); }
+        .carousel-dot:hover { background: var(--accent-light); }
+        .carousel-dot.active { width: 28px; background: var(--secondary); }
+        .carousel-hint { text-align: center; font-size: 12px; color: var(--gray); margin-top: 12px; }
+        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 32px; } .hero-subtitle { font-size: 18px; } .section-title { font-size: 28px; } .features-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } .comparison-table { min-width: 600px; } .hero-badges { justify-content: center; } .carousel-card { padding: 10px; } .carousel-slide { padding: 12px 12px 16px; } .carousel-arrow { width: 34px; height: 34px; font-size: 13px; } .carousel-arrow.prev { left: 8px; } .carousel-arrow.next { right: 8px; } .shot-title { font-size: 15px; } .shot-desc { font-size: 13px; } .screenshots-intro { font-size: 15px; } }
     </style>
 </head>
 <body>
@@ -295,6 +319,86 @@
                     <p class="lang-en">Every result exports for archival and publication: CSV, TSV, XML, JSON, and Excel (XLSX) across statistical measures, discourse batteries, social analyses, and posts. A Methods Section draft documents the analytical pipeline in citation-ready prose, and discourse claims export with their evidence identifiers and confidence values so that every interpretation can be audited.</p>
                     <p class="lang-ar">تُصدَّر جميع النتائج للأرشفة والنشر بصيغ CSV وTSV وXML وJSON وExcel (XLSX) عبر المقاييس الإحصائية وبطاريات تحليل الخطاب وتحليلات وسائل التواصل والمنشورات. تُوثّق مسودة قسم المنهجيات مسار التحليل بنثر جاهز للاقتباس، وتُصدَّر ادعاءات الخطاب مع مُعرّفات الأدلة وقيم الثقة حتى قابل كل تفسير للتدقيق.</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- Screenshots Carousel -->
+        <section id="screenshots">
+            <h2 class="section-title lang-en">CorpusMind Lens in Action</h2>
+            <h2 class="section-title lang-ar" style="display:none;">كوربَس مايند لِنز أثناء العمل</h2>
+            <p class="screenshots-intro">
+                <span class="lang-en">A guided visual tour of the main workspaces — from the welcome screen, image-set management and annotation dimensions to social-media corpora, engagement analytics and the local model catalogue. Use the arrows, the dots, or your keyboard; click any screenshot to view it full size.</span>
+                <span class="lang-ar">جولة بصرية موجَّهة عبر مساحات العمل الرئيسية — من شاشة الترحيب وإدارة مجموعات الصور وأبعاد الوسم إلى مدونات وسائل التواصل وتحليلات التفاعل وكتالوج النماذج المحلية. استخدم الأسهم أو النقاط أو لوحة المفاتيح؛ وانقر على أي لقطة لعرضها بالحجم الكامل.</span>
+            </p>
+            <div class="carousel-card" id="cm-carousel-card">
+                <div class="carousel-viewport" id="cm-carousel" tabindex="0" role="region" aria-roledescription="carousel" aria-label="CorpusMind Lens screenshots" dir="ltr">
+                    <div class="carousel-track">
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_1.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_1.png" alt="About CorpusMind Lens screen with privacy, credits and citation" loading="eager"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-circle-info"></i><span class="lang-en">About, Privacy &amp; Citation</span><span class="lang-ar">حول التطبيق والخصوصية والاستشهاد</span></div>
+                                <div class="shot-desc"><span class="lang-en">The About page summarises what Lens does, the privacy commitments (no cloud, no telemetry, opt-in facial analysis), the open-science credits, and a ready-made Zenodo citation for published research.</span><span class="lang-ar">تلخّص صفحة «حول» ما يفعله لِنز، والالتزامات المتعلقة بالخصوصية (بلا سحابة، بلا قياسات استخدام، وتحليل الوجه اختياري)، واعتمادات العلم المفتوح، واستشهاد Zenodo جاهزًا للبحث المنشور.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_2.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_2.png" alt="Welcome home screen with the three-step workflow and project management" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-house"></i><span class="lang-en">Welcome &amp; Three-Step Workflow</span><span class="lang-ar">الترحيب وسير العمل ثلاثي الخطوات</span></div>
+                                <div class="shot-desc"><span class="lang-en">The Home screen greets you with the three-step workflow — build the corpus, analyse, share — alongside project management for creating projects, image sets and jumping straight into the analysis pages.</span><span class="lang-ar">تُرحّبك الشاشة الرئيسية بسير العمل من ثلاث خطوات — بناء المدونة، ثم التحليل، ثم المشاركة — إلى جانب إدارة المشاريع لإنشاء المشاريع ومجموعات الصور والانتقال مباشرةً إلى صفحات التحليل.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_3.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_3.png" alt="Images page with image sets, uploads and per-set statistics" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-images"></i><span class="lang-en">Image-Set Management</span><span class="lang-ar">إدارة مجموعات الصور</span></div>
+                                <div class="shot-desc"><span class="lang-en">Import images into sets with background analysis: automatic OCR, dominant-colour palette and composition geometry, plus per-set statistics and one-click exports to XLSX or an extracted-text JSON corpus.</span><span class="lang-ar">استورد الصور إلى مجموعات مع تحليل تلقائي في الخلفية: استخراج النصوص، ولوحة الألوان السائدة، وهندسة التكوين، إلى جانب إحصاءات لكل مجموعة وتصدير بنقرة واحدة إلى XLSX أو مدونة JSON للنصوص المستخرجة.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_4.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_4.png" alt="Social media corpus with word frequency and KWIC concordance analyses" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-table-list"></i><span class="lang-en">Social Media Corpora &amp; KWIC Concordance</span><span class="lang-ar">مدونات وسائل التواصل والكونكوردانس</span></div>
+                                <div class="shot-desc"><span class="lang-en">Build social-media corpora from your own exports or official free-tier APIs, then run the full statistical battery — word frequency, lexical diversity, n-grams and KWIC concordance — with CSV, XML, TSV and JSON export.</span><span class="lang-ar">أنشئ مدونات لوسائل التواصل من تصديراتك أو عبر الواجهات الرسمية المجانية، ثم طبّق البطارية الإحصائية الكاملة — تردد الكلمات، والتنوع المعجمي، والـn-grams، والكونكوردانس — مع تصدير CSV وXML وTSV وJSON.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_5.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_5.png" alt="Ethical social media import with pseudonymisation and redaction options" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-shield-halved"></i><span class="lang-en">Ethical Import &amp; API Fetch</span><span class="lang-ar">الاستيراد الأخلاقي والجلب عبر الواجهات</span></div>
+                                <div class="shot-desc"><span class="lang-en">Offline imports accept X/Twitter archives, Instagram and Facebook Download-Your-Information files, TikTok exports and generic CSV/JSONL behind an ethics attestation, with pseudonymised authors, URL and @mention redaction, and optional vision analysis. Official Reddit, Mastodon and YouTube APIs use your own free credentials, never stored.</span><span class="lang-ar">يقبل الاستيراد دون اتصال أرشيفات X/تويتر، وملفات «تنزيل معلوماتك» من إنستغرام وفيسبوك، وتصديرات تيك توك، وملفات CSV/JSONL العامة بعد إقرار أخلاقي، مع إخفاء هويات المؤلفين وحذف الروابط والإشارات وتحليل بصري اختياري. وتُستخدم واجهات ريديت وماستودون ويوتيوب الرسمية ببيانات اعتمادك المجانية التي لا تُخزَّن أبدًا.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_6.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_6.png" alt="Engagement analytics ranking posts by likes, comments and shares" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-chart-line"></i><span class="lang-en">Engagement Analytics</span><span class="lang-ar">تحليلات التفاعل</span></div>
+                                <div class="shot-desc"><span class="lang-en">The analyses tabs cover emoji and hashtag networks, engagement-weighted statistics, timelines and cross-corpus keyness — here ranking YouTube posts by likes, comments and shares with summary statistics and one-click export.</span><span class="lang-ar">تغطي تبويبات التحليلات الإيموجي وشبكات الوسوم والإحصاءات الموزونة بالتفاعل والخطوط الزمنية والمفتاحية بين المدونات — وهنا تُرتَّب منشورات يوتيوب حسب الإعجابات والتعليقات والمشاركات مع إحصاءات موجزة وتصدير بنقرة واحدة.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_7.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_7.png" alt="Model catalogue in Settings with vision, text and embedding models" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-microchip"></i><span class="lang-en">Local Model Catalogue</span><span class="lang-ar">كتالوج النماذج المحلية</span></div>
+                                <div class="shot-desc"><span class="lang-en">The Settings catalogue curates vision, text and embedding models with honest CPU and RAM fit badges plus Arabic-support flags, and pulls any Hugging Face GGUF model with one click — everything runs locally through Ollama or LM Studio.</span><span class="lang-ar">يُنسّق كتالوج الإعدادات نماذج الرؤية والنص والتضمين مع شارات ملاءمة صادقة للمعالج والذاكرة وشارات دعم العربية، ويثبّت أي نموذج GGUF من Hugging Face بنقرة واحدة — ويعمل كل شيء محليًا عبر Ollama أو LM Studio.</span></div>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide">
+                            <div class="shot-frame"><a href="images/CorpusMindL_8.png" target="_blank" rel="noopener"><img src="images/CorpusMindL_8.png" alt="Multi-select annotation dimensions such as visual morphology and filmic shot scale" loading="lazy"></a></div>
+                            <figcaption class="shot-caption">
+                                <div class="shot-title"><i class="fas fa-tags"></i><span class="lang-en">Annotation Dimensions</span><span class="lang-ar">أبعاد الوسم</span></div>
+                                <div class="shot-desc"><span class="lang-en">Multi-select annotation dimensions — visual morphology, attentional framing, filmic shot scale, path structure and transitions, multimodal integration — fully bilingual in English and Arabic, feeding the twelve framework lenses.</span><span class="lang-ar">أبعاد وسم متعددة الاختيار — التصرُّف البصري، والتأطير الانتباهي، ومقاييس اللقطة السينمائية، وبنية المسارات والانتقالات، والتكامل متعدد الأنماط — بلغتين إنجليزية وعربية، وتُغذّي عدسات الأطر الاثني عشر.</span></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <button class="carousel-arrow prev" id="cm-prev" type="button" aria-label="Previous screenshot"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-arrow next" id="cm-next" type="button" aria-label="Next screenshot"><i class="fas fa-chevron-right"></i></button>
+                    <div class="carousel-counter" id="cm-counter">1 / 8</div>
+                </div>
+                <div class="carousel-dots" id="cm-dots"></div>
+                <p class="carousel-hint">
+                    <span class="lang-en"><i class="fas fa-hand-pointer"></i> Swipe, use the &larr; &rarr; keys, or click a screenshot to open it full size</span>
+                    <span class="lang-ar"><i class="fas fa-hand-pointer"></i> اسحب أو استخدم مفتاحي السهمين، أو انقر على اللقطة لفتحها بالحجم الكامل</span>
+                </p>
             </div>
         </section>
 
@@ -581,6 +685,75 @@
             document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
             gtag('event', 'language_change', {event_category: 'engagement', event_label: lang});
         }
+        // ===== Screenshots carousel =====
+        (function() {
+            const vp = document.getElementById('cm-carousel');
+            if (!vp) return;
+            const track = vp.querySelector('.carousel-track');
+            const slides = track ? Array.from(track.children) : [];
+            const n = slides.length;
+            if (!n) return;
+            const dotsWrap = document.getElementById('cm-dots');
+            const counter = document.getElementById('cm-counter');
+            const card = document.getElementById('cm-carousel-card');
+            let idx = 0, timer = null, suppressClick = false;
+            const AUTOPLAY_MS = 6500;
+            for (let i = 0; i < n; i++) {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                b.setAttribute('aria-label', 'Go to screenshot ' + (i + 1));
+                b.addEventListener('click', function() { go(i, true); restart(); });
+                dotsWrap.appendChild(b);
+            }
+            function go(i, byUser) {
+                idx = ((i % n) + n) % n;
+                track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+                if (counter) counter.textContent = (idx + 1) + ' / ' + n;
+                Array.prototype.forEach.call(dotsWrap.children, function(d, j) { d.classList.toggle('active', j === idx); });
+                slides.forEach(function(s, j) { s.setAttribute('aria-hidden', j === idx ? 'false' : 'true'); });
+                if (byUser && typeof gtag === 'function') gtag('event', 'carousel_nav', { event_category: 'engagement', event_label: 'lens_slide_' + (idx + 1) });
+            }
+            function next(byUser) { go(idx + 1, byUser); }
+            function prev(byUser) { go(idx - 1, byUser); }
+            function start() { if (!timer) timer = setInterval(function() { next(false); }, AUTOPLAY_MS); }
+            function stop() { if (timer) { clearInterval(timer); timer = null; } }
+            function restart() { stop(); start(); }
+            document.getElementById('cm-next').addEventListener('click', function() { next(true); restart(); });
+            document.getElementById('cm-prev').addEventListener('click', function() { prev(true); restart(); });
+            card.addEventListener('mouseenter', stop);
+            card.addEventListener('mouseleave', function() { if (!document.hidden) start(); });
+            vp.addEventListener('focusin', stop);
+            vp.addEventListener('focusout', start);
+            vp.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') { next(true); restart(); e.preventDefault(); }
+                else if (e.key === 'ArrowLeft') { prev(true); restart(); e.preventDefault(); }
+            });
+            let touchX = null, touchY = null;
+            vp.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; stop(); }, { passive: true });
+            vp.addEventListener('touchend', function(e) {
+                if (touchX === null) return;
+                const dx = e.changedTouches[0].clientX - touchX, dy = e.changedTouches[0].clientY - touchY;
+                if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) { next(true); } else { prev(true); }
+                    suppressClick = true;
+                    setTimeout(function() { suppressClick = false; }, 400);
+                }
+                touchX = touchY = null;
+                if (!document.hidden) start();
+            }, { passive: true });
+            vp.addEventListener('click', function(e) { if (suppressClick) { e.preventDefault(); e.stopPropagation(); } }, true);
+            document.addEventListener('visibilitychange', function() { if (document.hidden) { stop(); } else if (!vp.matches(':hover')) { start(); } });
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function(entries) {
+                    if (entries[0].isIntersecting) { if (!document.hidden) start(); } else { stop(); }
+                }, { threshold: 0.25 }).observe(vp);
+            } else {
+                start();
+            }
+            go(0, false);
+        })();
+
         (async function() {
             const REPO='waleedmandour/CorpusMind-Lens', TAG='v0.3.2';
             try {
