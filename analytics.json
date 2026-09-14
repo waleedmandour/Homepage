@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 307,
-    "all_time_pageviews": 940,
-    "last_7_days_visitors": 25,
-    "last_30_days_visitors": 53
+    "all_time_visitors": 308,
+    "all_time_pageviews": 942,
+    "last_7_days_visitors": 22,
+    "last_30_days_visitors": 54
   },
   "top_countries_all_time": [
     {
@@ -127,6 +127,13 @@
       "flag_emoji": "🇸🇬"
     },
     {
+      "country": "Iran",
+      "country_code": "IR",
+      "country_numeric": "364",
+      "visitors": 2,
+      "flag_emoji": "🇮🇷"
+    },
+    {
       "country": "Malaysia",
       "country_code": "MY",
       "country_numeric": "458",
@@ -188,13 +195,6 @@
       "country_numeric": "246",
       "visitors": 1,
       "flag_emoji": "🇫🇮"
-    },
-    {
-      "country": "Iran",
-      "country_code": "IR",
-      "country_numeric": "364",
-      "visitors": 1,
-      "flag_emoji": "🇮🇷"
     },
     {
       "country": "Libya",
@@ -304,16 +304,16 @@
       "flag_emoji": "🇭🇰"
     },
     {
+      "country": "Iran",
+      "country_code": "IR",
+      "visitors": 2,
+      "flag_emoji": "🇮🇷"
+    },
+    {
       "country": "France",
       "country_code": "FR",
       "visitors": 1,
       "flag_emoji": "🇫🇷"
-    },
-    {
-      "country": "Iran",
-      "country_code": "IR",
-      "visitors": 1,
-      "flag_emoji": "🇮🇷"
     },
     {
       "country": "Jordan",
@@ -325,8 +325,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 450,
-      "visitors": 259
+      "pageviews": 452,
+      "visitors": 260
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -374,5 +374,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-14T02:17:55Z"
+  "fetched_at": "2026-09-14T08:16:07Z"
 }
