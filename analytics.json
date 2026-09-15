@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 308,
     "all_time_pageviews": 951,
-    "last_7_days_visitors": 22,
-    "last_30_days_visitors": 54
+    "last_7_days_visitors": 19,
+    "last_30_days_visitors": 52
   },
   "top_countries_all_time": [
     {
@@ -292,12 +292,6 @@
       "flag_emoji": "🇮🇶"
     },
     {
-      "country": "Egypt",
-      "country_code": "EG",
-      "visitors": 2,
-      "flag_emoji": "🇪🇬"
-    },
-    {
       "country": "Hong Kong",
       "country_code": "HK",
       "visitors": 2,
@@ -308,6 +302,12 @@
       "country_code": "IR",
       "visitors": 2,
       "flag_emoji": "🇮🇷"
+    },
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 1,
+      "flag_emoji": "🇪🇬"
     },
     {
       "country": "France",
@@ -374,5 +374,5 @@
       "visitors": 2
     }
   ],
-  "fetched_at": "2026-09-15T02:24:04Z"
+  "fetched_at": "2026-09-15T08:08:26Z"
 }
