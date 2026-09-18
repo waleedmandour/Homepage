@@ -2,9 +2,9 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 312,
-    "all_time_pageviews": 968,
-    "last_7_days_visitors": 15,
-    "last_30_days_visitors": 51
+    "all_time_pageviews": 972,
+    "last_7_days_visitors": 13,
+    "last_30_days_visitors": 50
   },
   "top_countries_all_time": [
     {
@@ -264,7 +264,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 21,
+      "visitors": 20,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -325,7 +325,7 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 458,
+      "pageviews": 459,
       "visitors": 263
     },
     {
@@ -340,12 +340,12 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 35,
+      "pageviews": 36,
       "visitors": 7
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 31,
+      "pageviews": 32,
       "visitors": 5
     },
     {
@@ -355,7 +355,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 23,
+      "pageviews": 24,
       "visitors": 7
     },
     {
@@ -374,5 +374,5 @@
       "visitors": 4
     }
   ],
-  "fetched_at": "2026-09-18T02:06:56Z"
+  "fetched_at": "2026-09-18T07:43:20Z"
 }
