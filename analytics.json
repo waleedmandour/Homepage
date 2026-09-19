@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 313,
-    "all_time_pageviews": 991,
+    "all_time_pageviews": 992,
     "last_7_days_visitors": 14,
     "last_30_days_visitors": 50
   },
@@ -365,7 +365,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindVoice/",
-      "pageviews": 21,
+      "pageviews": 22,
       "visitors": 5
     },
     {
@@ -374,5 +374,5 @@
       "visitors": 16
     }
   ],
-  "fetched_at": "2026-09-19T19:03:47Z"
+  "fetched_at": "2026-09-19T21:55:13Z"
 }
