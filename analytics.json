@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 313,
-    "all_time_pageviews": 982,
+    "all_time_pageviews": 990,
     "last_7_days_visitors": 14,
     "last_30_days_visitors": 50
   },
@@ -334,23 +334,23 @@
       "visitors": 10
     },
     {
+      "url": "waleedmandour.org/projects/CorpusMind/",
+      "pageviews": 41,
+      "visitors": 9
+    },
+    {
       "url": "waleedmandour.org/projects/AMTA/",
       "pageviews": 38,
       "visitors": 9
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 38,
-      "visitors": 8
-    },
-    {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 35,
+      "pageviews": 37,
       "visitors": 6
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 27,
+      "pageviews": 28,
       "visitors": 8
     },
     {
@@ -364,15 +364,15 @@
       "visitors": 13
     },
     {
+      "url": "waleedmandour.org/projects/CorpusMindVoice/",
+      "pageviews": 21,
+      "visitors": 5
+    },
+    {
       "url": "waleedmandour.org/teaching/",
       "pageviews": 21,
       "visitors": 16
-    },
-    {
-      "url": "waleedmandour.org/projects/CorpusMindVoice/",
-      "pageviews": 20,
-      "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-19T09:55:25Z"
+  "fetched_at": "2026-09-19T13:34:48Z"
 }
