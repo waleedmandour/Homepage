@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 319,
-    "all_time_pageviews": 1002,
-    "last_7_days_visitors": 13,
-    "last_30_days_visitors": 52
+    "all_time_visitors": 320,
+    "all_time_pageviews": 1004,
+    "last_7_days_visitors": 14,
+    "last_30_days_visitors": 53
   },
   "top_countries_all_time": [
     {
@@ -162,6 +162,13 @@
       "flag_emoji": "🇹🇭"
     },
     {
+      "country": "Türkiye",
+      "country_code": "TR",
+      "country_numeric": "792",
+      "visitors": 2,
+      "flag_emoji": "🇹🇷"
+    },
+    {
       "country": "Andorra",
       "country_code": "AD",
       "country_numeric": "020",
@@ -246,13 +253,6 @@
       "flag_emoji": "🇹🇼"
     },
     {
-      "country": "Türkiye",
-      "country_code": "TR",
-      "country_numeric": "792",
-      "visitors": 1,
-      "flag_emoji": "🇹🇷"
-    },
-    {
       "country": "United Arab Emirates",
       "country_code": "AE",
       "country_numeric": "784",
@@ -335,8 +335,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 43,
-      "visitors": 9
+      "pageviews": 45,
+      "visitors": 10
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -374,5 +374,5 @@
       "visitors": 17
     }
   ],
-  "fetched_at": "2026-09-24T13:03:02Z"
+  "fetched_at": "2026-09-24T18:03:07Z"
 }
