@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 321,
-    "all_time_pageviews": 1006,
+    "all_time_pageviews": 1007,
     "last_7_days_visitors": 15,
     "last_30_days_visitors": 51
   },
@@ -350,7 +350,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 29,
+      "pageviews": 30,
       "visitors": 9
     },
     {
@@ -374,5 +374,5 @@
       "visitors": 17
     }
   ],
-  "fetched_at": "2026-09-25T19:41:04Z"
+  "fetched_at": "2026-09-25T22:56:42Z"
 }
