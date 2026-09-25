@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AMTA Lexicography Assistant: A Google Sheets Add-on for automated dictionary creation using advanced academic APIs (Scopus, OpenAlex, etc.) and Gemini 3.0 Flash.">
+    <meta name="description" content="AMTA Lexicography Assistant v1.3: A Google Sheets Add-on for automated dictionary creation using advanced academic APIs (Scopus, OpenAlex, etc.) and Gemini 2.5 Flash — with resilient multi-provider fallback (Groq, LM Studio) and a bilingual English/Arabic user guide.">
     <title>AMTA Lexicography Assistant - Dr. Waleed Mandour</title>
     <!-- Google Analytics (G-WW4M0NCF1V — same measurement ID as the rest of waleedmandour.org) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
@@ -432,10 +432,10 @@
                 </div>
 
                 <div class="coming-soon-badge lang-en">
-                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Available on Google Workspace Marketplace
+                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Available on Google Workspace Marketplace &middot; v1.3
                 </div>
                 <div class="coming-soon-badge lang-ar">
-                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; متاح على متجر جوجل للتطبيقات
+                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; متاح على متجر جوجل للتطبيقات &middot; الإصدار 1.3
                 </div>
 
                 <h1 class="lang-en">AMTA Lexicography Assistant</h1>
@@ -509,8 +509,8 @@
                     <div class="feature-icon"><i class="fas fa-language"></i></div>
                     <h3 class="lang-en">RAG-Powered Multilingual Definitions</h3>
                     <h3 class="lang-ar">تعريفات متعددة اللغات بتقنية RAG</h3>
-                    <p class="lang-en">Eliminate AI hallucinations. Uses Retrieval-Augmented Generation — "reads" abstracts of actual academic papers before prompting Google Gemini to draft definitions, translations (Arabic, Spanish, French, Chinese, and more), and usage examples.</p>
-                    <p class="lang-ar">تخلّص من هلوسة الذكاء الاصطناعي. يستخدم التوليد المعزز بالاسترجاع — "يقرأ" ملخصات أوراق أكاديمية فعلية قبل توجيه Google Gemini لصياغة التعريفات والترجمات (العربية، الإسبانية، الفرنسية، الصينية، والمزيد) وأمثلة الاستخدام.</p>
+                    <p class="lang-en">Eliminate AI hallucinations. Uses Retrieval-Augmented Generation — "reads" abstracts of actual academic papers before prompting Google Gemini to draft definitions, translations (Arabic, Spanish, French, Chinese, and more), and usage examples. From v1.3, an automatic multi-provider fallback (Groq cloud or a local LM Studio server) keeps AI generation running even when Gemini quotas are exhausted.</p>
+                    <p class="lang-ar">تخلّص من هلوسة الذكاء الاصطناعي. يستخدم التوليد المعزز بالاسترجاع — "يقرأ" ملخصات أوراق أكاديمية فعلية قبل توجيه Google Gemini لصياغة التعريفات والترجمات (العربية، الإسبانية، الفرنسية، الصينية، والمزيد) وأمثلة الاستخدام. واعتباراً من الإصدار 1.3، يضمن نظام الاحتياط التلقائي متعدد المزودين (Groq السحابي أو خادم LM Studio المحلي) استمرار التوليد الآلي حتى عند نفاد حصة Gemini.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-file-export"></i></div>
@@ -583,7 +583,7 @@
             <span class="apis-label lang-en">Powered By Academic APIs</span>
             <span class="apis-label lang-ar">مدعوم بواجهات برمجة تطبيقات أكاديمية</span>
             <div class="apis-grid">
-                <div class="api-badge"><i class="fas fa-robot"></i><span>Gemini 3.0 Flash</span></div>
+                <div class="api-badge"><i class="fas fa-robot"></i><span>Gemini 2.5 Flash</span></div>
                 <div class="api-badge" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);"><i class="fas fa-book-open"></i><span>Scopus API</span></div>
                 <div class="api-badge"><i class="fas fa-globe"></i><span>OpenAlex</span></div>
                 <div class="api-badge"><i class="fas fa-dna"></i><span>Europe PMC</span></div>
@@ -591,6 +591,44 @@
                 <div class="api-badge"><i class="fas fa-database"></i><span>CORE API</span></div>
                 <div class="api-badge"><i class="fas fa-book"></i><span>arXiv API</span></div>
                 <div class="api-badge"><i class="fas fa-search"></i><span>SerpApi</span></div>
+            </div>
+        </section>
+
+        <!-- What's New in v1.3 -->
+        <section>
+            <h2 class="section-title lang-en">What's New in Version 1.3</h2>
+            <h2 class="section-title lang-ar">الجديد في الإصدار 1.3</h2>
+            <p class="section-subtitle lang-en">The latest release focuses on resilience, transparency, and bilingual accessibility</p>
+            <p class="section-subtitle lang-ar">يركّز الإصدار الأحدث على المتانة والشفافية وإتاحة الوصول بلغتين</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shuffle"></i></div>
+                    <h3 class="lang-en">Resilient Multi-Provider AI</h3>
+                    <h3 class="lang-ar">ذكاء اصطناعي مرن متعدد المزودين</h3>
+                    <p class="lang-en">Gemini remains the primary engine, but users can now add a free Groq API key (cloud) or connect a local LM Studio server as automatic fallbacks. If a provider hits its quota, generation continues seamlessly with the next one in the chain.</p>
+                    <p class="lang-ar">يبقى Gemini محرك العمل الأساسي، ويمكن المستخدمين الآن إضافة مفتاح Groq مجاني (سحابياً) أو ربط خادم LM Studio محلي كمزودين احتياطيين تلقائيين؛ فعند نفاد حصة أحد المزودين ينتقل التوليد بسلاسة إلى المزود التالي في السلسلة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                    <h3 class="lang-en">Bilingual User Guide (EN/AR)</h3>
+                    <h3 class="lang-ar">دليل مستخدم ثنائي اللغة (إنجليزي/عربي)</h3>
+                    <p class="lang-en">The complete user guide is now professionally available in Modern Standard Arabic alongside the English original, with one-click language switching and export to PDF from inside the add-on.</p>
+                    <p class="lang-ar">أصبح دليل المستخدم الكامل متاحاً باحترافية باللغة العربية الفصحى إلى جانب النسخة الإنجليزية الأصلية، مع التبديل بين اللغتين بنقرة واحدة وتصدير الدليل بصيغة PDF من داخل الإضافة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-gauge-high"></i></div>
+                    <h3 class="lang-en">Adaptive Quota Management</h3>
+                    <h3 class="lang-ar">إدارة تكيفية لحصص الاستخدام</h3>
+                    <p class="lang-en">Smarter per-user rate limiting with adaptive pacing, automatic model discovery, and circuit-breaker protection keeps large batch runs stable within each provider's free-tier limits.</p>
+                    <p class="lang-ar">تحسين ذكي لضبط الطلبات لكل مستخدم مع وتيرة تكيفية واكتشاف تلقائي للنماذج وحماية بقواطع الدائرة، بما يضمن استقرار التشغيل الدفعي الكبير ضمن حدود الحصص المجانية لكل مزود.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3 class="lang-en">Extended Diagnostics</h3>
+                    <h3 class="lang-ar">تشخيص موسّع</h3>
+                    <p class="lang-en">A new Provider Settings dialog, per-provider connection tests, and a consolidated API Quotas &amp; Limits report make configuration and troubleshooting straightforward — no scripting required.</p>
+                    <p class="lang-ar">نافذة إعدادات جديدة للمزودين، واختبارات اتصال منفصلة لكل مزود، وتقرير موحّد لحصص واجهات البرمجة، تجعل الإعداد وحل المشكلات أمراً مباشراً دون الحاجة إلى أي برمجة.</p>
+                </div>
             </div>
         </section>
 
@@ -692,7 +730,7 @@
                         </div>
                     </div>
                     <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
-                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">3.0</div>
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">2.5</div>
                         <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
                             <span class="lang-en">Gemini Flash</span>
                             <span class="lang-ar">جيمني فلاش</span>
