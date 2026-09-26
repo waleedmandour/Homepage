@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 321,
-    "all_time_pageviews": 1011,
-    "last_7_days_visitors": 15,
-    "last_30_days_visitors": 51
+    "all_time_visitors": 322,
+    "all_time_pageviews": 1012,
+    "last_7_days_visitors": 13,
+    "last_30_days_visitors": 50
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 68,
+      "visitors": 69,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -64,18 +64,18 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "country_numeric": "344",
+      "visitors": 7,
+      "flag_emoji": "🇭🇰"
+    },
+    {
       "country": "Canada",
       "country_code": "CA",
       "country_numeric": "124",
       "visitors": 6,
       "flag_emoji": "🇨🇦"
-    },
-    {
-      "country": "Hong Kong",
-      "country_code": "HK",
-      "country_numeric": "344",
-      "visitors": 6,
-      "flag_emoji": "🇭🇰"
     },
     {
       "country": "Jordan",
@@ -264,7 +264,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 16,
+      "visitors": 15,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -288,7 +288,7 @@
     {
       "country": "Hong Kong",
       "country_code": "HK",
-      "visitors": 2,
+      "visitors": 3,
       "flag_emoji": "🇭🇰"
     },
     {
@@ -335,8 +335,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 46,
-      "visitors": 10
+      "pageviews": 47,
+      "visitors": 11
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
@@ -374,5 +374,5 @@
       "visitors": 17
     }
   ],
-  "fetched_at": "2026-09-26T06:49:58Z"
+  "fetched_at": "2026-09-26T11:56:32Z"
 }
