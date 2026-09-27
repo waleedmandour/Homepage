@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 323,
-    "all_time_pageviews": 1019,
-    "last_7_days_visitors": 14,
-    "last_30_days_visitors": 51
+    "all_time_visitors": 324,
+    "all_time_pageviews": 1027,
+    "last_7_days_visitors": 15,
+    "last_30_days_visitors": 52
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 47,
+      "visitors": 48,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -270,7 +270,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 14,
+      "visitors": 15,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -325,13 +325,13 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 467,
-      "visitors": 268
+      "pageviews": 470,
+      "visitors": 269
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 71,
-      "visitors": 10
+      "pageviews": 72,
+      "visitors": 11
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -351,7 +351,7 @@
     {
       "url": "waleedmandour.org/projects/",
       "pageviews": 31,
-      "visitors": 10
+      "visitors": 11
     },
     {
       "url": "waleedmandour.org/index.html",
@@ -364,15 +364,15 @@
       "visitors": 13
     },
     {
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 23,
+      "visitors": 18
+    },
+    {
       "url": "waleedmandour.org/projects/CorpusMindVoice/",
       "pageviews": 22,
       "visitors": 5
-    },
-    {
-      "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 22,
-      "visitors": 13
     }
   ],
-  "fetched_at": "2026-09-27T15:59:41Z"
+  "fetched_at": "2026-09-27T19:36:07Z"
 }
