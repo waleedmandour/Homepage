@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 322,
-    "all_time_pageviews": 1016,
-    "last_7_days_visitors": 13,
-    "last_30_days_visitors": 50
+    "all_time_visitors": 323,
+    "all_time_pageviews": 1019,
+    "last_7_days_visitors": 14,
+    "last_30_days_visitors": 51
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 46,
+      "visitors": 47,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -270,7 +270,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 13,
+      "visitors": 14,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -335,7 +335,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 48,
+      "pageviews": 49,
       "visitors": 11
     },
     {
@@ -369,10 +369,10 @@
       "visitors": 5
     },
     {
-      "url": "waleedmandour.org/teaching/",
+      "url": "waleedmandour.org/projects/scholarscribe/",
       "pageviews": 22,
-      "visitors": 17
+      "visitors": 13
     }
   ],
-  "fetched_at": "2026-09-27T05:58:29Z"
+  "fetched_at": "2026-09-27T11:26:27Z"
 }
