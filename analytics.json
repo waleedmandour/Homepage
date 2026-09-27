@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 324,
-    "all_time_pageviews": 1027,
-    "last_7_days_visitors": 15,
-    "last_30_days_visitors": 52
+    "all_time_visitors": 325,
+    "all_time_pageviews": 1029,
+    "last_7_days_visitors": 16,
+    "last_30_days_visitors": 53
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 48,
+      "visitors": 49,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -262,16 +262,16 @@
   ],
   "top_countries_last_30_days": [
     {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 16,
+      "flag_emoji": "🇴🇲"
+    },
+    {
       "country": "China",
       "country_code": "CN",
       "visitors": 15,
       "flag_emoji": "🇨🇳"
-    },
-    {
-      "country": "Oman",
-      "country_code": "OM",
-      "visitors": 15,
-      "flag_emoji": "🇴🇲"
     },
     {
       "country": "United States",
@@ -325,8 +325,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 470,
-      "visitors": 269
+      "pageviews": 471,
+      "visitors": 270
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -350,7 +350,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 31,
+      "pageviews": 32,
       "visitors": 11
     },
     {
@@ -374,5 +374,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-27T19:36:07Z"
+  "fetched_at": "2026-09-27T22:41:02Z"
 }
