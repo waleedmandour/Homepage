@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 325,
-    "all_time_pageviews": 1031,
-    "last_7_days_visitors": 14,
-    "last_30_days_visitors": 52
+    "all_time_visitors": 326,
+    "all_time_pageviews": 1035,
+    "last_7_days_visitors": 15,
+    "last_30_days_visitors": 53
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 69,
+      "visitors": 70,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -262,16 +262,16 @@
   ],
   "top_countries_last_30_days": [
     {
+      "country": "China",
+      "country_code": "CN",
+      "visitors": 16,
+      "flag_emoji": "🇨🇳"
+    },
+    {
       "country": "Oman",
       "country_code": "OM",
       "visitors": 16,
       "flag_emoji": "🇴🇲"
-    },
-    {
-      "country": "China",
-      "country_code": "CN",
-      "visitors": 15,
-      "flag_emoji": "🇨🇳"
     },
     {
       "country": "United States",
@@ -325,8 +325,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 472,
-      "visitors": 270
+      "pageviews": 473,
+      "visitors": 271
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -335,7 +335,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 50,
+      "pageviews": 53,
       "visitors": 11
     },
     {
@@ -374,5 +374,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-28T07:55:38Z"
+  "fetched_at": "2026-09-28T16:15:59Z"
 }
