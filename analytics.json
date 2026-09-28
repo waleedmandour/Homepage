@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 326,
-    "all_time_pageviews": 1035,
-    "last_7_days_visitors": 15,
-    "last_30_days_visitors": 53
+    "all_time_visitors": 327,
+    "all_time_pageviews": 1039,
+    "last_7_days_visitors": 16,
+    "last_30_days_visitors": 54
   },
   "top_countries_all_time": [
     {
@@ -176,6 +176,13 @@
       "flag_emoji": "🇦🇩"
     },
     {
+      "country": "Austria",
+      "country_code": "AT",
+      "country_numeric": "040",
+      "visitors": 1,
+      "flag_emoji": "🇦🇹"
+    },
+    {
       "country": "Belarus",
       "country_code": "BY",
       "country_numeric": "112",
@@ -310,32 +317,32 @@
       "flag_emoji": "🇲🇾"
     },
     {
+      "country": "Austria",
+      "country_code": "AT",
+      "visitors": 1,
+      "flag_emoji": "🇦🇹"
+    },
+    {
       "country": "India",
       "country_code": "IN",
       "visitors": 1,
       "flag_emoji": "🇮🇳"
-    },
-    {
-      "country": "Türkiye",
-      "country_code": "TR",
-      "visitors": 1,
-      "flag_emoji": "🇹🇷"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 473,
-      "visitors": 271
+      "pageviews": 475,
+      "visitors": 272
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 72,
+      "pageviews": 73,
       "visitors": 11
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 53,
+      "pageviews": 54,
       "visitors": 11
     },
     {
@@ -374,5 +381,5 @@
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-28T16:15:59Z"
+  "fetched_at": "2026-09-28T22:20:20Z"
 }
