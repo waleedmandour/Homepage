@@ -173,7 +173,7 @@ body.arabic .ethics-card {
         body.arabic .feature-card { text-align: right; }
         .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-color: var(--secondary); }
-        /* ===== Monitoring explainer (v2.2.0-pre) ===== */
+        /* ===== Monitoring explainer (v2.1.0) ===== */
         .monitoring-intro { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); border-left: 4px solid var(--secondary); padding: 24px 28px; margin: 40px auto 0; border-radius: 12px; max-width: 960px; box-shadow: var(--shadow); }
         body.arabic .monitoring-intro { border-left: none; border-right: 4px solid var(--secondary); }
         .monitoring-intro p { color: #263238; margin-bottom: 10px; line-height: 1.65; }
@@ -231,7 +231,7 @@ body.arabic .ethics-card {
         .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(10, 28, 60, 0.4); }
         .cta-button.secondary { background: linear-gradient(135deg, var(--scribe-warm) 0%, #6d3410 100%); }
 
-        /* ===== Release badge (v2.2.0-pre) ===== */
+        /* ===== Release badge (v2.2.1) ===== */
         .release-badge { display: inline-block; background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(32, 178, 170, 0.3); text-transform: uppercase; }
 
         /* ===== Platform download cards ===== */
@@ -341,8 +341,8 @@ body.arabic .ethics-card {
                     </div>
                 </div>
 
-                <div class="release-badge lang-en">Latest Release &middot; v2.2.0-pre</div>
-                <div class="release-badge lang-ar">أحدث إصدار &middot; v2.2.0-pre</div>
+                <div class="release-badge lang-en">Latest Release &middot; v2.2.1</div>
+                <div class="release-badge lang-ar">أحدث إصدار &middot; v2.2.1</div>
 
                 <h1 class="lang-en">ScholarScribe: Write with Ethical AI, On Your Own Machine</h1>
                 <h1 class="lang-ar">سكولار سكرايب: اكتب بذكاء اصطناعي أخلاقي على جهازك الخاص</h1>
@@ -371,12 +371,12 @@ body.arabic .ethics-card {
             </div>
         </section>
 
-        <!-- What's New in v2.2.0-pre (improvement sprint) -->
+        <!-- What's New in v2.2.1 (improvement sprint) -->
         <div class="ethics-notice" style="background: linear-gradient(135deg, rgba(32, 178, 170, 0.08) 0%, rgba(26, 95, 122, 0.08) 100%); border-left: 4px solid var(--secondary);">
-            <h4 class="lang-en"><i class="fas fa-rocket"></i> What's New in v2.2.0-pre</h4>
-            <h4 class="lang-ar"><i class="fas fa-rocket"></i> الجديد في v2.2.0-pre</h4>
-            <p class="lang-en">The v2.2.0-pre improvement sprint reorganizes the sidebar into 7 workflow phases (Get started, Prepare the draft, Understand the draft, AI writing help, Authenticity and style, Evidence and compliance, Privacy and app). The Risk Profile tab now shows four proxy signals per passage (perplexity, vocabulary uniformity, burstiness, sentence-length variance) in a click-to-expand detail panel with excerpt, plain-language reason, Jump to passage, and Copy reason buttons. Every statistic in the app (Liang et al. 2023 false-positive rates, Weber-Wulff et al. 2023 detector accuracy figures, Nature and ICMJE word count ranges) now carries a clickable source link and a "Last verified" date. The journal-target comparison panel now shows ranges instead of single numbers: Nature 2,500-4,300 words; ICMJE 3,000-6,000 words. An A-/A/A+ font-scale control and a Comfortable/Compact density toggle ship in the sidebar footer. The AI Text Cleaner's normalize-dashes option now strips em and en dashes to plain hyphens, and the entire codebase (including this page) is swept clean of em and en dashes. See the <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">full CHANGELOG</a> for the per-task breakdown and the 10 design decisions.</p>
-            <p class="lang-ar">يُعيد ركيزة التحسين v2.2.0-pre تنظيم الشريط الجانبي إلى 7 مراحل سير عمل (البدء، تجهيز المسودة، فهم المسودة، مساعدة الكتابة بالذكاء الاصطناعي، الأصالة والأسلوب، الأدلة والامتثال، الخصوصية والتطبيق). تعرض تبويب ملف مخاطر الأصالة الآن أربع إشارات تمثيلية لكل مقطع (الحيرة، تجانس المفردات، الانفجار، تباين طول الجملة) في لوحة تفاصيل قابلة للتوسيع بنقرة، مع مقتطف، وسبب بلغة واضحة، وأزرار القفز إلى المقطع ونسخ السبب. كل إحصائية في التطبيق (معدلات الإيجابية الكاذبة من Liang et al. 2023، أرقام دقة الكواشف من Weber-Wulff et al. 2023، نطاقات عدد كلمات Nature وICMJE) تحمل الآن رابط مصدر قابل للنقر وتاريخ "آخر تحقق". تعرض لوحة مقارنة أهداف المجلات الآن نطاقات بدلاً من أرقام مفردة: Nature 2,500-4,300 كلمة؛ ICMJE 3,000-6,000 كلمة. يأتي تحكم A-/A/A+ في حجم الخط وزر تبديل الكثافة المريح/المضغوط في تذييل الشريط الجانبي. خيار تطبيع الشرطات في منظّف النصوص الآن يزيل الشرطات الطويلة والقصيرة إلى واصلات بسيطة، وقد تم تنظيف قاعدة الشيفرة بالكامل (بما في ذلك هذه الصفحة) من الشرطات الطويلة والقصيرة. راجع <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG الكامل</a> للاطلاع على تفصيل المهام والقرارات التصميمية العشرة.</p>
+            <h4 class="lang-en"><i class="fas fa-rocket"></i> What's New in v2.2.1</h4>
+            <h4 class="lang-ar"><i class="fas fa-rocket"></i> الجديد في v2.2.1</h4>
+            <p class="lang-en">v2.2.1 polishes the User Guide PDF (the cover now embeds the app logo and uses symmetric margins matching the body pages), adds first-phrase excerpts to every section in the Structure Analyzer (mirroring the Risk Profile pattern, so you can preview each section without scrolling), adds a paste-references mode to the Citation Manager (pick your style: APA, MLA, Chicago, Vancouver, or auto-detect; paste your plain-text reference list; ScholarScribe converts it to BibTeX, lets you download the .bib file, and auto-validates it against your draft), and adds an "Attach manuscript" button to the Chat tab (load a .txt, .md, .tex, .rst, or .docx file and discuss it directly with the local LLM). See the <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">full CHANGELOG</a> for the per-task breakdown.</p>
+            <p class="lang-ar">v2.2.1 يحسّن دليل المستخدم PDF (الغلاف الآن يتضمن شعار التطبيق ويستخدم هوامش متماثلة تطابق صفحات النص)، يضيف مقتطفات للعبارات الأولى لكل قسم في محلل البنية (على غرار نمط ملف مخاطر الأصالة، حتى تتمكن من معاينة كل قسم دون تمرير)، يضيف وضع لصق المراجع إلى إدارة الاستشهادات (اختر أسلوبك: APA، MLA، Chicago، Vancouver، أو اكتشاف تلقائي؛ الصق قائمة مراجعك كنص عادي؛ يقوم سكولار سكرايب بتحويلها إلى BibTeX، يتيح لك تنزيل ملف .bib، ويتحقق منها تلقائياً مقابل مسودتك)، ويضيف زر "إرفاق مخطوطة" إلى تبويب المحادثة (حمّل ملف .txt أو .md أو .tex أو .rst أو .docx وناقشه مباشرة مع النموذج المحلي). راجع <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG الكامل</a> للاطلاع على تفصيل المهام.</p>
         </div>
 
         <!-- Ethics Notice -->
@@ -704,8 +704,8 @@ body.arabic .ethics-card {
             <h2 class="section-title lang-en">Does ScholarScribe Monitor Your Writing?</h2>
             <h2 class="section-title lang-ar">هل يراقب سكولار سكرايب كتابتك؟</h2>
             <div class="monitoring-intro">
-                <p class="lang-en"><strong>No.</strong> ScholarScribe has no background process, no keystroke logging, no screen capture, and never watches you write in real time. The optional Writing Provenance feature (v2.2.0-pre) is passive, fully local, and works only on files <em>you</em> explicitly choose: it reads the revision records that Microsoft Word (Track Changes) or Google Docs (version history) already created, hashes and signs them on your device, and lets you export verifiable evidence of your writing process, which you alone decide to share. The output is <strong>evidence, not a verdict</strong>.</p>
-                <p class="lang-ar"><strong>لا.</strong> لا يوجد في سكولار سكرايب أي عملية خلفية، ولا تسجيل لضغطات المفاتيح، ولا التقاط للشاشة، ولا يراقب كتابتك لحظياً أبداً. ميزة إثبات الكتابة الاختيارية (v2.2.0-pre) سلبية، ومحلية بالكامل، ولا تعمل إلا على ملفات تختارها <em>أنت</em> صراحةً: تقرأ سجلات التعديل التي أنشأها Microsoft Word (تتبع التغييرات) أو Google Docs (سجل الإصدارات) مسبقاً، وتبصمها وتوقّعها على جهازك، وتتيح لك تصدير دليل قابل للتحقق على عملية كتابتك, تقرر وحدك مشاركته من عدمه. الناتج <strong>دليل، لا حكم</strong>.</p>
+                <p class="lang-en"><strong>No.</strong> ScholarScribe has no background process, no keystroke logging, no screen capture, and never watches you write in real time. The optional Writing Provenance feature (v2.2.1) is passive, fully local, and works only on files <em>you</em> explicitly choose: it reads the revision records that Microsoft Word (Track Changes) or Google Docs (version history) already created, hashes and signs them on your device, and lets you export verifiable evidence of your writing process, which you alone decide to share. The output is <strong>evidence, not a verdict</strong>.</p>
+                <p class="lang-ar"><strong>لا.</strong> لا يوجد في سكولار سكرايب أي عملية خلفية، ولا تسجيل لضغطات المفاتيح، ولا التقاط للشاشة، ولا يراقب كتابتك لحظياً أبداً. ميزة إثبات الكتابة الاختيارية (v2.2.1) سلبية، ومحلية بالكامل، ولا تعمل إلا على ملفات تختارها <em>أنت</em> صراحةً: تقرأ سجلات التعديل التي أنشأها Microsoft Word (تتبع التغييرات) أو Google Docs (سجل الإصدارات) مسبقاً، وتبصمها وتوقّعها على جهازك، وتتيح لك تصدير دليل قابل للتحقق على عملية كتابتك, تقرر وحدك مشاركته من عدمه. الناتج <strong>دليل، لا حكم</strong>.</p>
             </div>
             <div class="monitoring-grid">
                 <div class="monitoring-card">
@@ -772,8 +772,8 @@ body.arabic .ethics-card {
         <div class="data-notice">
             <h4 class="lang-en"><i class="fas fa-flask"></i> Research Transparency Notice</h4>
             <h4 class="lang-ar"><i class="fas fa-flask"></i> ملاحظة الشفافية البحثية</h4>
-            <p class="lang-en">ScholarScribe v2.2.0-pre, &copy; 2026 <strong>Dr. Waleed Mandour</strong>, released under the MIT License. Designed and directed by Dr. Mandour, with engineering support from <strong>GLM 5.1</strong> and <strong>GLM 5.2</strong> (Z.ai) as collaborators under his direction; Dr. Mandour reviewed all code, verified all claims, and retained final editorial authority.</p>
-            <p class="lang-ar">سكولار سكرايب v2.2.0-pre, &copy; 2026 <strong>د. وليد مندور</strong>، صدر تحت رخصة MIT. صُمِّم وأُخرج بإشراف د. مندور، بدعم هندسي من <strong>GLM 5.1</strong> و<strong>GLM 5.2</strong> (Z.ai) كتعاون تحت إشرافه؛ راجع د. مندور كل الكود وتحقق من كل الادعاءات واحتفظ بالسلطة التحريرية النهائية.</p>
+            <p class="lang-en">ScholarScribe v2.2.1, &copy; 2026 <strong>Dr. Waleed Mandour</strong>, released under the MIT License. Designed and directed by Dr. Mandour, with engineering support from <strong>GLM 5.1</strong> and <strong>GLM 5.2</strong> (Z.ai) as collaborators under his direction; Dr. Mandour reviewed all code, verified all claims, and retained final editorial authority.</p>
+            <p class="lang-ar">سكولار سكرايب v2.2.1, &copy; 2026 <strong>د. وليد مندور</strong>، صدر تحت رخصة MIT. صُمِّم وأُخرج بإشراف د. مندور، بدعم هندسي من <strong>GLM 5.1</strong> و<strong>GLM 5.2</strong> (Z.ai) كتعاون تحت إشرافه؛ راجع د. مندور كل الكود وتحقق من كل الادعاءات واحتفظ بالسلطة التحريرية النهائية.</p>
             <p class="lang-en"><strong>Funding Disclaimer:</strong> This work is not funded by any institution. It was independently developed by the researcher and is dedicated to the academic community as a free and open-source tool.</p>
             <p class="lang-ar"><strong>إخلاء مسؤولية التمويل:</strong> هذا العمل غير مموّل من أي مؤسسة. طوّره الباحث بشكل مستقل وأُهدي للمجتمع الأكاديمي كأداة حرة مفتوحة المصدر.</p>
             <p class="lang-en"><strong>Persistent identifier:</strong> <a href="https://doi.org/10.5281/zenodo.20781043" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.20781043</a></p>
@@ -788,12 +788,12 @@ body.arabic .ethics-card {
             <p class="lang-ar">إذا استخدمت سكولار سكرايب في بحثك أو تدريسك أو كتاباتك، يرجى اقتباسه. فيما يلي مراجع جاهزة بنمط APA الإصدار السابع وBibTeX, والأخير يُدرج مباشرة في ملف <code>.bib</code> الخاص بك ويتحقق منه مدير الاستشهادات في سكولار سكرايب نفسه.</p>
             <div class="citation-label lang-en">APA 7th edition</div>
             <div class="citation-label lang-ar">نمط APA الإصدار السابع</div>
-            <div class="citation-apa"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>Mandour, W. (2026). <em>ScholarScribe</em> (Version 2.2.0-pre) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.20781043</div>
+            <div class="citation-apa"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>Mandour, W. (2026). <em>ScholarScribe</em> (Version 2.2.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.20781043</div>
             <div class="citation-label lang-en">BibTeX</div>
             <div class="citation-label lang-ar">BibTeX</div><div class="citation-bibtex"><button class="citation-copy-btn" onclick="copyCitation(this)">Copy</button>@software{Mandour_ScholarScribe_2026,
   author       = {Mandour, Waleed},
   title        = {{ScholarScribe}},
-  version = {2.2.0-pre},
+  version = {2.2.1},
   year         = {2026},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.20781043},
@@ -805,42 +805,42 @@ body.arabic .ethics-card {
         <section class="cta-section">
             <h2 class="cta-title lang-en">Available Now for Researchers</h2>
             <h2 class="cta-title lang-ar">متاح الآن للباحثين</h2>
-            <p class="cta-subtitle lang-en">Download ScholarScribe v2.2.0-pre to bring privacy-first, local-LLM writing assistance directly to your research workflow. No telemetry, no cloud, no paid APIs, just your device, your text, your model.</p>
-            <p class="cta-subtitle lang-ar">نزّل سكولار سكرايب v2.2.0-pre لجلب مساعدة كتابة بحثية تحترم الخصوصية وتعتمد النماذج المحلية مباشرة إلى سير عملك البحثي. بلا ارسال بيانات استخدام، بلا سحابة، بلا واجهات مدفوعة, جهازك، نصك، نموذجك.</p>
+            <p class="cta-subtitle lang-en">Download ScholarScribe v2.2.1 to bring privacy-first, local-LLM writing assistance directly to your research workflow. No telemetry, no cloud, no paid APIs, just your device, your text, your model.</p>
+            <p class="cta-subtitle lang-ar">نزّل سكولار سكرايب v2.2.1 لجلب مساعدة كتابة بحثية تحترم الخصوصية وتعتمد النماذج المحلية مباشرة إلى سير عملك البحثي. بلا ارسال بيانات استخدام، بلا سحابة، بلا واجهات مدفوعة, جهازك، نصك، نموذجك.</p>
 
             <div class="download-platforms">
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.0-pre/ScholarScribe_2.2.0_x64_en-US.msi" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe_2.2.1_x64_en-US.msi" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-windows"></i>
                     <span class="dl-name lang-en">Windows</span>
                     <span class="dl-name lang-ar">ويندوز</span>
                     <span class="dl-os">x64 &middot; MSI installer</span>
-                    <span class="dl-file">ScholarScribe_2.2.0_x64_en-US.msi</span>
+                    <span class="dl-file">ScholarScribe_2.2.1_x64_en-US.msi</span>
                 </a>
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.0-pre/ScholarScribe_2.2.0_aarch64.dmg" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe_2.2.1_aarch64.dmg" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-apple"></i>
                     <span class="dl-name lang-en">macOS</span>
                     <span class="dl-name lang-ar">ماك</span>
                     <span class="dl-os">Apple Silicon &middot; DMG</span>
-                    <span class="dl-file">ScholarScribe_2.2.0_aarch64.dmg</span>
+                    <span class="dl-file">ScholarScribe_2.2.1_aarch64.dmg</span>
                 </a>
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.0-pre/ScholarScribe_2.2.0_amd64.deb" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe_2.2.1_amd64.deb" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-ubuntu"></i>
                     <span class="dl-name lang-en">Linux (Debian/Ubuntu)</span>
                     <span class="dl-name lang-ar">لينكس (ديبيان/أوبونتو)</span>
                     <span class="dl-os">amd64 &middot; DEB package</span>
-                    <span class="dl-file">ScholarScribe_2.2.0_amd64.deb</span>
+                    <span class="dl-file">ScholarScribe_2.2.1_amd64.deb</span>
                 </a>
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.0-pre/ScholarScribe-2.2.0-1.x86_64.rpm" target="_blank" rel="noopener" class="download-card">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-2.2.1-1.x86_64.rpm" target="_blank" rel="noopener" class="download-card">
                     <i class="fab fa-redhat"></i>
                     <span class="dl-name lang-en">Linux (Fedora/RHEL)</span>
                     <span class="dl-name lang-ar">لينكس (فيدورا/RHEL)</span>
                     <span class="dl-os">x86_64 &middot; RPM package</span>
-                    <span class="dl-file">ScholarScribe-2.2.0-1.x86_64.rpm</span>
+                    <span class="dl-file">ScholarScribe-2.2.1-1.x86_64.rpm</span>
                 </a>
             </div>
 
             <div class="cta-buttons">
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.0-pre/ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
                     <i class="fas fa-book-open"></i>
                     <span class="lang-en">User Guide (PDF)</span>
                     <span class="lang-ar">دليل المستخدم (PDF)</span>
@@ -852,8 +852,8 @@ body.arabic .ethics-card {
                 </a>
             </div>
 
-            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Requires <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> installed locally. Version 2.2.0-pre &middot; MIT License &middot; See the <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.0-pre" target="_blank" rel="noopener">release notes</a>.</p>
-            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">يتطلب تثبيت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> محلياً. الإصدار 2.2.0-pre &middot; رخصة MIT &middot; اطّلع على <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.0-pre" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
+            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Requires <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> installed locally. Version 2.2.1 &middot; MIT License &middot; See the <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1" target="_blank" rel="noopener">release notes</a>.</p>
+            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">يتطلب تثبيت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> محلياً. الإصدار 2.2.1 &middot; رخصة MIT &middot; اطّلع على <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
         </section>
 
         <!-- Real-Time Analytics Dashboard (mirrors the CorpusMind / CorpusMind Lens pattern) -->
@@ -1030,9 +1030,9 @@ body.arabic .ethics-card {
                     <a href="https://github.com/waleedmandour/scholarscribe" target="_blank" rel="noopener" class="lang-en">GitHub Repo</a>
                     <a href="https://github.com/waleedmandour/scholarscribe" target="_blank" rel="noopener" class="lang-ar">مستودع GitHub</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases" target="_blank" rel="noopener" class="lang-en">Releases</a>
-                    <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.0-pre#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-en">User Guide</a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-en">User Guide</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases" target="_blank" rel="noopener" class="lang-ar">الإصدارات</a>
-                    <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.0-pre#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم</a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/docs/ETHICS.md" target="_blank" rel="noopener" class="lang-en">Ethics Policy</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/docs/ETHICS.md" target="_blank" rel="noopener" class="lang-ar">سياسة الأخلاقيات</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/SECURITY.md" target="_blank" rel="noopener" class="lang-en">Security Policy</a>
@@ -1100,7 +1100,7 @@ body.arabic .ethics-card {
         // users of the installed desktop app.
         (async function() {
             const REPO = 'waleedmandour/scholarscribe';
-            const TAG = 'v2.2.0-pre';
+            const TAG = 'v2.2.1';
 
             try {
                 // Fetch release data
