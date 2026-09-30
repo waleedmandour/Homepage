@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 357,
-    "all_time_pageviews": 1127,
-    "last_7_days_visitors": 46,
-    "last_30_days_visitors": 81
+    "all_time_visitors": 371,
+    "all_time_pageviews": 1184,
+    "last_7_days_visitors": 61,
+    "last_30_days_visitors": 95
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 70,
+      "visitors": 71,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -32,7 +32,7 @@
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 33,
+      "visitors": 46,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -271,7 +271,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 17,
+      "visitors": 30,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -283,7 +283,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 14,
+      "visitors": 15,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -332,12 +332,17 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 480,
-      "visitors": 274
+      "pageviews": 485,
+      "visitors": 277
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 98,
+      "pageviews": 111,
+      "visitors": 33
+    },
+    {
+      "url": "waleedmandour.org/projects/CorpusMindLens/",
+      "pageviews": 88,
       "visitors": 28
     },
     {
@@ -346,14 +351,9 @@
       "visitors": 11
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 61,
-      "visitors": 18
-    },
-    {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 39,
-      "visitors": 14
+      "pageviews": 41,
+      "visitors": 15
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -366,6 +366,11 @@
       "visitors": 8
     },
     {
+      "url": "waleedmandour.org/projects/CorpusMindVoice/",
+      "pageviews": 24,
+      "visitors": 6
+    },
+    {
       "url": "waleedmandour.org/teaching/",
       "pageviews": 24,
       "visitors": 19
@@ -374,12 +379,7 @@
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
       "pageviews": 23,
       "visitors": 13
-    },
-    {
-      "url": "waleedmandour.org/projects/CorpusMindVoice/",
-      "pageviews": 22,
-      "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-30T13:09:32Z"
+  "fetched_at": "2026-09-30T18:41:41Z"
 }
