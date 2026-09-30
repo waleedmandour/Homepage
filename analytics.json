@@ -1,12 +1,19 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 371,
-    "all_time_pageviews": 1184,
-    "last_7_days_visitors": 61,
-    "last_30_days_visitors": 95
+    "all_time_visitors": 465,
+    "all_time_pageviews": 1384,
+    "last_7_days_visitors": 155,
+    "last_30_days_visitors": 189
   },
   "top_countries_all_time": [
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "country_numeric": "818",
+      "visitors": 113,
+      "flag_emoji": "🇪🇬"
+    },
     {
       "country": "United States",
       "country_code": "US",
@@ -18,7 +25,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 71,
+      "visitors": 72,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -29,25 +36,18 @@
       "flag_emoji": "🇴🇲"
     },
     {
-      "country": "Egypt",
-      "country_code": "EG",
-      "country_numeric": "818",
-      "visitors": 46,
-      "flag_emoji": "🇪🇬"
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "country_numeric": "682",
+      "visitors": 16,
+      "flag_emoji": "🇸🇦"
     },
     {
       "country": "India",
       "country_code": "IN",
       "country_numeric": "356",
-      "visitors": 12,
+      "visitors": 13,
       "flag_emoji": "🇮🇳"
-    },
-    {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "country_numeric": "682",
-      "visitors": 10,
-      "flag_emoji": "🇸🇦"
     },
     {
       "country": "Germany",
@@ -64,11 +64,25 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "country_numeric": "368",
+      "visitors": 8,
+      "flag_emoji": "🇮🇶"
+    },
+    {
       "country": "Hong Kong",
       "country_code": "HK",
       "country_numeric": "344",
       "visitors": 7,
       "flag_emoji": "🇭🇰"
+    },
+    {
+      "country": "Jordan",
+      "country_code": "JO",
+      "country_numeric": "400",
+      "visitors": 7,
+      "flag_emoji": "🇯🇴"
     },
     {
       "country": "Canada",
@@ -78,25 +92,18 @@
       "flag_emoji": "🇨🇦"
     },
     {
-      "country": "Jordan",
-      "country_code": "JO",
-      "country_numeric": "400",
-      "visitors": 6,
-      "flag_emoji": "🇯🇴"
-    },
-    {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "country_numeric": "368",
-      "visitors": 5,
-      "flag_emoji": "🇮🇶"
-    },
-    {
       "country": "Ireland",
       "country_code": "IE",
       "country_numeric": "372",
       "visitors": 5,
       "flag_emoji": "🇮🇪"
+    },
+    {
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "country_numeric": "826",
+      "visitors": 5,
+      "flag_emoji": "🇬🇧"
     },
     {
       "country": "Argentina",
@@ -120,11 +127,11 @@
       "flag_emoji": "🇳🇱"
     },
     {
-      "country": "United Kingdom",
-      "country_code": "GB",
-      "country_numeric": "826",
+      "country": "Tunisia",
+      "country_code": "TN",
+      "country_numeric": "788",
       "visitors": 4,
-      "flag_emoji": "🇬🇧"
+      "flag_emoji": "🇹🇳"
     },
     {
       "country": "Singapore",
@@ -146,6 +153,20 @@
       "country_numeric": "364",
       "visitors": 2,
       "flag_emoji": "🇮🇷"
+    },
+    {
+      "country": "Libya",
+      "country_code": "LY",
+      "country_numeric": "434",
+      "visitors": 2,
+      "flag_emoji": "🇱🇾"
+    },
+    {
+      "country": "Palestine",
+      "country_code": "PS",
+      "country_numeric": "275",
+      "visitors": 2,
+      "flag_emoji": "🇵🇸"
     },
     {
       "country": "Poland",
@@ -181,6 +202,13 @@
       "country_numeric": "792",
       "visitors": 2,
       "flag_emoji": "🇹🇷"
+    },
+    {
+      "country": "Algeria",
+      "country_code": "DZ",
+      "country_numeric": "012",
+      "visitors": 1,
+      "flag_emoji": "🇩🇿"
     },
     {
       "country": "Andorra",
@@ -225,11 +253,25 @@
       "flag_emoji": "🇫🇮"
     },
     {
-      "country": "Libya",
-      "country_code": "LY",
-      "country_numeric": "434",
+      "country": "Indonesia",
+      "country_code": "ID",
+      "country_numeric": "360",
       "visitors": 1,
-      "flag_emoji": "🇱🇾"
+      "flag_emoji": "🇮🇩"
+    },
+    {
+      "country": "Israel",
+      "country_code": "IL",
+      "country_numeric": "376",
+      "visitors": 1,
+      "flag_emoji": "🇮🇱"
+    },
+    {
+      "country": "Kuwait",
+      "country_code": "KW",
+      "country_numeric": "414",
+      "visitors": 1,
+      "flag_emoji": "🇰🇼"
     },
     {
       "country": "Mexico",
@@ -260,31 +302,52 @@
       "flag_emoji": "🇪🇸"
     },
     {
+      "country": "Sudan",
+      "country_code": "SD",
+      "country_numeric": "729",
+      "visitors": 1,
+      "flag_emoji": "🇸🇩"
+    },
+    {
+      "country": "Syria",
+      "country_code": "SY",
+      "country_numeric": "760",
+      "visitors": 1,
+      "flag_emoji": "🇸🇾"
+    },
+    {
       "country": "Taiwan",
       "country_code": "TW",
       "country_numeric": "158",
       "visitors": 1,
       "flag_emoji": "🇹🇼"
+    },
+    {
+      "country": "Western Sahara",
+      "country_code": "EH",
+      "country_numeric": "732",
+      "visitors": 1,
+      "flag_emoji": "🇪🇭"
     }
   ],
   "top_countries_last_30_days": [
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 30,
+      "visitors": 97,
       "flag_emoji": "🇪🇬"
+    },
+    {
+      "country": "China",
+      "country_code": "CN",
+      "visitors": 16,
+      "flag_emoji": "🇨🇳"
     },
     {
       "country": "Oman",
       "country_code": "OM",
       "visitors": 16,
       "flag_emoji": "🇴🇲"
-    },
-    {
-      "country": "China",
-      "country_code": "CN",
-      "visitors": 15,
-      "flag_emoji": "🇨🇳"
     },
     {
       "country": "United States",
@@ -295,8 +358,20 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 4,
+      "visitors": 10,
       "flag_emoji": "🇸🇦"
+    },
+    {
+      "country": "Iraq",
+      "country_code": "IQ",
+      "visitors": 6,
+      "flag_emoji": "🇮🇶"
+    },
+    {
+      "country": "Tunisia",
+      "country_code": "TN",
+      "visitors": 4,
+      "flag_emoji": "🇹🇳"
     },
     {
       "country": "Hong Kong",
@@ -305,44 +380,32 @@
       "flag_emoji": "🇭🇰"
     },
     {
-      "country": "Iraq",
-      "country_code": "IQ",
-      "visitors": 3,
-      "flag_emoji": "🇮🇶"
+      "country": "India",
+      "country_code": "IN",
+      "visitors": 2,
+      "flag_emoji": "🇮🇳"
     },
     {
       "country": "Iran",
       "country_code": "IR",
       "visitors": 2,
       "flag_emoji": "🇮🇷"
-    },
-    {
-      "country": "Malaysia",
-      "country_code": "MY",
-      "visitors": 2,
-      "flag_emoji": "🇲🇾"
-    },
-    {
-      "country": "United Arab Emirates",
-      "country_code": "AE",
-      "visitors": 2,
-      "flag_emoji": "🇦🇪"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 485,
-      "visitors": 277
+      "pageviews": 508,
+      "visitors": 289
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 111,
-      "visitors": 33
+      "pageviews": 269,
+      "visitors": 124
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 88,
+      "pageviews": 89,
       "visitors": 28
     },
     {
@@ -352,13 +415,18 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 41,
-      "visitors": 15
+      "pageviews": 55,
+      "visitors": 20
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
       "pageviews": 39,
       "visitors": 10
+    },
+    {
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 26,
+      "visitors": 23
     },
     {
       "url": "waleedmandour.org/index.html",
@@ -371,15 +439,10 @@
       "visitors": 6
     },
     {
-      "url": "waleedmandour.org/teaching/",
-      "pageviews": 24,
-      "visitors": 19
-    },
-    {
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
       "pageviews": 23,
       "visitors": 13
     }
   ],
-  "fetched_at": "2026-09-30T18:41:41Z"
+  "fetched_at": "2026-09-30T22:43:06Z"
 }
