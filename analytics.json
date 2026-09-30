@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 329,
-    "all_time_pageviews": 1063,
-    "last_7_days_visitors": 17,
-    "last_30_days_visitors": 54
+    "all_time_visitors": 357,
+    "all_time_pageviews": 1127,
+    "last_7_days_visitors": 46,
+    "last_30_days_visitors": 81
   },
   "top_countries_all_time": [
     {
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 87,
+      "visitors": 93,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -32,7 +32,7 @@
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 16,
+      "visitors": 33,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -92,18 +92,18 @@
       "flag_emoji": "🇮🇶"
     },
     {
+      "country": "Ireland",
+      "country_code": "IE",
+      "country_numeric": "372",
+      "visitors": 5,
+      "flag_emoji": "🇮🇪"
+    },
+    {
       "country": "Argentina",
       "country_code": "AR",
       "country_numeric": "032",
       "visitors": 4,
       "flag_emoji": "🇦🇷"
-    },
-    {
-      "country": "Ireland",
-      "country_code": "IE",
-      "country_numeric": "372",
-      "visitors": 4,
-      "flag_emoji": "🇮🇪"
     },
     {
       "country": "Malaysia",
@@ -113,6 +113,13 @@
       "flag_emoji": "🇲🇾"
     },
     {
+      "country": "Netherlands",
+      "country_code": "NL",
+      "country_numeric": "528",
+      "visitors": 4,
+      "flag_emoji": "🇳🇱"
+    },
+    {
       "country": "United Kingdom",
       "country_code": "GB",
       "country_numeric": "826",
@@ -120,18 +127,18 @@
       "flag_emoji": "🇬🇧"
     },
     {
-      "country": "Netherlands",
-      "country_code": "NL",
-      "country_numeric": "528",
-      "visitors": 3,
-      "flag_emoji": "🇳🇱"
-    },
-    {
       "country": "Singapore",
       "country_code": "SG",
       "country_numeric": "702",
       "visitors": 3,
       "flag_emoji": "🇸🇬"
+    },
+    {
+      "country": "United Arab Emirates",
+      "country_code": "AE",
+      "country_numeric": "784",
+      "visitors": 3,
+      "flag_emoji": "🇦🇪"
     },
     {
       "country": "Iran",
@@ -153,6 +160,13 @@
       "country_numeric": "643",
       "visitors": 2,
       "flag_emoji": "🇷🇺"
+    },
+    {
+      "country": "Sweden",
+      "country_code": "SE",
+      "country_numeric": "752",
+      "visitors": 2,
+      "flag_emoji": "🇸🇪"
     },
     {
       "country": "Thailand",
@@ -246,28 +260,20 @@
       "flag_emoji": "🇪🇸"
     },
     {
-      "country": "Sweden",
-      "country_code": "SE",
-      "country_numeric": "752",
-      "visitors": 1,
-      "flag_emoji": "🇸🇪"
-    },
-    {
       "country": "Taiwan",
       "country_code": "TW",
       "country_numeric": "158",
       "visitors": 1,
       "flag_emoji": "🇹🇼"
-    },
-    {
-      "country": "United Arab Emirates",
-      "country_code": "AE",
-      "country_numeric": "784",
-      "visitors": 1,
-      "flag_emoji": "🇦🇪"
     }
   ],
   "top_countries_last_30_days": [
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 17,
+      "flag_emoji": "🇪🇬"
+    },
     {
       "country": "Oman",
       "country_code": "OM",
@@ -277,13 +283,13 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 15,
+      "visitors": 14,
       "flag_emoji": "🇨🇳"
     },
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 8,
+      "visitors": 14,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -317,23 +323,22 @@
       "flag_emoji": "🇲🇾"
     },
     {
-      "country": "Austria",
-      "country_code": "AT",
-      "visitors": 1,
-      "flag_emoji": "🇦🇹"
-    },
-    {
-      "country": "India",
-      "country_code": "IN",
-      "visitors": 1,
-      "flag_emoji": "🇮🇳"
+      "country": "United Arab Emirates",
+      "country_code": "AE",
+      "visitors": 2,
+      "flag_emoji": "🇦🇪"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 476,
-      "visitors": 272
+      "pageviews": 480,
+      "visitors": 274
+    },
+    {
+      "url": "waleedmandour.org/projects/CorpusMind/",
+      "pageviews": 98,
+      "visitors": 28
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -341,9 +346,14 @@
       "visitors": 11
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 67,
-      "visitors": 12
+      "url": "waleedmandour.org/projects/CorpusMindLens/",
+      "pageviews": 61,
+      "visitors": 18
+    },
+    {
+      "url": "waleedmandour.org/projects/",
+      "pageviews": 39,
+      "visitors": 14
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -351,19 +361,14 @@
       "visitors": 10
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 39,
-      "visitors": 6
-    },
-    {
-      "url": "waleedmandour.org/projects/",
-      "pageviews": 35,
-      "visitors": 12
-    },
-    {
       "url": "waleedmandour.org/index.html",
       "pageviews": 24,
       "visitors": 8
+    },
+    {
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 24,
+      "visitors": 19
     },
     {
       "url": "waleedmandour.org/projects/AMTA/privacy.html",
@@ -371,15 +376,10 @@
       "visitors": 13
     },
     {
-      "url": "waleedmandour.org/teaching/",
-      "pageviews": 23,
-      "visitors": 18
-    },
-    {
       "url": "waleedmandour.org/projects/CorpusMindVoice/",
       "pageviews": 22,
       "visitors": 5
     }
   ],
-  "fetched_at": "2026-09-30T06:08:47Z"
+  "fetched_at": "2026-09-30T13:09:32Z"
 }
