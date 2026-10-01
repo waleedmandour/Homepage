@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 465,
-    "all_time_pageviews": 1384,
-    "last_7_days_visitors": 155,
-    "last_30_days_visitors": 189
+    "all_time_visitors": 470,
+    "all_time_pageviews": 1408,
+    "last_7_days_visitors": 160,
+    "last_30_days_visitors": 194
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 113,
+      "visitors": 117,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 16,
+      "visitors": 17,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -334,7 +334,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 97,
+      "visitors": 101,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -358,7 +358,7 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 10,
+      "visitors": 11,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -395,18 +395,18 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 508,
-      "visitors": 289
+      "pageviews": 510,
+      "visitors": 290
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 269,
-      "visitors": 124
+      "pageviews": 285,
+      "visitors": 128
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 89,
-      "visitors": 28
+      "pageviews": 93,
+      "visitors": 30
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -425,7 +425,7 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 26,
+      "pageviews": 27,
       "visitors": 23
     },
     {
@@ -444,5 +444,5 @@
       "visitors": 13
     }
   ],
-  "fetched_at": "2026-09-30T22:43:06Z"
+  "fetched_at": "2026-10-01T01:40:41Z"
 }
