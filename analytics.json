@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 470,
-    "all_time_pageviews": 1408,
-    "last_7_days_visitors": 160,
-    "last_30_days_visitors": 194
+    "all_time_visitors": 478,
+    "all_time_pageviews": 1432,
+    "last_7_days_visitors": 167,
+    "last_30_days_visitors": 201
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 117,
+      "visitors": 121,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 17,
+      "visitors": 20,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -155,6 +155,13 @@
       "flag_emoji": "🇮🇷"
     },
     {
+      "country": "Israel",
+      "country_code": "IL",
+      "country_numeric": "376",
+      "visitors": 2,
+      "flag_emoji": "🇮🇱"
+    },
+    {
       "country": "Libya",
       "country_code": "LY",
       "country_numeric": "434",
@@ -260,13 +267,6 @@
       "flag_emoji": "🇮🇩"
     },
     {
-      "country": "Israel",
-      "country_code": "IL",
-      "country_numeric": "376",
-      "visitors": 1,
-      "flag_emoji": "🇮🇱"
-    },
-    {
       "country": "Kuwait",
       "country_code": "KW",
       "country_numeric": "414",
@@ -334,14 +334,8 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 101,
+      "visitors": 105,
       "flag_emoji": "🇪🇬"
-    },
-    {
-      "country": "China",
-      "country_code": "CN",
-      "visitors": 16,
-      "flag_emoji": "🇨🇳"
     },
     {
       "country": "Oman",
@@ -350,16 +344,22 @@
       "flag_emoji": "🇴🇲"
     },
     {
-      "country": "United States",
-      "country_code": "US",
-      "visitors": 14,
-      "flag_emoji": "🇺🇸"
+      "country": "China",
+      "country_code": "CN",
+      "visitors": 15,
+      "flag_emoji": "🇨🇳"
     },
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 11,
+      "visitors": 14,
       "flag_emoji": "🇸🇦"
+    },
+    {
+      "country": "United States",
+      "country_code": "US",
+      "visitors": 14,
+      "flag_emoji": "🇺🇸"
     },
     {
       "country": "Iraq",
@@ -395,18 +395,18 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 510,
+      "pageviews": 512,
       "visitors": 290
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 285,
-      "visitors": 128
+      "pageviews": 302,
+      "visitors": 135
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 93,
-      "visitors": 30
+      "pageviews": 94,
+      "visitors": 31
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -415,7 +415,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 55,
+      "pageviews": 57,
       "visitors": 20
     },
     {
@@ -429,6 +429,11 @@
       "visitors": 23
     },
     {
+      "url": "waleedmandour.org/projects/scholarscribe/",
+      "pageviews": 25,
+      "visitors": 13
+    },
+    {
       "url": "waleedmandour.org/index.html",
       "pageviews": 24,
       "visitors": 8
@@ -437,12 +442,7 @@
       "url": "waleedmandour.org/projects/CorpusMindVoice/",
       "pageviews": 24,
       "visitors": 6
-    },
-    {
-      "url": "waleedmandour.org/projects/AMTA/privacy.html",
-      "pageviews": 23,
-      "visitors": 13
     }
   ],
-  "fetched_at": "2026-10-01T01:40:41Z"
+  "fetched_at": "2026-10-01T07:59:19Z"
 }
