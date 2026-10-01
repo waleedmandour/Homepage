@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 478,
-    "all_time_pageviews": 1432,
-    "last_7_days_visitors": 167,
-    "last_30_days_visitors": 201
+    "all_time_visitors": 491,
+    "all_time_pageviews": 1466,
+    "last_7_days_visitors": 180,
+    "last_30_days_visitors": 214
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 121,
+      "visitors": 123,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -32,7 +32,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 49,
+      "visitors": 60,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -334,13 +334,13 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 105,
+      "visitors": 107,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 16,
+      "visitors": 27,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -395,18 +395,18 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 512,
-      "visitors": 290
+      "pageviews": 518,
+      "visitors": 295
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 302,
-      "visitors": 135
+      "pageviews": 310,
+      "visitors": 137
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 94,
-      "visitors": 31
+      "pageviews": 95,
+      "visitors": 32
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -415,8 +415,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 57,
-      "visitors": 20
+      "pageviews": 58,
+      "visitors": 21
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -424,25 +424,25 @@
       "visitors": 10
     },
     {
-      "url": "waleedmandour.org/teaching/",
-      "pageviews": 27,
-      "visitors": 23
+      "url": "waleedmandour.org/projects/scholarscribe/",
+      "pageviews": 36,
+      "visitors": 19
     },
     {
-      "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 25,
-      "visitors": 13
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 29,
+      "visitors": 24
+    },
+    {
+      "url": "waleedmandour.org/projects/scholarscribe/index.html",
+      "pageviews": 26,
+      "visitors": 10
     },
     {
       "url": "waleedmandour.org/index.html",
       "pageviews": 24,
       "visitors": 8
-    },
-    {
-      "url": "waleedmandour.org/projects/CorpusMindVoice/",
-      "pageviews": 24,
-      "visitors": 6
     }
   ],
-  "fetched_at": "2026-10-01T07:59:19Z"
+  "fetched_at": "2026-10-01T15:09:32Z"
 }
