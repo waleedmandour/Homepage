@@ -1,24 +1,24 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 491,
-    "all_time_pageviews": 1466,
-    "last_7_days_visitors": 180,
-    "last_30_days_visitors": 214
+    "all_time_visitors": 523,
+    "all_time_pageviews": 1534,
+    "last_7_days_visitors": 212,
+    "last_30_days_visitors": 246
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 123,
+      "visitors": 144,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 93,
+      "visitors": 94,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 20,
+      "visitors": 22,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -92,18 +92,18 @@
       "flag_emoji": "🇨🇦"
     },
     {
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "country_numeric": "826",
+      "visitors": 6,
+      "flag_emoji": "🇬🇧"
+    },
+    {
       "country": "Ireland",
       "country_code": "IE",
       "country_numeric": "372",
       "visitors": 5,
       "flag_emoji": "🇮🇪"
-    },
-    {
-      "country": "United Kingdom",
-      "country_code": "GB",
-      "country_numeric": "826",
-      "visitors": 5,
-      "flag_emoji": "🇬🇧"
     },
     {
       "country": "Argentina",
@@ -134,6 +134,27 @@
       "flag_emoji": "🇹🇳"
     },
     {
+      "country": "United Arab Emirates",
+      "country_code": "AE",
+      "country_numeric": "784",
+      "visitors": 4,
+      "flag_emoji": "🇦🇪"
+    },
+    {
+      "country": "Iran",
+      "country_code": "IR",
+      "country_numeric": "364",
+      "visitors": 3,
+      "flag_emoji": "🇮🇷"
+    },
+    {
+      "country": "Palestine",
+      "country_code": "PS",
+      "country_numeric": "275",
+      "visitors": 3,
+      "flag_emoji": "🇵🇸"
+    },
+    {
       "country": "Singapore",
       "country_code": "SG",
       "country_numeric": "702",
@@ -141,18 +162,11 @@
       "flag_emoji": "🇸🇬"
     },
     {
-      "country": "United Arab Emirates",
-      "country_code": "AE",
-      "country_numeric": "784",
-      "visitors": 3,
-      "flag_emoji": "🇦🇪"
-    },
-    {
-      "country": "Iran",
-      "country_code": "IR",
-      "country_numeric": "364",
+      "country": "Algeria",
+      "country_code": "DZ",
+      "country_numeric": "012",
       "visitors": 2,
-      "flag_emoji": "🇮🇷"
+      "flag_emoji": "🇩🇿"
     },
     {
       "country": "Israel",
@@ -167,13 +181,6 @@
       "country_numeric": "434",
       "visitors": 2,
       "flag_emoji": "🇱🇾"
-    },
-    {
-      "country": "Palestine",
-      "country_code": "PS",
-      "country_numeric": "275",
-      "visitors": 2,
-      "flag_emoji": "🇵🇸"
     },
     {
       "country": "Poland",
@@ -209,13 +216,6 @@
       "country_numeric": "792",
       "visitors": 2,
       "flag_emoji": "🇹🇷"
-    },
-    {
-      "country": "Algeria",
-      "country_code": "DZ",
-      "country_numeric": "012",
-      "visitors": 1,
-      "flag_emoji": "🇩🇿"
     },
     {
       "country": "Andorra",
@@ -274,11 +274,25 @@
       "flag_emoji": "🇰🇼"
     },
     {
+      "country": "Mauritania",
+      "country_code": "MR",
+      "country_numeric": "478",
+      "visitors": 1,
+      "flag_emoji": "🇲🇷"
+    },
+    {
       "country": "Mexico",
       "country_code": "MX",
       "country_numeric": "484",
       "visitors": 1,
       "flag_emoji": "🇲🇽"
+    },
+    {
+      "country": "Morocco",
+      "country_code": "MA",
+      "country_numeric": "504",
+      "visitors": 1,
+      "flag_emoji": "🇲🇦"
     },
     {
       "country": "Pakistan",
@@ -300,6 +314,13 @@
       "country_numeric": "724",
       "visitors": 1,
       "flag_emoji": "🇪🇸"
+    },
+    {
+      "country": "Sri Lanka",
+      "country_code": "LK",
+      "country_numeric": "144",
+      "visitors": 1,
+      "flag_emoji": "🇱🇰"
     },
     {
       "country": "Sudan",
@@ -334,7 +355,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 107,
+      "visitors": 128,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -344,21 +365,21 @@
       "flag_emoji": "🇴🇲"
     },
     {
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "visitors": 16,
+      "flag_emoji": "🇸🇦"
+    },
+    {
       "country": "China",
       "country_code": "CN",
       "visitors": 15,
       "flag_emoji": "🇨🇳"
     },
     {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "visitors": 14,
-      "flag_emoji": "🇸🇦"
-    },
-    {
       "country": "United States",
       "country_code": "US",
-      "visitors": 14,
+      "visitors": 15,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -380,33 +401,38 @@
       "flag_emoji": "🇭🇰"
     },
     {
-      "country": "India",
-      "country_code": "IN",
-      "visitors": 2,
-      "flag_emoji": "🇮🇳"
-    },
-    {
       "country": "Iran",
       "country_code": "IR",
-      "visitors": 2,
+      "visitors": 3,
       "flag_emoji": "🇮🇷"
+    },
+    {
+      "country": "Palestine",
+      "country_code": "PS",
+      "visitors": 3,
+      "flag_emoji": "🇵🇸"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
       "pageviews": 518,
-      "visitors": 295
+      "visitors": 296
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 310,
-      "visitors": 137
+      "pageviews": 321,
+      "visitors": 139
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 95,
+      "pageviews": 96,
       "visitors": 32
+    },
+    {
+      "url": "waleedmandour.org/projects/rdat/",
+      "pageviews": 74,
+      "visitors": 41
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -415,7 +441,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 58,
+      "pageviews": 59,
       "visitors": 21
     },
     {
@@ -425,24 +451,19 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 36,
+      "pageviews": 37,
       "visitors": 19
     },
     {
       "url": "waleedmandour.org/teaching/",
       "pageviews": 29,
-      "visitors": 24
+      "visitors": 25
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
       "pageviews": 26,
       "visitors": 10
-    },
-    {
-      "url": "waleedmandour.org/index.html",
-      "pageviews": 24,
-      "visitors": 8
     }
   ],
-  "fetched_at": "2026-10-01T15:09:32Z"
+  "fetched_at": "2026-10-01T20:39:41Z"
 }
