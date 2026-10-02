@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 549,
-    "all_time_pageviews": 1714,
-    "last_7_days_visitors": 237,
-    "last_30_days_visitors": 270
+    "all_time_visitors": 550,
+    "all_time_pageviews": 1754,
+    "last_7_days_visitors": 238,
+    "last_30_days_visitors": 271
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 154,
+      "visitors": 155,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -355,7 +355,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 138,
+      "visitors": 139,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -416,23 +416,23 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 537,
+      "pageviews": 539,
       "visitors": 301
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 407,
+      "pageviews": 413,
       "visitors": 152
     },
     {
-      "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 115,
-      "visitors": 43
+      "url": "waleedmandour.org/projects/rdat/",
+      "pageviews": 133,
+      "visitors": 46
     },
     {
-      "url": "waleedmandour.org/projects/rdat/",
-      "pageviews": 109,
-      "visitors": 45
+      "url": "waleedmandour.org/projects/CorpusMindLens/",
+      "pageviews": 117,
+      "visitors": 43
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -441,12 +441,12 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 67,
+      "pageviews": 69,
       "visitors": 23
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 40,
+      "pageviews": 43,
       "visitors": 20
     },
     {
@@ -456,7 +456,7 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 31,
+      "pageviews": 32,
       "visitors": 26
     },
     {
@@ -465,5 +465,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-02T18:47:47Z"
+  "fetched_at": "2026-10-02T22:40:47Z"
 }
