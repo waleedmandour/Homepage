@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 550,
-    "all_time_pageviews": 1755,
+    "all_time_pageviews": 1756,
     "last_7_days_visitors": 236,
     "last_30_days_visitors": 271
   },
@@ -426,7 +426,7 @@
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
-      "pageviews": 133,
+      "pageviews": 134,
       "visitors": 46
     },
     {
@@ -465,5 +465,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-03T07:16:12Z"
+  "fetched_at": "2026-10-03T12:50:38Z"
 }
