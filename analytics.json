@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 565,
-    "all_time_pageviews": 1817,
-    "last_7_days_visitors": 250,
-    "last_30_days_visitors": 285
+    "all_time_visitors": 568,
+    "all_time_pageviews": 1820,
+    "last_7_days_visitors": 253,
+    "last_30_days_visitors": 288
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 164,
+      "visitors": 165,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -32,7 +32,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 61,
+      "visitors": 63,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -362,13 +362,13 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 148,
+      "visitors": 149,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 27,
+      "visitors": 29,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -428,8 +428,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 457,
-      "visitors": 165
+      "pageviews": 459,
+      "visitors": 166
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -449,12 +449,12 @@
     {
       "url": "waleedmandour.org/projects/",
       "pageviews": 70,
-      "visitors": 23
+      "visitors": 24
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 43,
-      "visitors": 20
+      "pageviews": 44,
+      "visitors": 21
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -472,5 +472,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-04T14:34:38Z"
+  "fetched_at": "2026-10-04T18:27:23Z"
 }
