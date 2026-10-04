@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 558,
-    "all_time_pageviews": 1781,
-    "last_7_days_visitors": 243,
-    "last_30_days_visitors": 278
+    "all_time_visitors": 565,
+    "all_time_pageviews": 1817,
+    "last_7_days_visitors": 250,
+    "last_30_days_visitors": 285
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 159,
+      "visitors": 164,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -190,6 +190,13 @@
       "flag_emoji": "🇮🇱"
     },
     {
+      "country": "Kuwait",
+      "country_code": "KW",
+      "country_numeric": "414",
+      "visitors": 2,
+      "flag_emoji": "🇰🇼"
+    },
+    {
       "country": "Libya",
       "country_code": "LY",
       "country_numeric": "434",
@@ -239,6 +246,13 @@
       "flag_emoji": "🇦🇹"
     },
     {
+      "country": "Bahrain",
+      "country_code": "BH",
+      "country_numeric": "048",
+      "visitors": 1,
+      "flag_emoji": "🇧🇭"
+    },
+    {
       "country": "Belarus",
       "country_code": "BY",
       "country_numeric": "112",
@@ -265,13 +279,6 @@
       "country_numeric": "246",
       "visitors": 1,
       "flag_emoji": "🇫🇮"
-    },
-    {
-      "country": "Kuwait",
-      "country_code": "KW",
-      "country_numeric": "414",
-      "visitors": 1,
-      "flag_emoji": "🇰🇼"
     },
     {
       "country": "Mauritania",
@@ -355,7 +362,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 143,
+      "visitors": 148,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -416,17 +423,17 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 540,
-      "visitors": 301
+      "pageviews": 542,
+      "visitors": 302
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 427,
-      "visitors": 158
+      "pageviews": 457,
+      "visitors": 165
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
-      "pageviews": 136,
+      "pageviews": 138,
       "visitors": 46
     },
     {
@@ -456,8 +463,8 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 32,
-      "visitors": 26
+      "pageviews": 34,
+      "visitors": 28
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
@@ -465,5 +472,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-04T08:57:32Z"
+  "fetched_at": "2026-10-04T14:34:38Z"
 }
