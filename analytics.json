@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 571,
-    "all_time_pageviews": 1829,
-    "last_7_days_visitors": 251,
-    "last_30_days_visitors": 289
+    "all_time_visitors": 573,
+    "all_time_pageviews": 1838,
+    "last_7_days_visitors": 253,
+    "last_30_days_visitors": 291
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 64,
+      "visitors": 65,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -141,6 +141,13 @@
       "flag_emoji": "🇦🇪"
     },
     {
+      "country": "Indonesia",
+      "country_code": "ID",
+      "country_numeric": "360",
+      "visitors": 3,
+      "flag_emoji": "🇮🇩"
+    },
+    {
       "country": "Iran",
       "country_code": "IR",
       "country_numeric": "364",
@@ -174,13 +181,6 @@
       "country_numeric": "012",
       "visitors": 2,
       "flag_emoji": "🇩🇿"
-    },
-    {
-      "country": "Indonesia",
-      "country_code": "ID",
-      "country_numeric": "360",
-      "visitors": 2,
-      "flag_emoji": "🇮🇩"
     },
     {
       "country": "Israel",
@@ -368,7 +368,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 29,
+      "visitors": 30,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -408,27 +408,27 @@
       "flag_emoji": "🇭🇰"
     },
     {
+      "country": "Indonesia",
+      "country_code": "ID",
+      "visitors": 3,
+      "flag_emoji": "🇮🇩"
+    },
+    {
       "country": "Iran",
       "country_code": "IR",
       "visitors": 3,
       "flag_emoji": "🇮🇷"
-    },
-    {
-      "country": "Palestine",
-      "country_code": "PS",
-      "visitors": 3,
-      "flag_emoji": "🇵🇸"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 543,
-      "visitors": 303
+      "pageviews": 545,
+      "visitors": 304
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 467,
+      "pageviews": 472,
       "visitors": 168
     },
     {
@@ -448,8 +448,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 70,
-      "visitors": 24
+      "pageviews": 72,
+      "visitors": 25
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -472,5 +472,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-05T16:34:59Z"
+  "fetched_at": "2026-10-05T22:59:29Z"
 }
