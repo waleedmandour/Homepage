@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 569,
     "all_time_pageviews": 1824,
-    "last_7_days_visitors": 254,
-    "last_30_days_visitors": 289
+    "last_7_days_visitors": 249,
+    "last_30_days_visitors": 287
   },
   "top_countries_all_time": [
     {
@@ -368,7 +368,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 29,
+      "visitors": 28,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -386,7 +386,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 14,
+      "visitors": 13,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -472,5 +472,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-05T01:23:23Z"
+  "fetched_at": "2026-10-05T07:53:59Z"
 }
