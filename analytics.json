@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 569,
-    "all_time_pageviews": 1824,
-    "last_7_days_visitors": 249,
-    "last_30_days_visitors": 287
+    "all_time_visitors": 571,
+    "all_time_pageviews": 1829,
+    "last_7_days_visitors": 251,
+    "last_30_days_visitors": 289
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 166,
+      "visitors": 167,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -32,7 +32,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 63,
+      "visitors": 64,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -362,13 +362,13 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 150,
+      "visitors": 151,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 28,
+      "visitors": 29,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -423,13 +423,13 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 542,
-      "visitors": 302
+      "pageviews": 543,
+      "visitors": 303
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 463,
-      "visitors": 167
+      "pageviews": 467,
+      "visitors": 168
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -472,5 +472,5 @@
       "visitors": 11
     }
   ],
-  "fetched_at": "2026-10-05T07:53:59Z"
+  "fetched_at": "2026-10-05T16:34:59Z"
 }
