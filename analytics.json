@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 573,
-    "all_time_pageviews": 1838,
+    "all_time_visitors": 576,
+    "all_time_pageviews": 1843,
     "last_7_days_visitors": 253,
-    "last_30_days_visitors": 291
+    "last_30_days_visitors": 294
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 65,
+      "visitors": 68,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -368,7 +368,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 30,
+      "visitors": 33,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -448,13 +448,13 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 72,
-      "visitors": 25
+      "pageviews": 73,
+      "visitors": 26
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 44,
-      "visitors": 21
+      "pageviews": 47,
+      "visitors": 23
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -468,9 +468,9 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
-      "pageviews": 29,
-      "visitors": 11
+      "pageviews": 30,
+      "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-06T02:43:35Z"
+  "fetched_at": "2026-10-06T09:35:13Z"
 }
