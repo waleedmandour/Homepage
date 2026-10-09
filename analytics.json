@@ -2,9 +2,9 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 586,
-    "all_time_pageviews": 1874,
-    "last_7_days_visitors": 120,
-    "last_30_days_visitors": 299
+    "all_time_pageviews": 1876,
+    "last_7_days_visitors": 57,
+    "last_30_days_visitors": 294
   },
   "top_countries_all_time": [
     {
@@ -380,13 +380,13 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 20,
+      "visitors": 18,
       "flag_emoji": "🇸🇦"
     },
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 11,
+      "visitors": 8,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -423,12 +423,12 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 554,
+      "pageviews": 555,
       "visitors": 308
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 483,
+      "pageviews": 484,
       "visitors": 171
     },
     {
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-09T06:57:08Z"
+  "fetched_at": "2026-10-09T14:04:05Z"
 }
