@@ -1,24 +1,24 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 588,
-    "all_time_pageviews": 1881,
-    "last_7_days_visitors": 59,
-    "last_30_days_visitors": 296
+    "all_time_visitors": 591,
+    "all_time_pageviews": 1887,
+    "last_7_days_visitors": 62,
+    "last_30_days_visitors": 299
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 171,
+      "visitors": 173,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 106,
+      "visitors": 107,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -362,7 +362,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 155,
+      "visitors": 157,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -374,7 +374,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 26,
+      "visitors": 27,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -438,8 +438,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 127,
-      "visitors": 47
+      "pageviews": 131,
+      "visitors": 49
     },
     {
       "url": "waleedmandour.org/projects/",
@@ -458,8 +458,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
-      "pageviews": 39,
-      "visitors": 10
+      "pageviews": 41,
+      "visitors": 11
     },
     {
       "url": "waleedmandour.org/teaching/",
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-09T23:41:08Z"
+  "fetched_at": "2026-10-10T03:16:58Z"
 }
