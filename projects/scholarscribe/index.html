@@ -69,7 +69,6 @@ body.arabic nav ul {
 /* 3. Keep specific grid content right-aligned for better readability inside cards */
 body.arabic .features-grid, 
 body.arabic .workflow-steps, 
-body.arabic .ui-showcase-grid, 
 body.arabic .feature-card,
 body.arabic .ethics-card { 
     text-align: right; 
@@ -156,11 +155,34 @@ body.arabic .ethics-card {
         .workflow-steps, .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
         .features-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin: 64px 0; }
 
-        .ui-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 64px auto; max-width: 1000px; }
-        .ui-screenshot-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--light); transition: var(--transition); }
-        .ui-screenshot-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
-        .ui-screenshot-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--light); background: #f8f9fa; }
-        .ui-screenshot-caption { padding: 16px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; }
+        /* ===== SCREENSHOT CAROUSEL ===== */
+        .carousel { max-width: 1000px; margin: 48px auto 0; outline: none; }
+        .carousel:focus-visible .carousel-viewport { box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.55), var(--shadow); }
+        .carousel-viewport { position: relative; background: var(--white); border: 1px solid var(--light); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); direction: ltr; user-select: none; touch-action: pan-y; }
+        .carousel-track { display: flex; transition: transform 0.55s cubic-bezier(0.33, 1, 0.68, 1); will-change: transform; }
+        .carousel-slide { min-width: 100%; margin: 0; background: #f8f9fa; }
+        .carousel-slide img { width: 100%; aspect-ratio: 1180 / 758; object-fit: contain; display: block; background: #f8f9fa; pointer-events: none; }
+        .carousel-slide figcaption { padding: 15px 48px; text-align: center; font-weight: 600; color: var(--primary); font-size: 15px; border-top: 1px solid var(--light); background: var(--white); min-height: 54px; }
+        .carousel-slide figcaption .lang-en, .carousel-slide figcaption .lang-ar { display: inline; }
+        body.arabic .carousel-slide figcaption .lang-en { display: none; }
+        body:not(.arabic) .carousel-slide figcaption .lang-ar { display: none; }
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(10, 28, 60, 0.55); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; z-index: 5; transition: var(--transition); backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+        .carousel-arrow:hover { background: var(--secondary); border-color: var(--secondary); transform: translateY(-50%) scale(1.08); }
+        .carousel-arrow:active { transform: translateY(-50%) scale(0.96); }
+        .carousel-arrow:focus-visible { outline: 3px solid rgba(32, 178, 170, 0.8); outline-offset: 2px; }
+        .carousel-prev { left: 14px; }
+        .carousel-next { right: 14px; }
+        .carousel-counter { position: absolute; top: 14px; right: 14px; background: rgba(10, 28, 60, 0.55); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; backdrop-filter: blur(6px); z-index: 5; }
+        .carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 10px; border: none; padding: 0; background: rgba(10, 28, 60, 0.18); cursor: pointer; transition: var(--transition); }
+        .carousel-dot:hover { background: rgba(10, 28, 60, 0.4); }
+        .carousel-dot.active { width: 28px; background: var(--secondary); }
+        .carousel-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        body.arabic .carousel-slide figcaption { direction: rtl; }
+        body.arabic .carousel-prev { left: auto; right: 14px; }
+        body.arabic .carousel-next { right: auto; left: 14px; }
+        body.arabic .carousel-counter { right: auto; left: 14px; }
+        @media (prefers-reduced-motion: reduce) { .carousel-track { transition: none; } }
 
         .workflow-step, .feature-card { background: var(--white); padding: 32px 24px; border-radius: 12px; text-align: center; box-shadow: var(--shadow); transition: var(--transition); position: relative; overflow: hidden; }
 
@@ -290,7 +312,7 @@ body.arabic .ethics-card {
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) { .header-content { flex-direction: column; text-align: center; } .header-text, body.arabic .header-text { text-align: center; } }
-        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid, .workflow-steps, .ui-showcase-grid, .ethics-grid, .model-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; } .app-logo-container::before { width: 160px; height: 160px; } .app-logo-container::after { width: 180px; height: 180px; } .app-logo-frame { border-radius: 25px; padding: 12px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } }
+        @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid, .workflow-steps, .ethics-grid, .model-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; } .app-logo-container::before { width: 160px; height: 160px; } .app-logo-container::after { width: 180px; height: 180px; } .app-logo-frame { border-radius: 25px; padding: 12px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } .carousel-arrow { width: 36px; height: 36px; font-size: 13px; } .carousel-prev { left: 8px; } .carousel-next { right: 8px; } .carousel-slide figcaption { padding: 12px 40px; font-size: 13.5px; min-height: 48px; } .carousel-counter { font-size: 11px; padding: 3px 10px; } }
         @media (max-width: 480px) { nav ul { flex-direction: column; gap: 20px; padding: 20px; } h1 { font-size: 1.8em; } .header-photo { width: 130px; height: 130px; } .hero h1 { font-size: 28px; } .hero-description { font-size: 16px; } .feature-card { padding: 24px; } .container { padding: 0 16px; } .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; } .app-logo-container::before { width: 140px; height: 140px; } .app-logo-container::after { width: 160px; height: 160px; } .app-logo-frame { border-radius: 20px; padding: 10px; } .privacy-table th, .privacy-table td { padding: 10px 12px; font-size: 13px; } }
     </style>
 </head>
@@ -367,10 +389,10 @@ body.arabic .ethics-card {
 
                 <div>
                     <p class="hero-description lang-en">
-                        ScholarScribe helps researchers who are writing their own manuscripts by running open large language models (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline. It combines a 24-rule AI text cleaner, citation validation against BibTeX files, document statistics, structure analysis, abstract generation, authenticity-risk assessment, voice-consistency checks, a writing-process journal, AI-use disclosure statements, an in-app privacy audit, and, new in v2.1.0, opt-in, signed Writing Provenance evidence built from your document's own revision history: all designed to support transparent, ethical research writing without ever sending your text to the cloud.
+                        ScholarScribe helps researchers who are writing their own manuscripts by running open large language models (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline. It combines a 23-rule AI text cleaner, offline language checking, docx-to-LaTeX conversion, citation validation against BibTeX files, document statistics, structure analysis, abstract generation, authenticity-risk assessment, voice-consistency checks, a writing-process journal, AI-use disclosure statements, an in-app privacy audit, and, new in v2.2.1, opt-in, signed Writing Provenance evidence built from your document's own revision history: all designed to support transparent, ethical research writing without ever sending your text to the cloud.
                     </p>
                     <p class="hero-description lang-ar">
-                        يساعد سكولار سكرايب الباحثين الذين يكتبون مخطوطاتهم الخاصة من خلال تشغيل نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3) بالكامل دون اتصال. إذ يجمع التطبيق بين منظّف نصوص ذكي بقواعد التحول الـ 24، والتحقق من الاستشهادات مقابل ملفات BibTeX، وإحصاءات الوثيقة، وتحليل البنية، وتوليد الملخصات، وتقييم مخاطر الأصالة، وفحص اتساق الصوت، ومذكرات عملية الكتابة، وبيانات الإفصاح عن استخدام الذكاء الاصطناعي، وسجل خصوصية داخلي، و,  الجديد في v2.1.0 ,  أدلة إثبات كتابة موقّعة اختيارية مبنية من تاريخ تعديلات مستندك نفسه: كلها مصممة لدعم الكتابة البحثية الشفافة والأخلاقية دون إرسال نصك إلى السحابة أبداً.
+                        يساعد سكولار سكرايب الباحثين الذين يكتبون مخطوطاتهم الخاصة من خلال تشغيل نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3) بالكامل دون اتصال. إذ يجمع التطبيق بين منظّف نصوص ذكي بقواعد التحول الـ 23، وفحص لغوي دون اتصال، وتحويل docx إلى LaTeX، والتحقق من الاستشهادات مقابل ملفات BibTeX، وإحصاءات الوثيقة، وتحليل البنية، وتوليد الملخصات، وتقييم مخاطر الأصالة، وفحص اتساق الصوت، ومذكرات عملية الكتابة، وبيانات الإفصاح عن استخدام الذكاء الاصطناعي، وسجل خصوصية داخلي، و,  الجديد في v2.2.1 ,  أدلة إثبات كتابة موقّعة اختيارية مبنية من تاريخ تعديلات مستندك نفسه: كلها مصممة لدعم الكتابة البحثية الشفافة والأخلاقية دون إرسال نصك إلى السحابة أبداً.
                     </p>
                 </div>
             </div>
@@ -380,8 +402,8 @@ body.arabic .ethics-card {
         <div class="ethics-notice" style="background: linear-gradient(135deg, rgba(32, 178, 170, 0.08) 0%, rgba(26, 95, 122, 0.08) 100%); border-left: 4px solid var(--secondary);">
             <h4 class="lang-en"><i class="fas fa-rocket"></i> What's New in v2.2.1</h4>
             <h4 class="lang-ar"><i class="fas fa-rocket"></i> الجديد في v2.2.1</h4>
-            <p class="lang-en">v2.2.1 polishes the User Guide PDF (the cover now embeds the app logo and uses symmetric margins matching the body pages), adds first-phrase excerpts to every section in the Structure Analyzer (mirroring the Risk Profile pattern, so you can preview each section without scrolling), adds a paste-references mode to the Citation Manager (pick your style: APA, MLA, Chicago, Vancouver, or auto-detect; paste your plain-text reference list; ScholarScribe converts it to BibTeX, lets you download the .bib file, and auto-validates it against your draft), and adds an "Attach manuscript" button to the Chat tab (load a .txt, .md, .tex, .rst, or .docx file and discuss it directly with the local LLM). See the <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">full CHANGELOG</a> for the per-task breakdown.</p>
-            <p class="lang-ar">v2.2.1 يحسّن دليل المستخدم PDF (الغلاف الآن يتضمن شعار التطبيق ويستخدم هوامش متماثلة تطابق صفحات النص)، يضيف مقتطفات للعبارات الأولى لكل قسم في محلل البنية (على غرار نمط ملف مخاطر الأصالة، حتى تتمكن من معاينة كل قسم دون تمرير)، يضيف وضع لصق المراجع إلى إدارة الاستشهادات (اختر أسلوبك: APA، MLA، Chicago، Vancouver، أو اكتشاف تلقائي؛ الصق قائمة مراجعك كنص عادي؛ يقوم سكولار سكرايب بتحويلها إلى BibTeX، يتيح لك تنزيل ملف .bib، ويتحقق منها تلقائياً مقابل مسودتك)، ويضيف زر "إرفاق مخطوطة" إلى تبويب المحادثة (حمّل ملف .txt أو .md أو .tex أو .rst أو .docx وناقشه مباشرة مع النموذج المحلي). راجع <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG الكامل</a> للاطلاع على تفصيل المهام.</p>
+            <p class="lang-en">v2.2.1 is the first stable release since v2.1.0: the Get started group now leads with the About tab, a new Language Check tab gives offline grammar and style feedback entirely on your device (powered by the harper engine, with American, British, Australian, or Canadian English and a dictionary toggle), the Text Cleaner gains a Convert to LaTeX (.tex) action for .docx manuscripts, the Citation Manager accepts a pasted plain-text reference list and converts it to BibTeX (APA, MLA, Chicago, Vancouver, or auto-detect), the Structure Analyzer shows first-phrase excerpts for every section, the Chat tab gains an "Attach manuscript" button, and the User Guide PDF is now a compact 2-page reference. See the <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">full CHANGELOG</a> for the per-task breakdown.</p>
+            <p class="lang-ar">v2.2.1 هو أول إصدار مستقر منذ v2.1.0: أصبحت مجموعة "البداية" في الشريط الجانبي تبدأ بتبويب "حول"، وأضاف تبويب "الفحص اللغوي" الجديد تغذية راجعة نحوية وأسلوبية تعمل دون اتصال بالكامل على جهازك (بمحرك harper، مع دعم الإنجليزية الأمريكية أو البريطانية أو الأسترالية أو الكندية ومفتاح قاموس)، وأضاف Text Cleaner إجراء "التحويل إلى LaTeX (.tex)" لمخططات .docx، وقبلت إدارة الاستشهادات قائمة مراجع ملصوقة كنص عادي وحولتها إلى BibTeX (APA أو MLA أو Chicago أو Vancouver أو اكتشاف تلقائي)، وأظهر محلل البنية مقتطفات للعبارات الأولى لكل قسم، وأضاف تبويب المحادثة زر "إرفاق مخطوطة"، وأصبح دليل المستخدم PDF مرجعاً مضغوطاً من صفحتين. راجع <a href="https://github.com/waleedmandour/scholarscribe/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG الكامل</a> للاطلاع على تفصيل المهام.</p>
         </div>
 
         <!-- Ethics Notice -->
@@ -435,10 +457,10 @@ body.arabic .ethics-card {
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-broom"></i></div>
-                    <h3 class="lang-en">AI Text Cleaner, 24 Rule-Based Transformations</h3>
-                    <h3 class="lang-ar">منظّف النص, 24 تحويلاً قاعدياً</h3>
-                    <p class="lang-en">Fix common artifacts from copy-pasted text, especially from PDFs, web pages, OCR, and word processors. <strong>Default (12 ops):</strong> fix mojibake, expand ligatures, normalize quotes/dashes, strip zero-width/control chars, join hyphenated line breaks, fix broken citations, remove page numbers, collapse whitespace. <strong>Strict (24 ops, &epsilon; button):</strong> adds BOM strip, CRLF&rarr;LF, non-breaking-space conversion, Unicode whitespace normalization, soft-hyphen strip, variation-selector strip, ellipsis conversion, asterisk removal, markdown-heading removal, bullet normalization, and repeated-punctuation collapse. Two <code>.docx</code> modes: extract-only (all cleaners) or clean-in-place (preserves tables, images, hyperlinks, headers/footers, styles, track changes).</p>
-                    <p class="lang-ar">أصلح التحولات الشائعة من النص المنسوخ, خاصةً من ملفات PDF والصفحات وOCR ومعالجات النصوص. <strong>الافتراضي (12 عملية):</strong> إصلاح mojibake، توسيع الرابطات، تطبيع علامات الاقتباس/الشرطات، إزالة أحرف العرض الصفري/التحكم، وصل الكلمات المقسمة، إصلاح الاستشهادات المعطوبة، إزالة أرقام الصفحات، وطي المسافات. <strong>الصارم (24 عملية، زر &epsilon;):</strong> يضيف إزالة BOM، CRLF&rarr;LF، تحويل المسافات غير القابلة للكسر، تطبيع مسافات Unicode، إزالة الواصلات الناعمة، إزالة محددات التغيير، تحويل علامات الحذف، إزالة النجوم، إزالة عناوين Markdown، تطبيع النقاط، وطي علامات الترقيم المكررة. وضعان لـ <code>.docx</code>: استخراج فقط (كل المنظفات) أو التنظيف في الموضع (يحفظ الجداول والصور والروابط والترويسات/التذييلات والأنماط وتتبع التغييرات).</p>
+                    <h3 class="lang-en">AI Text Cleaner, 23 Rule-Based Transformations</h3>
+                    <h3 class="lang-ar">منظّف النص, 23 تحويلاً قاعدياً</h3>
+                    <p class="lang-en">Fix common artifacts from copy-pasted text, especially from PDFs, web pages, OCR, and word processors. <strong>Default (12 ops):</strong> fix mojibake, expand ligatures, normalize quotes/dashes, strip zero-width/control chars, join hyphenated line breaks, fix broken citations, remove page numbers, collapse whitespace. <strong>Strict (23 ops, &epsilon; button):</strong> adds BOM strip, CRLF&rarr;LF, non-breaking-space conversion, Unicode whitespace normalization, soft-hyphen strip, variation-selector strip, ellipsis conversion, asterisk removal, markdown-heading removal, bullet normalization, and repeated-punctuation collapse. Two <code>.docx</code> modes: extract-only (all cleaners) or clean-in-place (preserves tables, images, hyperlinks, headers/footers, styles, track changes).</p>
+                    <p class="lang-ar">أصلح التحولات الشائعة من النص المنسوخ, خاصةً من ملفات PDF والصفحات وOCR ومعالجات النصوص. <strong>الافتراضي (12 عملية):</strong> إصلاح mojibake، توسيع الرابطات، تطبيع علامات الاقتباس/الشرطات، إزالة أحرف العرض الصفري/التحكم، وصل الكلمات المقسمة، إصلاح الاستشهادات المعطوبة، إزالة أرقام الصفحات، وطي المسافات. <strong>الصارم (23 عملية، زر &epsilon;):</strong> يضيف إزالة BOM، CRLF&rarr;LF، تحويل المسافات غير القابلة للكسر، تطبيع مسافات Unicode، إزالة الواصلات الناعمة، إزالة محددات التغيير، تحويل علامات الحذف، إزالة النجوم، إزالة عناوين Markdown، تطبيع النقاط، وطي علامات الترقيم المكررة. وضعان لـ <code>.docx</code>: استخراج فقط (كل المنظفات) أو التنظيف في الموضع (يحفظ الجداول والصور والروابط والترويسات/التذييلات والأنماط وتتبع التغييرات).</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-quote-right"></i></div>
@@ -504,49 +526,50 @@ body.arabic .ethics-card {
             <h2 class="section-title lang-en">Application Interface</h2>
             <h2 class="section-title lang-ar">واجهة التطبيق</h2>
 
-            <div class="ui-showcase-grid">
-                <div class="ui-screenshot-card">
-                    <img src="images/screenshot-models.png" alt="ScholarScribe Models tab" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                    <div class="ui-screenshot-caption">
-                        <span class="lang-en">Models. Install &amp; Import LLMs</span>
-                        <span class="lang-ar">النماذج, تثبيت واستيراد النماذج اللغوية</span>
+            <div class="carousel" id="ui-carousel" role="region" aria-roledescription="carousel" aria-label="Application screenshots" tabindex="0">
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 5">
+                            <img src="images/01-tour-light.png" alt="ScholarScribe welcome tour dialog over the Models tab" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">Welcome Tour. Six guided steps through the essentials</span>
+                                <span class="lang-ar">الجولة الترحيبية, ست خطوات موجّهة عبر الأساسيات</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
+                            <img src="images/02-models-light.png" alt="ScholarScribe Models tab in light mode with Ollama connected" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">Models. Install and run local LLMs via Ollama, with a RAM fit check</span>
+                                <span class="lang-ar">النماذج, ثبّت وشغّل النماذج المحلية عبر Ollama مع فحص ملاءمة الذاكرة</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
+                            <img src="images/03-about-light.png" alt="ScholarScribe About tab with version and environment details" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">About. Version, environment, and the guided tour launcher</span>
+                                <span class="lang-ar">حول, الإصدار والبيئة ومُطلق الجولة الإرشادية</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
+                            <img src="images/04-cleaner-light.png" alt="ScholarScribe AI Text Cleaner tab with cleaning options" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">AI Text Cleaner. Deterministic, rule-based cleaning that never leaves your device</span>
+                                <span class="lang-ar">منظّف النص الذكي, تنظيف قاعدي حتمي لا يغادر جهازك أبداً</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
+                            <img src="images/05-models-dark.png" alt="ScholarScribe Models tab in dark mode" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">Dark Mode. A comfortable palette for late-night writing sessions</span>
+                                <span class="lang-ar">الوضع الداكن, لوحة مريحة لجلسات الكتابة الليلية</span>
+                            </figcaption>
+                        </figure>
                     </div>
+                    <button class="carousel-arrow carousel-prev" type="button" aria-label="Previous screenshot"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                    <button class="carousel-arrow carousel-next" type="button" aria-label="Next screenshot"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                    <div class="carousel-counter" aria-hidden="true"><span class="carousel-current">1</span> / <span class="carousel-total">5</span></div>
                 </div>
-                <div class="ui-screenshot-card">
-                    <img src="images/screenshot-cleaner.png" alt="ScholarScribe AI Text Cleaner tab" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                    <div class="ui-screenshot-caption">
-                        <span class="lang-en">AI Text Cleaner, 24 Rule-Based Ops</span>
-                        <span class="lang-ar">منظّف النص, 24 عملية قاعدية</span>
-                    </div>
-                </div>
-                <div class="ui-screenshot-card">
-                    <img src="images/screenshot-citations.png" alt="ScholarScribe Citation Manager tab" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                    <div class="ui-screenshot-caption">
-                        <span class="lang-en">Citation Manager. BibTeX Validation</span>
-                        <span class="lang-ar">إدارة الاستشهادات, التحقق من BibTeX</span>
-                    </div>
-                </div>
-                <div class="ui-screenshot-card">
-                    <img src="images/screenshot-privacy.png" alt="ScholarScribe Privacy Audit tab" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                    <div class="ui-screenshot-caption">
-                        <span class="lang-en">Privacy Audit. Live Network Log</span>
-                        <span class="lang-ar">تدقيق الخصوصية, سجل شبكي مباشر</span>
-                    </div>
-                </div>
-                <div class="ui-screenshot-card">
-                    <img src="images/screenshot-style.png" alt="ScholarScribe Style Analysis tab" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                    <div class="ui-screenshot-caption">
-                        <span class="lang-en">Style Analysis. Voice Consistency</span>
-                        <span class="lang-ar">تحليل الأسلوب, اتساق الصوت</span>
-                    </div>
-                </div>
-                <div class="ui-screenshot-card">
-                    <img src="images/screenshot-disclosure.png" alt="ScholarScribe Disclosure Assistant tab" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                    <div class="ui-screenshot-caption">
-                        <span class="lang-en">Disclosure Assistant. Venue Templates</span>
-                        <span class="lang-ar">مساعد الإفصاح, قوالب الناشرين</span>
-                    </div>
-                </div>
+                <div class="carousel-dots" role="group" aria-label="Choose slide"></div>
             </div>
         </section>
 
@@ -593,7 +616,7 @@ body.arabic .ethics-card {
         <!-- Privacy Table -->
         <section>
             <h2 class="section-title lang-en">Privacy at a Glance</h2>
-            <h2 class="section-title lang-ar"نبذة عن الخصوصية في البرنامج</h2>
+            <h2 class="section-title lang-ar">نبذة عن الخصوصية في البرنامج</h2>
             <div class="privacy-table-wrap">
                 <table class="privacy-table">
                     <thead>
@@ -835,27 +858,22 @@ body.arabic .ethics-card {
                     <span class="dl-os">amd64 &middot; DEB package</span>
                     <span class="dl-file">ScholarScribe_2.2.1_amd64.deb</span>
                 </a>
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-2.2.1-1.x86_64.rpm" target="_blank" rel="noopener" class="download-card">
-                    <i class="fab fa-redhat"></i>
-                    <span class="dl-name lang-en">Linux (Fedora/RHEL)</span>
-                    <span class="dl-name lang-ar">لينكس (فيدورا/RHEL)</span>
-                    <span class="dl-os">x86_64 &middot; RPM package</span>
-                    <span class="dl-file">ScholarScribe-2.2.1-1.x86_64.rpm</span>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe_2.2.1_amd64.AppImage" target="_blank" rel="noopener" class="download-card">
+                    <i class="fab fa-linux"></i>
+                    <span class="dl-name lang-en">Linux (AppImage)</span>
+                    <span class="dl-name lang-ar">لينكس (أب إيماج)</span>
+                    <span class="dl-os">amd64 &middot; portable AppImage</span>
+                    <span class="dl-file">ScholarScribe_2.2.1_amd64.AppImage</span>
                 </a>
             </div>
 
             <div class="cta-buttons">
                 <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
                     <i class="fas fa-book-open"></i>
-                    <span class="lang-en">User Guide (PDF)</span>
-                    <span class="lang-ar">دليل المستخدم (PDF)</span>
+                    <span class="lang-en">User Guide (PDF, 2 pages)</span>
+                    <span class="lang-ar">دليل المستخدم (PDF, صفحتان)</span>
                 </a>
-                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-Quick-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
-                    <i class="fas fa-file-pdf"></i>
-                    <span class="lang-en">Quick Guide (PDF)</span>
-                    <span class="lang-ar">الدليل السريع (PDF)</span>
-                </a>
-                <a href="https://github.com/waleedmandour/scholarscribe" target="_blank" rel="noopener" class="cta-button secondary">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1" target="_blank" rel="noopener" class="cta-button secondary">
                     <i class="fab fa-github"></i>
                     <span class="lang-en">View Source on GitHub</span>
                     <span class="lang-ar">الكود المصدري على GitHub</span>
@@ -1041,10 +1059,8 @@ body.arabic .ethics-card {
                     <a href="https://github.com/waleedmandour/scholarscribe" target="_blank" rel="noopener" class="lang-ar">مستودع GitHub</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases" target="_blank" rel="noopener" class="lang-en">Releases</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-en">User Guide</a>
-                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-Quick-Guide.pdf" target="_blank" rel="noopener" class="lang-en">Quick Guide</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases" target="_blank" rel="noopener" class="lang-ar">الإصدارات</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.1#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم</a>
-                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.2.1/ScholarScribe-Quick-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">الدليل السريع</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/docs/ETHICS.md" target="_blank" rel="noopener" class="lang-en">Ethics Policy</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/docs/ETHICS.md" target="_blank" rel="noopener" class="lang-ar">سياسة الأخلاقيات</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/SECURITY.md" target="_blank" rel="noopener" class="lang-en">Security Policy</a>
@@ -1053,8 +1069,8 @@ body.arabic .ethics-card {
                     <a href="https://waleedmandour.org/projects/" class="lang-ar">&larr; العودة إلى المشاريع</a>
                 </div>
                 <div>
-                    <span class="lang-en">MIT License &middot; Built with Tauri 2, Svelte 4, and Ollama</span>
-                    <span class="lang-ar">رخصة MIT &middot; مبني بـ Tauri 2 وSvelte 4 وOllama</span>
+                    <span class="lang-en">MIT License &middot; Built with Tauri 2, Svelte 5, and Ollama</span>
+                    <span class="lang-ar">رخصة MIT &middot; مبني بـ Tauri 2 وSvelte 5 وOllama</span>
                 </div>
             </div>
         </footer>
@@ -1084,6 +1100,110 @@ body.arabic .ethics-card {
 
         langEnBtn.addEventListener('click', () => setLanguage('en'));
         langArBtn.addEventListener('click', () => setLanguage('ar'));
+
+        // ===== Screenshot Carousel =====
+        // Slide navigation with arrows, dots, keyboard, swipe, and a
+        // gentle autoplay that pauses on hover/focus and is disabled
+        // entirely for users who prefer reduced motion. RTL-aware: in
+        // Arabic mode the arrow buttons swap sides via CSS and keyboard/
+        // swipe directions invert to match the reading flow.
+        (function() {
+            const root = document.getElementById('ui-carousel');
+            if (!root) return;
+            const track = root.querySelector('.carousel-track');
+            const slides = Array.from(root.querySelectorAll('.carousel-slide'));
+            const prevBtn = root.querySelector('.carousel-prev');
+            const nextBtn = root.querySelector('.carousel-next');
+            const dotsBox = root.querySelector('.carousel-dots');
+            const currentEl = root.querySelector('.carousel-current');
+            const totalEl = root.querySelector('.carousel-total');
+            const count = slides.length;
+            let index = 0;
+            let timer = null;
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const AUTOPLAY_MS = 6000;
+
+            totalEl.textContent = count;
+
+            // Build one dot per slide
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'carousel-dot';
+                dot.setAttribute('aria-label', 'Go to screenshot ' + (i + 1) + ' of ' + count);
+                dot.addEventListener('click', () => { goTo(i, true); });
+                dotsBox.appendChild(dot);
+            });
+            const dots = Array.from(dotsBox.children);
+
+            function isRTL() { return document.body.classList.contains('arabic'); }
+
+            function update() {
+                track.style.transform = 'translateX(-' + (index * 100) + '%)';
+                slides.forEach((slide, i) => {
+                    slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                    dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+                });
+                currentEl.textContent = index + 1;
+            }
+
+            function goTo(i, manual) {
+                index = (i + count) % count;
+                update();
+                if (manual) restartAutoplay();
+            }
+
+            const next = (manual) => goTo(index + 1, manual);
+            const prev = (manual) => goTo(index - 1, manual);
+
+            nextBtn.addEventListener('click', () => next(true));
+            prevBtn.addEventListener('click', () => prev(true));
+
+            // Keyboard: Left/Right invert in Arabic mode to match RTL flow
+            root.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') { isRTL() ? prev(true) : next(true); }
+                else if (e.key === 'ArrowLeft') { isRTL() ? next(true) : prev(true); }
+            });
+
+            // Swipe support via pointer events (vertical scrolling preserved)
+            let startX = null, startY = null;
+            const viewport = root.querySelector('.carousel-viewport');
+            viewport.addEventListener('pointerdown', (e) => {
+                startX = e.clientX; startY = e.clientY;
+            });
+            viewport.addEventListener('pointerup', (e) => {
+                if (startX === null) return;
+                const dx = e.clientX - startX, dy = e.clientY - startY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) { isRTL() ? prev(true) : next(true); }
+                    else { isRTL() ? next(true) : prev(true); }
+                }
+                startX = startY = null;
+            });
+
+            // Autoplay: 6s per slide, paused on hover/focus, disabled for
+            // reduced-motion users and while the tab is hidden.
+            function stopAutoplay() { if (timer) { clearInterval(timer); timer = null; } }
+            function startAutoplay() {
+                if (reducedMotion || timer || document.hidden) return;
+                timer = setInterval(() => next(false), AUTOPLAY_MS);
+            }
+            function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+
+            root.addEventListener('mouseenter', stopAutoplay);
+            root.addEventListener('mouseleave', () => startAutoplay());
+            root.addEventListener('focusin', stopAutoplay);
+            root.addEventListener('focusout', () => startAutoplay());
+            document.addEventListener('visibilitychange', () => {
+                document.hidden ? stopAutoplay() : startAutoplay();
+            });
+
+            update();
+            startAutoplay();
+        })();
 
         // Copy citation to clipboard
         function copyCitation(btn) {

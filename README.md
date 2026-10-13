@@ -64,6 +64,9 @@ Homepage/
 │   │   └── index.html
 │   ├── awe-desktop/            # AWE Desktop: AI Co-Marker (Offline Windows App)
 │   │   └── index.html
+│   ├── scholarscribe/          # ScholarScribe: Privacy-First Local-LLM Writing Companion
+│   │   ├── index.html
+│   │   └── images/             # App logo, favicons, and UI screenshots (carousel)
 │   ├── ReferralSIS/            # Referral Student Information System
 │   │   └── index.html
 │   ├── rdat-pwa/               # RDAT Copilot: AI-Powered Translation Assistant
@@ -121,6 +124,7 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 
 | Project | Description | Status | Link |
 |---------|-------------|--------|------|
+| **ScholarScribe** | Privacy-first, local-LLM writing companion for researchers: a Tauri 2 desktop app (Windows, macOS, Linux) with offline language checking, a 23-op AI Text Cleaner, docx-to-LaTeX conversion, citation management, structure and style analysis, AI-use disclosure statements, and signed Writing Provenance evidence. All inference runs on-device via Ollama, no telemetry, no cloud | Stable Release v2.2.1 | [Projects/ScholarScribe](projects/scholarscribe/) |
 | **AMTA** | AI-Model Triangulation Approach for bilingual dictionary compilation using corpus-driven term selection and RAG-enhanced AI generation | Active Development | [Projects/AMTA](projects/AMTA/) |
 | **iAWE** | Intelligent Academic Writing Evaluator — deterministic, schema-enforced feedback system for EAP writing assessment | Active Research | [Projects/iAWE](projects/iAWE/) |
 | **Binti2** | Egyptian Arabic Voice Assistant for BYD electric vehicles with natural dialect interaction and EV features | Active Development | [Projects/Binti2](projects/binti2/) |
@@ -133,8 +137,11 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 
 ### Research Tools & Datasets
 
+<!-- NOTE: The ScholarScribe Zenodo DOI in the table below is provisional. Replace 10.5281/zenodo.23052647 with the final DOI once minted (the same DOI is used on projects/scholarscribe/index.html). -->
+
 | Resource | Type | Link |
 |----------|------|------|
+| ScholarScribe | Software (Zenodo) | [DOI: 10.5281/zenodo.23052647](https://doi.org/10.5281/zenodo.23052647) |
 | Student Peer Assessment Suite | Software (OSF) | [DOI: 10.17605/OSF.IO/2MZWN](https://doi.org/10.17605/OSF.IO/2MZWN) |
 | iAWE Student Corpus | Dataset (OSF) | [DOI: 10.17605/OSF.IO/4G3E5](https://doi.org/10.17605/OSF.IO/4G3E5) |
 | AMTA Framework for Specialised Lexicography | Software (OSF) | [DOI: 10.17605/OSF.IO/8QB9V](https://doi.org/10.17605/OSF.IO/8QB9V) |
