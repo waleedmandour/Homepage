@@ -210,15 +210,21 @@ body.arabic .ethics-card {
         .workflow-step p, .feature-card p { color: var(--gray); font-size: 15px; line-height: 1.6; }
         .feature-icon { font-size: 40px; margin-bottom: 24px; display: inline-block; padding: 16px; background: rgba(10, 28, 60, 0.1); border-radius: 12px; color: var(--primary); }
 
-        /* ===== PRIVACY TABLE ===== */
-        .privacy-table-wrap { overflow-x: auto; max-width: 900px; margin: 32px auto; border-radius: 12px; box-shadow: var(--shadow); }
-        .privacy-table { width: 100%; border-collapse: collapse; background: var(--white); font-size: 15px; }
-        .privacy-table th { background: var(--primary); color: var(--white); padding: 14px 18px; text-align: left; font-weight: 700; }
-        body.arabic .privacy-table th { text-align: right; }
-        .privacy-table td { padding: 12px 18px; border-bottom: 1px solid var(--light); color: var(--dark); }
-        .privacy-table tr:last-child td { border-bottom: none; }
-        .privacy-table tr:nth-child(even) { background: #fafbfc; }
-        .privacy-table strong { color: var(--primary); }
+        /* ===== PRIVACY CARDS ===== */
+        .privacy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; max-width: 1100px; margin: 48px auto 0; }
+        .privacy-card { background: var(--white); border: 1px solid var(--light); border-radius: 14px; padding: 22px; box-shadow: var(--shadow); transition: var(--transition); position: relative; overflow: hidden; text-align: left; }
+        body.arabic .privacy-card { text-align: right; }
+        .privacy-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--secondary), var(--accent)); }
+        .privacy-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(10, 28, 60, 0.14); border-color: var(--secondary); }
+        .privacy-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+        .privacy-icon { flex: 0 0 auto; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(10, 28, 60, 0.08); border-radius: 12px; color: var(--accent); font-size: 18px; }
+        .privacy-head h3 { flex: 1 1 auto; color: var(--primary); font-size: 17px; font-weight: 700; line-height: 1.3; margin: 0; }
+        .privacy-badge { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.3px; white-space: nowrap; }
+        .privacy-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+        .badge-green { background: #e6f4ea; color: #1e7b34; border: 1px solid #bfe3c8; }
+        .badge-teal { background: rgba(32, 178, 170, 0.12); color: #17726d; border: 1px solid rgba(32, 178, 170, 0.4); }
+        .privacy-card p { color: var(--gray); font-size: 14.5px; line-height: 1.65; margin: 0; }
+        .privacy-card code { background: rgba(10, 28, 60, 0.06); border-radius: 4px; padding: 1px 6px; font-size: 12.5px; color: var(--primary); word-break: break-all; }
 
         /* ===== ETHICS GRID ===== */
         .ethics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1000px; margin: 32px auto; }
@@ -313,7 +319,7 @@ body.arabic .ethics-card {
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) { .header-content { flex-direction: column; text-align: center; } .header-text, body.arabic .header-text { text-align: center; } }
         @media (max-width: 768px) { nav ul { gap: 20px; } h1 { font-size: 2.2em; } .tagline { font-size: 1.1em; } .header-photo { width: 150px; height: 150px; } .hero h1 { font-size: 36px; } .hero-subtitle { font-size: 20px; } .section-title { font-size: 28px; } .features-grid, .workflow-steps, .ethics-grid, .model-grid { grid-template-columns: 1fr; } .language-toggle { top: 16px; right: 16px; } .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; } .app-logo-container::before { width: 160px; height: 160px; } .app-logo-container::after { width: 180px; height: 180px; } .app-logo-frame { border-radius: 25px; padding: 12px; } .footer-links { flex-direction: column; gap: 8px; } .footer-links a:not(:last-child)::after { display: none; } .cta-buttons { flex-direction: column; align-items: center; } .carousel-arrow { width: 36px; height: 36px; font-size: 13px; } .carousel-prev { left: 8px; } .carousel-next { right: 8px; } .carousel-slide figcaption { padding: 12px 40px; font-size: 13.5px; min-height: 48px; } .carousel-counter { font-size: 11px; padding: 3px 10px; } }
-        @media (max-width: 480px) { nav ul { flex-direction: column; gap: 20px; padding: 20px; } h1 { font-size: 1.8em; } .header-photo { width: 130px; height: 130px; } .hero h1 { font-size: 28px; } .hero-description { font-size: 16px; } .feature-card { padding: 24px; } .container { padding: 0 16px; } .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; } .app-logo-container::before { width: 140px; height: 140px; } .app-logo-container::after { width: 160px; height: 160px; } .app-logo-frame { border-radius: 20px; padding: 10px; } .privacy-table th, .privacy-table td { padding: 10px 12px; font-size: 13px; } }
+        @media (max-width: 480px) { nav ul { flex-direction: column; gap: 20px; padding: 20px; } h1 { font-size: 1.8em; } .header-photo { width: 130px; height: 130px; } .hero h1 { font-size: 28px; } .hero-description { font-size: 16px; } .feature-card { padding: 24px; } .container { padding: 0 16px; } .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; } .app-logo-container::before { width: 140px; height: 140px; } .app-logo-container::after { width: 160px; height: 160px; } .app-logo-frame { border-radius: 20px; padding: 10px; } .privacy-card { padding: 18px 16px; } .privacy-card p { font-size: 13.5px; } }
     </style>
 </head>
 <body>
@@ -395,6 +401,58 @@ body.arabic .ethics-card {
                         يساعد سكولار سكرايب الباحثين الذين يكتبون مخطوطاتهم الخاصة من خلال تشغيل نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3) بالكامل دون اتصال. إذ يجمع التطبيق بين منظّف نصوص ذكي بقواعد التحول الـ 23، وفحص لغوي دون اتصال، وتحويل docx إلى LaTeX، والتحقق من الاستشهادات مقابل ملفات BibTeX، وإحصاءات الوثيقة، وتحليل البنية، وتوليد الملخصات، وتقييم مخاطر الأصالة، وفحص اتساق الصوت، ومذكرات عملية الكتابة، وبيانات الإفصاح عن استخدام الذكاء الاصطناعي، وسجل خصوصية داخلي، و,  الجديد في v2.2.1 ,  أدلة إثبات كتابة موقّعة اختيارية مبنية من تاريخ تعديلات مستندك نفسه: كلها مصممة لدعم الكتابة البحثية الشفافة والأخلاقية دون إرسال نصك إلى السحابة أبداً.
                     </p>
                 </div>
+            </div>
+        </section>
+
+        <!-- UI Showcase -->
+        <section>
+            <h2 class="section-title lang-en">Application Interface</h2>
+            <h2 class="section-title lang-ar">واجهة التطبيق</h2>
+
+            <div class="carousel" id="ui-carousel" role="region" aria-roledescription="carousel" aria-label="Application screenshots" tabindex="0">
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 5">
+                            <img src="images/01-tour-light.png" alt="ScholarScribe welcome tour dialog over the Models tab" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">Welcome Tour. Six guided steps through the essentials</span>
+                                <span class="lang-ar">الجولة الترحيبية, ست خطوات موجّهة عبر الأساسيات</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
+                            <img src="images/02-models-light.png" alt="ScholarScribe Models tab in light mode with Ollama connected" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">Models. Install and run local LLMs via Ollama, with a RAM fit check</span>
+                                <span class="lang-ar">النماذج, ثبّت وشغّل النماذج المحلية عبر Ollama مع فحص ملاءمة الذاكرة</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
+                            <img src="images/03-about-light.png" alt="ScholarScribe About tab with version and environment details" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">About. Version, environment, and the guided tour launcher</span>
+                                <span class="lang-ar">حول, الإصدار والبيئة ومُطلق الجولة الإرشادية</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
+                            <img src="images/04-cleaner-light.png" alt="ScholarScribe AI Text Cleaner tab with cleaning options" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">AI Text Cleaner. Deterministic, rule-based cleaning that never leaves your device</span>
+                                <span class="lang-ar">منظّف النص الذكي, تنظيف قاعدي حتمي لا يغادر جهازك أبداً</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
+                            <img src="images/05-models-dark.png" alt="ScholarScribe Models tab in dark mode" loading="lazy" decoding="async" draggable="false">
+                            <figcaption>
+                                <span class="lang-en">Dark Mode. A comfortable palette for late-night writing sessions</span>
+                                <span class="lang-ar">الوضع الداكن, لوحة مريحة لجلسات الكتابة الليلية</span>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <button class="carousel-arrow carousel-prev" type="button" aria-label="Previous screenshot"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                    <button class="carousel-arrow carousel-next" type="button" aria-label="Next screenshot"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                    <div class="carousel-counter" aria-hidden="true"><span class="carousel-current">1</span> / <span class="carousel-total">5</span></div>
+                </div>
+                <div class="carousel-dots" role="group" aria-label="Choose slide"></div>
             </div>
         </section>
 
@@ -521,58 +579,6 @@ body.arabic .ethics-card {
             </div>
         </section>
 
-        <!-- UI Showcase -->
-        <section>
-            <h2 class="section-title lang-en">Application Interface</h2>
-            <h2 class="section-title lang-ar">واجهة التطبيق</h2>
-
-            <div class="carousel" id="ui-carousel" role="region" aria-roledescription="carousel" aria-label="Application screenshots" tabindex="0">
-                <div class="carousel-viewport">
-                    <div class="carousel-track">
-                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 5">
-                            <img src="images/01-tour-light.png" alt="ScholarScribe welcome tour dialog over the Models tab" draggable="false">
-                            <figcaption>
-                                <span class="lang-en">Welcome Tour. Six guided steps through the essentials</span>
-                                <span class="lang-ar">الجولة الترحيبية, ست خطوات موجّهة عبر الأساسيات</span>
-                            </figcaption>
-                        </figure>
-                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
-                            <img src="images/02-models-light.png" alt="ScholarScribe Models tab in light mode with Ollama connected" loading="lazy" decoding="async" draggable="false">
-                            <figcaption>
-                                <span class="lang-en">Models. Install and run local LLMs via Ollama, with a RAM fit check</span>
-                                <span class="lang-ar">النماذج, ثبّت وشغّل النماذج المحلية عبر Ollama مع فحص ملاءمة الذاكرة</span>
-                            </figcaption>
-                        </figure>
-                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
-                            <img src="images/03-about-light.png" alt="ScholarScribe About tab with version and environment details" loading="lazy" decoding="async" draggable="false">
-                            <figcaption>
-                                <span class="lang-en">About. Version, environment, and the guided tour launcher</span>
-                                <span class="lang-ar">حول, الإصدار والبيئة ومُطلق الجولة الإرشادية</span>
-                            </figcaption>
-                        </figure>
-                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
-                            <img src="images/04-cleaner-light.png" alt="ScholarScribe AI Text Cleaner tab with cleaning options" loading="lazy" decoding="async" draggable="false">
-                            <figcaption>
-                                <span class="lang-en">AI Text Cleaner. Deterministic, rule-based cleaning that never leaves your device</span>
-                                <span class="lang-ar">منظّف النص الذكي, تنظيف قاعدي حتمي لا يغادر جهازك أبداً</span>
-                            </figcaption>
-                        </figure>
-                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
-                            <img src="images/05-models-dark.png" alt="ScholarScribe Models tab in dark mode" loading="lazy" decoding="async" draggable="false">
-                            <figcaption>
-                                <span class="lang-en">Dark Mode. A comfortable palette for late-night writing sessions</span>
-                                <span class="lang-ar">الوضع الداكن, لوحة مريحة لجلسات الكتابة الليلية</span>
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <button class="carousel-arrow carousel-prev" type="button" aria-label="Previous screenshot"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
-                    <button class="carousel-arrow carousel-next" type="button" aria-label="Next screenshot"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
-                    <div class="carousel-counter" aria-hidden="true"><span class="carousel-current">1</span> / <span class="carousel-total">5</span></div>
-                </div>
-                <div class="carousel-dots" role="group" aria-label="Choose slide"></div>
-            </div>
-        </section>
-
         <!-- Model Catalog -->
         <section>
             <h2 class="section-title lang-en">Supported Local Models</h2>
@@ -613,65 +619,81 @@ body.arabic .ethics-card {
             </div>
         </section>
 
-        <!-- Privacy Table -->
+        <!-- Privacy Cards -->
         <section>
             <h2 class="section-title lang-en">Privacy at a Glance</h2>
             <h2 class="section-title lang-ar">نبذة عن الخصوصية في البرنامج</h2>
-            <div class="privacy-table-wrap">
-                <table class="privacy-table">
-                    <thead>
-                        <tr>
-                            <th class="lang-en">Property</th>
-                            <th class="lang-en">Status</th>
-                            <th class="lang-ar">الخاصية</th>
-                            <th class="lang-ar">الحالة</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="lang-en">Telemetry</td>
-                            <td class="lang-en"><strong>None.</strong> No analytics, no crash reporting, no usage tracking.</td>
-                            <td class="lang-ar">قياسات الاستخدام</td>
-                            <td class="lang-ar"><strong>لا شيء.</strong> بلا تحليلات، بلا تقارير أعطال، بلا تتبع.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Network calls</td>
-                            <td class="lang-en">Model downloads contact <code>registry.ollama.ai</code>, only when you click "Download", carrying no text or usage data. GGUF imports make zero outbound calls. The only other external host is Google's read-only Docs API, only if you click "Connect Google Doc" in the Provenance tab, with every call logged in the Privacy Audit.</td>
-                            <td class="lang-ar">الاتصالات الشبكية</td>
-                            <td class="lang-ar">تنزيلات النماذج تتصل بـ <code>registry.ollama.ai</code>, فقط عند الضغط على «تنزيل»، ولا تحمل أي نص أو بيانات استخدام. استيراد GGUF لا يؤدي إلى أي اتصال. المضيف الخارجي الوحيد الآخر هو واجهة Google للقراءة فقط, فقط إذا ضغطت «ربط مستند Google» في تبويب إثبات الكتابة، وكل اتصال يُسجَّل في تدقيق الخصوصية.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">User text</td>
-                            <td class="lang-en"><strong>Never leaves your device.</strong> Drafts, reference samples, chat messages, <code>.bib</code> files, all stay in memory or local files.</td>
-                            <td class="lang-ar">نص المستخدم</td>
-                            <td class="lang-ar"><strong>لا يغادر جهازك أبداً.</strong> المسودات، عينات المرجع، رسائل المحادثة، ملفات <code>.bib</code>, كلها تبقى في الذاكرة أو ملفات محلية.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Third-party APIs</td>
-                            <td class="lang-en"><strong>No cloud LLM APIs.</strong> No OpenAI, Anthropic, or Google AI. The optional Google Docs bridge (Provenance tab) is a read-only document-history import you trigger yourself, logged in the Privacy Audit.</td>
-                            <td class="lang-ar">واجهات الطرف الثالث</td>
-                            <td class="lang-ar"><strong>لا واجهات نماذج سحابية.</strong> بلا OpenAI أو Anthropic أو Google AI. جسر Google Docs الاختياري (تبويب إثبات الكتابة) استيراد للقراءة فقط لتاريخ المستند تبدأه أنت, ويُسجَّل في تدقيق الخصوصية.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Crash reports</td>
-                            <td class="lang-en">None collected. Errors are written to a local log file only.</td>
-                            <td class="lang-ar">تقارير الأعطال</td>
-                            <td class="lang-ar">لا تُجمع. تُكتب الأخطاء في ملف سجل محلي فقط.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Saved drafts</td>
-                            <td class="lang-en">Opt-in only. Plain JSON in <code>%APPDATA%\com.scholarscribe.app\data\</code>. Never synced.</td>
-                            <td class="lang-ar">المسودات المحفوظة</td>
-                            <td class="lang-ar">اختياري فقط. JSON صريح في <code>%APPDATA%\com.scholarscribe.app\data\</code>. لا تُزامن أبداً.</td>
-                        </tr>
-                        <tr>
-                            <td class="lang-en">Audit log</td>
-                            <td class="lang-en">In-memory only. Cleared on app close. Never persisted.</td>
-                            <td class="lang-ar">سجل التدقيق</td>
-                            <td class="lang-ar">في الذاكرة فقط. يُمحى عند إغلاق التطبيق. لا يتم حفظه أبداً.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="privacy-grid">
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-eye-slash" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">Telemetry</h3>
+                        <h3 class="lang-ar">قياسات الاستخدام</h3>
+                        <span class="privacy-badge badge-green"><span class="lang-en">None</span><span class="lang-ar">لا شيء</span></span>
+                    </div>
+                    <p class="lang-en">No analytics, no crash reporting, no usage tracking.</p>
+                    <p class="lang-ar">بلا تحليلات، بلا تقارير أعطال، بلا تتبع.</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-wifi" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">Network Calls</h3>
+                        <h3 class="lang-ar">الاتصالات الشبكية</h3>
+                        <span class="privacy-badge badge-teal"><span class="lang-en">User-triggered</span><span class="lang-ar">بمبادرة منك</span></span>
+                    </div>
+                    <p class="lang-en">Model downloads contact <code>registry.ollama.ai</code>, only when you click "Download", carrying no text or usage data. GGUF imports make zero outbound calls. The only other external host is Google's read-only Docs API, only if you click "Connect Google Doc" in the Provenance tab, with every call logged in the Privacy Audit.</p>
+                    <p class="lang-ar">تنزيلات النماذج تتصل بـ <code>registry.ollama.ai</code>, فقط عند الضغط على «تنزيل»، ولا تحمل أي نص أو بيانات استخدام. استيراد GGUF لا يؤدي إلى أي اتصال. المضيف الخارجي الوحيد الآخر هو واجهة Google للقراءة فقط, فقط إذا ضغطت «ربط مستند Google» في تبويب إثبات الكتابة، وكل اتصال يُسجَّل في تدقيق الخصوصية.</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-lock" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">User Text</h3>
+                        <h3 class="lang-ar">نص المستخدم</h3>
+                        <span class="privacy-badge badge-green"><span class="lang-en">Never leaves your device</span><span class="lang-ar">لا يغادر جهازك أبداً</span></span>
+                    </div>
+                    <p class="lang-en">Drafts, reference samples, chat messages, <code>.bib</code> files, all stay in memory or local files.</p>
+                    <p class="lang-ar">المسودات، عينات المرجع، رسائل المحادثة، ملفات <code>.bib</code>, كلها تبقى في الذاكرة أو ملفات محلية.</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-plug" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">Third-Party APIs</h3>
+                        <h3 class="lang-ar">واجهات الطرف الثالث</h3>
+                        <span class="privacy-badge badge-green"><span class="lang-en">No cloud LLM APIs</span><span class="lang-ar">بلا نماذج سحابية</span></span>
+                    </div>
+                    <p class="lang-en">No OpenAI, Anthropic, or Google AI. The optional Google Docs bridge (Provenance tab) is a read-only document-history import you trigger yourself, logged in the Privacy Audit.</p>
+                    <p class="lang-ar">بلا OpenAI أو Anthropic أو Google AI. جسر Google Docs الاختياري (تبويب إثبات الكتابة) استيراد للقراءة فقط لتاريخ المستند تبدأه أنت, ويُسجَّل في تدقيق الخصوصية.</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-bug" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">Crash Reports</h3>
+                        <h3 class="lang-ar">تقارير الأعطال</h3>
+                        <span class="privacy-badge badge-green"><span class="lang-en">None collected</span><span class="lang-ar">لا تُجمع</span></span>
+                    </div>
+                    <p class="lang-en">Errors are written to a local log file only.</p>
+                    <p class="lang-ar">تُكتب الأخطاء في ملف سجل محلي فقط.</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-save" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">Saved Drafts</h3>
+                        <h3 class="lang-ar">المسودات المحفوظة</h3>
+                        <span class="privacy-badge badge-teal"><span class="lang-en">Opt-in, local only</span><span class="lang-ar">اختياري ومحلي</span></span>
+                    </div>
+                    <p class="lang-en">Plain JSON in <code>%APPDATA%\com.scholarscribe.app\data\</code>. Never synced.</p>
+                    <p class="lang-ar">JSON صريح في <code>%APPDATA%\com.scholarscribe.app\data\</code>. لا تُزامن أبداً.</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="privacy-head">
+                        <div class="privacy-icon"><i class="fas fa-clipboard-list" aria-hidden="true"></i></div>
+                        <h3 class="lang-en">Audit Log</h3>
+                        <h3 class="lang-ar">سجل التدقيق</h3>
+                        <span class="privacy-badge badge-teal"><span class="lang-en">In-memory only</span><span class="lang-ar">في الذاكرة فقط</span></span>
+                    </div>
+                    <p class="lang-en">Cleared on app close. Never persisted.</p>
+                    <p class="lang-ar">يُمحى عند إغلاق التطبيق. لا يتم حفظه أبداً.</p>
+                </div>
             </div>
         </section>
 
