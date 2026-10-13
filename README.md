@@ -137,11 +137,9 @@ Investigating the integration of Artificial Intelligence tools to enhance langua
 
 ### Research Tools & Datasets
 
-<!-- NOTE: The ScholarScribe Zenodo DOI in the table below is provisional. Replace 10.5281/zenodo.23052647 with the final DOI once minted (the same DOI is used on projects/scholarscribe/index.html). -->
-
 | Resource | Type | Link |
 |----------|------|------|
-| ScholarScribe | Software (Zenodo) | [DOI: 10.5281/zenodo.23052647](https://doi.org/10.5281/zenodo.23052647) |
+| ScholarScribe | Software (Zenodo) | [DOI: 10.5281/zenodo.23324356](https://doi.org/10.5281/zenodo.23324356) |
 | Student Peer Assessment Suite | Software (OSF) | [DOI: 10.17605/OSF.IO/2MZWN](https://doi.org/10.17605/OSF.IO/2MZWN) |
 | iAWE Student Corpus | Dataset (OSF) | [DOI: 10.17605/OSF.IO/4G3E5](https://doi.org/10.17605/OSF.IO/4G3E5) |
 | AMTA Framework for Specialised Lexicography | Software (OSF) | [DOI: 10.17605/OSF.IO/8QB9V](https://doi.org/10.17605/OSF.IO/8QB9V) |
