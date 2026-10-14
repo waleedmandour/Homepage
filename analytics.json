@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 594,
     "all_time_pageviews": 1920,
-    "last_7_days_visitors": 27,
-    "last_30_days_visitors": 296
+    "last_7_days_visitors": 20,
+    "last_30_days_visitors": 294
   },
   "top_countries_all_time": [
     {
@@ -368,7 +368,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 34,
+      "visitors": 33,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-14T02:38:17Z"
+  "fetched_at": "2026-10-14T08:09:39Z"
 }
