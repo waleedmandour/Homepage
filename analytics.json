@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 599,
-    "all_time_pageviews": 1931,
-    "last_7_days_visitors": 27,
-    "last_30_days_visitors": 299
+    "all_time_visitors": 601,
+    "all_time_pageviews": 1935,
+    "last_7_days_visitors": 29,
+    "last_30_days_visitors": 301
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 108,
+      "visitors": 109,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -78,6 +78,13 @@
       "flag_emoji": "🇭🇰"
     },
     {
+      "country": "Ireland",
+      "country_code": "IE",
+      "country_numeric": "372",
+      "visitors": 7,
+      "flag_emoji": "🇮🇪"
+    },
+    {
       "country": "Jordan",
       "country_code": "JO",
       "country_numeric": "400",
@@ -90,13 +97,6 @@
       "country_numeric": "124",
       "visitors": 6,
       "flag_emoji": "🇨🇦"
-    },
-    {
-      "country": "Ireland",
-      "country_code": "IE",
-      "country_numeric": "372",
-      "visitors": 6,
-      "flag_emoji": "🇮🇪"
     },
     {
       "country": "United Kingdom",
@@ -374,7 +374,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 26,
+      "visitors": 27,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -408,16 +408,16 @@
       "flag_emoji": "🇮🇩"
     },
     {
+      "country": "Ireland",
+      "country_code": "IE",
+      "visitors": 3,
+      "flag_emoji": "🇮🇪"
+    },
+    {
       "country": "Palestine",
       "country_code": "PS",
       "visitors": 3,
       "flag_emoji": "🇵🇸"
-    },
-    {
-      "country": "United Arab Emirates",
-      "country_code": "AE",
-      "visitors": 3,
-      "flag_emoji": "🇦🇪"
     }
   ],
   "top_pages_all_time": [
@@ -428,8 +428,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 499,
-      "visitors": 174
+      "pageviews": 501,
+      "visitors": 175
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -438,8 +438,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 132,
-      "visitors": 49
+      "pageviews": 134,
+      "visitors": 50
     },
     {
       "url": "waleedmandour.org/projects/",
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-14T14:09:52Z"
+  "fetched_at": "2026-10-14T19:02:33Z"
 }
