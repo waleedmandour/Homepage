@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 601,
-    "all_time_pageviews": 1935,
-    "last_7_days_visitors": 29,
-    "last_30_days_visitors": 301
+    "all_time_visitors": 602,
+    "all_time_pageviews": 1937,
+    "last_7_days_visitors": 31,
+    "last_30_days_visitors": 302
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 74,
+      "visitors": 75,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -183,6 +183,13 @@
       "flag_emoji": "🇩🇿"
     },
     {
+      "country": "Belgium",
+      "country_code": "BE",
+      "country_numeric": "056",
+      "visitors": 2,
+      "flag_emoji": "🇧🇪"
+    },
+    {
       "country": "Israel",
       "country_code": "IL",
       "country_numeric": "376",
@@ -258,13 +265,6 @@
       "country_numeric": "112",
       "visitors": 1,
       "flag_emoji": "🇧🇾"
-    },
-    {
-      "country": "Belgium",
-      "country_code": "BE",
-      "country_numeric": "056",
-      "visitors": 1,
-      "flag_emoji": "🇧🇪"
     },
     {
       "country": "Brazil",
@@ -368,7 +368,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 37,
+      "visitors": 38,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -433,7 +433,7 @@
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
-      "pageviews": 139,
+      "pageviews": 140,
       "visitors": 47
     },
     {
@@ -453,8 +453,8 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 63,
-      "visitors": 29
+      "pageviews": 64,
+      "visitors": 30
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-15T01:04:59Z"
+  "fetched_at": "2026-10-15T06:41:32Z"
 }
