@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 614,
-    "all_time_pageviews": 1967,
-    "last_7_days_visitors": 37,
-    "last_30_days_visitors": 314
+    "all_time_visitors": 615,
+    "all_time_pageviews": 1970,
+    "last_7_days_visitors": 39,
+    "last_30_days_visitors": 315
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 75,
+      "visitors": 76,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -71,18 +71,18 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Hong Kong",
+      "country_code": "HK",
+      "country_numeric": "344",
+      "visitors": 8,
+      "flag_emoji": "🇭🇰"
+    },
+    {
       "country": "Canada",
       "country_code": "CA",
       "country_numeric": "124",
       "visitors": 7,
       "flag_emoji": "🇨🇦"
-    },
-    {
-      "country": "Hong Kong",
-      "country_code": "HK",
-      "country_numeric": "344",
-      "visitors": 7,
-      "flag_emoji": "🇭🇰"
     },
     {
       "country": "Ireland",
@@ -386,7 +386,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 8,
+      "visitors": 9,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -428,7 +428,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 516,
+      "pageviews": 517,
       "visitors": 181
     },
     {
@@ -453,8 +453,8 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 64,
-      "visitors": 30
+      "pageviews": 66,
+      "visitors": 31
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-16T23:07:09Z"
+  "fetched_at": "2026-10-17T02:04:05Z"
 }
