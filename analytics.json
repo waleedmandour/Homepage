@@ -2,8 +2,8 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 615,
-    "all_time_pageviews": 1975,
-    "last_7_days_visitors": 35,
+    "all_time_pageviews": 1981,
+    "last_7_days_visitors": 36,
     "last_30_days_visitors": 312
   },
   "top_countries_all_time": [
@@ -428,8 +428,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 519,
-      "visitors": 181
+      "pageviews": 524,
+      "visitors": 182
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -463,8 +463,8 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 36,
-      "visitors": 30
+      "pageviews": 37,
+      "visitors": 31
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-17T21:51:36Z"
+  "fetched_at": "2026-10-17T23:37:09Z"
 }
