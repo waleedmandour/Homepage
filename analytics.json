@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 617,
-    "all_time_pageviews": 1993,
-    "last_7_days_visitors": 38,
-    "last_30_days_visitors": 314
+    "all_time_visitors": 618,
+    "all_time_pageviews": 2004,
+    "last_7_days_visitors": 40,
+    "last_30_days_visitors": 315
   },
   "top_countries_all_time": [
     {
@@ -190,6 +190,13 @@
       "flag_emoji": "🇧🇪"
     },
     {
+      "country": "Brazil",
+      "country_code": "BR",
+      "country_numeric": "076",
+      "visitors": 2,
+      "flag_emoji": "🇧🇷"
+    },
+    {
       "country": "Israel",
       "country_code": "IL",
       "country_numeric": "376",
@@ -267,11 +274,11 @@
       "flag_emoji": "🇧🇾"
     },
     {
-      "country": "Brazil",
-      "country_code": "BR",
-      "country_numeric": "076",
+      "country": "Colombia",
+      "country_code": "CO",
+      "country_numeric": "170",
       "visitors": 1,
-      "flag_emoji": "🇧🇷"
+      "flag_emoji": "🇨🇴"
     },
     {
       "country": "Finland",
@@ -423,12 +430,12 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 573,
-      "visitors": 315
+      "pageviews": 576,
+      "visitors": 317
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 532,
+      "pageviews": 536,
       "visitors": 184
     },
     {
@@ -438,8 +445,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 134,
-      "visitors": 50
+      "pageviews": 136,
+      "visitors": 51
     },
     {
       "url": "waleedmandour.org/projects/",
@@ -448,8 +455,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 75,
-      "visitors": 12
+      "pageviews": 77,
+      "visitors": 13
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -472,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-18T12:15:47Z"
+  "fetched_at": "2026-10-18T16:12:58Z"
 }
