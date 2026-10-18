@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 615,
-    "all_time_pageviews": 1981,
-    "last_7_days_visitors": 36,
-    "last_30_days_visitors": 312
+    "all_time_visitors": 617,
+    "all_time_pageviews": 1993,
+    "last_7_days_visitors": 38,
+    "last_30_days_visitors": 314
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 174,
+      "visitors": 176,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -362,7 +362,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 158,
+      "visitors": 160,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -428,8 +428,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 524,
-      "visitors": 182
+      "pageviews": 532,
+      "visitors": 184
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -463,8 +463,8 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 37,
-      "visitors": 31
+      "pageviews": 39,
+      "visitors": 32
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
@@ -472,5 +472,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-18T07:31:34Z"
+  "fetched_at": "2026-10-18T12:15:47Z"
 }
