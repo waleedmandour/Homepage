@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 618,
-    "all_time_pageviews": 2004,
-    "last_7_days_visitors": 40,
-    "last_30_days_visitors": 315
+    "all_time_visitors": 619,
+    "all_time_pageviews": 2006,
+    "last_7_days_visitors": 41,
+    "last_30_days_visitors": 316
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 81,
+      "visitors": 82,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -375,7 +375,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 45,
+      "visitors": 46,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -435,8 +435,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 536,
-      "visitors": 184
+      "pageviews": 538,
+      "visitors": 185
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-18T19:04:18Z"
+  "fetched_at": "2026-10-18T22:02:01Z"
 }
