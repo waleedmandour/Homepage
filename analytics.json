@@ -2,9 +2,9 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 619,
-    "all_time_pageviews": 2010,
-    "last_7_days_visitors": 41,
-    "last_30_days_visitors": 315
+    "all_time_pageviews": 2013,
+    "last_7_days_visitors": 42,
+    "last_30_days_visitors": 316
   },
   "top_countries_all_time": [
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 26,
+      "visitors": 27,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -387,7 +387,7 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 18,
+      "visitors": 19,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -435,8 +435,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 542,
-      "visitors": 185
+      "pageviews": 543,
+      "visitors": 186
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -445,8 +445,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 136,
-      "visitors": 51
+      "pageviews": 137,
+      "visitors": 52
     },
     {
       "url": "waleedmandour.org/projects/",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-19T17:56:06Z"
+  "fetched_at": "2026-10-19T21:53:06Z"
 }
