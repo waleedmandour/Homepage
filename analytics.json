@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 625,
-    "all_time_pageviews": 2025,
+    "all_time_pageviews": 2028,
     "last_7_days_visitors": 47,
     "last_30_days_visitors": 322
   },
@@ -435,12 +435,12 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 545,
+      "pageviews": 546,
       "visitors": 187
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 147,
+      "pageviews": 148,
       "visitors": 57
     },
     {
@@ -450,7 +450,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 85,
+      "pageviews": 86,
       "visitors": 30
     },
     {
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-20T15:27:28Z"
+  "fetched_at": "2026-10-20T19:43:46Z"
 }
