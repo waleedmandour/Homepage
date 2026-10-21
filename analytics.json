@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 633,
-    "all_time_pageviews": 2059,
-    "last_7_days_visitors": 51,
-    "last_30_days_visitors": 327
+    "all_time_visitors": 639,
+    "all_time_pageviews": 2074,
+    "last_7_days_visitors": 57,
+    "last_30_days_visitors": 333
   },
   "top_countries_all_time": [
     {
@@ -39,14 +39,14 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 27,
+      "visitors": 31,
       "flag_emoji": "🇸🇦"
     },
     {
       "country": "India",
       "country_code": "IN",
       "country_numeric": "356",
-      "visitors": 13,
+      "visitors": 14,
       "flag_emoji": "🇮🇳"
     },
     {
@@ -71,18 +71,18 @@
       "flag_emoji": "🇫🇷"
     },
     {
+      "country": "Canada",
+      "country_code": "CA",
+      "country_numeric": "124",
+      "visitors": 8,
+      "flag_emoji": "🇨🇦"
+    },
+    {
       "country": "Hong Kong",
       "country_code": "HK",
       "country_numeric": "344",
       "visitors": 8,
       "flag_emoji": "🇭🇰"
-    },
-    {
-      "country": "Canada",
-      "country_code": "CA",
-      "country_numeric": "124",
-      "visitors": 7,
-      "flag_emoji": "🇨🇦"
     },
     {
       "country": "Ireland",
@@ -387,7 +387,7 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 19,
+      "visitors": 23,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -430,18 +430,18 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 583,
-      "visitors": 320
+      "pageviews": 588,
+      "visitors": 323
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 550,
-      "visitors": 187
+      "pageviews": 552,
+      "visitors": 188
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 162,
-      "visitors": 62
+      "pageviews": 167,
+      "visitors": 65
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -450,8 +450,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 86,
-      "visitors": 30
+      "pageviews": 87,
+      "visitors": 31
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -460,7 +460,7 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 69,
+      "pageviews": 71,
       "visitors": 33
     },
     {
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-21T12:33:31Z"
+  "fetched_at": "2026-10-21T17:46:08Z"
 }
