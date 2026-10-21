@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 632,
-    "all_time_pageviews": 2055,
-    "last_7_days_visitors": 54,
-    "last_30_days_visitors": 329
+    "all_time_visitors": 633,
+    "all_time_pageviews": 2059,
+    "last_7_days_visitors": 51,
+    "last_30_days_visitors": 327
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 83,
+      "visitors": 84,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -375,13 +375,13 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 47,
+      "visitors": 48,
       "flag_emoji": "🇴🇲"
     },
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 30,
+      "visitors": 27,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -435,7 +435,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 548,
+      "pageviews": 550,
       "visitors": 187
     },
     {
@@ -460,8 +460,8 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 67,
-      "visitors": 32
+      "pageviews": 69,
+      "visitors": 33
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-21T06:46:02Z"
+  "fetched_at": "2026-10-21T12:33:31Z"
 }
