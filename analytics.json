@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 642,
-    "all_time_pageviews": 2086,
-    "last_7_days_visitors": 51,
-    "last_30_days_visitors": 334
+    "all_time_visitors": 643,
+    "all_time_pageviews": 2088,
+    "last_7_days_visitors": 52,
+    "last_30_days_visitors": 335
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 186,
+      "visitors": 187,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -369,7 +369,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 170,
+      "visitors": 171,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -460,8 +460,8 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 71,
-      "visitors": 33
+      "pageviews": 73,
+      "visitors": 34
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-22T15:43:11Z"
+  "fetched_at": "2026-10-22T19:36:44Z"
 }
