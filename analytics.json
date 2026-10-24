@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 647,
     "all_time_pageviews": 2103,
-    "last_7_days_visitors": 46,
-    "last_30_days_visitors": 339
+    "last_7_days_visitors": 40,
+    "last_30_days_visitors": 338
   },
   "top_countries_all_time": [
     {
@@ -393,7 +393,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 11,
+      "visitors": 10,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-24T02:27:23Z"
+  "fetched_at": "2026-10-24T07:43:22Z"
 }
