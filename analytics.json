@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 649,
-    "all_time_pageviews": 2109,
+    "all_time_pageviews": 2113,
     "last_7_days_visitors": 42,
     "last_30_days_visitors": 340
   },
@@ -440,7 +440,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 177,
+      "pageviews": 179,
       "visitors": 68
     },
     {
@@ -450,8 +450,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 89,
-      "visitors": 33
+      "pageviews": 91,
+      "visitors": 34
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-24T19:08:52Z"
+  "fetched_at": "2026-10-24T22:05:47Z"
 }
