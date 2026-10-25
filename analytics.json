@@ -1,9 +1,9 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 649,
-    "all_time_pageviews": 2121,
-    "last_7_days_visitors": 42,
+    "all_time_visitors": 650,
+    "all_time_pageviews": 2124,
+    "last_7_days_visitors": 38,
     "last_30_days_visitors": 340
   },
   "top_countries_all_time": [
@@ -32,7 +32,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 78,
+      "visitors": 79,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -393,7 +393,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 10,
+      "visitors": 11,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -430,13 +430,13 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 597,
-      "visitors": 328
+      "pageviews": 598,
+      "visitors": 329
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 563,
-      "visitors": 190
+      "pageviews": 564,
+      "visitors": 191
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
@@ -450,8 +450,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 94,
-      "visitors": 34
+      "pageviews": 95,
+      "visitors": 35
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-25T05:29:42Z"
+  "fetched_at": "2026-10-25T10:22:00Z"
 }
