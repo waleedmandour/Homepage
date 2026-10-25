@@ -2,8 +2,8 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 650,
-    "all_time_pageviews": 2124,
-    "last_7_days_visitors": 38,
+    "all_time_pageviews": 2125,
+    "last_7_days_visitors": 39,
     "last_30_days_visitors": 340
   },
   "top_countries_all_time": [
@@ -435,7 +435,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 564,
+      "pageviews": 565,
       "visitors": 191
     },
     {
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-25T14:40:17Z"
+  "fetched_at": "2026-10-25T17:57:44Z"
 }
