@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ScholarScribe: A privacy-first, local-LLM writing companion for researchers. Runs entirely on your device, no telemetry, no cloud calls, no paid APIs, with opt-in, signed Writing Provenance evidence. Built with Tauri, Svelte, and Ollama.">
+    <meta name="description" content="ScholarScribe: A privacy-first, local-LLM writing companion for researchers. Runs entirely on your device, no telemetry, no cloud calls, no paid APIs, with opt-in, signed Writing Provenance evidence, and a preview Word Assist add-in for Microsoft Word. Built with Tauri, Svelte, and Ollama.">
     <title>ScholarScribe: Privacy-First Local-LLM Writing Companion | Dr. Waleed Mandour</title>
     <!-- Google Analytics (G-WW4M0NCF1V, same measurement ID as the rest of waleedmandour.org) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
@@ -261,6 +261,8 @@ body.arabic .ethics-card {
 
         /* ===== Release badge (v2.2.2) ===== */
         .release-badge { display: inline-block; background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%); color: white; padding: 6px 16px; border-radius: 30px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(32, 178, 170, 0.3); text-transform: uppercase; }
+        .release-badge.preview-badge { background: linear-gradient(135deg, var(--scribe-warm) 0%, #6d3410 100%); margin-left: 10px; margin-right: 0; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.35); text-decoration: none; }
+        body.arabic .release-badge.preview-badge { margin-left: 0; margin-right: 10px; }
 
         /* ===== Platform download cards ===== */
         .download-platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; max-width: 920px; margin: 0 auto 28px; }
@@ -369,8 +371,10 @@ body.arabic .ethics-card {
                     </div>
                 </div>
 
-                <div class="release-badge lang-en">Latest Release &middot; v2.2.2</div>
-                <div class="release-badge lang-ar">أحدث إصدار &middot; v2.2.2</div>
+                <div class="release-badge lang-en">Latest Stable Release &middot; v2.2.2</div>
+                <div class="release-badge lang-ar">أحدث إصدار مستقر &middot; v2.2.2</div>
+                <a class="release-badge preview-badge lang-en" href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.3.0-pre" target="_blank" rel="noopener">New Preview: Word Assist &middot; v2.3.0-pre</a>
+                <a class="release-badge preview-badge lang-ar" href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.3.0-pre" target="_blank" rel="noopener">معاينة جديدة: Word Assist &middot; v2.3.0-pre</a>
 
                 <h1 class="lang-en">ScholarScribe: Write with Ethical AI, On Your Own Machine</h1>
                 <h1 class="lang-ar">سكولار سكرايب: اكتب بذكاء اصطناعي أخلاقي على جهازك الخاص</h1>
@@ -390,15 +394,16 @@ body.arabic .ethics-card {
                     <span class="hero-badge"><i class="fab fa-linux"></i> Linux</span>
                     <span class="hero-badge"><i class="fas fa-microchip"></i> Local LLMs (Ollama)</span>
                     <span class="hero-badge"><i class="fas fa-fingerprint"></i> Writing Provenance</span>
+                    <span class="hero-badge"><i class="fas fa-file-word"></i> Word Assist (Preview)</span>
                     <span class="hero-badge"><i class="fab fa-github"></i> Open Source (MIT)</span>
                 </div>
 
                 <div>
                     <p class="hero-description lang-en">
-                        ScholarScribe helps researchers who are writing their own manuscripts by running open large language models (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline. It combines a 23-rule AI text cleaner, offline language checking, docx-to-LaTeX conversion (with footnote/endnote extraction), citation validation against BibTeX files (with full APA, MLA, Chicago, Vancouver, AMA, and IEEE style heuristics, plus a new manuscript-upload mode that extracts the references section automatically), document statistics, structure analysis, abstract generation, authenticity-risk assessment, voice-consistency checks, a writing-process journal, AI-use disclosure statements, an in-app privacy audit, and, new in v2.1.0, opt-in, signed Writing Provenance evidence built from your document's own revision history: all designed to support transparent, ethical research writing without ever sending your text to the cloud.
+                        ScholarScribe helps researchers who are writing their own manuscripts by running open large language models (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline. It combines a 23-rule AI text cleaner, offline language checking, docx-to-LaTeX conversion (with footnote/endnote extraction), citation validation against BibTeX files (with full APA, MLA, Chicago, Vancouver, AMA, and IEEE style heuristics, plus a new manuscript-upload mode that extracts the references section automatically), document statistics, structure analysis, abstract generation, authenticity-risk assessment, voice-consistency checks, a writing-process journal, AI-use disclosure statements, an in-app privacy audit, and, new in v2.1.0, opt-in, signed Writing Provenance evidence built from your document's own revision history, plus &mdash; new in the v2.3.0-pre preview &mdash; the opt-in Word Assist add-in that brings the same local-first help into Microsoft Word itself: offline grammar flags and validated whole-sentence rewrites in a Word task pane served by your own app over an encrypted loopback connection: all designed to support transparent, ethical research writing without ever sending your text to the cloud.
                     </p>
                     <p class="hero-description lang-ar">
-                        يساعد سكولار سكرايب الباحثين الذين يكتبون مخطوطاتهم الخاصة من خلال تشغيل نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3) بالكامل دون اتصال. إذ يجمع التطبيق بين منظّف نصوص ذكي بقواعد التحول الـ 23، وفحص لغوي دون اتصال، وتحويل docx إلى LaTeX (مع استخراج الحواشي والتعليقات الختامية)، والتحقق من الاستشهادات مقابل ملفات BibTeX (مع كتل استدلال كاملة لأساليب APA وMLA وChicago وVancouver وAMA وIEEE، بالإضافة إلى وضع جديد لرفع المخطوطة الذي يستخرج قسم المراجع تلقائياً)، وإحصاءات الوثيقة، وتحليل البنية، وتوليد الملخصات، وتقييم مخاطر الأصالة، وفحص اتساق الصوت، ومذكرات عملية الكتابة، وبيانات الإفصاح عن استخدام الذكاء الاصطناعي، وسجل خصوصية داخلي، و,  الجديد في v2.1.0 ,  أدلة إثبات كتابة موقّعة اختيارية مبنية من تاريخ تعديلات مستندك نفسه: كلها مصممة لدعم الكتابة البحثية الشفافة والأخلاقية دون إرسال نصك إلى السحابة أبداً.
+                        يساعد سكولار سكرايب الباحثين الذين يكتبون مخطوطاتهم الخاصة من خلال تشغيل نماذج لغوية كبيرة مفتوحة (Gemma 3 وQwen 3 وPhi-4 وDeepSeek R1 وLlama 3.3) بالكامل دون اتصال. إذ يجمع التطبيق بين منظّف نصوص ذكي بقواعد التحول الـ 23، وفحص لغوي دون اتصال، وتحويل docx إلى LaTeX (مع استخراج الحواشي والتعليقات الختامية)، والتحقق من الاستشهادات مقابل ملفات BibTeX (مع كتل استدلال كاملة لأساليب APA وMLA وChicago وVancouver وAMA وIEEE، بالإضافة إلى وضع جديد لرفع المخطوطة الذي يستخرج قسم المراجع تلقائياً)، وإحصاءات الوثيقة، وتحليل البنية، وتوليد الملخصات، وتقييم مخاطر الأصالة، وفحص اتساق الصوت، ومذكرات عملية الكتابة، وبيانات الإفصاح عن استخدام الذكاء الاصطناعي، وسجل خصوصية داخلي، و,  الجديد في v2.1.0 ,  أدلة إثبات كتابة موقّعة اختيارية مبنية من تاريخ تعديلات مستندك نفسه, بالإضافة إلى &mdash; الجديد في المعاينة v2.3.0-pre &mdash; إضافة Word Assist الاختيارية التي تنقل المساعدة المحلية نفسها إلى داخل Microsoft Word: تنبيهات نحوية دون اتصال وإعادة صياغة كاملة للجمل مع التحقق منها في لوحة مهام داخل Word تخدمها نسختك من التطبيق عبر اتصال loopback مشفّر: كلها مصممة لدعم الكتابة البحثية الشفافة والأخلاقية دون إرسال نصك إلى السحابة أبداً.
                     </p>
                 </div>
             </div>
@@ -455,6 +460,14 @@ body.arabic .ethics-card {
                 <div class="carousel-dots" role="group" aria-label="Choose slide"></div>
             </div>
         </section>
+
+        <!-- What's New in v2.3.0-pre (preview): Word Assist for Microsoft Word -->
+        <div class="ethics-notice" style="background: linear-gradient(135deg, rgba(139, 69, 19, 0.08) 0%, rgba(32, 178, 170, 0.08) 100%); border-left: 4px solid var(--scribe-warm);">
+            <h4 class="lang-en"><i class="fas fa-file-word"></i> New Preview: Word Assist for Microsoft Word (v2.3.0-pre)</h4>
+            <h4 class="lang-ar"><i class="fas fa-file-word"></i> معاينة جديدة: Word Assist داخل Microsoft Word (v2.3.0-pre)</h4>
+            <p class="lang-en">The v2.3.0-pre preview adds <strong>Word Assist</strong>, a task-pane add-in for Microsoft Word served by the desktop app itself over an encrypted loopback connection (<code>127.0.0.1</code>, port <code>38080</code> by default). While it is on, the pane flags grammar issues as you type (Tier&nbsp;0, the same offline harper engine as Language Check) and can rewrite whole sentences with your local Ollama model (Tier&nbsp;1, optional) &mdash; every rewrite passes six validation rules (citations, numbers, URLs, math, and quoted text are never altered) before Word sees it. Every accepted suggestion is recorded in a SHA-256 hash-chained ledger that stores <strong>counts, never text</strong>, so you can acknowledge the assistance in a disclosure statement. This preview also fixes the v0.1.0 bug where accepting the disclosure never persisted the opt-in, so every enable attempt failed with "Word Assist is not opted in&hellip;". Word Assist is <strong>opt-in and off by default</strong>: accept the plain-language disclosure in the Word Assist tab, trust the name-constrained local certificate in your own account, sideload the manifest, and pair with a one-time 6-character code &mdash; the 2-page quick guide and the 10-page illustrated guide (both attached to the release) walk you through every step.</p>
+            <p class="lang-ar">يضيف الإصدار التجريبي v2.3.0-pre ميزة <strong>Word Assist</strong>: إضافة لوحة مهام لـ Microsoft Word تخدمها نسخة سطح المكتب من ScholarScribe نفسها عبر اتصال loopback مشفّر (<code>127.0.0.1</code>, المنفذ <code>38080</code> افتراضياً). أثناء تشغيلها، تُعلّم اللوحة المشكلات النحوية أثناء الكتابة (المستوى 0، محرك harper دون اتصال نفسه المستخدم في فحص اللغة)، ويمكنها إعادة صياغة جمل كاملة بنموذج Ollama المحلي لديك (المستوى 1، اختياري) &mdash; وكل إعادة صياغة تمر بست قواعد تحقق (الاستشهادات والأرقام والروابط والمعادلات والنصوص المقتبسة لا تُمَس أبداً) قبل أن يراها Word. ويُسجَّل كل اقتراح مقبول في سجل متشابك البصمات بـ SHA-256 يحفظ <strong>الأعداد فقط، لا النص أبداً</strong>، لتذكر المساعدة في بيان الإفصاح. كما يصلح هذا الإصدار خلل v0.1.0 حيث لم يكن قبول نافذة الإفصاح يحفظ التفعيل أبداً، فتكرر ظهور رسالة «Word Assist is not opted in&hellip;». ميزة Word Assist <strong>اختيارية ومعطّلة افتراضياً</strong>: اقبل نافذة الإفصاح بلغة واضحة من تبويب Word Assist، وثق بشهادة محلية مقيّدة بالنطاق في حسابك أنت، وثبّت ملف الـ manifest يدوياً، ثم اقرن الإضافة برمز من ستة أحرف يُستخدم مرة واحدة &mdash; والدليل السريع (صفحتان) والدليل الموضّح الكامل (10 صفحات)، وكلاهما مرفق بالإصدار، يشرحان كل خطوة.</p>
+        </div>
 
         <!-- What's New in v2.2.2 (graduation of r6 + r7 pre-releases) -->
         <div class="ethics-notice" style="background: linear-gradient(135deg, rgba(32, 178, 170, 0.08) 0%, rgba(26, 95, 122, 0.08) 100%); border-left: 4px solid var(--secondary);">
@@ -579,6 +592,64 @@ body.arabic .ethics-card {
             </div>
         </section>
 
+        <!-- Word Assist add-in (Preview, v2.3.0-pre). This is the Microsoft Word ADD-IN — distinct from the ScholarScribe desktop app described above. -->
+        <section id="word-assist">
+            <h2 class="section-title lang-en">Word Assist for Microsoft Word <span style="font-size:15px; color:var(--scribe-warm); font-weight:700; display:block; margin-top:10px;">(Preview &middot; ships in v2.3.0-pre)</span></h2>
+            <h2 class="section-title lang-ar">Word Assist داخل Microsoft Word <span style="font-size:15px; color:var(--scribe-warm); font-weight:700; display:block; margin-top:10px;">(معاينة &middot; ضمن الإصدار v2.3.0-pre)</span></h2>
+
+            <p class="lang-en" style="max-width: 900px; margin: 0 auto 24px; color: var(--dark); font-size: 15.5px; line-height: 1.7;">Word Assist is an <strong>add-in for Microsoft Word, not a separate product</strong>: the ScholarScribe desktop app itself serves a task pane inside Word over an encrypted loopback connection (<code>127.0.0.1</code>, port <code>38080</code> by default). While Word Assist is enabled, the pane flags grammar issues as you type and can rewrite whole sentences with your local Ollama model &mdash; your document text never travels beyond your machine. It requires Microsoft 365 Word desktop on Windows or macOS (not Word for the web, not perpetual Word 2019/2021), and it is opt-in: nothing happens until you accept the disclosure dialog in the Word Assist tab.</p>
+            <p class="lang-ar" style="max-width: 900px; margin: 0 auto 24px; color: var(--dark); font-size: 15.5px; line-height: 1.7;">‏Word Assist <strong>إضافة لـ Microsoft Word، وليست منتجاً منفصلاً</strong>: تطبيق ScholarScribe لسطح المكتب نفسه هو من يخدم لوحة مهام داخل Word عبر اتصال loopback مشفّر (<code>127.0.0.1</code>, المنفذ <code>38080</code> افتراضياً). أثناء تشغيل Word Assist، تُعلّم اللوحة المشكلات النحوية أثناء الكتابة ويمكنها إعادة صياغة جمل كاملة بنموذج Ollama المحلي لديك &mdash; ولا يغادر نص مستندك جهازك أبداً. تتطلب Microsoft 365 Word لسطح المكتب على ويندوز أو macOS (ليس Word للويب، وليس Word 2019/2021 الدائم)، وهي اختيارية: لا يحدث شيء حتى تقبل نافذة الإفصاح من تبويب Word Assist.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-spell-check"></i></div>
+                    <h3 class="lang-en">Tier 0. Offline Grammar, In Your Document</h3>
+                    <h3 class="lang-ar">المستوى 0: نحو دون اتصال، داخل مستندك</h3>
+                    <p class="lang-en">The same deterministic harper engine as ScholarScribe's Language Check lints each sentence as you type and maps the flags into the Word task pane. No model, no network, no waiting: checks run entirely offline, and your existing language-check rule overrides apply unchanged.</p>
+                    <p class="lang-ar">محرك harper الحتمي نفسه المستخدم في فحص اللغة داخل ScholarScribe يراجع كل جملة أثناء الكتابة وينقل التنبيهات إلى لوحة المهام في Word. بلا نموذج، بلا شبكة، بلا انتظار: الفحص يعمل دون اتصال بالكامل، وتنطبق قواعد فحص اللغة التي خصّصتها سابقاً كما هي.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h3 class="lang-en">Tier 1. Validated Rewrites, Your Model</h3>
+                    <h3 class="lang-ar">المستوى 1: إعادة صياغة مُتحقَّق منها، بنموذجك</h3>
+                    <p class="lang-en">Ask your local Ollama model for a whole-sentence rewrite of any flagged sentence. Six rejection rules run before Word sees the result: citations, numbers, URLs, math, and quoted material are never altered, and nothing is applied unless you accept it. Tier 1 is optional and off by default.</p>
+                    <p class="lang-ar">اطلب من نموذج Ollama المحلي إعادة صياغة أي جملة مُعلَّمة كاملةً. ست قواعد رفض تعمل قبل أن يرى Word النتيجة: الاستشهادات والأرقام والروابط والمعادلات والنصوص المقتبسة لا تُمَس أبداً، ولا يُطبَّق شيء إلا بقبولك. المستوى 1 اختياري ومعطّل افتراضياً.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-link"></i></div>
+                    <h3 class="lang-en">Assist Ledger. Acknowledge With Evidence</h3>
+                    <h3 class="lang-ar">سجل المساعدة: أقرّ المساعدة بدليل</h3>
+                    <p class="lang-en">Every accepted suggestion is recorded in a SHA-256 hash-chained ledger that stores counts only, never text. When you submit, your AI-use disclosure statement can cite real numbers from a tamper-evident record instead of a vague "an AI tool helped me".</p>
+                    <p class="lang-ar">يُسجَّل كل اقتراح تقبله في سجل متشابك البصمات بـ SHA-256 يحفظ الأعداد فقط، لا النص أبداً. عند الإرسال، يمكن لبيان الإفصاح عن استخدام الذكاء الاصطناعي أن يستشهد بأرقام حقيقية من سجل مقاوم للعبث بدلاً من عبارة غامضة مثل «ساعدتني أداة ذكاء اصطناعي».</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-toggle-on"></i></div>
+                    <h3 class="lang-en">Opt-In, Local by Construction</h3>
+                    <h3 class="lang-ar">اختيارية ومحلية بالتصميم</h3>
+                    <p class="lang-en">The disclosure dialog is the only on-switch. The service is loopback-only TLS with an ephemeral, name-constrained CA that you trust in your own account; pairing uses a one-time 6-character code; and nothing is installed system-wide without your explicit action &mdash; every step is per-account and reversible.</p>
+                    <p class="lang-ar">نافذة الإفصاح هي المفتاح الوحيد للتفعيل. الخدمة تعمل عبر TLS على loopback فقط بشهادة جذر مؤقتة مقيّدة بالنطاق تثق بها في حسابك أنت، والاقتران يتم برمز من ستة أحرف يُستخدم مرة واحدة، ولا يُثبَّت أي شيء على مستوى النظام دون إجراء صريح منك &mdash; كل خطوة على مستوى حسابك وقابلة للتراجع.</p>
+                </div>
+            </div>
+
+            <div class="cta-buttons" style="margin-top: 30px;">
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.3.0-pre" target="_blank" rel="noopener" class="cta-button">
+                    <i class="fas fa-download"></i>
+                    <span class="lang-en">Get the v2.3.0-pre Preview</span>
+                    <span class="lang-ar">نزّل المعاينة v2.3.0-pre</span>
+                </a>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-Quick-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
+                    <i class="fas fa-book-open"></i>
+                    <span class="lang-en">Quick Guide (PDF, 2 pages)</span>
+                    <span class="lang-ar">الدليل السريع (PDF، صفحتان)</span>
+                </a>
+                <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-User-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="lang-en">Full Guide (PDF, 10 pages)</span>
+                    <span class="lang-ar">الدليل الكامل (PDF، 10 صفحات)</span>
+                </a>
+            </div>
+        </section>
+
         <!-- Model Catalog -->
         <section>
             <h2 class="section-title lang-en">Supported Local Models</h2>
@@ -641,8 +712,8 @@ body.arabic .ethics-card {
                         <h3 class="lang-ar">الاتصالات الشبكية</h3>
                         <span class="privacy-badge badge-teal"><span class="lang-en">User-triggered</span><span class="lang-ar">بمبادرة منك</span></span>
                     </div>
-                    <p class="lang-en">Model downloads contact <code>registry.ollama.ai</code>, only when you click "Download", carrying no text or usage data. GGUF imports make zero outbound calls. The only other external host is Google's read-only Docs API, only if you click "Connect Google Doc" in the Provenance tab, with every call logged in the Privacy Audit.</p>
-                    <p class="lang-ar">تنزيلات النماذج تتصل بـ <code>registry.ollama.ai</code>, فقط عند الضغط على «تنزيل»، ولا تحمل أي نص أو بيانات استخدام. استيراد GGUF لا يؤدي إلى أي اتصال. المضيف الخارجي الوحيد الآخر هو واجهة Google للقراءة فقط, فقط إذا ضغطت «ربط مستند Google» في تبويب إثبات الكتابة، وكل اتصال يُسجَّل في تدقيق الخصوصية.</p>
+                    <p class="lang-en">Model downloads contact <code>registry.ollama.ai</code>, only when you click "Download", carrying no text or usage data. GGUF imports make zero outbound calls. The only other external host is Google's read-only Docs API, only if you click "Connect Google Doc" in the Provenance tab, with every call logged in the Privacy Audit. The opt-in Word Assist preview (v2.3.0-pre) additionally runs an <strong>inbound loopback listener</strong> on <code>https://localhost:38080</code> (127.0.0.1 only, port configurable) while enabled, and Word's task pane loads the office.js library from Microsoft's CDN — a fetch that never carries document text.</p>
+                    <p class="lang-ar">تنزيلات النماذج تتصل بـ <code>registry.ollama.ai</code>, فقط عند الضغط على «تنزيل»، ولا تحمل أي نص أو بيانات استخدام. استيراد GGUF لا يؤدي إلى أي اتصال. المضيف الخارجي الوحيد الآخر هو واجهة Google للقراءة فقط, فقط إذا ضغطت «ربط مستند Google» في تبويب إثبات الكتابة، وكل اتصال يُسجَّل في تدقيق الخصوصية. كما تُشغّل معاينة Word Assist الاختيارية (v2.3.0-pre) <strong>مستمعاً على loopback</strong> على <code>https://localhost:38080</code> (‏127.0.0.1 فقط، والمنفذ قابل للضبط) أثناء تفعيلها، وتحمّل لوحة مهام Word مكتبة office.js من شبكة توصيل Microsoft — وهو طلب لا يحمل نص المستند أبداً.</p>
                 </div>
                 <div class="privacy-card">
                     <div class="privacy-head">
@@ -724,6 +795,8 @@ body.arabic .ethics-card {
                         <li class="lang-ar">ينظّف تحولات النص المنسوخ دون إعادة كتابته.</li>
                         <li class="lang-en">Lets you export a signed, hash-chained record of your document's real revision history (Word Track Changes / Google Docs version history) as opt-in, verifiable evidence of your writing process.</li>
                         <li class="lang-ar">يتيح لك تصدير سجل موقّع متشابك البصمات لتاريخ التعديلات الحقيقي لمستندك (تتبع التغييرات في Word / سجل إصدارات Google Docs) كدليل اختياري قابل للتحقق على عملية كتابتك.</li>
+                        <li class="lang-en">Checks grammar and offers validated rewrites <strong>inside Microsoft Word</strong> through the opt-in Word Assist add-in (v2.3.0-pre preview), recording accepted-suggestion counts — never text — in a hash-chained ledger you can cite in your disclosure.</li>
+                        <li class="lang-ar">يفحص النحو ويقدم إعادة صياغة مُتحقَّق منها <strong>داخل Microsoft Word</strong> عبر إضافة Word Assist الاختيارية (معاينة v2.3.0-pre)، مسجّلاً أعداد الاقتراحات المقبولة — لا النص أبداً — في سجل متشابك البصمات يمكنك الاستشهاد به في بيان الإفصاح.</li>
                     </ul>
                 </div>
                 <div class="ethics-card does-not">
@@ -815,6 +888,13 @@ body.arabic .ethics-card {
                     <p class="lang-en">Open the Models tab and install a model that fits your RAM (e.g. Gemma 3 4B for 8 GB RAM, Qwen 3 14B for 16 GB). Then load your <code>.docx</code> or <code>.bib</code> file in the relevant tab. Your text never leaves your machine.</p>
                     <p class="lang-ar">افتح تبويب النماذج وثبّت نموذجاً يناسب رامك (مثلاً Gemma 3 4B لـ 8 جيجا رام، Qwen 3 14B لـ 16 جيجا). ثم حمّل ملف <code>.docx</code> أو <code>.bib</code> في التبويب المناسب. لا يغادر نصك جهازك أبداً.</p>
                 </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4 class="lang-en">Optional: Word Assist in Word</h4>
+                    <h4 class="lang-ar">اختياري: Word Assist داخل Word</h4>
+                    <p class="lang-en">On the v2.3.0-pre preview, open the Word Assist tab, accept the disclosure, trust the local certificate, sideload the manifest, and pair with a one-time code — the 2-page quick guide walks you through it in minutes.</p>
+                    <p class="lang-ar">في المعاينة v2.3.0-pre، افتح تبويب Word Assist، واقبل نافذة الإفصاح، وثق بالشهادة المحلية، وثبّت ملف الـ manifest، واقرن الإضافة برمز يُستخدم مرة واحدة — الدليل السريع (صفحتان) يشرح ذلك كله في دقائق.</p>
+                </div>
             </div>
         </section>
 
@@ -902,8 +982,32 @@ body.arabic .ethics-card {
                 </a>
             </div>
 
-            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Requires <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> installed locally. Version 2.2.2 &middot; MIT License &middot; See the <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.2" target="_blank" rel="noopener">release notes</a>.</p>
-            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">يتطلب تثبيت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> محلياً. الإصدار 2.2.2 &middot; رخصة MIT &middot; اطّلع على <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.2" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
+            <div style="margin-top: 36px;">
+                <p style="font-weight: 700; color: var(--primary); margin-bottom: 14px; font-size: 16.5px;">
+                    <span class="lang-en"><i class="fas fa-file-word" style="color: var(--scribe-warm); margin-right: 6px;"></i>Trying the Word Assist preview (v2.3.0-pre)?</span>
+                    <span class="lang-ar"><i class="fas fa-file-word" style="color: var(--scribe-warm); margin-left: 6px;"></i>تجرب معاينة Word Assist (v2.3.0-pre)؟</span>
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.3.0-pre" target="_blank" rel="noopener" class="cta-button">
+                        <i class="fas fa-download"></i>
+                        <span class="lang-en">Word Assist Preview Build</span>
+                        <span class="lang-ar">نسخة معاينة Word Assist</span>
+                    </a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-Quick-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
+                        <i class="fas fa-book-open"></i>
+                        <span class="lang-en">Word Assist Quick Guide (PDF, 2 pages)</span>
+                        <span class="lang-ar">الدليل السريع لـ Word Assist (PDF، صفحتان)</span>
+                    </a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-User-Guide.pdf" target="_blank" rel="noopener" class="cta-button secondary">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="lang-en">Full Guide (PDF, 10 pages)</span>
+                        <span class="lang-ar">الدليل الكامل (PDF، 10 صفحات)</span>
+                    </a>
+                </div>
+            </div>
+
+            <p class="cta-subtitle lang-en" style="margin-top: 28px; font-size: 14px;">Requires <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> installed locally. Stable version 2.2.2 &middot; Word Assist preview: v2.3.0-pre &middot; MIT License &middot; See the <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.2" target="_blank" rel="noopener">release notes</a>.</p>
+            <p class="cta-subtitle lang-ar" style="margin-top: 28px; font-size: 14px;">يتطلب تثبيت <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> محلياً. الإصدار المستقر 2.2.2 &middot; معاينة Word Assist: v2.3.0-pre &middot; رخصة MIT &middot; اطّلع على <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.2" target="_blank" rel="noopener">ملاحظات الإصدار</a>.</p>
         </section>
 
         <!-- Real-Time Analytics Dashboard (mirrors the CorpusMind / CorpusMind Lens pattern) -->
@@ -1083,6 +1187,10 @@ body.arabic .ethics-card {
                     <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.2#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-en">User Guide</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases" target="_blank" rel="noopener" class="lang-ar">الإصدارات</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/releases/tag/v2.2.2#:~:text=ScholarScribe-User-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">دليل المستخدم</a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-Quick-Guide.pdf" target="_blank" rel="noopener" class="lang-en">Word Assist Quick Guide</a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-Quick-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">الدليل السريع لـ Word Assist</a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-User-Guide.pdf" target="_blank" rel="noopener" class="lang-en">Word Assist Guide (Full)</a>
+                    <a href="https://github.com/waleedmandour/scholarscribe/releases/download/v2.3.0-pre/ScholarScribe-Word-Assist-User-Guide.pdf" target="_blank" rel="noopener" class="lang-ar">دليل Word Assist الكامل</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/docs/ETHICS.md" target="_blank" rel="noopener" class="lang-en">Ethics Policy</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/docs/ETHICS.md" target="_blank" rel="noopener" class="lang-ar">سياسة الأخلاقيات</a>
                     <a href="https://github.com/waleedmandour/scholarscribe/blob/main/SECURITY.md" target="_blank" rel="noopener" class="lang-en">Security Policy</a>
