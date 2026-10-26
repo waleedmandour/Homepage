@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 650,
-    "all_time_pageviews": 2136,
-    "last_7_days_visitors": 39,
-    "last_30_days_visitors": 340
+    "all_time_visitors": 655,
+    "all_time_pageviews": 2145,
+    "last_7_days_visitors": 42,
+    "last_30_days_visitors": 344
   },
   "top_countries_all_time": [
     {
@@ -18,14 +18,14 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 116,
+      "visitors": 118,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 84,
+      "visitors": 85,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -134,6 +134,13 @@
       "flag_emoji": "🇲🇾"
     },
     {
+      "country": "Sweden",
+      "country_code": "SE",
+      "country_numeric": "752",
+      "visitors": 4,
+      "flag_emoji": "🇸🇪"
+    },
+    {
       "country": "United Arab Emirates",
       "country_code": "AE",
       "country_numeric": "784",
@@ -237,13 +244,6 @@
       "country_numeric": "643",
       "visitors": 2,
       "flag_emoji": "🇷🇺"
-    },
-    {
-      "country": "Sweden",
-      "country_code": "SE",
-      "country_numeric": "752",
-      "visitors": 2,
-      "flag_emoji": "🇸🇪"
     },
     {
       "country": "Türkiye",
@@ -381,7 +381,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 29,
+      "visitors": 31,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -430,18 +430,18 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 598,
-      "visitors": 329
+      "pageviews": 599,
+      "visitors": 330
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 567,
-      "visitors": 191
+      "pageviews": 571,
+      "visitors": 193
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 181,
-      "visitors": 68
+      "pageviews": 185,
+      "visitors": 70
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-26T05:34:34Z"
+  "fetched_at": "2026-10-26T11:50:17Z"
 }
