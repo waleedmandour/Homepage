@@ -2,7 +2,7 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 650,
-    "all_time_pageviews": 2133,
+    "all_time_pageviews": 2136,
     "last_7_days_visitors": 39,
     "last_30_days_visitors": 340
   },
@@ -450,7 +450,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 98,
+      "pageviews": 100,
       "visitors": 35
     },
     {
@@ -475,9 +475,9 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
-      "pageviews": 33,
+      "pageviews": 34,
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-25T22:54:51Z"
+  "fetched_at": "2026-10-26T00:51:06Z"
 }
