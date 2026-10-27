@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 658,
-    "all_time_pageviews": 2153,
-    "last_7_days_visitors": 39,
-    "last_30_days_visitors": 346
+    "all_time_visitors": 659,
+    "all_time_pageviews": 2163,
+    "last_7_days_visitors": 41,
+    "last_30_days_visitors": 347
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 118,
+      "visitors": 119,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -381,7 +381,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 31,
+      "visitors": 32,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -430,7 +430,7 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 601,
+      "pageviews": 605,
       "visitors": 331
     },
     {
@@ -450,8 +450,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 101,
-      "visitors": 35
+      "pageviews": 103,
+      "visitors": 36
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -470,14 +470,14 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 39,
-      "visitors": 32
+      "pageviews": 41,
+      "visitors": 33
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
-      "pageviews": 35,
-      "visitors": 12
+      "pageviews": 36,
+      "visitors": 13
     }
   ],
-  "fetched_at": "2026-10-27T19:03:31Z"
+  "fetched_at": "2026-10-27T23:19:45Z"
 }
