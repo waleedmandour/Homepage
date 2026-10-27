@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 657,
-    "all_time_pageviews": 2151,
-    "last_7_days_visitors": 38,
-    "last_30_days_visitors": 345
+    "all_time_visitors": 658,
+    "all_time_pageviews": 2153,
+    "last_7_days_visitors": 39,
+    "last_30_days_visitors": 346
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 85,
+      "visitors": 86,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -53,7 +53,7 @@
       "country": "Germany",
       "country_code": "DE",
       "country_numeric": "276",
-      "visitors": 11,
+      "visitors": 12,
       "flag_emoji": "🇩🇪"
     },
     {
@@ -375,7 +375,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 46,
+      "visitors": 47,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -415,23 +415,23 @@
       "flag_emoji": "🇨🇦"
     },
     {
+      "country": "Germany",
+      "country_code": "DE",
+      "visitors": 3,
+      "flag_emoji": "🇩🇪"
+    },
+    {
       "country": "India",
       "country_code": "IN",
       "visitors": 3,
       "flag_emoji": "🇮🇳"
-    },
-    {
-      "country": "Indonesia",
-      "country_code": "ID",
-      "visitors": 3,
-      "flag_emoji": "🇮🇩"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 599,
-      "visitors": 330
+      "pageviews": 601,
+      "visitors": 331
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -479,5 +479,5 @@
       "visitors": 12
     }
   ],
-  "fetched_at": "2026-10-27T13:44:10Z"
+  "fetched_at": "2026-10-27T19:03:31Z"
 }
