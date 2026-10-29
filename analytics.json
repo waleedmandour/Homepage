@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 664,
-    "all_time_pageviews": 2178,
-    "last_7_days_visitors": 40,
-    "last_30_days_visitors": 350
+    "all_time_visitors": 665,
+    "all_time_pageviews": 2194,
+    "last_7_days_visitors": 32,
+    "last_30_days_visitors": 349
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 119,
+      "visitors": 120,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -381,7 +381,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 32,
+      "visitors": 33,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -393,7 +393,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 12,
+      "visitors": 11,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -430,17 +430,17 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 608,
-      "visitors": 334
+      "pageviews": 610,
+      "visitors": 335
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 580,
+      "pageviews": 582,
       "visitors": 196
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 192,
+      "pageviews": 194,
       "visitors": 73
     },
     {
@@ -450,8 +450,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 103,
-      "visitors": 36
+      "pageviews": 107,
+      "visitors": 37
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
@@ -460,8 +460,8 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 73,
-      "visitors": 34
+      "pageviews": 75,
+      "visitors": 35
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -475,9 +475,9 @@
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
-      "pageviews": 36,
-      "visitors": 13
+      "pageviews": 40,
+      "visitors": 14
     }
   ],
-  "fetched_at": "2026-10-29T01:22:43Z"
+  "fetched_at": "2026-10-29T07:46:33Z"
 }
