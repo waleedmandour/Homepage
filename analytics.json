@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 665,
     "all_time_pageviews": 2194,
-    "last_7_days_visitors": 32,
-    "last_30_days_visitors": 349
+    "last_7_days_visitors": 29,
+    "last_30_days_visitors": 347
   },
   "top_countries_all_time": [
     {
@@ -399,7 +399,7 @@
     {
       "country": "Iraq",
       "country_code": "IQ",
-      "visitors": 7,
+      "visitors": 6,
       "flag_emoji": "🇮🇶"
     },
     {
@@ -479,5 +479,5 @@
       "visitors": 14
     }
   ],
-  "fetched_at": "2026-10-30T03:27:33Z"
+  "fetched_at": "2026-10-30T10:32:59Z"
 }
