@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 665,
-    "all_time_pageviews": 2194,
-    "last_7_days_visitors": 25,
-    "last_30_days_visitors": 212
+    "all_time_visitors": 666,
+    "all_time_pageviews": 2195,
+    "last_7_days_visitors": 26,
+    "last_30_days_visitors": 213
   },
   "top_countries_all_time": [
     {
@@ -246,6 +246,13 @@
       "flag_emoji": "🇷🇺"
     },
     {
+      "country": "Spain",
+      "country_code": "ES",
+      "country_numeric": "724",
+      "visitors": 2,
+      "flag_emoji": "🇪🇸"
+    },
+    {
       "country": "Türkiye",
       "country_code": "TR",
       "country_numeric": "792",
@@ -321,13 +328,6 @@
       "country_numeric": "690",
       "visitors": 1,
       "flag_emoji": "🇸🇨"
-    },
-    {
-      "country": "Spain",
-      "country_code": "ES",
-      "country_numeric": "724",
-      "visitors": 1,
-      "flag_emoji": "🇪🇸"
     },
     {
       "country": "Sri Lanka",
@@ -479,5 +479,5 @@
       "visitors": 14
     }
   ],
-  "fetched_at": "2026-10-31T14:00:16Z"
+  "fetched_at": "2026-10-31T18:21:07Z"
 }
