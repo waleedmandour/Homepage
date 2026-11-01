@@ -592,8 +592,8 @@
                     </div>
                 </div>
                 <p style="text-align: center; margin-top: 16px; color: var(--gray); font-size: 14px;">
-                    <span class="lang-en">Click any slide to view it full-size &middot; <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener">Try the live web app</a></span>
-                    <span class="lang-ar">انقر على أي شريحة لعرضها بحجم كامل &middot; <a href="https://corpus-mind-web.vercel.app/" target="_blank" rel="noopener">جرّب تطبيق الويب مباشرة</a></span>
+                    <span class="lang-en">Click any slide to view it full-size</span>
+                    <span class="lang-ar">انقر على أي شريحة لعرضها بحجم كامل</span>
                 </p>
             </div>
         </section>
@@ -994,12 +994,6 @@
                                 <div id="bar-linux" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px; transition: width 1.5s ease; width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 12px; font-weight: 700;">0</div>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span style="font-size: 14px; min-width: 120px; text-align: left; color: var(--dark);"><i class="fas fa-globe"></i> Web App</span>
-                            <div style="flex: 1; height: 24px; background: var(--light); border-radius: 12px; overflow: hidden;">
-                                <div id="bar-web" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px; transition: width 1.5s ease; width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 12px; font-weight: 700;">0</div>
-                            </div>
-                        </div>
                     </div>
                     <p style="font-size: 12px; color: var(--gray); margin-top: 16px; text-align: center;">
                         <span class="lang-en">Data fetched from GitHub Releases API · updates in real time</span>
@@ -1131,7 +1125,7 @@
                 const repo = await repoResp.json();
 
                 let totalDownloads = 0;
-                let macos = 0, windows = 0, linux = 0, web = 0;
+                let macos = 0, windows = 0, linux = 0;
 
                 releaseList.forEach(rel => {
                     (rel.assets || []).forEach(asset => {
@@ -1140,7 +1134,6 @@
                         if (name.includes('.dmg') || name.includes('aarch64')) macos += asset.download_count;
                         else if (name.includes('.exe') || name.includes('.msi')) windows += asset.download_count;
                         else if (name.includes('.deb') || name.includes('.appimage')) linux += asset.download_count;
-                        else if (name.includes('web') || name.includes('.zip')) web += asset.download_count;
                     });
                 });
 
@@ -1165,7 +1158,7 @@
                 animateCount('stat-release-assets', ((latest && latest.assets) || []).length, 1200);
 
                 // Animate bars
-                const maxVal = Math.max(macos, windows, linux, web, 1);
+                const maxVal = Math.max(macos, windows, linux, 1);
                 function setBar(id, val) {
                     const bar = document.getElementById(id);
                     if (!bar) return;
@@ -1177,7 +1170,6 @@
                 setBar('bar-macos', macos);
                 setBar('bar-windows', windows);
                 setBar('bar-linux', linux);
-                setBar('bar-web', web);
 
             } catch(e) {
                 console.log('Dashboard data unavailable:', e);
