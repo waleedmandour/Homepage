@@ -3,8 +3,8 @@
   "totals": {
     "all_time_visitors": 668,
     "all_time_pageviews": 2203,
-    "last_7_days_visitors": 27,
-    "last_30_days_visitors": 154
+    "last_7_days_visitors": 21,
+    "last_30_days_visitors": 140
   },
   "top_countries_all_time": [
     {
@@ -369,7 +369,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 56,
+      "visitors": 47,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -403,16 +403,16 @@
       "flag_emoji": "🇨🇦"
     },
     {
-      "country": "Germany",
-      "country_code": "DE",
-      "visitors": 3,
-      "flag_emoji": "🇩🇪"
-    },
-    {
       "country": "France",
       "country_code": "FR",
       "visitors": 2,
       "flag_emoji": "🇫🇷"
+    },
+    {
+      "country": "Germany",
+      "country_code": "DE",
+      "visitors": 2,
+      "flag_emoji": "🇩🇪"
     },
     {
       "country": "India",
@@ -421,10 +421,10 @@
       "flag_emoji": "🇮🇳"
     },
     {
-      "country": "Indonesia",
-      "country_code": "ID",
+      "country": "Ireland",
+      "country_code": "IE",
       "visitors": 2,
-      "flag_emoji": "🇮🇩"
+      "flag_emoji": "🇮🇪"
     }
   ],
   "top_pages_all_time": [
@@ -479,5 +479,5 @@
       "visitors": 14
     }
   ],
-  "fetched_at": "2026-11-02T03:19:11Z"
+  "fetched_at": "2026-11-02T11:48:48Z"
 }
