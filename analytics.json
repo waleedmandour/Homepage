@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 674,
-    "all_time_pageviews": 2213,
-    "last_7_days_visitors": 12,
-    "last_30_days_visitors": 121
+    "all_time_visitors": 676,
+    "all_time_pageviews": 2216,
+    "last_7_days_visitors": 14,
+    "last_30_days_visitors": 123
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 121,
+      "visitors": 122,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -330,6 +330,13 @@
       "flag_emoji": "🇸🇨"
     },
     {
+      "country": "South Korea",
+      "country_code": "KR",
+      "country_numeric": "410",
+      "visitors": 1,
+      "flag_emoji": "🇰🇷"
+    },
+    {
       "country": "Sri Lanka",
       "country_code": "LK",
       "country_numeric": "144",
@@ -381,7 +388,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 16,
+      "visitors": 17,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -430,8 +437,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 617,
-      "visitors": 339
+      "pageviews": 619,
+      "visitors": 340
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -479,5 +486,5 @@
       "visitors": 14
     }
   ],
-  "fetched_at": "2026-11-05T15:54:48Z"
+  "fetched_at": "2026-11-05T21:41:13Z"
 }
