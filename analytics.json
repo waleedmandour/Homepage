@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 680,
-    "all_time_pageviews": 2222,
-    "last_7_days_visitors": 18,
-    "last_30_days_visitors": 120
+    "all_time_visitors": 681,
+    "all_time_pageviews": 2225,
+    "last_7_days_visitors": 20,
+    "last_30_days_visitors": 121
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 195,
+      "visitors": 196,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -376,7 +376,7 @@
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 33,
+      "visitors": 34,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -442,8 +442,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 586,
-      "visitors": 197
+      "pageviews": 589,
+      "visitors": 198
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
@@ -486,5 +486,5 @@
       "visitors": 14
     }
   ],
-  "fetched_at": "2026-11-06T21:52:10Z"
+  "fetched_at": "2026-11-07T01:26:05Z"
 }
