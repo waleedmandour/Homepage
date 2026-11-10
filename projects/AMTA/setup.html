@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup & Configuration | AMTA Lexicography Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary: #1a237e;       /* Academic Navy */
+            --primary-light: #3949ab;
+            --accent: #059669;        /* Success Teal */
+            --accent-light: #10b981;
+            --warning: #d97706;
+            --success: #16a34a;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== NAVIGATION TOGGLE ===== */
+        .nav-toggle {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: white;
+        }
+
+        .nav-icon {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .nav-text {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 4px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            gap: 4px;
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .language-toggle button:hover {
+            color: var(--primary);
+            background: rgba(26, 35, 126, 0.05);
+        }
+        
+        .language-toggle button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 80px 0 40px;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231a237e' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ===== ENHANCED APP LOGO SECTION ===== */
+        .app-logo-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .app-logo-frame {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(26, 35, 126, 0.1);
+            box-shadow: 
+                var(--shadow-lg),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+                0 0 30px rgba(26, 35, 126, 0.1);
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(26, 35, 126, 0.2);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 0 40px rgba(26, 35, 126, 0.15);
+        }
+
+        .app-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+            transition: filter 0.3s ease;
+        }
+
+        .app-logo-frame:hover .app-logo-img {
+            filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Decorative elements around logo */
+        .app-logo-container::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.1) 0%, rgba(57, 73, 171, 0.1) 100%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .app-logo-container::after {
+            content: '';
+            position: absolute;
+            width: 270px;
+            height: 270px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            animation: rotate 25s linear infinite reverse;
+            z-index: -2;
+        }
+
+        /* Add a subtle shine effect */
+        .app-logo-frame::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 60%);
+            background-size: 300% 300%;
+            animation: shine 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { background-position: -100% -100%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .header-subtitle {
+            color: var(--text-muted);
+            font-size: 20px;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* ===== API KEYS SECTION ===== */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.arabic .section-header {
+            flex-direction: row-reverse;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            color: var(--text-muted);
+            font-size: 17px;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        body.arabic .section-description {
+            text-align: right;
+        }
+
+        /* ===== API CARDS GRID ===== */
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .api-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .api-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        body.arabic .api-card::before {
+            left: 0;
+            right: 0;
+        }
+
+        .api-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .api-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        body.arabic .api-card-header {
+            flex-direction: row-reverse;
+        }
+
+        .api-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .api-card-title {
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        body.arabic .api-card-title {
+            text-align: right;
+        }
+
+        .api-card-description {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        body.arabic .api-card-description {
+            text-align: right;
+        }
+
+        .api-card-required {
+            display: inline-block;
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        body.arabic .api-card-required {
+            text-align: right;
+        }
+
+        .api-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+
+        body.arabic .api-card-link {
+            flex-direction: row-reverse;
+        }
+
+        .api-card-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ===== WORKFLOW STEPS ===== */
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .workflow-step {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border-left: 5px solid var(--accent);
+        }
+
+        body.arabic .workflow-step {
+            border-left: none;
+            border-right: 5px solid var(--accent);
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        body.arabic .step-header {
+            flex-direction: row-reverse;
+        }
+
+        .step-badge {
+            background: var(--accent);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        body.arabic .step-badge {
+            letter-spacing: normal;
+        }
+
+        .step-title {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        body.arabic .step-title {
+            text-align: right;
+        }
+
+        .step-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        body.arabic .step-description {
+            text-align: right;
+        }
+
+        .step-visual {
+            display: flex;
+            gap: 30px;
+            margin-top: 25px;
+            align-items: flex-start;
+        }
+
+        body.arabic .step-visual {
+            flex-direction: row-reverse;
+        }
+
+        .step-image {
+            flex: 0 0 45%;
+            max-width: 45%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .step-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .step-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .step-notes {
+            flex: 1;
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: var(--radius-md);
+        }
+
+        body.arabic .step-notes {
+            text-align: right;
+        }
+
+        .step-notes h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .step-notes p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .step-notes ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        body.arabic .step-notes ul {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        .step-notes li {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: rgba(26, 35, 126, 0.05);
+            border: 1px solid rgba(26, 35, 126, 0.1);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--primary);
+            margin: 15px 0;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        body.arabic .code-block {
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* ===== LOGIC BOX ===== */
+        .logic-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            margin: 30px 0;
+        }
+
+        .logic-box-header {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.arabic .logic-box-header {
+            flex-direction: row-reverse;
+        }
+
+        .logic-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(26, 35, 126, 0.1);
+        }
+
+        body.arabic .logic-step {
+            flex-direction: row-reverse;
+        }
+
+        .logic-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .logic-icon {
+            color: var(--accent);
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .logic-content {
+            flex: 1;
+        }
+
+        body.arabic .logic-content {
+            text-align: right;
+        }
+
+        .logic-content strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .logic-content p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== TROUBLESHOOTING SECTION ===== */
+        .troubleshooting-section {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 1px solid #fde68a;
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            margin-top: 50px;
+        }
+
+        body.arabic .troubleshooting-section {
+            direction: rtl;
+        }
+
+        .troubleshooting-header {
+            color: #92400e;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        body.arabic .troubleshooting-header {
+            flex-direction: row-reverse;
+        }
+
+        .troubleshooting-header i {
+            font-size: 32px;
+        }
+
+        .troubleshooting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .issue-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius-md);
+            border: 1px solid #fbbf24;
+        }
+
+        .issue-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        body.arabic .issue-header {
+            flex-direction: row-reverse;
+        }
+
+        .issue-icon {
+            color: #d97706;
+            font-size: 24px;
+        }
+
+        .issue-title {
+            color: #92400e;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 1.3;
+        }
+
+        body.arabic .issue-title {
+            text-align: right;
+        }
+
+        .issue-description {
+            color: #78350f;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        body.arabic .issue-description {
+            text-align: right;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-muted);
+            font-size: 15px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        body.arabic .footer {
+            direction: rtl;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        body.arabic .footer-links {
+            flex-direction: row-reverse;
+        }
+
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* ===== LANGUAGE CONTENT ===== */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-ar {
+            display: none;
+        }
+        
+        body.arabic .lang-en {
+            display: none;
+        }
+        
+        body.arabic .lang-ar {
+            display: block;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .step-visual {
+                flex-direction: column;
+            }
+            
+            body.arabic .step-visual {
+                flex-direction: column;
+            }
+            
+            .step-image {
+                flex: 1;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .app-logo-container {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .header {
+                padding: 60px 0 30px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .api-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-toggle, .language-toggle {
+                top: 16px;
+            }
+            
+            .nav-toggle {
+                left: 16px;
+            }
+            
+            .language-toggle {
+                right: 16px;
+            }
+            
+            .troubleshooting-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .app-logo-container {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .header-subtitle {
+                font-size: 18px;
+            }
+            
+            .workflow-step {
+                padding: 25px;
+            }
+            
+            .nav-toggle, .language-toggle {
+                padding: 8px 16px;
+            }
+            
+            .nav-text {
+                font-size: 13px;
+            }
+            
+            .app-logo-container {
+                width: 320px;
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Toggle -->
+    <a href="https://waleedmandour.org/projects/" class="nav-toggle">
+        <i class="fas fa-arrow-left nav-icon"></i>
+        <span class="nav-text lang-en">Back to Researcher Page</span>
+        <span class="nav-text lang-ar">العودة إلى أعمال الباحث</span>
+    </a>
+
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Enhanced App Logo -->
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <img src="images/AMTA2.png" alt="AMTA Lexicography Assistant Logo" class="app-logo-img">
+                    </div>
+                </div>
+                
+                <h1 class="lang-en">Setup & Configuration Guide</h1>
+                <h1 class="lang-ar">دليل الإعداد والتكوين</h1>
+                
+                <div class="header-subtitle lang-en">
+                    Comprehensive setup and operational manual for the AMTA Lexicography Assistant
+                </div>
+                <div class="header-subtitle lang-ar">
+                    دليل شامل للإعداد والتشغيل لمساعد AMTA المعجمي
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Introduction -->
+        <div class="section">
+            <p class="section-description lang-en">
+                This guide provides detailed instructions for configuring and operating the AMTA Lexicography Assistant. 
+                It explains the necessary API integrations, the Google Apps Script logic, and the user interface components 
+                required for the complete computational workflow for specialized dictionary creation.
+            </p>
+            <p class="section-description lang-ar">
+                يقدم هذا الدليل تعليمات مفصلة لتكوين وتشغيل مساعد AMTA المعجمي. 
+                يشرح تكاملات واجهة برمجة التطبيقات الضرورية، ومنطق Google Apps Script، ومكونات واجهة المستخدم 
+                المطلوبة لسير العمل الحسابي الكامل لإنشاء القواميس المتخصصة.
+            </p>
+        </div>
+
+        <!-- 1. Service Configuration -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2 class="section-title lang-en">Service Configuration & API Integration</h2>
+                <h2 class="section-title lang-ar">تكوين الخدمة وتكامل واجهة برمجة التطبيقات</h2>
+            </div>
+            
+            <p class="section-description lang-en">
+                The Assistant operates by orchestrating several external APIs. Before launching the app, obtain API keys/tokens 
+                from the providers below. These are <strong>essential</strong> for the pipeline to function.
+            </p>
+            <p class="section-description lang-ar">
+                يعمل المساعد من خلال تنسيق عدة واجهات برمجة تطبيقات خارجية. قبل تشغيل التطبيق، احصل على مفاتيح/رموز واجهة برمجة التطبيقات 
+                من المزودين أدناه. هذه <strong>ضرورية</strong> لعمل خط العمل.
+            </p>
+
+            <div class="api-grid">
+                <!-- Google Gemini Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">Google Gemini</h3>
+                        <h3 class="api-card-title lang-ar">Google Gemini</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Core Large Language Model for Retrieval-Augmented Generation (RAG), definition creation, and translations. 
+                        <strong>Required for Phases 4 & 5 of the pipeline.</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        نموذج اللغة الكبيرة الأساسي للتوليد المعزز بالاسترجاع، وإنشاء التعريفات، والترجمات. 
+                        <strong>مطلوب للمرحلتين 4 و 5 من خط العمل.</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Semantic Scholar Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">Semantic Scholar</h3>
+                        <h3 class="api-card-title lang-ar">Semantic Scholar</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Access to millions of academic papers for initial term discovery and metadata extraction. 
+                        <strong>Required for Phase 1 (Discovery).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        الوصول إلى ملايين الأوراق الأكاديمية للاكتشاف الأولي للمصطلحات واستخراج البيانات الوصفية. 
+                        <strong>مطلوب للمرحلة 1 (الاكتشاف).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://www.semanticscholar.org/product/api" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- SerpApi Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">SerpApi (Google Scholar)</h3>
+                        <h3 class="api-card-title lang-ar">SerpApi (Google Scholar)</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Enables structured search of Google Scholar for literature context and academic references. 
+                        <strong>Required for Phase 3 (Tier 2 Fallback).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        يتيح البحث المنظم في Google Scholar للسياق الأدبي والمراجع الأكاديمية. 
+                        <strong>مطلوب للمرحلة 3 (البديل من المستوى 2).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://serpapi.com/" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- CORE API Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">CORE API</h3>
+                        <h3 class="api-card-title lang-ar">CORE API</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Access to Open Access research papers for context enrichment and full-text retrieval. 
+                        <strong>Required for Phase 3 (Tier 1).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        الوصول إلى أوراق البحث مفتوحة الوصول لإثراء السياق واسترجاع النص الكامل. 
+                        <strong>مطلوب للمرحلة 3 (المستوى 1).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://core.ac.uk/services/api" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get API Key</span>
+                        <span class="lang-ar">احصل على مفتاح API</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Hugging Face Card -->
+                <div class="api-card">
+                    <div class="api-card-header">
+                        <div class="api-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="api-card-title lang-en">Hugging Face</h3>
+                        <h3 class="api-card-title lang-ar">Hugging Face</h3>
+                    </div>
+                    <p class="api-card-description lang-en">
+                        Powers linguistic tasks like Part-of-Speech (POS) tagging and basic Natural Language Processing operations. 
+                        <strong>Required for Phase 2 (Statistical Validation).</strong>
+                    </p>
+                    <p class="api-card-description lang-ar">
+                        يدعم المهام اللغوية مثل وسم أجزاء الكلام وعمليات معالجة اللغة الطبيعية الأساسية. 
+                        <strong>مطلوب للمرحلة 2 (التحقق الإحصائي).</strong>
+                    </p>
+                    <span class="api-card-required lang-en">Required</span>
+                    <span class="api-card-required lang-ar">مطلوب</span>
+                    <a href="https://huggingface.co/settings/tokens" target="_blank" class="api-card-link">
+                        <span class="lang-en">Get Access Token</span>
+                        <span class="lang-ar">احصل على رمز الوصول</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Frontend Interface -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h2 class="section-title lang-en">Frontend Interface (Google Sheets Sidebar)</h2>
+                <h2 class="section-title lang-ar">واجهة الواجهة الأمامية (الشريط الجانبي في Google Sheets)</h2>
+            </div>
+            
+            <p class="section-description lang-en">
+                The app's user interface is contained entirely within a custom Google Sheets sidebar, providing all controls 
+                and real-time status updates for the lexicography workflow.
+            </p>
+            <p class="section-description lang-ar">
+                واجهة مستخدم التطبيق موجودة بالكامل داخل شريط جانبي مخصص في Google Sheets، مما يوفر جميع عناصر التحكم 
+                وتحديثات الحالة في الوقت الفعلي لسير العمل المعجمي.
+            </p>
+        </div>
+
+        <!-- 5. Frequently Asked Questions (FAQ) - HEADING ONLY -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h2 class="section-title lang-en">Frequently Asked Questions (FAQ)</h2>
+                <h2 class="section-title lang-ar">الأسئلة الشائعة</h2>
+            </div>
+            <!-- FAQ content removed as requested -->
+        </div>
+
+        <!-- 5. Troubleshooting -->
+        <div class="troubleshooting-section">
+            <h3 class="troubleshooting-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="lang-en">Troubleshooting & Common Issues</span>
+                <span class="lang-ar">استكشاف الأخطاء وإصلاحها والمشكلات الشائعة</span>
+            </h3>
+            
+            <div class="troubleshooting-grid">
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h4 class="issue-title lang-en">"Exception: Access Denied" / "Authorization Required"</h4>
+                        <h4 class="issue-title lang-ar">"استثناء: تم الرفض" / "مطلوب تفويض"</h4>
+                    </div>
+                    <p class="issue-description lang-en">
+                        This indicates your Apps Script OAuth token has expired or permissions were not fully granted. 
+                        <strong>Solution:</strong> Uninstall the Add-on from the Google Workspace Marketplace, close the sheet completely, 
+                        reopen it, and reinstall the Add-on, ensuring you click 'Allow' for all requested scopes.
+                    </p>
+                    <p class="issue-description lang-ar">
+                        يشير هذا إلى أن رمز OAuth الخاص بـ Apps Script قد انتهت صلاحيته أو لم يتم منح الأذونات بالكامل. 
+                        <strong>الحل:</strong> قم بإلغاء تثبيت الإضافة من سوق Google Workspace، وأغلق الورقة تمامًا، 
+                        وأعد فتحها، وأعد تثبيت الإضافة، مع التأكد من النقر على "السماح" لجميع النطاقات المطلوبة.
+                    </p>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h4 class="issue-title lang-en">"401 Unauthorized" / "Invalid API Key"</h4>
+                        <h4 class="issue-title lang-ar">"401 غير مصرح" / "مفتاح API غير صالح"</h4>
+                    </div>
+                    <p class="issue-description lang-en">
+                        The API key is incorrect, expired, or improperly stored in the system. 
+                        <strong>Solution:</strong> Re-open the Settings tab in the sidebar and carefully re-enter the key(s). 
+                        Click 'Save Configuration' again. Verify the key is active and has sufficient quota in the provider's dashboard.
+                    </p>
+                    <p class="issue-description lang-ar">
+                        مفتاح API غير صحيح، أو منتهي الصلاحية، أو مخزن بشكل غير صحيح في النظام. 
+                        <strong>الحل:</strong> أعد فتح علامة تبويب الإعدادات في الشريط الجانبي وأعد إدخال المفتاح (المفاتيح) بعناية. 
+                        انقر فوق "حفظ التكوين" مرة أخرى. تحقق من أن المفتاح نشط وبه فترة كافية في لوحة تحكم المزود.
+                    </p>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4 class="issue-title lang-en">Timeout / Rate Limit Exceeded (429 Error)</h4>
+                        <h4 class="issue-title lang-ar">"المهلة / تجاوز حد المعدل (خطأ 429)"</h4>
+                    </div>
+                    <p class="issue-description lang-en">
+                        The external API has stopped responding due to too many requests or quota limits. 
+                        <strong>Solution:</strong> This is common with free API tiers. The App Script
+                        has built-in pauses, but if this happens, simply wait 10-15 minutes, then click "Run Full Pipeline" again. 
+                        The row-by-row logic will resume automatically from the last processed term.
+                    </p>
+                    <p class="issue-description lang-ar">
+                        توقفت واجهة برمجة التطبيقات الخارجية عن الرد بسبب كثرة الطلبات أو حدود الفترة. 
+                        <strong>الحل:</strong> هذا شائع مع مستويات API المجانية. تمت برمجة المنصة لتعمل على فترات توقف تتسق مع، 
+                        ولكن إذا حدث هذا، انتظر ببساطة 10-15 دقيقة، ثم انقر فوق "تشغيل خط العمل الكامل" مرة أخرى. 
+                        سيكمل المنطق صفًا بصفح تلقائيًا من المصطلح الأخير الذي تم معالجته.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <strong class="lang-en">AMTA Lexicography Assistant</strong>
+                    <strong class="lang-ar">مساعد AMTA المعجمي</strong>
+                    <span class="lang-en"> • Setup & Configuration Guide</span>
+                    <span class="lang-ar"> • دليل الإعداد والتكوين</span>
+                </div>
+                <div style="margin-top: 5px;">
+                    <span class="lang-en">Developed by Waleed Mandour 2025</span>
+                    <span class="lang-ar"> تم تطوير بواسطة وليد مندور 2025</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://waleedmandour.org/projects/" class="footer-link">
+                        <span class="lang-en">Research Work</span>
+                        <span class="lang-ar">الأعمال البحثية</span>
+                    </a>
+                    <a href="https://waleedmandour.org/projects/AMTA/support.html" class="footer-link">
+                        <span class="lang-en">Technical Support</span>
+                        <span class="lang-ar">الدعم الفني</span>
+                    </a>
+                    <a href="../../privacy.html" class="footer-link">
+                        <span class="lang-en">Privacy Policy</span>
+                        <span class="lang-ar">سياسة الخصوصية</span>
+                    </a>
+                    <a href="../../terms.html" class="footer-link">
+                        <span class="lang-en">Terms of Service</span>
+                        <span class="lang-ar">شروط الخدمة</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add subtle animation to workflow steps on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe workflow steps and API cards
+            document.querySelectorAll('.workflow-step, .api-card, .issue-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Logo animation on hover
+            const logo = document.querySelector('.app-logo-frame');
+            if (logo) {
+                logo.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) rotateX(5deg) rotateY(5deg) scale(1.05)';
+                });
+                
+                logo.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

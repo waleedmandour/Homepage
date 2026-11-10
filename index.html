@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Waleed Mandour - PhD in Applied Linguistics | SQU</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 28, 60, 0.9);
+            border-radius: 30px;
+            padding: 8px 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-toggle button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+        
+        .language-toggle button.active {
+            background: var(--secondary);
+        }
+        
+        /* Header Styles */
+        header {
+            background: 
+                linear-gradient(135deg, rgba(10, 28, 60, 0.95) 0%, rgba(26, 95, 122, 0.9) 100%);
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .header-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        body.arabic .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .header-photo-container {
+            position: relative;
+        }
+        
+        .header-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 30px rgba(32, 178, 170, 0.6);
+            transition: var(--transition);
+        }
+        
+        .header-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(32, 178, 170, 0.8);
+        }
+        
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        body.arabic .research-tags {
+            justify-content: flex-end;
+        }
+        
+        .research-tag {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .research-tag:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        nav {
+            position: relative;
+            z-index: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        body.arabic nav a:after {
+            left: auto;
+            right: 0;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding-bottom: 60px;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 60px auto;
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        body.arabic .hero-section {
+            flex-direction: row-reverse;
+        }
+        
+        .welcome-text {
+            flex: 1;
+            min-width: 400px;
+        }
+        
+        .welcome-text h2 {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-text p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            font-size: 1.05em;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #1a9c96;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            margin-left: 10px;
+        }
+        
+        body.arabic .btn-outline {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .quick-info-section {
+            flex: 0 0 280px;
+            margin-left: 30px;
+            background-color: var(--light);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
+        }
+        
+        body.arabic .quick-info-section {
+            margin-left: 0;
+            margin-right: 30px;
+        }
+        
+        .quick-info-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        
+        .quick-info-section ul {
+            list-style: none;
+            padding: 0;
+            line-height: 1.8;
+        }
+        
+        .quick-info-section li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        body.arabic .quick-info-section li {
+            flex-direction: row-reverse;
+        }
+        
+        .quick-info-section span {
+            margin-right: 10px;
+            color: var(--secondary);
+            font-size: 1.2em;
+        }
+        
+        body.arabic .quick-info-section span {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        .quick-info-section a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--primary);
+            transition: var(--transition);
+        }
+        
+        .quick-info-section a:hover {
+            color: var(--secondary);
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        /* App Showcase Section */
+        .app-showcase {
+            background: linear-gradient(135deg, var(--white) 0%, #e0f7fa 100%);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 60px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        body.arabic .app-showcase {
+            flex-direction: row-reverse;
+        }
+
+        .app-content h3 {
+            color: var(--primary);
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .app-content p {
+            font-size: 1.1em;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        /* Research Focus Section */
+        .research-focus {
+            background-color: var(--light);
+            padding: 60px 0;
+            margin-bottom: 60px;
+            border-radius: 12px;
+        }
+        
+        .research-areas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .research-area {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .research-area:hover {
+            transform: translateY(-5px);
+        }
+        
+        .research-icon {
+            font-size: 2.5em;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .research-area h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Publications Section */
+        .section-title {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+        
+        .publication-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        body.arabic .card-header {
+            flex-direction: row-reverse;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        body.arabic .card-icon {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+        
+        .card h4 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.2em;
+            line-height: 1.3;
+        }
+        
+        .card-meta {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .card p {
+            font-size: 0.9em;
+            color: var(--dark);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .card-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            border: 1px solid var(--secondary);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+            align-self: flex-start;
+            font-size: 0.9em;
+        }
+        
+        .card-link:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Language-specific content */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-section { flex-direction: column; }
+            body.arabic .hero-section { flex-direction: column; }
+            .welcome-text { min-width: 100%; margin-bottom: 30px; }
+            .quick-info-section { margin-left: 0; margin-right: 0; width: 100%; }
+            .header-content { flex-direction: column; text-align: center; }
+            .header-text { text-align: center; }
+            body.arabic .header-text { text-align: center; }
+            .research-tags { justify-content: center; }
+            .app-showcase { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+    
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                
+                <p class="tagline lang-en">PhD in Applied Linguistics | Assistant Lecturer | Google Certified Trainer | SQU</p>
+                <p class="tagline lang-ar">دكتوراه في اللغويات التطبيقية | محاضر مساعد | مدرب معتمد من جوجل | جامعة السلطان قابوس</p>
+                
+                <div class="research-tags">
+                    <div class="research-tag lang-en">Educational Technologies</div>
+                    <div class="research-tag lang-en">AI in Lexicography</div>
+                    <div class="research-tag lang-en">Corpus Studies</div>
+                    <div class="research-tag lang-en">Discourse Analysis</div>
+                    
+                    <div class="research-tag lang-ar">تكنولوجيا التعليم</div>
+                    <div class="research-tag lang-ar">الذكاء الاصطناعي في علم المعاجم</div>
+                    <div class="research-tag lang-ar">دراسات المدونات النصية</div>
+                    <div class="research-tag lang-ar">تحليل الخطاب</div>
+                </div>
+            </div>
+            
+            <div class="header-photo-container">
+                <img src="images/photo.png" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html" class="lang-en">Home</a><a href="index.html" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Research & Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">الأبحاث والمنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+
+    <main class="container">
+        <section class="hero-section">
+            <div class="welcome-text">
+                <h2 class="lang-en">Welcome to My Academic Profile</h2>
+                <h2 class="lang-ar">مرحباً بكم في ملفي الأكاديمي</h2>
+                
+                <p class="lang-en">I am <strong>Dr. Waleed Mandour</strong>, holding a <strong>PhD in Applied Linguistics</strong> from Mansoura University (February 2025). I am a dedicated Assistant Lecturer and E-Learning Committee Member and Translation Committee Member at Sultan Qaboos University, Oman. My research journey explores the dynamic intersections of <strong>Lexicography, Corpus Studies, Discourse Analysis</strong>, with a particular passion for their innovative applications in <strong>Lexicography and Educational Technology</strong>.</p>
+                
+                <p class="lang-ar">أنا <strong>الدكتور وليد مندور</strong>، حاصل على <strong>درجة الدكتوراه في اللغويات التطبيقية</strong> من جامعة المنصورة (فبراير ٢٠٢٥). أعمل محاضر مساعد وعضو لجنة التعلم الإلكتروني ولجنة الترجمة في جامعة السلطان قابوس، سلطنة عمان. يركز مسيرتي البحثية على التقاطعات الديناميكية بين <strong>علم المعاجم ودراسات المدونات النصية وتحليل الخطاب</strong>، مع شغف خاص بتطبيقاتها المبتكرة في <strong>علم المعاجم وتكنولوجيا التعليم</strong>.</p>
+                
+                <p class="lang-en">My work is driven by a commitment to developing data-driven tools and methodologies that enhance our understanding of language, facilitate effective language learning, and revolutionize dictionary design.</p>
+                
+                <p class="lang-ar">يتمحور عملي حول الالتزام بتطوير أدوات ومنهجيات قائمة على البيانات لتعزيز فهمنا للغة، وتسهيل تعلم اللغة الفعال، وإحداث ثورة في صناعة المعاجم.</p>
+                
+                <a href="#publications" class="btn lang-en">View Publications</a>
+                <a href="#publications" class="btn lang-ar">عرض المنشورات</a>
+                
+            </div>
+            
+            <div class="quick-info-section">
+                <h3 class="lang-en">Quick Info</h3>
+                <h3 class="lang-ar">معلومات سريعة</h3>
+                
+                <ul>
+                    <li>
+                        <span><i class="fas fa-id-badge"></i></span>
+                        <div>
+                            <strong class="lang-en">ORCID ID:</strong>
+                            <strong class="lang-ar">معرف الأوركيد:</strong>
+                            <a href="https://orcid.org/0000-0002-9262-5993" target="_blank">0000-0002-9262-5993</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span><i class="fas fa-book"></i></span>
+                        <div>
+                            <strong class="lang-en">Scopus ID:</strong>
+                            <strong class="lang-ar">معرف سكوبس:</strong>
+                            <a href="https://www.scopus.com/authid/detail.uri?authorId=58211012400" target="_blank">58211012400</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span><i class="fas fa-search"></i></span>
+                        <div>
+                            <strong class="lang-en">ResearchGate:</strong>
+                            <strong class="lang-ar">ريسرش جيت:</strong>
+                            <a href="https://www.researchgate.net/profile/Waleed-Mandour" target="_blank" class="lang-en">Profile</a>
+                            <a href="https://www.researchgate.net/profile/Waleed-Mandour" target="_blank" class="lang-ar">الملف الشخصي</a>
+                        </div>
+                    </li>
+                     <li>
+                        <span><i class="fas fa-graduation-cap"></i></span>
+                        <div>
+                            <strong class="lang-en">Google Scholar:</strong>
+                            <strong class="lang-ar">جوجل سكولار:</strong>
+                            <a href="https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en" target="_blank" class="lang-en">Profile</a>
+                            <a href="https://scholar.google.com/citations?user=aM8h3-4z8gUC&hl=en" target="_blank" class="lang-ar">الملف الشخصي</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span><i class="fas fa-envelope"></i></span>
+                        <div>
+                            <strong class="lang-en">Email:</strong>
+                            <strong class="lang-ar">البريد الإلكتروني:</strong>
+                            <a href="mailto:w.abumandour@squ.edu.om">w.abumandour@squ.edu.om</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span><i class="fab fa-github"></i></span>
+                        <div>
+                            <strong class="lang-en">GitHub:</strong>
+                            <strong class="lang-ar">جيت هاب:</strong>
+                            <a href="https://github.com/waleedmandour" target="_blank" class="lang-en">Profile</a>
+                            <a href="https://github.com/waleedmandour" target="_blank" class="lang-ar">الملف الشخصي</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="app-showcase">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-laptop-code"></i> Featured Tool: AMTA Assistant</h3>
+                <h3 class="lang-ar"><i class="fas fa-laptop-code"></i> أداة مميزة: مساعد AMTA</h3>
+                
+                <p class="lang-en">An advanced Google Workspace Add-on for automated lexicography and corpus analysis using Generative AI.</p>
+                <p class="lang-ar">إضافة متقدمة لمساحة عمل جوجل للمعجميات الآلية وتحليل المدونات باستخدام الذكاء الاصطناعي التوليدي.</p>
+                
+                <a href="projects/AMTA/index.html" class="btn lang-en">View App Homepage →</a>
+                <a href="projects/AMTA/index.html" class="btn lang-ar">عرض صفحة التطبيق ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: var(--secondary);">
+                <i class="fas fa-robot"></i>
+            </div>
+        </section>
+
+        <!-- ScholarScribe Showcase -->
+        <section class="app-showcase" style="border-color: #8B4513; background: linear-gradient(135deg, var(--white) 0%, #fdf6e3 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-feather-alt"></i> New Release: ScholarScribe</h3>
+                <h3 class="lang-ar"><i class="fas fa-feather-alt"></i> إصدار جديد: سكولار سكرايب</h3>
+                
+                <p class="lang-en">A privacy-first, local-LLM writing companion for researchers. Runs open LLMs (Gemma 3, Qwen 3, Phi-4, DeepSeek R1, Llama 3.3) fully offline — no telemetry, no cloud calls, no paid APIs. Bundles a 24-rule AI Text Cleaner, BibTeX Citation Manager, Document Statistics, Style Analysis, Disclosure Assistant, and an in-app Privacy Audit log.</p>
+                <p class="lang-ar">رفيق كتابة بحثي يحترم الخصوصية أولاً. يشغّل النماذج اللغوية المفتوحة بالكامل دون اتصال — بلا قياسات، بلا اتصالات سحابية، بلا واجهات مدفوعة. يجمع منظّفاً ذكياً بقواعد التحول الـ 24، وإدارة استشهادات BibTeX، وإحصاءات الوثيقة، وتحليل الأسلوب، ومساعد الإفصاح، وسجل خصوصية داخلي.</p>
+                
+                <a href="projects/scholarscribe/index.html" class="btn" style="background-color: #8B4513;">View ScholarScribe Page →</a>
+                <a href="projects/scholarscribe/index.html" class="btn" style="background-color: #8B4513;">صفحة سكولار سكرايب ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #8B4513;">
+                <i class="fas fa-feather-alt"></i>
+            </div>
+        </section>
+
+        <!-- CorpusMind Showcase -->
+        <section class="app-showcase" style="border-color: #00695C; background: linear-gradient(135deg, var(--white) 0%, #e0f2f1 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-magnifying-glass"></i> CorpusMind: AI-Native Corpus Linguistics</h3>
+                <h3 class="lang-ar"><i class="fas fa-magnifying-glass"></i> كوربَس مايند: لسانيات المحتوى المدعومة بالذكاء الاصطناعي</h3>
+                
+                <p class="lang-en">A local-first, AI-native research environment for corpus linguistics and multimodal discourse analysis. Two integrated suites: CorpusMind Text (concordancing, frequency, collocation, keyness, n-grams, dispersion, 12+ statistics with tests, first-class Arabic support) and CorpusMind Vision (Visual Grammar, multimodal CDA). Ships as a PWA + native desktop apps (Windows, Linux, macOS) with local LLM inference via Ollama/LM Studio. No telemetry, no cloud calls.</p>
+                <p class="lang-ar">بيئة بحثية محلية أصيلة مدعومة بالذكاء الاصطناعي للسانيات المحتوى وتحليل الخطاب متعدد الوسائط. جناحان متكاملان: كوربَس مايند للنص (الكشف السياقي، التردد، التجميع، الأهمية، الرسم البياني، 12+ إحصائية مع اختبارات، دعم عربي من الدرجة الأولى) وكوربَس مايند للبصر (النحو البصري، التحليل النقدي متعدد الوسائط). يأتي كتطبيق ويب تقدمي + تطبيقات سطح المكتب (ويندوز، لينكس، ماك) مع استدلال نماذج لغوية محلية عبر Ollama/LM Studio. بدون قياسات، بدون اتصالات سحابية.</p>
+                
+                <a href="projects/CorpusMind/index.html" class="btn" style="background-color: #00695C;">View CorpusMind Page &rarr;</a>
+                <a href="projects/CorpusMind/index.html" class="btn" style="background-color: #00695C;">صفحة كوربَس مايند &larr;</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #00695C;">
+                <i class="fas fa-magnifying-glass"></i>
+            </div>
+        </section>
+
+        <!-- RDAT Copilot Showcase -->
+        <section class="app-showcase" style="border-color: #4A148C; background: linear-gradient(135deg, var(--white) 0%, #f5f0ff 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-language"></i> RDAT Copilot: AI-Powered Translation Assistant</h3>
+                <h3 class="lang-ar"><i class="fas fa-language"></i> مساعد الترجمة الذكي: RDAT Copilot</h3>
+                
+                <p class="lang-en">A professional computer-assisted translation environment for bidirectional English–Arabic work — a Tauri 2 desktop app with Ollama (Gemma 4) plus an installable PWA — with a three-tier AI pipeline, RAG, and AMTA terminology linting.</p>
+                <p class="lang-ar">بيئة ترجمة احترافية بمساعدة الحاسوب للترجمة الثنائية الاتجاه بين الإنجليزية والعربية — تطبيق سطح مكتب Tauri 2 يعمل بـ Ollama (Gemma 4) مع تطبيق ويب تقدمي قابل للتثبيت — بخط أنابيب ذكاء اصطناعي ثلاثي المراحل، وبحث دلالي، وفحص المصطلحات.</p>
+                
+                <a href="projects/rdat/" class="btn" style="background-color: #4A148C;">View RDAT Copilot Page →</a>
+                <a href="projects/rdat/" class="btn" style="background-color: #4A148C;">صفحة مساعد الترجمة ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #4A148C;">
+                <i class="fas fa-language"></i>
+            </div>
+        </section>
+
+                <!-- iAWE System Showcase -->
+        <section class="app-showcase" style="border-color: #1A5F7A; background: linear-gradient(135deg, var(--white) 0%, #f0f8ff 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-graduation-cap"></i> New Project: iAWE System</h3>
+                <h3 class="lang-ar"><i class="fas fa-graduation-cap"></i> مشروع جديد: نظام ذكي لتقييم الكتابة الأكاديمية</h3>
+                
+                <p class="lang-en">An intelligent academic writing evaluation system that provides deterministic, schema-enforced feedback for EAP writing.</p>
+                <p class="lang-ar">نظام ذكي لتقييم الكتابة الأكاديمية يقدم تغذية راجعة منضبطة وقابلة للتفسير لكتابة اللغة الإنجليزية للأغراض الأكاديمية.</p>
+                
+                <a href="projects/iAWE/index.html" class="btn" style="background-color: #1A5F7A;">View iAWE Homepage →</a>
+                <a href="projects/iAWE/index.html" class="btn" style="background-color: #1A5F7A;">عرض صفحة التطبيق ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: var(--secondary);">
+                <i class="fas fa-robot"></i>
+            </div>
+        </section>
+
+        <!-- iAWE System (PWA) Showcase -->
+        <section class="app-showcase" style="border-color: #1a5f2a; background: linear-gradient(135deg, var(--white) 0%, #f0fff0 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-cloud"></i> iAWE System: AI Co-Marker (Cloud PWA)</h3>
+                <h3 class="lang-ar"><i class="fas fa-cloud"></i> نظام iAWE: المُعلِّم الذكي (تطبيق ويب سحابي)</h3>
+                
+                <p class="lang-en">An Intelligent Automated Writing Evaluation System for Foundation and Credit Course students at SQU. Upload handwritten essays, extract text via OCR, and receive IELTS-criteria AI assessment with constructive feedback.</p>
+                <p class="lang-ar">نظام التقييم الآلي الذكي للكتابة لطلاب السنة التأسيسية والمقررات الائتمانية في جامعة السلطان قابوس. ارفع صور المقالات المكتوبة بخط اليد، واستخرج النص عبر التعرف البصري، واحصل على تقييم ذكي وفق معايير الآيلتس مع تغذية راجعة بناءة.</p>
+                
+                <a href="projects/awe-system/index.html" class="btn" style="background-color: #1a5f2a;">View iAWE System Page →</a>
+                <a href="projects/awe-system/index.html" class="btn" style="background-color: #1a5f2a;">صفحة نظام iAWE ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #1a5f2a;">
+                <i class="fas fa-pen-fancy"></i>
+            </div>
+        </section>
+
+        <!-- AWE Desktop Showcase -->
+        <section class="app-showcase" style="border-color: #2c5aa0; background: linear-gradient(135deg, var(--white) 0%, #f0f5ff 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-desktop"></i> AWE Desktop: AI Co-Marker (Offline)</h3>
+                <h3 class="lang-ar"><i class="fas fa-desktop"></i> نظام تقييم الكتابة: المُعلِّم الذكي (حاسوب بدون إنترنت)</h3>
+                
+                <p class="lang-en">A native Windows desktop application for offline essay assessment. Features local LLM support (Ollama, LM Studio), offline OCR (Tesseract, PaddleOCR), full privacy with no internet required, and Microsoft Store readiness.</p>
+                <p class="lang-ar">تطبيق حاسوب أصلي لنظام ويندوز لتقييم المقالات بدون اتصال. يتميز بدعم نماذج لغوية محلية (Ollama, LM Studio)، وتعرف بصري غير متصل (Tesseract, PaddleOCR)، وخصوصية كاملة بدون حاجة للإنترنت، وجاهزية متجر مايكروسوفت.</p>
+                
+                <a href="projects/awe-desktop/index.html" class="btn" style="background-color: #2c5aa0;">View AWE Desktop Page →</a>
+                <a href="projects/awe-desktop/index.html" class="btn" style="background-color: #2c5aa0;">صفحة تطبيق الحاسوب ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #2c5aa0;">
+                <i class="fas fa-laptop"></i>
+            </div>
+        </section>
+
+        <!-- EV Connect (EVD) Showcase -->
+        <section class="app-showcase" style="border-color: #00897B; background: linear-gradient(135deg, var(--white) 0%, #e0f2f1 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-car-battery"></i> EV Connect: BYD OBD-II Monitor</h3>
+                <h3 class="lang-ar"><i class="fas fa-car-battery"></i> EV Connect: مراقب تشخيصي OBD-II لسيارات BYD الكهربائية</h3>
+                
+                <p class="lang-en">Real-time OBD-II diagnostics and monitoring for BYD electric vehicles. Optimized for vGate iCar Pro BLE 4.0, featuring a comprehensive dashboard, battery & charging monitor, diagnostics, eco driving score, and voice guide — all in a Progressive Web App.</p>
+                <p class="lang-ar">مراقب تشخيصي حقيقي الوقت عبر OBD-II لسيارات BYD الكهربائية. محسّن لجهاز vGate iCar Pro BLE 4.0، يتميز بلوحة معلومات شاملة، ورصد البطارية والشحن، وتشخيصات الأعطال، وتقييم القيادة الاقتصادي، ودليل صوتي — كل ذلك في تطبيق ويب تقدمي.</p>
+                
+                <a href="projects/evd/index.html" class="btn" style="background-color: #00897B;">View EV Connect Page →</a>
+                <a href="projects/evd/index.html" class="btn" style="background-color: #00897B;">صفحة EV Connect ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #00897B;">
+                <i class="fas fa-car-battery"></i>
+            </div>
+        </section>
+
+        <!-- Binti2 Voice Assistant Showcase -->
+        <section class="app-showcase" style="border-color: #e74c3c; background: linear-gradient(135deg, var(--white) 0%, #fff5f5 100%);">
+            <div class="app-content">
+                <h3 class="lang-en"><i class="fas fa-microphone-alt"></i> Binti2: Egyptian Arabic Voice Assistant for BYD EVs</h3>
+                <h3 class="lang-ar"><i class="fas fa-microphone-alt"></i> بنتي ٢: مساعد صوتي بالعربية المصرية لسيارات بي واي دي الكهربائية</h3>
+                
+                <p class="lang-en">A voice-controlled intelligent assistant designed for BYD electric vehicles, featuring natural Egyptian Arabic interaction, EV charging station locator, vehicle security system, and bilingual interface.</p>
+                <p class="lang-ar">مساعد ذكي يتحكم بالصوت مصمم لسيارات بي واي دي الكهربائية، يتميز بالتفاعل الطبيعي باللهجة المصرية، ومحدد محطات شحن السيارات الكهربائية، ونظام أمان المركبات، وواجهة ثنائية اللغة.</p>
+                
+                <a href="projects/binti2/index.html" class="btn" style="background-color: #e74c3c;">View Binti2 Page →</a>
+                <a href="projects/binti2/index.html" class="btn" style="background-color: #e74c3c;">صفحة بنتي ٢ ←</a>
+            </div>
+            <div class="app-icon" style="font-size: 4em; color: #e74c3c;">
+                <i class="fas fa-car"></i>
+            </div>
+        </section>
+
+        <section id="research" class="research-focus">
+            <div class="container">
+                <h2 class="section-title lang-en">Research Focus</h2>
+                <h2 class="section-title lang-ar">مجالات البحث</h2>
+                
+                <div class="research-areas">
+                    <div class="research-area">
+                        <div class="research-icon"><i class="fas fa-language"></i></div>
+                        <h3 class="lang-en">Lexicography</h3>
+                        <h3 class="lang-ar">المعجميات</h3>
+                        <p class="lang-en">Advancing dictionary design through AI-powered methodologies.</p>
+                        <p class="lang-ar">تطوير تصميم القواميس من خلال منهجيات مدعومة بالذكاء الاصطناعي.</p>
+                    </div>
+                    <div class="research-area">
+                        <div class="research-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="lang-en">NLP</h3>
+                        <h3 class="lang-ar">معالجة اللغات الطبيعية</h3>
+                        <p class="lang-en">Developing innovative tools for linguistic analysis.</p>
+                        <p class="lang-ar">تطوير أدوات مبتكرة للتحليل اللغوي.</p>
+                    </div>
+                    <div class="research-area">
+                        <div class="research-icon"><i class="fas fa-chart-bar"></i></div>
+                        <h3 class="lang-en">Corpus Studies</h3>
+                        <h3 class="lang-ar">دراسات المدونات النصية</h3>
+                        <p class="lang-en">Data-driven analysis of language patterns across domains.</p>
+                        <p class="lang-ar">التحليل القائم على البيانات لأنماط اللغة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teaching & Training Section -->
+        <section class="research-focus" style="background-color: var(--white); border: 2px solid var(--accent);">
+            <div class="container">
+                <h2 class="section-title lang-en">Teaching & Training</h2>
+                <h2 class="section-title lang-ar">التدريس والتدريب</h2>
+                
+                <div class="research-areas">
+                    <div class="research-area">
+                        <div class="research-icon"><i class="fas fa-university"></i></div>
+                        <h3 class="lang-en">Assistant Lecturer, SQU</h3>
+                        <h3 class="lang-ar">محاضر مساعد، جامعة السلطان قابوس</h3>
+                        <p class="lang-en">Teaching English for Academic Purposes at the Center for Preparatory Studies, Sultan Qaboos University, Oman.</p>
+                        <p class="lang-ar">تدريس اللغة الإنجليزية للأغراض الأكاديمية في مركز الدراسات التمهيدية، جامعة السلطان قابوس، سلطنة عمان.</p>
+                    </div>
+                    <div class="research-area">
+                        <div class="research-icon" style="color: #4285F4;"><i class="fab fa-google"></i></div>
+                        <h3 class="lang-en">Google Certified Trainer</h3>
+                        <h3 class="lang-ar">مدرب معتمد من جوجل للتعليم</h3>
+                        <p class="lang-en">Google for Education Certified Teacher Trainer, integrating technology into language learning.</p>
+                        <p class="lang-ar">مدرب معتمد من جوجل للتعليم، متخصص في دمج التكنولوجيا في تعلم اللغة.</p>
+                    </div>
+                    <div class="research-area">
+                        <div class="research-icon" style="color: var(--accent);"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <h3 class="lang-en">TESOL & Professional Development</h3>
+                        <h3 class="lang-ar">تيسول والتطوير المهني</h3>
+                        <p class="lang-en">Board Member of TESOL Oman and former Steering Committee Member of NileTESOL (May 2018 – December 2020).</p>
+                        <p class="lang-ar">عضو مجلس إدارة تيسول عمان وعضو سابق في اللجنة التوجيهية لنايل تيسول.</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="teaching/" class="btn lang-en" style="background-color: var(--accent);">View Full Teaching Profile →</a>
+                    <a href="teaching/" class="btn lang-ar" style="background-color: var(--accent);">عرض الملف التعليمي الكامل ←</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Service Section -->
+        <section class="research-focus" style="background-color: #f0f8f0; border: 2px solid #4CAF50;">
+            <div class="container">
+                <h2 class="section-title lang-en">Community Service & Outreach</h2>
+                <h2 class="section-title lang-ar">خدمة المجتمع والأنشطة الخارجية</h2>
+                
+                <div class="research-areas">
+                    <div class="research-area">
+                        <div class="research-icon" style="color: #4CAF50;"><i class="fas fa-users"></i></div>
+                        <h3 class="lang-en">E-Learning Committee</h3>
+                        <h3 class="lang-ar">لجنة التعلم الإلكتروني</h3>
+                        <p class="lang-en">Standing Member of the E-Learning Committee at SQU's Center for Preparatory Studies, driving digital transformation in education.</p>
+                        <p class="lang-ar">عضو دائم في لجنة التعلم الإلكتروني بمركز الدراسات التمهيدية بجامعة السلطان قابوس، يقود التحول الرقمي في التعليم.</p>
+                    </div>
+                    <div class="research-area">
+                        <div class="research-icon" style="color: var(--secondary);"><i class="fas fa-language"></i></div>
+                        <h3 class="lang-en">Translation Committee</h3>
+                        <h3 class="lang-ar">لجنة الترجمة</h3>
+                        <p class="lang-en">Active member of the Translation Committee at SQU, facilitating cross-linguistic academic communication.</p>
+                        <p class="lang-ar">عضو فعّال في لجنة الترجمة بجامعة السلطان قابوس، يسهل التواصل الأكاديمي بين اللغات.</p>
+                    </div>
+                    <div class="research-area">
+                        <div class="research-icon" style="color: #FF9800;"><i class="fas fa-hands-helping"></i></div>
+                        <h3 class="lang-en">Professional Associations</h3>
+                        <h3 class="lang-ar">الجمعيات المهنية</h3>
+                        <p class="lang-en">Board Member of TESOL Oman, member of TESOL International Association, and former Steering Committee Member of NileTESOL (2018–2020).</p>
+                        <p class="lang-ar">عضو مجلس إدارة تيسول عمان، وعضو في جمعية تيسول الدولية، وعضو سابق في اللجنة التوجيهية لنايل تيسول.</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="community/" class="btn lang-en" style="background-color: #4CAF50;">Learn More →</a>
+                    <a href="community/" class="btn lang-ar" style="background-color: #4CAF50;">اعرف المزيد ←</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="featured-publications">
+            <h2 class="section-title lang-en">Featured Publications & Works</h2>
+            <h2 class="section-title lang-ar">المنشورات والأعمال البارزة</h2>
+            
+            <div class="publication-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #20B2AA;">L</div>
+                        <div>
+                            <h4 class="lang-en">The AMTA Framework: An AI-Augmented Triangulation Model for Empirical Bilingual Lexicography</h4>
+                            <h4 class="lang-ar">إطار AMTA: نموذج تثليث معزز بالذكاء الاصطناعي للمعجميات التجريبية ثنائية اللغة</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">Lexicography (University of Toronto Press), 2026-05-25 | Journal Article</p>
+                    <p class="lang-en">Empirically validates the AI-augmented Method of Triangulation Approach (AMTA) for specialized bilingual lexicography via corpus-driven term selection, RAG-based content generation, and multi-dimensional validation. Published as an Advance Online Publication.</p>
+                    <p class="lang-ar">يحقق تجريبياً من النهج المعزز بالذكاء الاصطناعي لتثليث المنهج (AMTA) للمعجميات ثنائية اللغة المتخصصة عبر اختيار المصطلحات القائم على المدونات، وتوليد المحتوى بتقنية RAG، والتحقق متعدد الأبعاد. منشور كنسخة إلكترونية مسبقة.</p>
+                    <a href="https://doi.org/10.3138/lexi-2025-0017" target="_blank" rel="noopener" class="card-link lang-en">View Article (DOI) →</a>
+                    <a href="https://doi.org/10.3138/lexi-2025-0017" target="_blank" rel="noopener" class="card-link lang-ar">عرض المقال (DOI) ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #20B2AA;">J</div>
+                        <div>
+                            <h4 class="lang-en">Parallel Timeline Evolution of Corpus Studies and AI</h4>
+                            <h4 class="lang-ar">التطور الزمني المتوازي لدراسات المدونات النصية والذكاء الاصطناعي</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">OSF, 2025-03-16 | Journal Article</p>
+                    <p class="lang-en">Explores the intertwined development of corpus linguistics and AI over time.</p>
+                    <p class="lang-ar">يستكشف التطور المتشابك لعلوم المدونات النصية والذكاء الاصطناعي عبر الزمن.</p>
+                    <a href="https://doi.org/10.17605/OSF.IO/Y5WMC" target="_blank" class="card-link lang-en">View on OSF →</a>
+                    <a href="https://doi.org/10.17605/OSF.IO/Y5WMC" target="_blank" class="card-link lang-ar">عرض على OSF ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #0A1C3C;">T</div>
+                        <div>
+                            <h4 class="lang-en">Textual Analysis Script for Researchers</h4>
+                            <h4 class="lang-ar">نص تحليل النصوص للباحثين</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">OSF, 2025-01 | Research Tool</p>
+                    <p class="lang-en">A practical script designed to assist researchers in performing textual analyses.</p>
+                    <p class="lang-ar">نص عملي مصمم لمساعدة الباحثين في إجراء تحليلات نصية.</p>
+                    <a href="https://doi.org/10.17605/OSF.IO/GNME6" target="_blank" class="card-link lang-en">View on OSF →</a>
+                    <a href="https://doi.org/10.17605/OSF.IO/GNME6" target="_blank" class="card-link lang-ar">عرض على OSF ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #708090;">B</div>
+                        <div>
+                            <h4 class="lang-en">AI-powered tools for linguistic analysis</h4>
+                            <h4 class="lang-ar">أدوات مدعومة بالذكاء الاصطناعي للتحليل اللغوي</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">Book Chapter</p>
+                    <p class="lang-en">Multimedia and Sensory Input for Augmented, Mixed, and Virtual Reality.</p>
+                    <p class="lang-ar">مدخلات الوسائط المتعددة والحسية للواقع المعزز والمختلط والافتراضي.</p>
+                    <a href="https://www.igi-global.com/chapter/ai-powered-tools-for-linguistic-and-sentiment-analysis-in-language-learning/343940" target="_blank" class="card-link lang-en">View Chapter →</a>
+                    <a href="https://www.igi-global.com/chapter/ai-powered-tools-for-linguistic-and-sentiment-analysis-in-language-learning/343940" target="_blank" class="card-link lang-ar">عرض الفصل ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #e74c3c;">B</div>
+                        <div>
+                            <h4 class="lang-en">Binti2: Egyptian Arabic Voice Assistant for BYD EVs</h4>
+                            <h4 class="lang-ar">بنتي ٢: مساعد صوتي بالعربية المصرية لسيارات بي واي دي</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">Software Project, 2025</p>
+                    <p class="lang-en">A voice-controlled intelligent assistant for BYD electric vehicles featuring natural Egyptian Arabic interaction, EV charging station locator, and vehicle security system.</p>
+                    <p class="lang-ar">مساعد ذكي يتحكم بالصوت لسيارات بي واي دي الكهربائية يتميز بالتفاعل الطبيعي باللهجة المصرية ومحدد محطات الشحن ونظام أمان المركبات.</p>
+                    <a href="projects/binti2/index.html" class="card-link lang-en">View Project →</a>
+                    <a href="projects/binti2/index.html" class="card-link lang-ar">عرض المشروع ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #9C27B0;">I</div>
+                        <div>
+                            <h4 class="lang-en">AI-augmented Method of Triangulation for Specialised Lexicography (AMTA)</h4>
+                            <h4 class="lang-ar">النهج المعزز بالذكاء الاصطناعي لتثليث المعجميات المتخصصة</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">OSF, 2025-12 | Software</p>
+                    <p class="lang-en">An AI-augmented framework integrating multiple models to advance specialized bilingual lexicography through systematic triangulation.</p>
+                    <p class="lang-ar">إطار عمل معزز بالذكاء الاصطناعي يدمج نماذج متعددة لتعزيز المعجميات ثنائية اللغة المتخصصة من خلال التثليث المنهجي.</p>
+                    <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank" class="card-link lang-en">View on OSF →</a>
+                    <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank" class="card-link lang-ar">عرض على OSF ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #4CAF50;">S</div>
+                        <div>
+                            <h4 class="lang-en">Student Peer Assessment Suite</h4>
+                            <h4 class="lang-ar">مجموعة تقييم الأقران للطلاب</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">OSF, 2026-03 | Software</p>
+                    <p class="lang-en">A structured peer assessment tool deployed as a Google Workspace Add-on, facilitating collaborative review workflows in educational settings.</p>
+                    <p class="lang-ar">أداة منظمة لتقييم الأقران تم نشرها كإضافة لمساحة عمل جوجل، تيسر سير عمل المراجعة التعاونية في البيئات التعليمية.</p>
+                    <a href="https://doi.org/10.17605/OSF.IO/2MZWN" target="_blank" class="card-link lang-en">View on OSF →</a>
+                    <a href="https://doi.org/10.17605/OSF.IO/2MZWN" target="_blank" class="card-link lang-ar">عرض على OSF ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #FF9800;">L</div>
+                        <div>
+                            <h4 class="lang-en">Literacy in Two of Arthur Miller's Plays: A Corpus-Based Study</h4>
+                            <h4 class="lang-ar">محو الأمية في مسرحيتين لآرثر ميلر: دراسة قائمة على المدونات النصية</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">ResearchGate, July 2022 | Research Article</p>
+                    <p class="lang-en">A corpus-based investigation of orality and literacy features in selected plays by Arthur Miller.</p>
+                    <p class="lang-ar">دراسة قائمة على المدونات النصية لخصائص الشفاهية والكتابية في مسرحيات مختارة لآرثر ميلر.</p>
+                    <a href="https://www.researchgate.net/publication/362230472" target="_blank" class="card-link lang-en">View Article →</a>
+                    <a href="https://www.researchgate.net/publication/362230472" target="_blank" class="card-link lang-ar">عرض المقال ←</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #1A5F7A;">D</div>
+                        <div>
+                            <h4 class="lang-en">iAWE Student Corpus</h4>
+                            <h4 class="lang-ar">مدونة طلاب نظام تقييم الكتابة الأكاديمية الذكي</h4>
+                        </div>
+                    </div>
+                    <p class="card-meta">OSF, 2026-02 | Dataset</p>
+                    <p class="lang-en">A specialized student writing corpus designed for benchmarking and training the iAWE academic writing evaluation system.</p>
+                    <p class="lang-ar">مدونة كتابة طلابية متخصصة مصممة لقياس الأداء وتدريب نظام تقييم الكتابة الأكاديمية الذكي iAWE.</p>
+                    <a href="https://doi.org/10.17605/OSF.IO/4G3E5" target="_blank" class="card-link lang-en">View on OSF →</a>
+                    <a href="https://doi.org/10.17605/OSF.IO/4G3E5" target="_blank" class="card-link lang-ar">عرض على OSF ←</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Live Statistics Dashboard (portfolio-wide, aggregates ALL waleedmandour GitHub repos + ALL releases) ===== -->
+        <section id="dashboard" style="margin: 64px 0;">
+            <h2 class="section-title lang-en" style="text-align:center; font-size:2em; font-weight:700; color:var(--primary); margin-bottom:30px;">Live Statistics</h2>
+            <h2 class="section-title lang-ar" style="display:none; text-align:center; font-size:2em; font-weight:700; color:var(--primary); margin-bottom:30px;">الإحصاءات المباشرة</h2>
+            <div id="analytics-dashboard" style="max-width: 1100px; margin: 0 auto;">
+                <!-- Top row: aggregate stats across ALL repos + ALL releases (historical) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 4px;" id="stat-total-downloads">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Total Downloads</span>
+                            <span class="lang-ar">إجمالي التحميلات</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 4px;">
+                            <span class="lang-en">across all repos &amp; all releases</span>
+                            <span class="lang-ar">كل المستودعات وكل الإصدارات</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--secondary); margin-bottom: 4px;" id="stat-github-stars">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">GitHub Stars</span>
+                            <span class="lang-ar">نجوم GitHub</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 4px;">
+                            <span class="lang-en">across all public repos</span>
+                            <span class="lang-ar">كل المستودعات العامة</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;" id="stat-total-releases">—</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Total Releases</span>
+                            <span class="lang-ar">إجمالي الإصدارات</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 4px;">
+                            <span class="lang-en">all versions, all repos</span>
+                            <span class="lang-ar">كل الإصدارات، كل المستودعات</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GA-sourced visitor cards: Total Visitors (all-time) + Current Visitors (7d) -->
+                <div id="ga-visitors-row" style="display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--primary);"><i class="fas fa-users"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--primary); line-height: 1.1;" id="ga-total-visitors">—</div>
+                            <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                                <span class="lang-en">Total Visitors (all-time)</span>
+                                <span class="lang-ar">إجمالي الزوار (تراكمي)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                                <span class="lang-en">from Google Analytics</span>
+                                <span class="lang-ar">من Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-user-clock"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--secondary); line-height: 1.1;" id="ga-current-visitors">—</div>
+                            <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                                <span class="lang-en">Current Visitors (last 7 days)</span>
+                                <span class="lang-ar">الزوار الحاليون (آخر 7 أيام)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                                <span class="lang-en">from Google Analytics</span>
+                                <span class="lang-ar">من Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visitor info row: live visitor counter + geolocation -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-eye"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-status">
+                                <span class="lang-en">Welcome!</span>
+                                <span class="lang-ar">أهلاً بك!</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">You are visitor</span>
+                                <span class="lang-ar">أنت الزائر رقم</span>
+                                <strong id="stat-visitor-count" style="color: var(--secondary);">—</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--accent);"><i class="fas fa-map-marker-alt"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-location">
+                                <span class="lang-en">Detecting…</span>
+                                <span class="lang-ar">جارٍ التحديد…</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">Your location</span>
+                                <span class="lang-ar">موقعك</span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- Per-project breakdown (top 6 repos by downloads, historical) -->
+                <div id="platform-breakdown" style="background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                    <h3 style="font-size: 18px; color: var(--primary); margin-bottom: 20px;">
+                        <span class="lang-en">Downloads by Project</span>
+                        <span class="lang-ar">التحميلات حسب المشروع</span>
+                    </h3>
+                    <div id="project-bars" style="display: flex; flex-direction: column; gap: 14px;">
+                        <!-- Bars are populated by JS based on actual per-repo download counts -->
+                        <div style="font-size: 13px; color: var(--gray); text-align: center; padding: 24px;">
+                            <span class="lang-en">Loading project stats…</span>
+                            <span class="lang-ar">جارٍ تحميل إحصاءات المشاريع…</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 16px; text-align: center;">
+                        <span class="lang-en">Aggregated from GitHub API &middot; sums ALL releases (not just latest) &middot; cached for 10 minutes</span>
+                        <span class="lang-ar">مجمَّعة من واجهة GitHub &middot; تجمع كل الإصدارات (وليس فقط الأحدث) &middot; تُحدَّث كل 10 دقائق</span>
+                    </p>
+                </div>
+            </div>
+                        <!-- Visitors by Country — Interactive World Map (all-time, from Google Analytics) -->
+                <div id="ga-map-card" style="display: none; background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); margin-top: 32px;">
+                    <h3 style="font-size: 18px; color: var(--primary); margin-bottom: 6px;">
+                        <span class="lang-en">🌍 Visitors by Country</span>
+                        <span class="lang-ar">🌍 الزوار حسب الدولة</span>
+                    </h3>
+                    <p style="font-size: 12px; color: var(--gray); margin-bottom: 20px;">
+                        <span class="lang-en">All-time &middot; hover or tap a country for details</span>
+                        <span class="lang-ar">تراكمي &middot; مرر أو انقر على دولة لعرض التفاصيل</span>
+                    </p>
+                    <div id="world-map-container" style="width: 100%; position: relative; margin-bottom: 24px;">
+                        <svg id="world-map-svg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto; display: block;"></svg>
+                        <div id="map-tooltip" style="display: none; position: absolute; background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 13px; pointer-events: none; z-index: 100; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>
+                    </div>
+                    <div id="map-top-countries" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+                        <!-- Top-10 list populated by /js/visitors-map.js -->
+                    </div>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 20px; text-align: center;">
+                        <span class="map-total-visitors">—</span>
+                        <span class="lang-en"> visitors &middot; </span>
+                        <span class="lang-ar"> زائر &middot; </span>
+                        <span class="map-total-countries">—</span>
+                        <span class="lang-en"> countries &middot; from Google Analytics</span>
+                        <span class="lang-ar"> دولة &middot; من Google Analytics</span>
+                    </p>
+                </div>
+
+</section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="lang-en">
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="terms.html">Terms of Use</a> |
+                <a href="mailto:w.abumandour@squ.edu.om">Contact</a>
+            </div>
+            <div class="lang-ar">
+                <a href="privacy.html">سياسة الخصوصية</a> | 
+                <a href="terms.html">شروط الاستخدام</a> |
+                <a href="mailto:w.abumandour@squ.edu.om">تواصل</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Dr. Waleed Mandour. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langEnBtn = document.getElementById('lang-en');
+            const langArBtn = document.getElementById('lang-ar');
+            const body = document.body;
+
+            function setLanguage(lang) {
+                if (lang === 'ar') {
+                    body.classList.add('arabic');
+                    langArBtn.classList.add('active');
+                    langEnBtn.classList.remove('active');
+                    localStorage.setItem('lang', 'ar');
+                } else {
+                    body.classList.remove('arabic');
+                    langEnBtn.classList.add('active');
+                    langArBtn.classList.remove('active');
+                    localStorage.setItem('lang', 'en');
+                }
+            }
+
+            // Load saved preference
+            const savedLang = localStorage.getItem('lang') || 'en';
+            setLanguage(savedLang);
+
+            langEnBtn.addEventListener('click', () => setLanguage('en'));
+            langArBtn.addEventListener('click', () => setLanguage('ar'));
+        });
+
+        // ===== Portfolio-wide Live Statistics Dashboard =====
+        // Aggregates GitHub stats across ALL of waleedmandour's public repos
+        // and sums downloads across ALL releases (not just the latest), so the
+        // totals include historical versions (e.g. CorpusMind v0.1.0 → v1.0.0).
+        //
+        // GitHub API quota is 60 req/hr per IP unauthenticated. We make 2
+        // calls per repo × 6 repos = 12 calls per page load, so we cache the
+        // result in localStorage for 10 minutes to stay well under the limit.
+        //
+        // Repos queried (those with stars or known releases):
+        //   CorpusMind, EVD, rdat, scholarscribe, binti2, awe-system
+        // The dashboard will gracefully degrade if any repo 404s or rate-limits.
+        (async function() {
+            const REPOS = [
+                'waleedmandour/CorpusMind',
+                'waleedmandour/EVD',
+                'waleedmandour/rdat',
+                'waleedmandour/scholarscribe',
+                'waleedmandour/binti2',
+                'waleedmandour/awe-system'
+            ];
+            const CACHE_KEY = 'portfolio_github_stats_v1';
+            const CACHE_TTL_MS = 10 * 60 * 1000;  // 10 minutes
+
+            // ----- Try to load cached stats first -----
+            let stats = null;
+            try {
+                const raw = localStorage.getItem(CACHE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && parsed.fetched_at && (Date.now() - parsed.fetched_at) < CACHE_TTL_MS) {
+                        stats = parsed;
+                    }
+                }
+            } catch(e) { /* ignore corrupt cache */ }
+
+            // ----- If no fresh cache, fetch live -----
+            if (!stats) {
+                try {
+                    const results = await Promise.all(REPOS.map(async (fullName) => {
+                        const [repoResp, releasesResp] = await Promise.all([
+                            fetch(`https://api.github.com/repos/${fullName}`),
+                            fetch(`https://api.github.com/repos/${fullName}/releases?per_page=100`)
+                        ]);
+                        // Soft-fail: a 404 or rate-limit on one repo shouldn't break the whole dashboard
+                        if (!repoResp.ok || !releasesResp.ok) return null;
+                        const repo = await repoResp.json();
+                        const releases = await releasesResp.json();
+                        if (!Array.isArray(releases)) return null;
+                        let dl = 0, releaseCount = releases.length, assetCount = 0;
+                        releases.forEach(r => {
+                            (r.assets || []).forEach(a => {
+                                dl += a.download_count || 0;
+                                assetCount++;
+                            });
+                        });
+                        return {
+                            name: repo.name,
+                            full_name: repo.full_name,
+                            html_url: repo.html_url,
+                            stars: repo.stargazers_count || 0,
+                            forks: repo.forks_count || 0,
+                            downloads: dl,
+                            releases: releaseCount,
+                            assets: assetCount,
+                            description: repo.description || '',
+                            language: repo.language || ''
+                        };
+                    }));
+
+                    const valid = results.filter(r => r !== null);
+                    stats = {
+                        fetched_at: Date.now(),
+                        repos: valid,
+                        totals: {
+                            downloads: valid.reduce((s, r) => s + r.downloads, 0),
+                            stars: valid.reduce((s, r) => s + r.stars, 0),
+                            releases: valid.reduce((s, r) => s + r.releases, 0),
+                            assets: valid.reduce((s, r) => s + r.assets, 0)
+                        }
+                    };
+                    try { localStorage.setItem(CACHE_KEY, JSON.stringify(stats)); } catch(e) { /* storage full or disabled */ }
+                } catch(e) {
+                    console.log('Dashboard data unavailable:', e);
+                    // If network fails entirely but we have stale cache, use it
+                    try {
+                        const raw = localStorage.getItem(CACHE_KEY);
+                        if (raw) stats = JSON.parse(raw);
+                    } catch(e2) { /* give up */ }
+                }
+            }
+
+            // ----- Render -----
+            if (stats && stats.totals) {
+                function animateCount(elId, target, duration) {
+                    const el = document.getElementById(elId);
+                    if (!el) return;
+                    const start = 0;
+                    const startTime = performance.now();
+                    function update(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = Math.round(start + (target - start) * eased).toLocaleString();
+                        if (progress < 1) requestAnimationFrame(update);
+                    }
+                    requestAnimationFrame(update);
+                }
+
+                animateCount('stat-total-downloads', stats.totals.downloads, 1500);
+                animateCount('stat-github-stars', stats.totals.stars, 1500);
+                animateCount('stat-total-releases', stats.totals.releases, 1200);
+
+                // Per-project breakdown bars (sorted by downloads desc)
+                const barsContainer = document.getElementById('project-bars');
+                if (barsContainer) {
+                    const sortedRepos = (stats.repos || []).slice().sort((a, b) => b.downloads - a.downloads);
+                    const maxVal = Math.max(1, ...sortedRepos.map(r => r.downloads));
+                    if (sortedRepos.length === 0) {
+                        barsContainer.innerHTML = '<div style="font-size:13px;color:var(--gray);text-align:center;padding:24px;"><span class="lang-en">No release data available.</span><span class="lang-ar">لا توجد بيانات إصدار.</span></div>';
+                    } else {
+                        barsContainer.innerHTML = sortedRepos.map(r => {
+                            const widthPct = Math.max((r.downloads / maxVal) * 100, r.downloads > 0 ? 8 : 0);
+                            const langIcon = r.language === 'Python' ? 'fab fa-python'
+                                           : r.language === 'TypeScript' ? 'fab fa-js'
+                                           : r.language === 'Rust' ? 'fas fa-cog'
+                                           : r.language === 'Kotlin' ? 'fab fa-android'
+                                           : r.language === 'HTML' ? 'fab fa-html5'
+                                           : 'fas fa-code';
+                            return '<div style="display:flex;align-items:center;gap:12px;">' +
+                                '<a href="' + r.html_url + '" target="_blank" rel="noopener" style="font-size:14px;min-width:140px;text-align:left;color:var(--dark);text-decoration:none;font-weight:600;" title="' + (r.description || r.name) + '">' +
+                                    '<i class="' + langIcon + '"></i> ' + r.name +
+                                '</a>' +
+                                '<div style="flex:1;height:24px;background:var(--light);border-radius:12px;overflow:hidden;">' +
+                                    '<div style="height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:12px;width:' + widthPct + '%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:white;font-size:12px;font-weight:700;">' + r.downloads.toLocaleString() + '</div>' +
+                                '</div>' +
+                                '<span style="font-size:11px;color:var(--gray);min-width:80px;text-align:right;" title="' + r.stars + ' stars, ' + r.releases + ' releases">' +
+                                    '<i class="fas fa-star" style="color:#FFC107;"></i> ' + r.stars +
+                                    ' &middot; <i class="fas fa-tag"></i> ' + r.releases +
+                                '</span>' +
+                            '</div>';
+                        }).join('');
+                    }
+                }
+            }
+
+            // ===== Visitor counter + geolocation (per-browser) =====
+            (function() {
+                var key = 'home_visitors';
+                var count = parseInt(localStorage.getItem(key) || '0', 10);
+                count++;
+                localStorage.setItem(key, String(count));
+                var countEl = document.getElementById('stat-visitor-count');
+                if (countEl) {
+                    var startTime = performance.now();
+                    (function anim(now) {
+                        var p = Math.min((now - startTime) / 1200, 1);
+                        countEl.textContent = Math.round(count * (1 - Math.pow(1 - p, 3))).toLocaleString();
+                        if (p < 1) requestAnimationFrame(anim);
+                    })(startTime);
+                }
+            })();
+
+            // Geolocation via free IP API (no auth needed). Sends a GA event
+            // with the visitor's country so the site owner can see visitor
+            // geography in Google Analytics → Reports → Engagement → Events.
+            fetch('https://ipapi.co/json/')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (!locEl) return;
+                    if (data && data.country_name) {
+                        var city = data.city ? data.city + ', ' : '';
+                        var flag = data.country_code ? ' ' + String.fromCodePoint.apply(null, data.country_code.toUpperCase().split('').map(function(c){return 0x1F1E6 + c.charCodeAt(0) - 65;})) : '';
+                        locEl.innerHTML = '<span class="lang-en">' + city + data.country_name + flag + '</span><span class="lang-ar">' + city + data.country_name + flag + '</span>';
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'page_view', {event_category: 'geo', event_label: data.country_name, country_code: data.country_code});
+                        }
+                    } else {
+                        locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';
+                    }
+                })
+                .catch(function() {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (locEl) locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';
+                });
+        // ===== GA-sourced visitor stats (Total Visitors + Current Visitors 7d) =====
+        // Fetches /analytics.json (committed hourly by the
+        // .github/workflows/update-analytics.yml workflow). The file is
+        // only present after the site owner completes the one-time GA
+        // setup in docs/ANALYTICS_SETUP.md. Until then, this IIFE is a
+        // no-op — the GA cards stay hidden (display:none) and the
+        // per-browser 'Site Visitors' counter remains visible as a
+        // fallback. Once /analytics.json exists, this IIFE shows the GA
+        // cards with real numbers and hides the per-browser counter
+        // (since the GA numbers supersede it).
+        (async function() {
+            try {
+                // cache-busting query string so we always get the latest
+                // committed version (GitHub Pages serves with long max-age)
+                const resp = await fetch('/analytics.json?ts=' + Date.now());
+                if (!resp.ok) return;  // 404 — GA not configured yet, silently no-op
+                const data = await resp.json();
+                if (!data || !data.totals) return;
+
+                // Animate the count-up for both cards
+                function anim(id, target, dur) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const start = 0, t0 = performance.now();
+                    (function step(now) {
+                        const p = Math.min((now - t0) / dur, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.round(target * eased).toLocaleString();
+                        if (p < 1) requestAnimationFrame(step);
+                    })(t0);
+                }
+                anim('ga-total-visitors', data.totals.all_time_visitors || 0, 1500);
+                anim('ga-current-visitors', data.totals.last_7_days_visitors || 0, 1200);
+
+                // Show the GA row (switches from display:none to display:grid)
+                const gaRow = document.getElementById('ga-visitors-row');
+                if (gaRow) gaRow.style.display = 'grid';
+
+                // Hide the per-browser 'Site Visitors' counter card,
+                // since the GA numbers supersede it. The geolocation
+                // card (stat-visitor-location) stays visible.
+                const perBrowserCounter = document.getElementById('stat-visitor-status');
+                if (perBrowserCounter) {
+                    // Walk up to the card container (the parent of the
+                    // parent of stat-visitor-status is the card div).
+                    const card = perBrowserCounter.closest('div[style*="border-radius: 16px"]');
+                    if (card) card.style.display = 'none';
+                }
+            } catch(e) {
+                // Network error or JSON parse error — silently no-op.
+                // The GA cards stay hidden, the per-browser counter
+                // stays visible. Console-log for debugging only.
+                if (typeof console !== 'undefined' && console.log) {
+                    console.log('GA analytics fetch skipped:', e.message);
+                }
+            }
+        })();
+
+        })();
+    </script>
+    <script src="/js/visitors-map.js"></script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Privacy Policy for iAWE (Intelligent Academic Writing Evaluation Assistant) - A Google Sheets Add-on built on the EASE Framework 1.0 for EAP writing evaluation.">
+    <title>iAWE - Privacy Policy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & BASE STYLE --- */
+        :root {
+            --primary: #0A1C3C;       /* Academic Navy (matches iAWE index) */
+            --accent: #20B2AA;        /* Teal (matches iAWE index) */
+            --text-dark: #2c3e50;
+            --text-light: #546e7a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        /* Arabic language styling */
+        body[lang="ar"] {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 26px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 35px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--text-light); /* Lighter gray accent */
+            padding-left: 10px;
+        }
+
+        /* Adjust border for RTL layout */
+        body[lang="ar"] h3 {
+            border-left: none;
+            border-right: 4px solid var(--text-light);
+            padding-left: 0;
+            padding-right: 10px;
+        }
+
+        ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        body[lang="ar"] ul {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            background: #f0f4f7;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .meta {
+            font-size: 0.9em;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .compliance-note {
+            background-color: #f0f4f7;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* CRITICAL: LIMITED USE DISCLOSURE STYLING */
+        .limited-use-disclosure {
+            border: 3px solid var(--primary);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: #e8eaf6; /* Light Blue for attention */
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        /* Language toggle button styling */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .lang-toggle:hover {
+            background-color: var(--accent);
+        }
+
+        /* Marketplace Administration Info Box */
+        .marketplace-info {
+            background: linear-gradient(135deg, #f0f4f7 0%, #e8eaf6 100%);
+            border: 1px solid #c5cae9;
+            border-left: 4px solid var(--primary);
+            padding: 18px 22px;
+            margin: 25px 0 30px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        body[lang="ar"] .marketplace-info {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+        .marketplace-info h4 {
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .marketplace-info p {
+            margin: 0 0 10px 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .marketplace-info p:last-child { margin-bottom: 0; }
+        .marketplace-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #b0bec5;
+        }
+        .marketplace-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92em;
+            border-bottom: 1px dotted var(--accent);
+            transition: all 0.2s;
+        }
+        .marketplace-links a:hover {
+            color: var(--primary);
+            border-bottom-style: solid;
+        }
+        .marketplace-links .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        /* Hide content based on language */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        body[lang="ar"] .lang-en { display: none; }
+        body[lang="ar"] .lang-ar { display: block; }
+    </style>
+</head>
+<!-- Google Tag Manager / Analytics (Optional) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+
+<body lang="en">
+    <button class="lang-toggle" onclick="toggleLanguage()">العربية</button>
+
+    <div class="container">
+        <!-- ENGLISH CONTENT -->
+        <div class="lang-en">
+            <h1>Privacy Policy for iAWE</h1>
+            <p class="meta">Last Updated: June 2026</p>
+
+            <p><strong>iAWE (Intelligent Academic Writing Evaluation Assistant)</strong> is an AI-assisted academic writing evaluation system built strictly upon the <strong>EASE Framework 1.0 (Evidence-Anchored Scaffolding Evaluation)</strong>. Distributed as a Google Sheets Add-on via the Google Workspace Marketplace, iAWE is designed to prioritize user data privacy and adhere strictly to Google's User Data Policy. This policy explains what data the Add-on accesses, how it is used, and confirms what data is <strong>not</strong> collected.</p>
+
+            <div class="marketplace-info">
+                <h4><i class="fas fa-store-alt" style="font-size:16px;"></i> Marketplace Administration</h4>
+                <p>This Add-on is <strong>administered and distributed by the Google Workspace Marketplace</strong>. Installation, authentication, scope consent, version updates, and uninstallation are all handled through Google's infrastructure under your Google account's authority. The developer does not operate a separate installation server or distribution channel.</p>
+                <p><strong>Verification status:</strong> <span class="badge">Google Workspace Marketplace Listing</span> &mdash; pending publication.</p>
+                <div class="marketplace-links">
+                    <a href="terms.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="support.html"><i class="fas fa-headset"></i> Support &amp; Contact</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Project Homepage</a>
+                    <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> Google Workspace Marketplace</a>
+                </div>
+            </div>
+
+            <div class="compliance-note">
+                <p style="font-weight: bold; color: var(--primary);">DATA MINIMIZATION AND CORE PRINCIPLE</p>
+                <p>The Add-on is designed to process data <strong>ephemerally</strong> to run its core function: AI-augmented evaluation of L2 academic writing using Retrieval-Augmented Generation (RAG) and Data-Driven Learning (DDL) principles. We <strong>DO NOT</strong> collect, store, share, or sell any Personal Identifiable Information (PII), sensitive user data, or your email address for any secondary purpose.</p>
+            </div>
+
+            <h3>1. Google Workspace Data Access (Scopes Used)</h3>
+            <p>iAWE requests access to the following four OAuth scopes to perform its core function: the automated evaluation of academic writing within the Google Sheets environment. Access is strictly limited to the necessary functions described below, in accordance with Google's <strong>Least Privilege</strong> principle:</p>
+            <ul>
+                <li>
+                    <strong>Google Sheets Access (current spreadsheet only):</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> The application reads and writes data <strong>strictly within the active spreadsheet</strong> where the Add-on is invoked. This is necessary to retrieve the student's writing sample from Column A and to write the final processed EASE evaluation metrics (D1&ndash;D13 scores, NAWL lemma density, Type-Token Ratio, structured feedback) back to columns B&ndash;Q of the same sheet. The Add-on cannot access any other spreadsheet in your account.</p>
+                </li>
+                <li>
+                    <strong>Google Drive Access (file-level, user-initiated):</strong> <code>https://www.googleapis.com/auth/drive.file</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> This is a <strong>restricted scope</strong> governed by Google's Limited Use requirements. It is used <strong>solely</strong> to read the specific student essay file that you explicitly select via the Add-on sidebar file picker, and to save the final evaluation reports (JSON/CSV) generated by the EASE pipeline directly into your Drive. The Add-on cannot browse your Drive or access files you did not explicitly choose.</p>
+                </li>
+                <li>
+                    <strong>External Network Requests:</strong> <code>https://www.googleapis.com/auth/script.external_request</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> Required by Apps Script to permit outbound HTTPS calls via <code>UrlFetchApp</code>. This scope is used <strong>exclusively</strong> to send the student's writing sample (along with pre-computed linguistic metrics) to the Google Gemini 2.5 API for evidence-anchored feedback generation, and to query the Semantic Scholar API for scholarly context retrieval (RAG). No other external endpoints are contacted. The full list of permitted destinations is documented in Section 2.</p>
+                </li>
+                <li>
+                    <strong>Container UI Rendering:</strong> <code>https://www.googleapis.com/auth/script.container.ui</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> Required by Apps Script to display the iAWE user interface elements inside the Google Sheets container &mdash; specifically: the <code>"✍️ iAWE 1.0"</code> custom menu, the sidebar Control Panel (HTML service), the User Guide modal dialog, and the Contact form modal. This scope grants <strong>no data access</strong>; it only authorizes the rendering of UI elements within the host spreadsheet. It does not allow the Add-on to read or modify any spreadsheet content beyond what the <code>spreadsheets.currentonly</code> scope already permits.</p>
+                </li>
+            </ul>
+
+            <div class="limited-use-disclosure">
+                <p style="font-weight: bold; color: #b71c1c;">MANDATORY LIMITED USE DISCLOSURE:</p>
+                <p>iAWE's use and transfer of information received from Google APIs to any other app will adhere to <strong>Google API Services User Data Policy</strong>, including the <strong>Limited Use requirements</strong>. Specifically, we will only use Google data (including data from Google Sheets and Drive) to provide or improve user-facing features within this Add-on, and we <strong>will not</strong> transfer or sell user data for any other purpose, including serving personalized advertisements.</p>
+            </div>
+
+            <h3>2. Third-Party Data Processing (External APIs)</h3>
+            <p>To generate evidence-anchored feedback, retrieve scholarly context, and validate linguistic metrics, the Add-on acts as a secure relay by sending the student's <strong>writing sample</strong> and computed metrics (NAWL lemmas, Type-Token Ratio) to the following research-grade APIs:</p>
+            <ul>
+                <li><strong>Google Gemini 2.5:</strong> Used as a strict JSON-generation engine under a zero-trust architecture. The LLM is restricted to mapping pre-computed evidence against the EAP Knowledge Base and may not generate unverified pedagogical claims or hallucinate linguistic rules.</li>
+                <li><strong>Semantic Scholar API:</strong> Used to retrieve verified scholarly context and academic paper metadata that grounds the LLM's evaluation in empirical literature, in line with the RAG (Retrieval-Augmented Generation) principle of computational trust.</li>
+            </ul>
+            <p style="font-size: 0.95em; color: var(--text-light);"><strong>User Responsibility:</strong> Use of the Add-on implies acceptance of the Privacy Policies and Terms of Service of the respective third-party APIs listed above. Users are responsible for providing their own API keys where required.</p>
+
+            <h3>3. Data Storage & PII</h3>
+            <p>The developer (Dr. Waleed Mandour) maintains a strict data policy aligned with the EASE Framework's zero-trust principle:</p>
+            <ul>
+                <li><strong>No External Storage:</strong> We do not store any of your Google Workspace data (essay contents, email addresses, usage history, evaluation telemetry) on any server controlled by the developer or a third party, with the exception of the transient data processed by the APIs listed in Section 2.</li>
+                <li><strong>No PII Collection:</strong> The Add-on does not collect or track any Personal Identifiable Information (PII) for advertising, market research, or any purpose unrelated to the function of the Add-on.</li>
+                <li><strong>Research Telemetry (DBR compliance):</strong> While iAWE natively logs quantitative telemetry (JSON compliance, API latency, NAWL shifts) for Design-Based Research (DBR) iterations, this telemetry is computed and stored <strong>locally within your own spreadsheet</strong> and is never transmitted to the developer's servers.</li>
+            </ul>
+
+            <!-- NEW SECTION ADDED FOR COMPLIANCE -->
+            <h3>4. Data Security & Protection Mechanisms</h3>
+            <p>We employ industry-standard security measures to protect your data:</p>
+            <ul>
+                <li><strong>Encryption in Transit:</strong> All data transmitted between your Google Sheet and the external APIs listed in Section 2 is encrypted using <strong>HTTPS (TLS 1.2/1.3)</strong> protocols.</li>
+                <li><strong>Google Infrastructure:</strong> The Add-on's logic is hosted entirely on Google's secure Apps Script servers. We do not maintain separate servers, databases, or cloud buckets for this application, ensuring your data remains within the Google ecosystem and the transient memory of the execution runtime.</li>
+                <li><strong>Zero-Trust LLM Processing:</strong> The Gemini 2.5 model is restricted to a strict JSON schema and is fed only pre-computed empirical evidence (NAWL metrics, Semantic Scholar data). It cannot act as an authoritative judge and may not generate unverified pedagogical claims.</li>
+            </ul>
+
+            <!-- NEW SECTION ADDED FOR COMPLIANCE -->
+            <h3>5. Data Retention and Deletion Policy</h3>
+            <p>iAWE operates on a <strong>non-retention</strong> basis:</p>
+            <ul>
+                <li><strong>Ephemeral Processing:</strong> Data retrieved from your spreadsheet (essay text, computed linguistic metrics) is processed in the volatile memory of the script runtime and is discarded immediately upon the completion of the execution cycle. We do not retain logs of your specific queries or content on our side.</li>
+                <li><strong>Data Deletion:</strong> Since we do not store your data on external servers, there is no user data to delete from our side. </li>
+                <li><strong>User Control:</strong> You maintain full ownership of your data, including student essays, evaluation reports, and DBR telemetry. To permanently "delete" data processed by the Add-on, you simply need to delete the data from your Google Sheet or Google Drive.</li>
+            </ul>
+
+            <h3>6. User Consent and Contact</h3>
+            <p>By installing and using this Add-on, you consent to the data processing methods described in this policy, acknowledging its strict adherence to research-only usage principles and the EASE Framework 1.0 methodology.</p>
+            <p style="margin-top: 15px;"><strong>Contact:</strong> For any questions regarding this Privacy Policy or the Add-on's data handling, please contact the developer, Dr. Waleed Mandour, directly:</p>
+            <p style="margin-left: 20px;">
+                <strong>Email:</strong> <a href="mailto:w.abumandour@squ.edu.om" style="color: var(--accent);">w.abumandour@squ.edu.om</a><br>
+                <strong>Personal Email:</strong> <a href="mailto:waleedmandour@gmail.com" style="color: var(--accent);">waleedmandour@gmail.com</a><br>
+                <strong>ORCID ID:</strong> <code>0000-0002-9262-5993</code>
+            </p>
+        </div>
+
+        <!-- ARABIC CONTENT -->
+        <div class="lang-ar">
+            <h1>سياسة الخصوصية لنظام iAWE</h1>
+            <p class="meta">آخر تحديث: يونيو 2026</p>
+
+            <p><strong>iAWE (مساعد تقييم الكتابة الأكاديمية الذكي)</strong> هو نظام تقييم أكاديمي مدعوم بالذكاء الاصطناعي، مبني بشكل صارم على <strong>إطار EASE 1.0 (تقييم السقالات المُعتمد على الأدلة)</strong>. يُوزَّع كإضافة لجداول جوجل عبر متجر Google Workspace، وهو مصمم لإعطاء الأولوية لخصوصية بيانات المستخدم والالتزام الصارم بسياسة بيانات المستخدم من Google. توضح هذه السياسة البيانات التي يصل إليها النظام، وكيفية استخدامها، وتؤكد البيانات التي <strong>لا</strong> يتم جمعها.</p>
+
+            <div class="marketplace-info">
+                <h4><i class="fas fa-store-alt" style="font-size:16px;"></i> إدارة متجر جوجل</h4>
+                <p>تُدار هذه الإضافة وتُوزَّع <strong>بواسطة متجر Google Workspace</strong>. تتم عمليات التثبيت والمصادقة والموافقة على النطاقات وتحديثات الإصدار وإلغاء التثبيت بالكامل عبر بنية Google التحتية تحت سلطة حسابك في جوجل. لا يُشغّل المطور خادم تثبيت منفصل أو قناة توزيع مستقلة.</p>
+                <p><strong>حالة التحقق:</strong> <span class="badge">إدراج في متجر Google Workspace</span> &mdash; قيد النشر.</p>
+                <div class="marketplace-links">
+                    <a href="terms.html"><i class="fas fa-file-contract"></i> شروط الخدمة</a>
+                    <a href="support.html"><i class="fas fa-headset"></i> الدعم والاتصال</a>
+                    <a href="index.html"><i class="fas fa-home"></i> الصفحة الرئيسية للمشروع</a>
+                    <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> متجر Google Workspace</a>
+                </div>
+            </div>
+
+            <div class="compliance-note">
+                <p style="font-weight: bold; color: var(--primary);">تقليل البيانات والمبدأ الأساسي</p>
+                <p>تم تصميم النظام لمعالجة البيانات <strong>بشكل عابر</strong> لتشغيل وظيفته الأساسية: التقييم المعزز بالذكاء الاصطناعي للكتابة الأكاديمية بلغة أجنبية باستخدام تقنية توليد مستند للاسترجاع (RAG) ومبادئ التعلم القائم على البيانات (DDL). نحن <strong>لا</strong> نجمع أو نخزن أو نشارك أو نبيع أي معلومات تعريف شخصية (PII)، أو بيانات مستخدم حساسة، أو عنوان بريدك الإلكتروني لأي غرض ثانوي.</p>
+            </div>
+
+            <h3>1. الوصول إلى بيانات Google Workspace (النطاقات المستخدمة)</h3>
+            <p>يطلب نظام iAWE الوصول إلى النطاقات الأربعة التالية لأداء وظيفته الأساسية: التقييم الآلي للكتابة الأكاديمية ضمن بيئة جداول جوجل. يقتصر الوصول بدقة على الوظائف الضرورية الموضحة أدناه، وفقاً لمبدأ <strong>الحد الأدنى من الصلاحيات</strong> من Google:</p>
+            <ul>
+                <li>
+                    <strong>الوصول إلى Google Sheets (الجدول النشط فقط):</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> يقرأ النظام ويكتب البيانات <strong>بدقة داخل جدول البيانات النشط</strong> حيث يتم استدعاء الإضافة. هذا ضروري لاسترداد عينة الكتابة الخاصة بالطالب من العمود A وكتابة مقاييس تقييم EASE النهائية (درجات D1&ndash;D13، كثافة جذور NAWL، نسبة التنوع المعجمي TTR، التغذية الراجعة المنظمة) مرة أخرى إلى الأعمدة B&ndash;Q من نفس الورقة. لا يمكن للإضافة الوصول إلى أي جدول بيانات آخر في حسابك.</p>
+                </li>
+                <li>
+                    <strong>الوصول إلى Google Drive (على مستوى الملف، يبدأه المستخدم):</strong> <code>https://www.googleapis.com/auth/drive.file</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> هذا <strong>نطاق مقيد</strong> تخضع لمتطلبات الاستخدام المحدود من Google. يُستخدم <strong>فقط</strong> لقراءة ملف مقالة الطالب الذي تحدده بنفسك عبر منتقي الملفات في الشريط الجانبي، ولحفظ تقارير التقييم النهائية (JSON/CSV) التي ينشئها مسار EASE مباشرة في حسابك على Drive. لا يمكن للإضافة تصفح Drive الخاص بك أو الوصول إلى ملفات لم تخترها صراحةً.</p>
+                </li>
+                <li>
+                    <strong>طلبات الشبكة الخارجية:</strong> <code>https://www.googleapis.com/auth/script.external_request</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> مطلوب من Apps Script للسماح بمكالمات HTTPS الصادرة عبر <code>UrlFetchApp</code>. يُستخدم هذا النطاق <strong>حصرياً</strong> لإرسال عينة الكتابة الخاصة بالطالب (مع المقاييس اللغوية المحسوبة مسبقاً) إلى واجهة Google Gemini 2.5 API لتوليد التغذية الراجعة المعتمدة على الأدلة، ولاستعلام واجهة Semantic Scholar API لاسترجاع السياق العلمي (RAG). لا يتم الاتصال بأي نقاط نهاية خارجية أخرى. القائمة الكاملة للوجهات المسموح بها موثقة في القسم 2.</p>
+                </li>
+                <li>
+                    <strong>عرض واجهة المستخدم داخل الحاوية:</strong> <code>https://www.googleapis.com/auth/script.container.ui</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> مطلوب من Apps Script لعرض عناصر واجهة مستخدم iAWE داخل حاوية جداول جوجل &mdash; تحديداً: القائمة المخصصة <code>"✍️ iAWE 1.0"</code>، ولوحة التحكم الجانبية (خدمة HTML)، ونافذة دليل المستخدم، ونافذة نموذج الاتصال. هذا النطاق <strong>لا يمنح أي وصول للبيانات</strong>؛ فهو يُصرِّح فقط بعرض عناصر واجهة المستخدم داخل جدول البيانات المضيف. لا يسمح للإضافة بقراءة أو تعديل أي محتوى في الجدول بما يتجاوز ما يسمح به نطاق <code>spreadsheets.currentonly</code>.</p>
+                </li>
+            </ul>
+
+            <div class="limited-use-disclosure" dir="rtl">
+                <p style="font-weight: bold; color: #b71c1c;">الإفصاح الإلزامي للاستخدام المحدود:</p>
+                <p>سيخضع استخدام نظام iAWE ونقل المعلومات المستلمة من واجهات برمجة تطبيقات جوجل إلى أي تطبيق آخر لـ <strong>سياسة بيانات مستخدمي خدمات Google API</strong>، بما في ذلك <strong>متطلبات الاستخدام المحدود</strong>. على وجه التحديد، سنستخدم بيانات جوجل (بما في ذلك البيانات من جداول جوجل و درايف) فقط لتوفير أو تحسين الميزات التي يواجهها المستخدم داخل هذه الإضافة، و<strong>لن</strong> ننقل أو نبيع بيانات المستخدم لأي غرض آخر، بما في ذلك عرض الإعلانات المخصصة.</p>
+            </div>
+
+            <h3>2. معالجة بيانات الطرف الثالث (واجهات برمجة التطبيقات الخارجية)</h3>
+            <p>لتوليد تغذية راجعة معتمدة على الأدلة، واسترجاع السياق العلمي، والتحقق من المقاييس اللغوية، يعمل النظام كوسيلة آمنة من خلال إرسال <strong>عينة الكتابة</strong> الخاصة بالطالب والمقاييس المحسوبة (جذور NAWL، نسبة التنوع المعجمي TTR) إلى واجهات برمجة التطبيقات البحثية التالية:</p>
+            <ul>
+                <li><strong>Google Gemini 2.5:</strong> يُستخدم كمحرك صارم لتوليد JSON ضمن بنية "عدم الثقة". يُقيَّد النموذج اللغوي بمطابقة الأدلة المحسوبة مسبقاً مع قاعدة المعرفة الأكاديمية EAP، ولا يمكنه توليد ادعاءات تربوية غير موثقة أو اختلاق قواعد لغوية.</li>
+                <li><strong>Semantic Scholar API:</strong> يُستخدم لاسترداد السياق العلمي الموثوق وبيانات الأوراق الأكاديمية التي تُسند تقييم النموذج إلى الأدبيات التجريبية، وذلك التزاماً بمبدأ RAG (توليد مستند للاسترجاع) للثقة الحسابية.</li>
+            </ul>
+            <p style="font-size: 0.95em; color: var(--text-light);"><strong>مسؤولية المستخدم:</strong> استخدام الإضافة يعني قبول سياسات الخصوصية وشروط الخدمة لواجهات برمجة التطبيقات الخارجية المذكورة أعلاه. يكون المستخدمون مسؤولين عن توفير مفاتيح واجهة برمجة التطبيقات الخاصة بهم عند الحاجة.</p>
+
+            <h3>3. تخزين البيانات والمعلومات الشخصية</h3>
+            <p>يحافظ المطور (الدكتور وليد مندور) على سياسة بيانات صارمة تتوافق مع مبدأ "عدم الثقة" لإطار EASE:</p>
+            <ul>
+                <li><strong>لا يوجد تخزين خارجي:</strong> نحن لا نخزن أيًا من بيانات Google Workspace الخاصة بك (محتويات المقالات، عناوين البريد الإلكتروني، سجل الاستخدام، بيانات التقييم) على أي خادم خارجي، باستثناء البيانات العابرة التي تتم معالجتها بواسطة واجهات برمجة التطبيقات المذكورة في القسم 2.</li>
+                <li><strong>لا جمع للمعلومات الشخصية:</strong> لا يجمع النظام أي معلومات تعريف شخصية (PII) لأغراض الإعلان أو أبحاث السوق.</li>
+                <li><strong>بيانات البحث (متطلبات DBR):</strong> على الرغم من أن النظام يسجل تلقائياً مقاييس كمية (التزام JSON، ووقت استجابة API، وتغيرات كثافة NAWL) للتكرارات البحثية القائمة على التصميم (DBR)، فإن هذه البيانات تُحسب وتُخزن <strong>محلياً داخل جدول البيانات الخاص بك</strong> ولا تُرسل أبداً إلى خوادم المطور.</li>
+            </ul>
+
+            <!-- NEW SECTION ADDED FOR ARABIC COMPLIANCE -->
+            <h3>4. أمن البيانات وآليات الحماية</h3>
+            <p>نحن نستخدم تدابير أمنية متوافقة مع معايير الصناعة لحماية بياناتك:</p>
+            <ul>
+                <li><strong>التشفير أثناء النقل:</strong> يتم تشفير جميع البيانات المنقولة بين جدول بيانات Google وواجهات برمجة التطبيقات الخارجية المدرجة في القسم 2 باستخدام بروتوكولات <strong>HTTPS (TLS 1.2/1.3)</strong>.</li>
+                <li><strong>البنية التحتية لـ Google:</strong> يتم استضافة منطق النظام بالكامل على خوادم Google Apps Script الآمنة. نحن لا نحتفظ بخوادم أو قواعد بيانات منفصلة لهذا التطبيق، مما يضمن بقاء بياناتك داخل نظام Google البيئي والذاكرة العابرة لوقت تنفيذ التطبيق.</li>
+                <li><strong>معالجة الذكاء الاصطناعي "بدون ثقة":</strong> يُقيَّد نموذج Gemini 2.5 بمخطط JSON صارم ويُزود فقط بالأدلة التجريبية المحسوبة مسبقاً (مقاييس NAWL وبيانات Semantic Scholar). لا يمكنه العمل كحكم مطلق ولا يمكنه توليد ادعاءات تربوية غير موثقة.</li>
+            </ul>
+
+            <!-- NEW SECTION ADDED FOR ARABIC COMPLIANCE -->
+            <h3>5. سياسة الاحتفاظ بالبيانات وحذفها</h3>
+            <p>يعمل نظام iAWE على أساس <strong>عدم الاحتفاظ</strong> بالبيانات:</p>
+            <ul>
+                <li><strong>المعالجة العابرة:</strong> تتم معالجة البيانات المستردة من جدول البيانات الخاص بك (نص المقالة، المقاييس اللغوية المحسوبة) في الذاكرة المؤقتة (RAM) ويتم التخلص منها فور اكتمال دورة التنفيذ. نحن لا نحتفظ بسجلات لاستعلاماتك أو محتواك على جانبنا.</li>
+                <li><strong>حذف البيانات:</strong> نظرًا لأننا لا نخزن بياناتك على خوادم خارجية، فلا توجد بيانات مستخدم لحذفها من جانبنا.</li>
+                <li><strong>تحكم المستخدم:</strong> تحتفظ بملكية كاملة لبياناتك، بما في ذلك مقالات الطلاب وتقارير التقييم وبيانات DBR. لـ "حذف" البيانات التي تمت معالجتها بواسطة النظام، ما عليك سوى حذف البيانات من جدول بيانات Google أو Google Drive الخاص بك.</li>
+            </ul>
+
+            <h3>6. موافقة المستخدم والاتصال</h3>
+            <p>عن طريق تثبيت واستخدام هذه الإضافة، فإنك توافق على طرق معالجة البيانات الموضحة في هذه السياسة، مع الاعتراف بالتزامها الصارم بمبادئ الاستخدام البحثي ومنهجية إطار EASE 1.0.</p>
+            <p style="margin-top: 15px;"><strong>الاتصال:</strong> لأي أسئلة بخصوص سياسة الخصوصية أو التعامل مع البيانات، يرجى الاتصال بالمطور، الدكتور وليد مندور، مباشرة:</p>
+            <p style="margin-right: 20px;">
+                <strong>البريد الإلكتروني:</strong> <a href="mailto:w.abumandour@squ.edu.om" style="color: var(--accent);">w.abumandour@squ.edu.om</a><br>
+                <strong>البريد الإلكتروني الشخصي:</strong> <a href="mailto:waleedmandour@gmail.com" style="color: var(--accent);">waleedmandour@gmail.com</a><br>
+                <strong>ORCID ID:</strong> <code>0000-0002-9262-5993</code>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            const button = document.querySelector('.lang-toggle');
+
+            if (body.getAttribute('lang') === 'en') {
+                body.setAttribute('lang', 'ar');
+                button.textContent = 'English';
+            } else {
+                body.setAttribute('lang', 'en');
+                button.textContent = 'العربية';
+            }
+        }
+    </script>
+</body>
+</html>

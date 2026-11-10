@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Support and Contact information for iAWE - Intelligent Academic Writing Evaluation Assistant, a Google Sheets Add-on built on the EASE Framework 1.0.">
+<title>iAWE - Support & Contact</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 10px; background-color: #fff; }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { color: #0A1C3C; font-size: 24px; border-bottom: 2px solid #20B2AA; padding-bottom: 10px; margin-bottom: 20px; }
+    h2 { color: #0A1C3C; font-size: 18px; margin-top: 30px; margin-bottom: 12px; border-left: 4px solid #546e7a; padding-left: 10px; }
+    .contact-card { background-color: #f8f9fa; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; }
+    .contact-row { margin-bottom: 12px; }
+    .label { font-weight: bold; color: #555; width: 110px; display: inline-block; }
+    a { color: #1A5F7A; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .note { font-size: 0.9em; margin-top: 20px; color: #666; font-style: italic; border-top: 1px solid #eee; padding-top: 10px;}
+    ul { margin: 10px 0 15px 0; padding-left: 22px; }
+    li { margin-bottom: 6px; }
+    code { background: #f0f4f7; padding: 2px 5px; border-radius: 3px; font-family: monospace; color: #20B2AA; font-weight: bold; font-size: 0.85em; }
+    .marketplace-info { background: linear-gradient(135deg, #f0f4f7 0%, #e8eaf6 100%); border: 1px solid #c5cae9; border-left: 4px solid #0A1C3C; padding: 16px 20px; margin: 20px 0; border-radius: 8px; font-size: 0.95em; }
+    .marketplace-info h4 { color: #0A1C3C; font-size: 15px; font-weight: 700; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px; }
+    .marketplace-info p { margin: 0 0 10px 0; line-height: 1.6; }
+    .marketplace-info p:last-child { margin-bottom: 0; }
+    .marketplace-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #b0bec5; }
+    .marketplace-links a { color: #1A5F7A; text-decoration: none; font-weight: 600; font-size: 0.92em; border-bottom: 1px dotted #1A5F7A; }
+    .marketplace-links a:hover { color: #0A1C3C; border-bottom-style: solid; }
+    .marketplace-links .badge { display: inline-flex; align-items: center; gap: 5px; background: #0A1C3C; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
+</style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+<body>
+<div class="container">
+    <h1>iAWE - Support &amp; Contact</h1>
+    <p><strong>iAWE (Intelligent Academic Writing Evaluation Assistant)</strong> is an AI-assisted academic writing evaluation system built on the <strong>EASE Framework 1.0</strong> and distributed as a Google Sheets Add-on. If you encounter technical issues with the Add-on, require assistance with API configuration (Gemini 2.5, Semantic Scholar), or have academic suggestions for the tool, please review the troubleshooting notes below and contact the developer.</p>
+
+    <div class="marketplace-info">
+        <h4><i class="fas fa-store-alt"></i> Marketplace Administration</h4>
+        <p>This Add-on is <strong>administered and distributed by the Google Workspace Marketplace</strong>. Installation, scope consent, version updates, and uninstallation are all handled through your Google account. The developer does not operate a separate installation server or distribution channel.</p>
+        <p><strong>Verification status:</strong> <span class="badge">Google Workspace Marketplace Listing</span> &mdash; pending publication.</p>
+        <div class="marketplace-links">
+            <a href="privacy.html"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+            <a href="terms.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+            <a href="index.html"><i class="fas fa-home"></i> Project Homepage</a>
+            <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener"><i class="fab fa-google"></i> Google Workspace Marketplace</a>
+        </div>
+    </div>
+
+    <h2>Common Support Topics</h2>
+    <ul>
+        <li><strong>Installation issues:</strong> Ensure you are installing iAWE from the official Google Workspace Marketplace listing, and that your domain administrator permits third-party Add-ons with the four required scopes: <code>spreadsheets.currentonly</code>, <code>drive.file</code>, <code>script.external_request</code>, and <code>script.container.ui</code>.</li>
+        <li><strong>API configuration:</strong> Users must supply their own API keys for Gemini 2.5 (Google AI Studio) and Semantic Scholar where required. See the README section of the project page for setup instructions.</li>
+        <li><strong>Evaluation results interpretation:</strong> iAWE outputs structured EASE metrics including NAWL lemma density, Type-Token Ratio, and JSON-anchored feedback scores. Refer to the Research Transparency Notice on the project page for methodological context.</li>
+        <li><strong>RAG / DDL methodology questions:</strong> The EASE Framework triangulates DBR, DDL, and RAG principles. Academic inquiries about the underlying methodology are welcome.</li>
+    </ul>
+
+    <h2>Developer Contact</h2>
+    <div class="contact-card">
+        <div class="contact-row">
+            <span class="label">Developer:</span> Dr. Waleed Mandour
+        </div>
+        <div class="contact-row">
+            <span class="label">Affiliation:</span> Sultan Qaboos University
+        </div>
+        <div class="contact-row">
+            <span class="label">Role:</span> Assistant Lecturer, Center for Preparatory Studies
+        </div>
+        <div class="contact-row">
+            <span class="label">Academic:</span> <a href="mailto:w.abumandour@squ.edu.om">w.abumandour@squ.edu.om</a>
+        </div>
+        <div class="contact-row">
+            <span class="label">Support:</span> <a href="mailto:waleedmandour@gmail.com">waleedmandour@gmail.com</a>
+        </div>
+        <div class="contact-row">
+            <span class="label">ORCID:</span> <code>0000-0002-9262-5993</code>
+        </div>
+        <div class="note">
+            Please allow 24-48 hours for a response regarding academic or technical inquiries. When reporting a bug, please include the JSON compliance logs and API latency telemetry generated in your spreadsheet, as these are essential for diagnosing issues within the EASE pipeline.
+        </div>
+    </div>
+</div>
+</body>
+</html>

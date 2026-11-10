@@ -1,0 +1,6 @@
+# Dependencies for scripts/fetch_analytics.py
+# Used by .github/workflows/update-analytics.yml
+#
+# Pinned to major versions for reproducibility. Update with caution.
+google-analytics-data==0.18.13
+google-auth==2.34.0

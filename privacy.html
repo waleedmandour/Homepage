@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMTA Lexicography Assistant - Privacy Policy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & BASE STYLE --- */
+        :root {
+            --primary: #1a237e;       /* Academic Navy */
+            --accent: #059669;       /* Success Teal */
+            --text-dark: #2c3e50;
+            --text-light: #546e7a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 10px;
+            background-color: #fff;
+        }
+        
+        /* Arabic language styling */
+        body[lang="ar"] {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 26px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 35px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--text-light); /* Lighter gray accent */
+            padding-left: 10px;
+        }
+        
+        /* Adjust border for RTL layout */
+        body[lang="ar"] h3 {
+            border-left: none;
+            border-right: 4px solid var(--text-light);
+            padding-left: 0;
+            padding-right: 10px;
+        }
+        
+        ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        body[lang="ar"] ul {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f0f4f7;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .meta {
+            font-size: 0.9em;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .compliance-note {
+            background-color: #f0f4f7;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        /* CRITICAL: LIMITED USE DISCLOSURE STYLING */
+        .limited-use-disclosure {
+            border: 3px solid var(--primary);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: #e8eaf6; /* Light Blue for attention */
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        /* Language toggle button styling */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        
+        .lang-toggle:hover {
+            background-color: var(--accent);
+        }
+        
+        /* Hide content based on language */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        body[lang="ar"] .lang-en { display: none; }
+        body[lang="ar"] .lang-ar { display: block; }
+    </style>
+</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+<body lang="en">
+    <button class="lang-toggle" onclick="toggleLanguage()">العربية</button>
+    
+    <div class="container">
+        <div class="lang-en">
+            <h1>Privacy Policy for AMTA Lexicography Assistant</h1>
+            <p class="meta">Last Updated: December 2025</p>
+
+            <p>The AMTA Lexicography Assistant is an academic research tool designed to prioritize user data privacy and adhere strictly to Google's User Data Policy. This policy explains what data the Add-on accesses, how it is used, and confirms what data is <strong>not</strong> collected.</p>
+            
+            <div class="compliance-note">
+                <p style="font-weight: bold; color: var(--primary);">DATA MINIMIZATION AND CORE PRINCIPLE</p>
+                <p>The Add-on is designed to process data <strong>ephemerally</strong> to run its core functions. We <strong>DO NOT</strong> collect, store, share, or sell any Personal Identifiable Information (PII), sensitive user data, or your email address for any secondary purpose.</p>
+            </div>
+
+            <h3>1. Google Workspace Data Access (Scopes Used)</h3>
+            <p>The AMTA Lexicography Assistant requests access to the following scopes to perform its core function: the automated data pipeline for dictionary compilation. Access is strictly limited to the necessary functions described below:</p>
+            <ul>
+                <li>
+                    <strong>Google Drive Access:</strong> <code>https://www.googleapis.com/auth/drive</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> This scope is used <strong>solely</strong> to read the specific Corpus JSON file selected by the user to serve as the source data, and to save the final exported files (XML/CSV/JSON) generated by the pipeline directly into the user's Drive, as requested by the user's action.</p>
+                </li>
+                <li>
+                    <strong>Google Sheets Access:</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
+                    <p style="margin-top: 5px;"><strong>Justification:</strong> The application reads and writes data <strong>strictly within the active spreadsheet</strong> where the Add-on is invoked. This is necessary to retrieve the "Domain Input" term and write the final processed corpus statistics and results back to the sheet.</p>
+                </li>
+            </ul>
+
+            <div class="limited-use-disclosure">
+                <p style="font-weight: bold; color: #b71c1c;">MANDATORY LIMITED USE DISCLOSURE:</p>
+                <p>The AMTA Lexicography Assistant's use and transfer of information received from Google APIs to any other app will adhere to **Google API Services User Data Policy**, including the **Limited Use requirements**. Specifically, we will only use Google data (including data from Google Sheets and Drive) to provide or improve user-facing features within this Add-on, and we **will not** transfer or sell user data for any other purpose, including serving personalized advertisements.</p>
+            </div>
+            <h3>2. Third-Party Data Processing (External APIs)</h3>
+            <p>To generate definitions, gather academic references, and retrieve necessary data, the Add-on acts as a secure relay by sending the user's <strong>search term</strong> (the "Domain Input" from the sheet) to the following academic and research APIs:</p>
+            <ul>
+                <li><strong>Google Gemini:</strong> Used for AI-based definition generation, translation, and semantic cross-validation as part of the Gemini RAG phase.</li>
+                <li><strong>Semantic Scholar & CORE API:</strong> Used for retrieving verified academic paper metadata, citations, and abstracts relevant to the search term for the RAG validation phase.</li>
+                <li><strong>SerpApi:</strong> Used for retrieving structured search results from Google Scholar to enrich the academic corpus used in the pipeline.</li>
+            </ul>
+            <p style="font-size: 0.95em; color: var(--text-light);"><strong>User Responsibility:</strong> Use of the Add-on implies acceptance of the Privacy Policies and Terms of Service of the respective third-party APIs listed above.</p>
+
+            <h3>3. Data Storage & PII</h3>
+            <p>The developer (Dr. Waleed Mandour) maintains a strict data policy:</p>
+            <ul>
+                <li><strong>No External Storage:</strong> We do not store any of your Google Workspace data (file contents, email addresses, usage history, etc.) on any server controlled by the developer or a third party, with the exception of the transient data processed by the APIs listed in Section 2.</li>
+                <li><strong>No PII Collection:</strong> The Add-on does not collect or track any Personal Identifiable Information (PII) for advertising, market research, or any purpose unrelated to the function of the Add-on.</li>
+            </ul>
+
+            <h3>4. User Consent and Contact</h3>
+            <p>By installing and using this add-on, you consent to the data processing methods described in this policy, acknowledging its strict adherence to research-only usage principles.</p>
+            <p style="margin-top: 15px;"><strong>Contact:</strong> For any questions regarding this Privacy Policy or the Add-on's data handling, please contact the developer, Dr. Waleed Mandour, directly:</p>
+            <p style="margin-left: 20px;">
+                <strong>Email:</strong> <a href="mailto:w.abumandour@squ.edu.om" style="color: var(--accent);">w.abumandour@squ.edu.om</a><br>
+                <strong>Personal Email:</strong> <a href="mailto:waleedmandour@gmail.com" style="color: var(--accent);">waleedmandour@gmail.com</a><br>
+                <strong>ORCID ID:</strong> <code>0000-0002-9262-5993</code>
+            </p>
+        </div>
+        
+        <div class="lang-ar">
+            <h1>سياسة الخصوصية لمساعد AMTA المعجمي</h1>
+            <p class="meta">آخر تحديث: ديسمبر 2025</p>
+
+            <p>مساعد AMTA المعجمي هو أداة بحث أكاديمي مصممة لإعطاء الأولوية لخصوصية بيانات المستخدم والالتزام الصارم بسياسة بيانات المستخدم من Google. توضح هذه السياسة البيانات التي يصل إليها الإضافة، وكيفية استخدامها، وتؤكد البيانات التي <strong>لا</strong> يتم جمعها.</p>
+            
+            <div class="compliance-note">
+                <p style="font-weight: bold; color: var(--primary);">تقليل البيانات والمبدأ الأساسي</p>
+                <p>تم تصميم الإضافة لمعالجة البيانات <strong>بشكل عابر</strong> لتشغيل وظائفها الأساسية. نحن <strong>لا</strong> نجمع أو نخزن أو نشارك أو نبيع أي معلومات تعريف شخصية (PII)، أو بيانات مستخدم حساسة، أو عنوان بريدك الإلكتروني لأي غرض ثانوي.</p>
+            </div>
+
+            <h3>1. الوصول إلى بيانات Google Workspace (النطاقات المستخدمة)</h3>
+            <p>يطلب مساعد AMTA المعجمي الوصول إلى النطاقات التالية لأداء وظيفته الأساسية: خط أنابيب البيانات الآلي لتجميع القاموس. يقتصر الوصول بدقة على الوظائف الضرورية الموضحة أدناه:</p>
+            <ul>
+                <li>
+                    <strong>الوصول إلى Google Drive:</strong> <code>https://www.googleapis.com/auth/drive</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> يُستخدم هذا النطاق <strong>فقط</strong> لقراءة ملف JSON للمجمع المحدد من قبل المستخدم ليكون بمثابة البيانات المصدر، وحفظ الملفات المصدرة النهائية (XML/CSV/JSON) التي تم إنشاؤها بواسطة خط الأنابيب مباشرة في Drive الخاص بالمستخدم، كما هو مطلوب من خلال إجراء المستخدم.</p>
+                </li>
+                <li>
+                    <strong>الوصول إلى Google Sheets:</strong> <code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>
+                    <p style="margin-top: 5px;"><strong>التبرير:</strong> يقرأ التطبيق ويكتب البيانات <strong>بدقة داخل جدول البيانات النشط</strong> حيث يتم استدعاء الإضافة. هذا ضروري لاسترداد مصطلح "المجال المدخل" وكتابة إحصائيات المجمع المعالج النهائية والنتائج مرة أخرى إلى الورقة.</p>
+                </li>
+            </ul>
+
+            <div class="limited-use-disclosure" dir="rtl">
+                <p style="font-weight: bold; color: #b71c1c;">الإفصاح الإلزامي للاستخدام المحدود:</p>
+                <p>سيخضع استخدام مساعد AMTA المعجمي ونقل المعلومات المستلمة من واجهات برمجة تطبيقات جوجل إلى أي تطبيق آخر لـ **سياسة بيانات مستخدمي خدمات Google API**، بما في ذلك **متطلبات الاستخدام المحدود**. على وجه التحديد، سنستخدم بيانات جوجل (بما في ذلك البيانات من جداول جوجل و درايف) فقط لتوفير أو تحسين الميزات التي يواجهها المستخدم داخل هذه الإضافة، و**لن** ننقل أو نبيع بيانات المستخدم لأي غرض آخر، بما في ذلك عرض الإعلانات المخصصة.</p>
+            </div>
+            <h3>2. معالجة بيانات الطرف الثالث (واجهات برمجة التطبيقات الخارجية)</h3>
+            <p>لتوليد التعريفات، وجمع المراجع الأكاديمية، واسترداد البيانات اللازمة، تعمل الإضافة كوسيلة آمنة من خلال إرسال <strong>مصطلح البحث</strong> الخاص بالمستخدم ("المجال المدخل" من الورقة) إلى واجهات برمجة التطبيقات الأكاديمية والبحثية التالية:</p>
+            <ul>
+                <li><strong>Google Gemini:</strong> يُستخدم لتوليد التعريفات القائمة على الذكاء الاصطناعي، والترجمة، والتحقق المتبادل الدلالي كجزء من مرحلة Gemini RAG.</li>
+                <li><strong>Semantic Scholar & CORE API:</strong> يُستخدم لاسترداد بيانات ورقة أكاديمية موثقة، والاستشهادات، والملخصات ذات الصلة بمصطلح البحث لمرحلة التحقق من RAG.</li>
+                <li><strong>SerpApi:</strong> يُستخدم لاسترداد نتائج البحث المنظمة من Google Scholar لإثراء المجمع الأكاديمي المستخدم في خط الأنابيب.</li>
+            </ul>
+            <p style="font-size: 0.95em; color: var(--text-light);"><strong>مسؤولية المستخدم:</strong> استخدام الإضافة يعني قبول سياسات الخصوصية وشروط الخدمة لواجهات برمجة التطبيقات الخارجية المذكورة أعلاه.</p>
+
+            <h3>3. تخزين البيانات والمعلومات الشخصية</h3>
+            <p>يحافظ المطور (الدكتور وليد مندور) على سياسة بيانات صارمة:</p>
+            <ul>
+                <li><strong>لا يوجد تخزين خارجي:</strong> نحن لا نخزن أيًا من بيانات Google Workspace الخاصة بك (محتويات الملف، عناوين البريد الإلكتروني، سجل الاستخدام، إلخ) على أي خادم يتحكم فيه المطور أو طرف ثالث، باستثناء البيانات العابرة التي تتم معالجتها بواسطة واجهات برمجة التطبيقات المدرجة في القسم 2.</li>
+                <li><strong>لا جمع للمعلومات الشخصية:</strong> لا تجمع الإضافة أو تتعقب أي معلومات تعريف شخصية (PII) للإعلان، أو أبحاث السوق، أو أي غرض غير مرتبط بوظيفة الإضافة.</li>
+            </ul>
+
+            <h3>4. موافقة المستخدم والاتصال</h3>
+            <p>عن طريق تثبيت واستخدام هذه الإضافة، فإنك توافق على طرق معالجة البيانات الموضحة في هذه السياسة، مع الإقرار بالالتزام الصارم بمبادئ الاستخدام البحثي فقط.</p>
+            <p style="margin-top: 15px;"><strong>الاتصال:</strong> لأي أسئلة بخصوص سياسة الخصوصية هذه أو معالجة البيانات للإضافة، يرجى الاتصال بالمطور، الدكتور وليد مندور، مباشرة:</p>
+            <p style="margin-right: 20px;">
+                <strong>البريد الإلكتروني:</strong> <a href="mailto:w.abumandour@squ.edu.om" style="color: var(--accent);">w.abumandour@squ.edu.om</a><br>
+                <strong>البريد الإلكتروني الشخصي:</strong> <a href="mailto:waleedmandour@gmail.com" style="color: var(--accent);">waleedmandour@gmail.com</a><br>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            const button = document.querySelector('.lang-toggle');
+            
+            if (body.getAttribute('lang') === 'en') {
+                body.setAttribute('lang', 'ar');
+                button.textContent = 'English';
+            } else {
+                body.setAttribute('lang', 'en');
+                button.textContent = 'العربية';
+            }
+        }
+    </script>
+</body>
+</html>

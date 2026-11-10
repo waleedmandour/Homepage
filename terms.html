@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMTA Lexicography Assistant - Terms of Use</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & BASE STYLE (Consistent with Privacy & Index) --- */
+        :root {
+            --primary: #1a237e;       /* Academic Navy */
+            --accent: #059669;       /* Success Teal */
+            --text-dark: #2c3e50;
+            --text-light: #546e7a;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 10px;
+            background-color: #fff;
+        }
+        
+        /* Arabic language styling */
+        body[lang="ar"] {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 26px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 35px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--text-light);
+            padding-left: 10px;
+        }
+        
+        /* Adjust border for RTL layout */
+        body[lang="ar"] h3 {
+            border-left: none;
+            border-right: 4px solid var(--text-light);
+            padding-left: 0;
+            padding-right: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+
+        .meta {
+            font-size: 0.9em;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        /* Language toggle button styling */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        
+        .lang-toggle:hover {
+            background-color: var(--accent);
+        }
+        
+        /* Hide content based on language */
+        .lang-en { display: block; }
+        .lang-ar { display: none; }
+        body[lang="ar"] .lang-en { display: none; }
+        body[lang="ar"] .lang-ar { display: block; }
+    </style>
+</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WW4M0NCF1V');
+</script>
+<body lang="en">
+    <button class="lang-toggle" onclick="toggleLanguage()">العربية</button>
+    
+    <div class="container">
+        <div class="lang-en">
+            <h1>Terms of Service for AMTA Lexicography Assistant</h1>
+            <p class="meta">Effective Date: December 2025</p>
+            
+            <h3>1. Academic Use and Scope of Service</h3>
+            <p>The AMTA Lexicography Assistant is provided primarily for **academic, educational, and non-commercial research purposes**. It is designed to assist lexicographers and researchers in automating data collection, analysis, and formatting within the Google Workspace environment.</p>
+
+            <h3>2. Disclaimer of Warranty and Accuracy</h3>
+            <p>The software is provided **"as is," without warranty of any kind, express or implied**. While the developer strives to maintain the functionality and reliability of the Add-on, no guarantees are made regarding the correctness, completeness, or suitability of the AI-generated definitions, translations, or statistical calculations. **Users must verify all outputs against primary sources and bear full responsibility for the data used in their final work.**</p>
+
+            <h3>3. API Usage and External Services</h3>
+            <p>The Add-on relies on external third-party APIs (e.g., Google Gemini, SerpApi, Semantic Scholar, CORE). Users acknowledge and agree that:</p>
+            <ul>
+                <li>They are responsible for providing their own API keys and ensuring compliance with the terms of service of those respective providers.</li>
+                <li>The developer is not responsible for any costs incurred, service interruptions, or rate limits imposed by these third-party API providers.</li>
+            </ul>
+            
+            <h3>4. User Conduct and Restrictions</h3>
+            <p>Users agree not to use the Add-on for any purpose that is unlawful, fraudulent, or prohibited by these Terms. Prohibited uses include, but are not limited to, commercial resale of the tool's features, unauthorized data scraping, or any attempt to bypass rate limits.</p>
+
+            <h3>5. Intellectual Property and Data Ownership</h3>
+            <p>The core software, code, and methodology of the AMTA Lexicography Assistant are the exclusive intellectual property of the developer, Dr. Waleed Mandour. **The dictionaries, data sets, and corpus generated by the user using this tool remain the property of the user.**</p>
+
+            <h3>6. Modification of Terms</h3>
+            <p>The developer reserves the right to modify these Terms of Service at any time. Continued use of the Add-on after any such modification constitutes acceptance of the new Terms.</p>
+        </div>
+        
+        <div class="lang-ar">
+            <h1>شروط خدمة مساعد AMTA المعجمي</h1>
+            <p class="meta">تاريخ السريان: ديسمبر 2025</p>
+            
+            <h3>1. الاستخدام الأكاديمي ونطاق الخدمة</h3>
+            <p>يُقدَّم مساعد AMTA المعجمي في المقام الأول **للأغراض الأكاديمية والتعليمية والبحثية غير التجارية**. تم تصميمه لمساعدة المعجمين والباحثين في أتمتة جمع البيانات وتحليلها وتنسيقها ضمن بيئة Google Workspace.</p>
+
+            <h3>2. إخلاء مسؤولية الضمان والدقة</h3>
+            <p>يُقدَّم البرنامج **"كما هو"، دون أي ضمان من أي نوع، صريح أو ضمني**. بينما يسعى المطور جاهداً للحفاظ على وظائف الإضافة وموثوقيتها، لا تُقدَّم أي ضمانات فيما يتعلق بصحة أو اكتمال أو ملاءمة التعريفات التي تم إنشاؤها بواسطة الذكاء الاصطناعي، أو الترجمات، أو الحسابات الإحصائية. **يجب على المستخدمين التحقق من جميع المخرجات مقابل المصادر الأولية ويتحملون المسؤولية الكاملة عن البيانات المستخدمة في عملهم النهائي.**</p>
+
+            <h3>3. استخدام واجهة برمجة التطبيقات والخدمات الخارجية</h3>
+            <p>تعتمد الإضافة على واجهات برمجة تطبيقات خارجية من طرف ثالث (مثل Google Gemini وSerpApi وSemantic Scholar وCORE). يقر المستخدمون ويوافقون على ما يلي:</p>
+            <ul>
+                <li>أنهم مسؤولون عن توفير مفاتيح واجهة برمجة التطبيقات الخاصة بهم وضمان الامتثال لشروط الخدمة للمزودين المعنيين.</li>
+                <li>المطور غير مسؤول عن أي تكاليف متكبدة، أو انقطاعات في الخدمة، أو حدود للمعدل يفرضها مزودو واجهة برمجة التطبيقات من طرف ثالث.</li>
+            </ul>
+            
+            <h3>4. سلوك المستخدم والقيود</h3>
+            <p>يوافق المستخدمون على عدم استخدام الإضافة لأي غرض غير قانوني أو احتيالي أو محظور بموجب هذه الشروط. تشمل الاستخدامات المحظورة، على سبيل المثال لا الحصر، إعادة البيع التجاري لميزات الأداة، أو كشط البيانات غير المصرح به، أو أي محاولة لتجاوز حدود المعدل.</p>
+
+            <h3>5. الملكية الفكرية وملكية البيانات</h3>
+            <p>البرنامج الأساسي والكود والمنهجية الخاصة بمساعد AMTA المعجمي هي ملكية فكرية حصرية للمطور، الدكتور وليد مندور. **تظل القواميس ومجموعات البيانات والمجموعات النصية التي ينشئها المستخدم باستخدام هذه الأداة ملكًا للمستخدم.**</p>
+
+            <h3>6. تعديل الشروط</h3>
+            <p>يحتفظ المطور بالحق في تعديل شروط الخدمة هذه في أي وقت. استمرار استخدام الإضافة بعد أي تعديل من هذا القبيل يشكل قبولاً للشروط الجديدة.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            const button = document.querySelector('.lang-toggle');
+            
+            if (body.getAttribute('lang') === 'en') {
+                body.setAttribute('lang', 'ar');
+                button.textContent = 'English';
+            } else {
+                body.setAttribute('lang', 'en');
+                button.textContent = 'العربية';
+            }
+        }
+    </script>
+</body>
+</html>

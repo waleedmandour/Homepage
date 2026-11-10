@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AMTA Lexicography Assistant v1.3: A Google Sheets Add-on for automated dictionary creation using advanced academic APIs (Scopus, OpenAlex, etc.) and Gemini 2.5 Flash — with resilient multi-provider fallback (Groq, LM Studio) and a bilingual English/Arabic user guide.">
+    <title>AMTA Lexicography Assistant - Dr. Waleed Mandour</title>
+    <!-- Google Analytics (G-WW4M0NCF1V — same measurement ID as the rest of waleedmandour.org) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WW4M0NCF1V');
+    </script>
+    <link rel="icon" type="image/png" href="images/AMTA.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --accent-light: #20B2AA;
+            --accent-teal: #00695C;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic div,
+        body.arabic .hero-content,
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .audience-grid {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(10, 28, 60, 0.9); border-radius: 30px;
+            padding: 8px 15px; backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .language-toggle button {
+            background: none; border: none; color: var(--white);
+            cursor: pointer; padding: 5px 12px; border-radius: 20px;
+            font-size: 0.9em; font-weight: 600; transition: var(--transition);
+        }
+        .language-toggle button.active {
+            background: var(--secondary); color: var(--white);
+        }
+        .lang-ar { display: none; }
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            padding: 40px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.08)"/></svg>');
+            opacity: 0.5;
+        }
+        .header-content {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px; position: relative; z-index: 1;
+        }
+        .header-text h1 { font-size: 2.5em; font-weight: 800; margin-bottom: 5px; }
+        .tagline { font-size: 1.2em; color: rgba(255,255,255,0.8); }
+        .header-photo-container {
+            width: 130px; height: 130px; border-radius: 50%;
+            overflow: hidden; border: 4px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(32, 178, 170, 0.3);
+        }
+        .header-photo { width: 100%; height: 100%; object-fit: cover; }
+
+        nav {
+            position: relative; z-index: 2;
+            display: flex; justify-content: center;
+            flex-wrap: wrap; gap: 20px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px; border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px; margin: 30px auto 0;
+        }
+        nav a {
+            color: var(--white); text-decoration: none;
+            font-weight: 600; font-size: 1.1em;
+            transition: var(--transition); padding: 5px 0; position: relative;
+        }
+        nav a:after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 0; background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        body.arabic nav a:after { left: auto; right: 0; }
+        nav a:hover:after { width: 100%; }
+        nav a.active { color: var(--secondary); }
+        nav a.active:after { width: 100%; }
+
+        /* ===== ANIMATED APP LOGO ===== */
+        .app-logo-container {
+            position: relative; width: 180px; height: 180px;
+            margin: 0 auto 40px;
+            display: flex; align-items: center; justify-content: center;
+            animation: amta-float 6s ease-in-out infinite;
+        }
+        .app-logo-frame {
+            width: 100%; height: 100%; position: relative;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1) inset, 0 0 30px rgba(32,178,170,0.3);
+            padding: 15px; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2) inset, 0 0 40px rgba(32,178,170,0.4);
+        }
+        .app-logo-img {
+            width: 100%; height: 100%; object-fit: contain;
+            border-radius: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+            transition: filter 0.3s ease;
+        }
+        .app-logo-frame:hover .app-logo-img { filter: drop-shadow(0 8px 25px rgba(0,0,0,0.4)); }
+        .app-logo-container::before {
+            content: ''; position: absolute; width: 165px; height: 165px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(32,178,170,0.2) 0%, rgba(26,95,122,0.2) 100%);
+            animation: amta-rotate 20s linear infinite; z-index: -1;
+        }
+        .app-logo-container::after {
+            content: ''; position: absolute; width: 185px; height: 185px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            animation: amta-rotate 25s linear infinite reverse; z-index: -2;
+        }
+        .app-logo-frame::after {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            background-size: 300% 300%;
+            animation: amta-shine 8s ease-in-out infinite;
+            pointer-events: none; z-index: 1;
+        }
+        @keyframes amta-float { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-10px) rotate(0.5deg)} }
+        @keyframes amta-rotate { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+        @keyframes amta-shine { 0%{background-position:-100% -100%} 100%{background-position:200% 200%} }
+
+        /* ===== HERO ===== */
+        .hero { position: relative; padding: 40px 0; text-align: center; margin-bottom: 40px; }
+        .hero-content { position: relative; z-index: 1; text-align: center; max-width: 800px; margin: 0 auto; }
+        .coming-soon-badge {
+            display: inline-block; background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); padding: 8px 24px; border-radius: 30px;
+            font-size: 0.9em; font-weight: 700; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+        }
+        .hero h1 { font-size: 2.8em; font-weight: 800; margin-bottom: 15px; color: var(--primary); }
+        .hero-subtitle { font-size: 1.3em; color: var(--accent); margin-bottom: 20px; font-weight: 600; }
+        .hero-description { font-size: 1.1em; color: var(--gray); max-width: 700px; margin: 0 auto 30px; line-height: 1.8; }
+        .hero-cta {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); padding: 14px 36px; border-radius: 30px;
+            text-decoration: none; font-size: 1.1em; font-weight: 700;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+        }
+        .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(32, 178, 170, 0.4); }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;
+            padding: 30px; background: var(--white); border-radius: 20px;
+            box-shadow: var(--shadow); margin-bottom: 60px;
+        }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5em; font-weight: 800; color: var(--secondary); }
+        .stat-label { font-size: 0.95em; color: var(--gray); margin-top: 5px; }
+
+        /* ===== SECTIONS ===== */
+        .section-title { font-size: 2em; font-weight: 700; text-align: center; margin-bottom: 15px; color: var(--primary); }
+        .section-subtitle { text-align: center; color: var(--gray); font-size: 1.1em; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* ===== FEATURES ===== */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .feature-card {
+            background: var(--white); padding: 30px; border-radius: 20px;
+            box-shadow: var(--shadow); transition: var(--transition);
+            border-top: 4px solid var(--secondary);
+        }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .feature-icon {
+            width: 60px; height: 60px; border-radius: 15px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .feature-icon i { font-size: 28px; color: var(--white); }
+        .feature-card h3 { font-size: 1.3em; margin-bottom: 12px; color: var(--primary); }
+        .feature-card p { color: var(--gray); line-height: 1.7; }
+
+        /* ===== WORKFLOW ===== */
+        .workflow-section { background: var(--white); padding: 60px 0; border-radius: 30px; margin-bottom: 60px; box-shadow: var(--shadow); }
+        .workflow-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .workflow-step { text-align: center; position: relative; }
+        .workflow-number {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); font-size: 1.3em; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px;
+        }
+        .workflow-step h3 { font-size: 1.15em; margin-bottom: 8px; color: var(--primary); }
+        .workflow-step p { color: var(--gray); font-size: 0.95em; }
+
+        .workflow-image-container { margin: 40px auto; max-width: 900px; text-align: center; }
+        .workflow-image { width: 100%; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+
+        /* ===== DEMO GIF ===== */
+        .demo-section { text-align: center; margin-bottom: 60px; }
+        .demo-gif-container { max-width: 900px; margin: 30px auto; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 3px solid var(--white); }
+        .demo-gif { width: 100%; display: block; }
+
+        /* ===== APIs ===== */
+        .apis-section { text-align: center; margin-bottom: 60px; }
+        .apis-label { display: block; font-size: 1.3em; font-weight: 700; color: var(--primary); margin-bottom: 25px; }
+        .apis-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .api-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white); padding: 12px 20px; border-radius: 12px;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.95em; font-weight: 600;
+            transition: var(--transition); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .api-badge:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+        .api-badge i { font-size: 1.2em; }
+
+        /* ===== AUDIENCE ===== */
+        .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .audience-card {
+            background: var(--white); padding: 30px; border-radius: 20px;
+            text-align: center; box-shadow: var(--shadow); transition: var(--transition);
+            border-bottom: 4px solid var(--secondary);
+        }
+        .audience-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .audience-icon {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .audience-icon i { font-size: 28px; color: var(--white); }
+        .audience-card h3 { font-size: 1.2em; margin-bottom: 10px; color: var(--primary); }
+        .audience-card p { color: var(--gray); font-size: 0.95em; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white); text-align: center; padding: 60px 30px;
+            border-radius: 30px; margin-bottom: 60px;
+        }
+        .cta-title { font-size: 2em; font-weight: 700; margin-bottom: 15px; }
+        .cta-subtitle { font-size: 1.1em; opacity: 0.9; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--white); color: var(--primary);
+            padding: 14px 36px; border-radius: 30px;
+            text-decoration: none; font-size: 1.1em; font-weight: 700;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; cursor: pointer;
+        }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+
+        /* ===== CITATION ===== */
+        .citation-box {
+            background: var(--light); border-left: 4px solid var(--secondary);
+            padding: 25px 30px; border-radius: 12px; margin: 40px auto;
+            max-width: 800px; font-style: italic; color: var(--dark);
+        }
+        .citation-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .citation-box a:hover { text-decoration: underline; }
+
+        /* ===== ATTRIBUTION ===== */
+        .attribution-box {
+            background: #f8fafc; border-left: 4px solid var(--accent);
+            padding: 25px 30px; border-radius: 12px; margin: 40px auto;
+            max-width: 800px; color: var(--dark); font-size: 0.95em; line-height: 1.7;
+        }
+        .attribution-box .attr-title {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; color: var(--primary); font-size: 1.05em;
+            margin-bottom: 12px; font-style: normal;
+        }
+        .attribution-box .attr-title i { color: var(--accent); }
+        .attribution-box .attr-note {
+            font-size: 0.85em; color: var(--gray); margin-top: 12px;
+            padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.1);
+            font-style: italic;
+        }
+        .attribution-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .attribution-box a:hover { text-decoration: underline; }
+        .attribution-box .attr-citation { font-style: normal; word-break: break-word; }
+
+        /* ===== FOOTER ===== */
+        .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
+        .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .footer-email { color: var(--primary); text-decoration: none; font-weight: 600; transition: var(--transition); }
+        .footer-email:hover { color: var(--secondary); }
+        .footer a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+        .footer a:hover { color: var(--secondary); text-decoration: underline; }
+        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .footer-links a { padding: 0 10px; position: relative; }
+        .footer-links a:not(:last-child)::after { content: '|'; position: absolute; right: -5px; color: var(--gray); }
+        body.arabic .footer-links a:not(:last-child)::after { right: auto; left: -5px; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; }
+            .app-logo-container::before { width: 130px; height: 130px; }
+            .app-logo-container::after { width: 150px; height: 150px; }
+            .app-logo-frame { border-radius: 25px; padding: 12px; }
+            .hero h1 { font-size: 2em; }
+            .hero-subtitle { font-size: 1.1em; }
+            .section-title { font-size: 1.6em; }
+            .features-grid, .workflow-steps, .audience-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 20px; }
+            .stat-number { font-size: 2em; }
+            nav { gap: 12px; padding: 12px 20px; }
+            nav a { font-size: 0.95em; }
+        }
+        @media (max-width: 480px) {
+            .header-content { flex-direction: column; }
+            .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; }
+            .app-logo-container::before { width: 110px; height: 110px; }
+            .app-logo-container::after { width: 130px; height: 130px; }
+            .app-logo-frame { border-radius: 20px; padding: 10px; }
+            .hero h1 { font-size: 1.6em; }
+            .hero-description { font-size: 0.95em; }
+            .feature-card { padding: 20px; }
+            .container { padding: 0 16px; }
+            nav { flex-direction: column; gap: 10px; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                <p class="tagline lang-en">PhD in Applied Linguistics | Assistant Lecturer | SQU</p>
+                <p class="tagline lang-ar">دكتوراه في اللغويات التطبيقية | محاضر مساعد | جامعة السلطان قابوس</p>
+            </div>
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul style="list-style:none;display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <img src="images/AMTA2.png" alt="AMTA Lexicography Assistant Logo" class="app-logo-img">
+                    </div>
+                </div>
+
+                <div class="coming-soon-badge lang-en">
+                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Available on Google Workspace Marketplace &middot; v1.3
+                </div>
+                <div class="coming-soon-badge lang-ar">
+                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; متاح على متجر جوجل للتطبيقات &middot; الإصدار 1.3
+                </div>
+
+                <h1 class="lang-en">AMTA Lexicography Assistant</h1>
+                <h1 class="lang-ar">مساعد المعجم AMTA</h1>
+
+                <div class="hero-subtitle lang-en">Build Academic Dictionaries in Google Sheets™ with AI-Powered RAG</div>
+                <div class="hero-subtitle lang-ar">ابنِ قواميس أكاديمية في جداول بيانات جوجل™ بتقنية RAG المدعومة بالذكاء الاصطناعي</div>
+
+                <p class="hero-description lang-en">
+                    A specialized computational research tool for lexicographers, terminologists, and academic educators. Based on the AI-augmented Method of Triangulation Approach (AMTA), it transforms Google Sheets™ into a powerful workstation for building specialized dictionaries — automating term extraction, corpus statistics, and multilingual RAG-powered definitions.
+                </p>
+                <p class="hero-description lang-ar">
+                    أداة بحثية حسابية متخصصة للمعجميين والمصطلحيين والمعلمين الأكاديميين. تعتمد على منهجية التثليث المعززة بالذكاء الاصطناعي (AMTA)، وتحوّل جداول بيانات جوجل™ إلى محطة عمل قوية لبناء القواميس المتخصصة — مع أتمتة استخراج المصطلحات والإحصاءات اللغوية والتعريفات متعددة اللغات المدعومة بتقنية RAG.
+                </p>
+
+                <a href="https://workspace.google.com/marketplace/app/amta_lexicography_assistant/331538166887" target="_blank" class="hero-cta">
+                    <i class="fas fa-rocket"></i>
+                    <span class="lang-en">Install from Google Workspace</span>
+                    <span class="lang-ar">تثبيت من جوجل</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number">8+</div>
+                <div class="stat-label lang-en">Academic APIs</div>
+                <div class="stat-label lang-ar">واجهات أكاديمية</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">5+</div>
+                <div class="stat-label lang-en">Languages</div>
+                <div class="stat-label lang-ar">لغات</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">RAG</div>
+                <div class="stat-label lang-en">Powered Definitions</div>
+                <div class="stat-label lang-ar">تعريفات ذكية</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">Free</div>
+                <div class="stat-label lang-en">of Charge</div>
+                <div class="stat-label lang-ar">مجاناً</div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section>
+            <h2 class="section-title lang-en">Core Features</h2>
+            <h2 class="section-title lang-ar">الميزات الأساسية</h2>
+            <p class="section-subtitle lang-en">Everything you need to build professional, academically validated dictionaries</p>
+            <p class="section-subtitle lang-ar">كل ما تحتاجه لبناء قواميس احترافية موثقة أكاديمياً</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-search"></i></div>
+                    <h3 class="lang-en">Automated Terminology Extraction</h3>
+                    <h3 class="lang-ar">استخراج المصطلحات الآلي</h3>
+                    <p class="lang-en">Connect to Semantic Scholar, arXiv, OpenAlex, Europe PMC, CORE API, and Google Scholar (via SerpApi) to discover high-relevance technical terms within your specific domain.</p>
+                    <p class="lang-ar">اتصل بـ Semantic Scholar وarXiv وOpenAlex وEurope PMC وCORE API وباحث جوجل (عبر SerpApi) لاكتشاف المصطلحات التقنية عالية الصلة في مجالك المحدد.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="lang-en">Corpus Statistics & Validation</h3>
+                    <h3 class="lang-ar">إحصاءات المصدر والتحقق</h3>
+                    <p class="lang-en">Automatically calculates Keyness Scores (term specificity vs. general English) and Reference Frequency against the built-in BAWE corpus to validate true academic usage.</p>
+                    <p class="lang-ar">يحسب تلقائياً درجات الأهمية (خصوصية المصطلح مقابل الإنجليزية العامة) والتكرار المرجعي مقابل مجموعة BAWE المدمجة للتحقق من الاستخدام الأكاديمي الحقيقي.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3 class="lang-en">RAG-Powered Multilingual Definitions</h3>
+                    <h3 class="lang-ar">تعريفات متعددة اللغات بتقنية RAG</h3>
+                    <p class="lang-en">Eliminate AI hallucinations. Uses Retrieval-Augmented Generation — "reads" abstracts of actual academic papers before prompting Google Gemini to draft definitions, translations (Arabic, Spanish, French, Chinese, and more), and usage examples. From v1.3, an automatic multi-provider fallback (Groq cloud or a local LM Studio server) keeps AI generation running even when Gemini quotas are exhausted.</p>
+                    <p class="lang-ar">تخلّص من هلوسة الذكاء الاصطناعي. يستخدم التوليد المعزز بالاسترجاع — "يقرأ" ملخصات أوراق أكاديمية فعلية قبل توجيه Google Gemini لصياغة التعريفات والترجمات (العربية، الإسبانية، الفرنسية، الصينية، والمزيد) وأمثلة الاستخدام. واعتباراً من الإصدار 1.3، يضمن نظام الاحتياط التلقائي متعدد المزودين (Groq السحابي أو خادم LM Studio المحلي) استمرار التوليد الآلي حتى عند نفاد حصة Gemini.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-export"></i></div>
+                    <h3 class="lang-en">Lexicographic Enrichment & Export</h3>
+                    <h3 class="lang-ar">الإثراء المعجمي والتصدير</h3>
+                    <p class="lang-en">Automatically extract collocations and parts of speech. Export your dictionary as formatted XML for Lexonomy and other Dictionary Writing Systems, or download as JSON/CSV directly to Google Drive.</p>
+                    <p class="lang-ar">استخرج التلازمات اللفظية وأجزاء الكلام تلقائياً. صدّر معجمك كملف XML منسق لـ Lexonomy وأنظمة كتابة القواميس الأخرى، أو حمّله كـ JSON/CSV مباشرة إلى Google Drive.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo GIF Section -->
+        <section class="demo-section">
+            <h2 class="section-title lang-en">See It in Action</h2>
+            <h2 class="section-title lang-ar">شاهده أثناء العمل</h2>
+            <p class="section-subtitle lang-en">Watch how AMTA transforms Google Sheets into a lexicographic workstation</p>
+            <p class="section-subtitle lang-ar">شاهد كيف يحوّل AMTA جداول بيانات جوجل إلى محطة عمل معجمية</p>
+            <div class="demo-gif-container">
+                <img src="images/AMTA Demo.gif" alt="AMTA Lexicography Assistant Demo" class="demo-gif">
+            </div>
+        </section>
+
+        <!-- Workflow Section -->
+        <section class="workflow-section">
+            <div class="container">
+                <h2 class="section-title lang-en">How It Works</h2>
+                <h2 class="section-title lang-ar">كيف يعمل</h2>
+                <p class="section-subtitle lang-en">Four steps from raw academic data to a published dictionary</p>
+                <p class="section-subtitle lang-ar">أربع خطوات من البيانات الأكاديمية الخام إلى معجم منشور</p>
+
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="workflow-number">1</div>
+                        <h3 class="lang-en">Term Discovery</h3>
+                        <h3 class="lang-ar">اكتشاف المصطلحات</h3>
+                        <p class="lang-en">Search across 8+ academic APIs to extract domain-specific terminology from real research papers.</p>
+                        <p class="lang-ar">ابحث عبر أكثر من 8 واجهات أكاديمية لاستخراج المصطلحات المتخصصة من أوراق بحثية حقيقية.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">2</div>
+                        <h3 class="lang-en">Statistical Validation</h3>
+                        <h3 class="lang-ar">التحقق الإحصائي</h3>
+                        <p class="lang-en">Calculate keyness scores and reference frequencies to ensure terms are academically significant.</p>
+                        <p class="lang-ar">احسب درجات الأهمية والتكرارات المرجعية لضمان أهمية المصطلحات أكاديمياً.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">3</div>
+                        <h3 class="lang-en">RAG Definitions</h3>
+                        <h3 class="lang-ar">تعريفات RAG</h3>
+                        <p class="lang-en">Gemini reads paper abstracts and generates definitions, translations, and examples — no hallucinations.</p>
+                        <p class="lang-ar">يقرأ Gemini ملخصات الأوراق ويولّد التعريفات والترجمات والأمثلة — بلا هلوسة.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">4</div>
+                        <h3 class="lang-en">Export & Publish</h3>
+                        <h3 class="lang-ar">التصدير والنشر</h3>
+                        <p class="lang-en">Export as XML for Lexonomy, or JSON/CSV for analysis. Your dictionary is ready to publish.</p>
+                        <p class="lang-ar">صدّر كـ XML لـ Lexonomy، أو JSON/CSV للتحليل. معجمك جاهز للنشر.</p>
+                    </div>
+                </div>
+
+                <div class="workflow-image-container">
+                    <img src="images/Workflow.png" alt="AMTA Workflow Diagram" class="workflow-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- APIs Section -->
+        <section class="apis-section">
+            <span class="apis-label lang-en">Powered By Academic APIs</span>
+            <span class="apis-label lang-ar">مدعوم بواجهات برمجة تطبيقات أكاديمية</span>
+            <div class="apis-grid">
+                <div class="api-badge"><i class="fas fa-robot"></i><span>Gemini 2.5 Flash</span></div>
+                <div class="api-badge" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);"><i class="fas fa-book-open"></i><span>Scopus API</span></div>
+                <div class="api-badge"><i class="fas fa-globe"></i><span>OpenAlex</span></div>
+                <div class="api-badge"><i class="fas fa-dna"></i><span>Europe PMC</span></div>
+                <div class="api-badge"><i class="fas fa-graduation-cap"></i><a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span>Semantic Scholar</span></a></div>
+                <div class="api-badge"><i class="fas fa-database"></i><span>CORE API</span></div>
+                <div class="api-badge"><i class="fas fa-book"></i><span>arXiv API</span></div>
+                <div class="api-badge"><i class="fas fa-search"></i><span>SerpApi</span></div>
+            </div>
+        </section>
+
+        <!-- What's New in v1.3 -->
+        <section>
+            <h2 class="section-title lang-en">What's New in Version 1.3</h2>
+            <h2 class="section-title lang-ar">الجديد في الإصدار 1.3</h2>
+            <p class="section-subtitle lang-en">The latest release focuses on resilience, transparency, and bilingual accessibility</p>
+            <p class="section-subtitle lang-ar">يركّز الإصدار الأحدث على المتانة والشفافية وإتاحة الوصول بلغتين</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shuffle"></i></div>
+                    <h3 class="lang-en">Resilient Multi-Provider AI</h3>
+                    <h3 class="lang-ar">ذكاء اصطناعي مرن متعدد المزودين</h3>
+                    <p class="lang-en">Gemini remains the primary engine, but users can now add a free Groq API key (cloud) or connect a local LM Studio server as automatic fallbacks. If a provider hits its quota, generation continues seamlessly with the next one in the chain.</p>
+                    <p class="lang-ar">يبقى Gemini محرك العمل الأساسي، ويمكن المستخدمين الآن إضافة مفتاح Groq مجاني (سحابياً) أو ربط خادم LM Studio محلي كمزودين احتياطيين تلقائيين؛ فعند نفاد حصة أحد المزودين ينتقل التوليد بسلاسة إلى المزود التالي في السلسلة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                    <h3 class="lang-en">Bilingual User Guide (EN/AR)</h3>
+                    <h3 class="lang-ar">دليل مستخدم ثنائي اللغة (إنجليزي/عربي)</h3>
+                    <p class="lang-en">The complete user guide is now professionally available in Modern Standard Arabic alongside the English original, with one-click language switching and export to PDF from inside the add-on.</p>
+                    <p class="lang-ar">أصبح دليل المستخدم الكامل متاحاً باحترافية باللغة العربية الفصحى إلى جانب النسخة الإنجليزية الأصلية، مع التبديل بين اللغتين بنقرة واحدة وتصدير الدليل بصيغة PDF من داخل الإضافة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-gauge-high"></i></div>
+                    <h3 class="lang-en">Adaptive Quota Management</h3>
+                    <h3 class="lang-ar">إدارة تكيفية لحصص الاستخدام</h3>
+                    <p class="lang-en">Smarter per-user rate limiting with adaptive pacing, automatic model discovery, and circuit-breaker protection keeps large batch runs stable within each provider's free-tier limits.</p>
+                    <p class="lang-ar">تحسين ذكي لضبط الطلبات لكل مستخدم مع وتيرة تكيفية واكتشاف تلقائي للنماذج وحماية بقواطع الدائرة، بما يضمن استقرار التشغيل الدفعي الكبير ضمن حدود الحصص المجانية لكل مزود.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3 class="lang-en">Extended Diagnostics</h3>
+                    <h3 class="lang-ar">تشخيص موسّع</h3>
+                    <p class="lang-en">A new Provider Settings dialog, per-provider connection tests, and a consolidated API Quotas &amp; Limits report make configuration and troubleshooting straightforward — no scripting required.</p>
+                    <p class="lang-ar">نافذة إعدادات جديدة للمزودين، واختبارات اتصال منفصلة لكل مزود، وتقرير موحّد لحصص واجهات البرمجة، تجعل الإعداد وحل المشكلات أمراً مباشراً دون الحاجة إلى أي برمجة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who Is This For? -->
+        <section>
+            <h2 class="section-title lang-en">Who Is This For?</h2>
+            <h2 class="section-title lang-ar">لمن هذه الأداة؟</h2>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon"><i class="fas fa-book-reader"></i></div>
+                    <h3 class="lang-en">Lexicographers & Terminologists</h3>
+                    <h3 class="lang-ar">المعجميون والمصطلحيون</h3>
+                    <p class="lang-en">Automate the drafting phase, eliminate manual scraping, and focus strictly on editing and review.</p>
+                    <p class="lang-ar">أتمت مرحلة الصياغة، وتخلص من الاستخراج اليدوي، وركز على التحرير والمراجعة.</p>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3 class="lang-en">Educators</h3>
+                    <h3 class="lang-ar">المعلمون</h3>
+                    <p class="lang-en">Create course-specific, bilingual glossaries for university students in minutes.</p>
+                    <p class="lang-ar">أنشئ مسردات ثنائية اللغة لمقررات جامعية في دقائق.</p>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon"><i class="fas fa-microscope"></i></div>
+                    <h3 class="lang-en">Researchers</h3>
+                    <h3 class="lang-ar">الباحثون</h3>
+                    <p class="lang-en">Analyze the terminology landscape and conceptual hierarchy of a new academic field quickly.</p>
+                    <p class="lang-ar">حلّل المشهد المصطلحي والتسلسل المفاهيمي لمجال أكاديمي جديد بسرعة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic Citation -->
+        <section>
+            <div class="citation-box">
+                <p class="lang-en"><strong>Academic Citation:</strong> If you use this tool or methodology in your research, please cite the foundational framework:<br>
+                Mandour, W. (2025, December 23). <em>AI-augmented Method of Triangulation Approach for Specialised Lexicography.</em> OSF. <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank">https://doi.org/10.17605/OSF.IO/8QB9V</a></p>
+                <p class="lang-ar"><strong>الاستشهاد الأكاديمي:</strong> إذا استخدمت هذه الأداة أو المنهجية في بحثك، يرجى الاستشهاد بالإطار الأساسي:<br>
+                مندور، و. (2025، 23 ديسمبر). <em>منهجية التثليث المعززة بالذكاء الاصطناعي للمعجم المتخصص.</em> OSF. <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank">https://doi.org/10.17605/OSF.IO/8QB9V</a></p>
+            </div>
+        </section>
+
+        <!-- Data Attribution -->
+        <section>
+            <div class="attribution-box">
+                <div class="attr-title">
+                    <i class="fas fa-database"></i>
+                    <span class="lang-en">Data Attribution &mdash; Semantic Scholar Open Data Platform</span>
+                    <span class="lang-ar">إسناد البيانات &mdash; منصة Semantic Scholar المفتوحة للبيانات</span>
+                </div>
+                <p class="lang-en attr-citation">This tool relies on scholarly metadata retrieved from the <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">Semantic Scholar Open Data Platform</a>. In accordance with their attribution guidelines, we hereby cite the platform as follows:</p>
+                <p class="lang-ar attr-citation">تعتمد هذه الأداة على البيانات الوصفية الأكاديمية المسترجعة من <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">منصة Semantic Scholar المفتوحة للبيانات</a>. ووفقًا لإرشادات الإسناد الخاصة بهم، نستشهد بالمنصة على النحو التالي:</p>
+                <p class="attr-citation" style="margin-top:12px;">
+                    Kinney, R.M., Anastasiades, C., Authur, R., Beltagy, I., Bragg, J., Buraczynski, A., Cachola, I., Candra, S., Chandrasekhar, Y., Cohan, A., Crawford, M., Downey, D., Dunkelberger, J., Etzioni, O., Evans, R., Feldman, S., Gorney, J., Graham, D.W., Hu, F., Huff, R., King, D., Kohlmeier, S., Kuehl, B., Langan, M., Lin, D., Liu, H., Lo, K., Lochner, J., MacMillan, K., Murray, T.C., Newell, C., Rao, S., Rohatgi, S., Sayre, P., Shen, S., Singh, A., Soldaini, L., Subramanian, S., Tanaka, A., Wade, A.D., Wagner, L.M., Wang, L.L., Wilhelm, C., Wu, C., Yang, J., Zamarron, A., van Zuylen, M., &amp; Weld, D.S. (2023). <em>The Semantic Scholar Open Data Platform.</em> ArXiv, abs/2301.10140. <a href="https://arxiv.org/abs/2301.10140" target="_blank" rel="noopener">https://arxiv.org/abs/2301.10140</a>
+                </p>
+                <p class="attr-note lang-en">Scholarly paper metadata and abstracts retrieved via the Semantic Scholar Academic Graph are licensed under the terms specified by the Semantic Scholar Open Data Platform. All rights to the underlying content remain with their respective publishers and authors.</p>
+                <p class="attr-note lang-ar">البيانات الوصفية والملخصات الأكاديمية المسترجعة عبر Semantic Scholar Academic Graph مرخصة وفق الشروط المحددة بواسطة منصة Semantic Scholar المفتوحة للبيانات. وتظل جميع حقوق المحتوى الأصلي محفوظة للناشرين والمؤلفين المعنيين.</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">Ready to Build Your Dictionary?</h2>
+            <h2 class="cta-title lang-ar">مستعد لصناعة معجمك؟</h2>
+            <p class="cta-subtitle lang-en">Launch the add-on from the Extensions menu in Google Sheets and start creating professional dictionaries in minutes.</p>
+            <p class="cta-subtitle lang-ar">شغّل الإضافة من قائمة الإضافات في جداول جوجل وابدأ في إنشاء قواميس احترافية في دقائق.</p>
+            <button class="cta-button" onclick="window.open('https://workspace.google.com/marketplace/app/amta_lexicography_assistant/331538166887', '_blank')">
+                <i class="fas fa-rocket"></i>
+                <span class="lang-en">Get Started Now</span>
+                <span class="lang-ar">ابدأ الآن</span>
+            </button>
+        </section>
+
+        <!-- Real-Time Analytics Dashboard (adapted for Google Sheets Add-on: no GitHub releases to count) -->
+        <section id="dashboard" style="margin: 64px 0;">
+            <h2 class="section-title lang-en">Live Statistics</h2>
+            <h2 class="section-title lang-ar" style="display:none;">الإحصاءات المباشرة</h2>
+            <div id="analytics-dashboard" style="max-width: 900px; margin: 0 auto;">
+                <!-- Top row: Marketplace availability cards (no GitHub releases, so we surface project status instead) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #4CAF50; box-shadow: 0 0 0 4px rgba(76,175,80,0.18); animation: amta-pulse 2s infinite;"></span>
+                            <span class="lang-en">Live</span>
+                            <span class="lang-ar">متاح</span>
+                        </div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Marketplace Status</span>
+                            <span class="lang-ar">حالة الإضافة</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--secondary); margin-bottom: 4px;">
+                            <i class="fas fa-table" style="font-size: 36px;"></i>
+                        </div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Google Sheets&trade;</span>
+                            <span class="lang-ar">جداول جوجل&trade;</span>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">2.5</div>
+                        <div style="font-size: 14px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Gemini Flash</span>
+                            <span class="lang-ar">جيمني فلاش</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GA-sourced visitor cards: Total Visitors (all-time) + Current Visitors (7d) -->
+                <div id="ga-visitors-row" style="display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--primary);"><i class="fas fa-users"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--primary); line-height: 1.1;" id="ga-total-visitors">—</div>
+                            <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                                <span class="lang-en">Total Visitors (all-time)</span>
+                                <span class="lang-ar">إجمالي الزوار (تراكمي)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                                <span class="lang-en">from Google Analytics</span>
+                                <span class="lang-ar">من Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-user-clock"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--secondary); line-height: 1.1;" id="ga-current-visitors">—</div>
+                            <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                                <span class="lang-en">Current Visitors (last 7 days)</span>
+                                <span class="lang-ar">الزوار الحاليون (آخر 7 أيام)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                                <span class="lang-en">from Google Analytics</span>
+                                <span class="lang-ar">من Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visitor info row: live visitor counter + geolocation -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-eye"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-status">
+                                <span class="lang-en">Welcome!</span>
+                                <span class="lang-ar">أهلاً بك!</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">You are visitor</span>
+                                <span class="lang-ar">أنت الزائر رقم</span>
+                                <strong id="stat-visitor-count" style="color: var(--secondary);">—</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                        <div style="font-size: 36px; color: var(--accent);"><i class="fas fa-map-marker-alt"></i></div>
+                        <div style="text-align: left;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-location">
+                                <span class="lang-en">Detecting…</span>
+                                <span class="lang-ar">جارٍ التحديد…</span>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray);">
+                                <span class="lang-en">Your location</span>
+                                <span class="lang-ar">موقعك</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); text-align: center;">
+                    <p style="font-size: 13px; color: var(--gray); margin: 0;">
+                        <span class="lang-en">AMTA is a Google Sheets&trade; Add-on &middot; <a href="https://workspace.google.com/marketplace/app/amta_lexicography_assistant/331538166887" target="_blank" rel="noopener" style="color: var(--secondary); font-weight: 600;">Install from Google Workspace Marketplace</a></span>
+                        <span class="lang-ar">AMTA إضافة لجداول جوجل&trade; &middot; <a href="https://workspace.google.com/marketplace/app/amta_lexicography_assistant/331538166887" target="_blank" rel="noopener" style="color: var(--secondary); font-weight: 600;">ثبّتها من متجر Google Workspace</a></span>
+                    </p>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 12px; opacity: 0.85;">
+                        <span class="lang-en">Visitor counter is per-browser &middot; geolocation detected via ipapi.co</span>
+                        <span class="lang-ar">عدّاد الزوار لكل متصفح &middot; يُحدَّد الموقع عبر ipapi.co</span>
+                    </p>
+                </div>
+            </div>
+            <style>@keyframes amta-pulse{0%,100%{box-shadow:0 0 0 4px rgba(76,175,80,0.18)}50%{box-shadow:0 0 0 8px rgba(76,175,80,0.08)}}</style>
+                        <!-- Visitors by Country — Interactive World Map (all-time, from Google Analytics) -->
+                <div id="ga-map-card" style="display: none; background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); margin-top: 32px;">
+                    <h3 style="font-size: 18px; color: var(--primary); margin-bottom: 6px;">
+                        <span class="lang-en">🌍 Visitors by Country</span>
+                        <span class="lang-ar">🌍 الزوار حسب الدولة</span>
+                    </h3>
+                    <p style="font-size: 12px; color: var(--gray); margin-bottom: 20px;">
+                        <span class="lang-en">All-time &middot; hover or tap a country for details</span>
+                        <span class="lang-ar">تراكمي &middot; مرر أو انقر على دولة لعرض التفاصيل</span>
+                    </p>
+                    <div id="world-map-container" style="width: 100%; position: relative; margin-bottom: 24px;">
+                        <svg id="world-map-svg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto; display: block;"></svg>
+                        <div id="map-tooltip" style="display: none; position: absolute; background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 13px; pointer-events: none; z-index: 100; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>
+                    </div>
+                    <div id="map-top-countries" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+                        <!-- Top-10 list populated by /js/visitors-map.js -->
+                    </div>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 20px; text-align: center;">
+                        <span class="map-total-visitors">—</span>
+                        <span class="lang-en"> visitors &middot; </span>
+                        <span class="lang-ar"> زائر &middot; </span>
+                        <span class="map-total-countries">—</span>
+                        <span class="lang-en"> countries &middot; from Google Analytics</span>
+                        <span class="lang-ar"> دولة &middot; من Google Analytics</span>
+                    </p>
+                </div>
+
+</section>
+
+        <!-- Footer (DO NOT CHANGE) -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <span class="lang-en">© 2025-2026 Waleed Mandour • </span>
+                    <span class="lang-ar">© 2025-2026 وليد مندور • </span>
+                    <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                </div>
+                <div class="footer-links">
+                    <span class="lang-en">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                        <a href="support.html">Support</a>
+                    </span>
+                    <span class="lang-ar">
+                        <a href="privacy.html">سياسة الخصوصية</a>
+                        <a href="terms.html">شروط الخدمة</a>
+                        <a href="support.html">الدعم</a>
+                    </span>
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="lang-en">Part of the <strong>waleedmandour.org/projects/</strong> portfolio</span>
+                    <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.feature-card, .workflow-step, .audience-card, .api-badge').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // ===== Live Statistics: Visitor Counter + Geolocation =====
+        // AMTA is a Google Sheets Add-on (no GitHub releases), so the dashboard
+        // surfaces only the visitor counter + geolocation. The top stat cards
+        // (Marketplace Status / Platform / Gemini version) are static.
+        (function() {
+            // Visitor counter (localStorage-based, per-browser)
+            var key = 'amta_visitors';
+            var count = parseInt(localStorage.getItem(key) || '0', 10);
+            count++;
+            localStorage.setItem(key, String(count));
+            var countEl = document.getElementById('stat-visitor-count');
+            if (countEl) {
+                var startTime = performance.now();
+                (function anim(now) {
+                    var p = Math.min((now - startTime) / 1200, 1);
+                    countEl.textContent = Math.round(count * (1 - Math.pow(1 - p, 3))).toLocaleString();
+                    if (p < 1) requestAnimationFrame(anim);
+                })(startTime);
+            }
+
+            // Geolocation via free IP API (no auth needed). Sends a GA event
+            // with the visitor's country so the site owner can see visitor
+            // geography in Google Analytics → Reports → Engagement → Events.
+            fetch('https://ipapi.co/json/')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (!locEl) return;
+                    if (data && data.country_name) {
+                        var city = data.city ? data.city + ', ' : '';
+                        var flag = data.country_code ? ' ' + String.fromCodePoint.apply(null, data.country_code.toUpperCase().split('').map(function(c){return 0x1F1E6 + c.charCodeAt(0) - 65;})) : '';
+                        locEl.innerHTML = '<span class="lang-en">' + city + data.country_name + flag + '</span><span class="lang-ar">' + city + data.country_name + flag + '</span>';
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'page_view', {event_category: 'geo', event_label: data.country_name, country_code: data.country_code});
+                        }
+                    } else {
+                        locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';
+                    }
+                })
+                .catch(function() {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (locEl) locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';
+                });
+        // ===== GA-sourced visitor stats (Total Visitors + Current Visitors 7d) =====
+        // Fetches /analytics.json (committed hourly by the
+        // .github/workflows/update-analytics.yml workflow). The file is
+        // only present after the site owner completes the one-time GA
+        // setup in docs/ANALYTICS_SETUP.md. Until then, this IIFE is a
+        // no-op — the GA cards stay hidden (display:none) and the
+        // per-browser 'Site Visitors' counter remains visible as a
+        // fallback. Once /analytics.json exists, this IIFE shows the GA
+        // cards with real numbers and hides the per-browser counter
+        // (since the GA numbers supersede it).
+        (async function() {
+            try {
+                // cache-busting query string so we always get the latest
+                // committed version (GitHub Pages serves with long max-age)
+                const resp = await fetch('/analytics.json?ts=' + Date.now());
+                if (!resp.ok) return;  // 404 — GA not configured yet, silently no-op
+                const data = await resp.json();
+                if (!data || !data.totals) return;
+
+                // Animate the count-up for both cards
+                function anim(id, target, dur) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const start = 0, t0 = performance.now();
+                    (function step(now) {
+                        const p = Math.min((now - t0) / dur, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.round(target * eased).toLocaleString();
+                        if (p < 1) requestAnimationFrame(step);
+                    })(t0);
+                }
+                anim('ga-total-visitors', data.totals.all_time_visitors || 0, 1500);
+                anim('ga-current-visitors', data.totals.last_7_days_visitors || 0, 1200);
+
+                // Show the GA row (switches from display:none to display:grid)
+                const gaRow = document.getElementById('ga-visitors-row');
+                if (gaRow) gaRow.style.display = 'grid';
+
+                // Hide the per-browser 'Site Visitors' counter card,
+                // since the GA numbers supersede it. The geolocation
+                // card (stat-visitor-location) stays visible.
+                const perBrowserCounter = document.getElementById('stat-visitor-status');
+                if (perBrowserCounter) {
+                    // Walk up to the card container (the parent of the
+                    // parent of stat-visitor-status is the card div).
+                    const card = perBrowserCounter.closest('div[style*="border-radius: 16px"]');
+                    if (card) card.style.display = 'none';
+                }
+            } catch(e) {
+                // Network error or JSON parse error — silently no-op.
+                // The GA cards stay hidden, the per-browser counter
+                // stays visible. Console-log for debugging only.
+                if (typeof console !== 'undefined' && console.log) {
+                    console.log('GA analytics fetch skipped:', e.message);
+                }
+            }
+        })();
+
+        })();
+    </script>
+    <script src="/js/visitors-map.js"></script>
+</body>
+</html>
