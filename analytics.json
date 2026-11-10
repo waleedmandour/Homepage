@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 693,
-    "all_time_pageviews": 2248,
-    "last_7_days_visitors": 28,
-    "last_30_days_visitors": 121
+    "all_time_visitors": 694,
+    "all_time_pageviews": 2249,
+    "last_7_days_visitors": 29,
+    "last_30_days_visitors": 122
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 132,
+      "visitors": 133,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -395,7 +395,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 25,
+      "visitors": 26,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -483,15 +483,15 @@
       "visitors": 14
     },
     {
+      "url": "waleedmandour.org/teaching/",
+      "pageviews": 42,
+      "visitors": 34
+    },
+    {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
       "pageviews": 41,
       "visitors": 15
-    },
-    {
-      "url": "waleedmandour.org/teaching/",
-      "pageviews": 41,
-      "visitors": 33
     }
   ],
-  "fetched_at": "2026-11-10T16:42:25Z"
+  "fetched_at": "2026-11-10T22:01:59Z"
 }
