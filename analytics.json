@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 695,
-    "all_time_pageviews": 2253,
-    "last_7_days_visitors": 27,
-    "last_30_days_visitors": 123
+    "all_time_visitors": 697,
+    "all_time_pageviews": 2255,
+    "last_7_days_visitors": 29,
+    "last_30_days_visitors": 125
   },
   "top_countries_all_time": [
     {
@@ -99,6 +99,13 @@
       "flag_emoji": "🇯🇴"
     },
     {
+      "country": "Singapore",
+      "country_code": "SG",
+      "country_numeric": "702",
+      "visitors": 6,
+      "flag_emoji": "🇸🇬"
+    },
+    {
       "country": "United Kingdom",
       "country_code": "GB",
       "country_numeric": "826",
@@ -132,13 +139,6 @@
       "country_numeric": "458",
       "visitors": 4,
       "flag_emoji": "🇲🇾"
-    },
-    {
-      "country": "Singapore",
-      "country_code": "SG",
-      "country_numeric": "702",
-      "visitors": 4,
-      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Sweden",
@@ -423,6 +423,12 @@
       "flag_emoji": "🇮🇳"
     },
     {
+      "country": "Singapore",
+      "country_code": "SG",
+      "visitors": 3,
+      "flag_emoji": "🇸🇬"
+    },
+    {
       "country": "Sweden",
       "country_code": "SE",
       "visitors": 2,
@@ -433,19 +439,13 @@
       "country_code": "BE",
       "visitors": 1,
       "flag_emoji": "🇧🇪"
-    },
-    {
-      "country": "Brazil",
-      "country_code": "BR",
-      "visitors": 1,
-      "flag_emoji": "🇧🇷"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 629,
-      "visitors": 346
+      "pageviews": 630,
+      "visitors": 347
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -464,8 +464,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 109,
-      "visitors": 37
+      "pageviews": 110,
+      "visitors": 38
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -493,5 +493,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-11T09:59:42Z"
+  "fetched_at": "2026-11-11T17:44:42Z"
 }
