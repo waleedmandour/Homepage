@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 694,
-    "all_time_pageviews": 2252,
-    "last_7_days_visitors": 30,
-    "last_30_days_visitors": 122
+    "all_time_visitors": 695,
+    "all_time_pageviews": 2253,
+    "last_7_days_visitors": 27,
+    "last_30_days_visitors": 123
   },
   "top_countries_all_time": [
     {
@@ -134,6 +134,13 @@
       "flag_emoji": "🇲🇾"
     },
     {
+      "country": "Singapore",
+      "country_code": "SG",
+      "country_numeric": "702",
+      "visitors": 4,
+      "flag_emoji": "🇸🇬"
+    },
+    {
       "country": "Sweden",
       "country_code": "SE",
       "country_numeric": "752",
@@ -174,13 +181,6 @@
       "country_numeric": "643",
       "visitors": 3,
       "flag_emoji": "🇷🇺"
-    },
-    {
-      "country": "Singapore",
-      "country_code": "SG",
-      "country_numeric": "702",
-      "visitors": 3,
-      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Thailand",
@@ -493,5 +493,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-11T02:21:54Z"
+  "fetched_at": "2026-11-11T09:59:42Z"
 }
