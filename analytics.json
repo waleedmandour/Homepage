@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 700,
-    "all_time_pageviews": 2259,
-    "last_7_days_visitors": 32,
-    "last_30_days_visitors": 127
+    "all_time_visitors": 703,
+    "all_time_pageviews": 2263,
+    "last_7_days_visitors": 35,
+    "last_30_days_visitors": 130
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 89,
+      "visitors": 90,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 32,
+      "visitors": 33,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -267,6 +267,13 @@
       "flag_emoji": "🇦🇩"
     },
     {
+      "country": "Australia",
+      "country_code": "AU",
+      "country_numeric": "036",
+      "visitors": 1,
+      "flag_emoji": "🇦🇺"
+    },
+    {
       "country": "Austria",
       "country_code": "AT",
       "country_numeric": "040",
@@ -383,7 +390,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 30,
+      "visitors": 31,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -407,7 +414,7 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 7,
+      "visitors": 8,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -435,17 +442,17 @@
       "flag_emoji": "🇸🇪"
     },
     {
-      "country": "Belgium",
-      "country_code": "BE",
+      "country": "Australia",
+      "country_code": "AU",
       "visitors": 1,
-      "flag_emoji": "🇧🇪"
+      "flag_emoji": "🇦🇺"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 631,
-      "visitors": 348
+      "pageviews": 632,
+      "visitors": 349
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -493,5 +500,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-12T13:26:38Z"
+  "fetched_at": "2026-11-12T21:14:41Z"
 }
