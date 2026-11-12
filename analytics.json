@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 697,
-    "all_time_pageviews": 2255,
-    "last_7_days_visitors": 29,
-    "last_30_days_visitors": 125
+    "all_time_visitors": 699,
+    "all_time_pageviews": 2257,
+    "last_7_days_visitors": 31,
+    "last_30_days_visitors": 127
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 85,
+      "visitors": 86,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -85,6 +85,13 @@
       "flag_emoji": "🇭🇰"
     },
     {
+      "country": "Singapore",
+      "country_code": "SG",
+      "country_numeric": "702",
+      "visitors": 8,
+      "flag_emoji": "🇸🇬"
+    },
+    {
       "country": "Ireland",
       "country_code": "IE",
       "country_numeric": "372",
@@ -97,13 +104,6 @@
       "country_numeric": "400",
       "visitors": 7,
       "flag_emoji": "🇯🇴"
-    },
-    {
-      "country": "Singapore",
-      "country_code": "SG",
-      "country_numeric": "702",
-      "visitors": 6,
-      "flag_emoji": "🇸🇬"
     },
     {
       "country": "United Kingdom",
@@ -401,7 +401,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 11,
+      "visitors": 12,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -409,6 +409,12 @@
       "country_code": "SA",
       "visitors": 7,
       "flag_emoji": "🇸🇦"
+    },
+    {
+      "country": "Singapore",
+      "country_code": "SG",
+      "visitors": 5,
+      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Canada",
@@ -421,12 +427,6 @@
       "country_code": "IN",
       "visitors": 3,
       "flag_emoji": "🇮🇳"
-    },
-    {
-      "country": "Singapore",
-      "country_code": "SG",
-      "visitors": 3,
-      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Sweden",
@@ -444,8 +444,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 630,
-      "visitors": 347
+      "pageviews": 631,
+      "visitors": 348
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -493,5 +493,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-11T23:49:54Z"
+  "fetched_at": "2026-11-12T04:50:49Z"
 }
