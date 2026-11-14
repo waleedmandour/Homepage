@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 703,
-    "all_time_pageviews": 2267,
-    "last_7_days_visitors": 31,
-    "last_30_days_visitors": 126
+    "all_time_visitors": 698,
+    "all_time_pageviews": 2261,
+    "last_7_days_visitors": 14,
+    "last_30_days_visitors": 112
   },
   "top_countries_all_time": [
     {
@@ -32,7 +32,7 @@
       "country": "China",
       "country_code": "CN",
       "country_numeric": "156",
-      "visitors": 86,
+      "visitors": 85,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -76,13 +76,6 @@
       "country_numeric": "124",
       "visitors": 9,
       "flag_emoji": "🇨🇦"
-    },
-    {
-      "country": "Singapore",
-      "country_code": "SG",
-      "country_numeric": "702",
-      "visitors": 9,
-      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Hong Kong",
@@ -139,6 +132,13 @@
       "country_numeric": "458",
       "visitors": 4,
       "flag_emoji": "🇲🇾"
+    },
+    {
+      "country": "Singapore",
+      "country_code": "SG",
+      "country_numeric": "702",
+      "visitors": 4,
+      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Sweden",
@@ -388,27 +388,27 @@
   ],
   "top_countries_last_30_days": [
     {
-      "country": "Oman",
-      "country_code": "OM",
-      "visitors": 30,
-      "flag_emoji": "🇴🇲"
-    },
-    {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 28,
+      "visitors": 27,
       "flag_emoji": "🇪🇬"
+    },
+    {
+      "country": "Oman",
+      "country_code": "OM",
+      "visitors": 25,
+      "flag_emoji": "🇴🇲"
     },
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 25,
+      "visitors": 24,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 11,
+      "visitors": 10,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -416,12 +416,6 @@
       "country_code": "SA",
       "visitors": 8,
       "flag_emoji": "🇸🇦"
-    },
-    {
-      "country": "Singapore",
-      "country_code": "SG",
-      "visitors": 6,
-      "flag_emoji": "🇸🇬"
     },
     {
       "country": "Canada",
@@ -446,13 +440,19 @@
       "country_code": "AU",
       "visitors": 1,
       "flag_emoji": "🇦🇺"
+    },
+    {
+      "country": "Brazil",
+      "country_code": "BR",
+      "visitors": 1,
+      "flag_emoji": "🇧🇷"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 632,
-      "visitors": 349
+      "pageviews": 630,
+      "visitors": 347
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -471,8 +471,8 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 110,
-      "visitors": 38
+      "pageviews": 109,
+      "visitors": 37
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -500,5 +500,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-14T07:10:12Z"
+  "fetched_at": "2026-11-14T14:37:26Z"
 }
