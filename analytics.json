@@ -2,8 +2,8 @@
   "property_id": "514716245",
   "totals": {
     "all_time_visitors": 703,
-    "all_time_pageviews": 2273,
-    "last_7_days_visitors": 19,
+    "all_time_pageviews": 2275,
+    "last_7_days_visitors": 20,
     "last_30_days_visitors": 107
   },
   "top_countries_all_time": [
@@ -464,13 +464,13 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 113,
+      "pageviews": 114,
       "visitors": 38
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 80,
-      "visitors": 14
+      "pageviews": 81,
+      "visitors": 15
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -493,5 +493,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-15T11:38:13Z"
+  "fetched_at": "2026-11-15T18:09:59Z"
 }
