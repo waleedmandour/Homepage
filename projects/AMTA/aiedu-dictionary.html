@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI in Education: English–Arabic Dictionary — 1,211 corpus-validated bilingual entries across 40 specialist domains, with RAG definitions, collocations, authentic examples and cited sources. Built with the AMTA Lexicography Assistant and published on Lexonomy (CC BY 4.0).">
+    <title>AI in Education: English–Arabic Dictionary - Dr. Waleed Mandour</title>
+    <!-- Google Analytics (G-WW4M0NCF1V — same measurement ID as the rest of waleedmandour.org) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WW4M0NCF1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WW4M0NCF1V');
+    </script>
+    <link rel="icon" type="image/png" href="images/AMTA.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #0A1C3C;
+            --secondary: #20B2AA;
+            --accent: #1A5F7A;
+            --accent-light: #20B2AA;
+            --accent-teal: #00695C;
+            --light: #f0f4f7;
+            --dark: #333;
+            --white: #ffffff;
+            --gray: #777;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.arabic {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+        }
+
+        body.arabic .container,
+        body.arabic main,
+        body.arabic section,
+        body.arabic div,
+        body.arabic .hero-content,
+        body.arabic .features-grid,
+        body.arabic .workflow-steps,
+        body.arabic .audience-grid {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .language-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(10, 28, 60, 0.9); border-radius: 30px;
+            padding: 8px 15px; backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .language-toggle button {
+            background: none; border: none; color: var(--white);
+            cursor: pointer; padding: 5px 12px; border-radius: 20px;
+            font-size: 0.9em; font-weight: 600; transition: var(--transition);
+        }
+        .language-toggle button.active {
+            background: var(--secondary); color: var(--white);
+        }
+        .lang-ar { display: none; }
+        body.arabic .lang-en { display: none; }
+        body.arabic .lang-ar { display: block; }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            padding: 40px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.08)"/></svg>');
+            opacity: 0.5;
+        }
+        .header-content {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px; position: relative; z-index: 1;
+        }
+        .header-text h1 { font-size: 2.5em; font-weight: 800; margin-bottom: 5px; }
+        .tagline { font-size: 1.2em; color: rgba(255,255,255,0.8); }
+        .header-photo-container {
+            width: 130px; height: 130px; border-radius: 50%;
+            overflow: hidden; border: 4px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(32, 178, 170, 0.3);
+        }
+        .header-photo { width: 100%; height: 100%; object-fit: cover; }
+
+        nav {
+            position: relative; z-index: 2;
+            display: flex; justify-content: center;
+            flex-wrap: wrap; gap: 20px;
+            background: rgba(10, 28, 60, 0.7);
+            padding: 15px 30px; border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px; margin: 30px auto 0;
+        }
+        nav a {
+            color: var(--white); text-decoration: none;
+            font-weight: 600; font-size: 1.1em;
+            transition: var(--transition); padding: 5px 0; position: relative;
+        }
+        nav a:after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 0; background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        body.arabic nav a:after { left: auto; right: 0; }
+        nav a:hover:after { width: 100%; }
+        nav a.active { color: var(--secondary); }
+        nav a.active:after { width: 100%; }
+
+        /* ===== ANIMATED DICT LOGO ===== */
+        .app-logo-container {
+            position: relative; width: 180px; height: 180px;
+            margin: 0 auto 40px;
+            display: flex; align-items: center; justify-content: center;
+            animation: amta-float 6s ease-in-out infinite;
+        }
+        .app-logo-frame {
+            width: 100%; height: 100%; position: relative;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1) inset, 0 0 30px rgba(32,178,170,0.3);
+            padding: 15px; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        }
+        .app-logo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2) inset, 0 0 40px rgba(32,178,170,0.4);
+        }
+        .app-logo-icon {
+            font-size: 52px; color: var(--white);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+        .app-logo-wordmark {
+            font-weight: 800; font-size: 1.35em; color: var(--white);
+            letter-spacing: 1px; line-height: 1.2;
+        }
+        .app-logo-sub {
+            font-size: 0.75em; color: rgba(255,255,255,0.8); font-weight: 600;
+        }
+        .app-logo-container::before {
+            content: ''; position: absolute; width: 165px; height: 165px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(32,178,170,0.2) 0%, rgba(26,95,122,0.2) 100%);
+            animation: amta-rotate 20s linear infinite; z-index: -1;
+        }
+        .app-logo-container::after {
+            content: ''; position: absolute; width: 185px; height: 185px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            animation: amta-rotate 25s linear infinite reverse; z-index: -2;
+        }
+        .app-logo-frame::after {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            background-size: 300% 300%;
+            animation: amta-shine 8s ease-in-out infinite;
+            pointer-events: none; z-index: 1;
+        }
+        @keyframes amta-float { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-10px) rotate(0.5deg)} }
+        @keyframes amta-rotate { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+        @keyframes amta-shine { 0%{background-position:-100% -100%} 100%{background-position:200% 200%} }
+
+        /* ===== HERO ===== */
+        .hero { position: relative; padding: 40px 0; text-align: center; margin-bottom: 40px; }
+        .hero-content { position: relative; z-index: 1; text-align: center; max-width: 800px; margin: 0 auto; }
+        .coming-soon-badge {
+            display: inline-block; background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); padding: 8px 24px; border-radius: 30px;
+            font-size: 0.9em; font-weight: 700; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+        }
+        .hero h1 { font-size: 2.8em; font-weight: 800; margin-bottom: 15px; color: var(--primary); }
+        .hero-subtitle { font-size: 1.3em; color: var(--accent); margin-bottom: 20px; font-weight: 600; }
+        .hero-description { font-size: 1.1em; color: var(--gray); max-width: 700px; margin: 0 auto 30px; line-height: 1.8; }
+        .hero-cta {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); padding: 14px 36px; border-radius: 30px;
+            text-decoration: none; font-size: 1.1em; font-weight: 700;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+            margin: 0 8px 12px;
+        }
+        .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(32, 178, 170, 0.4); }
+        .hero-cta.hero-cta-secondary {
+            background: var(--white); color: var(--accent);
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .hero-cta.hero-cta-secondary:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;
+            padding: 30px; background: var(--white); border-radius: 20px;
+            box-shadow: var(--shadow); margin-bottom: 60px;
+        }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5em; font-weight: 800; color: var(--secondary); }
+        .stat-label { font-size: 0.95em; color: var(--gray); margin-top: 5px; }
+
+        /* ===== SECTIONS ===== */
+        .section-title { font-size: 2em; font-weight: 700; text-align: center; margin-bottom: 15px; color: var(--primary); }
+        .section-subtitle { text-align: center; color: var(--gray); font-size: 1.1em; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* ===== FEATURES ===== */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .feature-card {
+            background: var(--white); padding: 30px; border-radius: 20px;
+            box-shadow: var(--shadow); transition: var(--transition);
+            border-top: 4px solid var(--secondary);
+        }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .feature-icon {
+            width: 60px; height: 60px; border-radius: 15px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .feature-icon i { font-size: 28px; color: var(--white); }
+        .feature-card h3 { font-size: 1.3em; margin-bottom: 12px; color: var(--primary); }
+        .feature-card p { color: var(--gray); line-height: 1.7; }
+
+        /* ===== WORKFLOW ===== */
+        .workflow-section { background: var(--white); padding: 60px 0; border-radius: 30px; margin-bottom: 60px; box-shadow: var(--shadow); }
+        .workflow-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .workflow-step { text-align: center; position: relative; }
+        .workflow-number {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); font-size: 1.3em; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px;
+        }
+        .workflow-step h3 { font-size: 1.15em; margin-bottom: 8px; color: var(--primary); }
+        .workflow-step p { color: var(--gray); font-size: 0.95em; }
+
+        .workflow-link { text-align: center; margin-top: 40px; }
+        .workflow-link a {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--white); padding: 13px 32px; border-radius: 30px;
+            text-decoration: none; font-size: 1.05em; font-weight: 700;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+        }
+        .workflow-link a:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(32, 178, 170, 0.4); }
+
+        /* ===== BUILT-ON BADGES ===== */
+        .apis-section { text-align: center; margin-bottom: 60px; }
+        .apis-label { display: block; font-size: 1.3em; font-weight: 700; color: var(--primary); margin-bottom: 25px; }
+        .apis-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .api-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white); padding: 12px 20px; border-radius: 12px;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.95em; font-weight: 600;
+            transition: var(--transition); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .api-badge:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+        .api-badge i { font-size: 1.2em; }
+
+        /* ===== CITATION ===== */
+        .citation-box {
+            background: var(--light); border-left: 4px solid var(--secondary);
+            padding: 25px 30px; border-radius: 12px; margin: 40px auto;
+            max-width: 800px; font-style: italic; color: var(--dark);
+        }
+        .citation-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .citation-box a:hover { text-decoration: underline; }
+
+        /* ===== ATTRIBUTION ===== */
+        .attribution-box {
+            background: #f8fafc; border-left: 4px solid var(--accent);
+            padding: 25px 30px; border-radius: 12px; margin: 40px auto;
+            max-width: 800px; color: var(--dark); font-size: 0.95em; line-height: 1.7;
+        }
+        .attribution-box .attr-title {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; color: var(--primary); font-size: 1.05em;
+            margin-bottom: 12px; font-style: normal;
+        }
+        .attribution-box .attr-title i { color: var(--accent); }
+        .attribution-box .attr-note {
+            font-size: 0.85em; color: var(--gray); margin-top: 12px;
+            padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.1);
+            font-style: italic;
+        }
+        .attribution-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .attribution-box a:hover { text-decoration: underline; }
+        .attribution-box .attr-citation { font-style: normal; word-break: break-word; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white); text-align: center; padding: 60px 30px;
+            border-radius: 30px; margin-bottom: 60px;
+        }
+        .cta-title { font-size: 2em; font-weight: 700; margin-bottom: 15px; }
+        .cta-subtitle { font-size: 1.1em; opacity: 0.9; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--white); color: var(--primary);
+            padding: 14px 36px; border-radius: 30px;
+            text-decoration: none; font-size: 1.1em; font-weight: 700;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; cursor: pointer;
+            margin: 0 8px 12px;
+        }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+
+        /* ===== FOOTER ===== */
+        .footer { text-align: center; padding: 40px 0; color: var(--gray); font-size: 14px; border-top: 1px solid var(--light); margin-top: 64px; }
+        .footer-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .footer-email { color: var(--primary); text-decoration: none; font-weight: 600; transition: var(--transition); }
+        .footer-email:hover { color: var(--secondary); }
+        .footer a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+        .footer a:hover { color: var(--secondary); text-decoration: underline; }
+        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .footer-links a { padding: 0 10px; position: relative; }
+        .footer-links a:not(:last-child)::after { content: '|'; position: absolute; right: -5px; color: var(--gray); }
+        body.arabic .footer-links a:not(:last-child)::after { right: auto; left: -5px; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .app-logo-container { width: 140px; height: 140px; margin-bottom: 30px; }
+            .app-logo-container::before { width: 130px; height: 130px; }
+            .app-logo-container::after { width: 150px; height: 150px; }
+            .app-logo-frame { border-radius: 25px; padding: 12px; }
+            .hero h1 { font-size: 2em; }
+            .hero-subtitle { font-size: 1.1em; }
+            .section-title { font-size: 1.6em; }
+            .features-grid, .workflow-steps, .audience-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 20px; }
+            .stat-number { font-size: 2em; }
+            nav { gap: 12px; padding: 12px 20px; }
+            nav a { font-size: 0.95em; }
+        }
+        @media (max-width: 480px) {
+            .header-content { flex-direction: column; }
+            .app-logo-container { width: 120px; height: 120px; margin-bottom: 25px; }
+            .app-logo-container::before { width: 110px; height: 110px; }
+            .app-logo-container::after { width: 130px; height: 130px; }
+            .app-logo-frame { border-radius: 20px; padding: 10px; }
+            .hero h1 { font-size: 1.6em; }
+            .hero-description { font-size: 0.95em; }
+            .feature-card { padding: 20px; }
+            .container { padding: 0 16px; }
+            nav { flex-direction: column; gap: 10px; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-text">
+                <h1 class="lang-en">Dr. Waleed Mandour</h1>
+                <h1 class="lang-ar">د. وليد مندور</h1>
+                <p class="tagline lang-en">PhD in Applied Linguistics | Assistant Lecturer | SQU</p>
+                <p class="tagline lang-ar">دكتوراه في اللغويات التطبيقية | محاضر مساعد | جامعة السلطان قابوس</p>
+            </div>
+            <div class="header-photo-container">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocLEvz_bqpHSE1kp686DyWgAo39dKPGkwEMYMkCqjfj4bkabum9h=s288-c-no" alt="Dr. Waleed Mandour" class="header-photo">
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul style="list-style:none;display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+                    <li><a href="https://waleedmandour.org/" class="lang-en">Home</a><a href="https://waleedmandour.org/" class="lang-ar">الرئيسية</a></li>
+                    <li><a href="https://waleedmandour.org/research/" class="lang-en">Research</a><a href="https://waleedmandour.org/research/" class="lang-ar">البحث العلمي</a></li>
+                    <li><a href="https://waleedmandour.org/publications/" class="lang-en">Publications</a><a href="https://waleedmandour.org/publications/" class="lang-ar">المنشورات</a></li>
+                    <li><a href="https://waleedmandour.org/projects/" class="lang-en">Projects</a><a href="https://waleedmandour.org/projects/" class="lang-ar">المشاريع</a></li>
+                    <li><a href="https://waleedmandour.org/teaching/" class="lang-en">Teaching</a><a href="https://waleedmandour.org/teaching/" class="lang-ar">التدريس</a></li>
+                    <li><a href="https://waleedmandour.org/community/" class="lang-en">Community</a><a href="https://waleedmandour.org/community/" class="lang-ar">خدمة المجتمع</a></li>
+                    <li><a href="https://waleedmandour.org/news/" class="lang-en">News</a><a href="https://waleedmandour.org/news/" class="lang-ar">الأخبار</a></li>
+                    <li><a href="https://waleedmandour.org/contact/" class="lang-en">Contact</a><a href="https://waleedmandour.org/contact/" class="lang-ar">اتصل بي</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="app-logo-container">
+                    <div class="app-logo-frame">
+                        <i class="fas fa-book-open app-logo-icon"></i>
+                        <div class="app-logo-wordmark">AiEdu</div>
+                        <div class="app-logo-sub">EN&nbsp;&harr;&nbsp;AR</div>
+                    </div>
+                </div>
+
+                <div class="coming-soon-badge lang-en">
+                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; Live on Lexonomy &middot; Open Access (CC BY 4.0)
+                </div>
+                <div class="coming-soon-badge lang-ar">
+                    <i class="fas fa-circle" style="font-size: 8px; color: #4CAF50;"></i>&nbsp; متاح على منصة Lexonomy &middot; وصول مفتوح (CC BY 4.0)
+                </div>
+
+                <h1 class="lang-en">AI in Education: English–Arabic Dictionary</h1>
+                <h1 class="lang-ar">معجم الذكاء الاصطناعي في التعليم: إنجليزي–عربي</h1>
+
+                <div class="hero-subtitle lang-en">The first dictionary published with the AMTA lexicographic framework</div>
+                <div class="hero-subtitle lang-ar">أول معجم يُنشر باستخدام إطار AMTA المعجمي</div>
+
+                <p class="hero-description lang-en">
+                    A comprehensive bilingual dictionary of Artificial Intelligence in Education terminology, compiled with the AMTA Lexicography Assistant and published on Lexonomy, an open-source dictionary platform. Each of its 1,211 entries pairs an English term with an Arabic equivalent and offers corpus-validated definitions in both languages, authentic examples, collocations, and citations to real research papers — grounded in academic literature rather than raw model output.
+                </p>
+                <p class="hero-description lang-ar">
+                    معجم ثنائي اللغة شامل لمصطلحات الذكاء الاصطناعي في التعليم، أُعدّ باستخدام مساعد AMTA المعجمي ونُشر على منصة Lexonomy مفتوحة المصدر. يجمع كل مدخل من مدخلاته البالغ عددها 1,211 بين المصطلح الإنجليزي ومقابله العربي، مع تعريفات موثّقة إحصائياً باللغتين وأمثلة أصيلة وتلازمات لفظية وإحالات إلى أوراق بحثية حقيقية — كل ذلك مستند إلى الأدبيات الأكاديمية لا إلى مخرجات النماذج الخام.
+                </p>
+
+                <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank" rel="noopener" class="hero-cta">
+                    <i class="fas fa-book-open"></i>
+                    <span class="lang-en">Open the Dictionary</span>
+                    <span class="lang-ar">افتح المعجم</span>
+                </a>
+                <a href="index.html" class="hero-cta hero-cta-secondary">
+                    <i class="fas fa-table"></i>
+                    <span class="lang-en">About the AMTA Assistant</span>
+                    <span class="lang-ar">عن مساعد AMTA</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number">1,211</div>
+                <div class="stat-label lang-en">Terms</div>
+                <div class="stat-label lang-ar">مصطلح</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">40</div>
+                <div class="stat-label lang-en">Specialist Domains</div>
+                <div class="stat-label lang-ar">مجالاً تخصصياً</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">EN&#8646;AR</div>
+                <div class="stat-label lang-en">Fully Bilingual</div>
+                <div class="stat-label lang-ar">ثنائي اللغة بالكامل</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">7,000+</div>
+                <div class="stat-label lang-en">Collocations</div>
+                <div class="stat-label lang-ar">تلازمة لفظية</div>
+            </div>
+        </div>
+
+        <!-- What's Inside Section -->
+        <section>
+            <h2 class="section-title lang-en">What&rsquo;s Inside</h2>
+            <h2 class="section-title lang-ar">ماذا يتضمن المعجم؟</h2>
+            <p class="section-subtitle lang-en">Every entry is a complete micro-lesson in how the term is defined, used, and researched</p>
+            <p class="section-subtitle lang-ar">كل مدخل هو درس متكامل في تعريف المصطلح واستخدامه وأبحاثه</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3 class="lang-en">Bilingual Entries</h3>
+                    <h3 class="lang-ar">مدخلات ثنائية اللغة</h3>
+                    <p class="lang-en">Each English term is paired with an Arabic equivalent and parallel definitions in both languages, with Arabic definitions following a consistent scholarly phrasing (&#1610;&#1588;&#1610;&#1585; &#1575;&#1604;&#1605;&#1589;&#1591;&#1604;&#1581; &#1573;&#1604;&#1609;&hellip;).</p>
+                    <p class="lang-ar">يُقترن كل مصطلح إنجليزي بمقابله العربي وتعريف موازٍ باللغتين، مع صياغة عربية موحّدة للتعريفات (&#1610;&#1588;&#1610;&#1585; &#1575;&#1604;&#1605;&#1589;&#1591;&#1604;&#1581; &#1573;&#1604;&#1609;&hellip;).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 class="lang-en">Grounded in Real Research</h3>
+                    <h3 class="lang-ar">مستند إلى بحث حقيقي</h3>
+                    <p class="lang-en">Definitions were drafted from the abstracts of actual papers, and every entry cites an influential source with full bibliographic details and a DOI link &mdash; over 1,150 cited papers in total.</p>
+                    <p class="lang-ar">صيغت التعريفات من ملخصات أوراق بحثية فعلية، ويستشهد كل مدخل بورقة بحثية مؤثرة مع بياناتها الببليوغرافية الكاملة ورابط DOI &mdash; بأكثر من 1,150 ورقة مستشهد بها.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-link"></i></div>
+                    <h3 class="lang-en">Collocations with Parts of Speech</h3>
+                    <h3 class="lang-ar">تلازمات لفظية مع أنواع الكلام</h3>
+                    <p class="lang-en">More than 7,000 authentic word combinations tagged by grammatical function &mdash; noun (&#1575;&#1587;&#1605;), verb (&#1601;&#1593;&#1604;), or adjective (&#1589;&#1601;&#1577;) &mdash; showing how each term really behaves in academic writing.</p>
+                    <p class="lang-ar">أكثر من 7,000 تلازمة لفظية أصيلة مصنّفة وظيفياً &mdash; اسم أو فعل أو صفة &mdash; توضح السلوك اللغوي الحقيقي لكل مصطلح في الكتابة الأكاديمية.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h3 class="lang-en">Authentic Usage Examples</h3>
+                    <h3 class="lang-ar">أمثلة استخدام أصيلة</h3>
+                    <p class="lang-en">Every entry includes a real-life example sentence with an Arabic translation, with the key term highlighted so learners see the term in genuine context.</p>
+                    <p class="lang-ar">يتضمن كل مدخل مثالاً واقعياً مع ترجمته العربية، مع إبراز المصطلح الأساسي ليرى المتعلم المصطلح في سياقه الحقيقي.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sitemap"></i></div>
+                    <h3 class="lang-en">40 Specialist Domains</h3>
+                    <h3 class="lang-ar">40 مجالاً تخصصياً</h3>
+                    <p class="lang-en">Entries are organised across the full landscape of AI in Education &mdash; from Intelligent Tutoring Systems and Learning Analytics to Ethics, Policy, and Teacher Support.</p>
+                    <p class="lang-ar">تنتظم المدخلات في خريطة الذكاء الاصطناعي في التعليم كاملة &mdash; من أنظمة التدريس الذكية وتحليلات التعلم إلى الأخلاقيات والسياسات ودعم المعلمين.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-magnifying-glass"></i></div>
+                    <h3 class="lang-en">Corpus Exploration Links</h3>
+                    <h3 class="lang-ar">روابط استكشاف المدونات</h3>
+                    <p class="lang-en">Each entry links to SKELL, so researchers can see how the term is actually used across thousands of published academic texts.</p>
+                    <p class="lang-ar">يرتبط كل مدخل بمنصة SKELL ليطّلع الباحث على الاستخدام الفعلي للمصطلح في آلاف النصوص الأكاديمية المنشورة.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-volume-high"></i></div>
+                    <h3 class="lang-en">Audio Pronunciation</h3>
+                    <h3 class="lang-ar">نطق صوتي</h3>
+                    <p class="lang-en">British English audio is built into every entry, so learners and students can hear each term pronounced correctly as they browse.</p>
+                    <p class="lang-ar">نطق بالإنجليزية البريطانية مدمج في كل مدخل، ليستمع الطلاب والمتعلمون إلى النطق الصحيح لكل مصطلح أثناء التصفح.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fab fa-creative-commons"></i></div>
+                    <h3 class="lang-en">Openly Licensed</h3>
+                    <h3 class="lang-ar">رخصة مفتوحة</h3>
+                    <p class="lang-en">The dictionary is freely accessible online and published under Creative Commons Attribution (CC BY 4.0) &mdash; share and adapt it with attribution.</p>
+                    <p class="lang-ar">المعجم متاح مجاناً على الإنترنت ومُصرّح بموجب رخصة المشاع الإبداعي CC BY 4.0 &mdash; شاركه وكيّفه مع نسبه إلى صاحبه.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Built with AMTA Section -->
+        <section class="workflow-section">
+            <div class="container">
+                <h2 class="section-title lang-en">Built with the AMTA Framework</h2>
+                <h2 class="section-title lang-ar">بُني بإطار AMTA</h2>
+                <p class="section-subtitle lang-en">From raw academic data to a published, open-access dictionary &mdash; the same pipeline the AMTA Lexicography Assistant automates</p>
+                <p class="section-subtitle lang-ar">من البيانات الأكاديمية الخام إلى معجم منشور متاح للجميع &mdash; المسار نفسه الذي يؤتمته مساعد AMTA المعجمي</p>
+
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="workflow-number">1</div>
+                        <h3 class="lang-en">Term Discovery</h3>
+                        <h3 class="lang-ar">اكتشاف المصطلحات</h3>
+                        <p class="lang-en">Domain terms were harvested from real research papers via 8+ academic APIs, including Semantic Scholar, Scopus, OpenAlex, Europe PMC, CORE, and arXiv.</p>
+                        <p class="lang-ar">جُمعت مصطلحات المجال من أوراق بحثية حقيقية عبر أكثر من 8 واجهات أكاديمية، منها Semantic Scholar وScopus وOpenAlex وEurope PMC وCORE وarXiv.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">2</div>
+                        <h3 class="lang-en">Statistical Validation</h3>
+                        <h3 class="lang-ar">التحقق الإحصائي</h3>
+                        <p class="lang-en">Keyness scores and reference frequencies against the BAWE corpus confirmed that every term carries genuine academic usage.</p>
+                        <p class="lang-ar">أكدت درجات الأهمية والتكرارات المرجعية مقابل مجموعة BAWE المرجعية أن كل مصطلح يحمل استخداماً أكاديمياً حقيقياً.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">3</div>
+                        <h3 class="lang-en">RAG Definitions</h3>
+                        <h3 class="lang-ar">تعريفات RAG</h3>
+                        <p class="lang-en">Gemini read the abstracts of real papers before drafting each definition, Arabic translation, and example &mdash; minimising hallucination.</p>
+                        <p class="lang-ar">قرأ Gemini ملخصات الأوراق البحثية الحقيقية قبل صياغة كل تعريف وترجمة عربية ومثال &mdash; بما يقلّص الهلوسة إلى أدنى حد.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">4</div>
+                        <h3 class="lang-en">Export &amp; Publication</h3>
+                        <h3 class="lang-ar">التصدير والنشر</h3>
+                        <p class="lang-en">The finished dictionary was exported as Lexonomy-ready XML from the AMTA Assistant and published as an open, searchable online dictionary.</p>
+                        <p class="lang-ar">صُدّر المعجم المكتمل بتنسيق XML الجاهز لمنصة Lexonomy من مساعد AMTA، ونُشر كمعجم رقمي مفتوح وقابل للبحث.</p>
+                    </div>
+                </div>
+
+                <div class="workflow-link">
+                    <a href="index.html">
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="lang-en">Learn more about the AMTA Lexicography Assistant</span>
+                        <span class="lang-ar">تعرّف أكثر على مساعد AMTA المعجمي</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Built-on Stack Section -->
+        <section class="apis-section">
+            <span class="apis-label lang-en">Built On Open Infrastructure</span>
+            <span class="apis-label lang-ar">مبني على بنية تحتية مفتوحة</span>
+            <div class="apis-grid">
+                <div class="api-badge"><i class="fas fa-table"></i><span>AMTA Lexicography Assistant</span></div>
+                <div class="api-badge" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);"><i class="fas fa-book"></i><span>Lexonomy (open-source)</span></div>
+                <div class="api-badge"><i class="fas fa-robot"></i><span>Gemini 2.5 Flash</span></div>
+                <div class="api-badge"><i class="fas fa-graduation-cap"></i><span>Semantic Scholar</span></div>
+                <div class="api-badge"><i class="fas fa-database"></i><span>BAWE Corpus</span></div>
+                <div class="api-badge"><i class="fas fa-volume-high"></i><span>VoiceRSS TTS</span></div>
+            </div>
+        </section>
+
+        <!-- Academic Citation -->
+        <section>
+            <div class="citation-box">
+                <p class="lang-en"><strong>How to cite this dictionary:</strong><br>
+                Mandour, W. (2026). <em>AI in Education: English&ndash;Arabic Dictionary.</em> Published on Lexonomy. <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank">https://www.lexonomy.eu/dictionary/AiEdu</a> (CC BY 4.0).<br>
+                If you use the underlying methodology, please also cite the foundational framework:<br>
+                Mandour, W. (2025, December 23). <em>AI-augmented Method of Triangulation Approach for Specialised Lexicography.</em> OSF. <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank">https://doi.org/10.17605/OSF.IO/8QB9V</a></p>
+                <p class="lang-ar"><strong>كيفية الاستشهاد بهذا المعجم:</strong><br>
+                مندور، و. (2026). <em>معجم الذكاء الاصطناعي في التعليم: إنجليزي&ndash;عربي.</em> منشور على منصة Lexonomy. <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank">https://www.lexonomy.eu/dictionary/AiEdu</a> (CC BY 4.0).<br>
+                وإذا استخدمت المنهجية الأساسية، يرجى الاستشهاد أيضاً بالإطار التأسيسي:<br>
+                مندور، و. (2025، 23 ديسمبر). <em>منهجية التثليث المعززة بالذكاء الاصطناعي للمعجم المتخصص.</em> OSF. <a href="https://doi.org/10.17605/OSF.IO/8QB9V" target="_blank">https://doi.org/10.17605/OSF.IO/8QB9V</a></p>
+            </div>
+        </section>
+
+        <!-- Attribution -->
+        <section>
+            <div class="attribution-box">
+                <div class="attr-title">
+                    <i class="fas fa-circle-info"></i>
+                    <span class="lang-en">About This Publication</span>
+                    <span class="lang-ar">حول هذا المنشور</span>
+                </div>
+                <p class="lang-en attr-citation">The dictionary was compiled with the <a href="index.html">AMTA Lexicography Assistant</a> and is hosted on <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank" rel="noopener">Lexonomy</a>, an open-source dictionary writing system (MIT licence). The dictionary content is released under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0 International licence</a>. Full data attribution for scholarly metadata is available on the <a href="index.html">AMTA Assistant page</a>.</p>
+                <p class="lang-ar attr-citation">أُعدّ هذا المعجم باستخدام <a href="index.html">مساعد AMTA المعجمي</a> ويُستضاف على منصة <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank" rel="noopener">Lexonomy</a>، وهي نظام مفتوح المصدر لكتابة القواميس (رخصة MIT). ويُفرَج عن محتوى المعجم بموجب <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">رخصة المشاع الإبداعي ونسب المصنف 4.0 الدولية</a>. ويمكن الاطلاع على الإسناد الكامل للبيانات الأكاديمية في <a href="index.html">صفحة مساعد AMTA</a>.</p>
+                <p class="attr-note lang-en">Scholarly metadata and abstracts were retrieved via the Semantic Scholar Open Data Platform (Kinney et al., 2023). Definitions and translations were AI-drafted from real paper abstracts and curated by the author.</p>
+                <p class="attr-note lang-ar">جُمعت البيانات الوصفية والملخصات الأكاديمية عبر منصة Semantic Scholar المفتوحة للبيانات (Kinney وآخرون، 2023). وقد صيغت التعريفات والترجمات بالذكاء الاصطناعي استناداً إلى ملخصات أوراق حقيقية ثم راجعها المؤلف ونسّقها.</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title lang-en">The First of a Series</h2>
+            <h2 class="cta-title lang-ar">أول معجم في سلسلة</h2>
+            <p class="cta-subtitle lang-en">Further specialised dictionaries are being compiled with the same open-source lexicographic pipeline. Install the AMTA Assistant and build yours.</p>
+            <p class="cta-subtitle lang-ar">يجري الآن إعداد مزيد من المعاجم المتخصصة بالمسار المعجمي مفتوح المصدر نفسه. ثبّت مساعد AMTA وابنِ معجمك أنت أيضاً.</p>
+            <a class="cta-button" href="https://workspace.google.com/marketplace/app/amta_lexicography_assistant/331538166887" target="_blank" rel="noopener">
+                <i class="fas fa-rocket"></i>
+                <span class="lang-en">Get the AMTA Assistant</span>
+                <span class="lang-ar">احصل على مساعد AMTA</span>
+            </a>
+            <a class="cta-button" href="index.html" style="background: rgba(255,255,255,0.15); color: var(--white); border: 2px solid rgba(255,255,255,0.5);">
+                <i class="fas fa-table"></i>
+                <span class="lang-en">Explore the AMTA Project</span>
+                <span class="lang-ar">استكشف مشروع AMTA</span>
+            </a>
+        </section>
+
+        <!-- Footer (DO NOT CHANGE) -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <span class="lang-en">© 2025-2026 Waleed Mandour • </span>
+                    <span class="lang-ar">© 2025-2026 وليد مندور • </span>
+                    <a href="mailto:w.abumandour@squ.edu.om" class="footer-email">w.abumandour@squ.edu.om</a>
+                </div>
+                <div class="footer-links">
+                    <span class="lang-en">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                        <a href="support.html">Support</a>
+                    </span>
+                    <span class="lang-ar">
+                        <a href="privacy.html">سياسة الخصوصية</a>
+                        <a href="terms.html">شروط الخدمة</a>
+                        <a href="support.html">الدعم</a>
+                    </span>
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="lang-en">Part of the <strong>waleedmandour.org/projects/</strong> portfolio</span>
+                    <span class="lang-ar">جزء من محفظة <strong>waleedmandour.org/projects/</strong></span>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById('lang-en').addEventListener('click', function() {
+            document.body.classList.remove('arabic');
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-ar').classList.remove('active');
+        });
+        document.getElementById('lang-ar').addEventListener('click', function() {
+            document.body.classList.add('arabic');
+            document.getElementById('lang-ar').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.feature-card, .workflow-step, .audience-card, .api-badge').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

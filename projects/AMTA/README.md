@@ -14,6 +14,14 @@ AMTA Lexicography Assistant operationalises the AI-augmented **Method of Triangu
 3. **RAG Definitions** — reads the abstracts of real papers before prompting Gemini to draft definitions, translations (Arabic, Spanish, French, Chinese, and more), and usage examples — minimising hallucination.
 4. **Export & Publish** — exports to Lexonomy-ready XML, JSON, or CSV directly to Google Drive.
 
+## Published dictionaries
+
+| Dictionary | Terms | Domains | Access |
+|---|---|---|---|
+| [AI in Education: English–Arabic Dictionary](aiedu-dictionary.html) | 1,211 | 40 | [Live on Lexonomy](https://www.lexonomy.eu/dictionary/AiEdu) · CC BY 4.0 |
+
+*Further specialised dictionaries are being compiled with the same open-source pipeline (AMTA Assistant → Lexonomy XML → open publication) and will be listed here as they are completed.*
+
 ## What's new in v1.3
 
 - **Resilient multi-provider AI** — Gemini remains primary; users may add a free **Groq** API key (cloud) or a local **LM Studio** server as automatic fallbacks.
