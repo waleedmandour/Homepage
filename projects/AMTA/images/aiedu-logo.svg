@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0F2749"/><stop offset="1" stop-color="#0A1C3C"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B2040"/><stop offset="1" stop-color="#071631"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DFE8F0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#20B2AA" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#20B2AA" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <g clip-path="url(#topzone)">
+    <text x="66" y="46" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="21" font-weight="600" fill="#20B2AA" fill-opacity="0.13" text-anchor="middle" transform="rotate(0 66 46)">Frequency</text>
+    <text x="158" y="34" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="15" font-weight="400" fill="#7FA8C9" fill-opacity="0.11" text-anchor="middle" transform="rotate(0 158 34)">Syntax</text>
+    <text x="247" y="38" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="17" font-weight="400" fill="#E8EEF4" fill-opacity="0.1" text-anchor="middle" transform="rotate(0 247 38)">Corpus</text>
+    <text x="338" y="42" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="19" font-weight="600" fill="#20B2AA" fill-opacity="0.12" text-anchor="middle" transform="rotate(0 338 42)">Terms</text>
+    <text x="452" y="66" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="15" font-weight="400" fill="#7FA8C9" fill-opacity="0.11" text-anchor="middle" transform="rotate(90 452 66)">Definition</text>
+    <text x="36" y="128" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#E8EEF4" fill-opacity="0.11" text-anchor="middle" transform="rotate(90 36 128)">Collocation</text>
+    <text x="483" y="150" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#20B2AA" fill-opacity="0.12" text-anchor="middle" transform="rotate(90 483 150)">Embedding</text>
+    <text x="44" y="214" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="17" font-weight="400" fill="#E8EEF4" fill-opacity="0.11" text-anchor="middle" transform="rotate(0 44 214)">Feedback</text>
+    <text x="468" y="244" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="16" font-weight="400" fill="#7FA8C9" fill-opacity="0.11" text-anchor="middle" transform="rotate(0 468 244)">Adaptive</text>
+    <text x="74" y="296" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="15" font-weight="400" fill="#20B2AA" fill-opacity="0.1" text-anchor="middle" transform="rotate(0 74 296)">Prompt</text>
+    <text x="251" y="306" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="15" font-weight="400" fill="#E8EEF4" fill-opacity="0.09" text-anchor="middle" transform="rotate(0 251 306)">Accuracy</text>
+    <text x="432" y="300" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="15" font-weight="600" fill="#20B2AA" fill-opacity="0.11" text-anchor="middle" transform="rotate(0 432 300)">Learner</text>
+    <text x="142" y="104" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#7FA8C9" fill-opacity="0.09" text-anchor="middle" transform="rotate(0 142 104)">Assessment</text>
+    <text x="398" y="112" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#E8EEF4" fill-opacity="0.1" text-anchor="middle" transform="rotate(0 398 112)">Token</text>
+    <text x="108" y="74" font-family="Cairo, 'Noto Naskh Arabic', serif" font-size="16" font-weight="600" fill="#20B2AA" fill-opacity="0.12" text-anchor="middle" transform="rotate(0 108 74)">مصطلح</text>
+    <text x="408" y="186" font-family="Cairo, 'Noto Naskh Arabic', serif" font-size="14" font-weight="400" fill="#E8EEF4" fill-opacity="0.11" text-anchor="middle" transform="rotate(0 408 186)">تعريف</text>
+    <text x="62" y="330" font-family="Cairo, 'Noto Naskh Arabic', serif" font-size="15" font-weight="400" fill="#E8EEF4" fill-opacity="0.11" text-anchor="middle" transform="rotate(0 62 330)">معجم</text>
+    <text x="352" y="326" font-family="Cairo, 'Noto Naskh Arabic', serif" font-size="13" font-weight="400" fill="#7FA8C9" fill-opacity="0.1" text-anchor="middle" transform="rotate(0 352 326)">سياق</text>
+  </g>
+  <clipPath id="topzone"><rect x="0" y="0" width="512" height="344"/></clipPath>
+
+  <!-- ambient glow behind the book -->
+  <ellipse cx="256" cy="200" rx="158" ry="104" fill="url(#glow)"/>
+
+  <!-- AI neural nodes -->
+  <g stroke="#20B2AA" stroke-opacity="0.45" stroke-width="2" fill="none">
+    <path d="M150,88 L196,60 L252,50 L308,62 L352,90"/>
+    <path d="M196,60 L308,62" stroke-opacity="0.22"/>
+    <path d="M252,50 L228,92" stroke-opacity="0.22"/>
+  </g>
+  <g>
+    <circle cx="150" cy="88" r="4" fill="#20B2AA" opacity="0.8"/>
+    <circle cx="196" cy="60" r="4" fill="#20B2AA" opacity="0.8"/>
+    <circle cx="308" cy="62" r="4" fill="#20B2AA" opacity="0.8"/>
+    <circle cx="352" cy="90" r="4" fill="#20B2AA" opacity="0.8"/>
+    <circle cx="228" cy="92" r="3" fill="#7FA8C9" opacity="0.7"/>
+    <circle cx="252" cy="50" r="10" fill="none" stroke="#7FD1CB" stroke-opacity="0.45" stroke-width="1.5"/>
+    <circle cx="252" cy="50" r="6.5" fill="#7FD1CB"/>
+  </g>
+
+  <!-- open book -->
+  <path d="M256,146 C232,132 200,127 172,131 L172,250 C202,246 232,250 256,262
+           C280,250 310,246 340,250 L340,131 C312,127 280,132 256,146 Z"
+        fill="#1A5F7A" stroke="#12305B" stroke-width="2"/>
+  <path d="M256,152 C236,141 208,136 184,139 L184,243 C208,240 236,244 256,254 Z"
+        fill="url(#page)" stroke="#B9C6D4" stroke-width="1.5"/>
+  <path d="M256,152 C276,141 304,136 328,139 L328,243 C304,240 276,244 256,254 Z"
+        fill="url(#page)" stroke="#B9C6D4" stroke-width="1.5"/>
+  <path d="M256,152 L256,254" stroke="#9FB0C2" stroke-width="2"/>
+  <!-- dictionary text lines under the letters -->
+  <g fill="#AFC0D2" fill-opacity="0.85">
+    <rect x="196" y="222" width="46" height="3" rx="1.5"/>
+    <rect x="202" y="229" width="38" height="3" rx="1.5"/>
+    <rect x="198" y="236" width="42" height="3" rx="1.5"/>
+    <rect x="276" y="228" width="44" height="3" rx="1.5"/>
+    <rect x="282" y="235" width="36" height="3" rx="1.5"/>
+    <rect x="278" y="242" width="40" height="3" rx="1.5"/>
+  </g>
+  <!-- bilingual headword bridge: English A, Arabic ayn -->
+  <text x="217" y="210" font-family="Lora, 'DejaVu Serif', serif" font-size="58" font-weight="700"
+        fill="#0A1C3C" text-anchor="middle">A</text>
+  <text x="297" y="206" font-family="'Noto Naskh Arabic', Cairo, serif" font-size="56" font-weight="700"
+        fill="#0A1C3C" text-anchor="middle">ع</text>
+
+  <!-- pronunciation sound waves -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M368,178 A26,26 0 0 1 368,222" stroke="#20B2AA" stroke-width="5.5" opacity="0.95"/>
+    <path d="M382,168 A38,38 0 0 1 382,232" stroke="#20B2AA" stroke-width="5" opacity="0.72"/>
+    <path d="M396,158 A50,50 0 0 1 396,242" stroke="#20B2AA" stroke-width="4.5" opacity="0.5"/>
+  </g>
+
+  <!-- bottom band -->
+  <rect x="0" y="344" width="512" height="168" fill="url(#band)"/>
+  <rect x="0" y="344" width="512" height="2.5" fill="#20B2AA" fill-opacity="0.45"/>
+  <text x="256" y="407" font-family="Lora, 'DejaVu Serif', serif" font-size="53" font-weight="700"
+        fill="#FFFFFF" text-anchor="middle">AiEdu Dictionary</text>
+  <text x="256" y="449" font-family="Inter, 'DejaVu Sans', sans-serif" font-size="16.5" font-weight="700"
+        fill="#7FD1CB" text-anchor="middle" letter-spacing="3.5">AI IN EDUCATION · ENGLISH–ARABIC</text>
+  <text x="256" y="490" font-family="Cairo, 'Noto Naskh Arabic', serif" font-size="27" font-weight="700"
+        fill="#F4F7FA" text-anchor="middle">معجم الذكاء الاصطناعي في التعليم</text>
+</svg>

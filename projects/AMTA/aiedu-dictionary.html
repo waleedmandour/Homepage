@@ -13,7 +13,7 @@
         gtag('js', new Date());
         gtag('config', 'G-WW4M0NCF1V');
     </script>
-    <link rel="icon" type="image/png" href="images/AMTA.png">
+    <link rel="icon" type="image/png" href="images/aiedu-logo-icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -154,17 +154,13 @@
             border-color: rgba(255,255,255,0.6);
             box-shadow: 0 20px 45px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2) inset, 0 0 40px rgba(32,178,170,0.4);
         }
-        .app-logo-icon {
-            font-size: 52px; color: var(--white);
+        .app-logo-img {
+            width: 100%; height: 100%; object-fit: contain;
+            border-radius: 20px;
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+            transition: filter 0.3s ease;
         }
-        .app-logo-wordmark {
-            font-weight: 800; font-size: 1.35em; color: var(--white);
-            letter-spacing: 1px; line-height: 1.2;
-        }
-        .app-logo-sub {
-            font-size: 0.75em; color: rgba(255,255,255,0.8); font-weight: 600;
-        }
+        .app-logo-frame:hover .app-logo-img { filter: drop-shadow(0 8px 25px rgba(0,0,0,0.4)); }
         .app-logo-container::before {
             content: ''; position: absolute; width: 165px; height: 165px;
             border-radius: 40px;
@@ -424,9 +420,7 @@
             <div class="hero-content">
                 <div class="app-logo-container">
                     <div class="app-logo-frame">
-                        <i class="fas fa-book-open app-logo-icon"></i>
-                        <div class="app-logo-wordmark">AiEdu</div>
-                        <div class="app-logo-sub">EN&nbsp;&harr;&nbsp;AR</div>
+                        <img src="images/aiedu-logo.png" alt="AiEdu Dictionary Logo" class="app-logo-img">
                     </div>
                 </div>
 
