@@ -1,4 +1,6 @@
-# AMTA Lexicography Assistant — v1.3
+# AMTA Lexicography Assistant
+
+*Current version: 1.3 — see [What's new](#whats-new-in-v13).*
 
 **A Google Sheets™ Add-on that compiles specialized academic dictionaries intelligently.**
 
