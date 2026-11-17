@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 720,
-    "all_time_pageviews": 2329,
-    "last_7_days_visitors": 34,
-    "last_30_days_visitors": 120
+    "all_time_visitors": 724,
+    "all_time_pageviews": 2347,
+    "last_7_days_visitors": 41,
+    "last_30_days_visitors": 121
   },
   "top_countries_all_time": [
     {
@@ -18,14 +18,14 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 143,
+      "visitors": 145,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 90,
+      "visitors": 92,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -390,19 +390,19 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 30,
+      "visitors": 32,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 26,
+      "visitors": 24,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 19,
+      "visitors": 20,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -451,12 +451,12 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 644,
+      "pageviews": 645,
       "visitors": 354
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 603,
+      "pageviews": 604,
       "visitors": 201
     },
     {
@@ -471,13 +471,13 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 121,
-      "visitors": 40
+      "pageviews": 124,
+      "visitors": 41
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 86,
-      "visitors": 15
+      "pageviews": 91,
+      "visitors": 17
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -500,5 +500,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-17T04:51:45Z"
+  "fetched_at": "2026-11-17T13:58:02Z"
 }
