@@ -269,6 +269,20 @@
         }
         .workflow-link a:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(32, 178, 170, 0.4); }
 
+        /* ===== SCREENSHOT ===== */
+        .screenshot-section { background: var(--white); padding: 60px 0; border-radius: 30px; margin-bottom: 60px; box-shadow: var(--shadow); }
+        .screenshot-card {
+            max-width: 900px; margin: 0 auto; background: var(--white);
+            border: 1px solid rgba(0,0,0,0.08); border-radius: 14px;
+            box-shadow: var(--shadow); overflow: hidden;
+        }
+        .screenshot-card a { display: block; }
+        .screenshot-card img { display: block; width: 100%; height: auto; }
+        .screenshot-card figcaption {
+            padding: 14px 20px; font-size: 0.9em; color: var(--gray);
+            background: var(--light); border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
         /* ===== BUILT-ON BADGES ===== */
         .apis-section { text-align: center; margin-bottom: 60px; }
         .apis-label { display: block; font-size: 1.3em; font-weight: 700; color: var(--primary); margin-bottom: 25px; }
@@ -545,6 +559,32 @@
                     <h3 class="lang-ar">رخصة مفتوحة</h3>
                     <p class="lang-en">The dictionary is freely accessible online and published under Creative Commons Attribution (CC BY 4.0) &mdash; share and adapt it with attribution.</p>
                     <p class="lang-ar">المعجم متاح مجاناً على الإنترنت ومُصرّح بموجب رخصة المشاع الإبداعي CC BY 4.0 &mdash; شاركه وكيّفه مع نسبه إلى صاحبه.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- See It In Action Section -->
+        <section class="screenshot-section">
+            <div class="container">
+                <h2 class="section-title lang-en">See It In Action</h2>
+                <h2 class="section-title lang-ar">شاهده في العمل</h2>
+                <p class="section-subtitle lang-en">A live entry from the published Lexonomy edition &mdash; bilingual definitions, audio, authentic examples, collocations and cited sources in one view</p>
+                <p class="section-subtitle lang-ar">مدخل حي من نسخة Lexonomy المنشورة &mdash; تعريفات ثنائية اللغة ونطق وأمثلة أصيلة وتلازمات ومراجع موثّقة في عرض واحد</p>
+                <figure class="screenshot-card">
+                    <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank" rel="noopener">
+                        <img src="images/aiedu-lexonomy-entry.png" alt="Screenshot of the AiEdu dictionary on Lexonomy showing the featured entry Temporal Learning Analytics with English and Arabic definitions, audio pronunciation, a usage example with translation, collocations and the cited source" loading="lazy">
+                    </a>
+                    <figcaption>
+                        <span class="lang-en">The featured entry &ldquo;Temporal Learning Analytics&rdquo; in the live edition &mdash; click the image to open the dictionary.</span>
+                        <span class="lang-ar">المدخل المميز &ldquo;Temporal Learning Analytics&rdquo; في النسخة الحية &mdash; انقر الصورة لفتح المعجم.</span>
+                    </figcaption>
+                </figure>
+                <div class="workflow-link">
+                    <a href="https://www.lexonomy.eu/dictionary/AiEdu" target="_blank" rel="noopener">
+                        <i class="fas fa-book-open"></i>
+                        <span class="lang-en">Open the live dictionary on Lexonomy</span>
+                        <span class="lang-ar">افتح المعجم الحي على Lexonomy</span>
+                    </a>
                 </div>
             </div>
         </section>
