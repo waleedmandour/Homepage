@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 714,
-    "all_time_pageviews": 2311,
-    "last_7_days_visitors": 28,
-    "last_30_days_visitors": 114
+    "all_time_visitors": 720,
+    "all_time_pageviews": 2329,
+    "last_7_days_visitors": 34,
+    "last_30_days_visitors": 120
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 139,
+      "visitors": 143,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -109,7 +109,7 @@
       "country": "United Kingdom",
       "country_code": "GB",
       "country_numeric": "826",
-      "visitors": 6,
+      "visitors": 7,
       "flag_emoji": "🇬🇧"
     },
     {
@@ -118,6 +118,13 @@
       "country_numeric": "032",
       "visitors": 5,
       "flag_emoji": "🇦🇷"
+    },
+    {
+      "country": "Indonesia",
+      "country_code": "ID",
+      "country_numeric": "360",
+      "visitors": 5,
+      "flag_emoji": "🇮🇩"
     },
     {
       "country": "Netherlands",
@@ -132,13 +139,6 @@
       "country_numeric": "788",
       "visitors": 5,
       "flag_emoji": "🇹🇳"
-    },
-    {
-      "country": "Indonesia",
-      "country_code": "ID",
-      "country_numeric": "360",
-      "visitors": 4,
-      "flag_emoji": "🇮🇩"
     },
     {
       "country": "Malaysia",
@@ -388,16 +388,16 @@
   ],
   "top_countries_last_30_days": [
     {
+      "country": "United States",
+      "country_code": "US",
+      "visitors": 30,
+      "flag_emoji": "🇺🇸"
+    },
+    {
       "country": "Egypt",
       "country_code": "EG",
       "visitors": 26,
       "flag_emoji": "🇪🇬"
-    },
-    {
-      "country": "United States",
-      "country_code": "US",
-      "visitors": 26,
-      "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
@@ -436,23 +436,23 @@
       "flag_emoji": "🇨🇦"
     },
     {
+      "country": "Indonesia",
+      "country_code": "ID",
+      "visitors": 2,
+      "flag_emoji": "🇮🇩"
+    },
+    {
       "country": "Sweden",
       "country_code": "SE",
       "visitors": 2,
       "flag_emoji": "🇸🇪"
-    },
-    {
-      "country": "Argentina",
-      "country_code": "AR",
-      "visitors": 1,
-      "flag_emoji": "🇦🇷"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 639,
-      "visitors": 352
+      "pageviews": 644,
+      "visitors": 354
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -471,12 +471,12 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 118,
-      "visitors": 39
+      "pageviews": 121,
+      "visitors": 40
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 85,
+      "pageviews": 86,
       "visitors": 15
     },
     {
@@ -500,5 +500,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-16T22:38:32Z"
+  "fetched_at": "2026-11-17T04:51:45Z"
 }
