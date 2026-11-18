@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 728,
-    "all_time_pageviews": 2373,
+    "all_time_visitors": 731,
+    "all_time_pageviews": 2383,
     "last_7_days_visitors": 45,
-    "last_30_days_visitors": 125
+    "last_30_days_visitors": 126
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 94,
+      "visitors": 96,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -190,6 +190,13 @@
       "flag_emoji": "🇷🇺"
     },
     {
+      "country": "Spain",
+      "country_code": "ES",
+      "country_numeric": "724",
+      "visitors": 3,
+      "flag_emoji": "🇪🇸"
+    },
+    {
       "country": "Thailand",
       "country_code": "TH",
       "country_numeric": "764",
@@ -244,13 +251,6 @@
       "country_numeric": "616",
       "visitors": 2,
       "flag_emoji": "🇵🇱"
-    },
-    {
-      "country": "Spain",
-      "country_code": "ES",
-      "country_numeric": "724",
-      "visitors": 2,
-      "flag_emoji": "🇪🇸"
     },
     {
       "country": "Türkiye",
@@ -402,7 +402,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 22,
+      "visitors": 23,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -442,17 +442,17 @@
       "flag_emoji": "🇮🇩"
     },
     {
-      "country": "Sweden",
-      "country_code": "SE",
+      "country": "Spain",
+      "country_code": "ES",
       "visitors": 2,
-      "flag_emoji": "🇸🇪"
+      "flag_emoji": "🇪🇸"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 650,
-      "visitors": 355
+      "pageviews": 652,
+      "visitors": 356
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -461,7 +461,7 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 198,
+      "pageviews": 199,
       "visitors": 75
     },
     {
@@ -471,12 +471,12 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 129,
+      "pageviews": 131,
       "visitors": 41
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 98,
+      "pageviews": 100,
       "visitors": 17
     },
     {
@@ -500,5 +500,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-18T03:56:29Z"
+  "fetched_at": "2026-11-18T12:31:52Z"
 }
