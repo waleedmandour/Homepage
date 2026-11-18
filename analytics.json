@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 726,
-    "all_time_pageviews": 2369,
-    "last_7_days_visitors": 43,
-    "last_30_days_visitors": 123
+    "all_time_visitors": 728,
+    "all_time_pageviews": 2373,
+    "last_7_days_visitors": 45,
+    "last_30_days_visitors": 125
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 93,
+      "visitors": 94,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -162,6 +162,13 @@
       "flag_emoji": "🇦🇪"
     },
     {
+      "country": "Algeria",
+      "country_code": "DZ",
+      "country_numeric": "012",
+      "visitors": 3,
+      "flag_emoji": "🇩🇿"
+    },
+    {
       "country": "Iran",
       "country_code": "IR",
       "country_numeric": "364",
@@ -188,13 +195,6 @@
       "country_numeric": "764",
       "visitors": 3,
       "flag_emoji": "🇹🇭"
-    },
-    {
-      "country": "Algeria",
-      "country_code": "DZ",
-      "country_numeric": "012",
-      "visitors": 2,
-      "flag_emoji": "🇩🇿"
     },
     {
       "country": "Belgium",
@@ -402,7 +402,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 21,
+      "visitors": 22,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -491,8 +491,8 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 42,
-      "visitors": 34
+      "pageviews": 43,
+      "visitors": 35
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
@@ -500,5 +500,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-17T22:00:31Z"
+  "fetched_at": "2026-11-18T03:56:29Z"
 }
