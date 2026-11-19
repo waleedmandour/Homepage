@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 735,
-    "all_time_pageviews": 2392,
-    "last_7_days_visitors": 49,
-    "last_30_days_visitors": 130
+    "all_time_visitors": 742,
+    "all_time_pageviews": 2409,
+    "last_7_days_visitors": 51,
+    "last_30_days_visitors": 131
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 97,
+      "visitors": 104,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -401,16 +401,16 @@
       "flag_emoji": "🇺🇸"
     },
     {
-      "country": "Egypt",
-      "country_code": "EG",
-      "visitors": 25,
-      "flag_emoji": "🇪🇬"
-    },
-    {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 24,
+      "visitors": 30,
       "flag_emoji": "🇴🇲"
+    },
+    {
+      "country": "Egypt",
+      "country_code": "EG",
+      "visitors": 21,
+      "flag_emoji": "🇪🇬"
     },
     {
       "country": "China",
@@ -421,7 +421,7 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 9,
+      "visitors": 8,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -458,8 +458,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 654,
-      "visitors": 357
+      "pageviews": 656,
+      "visitors": 358
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -478,12 +478,12 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 132,
-      "visitors": 42
+      "pageviews": 135,
+      "visitors": 45
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 100,
+      "pageviews": 101,
       "visitors": 17
     },
     {
@@ -498,8 +498,8 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 43,
-      "visitors": 35
+      "pageviews": 44,
+      "visitors": 36
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/index.html",
@@ -507,5 +507,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-19T02:17:39Z"
+  "fetched_at": "2026-11-19T10:53:56Z"
 }
