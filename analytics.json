@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 747,
-    "all_time_pageviews": 2418,
-    "last_7_days_visitors": 53,
-    "last_30_days_visitors": 129
+    "all_time_visitors": 749,
+    "all_time_pageviews": 2420,
+    "last_7_days_visitors": 55,
+    "last_30_days_visitors": 131
   },
   "top_countries_all_time": [
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 36,
+      "visitors": 37,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -169,6 +169,13 @@
       "flag_emoji": "🇩🇿"
     },
     {
+      "country": "Brazil",
+      "country_code": "BR",
+      "country_numeric": "076",
+      "visitors": 3,
+      "flag_emoji": "🇧🇷"
+    },
+    {
       "country": "Iran",
       "country_code": "IR",
       "country_numeric": "364",
@@ -209,13 +216,6 @@
       "country_numeric": "056",
       "visitors": 2,
       "flag_emoji": "🇧🇪"
-    },
-    {
-      "country": "Brazil",
-      "country_code": "BR",
-      "country_numeric": "076",
-      "visitors": 2,
-      "flag_emoji": "🇧🇷"
     },
     {
       "country": "Israel",
@@ -421,7 +421,7 @@
     {
       "country": "Saudi Arabia",
       "country_code": "SA",
-      "visitors": 10,
+      "visitors": 11,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -507,5 +507,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-20T09:23:29Z"
+  "fetched_at": "2026-11-20T18:07:46Z"
 }
