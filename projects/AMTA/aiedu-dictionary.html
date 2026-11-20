@@ -686,6 +686,113 @@
             </div>
         </section>
 
+        <!-- Live Statistics: visitors dashboard (same mechanics as the AMTA page:
+             GA-sourced cards fed by /analytics.json, per-browser counter,
+             ipapi.co geolocation, and the /js/visitors-map.js world map) -->
+        <section>
+            <h2 class="section-title lang-en">Live Statistics</h2>
+            <h2 class="section-title lang-ar">إحصائيات حية</h2>
+            <p class="section-subtitle lang-en">Who is using the dictionary &middot; updated hourly from Google Analytics</p>
+            <p class="section-subtitle lang-ar">من يستخدم المعجم &middot; تُحدَّث كل ساعة من Google Analytics</p>
+
+            <!-- GA-sourced visitor cards: Total Visitors (all-time) + Current Visitors (7d) -->
+            <div id="ga-visitors-row" style="display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                    <div style="font-size: 36px; color: var(--primary);"><i class="fas fa-users"></i></div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 32px; font-weight: 800; color: var(--primary); line-height: 1.1;" id="ga-total-visitors">&mdash;</div>
+                        <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Total Visitors (all-time)</span>
+                            <span class="lang-ar">إجمالي الزوار (تراكمي)</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                            <span class="lang-en">from Google Analytics</span>
+                            <span class="lang-ar">من Google Analytics</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                    <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-user-clock"></i></div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 32px; font-weight: 800; color: var(--secondary); line-height: 1.1;" id="ga-current-visitors">&mdash;</div>
+                        <div style="font-size: 13px; color: var(--gray); font-weight: 600;">
+                            <span class="lang-en">Current Visitors (last 7 days)</span>
+                            <span class="lang-ar">الزوار الحاليون (آخر 7 أيام)</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--gray); opacity: 0.7; margin-top: 2px;">
+                            <span class="lang-en">from Google Analytics</span>
+                            <span class="lang-ar">من Google Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visitor info row: live visitor counter + geolocation -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                    <div style="font-size: 36px; color: var(--secondary);"><i class="fas fa-eye"></i></div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-status">
+                            <span class="lang-en">Welcome!</span>
+                            <span class="lang-ar">أهلاً بك!</span>
+                        </div>
+                        <div style="font-size: 13px; color: var(--gray);">
+                            <span class="lang-en">You are visitor</span>
+                            <span class="lang-ar">أنت الزائر رقم</span>
+                            <strong id="stat-visitor-count" style="color: var(--secondary);">&mdash;</strong>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: var(--white); border-radius: 16px; padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; gap: 16px; justify-content: center;">
+                    <div style="font-size: 36px; color: var(--accent);"><i class="fas fa-map-marker-alt"></i></div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="stat-visitor-location">
+                            <span class="lang-en">Detecting&hellip;</span>
+                            <span class="lang-ar">جارٍ التحديد&hellip;</span>
+                        </div>
+                        <div style="font-size: 13px; color: var(--gray);">
+                            <span class="lang-en">Your location</span>
+                            <span class="lang-ar">موقعك</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visitors by Country — Interactive World Map (all-time, from Google Analytics) -->
+            <div id="ga-map-card" style="display: none; background: var(--white); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); margin-top: 0; margin-bottom: 32px;">
+                <h3 style="font-size: 18px; color: var(--primary); margin-bottom: 6px;">
+                    <span class="lang-en">🌍 Visitors by Country</span>
+                    <span class="lang-ar">🌍 الزوار حسب الدولة</span>
+                </h3>
+                <p style="font-size: 12px; color: var(--gray); margin-bottom: 20px;">
+                    <span class="lang-en">All-time &middot; hover or tap a country for details</span>
+                    <span class="lang-ar">تراكمي &middot; مرر أو انقر على دولة لعرض التفاصيل</span>
+                </p>
+                <div id="world-map-container" style="width: 100%; position: relative; margin-bottom: 24px;">
+                    <svg id="world-map-svg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto; display: block;"></svg>
+                    <div id="map-tooltip" style="display: none; position: absolute; background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 13px; pointer-events: none; z-index: 100; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>
+                </div>
+                <div id="map-top-countries" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+                    <!-- Top-10 list populated by /js/visitors-map.js -->
+                </div>
+                <p style="font-size: 12px; color: var(--gray); margin-top: 20px; text-align: center;">
+                    <span class="map-total-visitors">&mdash;</span>
+                    <span class="lang-en"> visitors &middot; </span>
+                    <span class="lang-ar"> زائر &middot; </span>
+                    <span class="map-total-countries">&mdash;</span>
+                    <span class="lang-en"> countries &middot; from Google Analytics</span>
+                    <span class="lang-ar"> دولة &middot; من Google Analytics</span>
+                </p>
+            </div>
+
+            <div style="background: var(--white); border-radius: 16px; padding: 20px 28px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); text-align: center;">
+                <p style="font-size: 12px; color: var(--gray); margin: 0;">
+                    <span class="lang-en">Google Analytics totals cover the whole waleedmandour.org site &middot; visitor counter is per-browser &middot; geolocation detected via ipapi.co</span>
+                    <span class="lang-ar">تغطي إحصائيات Google Analytics موقع waleedmandour.org بالكامل &middot; عدّاد الزوار لكل متصفح &middot; يُحدَّد الموقع عبر ipapi.co</span>
+                </p>
+            </div>
+        </section>
+
         <!-- CTA Section -->
         <section class="cta-section">
             <h2 class="cta-title lang-en">The First of the AI Specialized Dictionaries Series</h2>
@@ -755,6 +862,100 @@
                 observer.observe(el);
             });
         });
+
+        // ===== Live Statistics: Visitor Counter + Geolocation =====
+        // Same mechanics as the AMTA page: a per-browser localStorage counter
+        // plus geolocation via ipapi.co (sends a GA event with the visitor's
+        // country so geography shows up in Google Analytics reports).
+        (function() {
+            // Visitor counter (localStorage-based, per-browser)
+            var key = 'aiedu_visitors';
+            var count = parseInt(localStorage.getItem(key) || '0', 10);
+            count++;
+            localStorage.setItem(key, String(count));
+            var countEl = document.getElementById('stat-visitor-count');
+            if (countEl) {
+                var startTime = performance.now();
+                (function anim(now) {
+                    var p = Math.min((now - startTime) / 1200, 1);
+                    countEl.textContent = Math.round(count * (1 - Math.pow(1 - p, 3))).toLocaleString();
+                    if (p < 1) requestAnimationFrame(anim);
+                })(startTime);
+            }
+
+            // Geolocation via free IP API (no auth needed).
+            fetch('https://ipapi.co/json/')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (!locEl) return;
+                    if (data && data.country_name) {
+                        var city = data.city ? data.city + ', ' : '';
+                        var flag = data.country_code ? ' ' + String.fromCodePoint.apply(null, data.country_code.toUpperCase().split('').map(function(c){return 0x1F1E6 + c.charCodeAt(0) - 65;})) : '';
+                        locEl.innerHTML = '<span class="lang-en">' + city + data.country_name + flag + '</span><span class="lang-ar">' + city + data.country_name + flag + '</span>';
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'page_view', {event_category: 'geo', event_label: data.country_name, country_code: data.country_code});
+                        }
+                    } else {
+                        locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';
+                    }
+                })
+                .catch(function() {
+                    var locEl = document.getElementById('stat-visitor-location');
+                    if (locEl) locEl.innerHTML = '<span class="lang-en">Unknown</span><span class="lang-ar">غير معروف</span>';
+                });
+        })();
+
+        // ===== GA-sourced visitor stats (Total Visitors + Current Visitors 7d) =====
+        // Fetches /analytics.json (committed hourly by the
+        // .github/workflows/update-analytics.yml workflow). Until the file
+        // exists, this IIFE is a no-op — the GA cards stay hidden and the
+        // per-browser counter remains visible as a fallback. Once
+        // /analytics.json exists, the GA cards are shown with real numbers
+        // and the per-browser counter is hidden (GA numbers supersede it).
+        (async function() {
+            try {
+                // cache-busting query string so we always get the latest
+                // committed version (GitHub Pages serves with long max-age)
+                const resp = await fetch('/analytics.json?ts=' + Date.now());
+                if (!resp.ok) return;  // 404 — GA not configured yet, silently no-op
+                const data = await resp.json();
+                if (!data || !data.totals) return;
+
+                // Animate the count-up for both cards
+                function anim(id, target, dur) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const t0 = performance.now();
+                    (function step(now) {
+                        const p = Math.min((now - t0) / dur, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.round(target * eased).toLocaleString();
+                        if (p < 1) requestAnimationFrame(step);
+                    })(t0);
+                }
+                anim('ga-total-visitors', data.totals.all_time_visitors || 0, 1500);
+                anim('ga-current-visitors', data.totals.last_7_days_visitors || 0, 1200);
+
+                // Show the GA row (switches from display:none to display:grid)
+                const gaRow = document.getElementById('ga-visitors-row');
+                if (gaRow) gaRow.style.display = 'grid';
+
+                // Hide the per-browser 'You are visitor' counter card, since
+                // the GA numbers supersede it. The geolocation card stays.
+                const perBrowserCounter = document.getElementById('stat-visitor-status');
+                if (perBrowserCounter) {
+                    const card = perBrowserCounter.closest('div[style*="border-radius: 16px"]');
+                    if (card) card.style.display = 'none';
+                }
+            } catch(e) {
+                // Network error or JSON parse error — silently no-op.
+                if (typeof console !== 'undefined' && console.log) {
+                    console.log('GA analytics fetch skipped:', e.message);
+                }
+            }
+        })();
     </script>
+    <script src="/js/visitors-map.js"></script>
 </body>
 </html>
