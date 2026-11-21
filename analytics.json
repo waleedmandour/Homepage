@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 750,
-    "all_time_pageviews": 2421,
+    "all_time_visitors": 751,
+    "all_time_pageviews": 2424,
     "last_7_days_visitors": 56,
-    "last_30_days_visitors": 132
+    "last_30_days_visitors": 123
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 106,
+      "visitors": 107,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -415,14 +415,8 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 11,
+      "visitors": 10,
       "flag_emoji": "🇨🇳"
-    },
-    {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "visitors": 11,
-      "flag_emoji": "🇸🇦"
     },
     {
       "country": "Singapore",
@@ -431,16 +425,16 @@
       "flag_emoji": "🇸🇬"
     },
     {
-      "country": "India",
-      "country_code": "IN",
-      "visitors": 4,
-      "flag_emoji": "🇮🇳"
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "visitors": 6,
+      "flag_emoji": "🇸🇦"
     },
     {
-      "country": "Canada",
-      "country_code": "CA",
+      "country": "India",
+      "country_code": "IN",
       "visitors": 2,
-      "flag_emoji": "🇨🇦"
+      "flag_emoji": "🇮🇳"
     },
     {
       "country": "Indonesia",
@@ -453,6 +447,12 @@
       "country_code": "ES",
       "visitors": 2,
       "flag_emoji": "🇪🇸"
+    },
+    {
+      "country": "Sweden",
+      "country_code": "SE",
+      "visitors": 2,
+      "flag_emoji": "🇸🇪"
     }
   ],
   "top_pages_all_time": [
@@ -483,8 +483,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 102,
-      "visitors": 18
+      "pageviews": 103,
+      "visitors": 19
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
@@ -502,10 +502,10 @@
       "visitors": 36
     },
     {
-      "url": "waleedmandour.org/projects/scholarscribe/index.html",
-      "pageviews": 41,
-      "visitors": 15
+      "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
+      "pageviews": 42,
+      "visitors": 27
     }
   ],
-  "fetched_at": "2026-11-21T07:50:45Z"
+  "fetched_at": "2026-11-21T15:45:37Z"
 }
