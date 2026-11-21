@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 749,
-    "all_time_pageviews": 2420,
-    "last_7_days_visitors": 55,
-    "last_30_days_visitors": 131
+    "all_time_visitors": 750,
+    "all_time_pageviews": 2421,
+    "last_7_days_visitors": 56,
+    "last_30_days_visitors": 132
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 146,
+      "visitors": 147,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -395,16 +395,16 @@
   ],
   "top_countries_last_30_days": [
     {
+      "country": "United States",
+      "country_code": "US",
+      "visitors": 33,
+      "flag_emoji": "🇺🇸"
+    },
+    {
       "country": "Oman",
       "country_code": "OM",
       "visitors": 32,
       "flag_emoji": "🇴🇲"
-    },
-    {
-      "country": "United States",
-      "country_code": "US",
-      "visitors": 32,
-      "flag_emoji": "🇺🇸"
     },
     {
       "country": "Egypt",
@@ -507,5 +507,5 @@
       "visitors": 15
     }
   ],
-  "fetched_at": "2026-11-20T18:07:46Z"
+  "fetched_at": "2026-11-21T00:28:17Z"
 }
