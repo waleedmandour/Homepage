@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 769,
-    "all_time_pageviews": 2444,
-    "last_7_days_visitors": 70,
-    "last_30_days_visitors": 141
+    "all_time_visitors": 773,
+    "all_time_pageviews": 2457,
+    "last_7_days_visitors": 76,
+    "last_30_days_visitors": 145
   },
   "top_countries_all_time": [
     {
@@ -18,14 +18,14 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 154,
+      "visitors": 157,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 110,
+      "visitors": 111,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -397,13 +397,13 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 40,
+      "visitors": 43,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 35,
+      "visitors": 36,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -458,8 +458,8 @@
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 657,
-      "visitors": 359
+      "pageviews": 661,
+      "visitors": 362
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
@@ -478,28 +478,28 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 136,
+      "pageviews": 137,
       "visitors": 46
     },
     {
       "url": "waleedmandour.org/projects/AMTA/index.html",
-      "pageviews": 103,
+      "pageviews": 104,
       "visitors": 19
     },
     {
       "url": "waleedmandour.org/projects/scholarscribe/",
-      "pageviews": 80,
+      "pageviews": 81,
       "visitors": 37
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 62,
-      "visitors": 46
+      "pageviews": 67,
+      "visitors": 49
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
-      "pageviews": 51,
-      "visitors": 16
+      "pageviews": 52,
+      "visitors": 17
     },
     {
       "url": "waleedmandour.org/teaching/",
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-22T09:01:10Z"
+  "fetched_at": "2026-11-22T17:28:45Z"
 }
