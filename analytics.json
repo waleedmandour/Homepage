@@ -1,31 +1,31 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 751,
-    "all_time_pageviews": 2424,
-    "last_7_days_visitors": 56,
-    "last_30_days_visitors": 123
+    "all_time_visitors": 765,
+    "all_time_pageviews": 2439,
+    "last_7_days_visitors": 71,
+    "last_30_days_visitors": 138
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 198,
+      "visitors": 203,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 147,
+      "visitors": 154,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 107,
+      "visitors": 109,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -397,19 +397,19 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 33,
+      "visitors": 40,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 32,
+      "visitors": 34,
       "flag_emoji": "🇴🇲"
     },
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 16,
+      "visitors": 22,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -492,6 +492,11 @@
       "visitors": 37
     },
     {
+      "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
+      "pageviews": 57,
+      "visitors": 42
+    },
+    {
       "url": "waleedmandour.org/projects/AMTA/",
       "pageviews": 51,
       "visitors": 16
@@ -500,12 +505,7 @@
       "url": "waleedmandour.org/teaching/",
       "pageviews": 44,
       "visitors": 36
-    },
-    {
-      "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 42,
-      "visitors": 27
     }
   ],
-  "fetched_at": "2026-11-21T21:18:11Z"
+  "fetched_at": "2026-11-22T01:46:28Z"
 }
