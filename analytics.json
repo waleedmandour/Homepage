@@ -1,17 +1,17 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 765,
-    "all_time_pageviews": 2439,
-    "last_7_days_visitors": 71,
-    "last_30_days_visitors": 138
+    "all_time_visitors": 769,
+    "all_time_pageviews": 2444,
+    "last_7_days_visitors": 70,
+    "last_30_days_visitors": 141
   },
   "top_countries_all_time": [
     {
       "country": "Egypt",
       "country_code": "EG",
       "country_numeric": "818",
-      "visitors": 203,
+      "visitors": 205,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 109,
+      "visitors": 110,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -39,7 +39,7 @@
       "country": "Saudi Arabia",
       "country_code": "SA",
       "country_numeric": "682",
-      "visitors": 37,
+      "visitors": 38,
       "flag_emoji": "🇸🇦"
     },
     {
@@ -403,13 +403,13 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 34,
+      "visitors": 35,
       "flag_emoji": "🇴🇲"
     },
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 22,
+      "visitors": 23,
       "flag_emoji": "🇪🇬"
     },
     {
@@ -419,16 +419,16 @@
       "flag_emoji": "🇨🇳"
     },
     {
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "visitors": 7,
+      "flag_emoji": "🇸🇦"
+    },
+    {
       "country": "Singapore",
       "country_code": "SG",
       "visitors": 7,
       "flag_emoji": "🇸🇬"
-    },
-    {
-      "country": "Saudi Arabia",
-      "country_code": "SA",
-      "visitors": 6,
-      "flag_emoji": "🇸🇦"
     },
     {
       "country": "India",
@@ -493,8 +493,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 57,
-      "visitors": 42
+      "pageviews": 62,
+      "visitors": 46
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-22T01:46:28Z"
+  "fetched_at": "2026-11-22T09:01:10Z"
 }
