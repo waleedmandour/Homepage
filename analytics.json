@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 773,
-    "all_time_pageviews": 2457,
-    "last_7_days_visitors": 76,
-    "last_30_days_visitors": 145
+    "all_time_visitors": 775,
+    "all_time_pageviews": 2459,
+    "last_7_days_visitors": 78,
+    "last_30_days_visitors": 147
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 111,
+      "visitors": 112,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -211,6 +211,13 @@
       "flag_emoji": "🇹🇭"
     },
     {
+      "country": "Türkiye",
+      "country_code": "TR",
+      "country_numeric": "792",
+      "visitors": 3,
+      "flag_emoji": "🇹🇷"
+    },
+    {
       "country": "Belgium",
       "country_code": "BE",
       "country_numeric": "056",
@@ -251,13 +258,6 @@
       "country_numeric": "616",
       "visitors": 2,
       "flag_emoji": "🇵🇱"
-    },
-    {
-      "country": "Türkiye",
-      "country_code": "TR",
-      "country_numeric": "792",
-      "visitors": 2,
-      "flag_emoji": "🇹🇷"
     },
     {
       "country": "Andorra",
@@ -403,7 +403,7 @@
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 36,
+      "visitors": 37,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -493,8 +493,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 67,
-      "visitors": 49
+      "pageviews": 69,
+      "visitors": 51
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-22T17:28:45Z"
+  "fetched_at": "2026-11-22T22:56:41Z"
 }
