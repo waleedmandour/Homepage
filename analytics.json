@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 775,
-    "all_time_pageviews": 2459,
-    "last_7_days_visitors": 78,
-    "last_30_days_visitors": 147
+    "all_time_visitors": 776,
+    "all_time_pageviews": 2461,
+    "last_7_days_visitors": 79,
+    "last_30_days_visitors": 148
   },
   "top_countries_all_time": [
     {
@@ -64,6 +64,13 @@
       "flag_emoji": "🇮🇶"
     },
     {
+      "country": "Canada",
+      "country_code": "CA",
+      "country_numeric": "124",
+      "visitors": 10,
+      "flag_emoji": "🇨🇦"
+    },
+    {
       "country": "France",
       "country_code": "FR",
       "country_numeric": "250",
@@ -76,13 +83,6 @@
       "country_numeric": "702",
       "visitors": 10,
       "flag_emoji": "🇸🇬"
-    },
-    {
-      "country": "Canada",
-      "country_code": "CA",
-      "country_numeric": "124",
-      "visitors": 9,
-      "flag_emoji": "🇨🇦"
     },
     {
       "country": "Hong Kong",
@@ -431,6 +431,12 @@
       "flag_emoji": "🇸🇬"
     },
     {
+      "country": "Canada",
+      "country_code": "CA",
+      "visitors": 2,
+      "flag_emoji": "🇨🇦"
+    },
+    {
       "country": "India",
       "country_code": "IN",
       "visitors": 2,
@@ -447,12 +453,6 @@
       "country_code": "ES",
       "visitors": 2,
       "flag_emoji": "🇪🇸"
-    },
-    {
-      "country": "Sweden",
-      "country_code": "SE",
-      "visitors": 2,
-      "flag_emoji": "🇸🇪"
     }
   ],
   "top_pages_all_time": [
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-22T22:56:41Z"
+  "fetched_at": "2026-11-23T03:25:36Z"
 }
