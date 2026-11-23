@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 776,
-    "all_time_pageviews": 2461,
-    "last_7_days_visitors": 79,
-    "last_30_days_visitors": 148
+    "all_time_visitors": 778,
+    "all_time_pageviews": 2464,
+    "last_7_days_visitors": 80,
+    "last_30_days_visitors": 146
   },
   "top_countries_all_time": [
     {
@@ -25,7 +25,7 @@
       "country": "Oman",
       "country_code": "OM",
       "country_numeric": "512",
-      "visitors": 112,
+      "visitors": 113,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -85,18 +85,18 @@
       "flag_emoji": "🇸🇬"
     },
     {
+      "country": "Jordan",
+      "country_code": "JO",
+      "country_numeric": "400",
+      "visitors": 9,
+      "flag_emoji": "🇯🇴"
+    },
+    {
       "country": "Hong Kong",
       "country_code": "HK",
       "country_numeric": "344",
       "visitors": 8,
       "flag_emoji": "🇭🇰"
-    },
-    {
-      "country": "Jordan",
-      "country_code": "JO",
-      "country_numeric": "400",
-      "visitors": 8,
-      "flag_emoji": "🇯🇴"
     },
     {
       "country": "Ireland",
@@ -397,13 +397,13 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 43,
+      "visitors": 41,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 37,
+      "visitors": 38,
       "flag_emoji": "🇴🇲"
     },
     {
@@ -415,7 +415,7 @@
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 10,
+      "visitors": 9,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -431,12 +431,6 @@
       "flag_emoji": "🇸🇬"
     },
     {
-      "country": "Canada",
-      "country_code": "CA",
-      "visitors": 2,
-      "flag_emoji": "🇨🇦"
-    },
-    {
       "country": "India",
       "country_code": "IN",
       "visitors": 2,
@@ -447,6 +441,12 @@
       "country_code": "ID",
       "visitors": 2,
       "flag_emoji": "🇮🇩"
+    },
+    {
+      "country": "Jordan",
+      "country_code": "JO",
+      "visitors": 2,
+      "flag_emoji": "🇯🇴"
     },
     {
       "country": "Spain",
@@ -493,8 +493,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 69,
-      "visitors": 51
+      "pageviews": 71,
+      "visitors": 52
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-23T03:25:36Z"
+  "fetched_at": "2026-11-23T13:50:36Z"
 }
