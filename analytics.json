@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 783,
-    "all_time_pageviews": 2484,
-    "last_7_days_visitors": 69,
-    "last_30_days_visitors": 149
+    "all_time_visitors": 786,
+    "all_time_pageviews": 2491,
+    "last_7_days_visitors": 72,
+    "last_30_days_visitors": 152
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 159,
+      "visitors": 161,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -218,6 +218,13 @@
       "flag_emoji": "🇹🇷"
     },
     {
+      "country": "Australia",
+      "country_code": "AU",
+      "country_numeric": "036",
+      "visitors": 2,
+      "flag_emoji": "🇦🇺"
+    },
+    {
       "country": "Belgium",
       "country_code": "BE",
       "country_numeric": "056",
@@ -265,13 +272,6 @@
       "country_numeric": "020",
       "visitors": 1,
       "flag_emoji": "🇦🇩"
-    },
-    {
-      "country": "Australia",
-      "country_code": "AU",
-      "country_numeric": "036",
-      "visitors": 1,
-      "flag_emoji": "🇦🇺"
     },
     {
       "country": "Austria",
@@ -397,7 +397,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 43,
+      "visitors": 45,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -431,6 +431,12 @@
       "flag_emoji": "🇸🇬"
     },
     {
+      "country": "Australia",
+      "country_code": "AU",
+      "visitors": 2,
+      "flag_emoji": "🇦🇺"
+    },
+    {
       "country": "India",
       "country_code": "IN",
       "visitors": 2,
@@ -447,24 +453,18 @@
       "country_code": "JO",
       "visitors": 2,
       "flag_emoji": "🇯🇴"
-    },
-    {
-      "country": "Spain",
-      "country_code": "ES",
-      "visitors": 2,
-      "flag_emoji": "🇪🇸"
     }
   ],
   "top_pages_all_time": [
     {
       "url": "waleedmandour.org/",
-      "pageviews": 665,
-      "visitors": 364
+      "pageviews": 668,
+      "visitors": 365
     },
     {
       "url": "waleedmandour.org/projects/CorpusMind/",
-      "pageviews": 609,
-      "visitors": 204
+      "pageviews": 610,
+      "visitors": 205
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
@@ -478,7 +478,7 @@
     },
     {
       "url": "waleedmandour.org/projects/",
-      "pageviews": 140,
+      "pageviews": 141,
       "visitors": 47
     },
     {
@@ -493,7 +493,7 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 77,
+      "pageviews": 78,
       "visitors": 55
     },
     {
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-24T21:42:11Z"
+  "fetched_at": "2026-11-25T04:41:31Z"
 }
