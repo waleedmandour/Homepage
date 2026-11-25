@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 787,
-    "all_time_pageviews": 2492,
-    "last_7_days_visitors": 64,
-    "last_30_days_visitors": 147
+    "all_time_visitors": 788,
+    "all_time_pageviews": 2493,
+    "last_7_days_visitors": 65,
+    "last_30_days_visitors": 148
   },
   "top_countries_all_time": [
     {
@@ -141,6 +141,13 @@
       "flag_emoji": "🇹🇳"
     },
     {
+      "country": "Algeria",
+      "country_code": "DZ",
+      "country_numeric": "012",
+      "visitors": 4,
+      "flag_emoji": "🇩🇿"
+    },
+    {
       "country": "Malaysia",
       "country_code": "MY",
       "country_numeric": "458",
@@ -160,13 +167,6 @@
       "country_numeric": "784",
       "visitors": 4,
       "flag_emoji": "🇦🇪"
-    },
-    {
-      "country": "Algeria",
-      "country_code": "DZ",
-      "country_numeric": "012",
-      "visitors": 3,
-      "flag_emoji": "🇩🇿"
     },
     {
       "country": "Brazil",
@@ -431,6 +431,12 @@
       "flag_emoji": "🇸🇬"
     },
     {
+      "country": "Algeria",
+      "country_code": "DZ",
+      "visitors": 2,
+      "flag_emoji": "🇩🇿"
+    },
+    {
       "country": "Australia",
       "country_code": "AU",
       "visitors": 2,
@@ -447,12 +453,6 @@
       "country_code": "ID",
       "visitors": 2,
       "flag_emoji": "🇮🇩"
-    },
-    {
-      "country": "Jordan",
-      "country_code": "JO",
-      "visitors": 2,
-      "flag_emoji": "🇯🇴"
     }
   ],
   "top_pages_all_time": [
@@ -493,8 +493,8 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 78,
-      "visitors": 55
+      "pageviews": 79,
+      "visitors": 56
     },
     {
       "url": "waleedmandour.org/projects/AMTA/",
@@ -507,5 +507,5 @@
       "visitors": 36
     }
   ],
-  "fetched_at": "2026-11-25T15:08:20Z"
+  "fetched_at": "2026-11-25T23:52:51Z"
 }
