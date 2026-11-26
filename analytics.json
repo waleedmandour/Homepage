@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 788,
-    "all_time_pageviews": 2493,
-    "last_7_days_visitors": 65,
-    "last_30_days_visitors": 148
+    "all_time_visitors": 791,
+    "all_time_pageviews": 2502,
+    "last_7_days_visitors": 55,
+    "last_30_days_visitors": 147
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 161,
+      "visitors": 162,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -239,6 +239,13 @@
       "flag_emoji": "🇮🇱"
     },
     {
+      "country": "Japan",
+      "country_code": "JP",
+      "country_numeric": "392",
+      "visitors": 2,
+      "flag_emoji": "🇯🇵"
+    },
+    {
       "country": "Kuwait",
       "country_code": "KW",
       "country_numeric": "414",
@@ -397,25 +404,25 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 43,
+      "visitors": 44,
       "flag_emoji": "🇺🇸"
     },
     {
       "country": "Oman",
       "country_code": "OM",
-      "visitors": 39,
+      "visitors": 38,
       "flag_emoji": "🇴🇲"
     },
     {
       "country": "Egypt",
       "country_code": "EG",
-      "visitors": 22,
+      "visitors": 20,
       "flag_emoji": "🇪🇬"
     },
     {
       "country": "China",
       "country_code": "CN",
-      "visitors": 9,
+      "visitors": 8,
       "flag_emoji": "🇨🇳"
     },
     {
@@ -468,8 +475,8 @@
     },
     {
       "url": "waleedmandour.org/projects/CorpusMindLens/",
-      "pageviews": 200,
-      "visitors": 76
+      "pageviews": 204,
+      "visitors": 78
     },
     {
       "url": "waleedmandour.org/projects/rdat/",
@@ -503,9 +510,9 @@
     },
     {
       "url": "waleedmandour.org/teaching/",
-      "pageviews": 44,
-      "visitors": 36
+      "pageviews": 45,
+      "visitors": 37
     }
   ],
-  "fetched_at": "2026-11-26T05:54:29Z"
+  "fetched_at": "2026-11-26T15:59:39Z"
 }
