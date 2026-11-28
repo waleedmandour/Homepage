@@ -1,10 +1,10 @@
 {
   "property_id": "514716245",
   "totals": {
-    "all_time_visitors": 810,
-    "all_time_pageviews": 2536,
-    "last_7_days_visitors": 69,
-    "last_30_days_visitors": 160
+    "all_time_visitors": 811,
+    "all_time_pageviews": 2538,
+    "last_7_days_visitors": 70,
+    "last_30_days_visitors": 161
   },
   "top_countries_all_time": [
     {
@@ -18,7 +18,7 @@
       "country": "United States",
       "country_code": "US",
       "country_numeric": "840",
-      "visitors": 174,
+      "visitors": 175,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -134,6 +134,13 @@
       "flag_emoji": "🇳🇱"
     },
     {
+      "country": "Russia",
+      "country_code": "RU",
+      "country_numeric": "643",
+      "visitors": 5,
+      "flag_emoji": "🇷🇺"
+    },
+    {
       "country": "Sweden",
       "country_code": "SE",
       "country_numeric": "752",
@@ -167,13 +174,6 @@
       "country_numeric": "458",
       "visitors": 4,
       "flag_emoji": "🇲🇾"
-    },
-    {
-      "country": "Russia",
-      "country_code": "RU",
-      "country_numeric": "643",
-      "visitors": 4,
-      "flag_emoji": "🇷🇺"
     },
     {
       "country": "United Arab Emirates",
@@ -404,7 +404,7 @@
     {
       "country": "United States",
       "country_code": "US",
-      "visitors": 55,
+      "visitors": 56,
       "flag_emoji": "🇺🇸"
     },
     {
@@ -450,16 +450,16 @@
       "flag_emoji": "🇮🇳"
     },
     {
+      "country": "Russia",
+      "country_code": "RU",
+      "visitors": 3,
+      "flag_emoji": "🇷🇺"
+    },
+    {
       "country": "Algeria",
       "country_code": "DZ",
       "visitors": 2,
       "flag_emoji": "🇩🇿"
-    },
-    {
-      "country": "Australia",
-      "country_code": "AU",
-      "visitors": 2,
-      "flag_emoji": "🇦🇺"
     }
   ],
   "top_pages_all_time": [
@@ -500,7 +500,7 @@
     },
     {
       "url": "waleedmandour.org/projects/AMTA/aiedu-dictionary.html",
-      "pageviews": 80,
+      "pageviews": 81,
       "visitors": 56
     },
     {
@@ -509,10 +509,10 @@
       "visitors": 17
     },
     {
-      "url": "waleedmandour.org/teaching/",
+      "url": "waleedmandour.org/projects/scholarscribe/index.html",
       "pageviews": 45,
-      "visitors": 37
+      "visitors": 18
     }
   ],
-  "fetched_at": "2026-11-27T19:14:59Z"
+  "fetched_at": "2026-11-28T02:21:08Z"
 }
